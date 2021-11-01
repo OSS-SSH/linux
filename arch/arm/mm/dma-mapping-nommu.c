@@ -5,12 +5,20 @@
  *  Copyright (C) 2000-2004 Russell King
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/dma-map-ops.h>
+=======
 #include <linux/export.h>
 #include <linux/mm.h>
 #include <linux/dma-direct.h>
 #include <linux/dma-map-ops.h>
 #include <linux/scatterlist.h>
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/dma-map-ops.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/cachetype.h>
 #include <asm/cacheflush.h>
 #include <asm/outercache.h>
@@ -18,6 +26,11 @@
 
 #include "dma.h"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void arch_sync_dma_for_device(phys_addr_t paddr, size_t size,
+		enum dma_data_direction dir)
+=======
 /*
  *  The generic direct mapping code is used if
  *   - MMU/MPU is off
@@ -77,6 +90,11 @@ static int arm_nommu_dma_mmap(struct device *dev, struct vm_area_struct *vma,
 
 static void __dma_page_cpu_to_dev(phys_addr_t paddr, size_t size,
 				  enum dma_data_direction dir)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void arch_sync_dma_for_device(phys_addr_t paddr, size_t size,
+		enum dma_data_direction dir)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	dmac_map_area(__va(paddr), size, dir);
 
@@ -86,8 +104,18 @@ static void __dma_page_cpu_to_dev(phys_addr_t paddr, size_t size,
 		outer_clean_range(paddr, paddr + size);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void arch_sync_dma_for_cpu(phys_addr_t paddr, size_t size,
+		enum dma_data_direction dir)
+=======
 static void __dma_page_dev_to_cpu(phys_addr_t paddr, size_t size,
 				  enum dma_data_direction dir)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void arch_sync_dma_for_cpu(phys_addr_t paddr, size_t size,
+		enum dma_data_direction dir)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (dir != DMA_TO_DEVICE) {
 		outer_inv_range(paddr, paddr + size);
@@ -95,6 +123,9 @@ static void __dma_page_dev_to_cpu(phys_addr_t paddr, size_t size,
 	}
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static dma_addr_t arm_nommu_dma_map_page(struct device *dev, struct page *page,
 					 unsigned long offset, size_t size,
 					 enum dma_data_direction dir,
@@ -191,6 +222,9 @@ const struct dma_map_ops arm_nommu_dma_ops = {
 };
 EXPORT_SYMBOL(arm_nommu_dma_ops);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void arch_setup_dma_ops(struct device *dev, u64 dma_base, u64 size,
 			const struct iommu_ops *iommu, bool coherent)
 {
@@ -201,14 +235,32 @@ void arch_setup_dma_ops(struct device *dev, u64 dma_base, u64 size,
 		 * enough to check if MPU is in use or not since in absense of
 		 * MPU system memory map is used.
 		 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dev->dma_coherent = cacheid ? coherent : true;
+=======
 		dev->archdata.dma_coherent = (cacheid) ? coherent : true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev->dma_coherent = cacheid ? coherent : true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		/*
 		 * Assume coherent DMA in case MMU/MPU has not been set up.
 		 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dev->dma_coherent = (get_cr() & CR_M) ? coherent : true;
+	}
+=======
 		dev->archdata.dma_coherent = (get_cr() & CR_M) ? coherent : true;
 	}
 
 	if (!dev->archdata.dma_coherent)
 		set_dma_ops(dev, &arm_nommu_dma_ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev->dma_coherent = (get_cr() & CR_M) ? coherent : true;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

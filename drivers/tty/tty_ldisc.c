@@ -812,7 +812,13 @@ void tty_ldisc_release(struct tty_struct *tty)
 
 	tty_ldisc_debug(tty, "released\n");
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 EXPORT_SYMBOL_GPL(tty_ldisc_release);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  *	tty_ldisc_init		-	ldisc setup for new tty

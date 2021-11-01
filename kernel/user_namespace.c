@@ -1385,7 +1385,15 @@ const struct proc_ns_operations userns_operations = {
 
 static __init int user_namespaces_init(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	user_ns_cachep = KMEM_CACHE(user_namespace, SLAB_PANIC | SLAB_ACCOUNT);
+=======
 	user_ns_cachep = KMEM_CACHE(user_namespace, SLAB_PANIC);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	user_ns_cachep = KMEM_CACHE(user_namespace, SLAB_PANIC | SLAB_ACCOUNT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 subsys_initcall(user_namespaces_init);

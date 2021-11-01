@@ -125,6 +125,19 @@ static int igt_gpu_reloc(void *arg)
 	intel_gt_pm_get(&eb.i915->gt);
 
 	for_each_uabi_engine(eb.engine, eb.i915) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		if (intel_engine_requires_cmd_parser(eb.engine) ||
+		    intel_engine_using_cmd_parser(eb.engine))
+			continue;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reloc_cache_init(&eb.reloc_cache, eb.i915);
 		memset(map, POISON_INUSE, 4096);
 

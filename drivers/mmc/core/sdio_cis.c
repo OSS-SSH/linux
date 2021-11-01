@@ -330,6 +330,28 @@ static int sdio_read_cis(struct mmc_card *card, struct sdio_func *func)
 			prev = &this->next;
 
 			if (ret == -ENOENT) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+				if (time_after(jiffies, timeout))
+					break;
+
+#define FMT(type) "%s: queuing " type " CIS tuple 0x%02x [%*ph] (%u bytes)\n"
+				/*
+				 * Tuples in this range are reserved for
+				 * vendors, so don't warn about them
+				 */
+				if (tpl_code >= 0x80 && tpl_code <= 0x8f)
+					pr_debug_ratelimited(FMT("vendor"),
+						mmc_hostname(card->host),
+						tpl_code, tpl_link, this->data,
+						tpl_link);
+				else
+					pr_warn_ratelimited(FMT("unknown"),
+						mmc_hostname(card->host),
+						tpl_code, tpl_link, this->data,
+						tpl_link);
+=======
 				if (time_after(jiffies, timeout))
 					break;
 				/* warn about unknown tuples */
@@ -337,6 +359,28 @@ static int sdio_read_cis(struct mmc_card *card, struct sdio_func *func)
 				       " CIS tuple 0x%02x (%u bytes)\n",
 				       mmc_hostname(card->host),
 				       tpl_code, tpl_link);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+				if (time_after(jiffies, timeout))
+					break;
+
+#define FMT(type) "%s: queuing " type " CIS tuple 0x%02x [%*ph] (%u bytes)\n"
+				/*
+				 * Tuples in this range are reserved for
+				 * vendors, so don't warn about them
+				 */
+				if (tpl_code >= 0x80 && tpl_code <= 0x8f)
+					pr_debug_ratelimited(FMT("vendor"),
+						mmc_hostname(card->host),
+						tpl_code, tpl_link, this->data,
+						tpl_link);
+				else
+					pr_warn_ratelimited(FMT("unknown"),
+						mmc_hostname(card->host),
+						tpl_code, tpl_link, this->data,
+						tpl_link);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 
 			/* keep on analyzing tuples */

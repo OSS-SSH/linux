@@ -841,6 +841,18 @@ static bool CalculatePrefetchSchedule(
 	else
 		*DestinationLinesForPrefetch = dst_y_prefetch_equ;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	// Limit to prevent overflow in DST_Y_PREFETCH register
+	*DestinationLinesForPrefetch = dml_min(*DestinationLinesForPrefetch, 63.75);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	// Limit to prevent overflow in DST_Y_PREFETCH register
+	*DestinationLinesForPrefetch = dml_min(*DestinationLinesForPrefetch, 63.75);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dml_print("DML: VStartup: %d\n", VStartup);
 	dml_print("DML: TCalc: %f\n", TCalc);
 	dml_print("DML: TWait: %f\n", TWait);
@@ -2267,7 +2279,15 @@ static void DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerforman
 					&locals->UrgentBurstFactorLumaPre[k],
 					&locals->UrgentBurstFactorChroma[k],
 					&locals->UrgentBurstFactorChromaPre[k],
+<<<<<<< HEAD
+<<<<<<< HEAD
+					&locals->NotEnoughUrgentLatencyHiding[0][0],
+=======
 					&locals->NotEnoughUrgentLatencyHiding,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					&locals->NotEnoughUrgentLatencyHiding[0][0],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					&locals->NotEnoughUrgentLatencyHidingPre);
 
 			if (mode_lib->vba.UseUrgentBurstBandwidth == false) {
@@ -2300,7 +2320,17 @@ static void DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerforman
 		}
 		mode_lib->vba.FractionOfUrgentBandwidth = MaxTotalRDBandwidthNoUrgentBurst / mode_lib->vba.ReturnBW;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (MaxTotalRDBandwidth <= mode_lib->vba.ReturnBW && locals->NotEnoughUrgentLatencyHiding[0][0] == 0 &&
+				locals->NotEnoughUrgentLatencyHidingPre == 0 && !VRatioPrefetchMoreThan4
+=======
 		if (MaxTotalRDBandwidth <= mode_lib->vba.ReturnBW && locals->NotEnoughUrgentLatencyHiding == 0 && locals->NotEnoughUrgentLatencyHidingPre == 0 && !VRatioPrefetchMoreThan4
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (MaxTotalRDBandwidth <= mode_lib->vba.ReturnBW && locals->NotEnoughUrgentLatencyHiding[0][0] == 0 &&
+				locals->NotEnoughUrgentLatencyHidingPre == 0 && !VRatioPrefetchMoreThan4
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				&& !DestinationLineTimesForPrefetchLessThan2)
 			mode_lib->vba.PrefetchModeSupported = true;
 		else {
@@ -4821,7 +4851,15 @@ void dml21_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
 							&locals->UrgentBurstFactorLumaPre[k],
 							&locals->UrgentBurstFactorChroma[k],
 							&locals->UrgentBurstFactorChromaPre[k],
+<<<<<<< HEAD
+<<<<<<< HEAD
+							&locals->NotEnoughUrgentLatencyHiding[0][0],
+=======
 							&locals->NotEnoughUrgentLatencyHiding,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+							&locals->NotEnoughUrgentLatencyHiding[0][0],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 							&locals->NotEnoughUrgentLatencyHidingPre);
 
 					if (mode_lib->vba.UseUrgentBurstBandwidth == false) {
@@ -4848,13 +4886,29 @@ void dml21_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
 				}
 				locals->BandwidthWithoutPrefetchSupported[i][0] = true;
 				if (mode_lib->vba.MaximumReadBandwidthWithoutPrefetch > locals->ReturnBWPerState[i][0]
+<<<<<<< HEAD
+<<<<<<< HEAD
+						|| locals->NotEnoughUrgentLatencyHiding[0][0] == 1) {
+=======
 						|| locals->NotEnoughUrgentLatencyHiding == 1) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						|| locals->NotEnoughUrgentLatencyHiding[0][0] == 1) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					locals->BandwidthWithoutPrefetchSupported[i][0] = false;
 				}
 
 				locals->PrefetchSupported[i][j] = true;
 				if (mode_lib->vba.MaximumReadBandwidthWithPrefetch > locals->ReturnBWPerState[i][0]
+<<<<<<< HEAD
+<<<<<<< HEAD
+						|| locals->NotEnoughUrgentLatencyHiding[0][0] == 1
+=======
 						|| locals->NotEnoughUrgentLatencyHiding == 1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						|| locals->NotEnoughUrgentLatencyHiding[0][0] == 1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						|| locals->NotEnoughUrgentLatencyHidingPre == 1) {
 					locals->PrefetchSupported[i][j] = false;
 				}
@@ -4889,7 +4943,15 @@ void dml21_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
 				}
 			} while ((locals->PrefetchSupported[i][j] != true || locals->VRatioInPrefetchSupported[i][j] != true)
 					&& (mode_lib->vba.NextMaxVStartup != mode_lib->vba.MaxMaxVStartup[0][0]
+<<<<<<< HEAD
+<<<<<<< HEAD
+						|| mode_lib->vba.NextPrefetchMode <= mode_lib->vba.MaxPrefetchMode));
+=======
 						|| mode_lib->vba.NextPrefetchMode < mode_lib->vba.MaxPrefetchMode));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						|| mode_lib->vba.NextPrefetchMode <= mode_lib->vba.MaxPrefetchMode));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (locals->PrefetchSupported[i][j] == true && locals->VRatioInPrefetchSupported[i][j] == true) {
 				mode_lib->vba.BandwidthAvailableForImmediateFlip = locals->ReturnBWPerState[i][0];

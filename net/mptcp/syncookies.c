@@ -37,7 +37,31 @@ static spinlock_t join_entry_locks[COOKIE_JOIN_SLOTS] __cacheline_aligned_in_smp
 
 static u32 mptcp_join_entry_hash(struct sk_buff *skb, struct net *net)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	static u32 mptcp_join_hash_secret __read_mostly;
+	struct tcphdr *th = tcp_hdr(skb);
+	u32 seq, i;
+
+	net_get_random_once(&mptcp_join_hash_secret,
+			    sizeof(mptcp_join_hash_secret));
+
+	if (th->syn)
+		seq = TCP_SKB_CB(skb)->seq;
+	else
+		seq = TCP_SKB_CB(skb)->seq - 1;
+
+	i = jhash_3words(seq, net_hash_mix(net),
+			 (__force __u32)th->source << 16 | (__force __u32)th->dest,
+			 mptcp_join_hash_secret);
+<<<<<<< HEAD
+=======
 	u32 i = skb_get_hash(skb) ^ net_hash_mix(net);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return i % ARRAY_SIZE(join_entries);
 }
@@ -94,18 +118,32 @@ bool mptcp_token_join_cookie_init_state(struct mptcp_subflow_request_sock *subfl
 
 	e->valid = 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msk = mptcp_token_get_sock(net, e->token);
+=======
 	msk = mptcp_token_get_sock(e->token);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msk = mptcp_token_get_sock(net, e->token);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!msk) {
 		spin_unlock_bh(&join_entry_locks[i]);
 		return false;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* If this fails, the token got re-used in the mean time by another
 	 * mptcp socket in a different netns, i.e. entry is outdated.
 	 */
 	if (!net_eq(sock_net((struct sock *)msk), net))
 		goto err_put;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	subflow_req->remote_nonce = e->remote_nonce;
 	subflow_req->local_nonce = e->local_nonce;
 	subflow_req->backup = e->backup;
@@ -114,11 +152,17 @@ bool mptcp_token_join_cookie_init_state(struct mptcp_subflow_request_sock *subfl
 	subflow_req->msk = msk;
 	spin_unlock_bh(&join_entry_locks[i]);
 	return true;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 err_put:
 	spin_unlock_bh(&join_entry_locks[i]);
 	sock_put((struct sock *)msk);
 	return false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void __init mptcp_join_cookie_init(void)

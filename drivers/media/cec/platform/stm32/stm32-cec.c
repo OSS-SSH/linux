@@ -305,14 +305,35 @@ static int stm32_cec_probe(struct platform_device *pdev)
 
 	cec->clk_hdmi_cec = devm_clk_get(&pdev->dev, "hdmi-cec");
 	if (IS_ERR(cec->clk_hdmi_cec) &&
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	    PTR_ERR(cec->clk_hdmi_cec) == -EPROBE_DEFER) {
+		ret = -EPROBE_DEFER;
+		goto err_unprepare_cec_clk;
+	}
+<<<<<<< HEAD
+=======
 	    PTR_ERR(cec->clk_hdmi_cec) == -EPROBE_DEFER)
 		return -EPROBE_DEFER;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!IS_ERR(cec->clk_hdmi_cec)) {
 		ret = clk_prepare(cec->clk_hdmi_cec);
 		if (ret) {
 			dev_err(&pdev->dev, "Can't prepare hdmi-cec clock\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+			goto err_unprepare_cec_clk;
+=======
 			return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto err_unprepare_cec_clk;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -324,6 +345,14 @@ static int stm32_cec_probe(struct platform_device *pdev)
 			CEC_NAME, caps,	CEC_MAX_LOG_ADDRS);
 	ret = PTR_ERR_OR_ZERO(cec->adap);
 	if (ret)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err_unprepare_hdmi_cec_clk;
+
+	ret = cec_register_adapter(cec->adap, &pdev->dev);
+	if (ret)
+		goto err_delete_adapter;
+=======
 		return ret;
 
 	ret = cec_register_adapter(cec->adap, &pdev->dev);
@@ -331,12 +360,39 @@ static int stm32_cec_probe(struct platform_device *pdev)
 		cec_delete_adapter(cec->adap);
 		return ret;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_unprepare_hdmi_cec_clk;
+
+	ret = cec_register_adapter(cec->adap, &pdev->dev);
+	if (ret)
+		goto err_delete_adapter;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cec_hw_init(cec);
 
 	platform_set_drvdata(pdev, cec);
 
 	return 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+err_delete_adapter:
+	cec_delete_adapter(cec->adap);
+
+err_unprepare_hdmi_cec_clk:
+	clk_unprepare(cec->clk_hdmi_cec);
+
+err_unprepare_cec_clk:
+	clk_unprepare(cec->clk_cec);
+	return ret;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int stm32_cec_remove(struct platform_device *pdev)

@@ -84,12 +84,28 @@ static const struct kfd2kgd_calls *kfd2kgd_funcs[] = {
 	[CHIP_DIMGREY_CAVEFISH] = &gfx_v10_3_kfd2kgd,
 	[CHIP_BEIGE_GOBY] = &gfx_v10_3_kfd2kgd,
 	[CHIP_YELLOW_CARP] = &gfx_v10_3_kfd2kgd,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	[CHIP_CYAN_SKILLFISH] = &gfx_v10_kfd2kgd,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	[CHIP_CYAN_SKILLFISH] = &gfx_v10_kfd2kgd,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #ifdef KFD_SUPPORT_IOMMU_V2
 static const struct kfd_device_info kaveri_device_info = {
 	.asic_family = CHIP_KAVERI,
 	.asic_name = "kaveri",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 70000,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 70000,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	/* max num of queues for KV.TODO should be a dynamic value */
 	.max_no_of_hqd	= 24,
@@ -109,6 +125,14 @@ static const struct kfd_device_info kaveri_device_info = {
 static const struct kfd_device_info carrizo_device_info = {
 	.asic_family = CHIP_CARRIZO,
 	.asic_name = "carrizo",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 80001,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 80001,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	/* max num of queues for CZ.TODO should be a dynamic value */
 	.max_no_of_hqd	= 24,
@@ -129,6 +153,14 @@ static const struct kfd_device_info carrizo_device_info = {
 static const struct kfd_device_info raven_device_info = {
 	.asic_family = CHIP_RAVEN,
 	.asic_name = "raven",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 90002,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 90002,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -147,6 +179,14 @@ static const struct kfd_device_info raven_device_info = {
 static const struct kfd_device_info hawaii_device_info = {
 	.asic_family = CHIP_HAWAII,
 	.asic_name = "hawaii",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 70001,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 70001,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	/* max num of queues for KV.TODO should be a dynamic value */
 	.max_no_of_hqd	= 24,
@@ -166,6 +206,14 @@ static const struct kfd_device_info hawaii_device_info = {
 static const struct kfd_device_info tonga_device_info = {
 	.asic_family = CHIP_TONGA,
 	.asic_name = "tonga",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 80002,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 80002,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 4,
@@ -184,6 +232,14 @@ static const struct kfd_device_info tonga_device_info = {
 static const struct kfd_device_info fiji_device_info = {
 	.asic_family = CHIP_FIJI,
 	.asic_name = "fiji",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 80003,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 80003,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 4,
@@ -202,6 +258,14 @@ static const struct kfd_device_info fiji_device_info = {
 static const struct kfd_device_info fiji_vf_device_info = {
 	.asic_family = CHIP_FIJI,
 	.asic_name = "fiji",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 80003,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 80003,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 4,
@@ -221,6 +285,14 @@ static const struct kfd_device_info fiji_vf_device_info = {
 static const struct kfd_device_info polaris10_device_info = {
 	.asic_family = CHIP_POLARIS10,
 	.asic_name = "polaris10",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 80003,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 80003,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 4,
@@ -239,6 +311,14 @@ static const struct kfd_device_info polaris10_device_info = {
 static const struct kfd_device_info polaris10_vf_device_info = {
 	.asic_family = CHIP_POLARIS10,
 	.asic_name = "polaris10",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 80003,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 80003,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 4,
@@ -257,6 +337,14 @@ static const struct kfd_device_info polaris10_vf_device_info = {
 static const struct kfd_device_info polaris11_device_info = {
 	.asic_family = CHIP_POLARIS11,
 	.asic_name = "polaris11",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 80003,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 80003,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 4,
@@ -275,6 +363,14 @@ static const struct kfd_device_info polaris11_device_info = {
 static const struct kfd_device_info polaris12_device_info = {
 	.asic_family = CHIP_POLARIS12,
 	.asic_name = "polaris12",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 80003,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 80003,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 4,
@@ -293,6 +389,14 @@ static const struct kfd_device_info polaris12_device_info = {
 static const struct kfd_device_info vegam_device_info = {
 	.asic_family = CHIP_VEGAM,
 	.asic_name = "vegam",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 80003,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 80003,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 4,
@@ -311,6 +415,14 @@ static const struct kfd_device_info vegam_device_info = {
 static const struct kfd_device_info vega10_device_info = {
 	.asic_family = CHIP_VEGA10,
 	.asic_name = "vega10",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 90000,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 90000,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -329,6 +441,14 @@ static const struct kfd_device_info vega10_device_info = {
 static const struct kfd_device_info vega10_vf_device_info = {
 	.asic_family = CHIP_VEGA10,
 	.asic_name = "vega10",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 90000,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 90000,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -347,6 +467,14 @@ static const struct kfd_device_info vega10_vf_device_info = {
 static const struct kfd_device_info vega12_device_info = {
 	.asic_family = CHIP_VEGA12,
 	.asic_name = "vega12",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 90004,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 90004,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -365,6 +493,14 @@ static const struct kfd_device_info vega12_device_info = {
 static const struct kfd_device_info vega20_device_info = {
 	.asic_family = CHIP_VEGA20,
 	.asic_name = "vega20",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 90006,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 90006,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd	= 24,
 	.doorbell_size	= 8,
@@ -383,6 +519,14 @@ static const struct kfd_device_info vega20_device_info = {
 static const struct kfd_device_info arcturus_device_info = {
 	.asic_family = CHIP_ARCTURUS,
 	.asic_name = "arcturus",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 90008,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 90008,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd	= 24,
 	.doorbell_size	= 8,
@@ -401,6 +545,14 @@ static const struct kfd_device_info arcturus_device_info = {
 static const struct kfd_device_info aldebaran_device_info = {
 	.asic_family = CHIP_ALDEBARAN,
 	.asic_name = "aldebaran",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 90010,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 90010,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd	= 24,
 	.doorbell_size	= 8,
@@ -419,6 +571,14 @@ static const struct kfd_device_info aldebaran_device_info = {
 static const struct kfd_device_info renoir_device_info = {
 	.asic_family = CHIP_RENOIR,
 	.asic_name = "renoir",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 90002,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 90002,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -437,6 +597,14 @@ static const struct kfd_device_info renoir_device_info = {
 static const struct kfd_device_info navi10_device_info = {
 	.asic_family = CHIP_NAVI10,
 	.asic_name = "navi10",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 100100,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 100100,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -447,6 +615,14 @@ static const struct kfd_device_info navi10_device_info = {
 	.needs_iommu_device = false,
 	.supports_cwsr = true,
 	.needs_pci_atomics = true,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.no_atomic_fw_version = 145,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.no_atomic_fw_version = 145,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.num_sdma_engines = 2,
 	.num_xgmi_sdma_engines = 0,
 	.num_sdma_queues_per_engine = 8,
@@ -455,6 +631,14 @@ static const struct kfd_device_info navi10_device_info = {
 static const struct kfd_device_info navi12_device_info = {
 	.asic_family = CHIP_NAVI12,
 	.asic_name = "navi12",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 100101,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 100101,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -465,6 +649,14 @@ static const struct kfd_device_info navi12_device_info = {
 	.needs_iommu_device = false,
 	.supports_cwsr = true,
 	.needs_pci_atomics = true,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.no_atomic_fw_version = 145,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.no_atomic_fw_version = 145,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.num_sdma_engines = 2,
 	.num_xgmi_sdma_engines = 0,
 	.num_sdma_queues_per_engine = 8,
@@ -473,6 +665,14 @@ static const struct kfd_device_info navi12_device_info = {
 static const struct kfd_device_info navi14_device_info = {
 	.asic_family = CHIP_NAVI14,
 	.asic_name = "navi14",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 100102,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 100102,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -483,6 +683,14 @@ static const struct kfd_device_info navi14_device_info = {
 	.needs_iommu_device = false,
 	.supports_cwsr = true,
 	.needs_pci_atomics = true,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.no_atomic_fw_version = 145,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.no_atomic_fw_version = 145,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.num_sdma_engines = 2,
 	.num_xgmi_sdma_engines = 0,
 	.num_sdma_queues_per_engine = 8,
@@ -491,6 +699,14 @@ static const struct kfd_device_info navi14_device_info = {
 static const struct kfd_device_info sienna_cichlid_device_info = {
 	.asic_family = CHIP_SIENNA_CICHLID,
 	.asic_name = "sienna_cichlid",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 100300,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 100300,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -501,6 +717,14 @@ static const struct kfd_device_info sienna_cichlid_device_info = {
 	.needs_iommu_device = false,
 	.supports_cwsr = true,
 	.needs_pci_atomics = true,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.no_atomic_fw_version = 92,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.no_atomic_fw_version = 92,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.num_sdma_engines = 4,
 	.num_xgmi_sdma_engines = 0,
 	.num_sdma_queues_per_engine = 8,
@@ -509,6 +733,14 @@ static const struct kfd_device_info sienna_cichlid_device_info = {
 static const struct kfd_device_info navy_flounder_device_info = {
 	.asic_family = CHIP_NAVY_FLOUNDER,
 	.asic_name = "navy_flounder",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 100301,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 100301,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -519,6 +751,14 @@ static const struct kfd_device_info navy_flounder_device_info = {
 	.needs_iommu_device = false,
 	.supports_cwsr = true,
 	.needs_pci_atomics = true,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.no_atomic_fw_version = 92,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.no_atomic_fw_version = 92,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.num_sdma_engines = 2,
 	.num_xgmi_sdma_engines = 0,
 	.num_sdma_queues_per_engine = 8,
@@ -527,6 +767,14 @@ static const struct kfd_device_info navy_flounder_device_info = {
 static const struct kfd_device_info vangogh_device_info = {
 	.asic_family = CHIP_VANGOGH,
 	.asic_name = "vangogh",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 100303,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 100303,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -536,7 +784,17 @@ static const struct kfd_device_info vangogh_device_info = {
 	.mqd_size_aligned = MQD_SIZE_ALIGNED,
 	.needs_iommu_device = false,
 	.supports_cwsr = true,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.needs_pci_atomics = true,
+	.no_atomic_fw_version = 92,
+=======
 	.needs_pci_atomics = false,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.needs_pci_atomics = true,
+	.no_atomic_fw_version = 92,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.num_sdma_engines = 1,
 	.num_xgmi_sdma_engines = 0,
 	.num_sdma_queues_per_engine = 2,
@@ -545,6 +803,115 @@ static const struct kfd_device_info vangogh_device_info = {
 static const struct kfd_device_info dimgrey_cavefish_device_info = {
 	.asic_family = CHIP_DIMGREY_CAVEFISH,
 	.asic_name = "dimgrey_cavefish",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 100302,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 100302,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	.max_pasid_bits = 16,
+	.max_no_of_hqd  = 24,
+	.doorbell_size  = 8,
+	.ih_ring_entry_size = 8 * sizeof(uint32_t),
+	.event_interrupt_class = &event_interrupt_class_v9,
+	.num_of_watch_points = 4,
+	.mqd_size_aligned = MQD_SIZE_ALIGNED,
+	.needs_iommu_device = false,
+	.supports_cwsr = true,
+	.needs_pci_atomics = true,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.no_atomic_fw_version = 92,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.no_atomic_fw_version = 92,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	.num_sdma_engines = 2,
+	.num_xgmi_sdma_engines = 0,
+	.num_sdma_queues_per_engine = 8,
+};
+
+static const struct kfd_device_info beige_goby_device_info = {
+	.asic_family = CHIP_BEIGE_GOBY,
+	.asic_name = "beige_goby",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 100304,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 100304,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	.max_pasid_bits = 16,
+	.max_no_of_hqd  = 24,
+	.doorbell_size  = 8,
+	.ih_ring_entry_size = 8 * sizeof(uint32_t),
+	.event_interrupt_class = &event_interrupt_class_v9,
+	.num_of_watch_points = 4,
+	.mqd_size_aligned = MQD_SIZE_ALIGNED,
+	.needs_iommu_device = false,
+	.supports_cwsr = true,
+	.needs_pci_atomics = true,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.no_atomic_fw_version = 92,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.no_atomic_fw_version = 92,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	.num_sdma_engines = 1,
+	.num_xgmi_sdma_engines = 0,
+	.num_sdma_queues_per_engine = 8,
+};
+
+static const struct kfd_device_info yellow_carp_device_info = {
+	.asic_family = CHIP_YELLOW_CARP,
+	.asic_name = "yellow_carp",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.gfx_target_version = 100305,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.gfx_target_version = 100305,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	.max_pasid_bits = 16,
+	.max_no_of_hqd  = 24,
+	.doorbell_size  = 8,
+	.ih_ring_entry_size = 8 * sizeof(uint32_t),
+	.event_interrupt_class = &event_interrupt_class_v9,
+	.num_of_watch_points = 4,
+	.mqd_size_aligned = MQD_SIZE_ALIGNED,
+	.needs_iommu_device = false,
+	.supports_cwsr = true,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.needs_pci_atomics = true,
+	.no_atomic_fw_version = 92,
+=======
+	.needs_pci_atomics = false,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.needs_pci_atomics = true,
+	.no_atomic_fw_version = 92,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	.num_sdma_engines = 1,
+	.num_xgmi_sdma_engines = 0,
+	.num_sdma_queues_per_engine = 2,
+};
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static const struct kfd_device_info cyan_skillfish_device_info = {
+	.asic_family = CHIP_CYAN_SKILLFISH,
+	.asic_name = "cyan_skillfish",
+	.gfx_target_version = 100103,
 	.max_pasid_bits = 16,
 	.max_no_of_hqd  = 24,
 	.doorbell_size  = 8,
@@ -560,42 +927,11 @@ static const struct kfd_device_info dimgrey_cavefish_device_info = {
 	.num_sdma_queues_per_engine = 8,
 };
 
-static const struct kfd_device_info beige_goby_device_info = {
-	.asic_family = CHIP_BEIGE_GOBY,
-	.asic_name = "beige_goby",
-	.max_pasid_bits = 16,
-	.max_no_of_hqd  = 24,
-	.doorbell_size  = 8,
-	.ih_ring_entry_size = 8 * sizeof(uint32_t),
-	.event_interrupt_class = &event_interrupt_class_v9,
-	.num_of_watch_points = 4,
-	.mqd_size_aligned = MQD_SIZE_ALIGNED,
-	.needs_iommu_device = false,
-	.supports_cwsr = true,
-	.needs_pci_atomics = true,
-	.num_sdma_engines = 1,
-	.num_xgmi_sdma_engines = 0,
-	.num_sdma_queues_per_engine = 8,
-};
-
-static const struct kfd_device_info yellow_carp_device_info = {
-	.asic_family = CHIP_YELLOW_CARP,
-	.asic_name = "yellow_carp",
-	.max_pasid_bits = 16,
-	.max_no_of_hqd  = 24,
-	.doorbell_size  = 8,
-	.ih_ring_entry_size = 8 * sizeof(uint32_t),
-	.event_interrupt_class = &event_interrupt_class_v9,
-	.num_of_watch_points = 4,
-	.mqd_size_aligned = MQD_SIZE_ALIGNED,
-	.needs_iommu_device = false,
-	.supports_cwsr = true,
-	.needs_pci_atomics = false,
-	.num_sdma_engines = 1,
-	.num_xgmi_sdma_engines = 0,
-	.num_sdma_queues_per_engine = 2,
-};
-
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* For each entry, [0] is regular and [1] is virtualisation device. */
 static const struct kfd_device_info *kfd_supported_devices[][2] = {
 #ifdef KFD_SUPPORT_IOMMU_V2
@@ -625,6 +961,14 @@ static const struct kfd_device_info *kfd_supported_devices[][2] = {
 	[CHIP_DIMGREY_CAVEFISH] = {&dimgrey_cavefish_device_info, &dimgrey_cavefish_device_info},
 	[CHIP_BEIGE_GOBY] = {&beige_goby_device_info, &beige_goby_device_info},
 	[CHIP_YELLOW_CARP] = {&yellow_carp_device_info, NULL},
+<<<<<<< HEAD
+<<<<<<< HEAD
+	[CHIP_CYAN_SKILLFISH] = {&cyan_skillfish_device_info, NULL},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	[CHIP_CYAN_SKILLFISH] = {&cyan_skillfish_device_info, NULL},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int kfd_gtt_sa_init(struct kfd_dev *kfd, unsigned int buf_size,
@@ -659,6 +1003,9 @@ struct kfd_dev *kgd2kfd_probe(struct kgd_dev *kgd,
 	if (!kfd)
 		return NULL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* Allow BIF to recode atomics to PCIe 3.0 AtomicOps.
 	 * 32 and 64-bit requests are possible and must be
 	 * supported.
@@ -673,6 +1020,9 @@ struct kfd_dev *kgd2kfd_probe(struct kgd_dev *kgd,
 		return NULL;
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfd->kgd = kgd;
 	kfd->device_info = device_info;
 	kfd->pdev = pdev;
@@ -772,6 +1122,32 @@ bool kgd2kfd_device_init(struct kfd_dev *kfd,
 	kfd->vm_info.vmid_num_kfd = kfd->vm_info.last_vmid_kfd
 			- kfd->vm_info.first_vmid_kfd + 1;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* Allow BIF to recode atomics to PCIe 3.0 AtomicOps.
+	 * 32 and 64-bit requests are possible and must be
+	 * supported.
+	 */
+	kfd->pci_atomic_requested = amdgpu_amdkfd_have_atomics_support(kfd->kgd);
+	if (!kfd->pci_atomic_requested &&
+	    kfd->device_info->needs_pci_atomics &&
+	    (!kfd->device_info->no_atomic_fw_version ||
+	     kfd->mec_fw_version < kfd->device_info->no_atomic_fw_version)) {
+		dev_info(kfd_device,
+			 "skipped device %x:%x, PCI rejects atomics %d<%d\n",
+			 kfd->pdev->vendor, kfd->pdev->device,
+			 kfd->mec_fw_version,
+			 kfd->device_info->no_atomic_fw_version);
+		return false;
+	}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Verify module parameters regarding mapped process number*/
 	if ((hws_max_conc_proc < 0)
 			|| (hws_max_conc_proc > kfd->vm_info.vmid_num_kfd)) {
@@ -910,7 +1286,13 @@ out:
 void kgd2kfd_device_exit(struct kfd_dev *kfd)
 {
 	if (kfd->init_complete) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		svm_migrate_fini((struct amdgpu_device *)kfd->kgd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		device_queue_manager_uninit(kfd->dqm);
 		kfd_interrupt_exit(kfd);
 		kfd_topology_remove_device(kfd);
@@ -1008,31 +1390,69 @@ int kgd2kfd_resume(struct kfd_dev *kfd, bool run_pm)
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int kgd2kfd_resume_iommu(struct kfd_dev *kfd)
+=======
 static int kfd_resume(struct kfd_dev *kfd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int kgd2kfd_resume_iommu(struct kfd_dev *kfd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int err = 0;
 
 	err = kfd_iommu_resume(kfd);
-	if (err) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (err)
 		dev_err(kfd_device,
 			"Failed to resume IOMMU for device %x:%x\n",
 			kfd->pdev->vendor, kfd->pdev->device);
-		return err;
-	}
+	return err;
+}
+
+static int kfd_resume(struct kfd_dev *kfd)
+{
+	int err = 0;
 
 	err = kfd->dqm->ops.start(kfd->dqm);
-	if (err) {
+	if (err)
 		dev_err(kfd_device,
 			"Error starting queue manager for device %x:%x\n",
 			kfd->pdev->vendor, kfd->pdev->device);
-		goto dqm_start_error;
-	}
 
 	return err;
+=======
+	if (err) {
+=======
+	if (err)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		dev_err(kfd_device,
+			"Failed to resume IOMMU for device %x:%x\n",
+			kfd->pdev->vendor, kfd->pdev->device);
+	return err;
+}
+
+static int kfd_resume(struct kfd_dev *kfd)
+{
+	int err = 0;
+
+	err = kfd->dqm->ops.start(kfd->dqm);
+	if (err)
+		dev_err(kfd_device,
+			"Error starting queue manager for device %x:%x\n",
+			kfd->pdev->vendor, kfd->pdev->device);
+
+	return err;
+<<<<<<< HEAD
 
 dqm_start_error:
 	kfd_iommu_suspend(kfd);
 	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void kfd_queue_work(struct workqueue_struct *wq,
@@ -1369,7 +1789,15 @@ void kfd_dec_compute_active(struct kfd_dev *kfd)
 	WARN_ONCE(count < 0, "Compute profile ref. count error");
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void kgd2kfd_smi_event_throttle(struct kfd_dev *kfd, uint64_t throttle_bitmask)
+=======
 void kgd2kfd_smi_event_throttle(struct kfd_dev *kfd, uint32_t throttle_bitmask)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void kgd2kfd_smi_event_throttle(struct kfd_dev *kfd, uint64_t throttle_bitmask)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (kfd && kfd->init_complete)
 		kfd_smi_event_update_thermal_throttling(kfd, throttle_bitmask);
@@ -1382,18 +1810,32 @@ void kgd2kfd_smi_event_throttle(struct kfd_dev *kfd, uint32_t throttle_bitmask)
  */
 int kfd_debugfs_hang_hws(struct kfd_dev *dev)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int r = 0;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dev->dqm->sched_policy != KFD_SCHED_POLICY_HWS) {
 		pr_err("HWS is not enabled");
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return dqm_debugfs_hang_hws(dev->dqm);
+=======
 	r = pm_debugfs_hang_hws(&dev->dqm->packets);
 	if (!r)
 		r = dqm_debugfs_execute_queues(dev->dqm);
 
 	return r;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return dqm_debugfs_hang_hws(dev->dqm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #endif

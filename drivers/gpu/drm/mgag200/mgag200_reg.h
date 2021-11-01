@@ -222,11 +222,24 @@
 
 #define MGAREG_MISC_IOADSEL	(0x1 << 0)
 #define MGAREG_MISC_RAMMAPEN	(0x1 << 1)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define MGAREG_MISC_CLKSEL_MASK		GENMASK(3, 2)
+#define MGAREG_MISC_CLKSEL_VGA25	(0x0 << 2)
+#define MGAREG_MISC_CLKSEL_VGA28	(0x1 << 2)
+#define MGAREG_MISC_CLKSEL_MGA		(0x3 << 2)
+<<<<<<< HEAD
+=======
 #define MGAREG_MISC_CLK_SEL_MASK	GENMASK(3, 2)
 #define MGAREG_MISC_CLK_SEL_VGA25	(0x0 << 2)
 #define MGAREG_MISC_CLK_SEL_VGA28	(0x1 << 2)
 #define MGAREG_MISC_CLK_SEL_MGA_PIX	(0x2 << 2)
 #define MGAREG_MISC_CLK_SEL_MGA_MSK	(0x3 << 2)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MGAREG_MISC_VIDEO_DIS	(0x1 << 4)
 #define MGAREG_MISC_HIGH_PG_SEL	(0x1 << 5)
 #define MGAREG_MISC_HSYNCPOL		BIT(6)

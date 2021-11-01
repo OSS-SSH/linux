@@ -1268,8 +1268,22 @@ static inline int snd_cs4281_create_gameport(struct cs4281 *chip) { return -ENOS
 static inline void snd_cs4281_free_gameport(struct cs4281 *chip) { }
 #endif /* IS_REACHABLE(CONFIG_GAMEPORT) */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void snd_cs4281_free(struct snd_card *card)
+{
+	struct cs4281 *chip = card->private_data;
+
+=======
 static int snd_cs4281_free(struct cs4281 *chip)
 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void snd_cs4281_free(struct snd_card *card)
+{
+	struct cs4281 *chip = card->private_data;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_cs4281_free_gameport(chip);
 
 	/* Mask interrupts */
@@ -1278,6 +1292,9 @@ static int snd_cs4281_free(struct cs4281 *chip)
 	snd_cs4281_pokeBA0(chip, BA0_CLKCR1, 0);
 	/* Sound System Power Management - Turn Everything OFF */
 	snd_cs4281_pokeBA0(chip, BA0_SSPM, 0);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* PCI interface - D3 state */
 	pci_set_power_state(chip->pci, PCI_D3hot);
 
@@ -1296,31 +1313,46 @@ static int snd_cs4281_dev_free(struct snd_device *device)
 {
 	struct cs4281 *chip = device->device_data;
 	return snd_cs4281_free(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int snd_cs4281_chip_init(struct cs4281 *chip); /* defined below */
 
 static int snd_cs4281_create(struct snd_card *card,
 			     struct pci_dev *pci,
-			     struct cs4281 **rchip,
+<<<<<<< HEAD
+<<<<<<< HEAD
 			     int dual_codec)
 {
-	struct cs4281 *chip;
-	unsigned int tmp;
+	struct cs4281 *chip = card->private_data;
 	int err;
-	static const struct snd_device_ops ops = {
-		.dev_free =	snd_cs4281_dev_free,
-	};
 
-	*rchip = NULL;
-	err = pci_enable_device(pci);
+	err = pcim_enable_device(pci);
 	if (err < 0)
 		return err;
+=======
+			     struct cs4281 **rchip,
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			     int dual_codec)
+{
+	struct cs4281 *chip = card->private_data;
+	int err;
+
+	err = pcim_enable_device(pci);
+	if (err < 0)
+		return err;
+<<<<<<< HEAD
 	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
 	if (chip == NULL) {
 		pci_disable_device(pci);
 		return -ENOMEM;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&chip->reg_lock);
 	chip->card = card;
 	chip->pci = pci;
@@ -1332,46 +1364,73 @@ static int snd_cs4281_create(struct snd_card *card,
 	}
 	chip->dual_codec = dual_codec;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = pcim_iomap_regions(pci, 0x03, "CS4281"); /* 2 BARs */
+	if (err < 0)
+		return err;
+	chip->ba0_addr = pci_resource_start(pci, 0);
+	chip->ba1_addr = pci_resource_start(pci, 1);
+
+	chip->ba0 = pcim_iomap_table(pci)[0];
+	chip->ba1 = pcim_iomap_table(pci)[1];
+	
+	if (devm_request_irq(&pci->dev, pci->irq, snd_cs4281_interrupt,
+			     IRQF_SHARED, KBUILD_MODNAME, chip)) {
+		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+=======
 	err = pci_request_regions(pci, "CS4281");
 	if (err < 0) {
 		kfree(chip);
 		pci_disable_device(pci);
+=======
+	err = pcim_iomap_regions(pci, 0x03, "CS4281"); /* 2 BARs */
+	if (err < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
-	}
 	chip->ba0_addr = pci_resource_start(pci, 0);
 	chip->ba1_addr = pci_resource_start(pci, 1);
 
-	chip->ba0 = pci_ioremap_bar(pci, 0);
-	chip->ba1 = pci_ioremap_bar(pci, 1);
-	if (!chip->ba0 || !chip->ba1) {
-		snd_cs4281_free(chip);
-		return -ENOMEM;
-	}
+	chip->ba0 = pcim_iomap_table(pci)[0];
+	chip->ba1 = pcim_iomap_table(pci)[1];
 	
-	if (request_irq(pci->irq, snd_cs4281_interrupt, IRQF_SHARED,
-			KBUILD_MODNAME, chip)) {
+	if (devm_request_irq(&pci->dev, pci->irq, snd_cs4281_interrupt,
+			     IRQF_SHARED, KBUILD_MODNAME, chip)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+<<<<<<< HEAD
 		snd_cs4281_free(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
 	}
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	card->private_free = snd_cs4281_free;
 
-	tmp = snd_cs4281_chip_init(chip);
-	if (tmp) {
-		snd_cs4281_free(chip);
-		return tmp;
-	}
-
-	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
-	if (err < 0) {
-		snd_cs4281_free(chip);
+	err = snd_cs4281_chip_init(chip);
+	if (err)
 		return err;
-	}
 
 	snd_cs4281_proc_init(chip);
+=======
+=======
+	card->private_free = snd_cs4281_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	err = snd_cs4281_chip_init(chip);
+	if (err)
+		return err;
+
+	snd_cs4281_proc_init(chip);
+<<<<<<< HEAD
 
 	*rchip = chip;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1887,46 +1946,80 @@ static int snd_cs4281_probe(struct pci_dev *pci,
 		return -ENOENT;
 	}
 
-	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-			   0, &card);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(*chip), &card);
+	if (err < 0)
+		return err;
+	chip = card->private_data;
+
+	err = snd_cs4281_create(card, pci, dual_codec[dev]);
 	if (err < 0)
 		return err;
 
-	err = snd_cs4281_create(card, pci, &chip, dual_codec[dev]);
-	if (err < 0) {
-		snd_card_free(card);
+	err = snd_cs4281_mixer(chip);
+	if (err < 0)
 		return err;
-	}
-	card->private_data = chip;
+	err = snd_cs4281_pcm(chip, 0);
+	if (err < 0)
+		return err;
+	err = snd_cs4281_midi(chip, 0);
+	if (err < 0)
+		return err;
+	err = snd_opl3_new(card, OPL3_HW_OPL3_CS4281, &opl3);
+	if (err < 0)
+		return err;
+=======
+	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+			   0, &card);
+=======
+	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(*chip), &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (err < 0)
+		return err;
+	chip = card->private_data;
+
+	err = snd_cs4281_create(card, pci, dual_codec[dev]);
+	if (err < 0)
+		return err;
 
 	err = snd_cs4281_mixer(chip);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 	err = snd_cs4281_pcm(chip, 0);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 	err = snd_cs4281_midi(chip, 0);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
-	}
 	err = snd_opl3_new(card, OPL3_HW_OPL3_CS4281, &opl3);
-	if (err < 0) {
-		snd_card_free(card);
+	if (err < 0)
 		return err;
+<<<<<<< HEAD
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	opl3->private_data = chip;
 	opl3->command = snd_cs4281_opl3_command;
 	snd_opl3_init(opl3);
 	err = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (err < 0)
+		return err;
+=======
 	if (err < 0) {
 		snd_card_free(card);
 		return err;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_cs4281_create_gameport(chip);
 	strcpy(card->driver, "CS4281");
 	strcpy(card->shortname, "Cirrus Logic CS4281");
@@ -1936,21 +2029,37 @@ static int snd_cs4281_probe(struct pci_dev *pci,
 		chip->irq);
 
 	err = snd_card_register(card);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (err < 0)
+		return err;
+=======
 	if (err < 0) {
 		snd_card_free(card);
 		return err;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static void snd_cs4281_remove(struct pci_dev *pci)
 {
 	snd_card_free(pci_get_drvdata(pci));
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Power Management
  */
@@ -2054,7 +2163,13 @@ static struct pci_driver cs4281_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_cs4281_ids,
 	.probe = snd_cs4281_probe,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.remove = snd_cs4281_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = CS4281_PM_OPS,
 	},

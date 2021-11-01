@@ -957,7 +957,15 @@ static inline void __iomem *ioremap(phys_addr_t offset, size_t size)
 
 #ifndef iounmap
 #define iounmap iounmap
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline void iounmap(volatile void __iomem *addr)
+=======
 static inline void iounmap(void __iomem *addr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void iounmap(volatile void __iomem *addr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 }
 #endif
@@ -1023,6 +1031,10 @@ static inline void __iomem *ioport_map(unsigned long port, unsigned int nr)
 	port &= IO_SPACE_LIMIT;
 	return (port > MMIO_UPPER_LIMIT) ? NULL : PCI_IOBASE + port;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define ARCH_HAS_GENERIC_IOPORT_MAP
+=======
 #define __pci_ioport_unmap __pci_ioport_unmap
 static inline void __pci_ioport_unmap(void __iomem *p)
 {
@@ -1033,6 +1045,10 @@ static inline void __pci_ioport_unmap(void __iomem *p)
 		return;
 	iounmap(p);
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ARCH_HAS_GENERIC_IOPORT_MAP
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #ifndef ioport_unmap
@@ -1048,6 +1064,13 @@ extern void ioport_unmap(void __iomem *p);
 #endif /* CONFIG_HAS_IOPORT_MAP */
 
 #ifndef CONFIG_GENERIC_IOMAP
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifndef pci_iounmap
+#define ARCH_WANTS_GENERIC_PCI_IOUNMAP
+#endif
+#endif
+=======
 struct pci_dev;
 extern void __iomem *pci_iomap(struct pci_dev *dev, int bar, unsigned long max);
 
@@ -1055,14 +1078,17 @@ extern void __iomem *pci_iomap(struct pci_dev *dev, int bar, unsigned long max);
 static inline void __pci_ioport_unmap(void __iomem *p) {}
 #endif
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef pci_iounmap
-#define pci_iounmap pci_iounmap
-static inline void pci_iounmap(struct pci_dev *dev, void __iomem *p)
-{
-	__pci_ioport_unmap(p);
-}
+#define ARCH_WANTS_GENERIC_PCI_IOUNMAP
 #endif
+#endif
+<<<<<<< HEAD
 #endif /* CONFIG_GENERIC_IOMAP */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifndef xlate_dev_mem_ptr
 #define xlate_dev_mem_ptr xlate_dev_mem_ptr

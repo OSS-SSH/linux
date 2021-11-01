@@ -31,11 +31,27 @@ properties:
 
   clocks:
     minItems: 1
+<<<<<<< HEAD
+<<<<<<< HEAD
+    maxItems: 7
+
+  clock-names:
+    minItems: 1
+    maxItems: 7
+=======
     maxItems: 3
 
   clock-names:
     minItems: 1
     maxItems: 3
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    maxItems: 7
+
+  clock-names:
+    minItems: 1
+    maxItems: 7
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 required:
   - compatible
@@ -72,6 +88,41 @@ allOf:
           contains:
             enum:
               - qcom,sdm660-a2noc
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+    then:
+      properties:
+        clocks:
+          items:
+            - description: Bus Clock.
+            - description: Bus A Clock.
+            - description: IPA Clock.
+            - description: UFS AXI Clock.
+            - description: Aggregate2 UFS AXI Clock.
+            - description: Aggregate2 USB3 AXI Clock.
+            - description: Config NoC USB2 AXI Clock.
+        clock-names:
+          items:
+            - const: bus
+            - const: bus_a
+            - const: ipa
+            - const: ufs_axi
+            - const: aggre2_ufs_axi
+            - const: aggre2_usb3_axi
+            - const: cfg_noc_usb2_axi
+
+  - if:
+      properties:
+        compatible:
+          contains:
+            enum:
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               - qcom,sdm660-bimc
               - qcom,sdm660-cnoc
               - qcom,sdm660-gnoc
@@ -91,6 +142,14 @@ examples:
   - |
       #include <dt-bindings/clock/qcom,rpmcc.h>
       #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+      #include <dt-bindings/clock/qcom,gcc-sdm660.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      #include <dt-bindings/clock/qcom,gcc-sdm660.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
       bimc: interconnect@1008000 {
               compatible = "qcom,sdm660-bimc";
@@ -123,9 +182,39 @@ examples:
               compatible = "qcom,sdm660-a2noc";
               reg = <0x01704000 0xc100>;
               #interconnect-cells = <1>;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+              clock-names = "bus",
+                            "bus_a",
+                            "ipa",
+                            "ufs_axi",
+                            "aggre2_ufs_axi",
+                            "aggre2_usb3_axi",
+                            "cfg_noc_usb2_axi";
+<<<<<<< HEAD
+              clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
+                       <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>,
+                       <&rpmcc RPM_SMD_IPA_CLK>,
+                       <&gcc GCC_UFS_AXI_CLK>,
+                       <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
+                       <&gcc GCC_AGGRE2_USB3_AXI_CLK>,
+                       <&gcc GCC_CFG_NOC_USB2_AXI_CLK>;
+=======
               clock-names = "bus", "bus_a";
               clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
                        <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+              clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
+                       <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>,
+                       <&rpmcc RPM_SMD_IPA_CLK>,
+                       <&gcc GCC_UFS_AXI_CLK>,
+                       <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
+                       <&gcc GCC_AGGRE2_USB3_AXI_CLK>,
+                       <&gcc GCC_CFG_NOC_USB2_AXI_CLK>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       };
 
       mnoc: interconnect@1745000 {

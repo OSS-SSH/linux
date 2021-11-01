@@ -122,6 +122,11 @@ static void dump_mem(const char *lvl, const char *str, unsigned long bottom,
 		     unsigned long top)
 {
 	unsigned long first;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int i;
+
+=======
 	mm_segment_t fs;
 	int i;
 
@@ -133,6 +138,11 @@ static void dump_mem(const char *lvl, const char *str, unsigned long bottom,
 	fs = get_fs();
 	set_fs(KERNEL_DS);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	printk("%s%s(0x%08lx to 0x%08lx)\n", lvl, str, bottom, top);
 
 	for (first = bottom & ~31; first < top; first += 32) {
@@ -145,7 +155,15 @@ static void dump_mem(const char *lvl, const char *str, unsigned long bottom,
 		for (p = first, i = 0; i < 8 && p < top; i++, p += 4) {
 			if (p >= bottom && p < top) {
 				unsigned long val;
+<<<<<<< HEAD
+<<<<<<< HEAD
+				if (get_kernel_nofault(val, (unsigned long *)p))
+=======
 				if (__get_user(val, (unsigned long *)p) == 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				if (get_kernel_nofault(val, (unsigned long *)p))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					sprintf(str + i * 9, " %08lx", val);
 				else
 					sprintf(str + i * 9, " ????????");
@@ -153,11 +171,23 @@ static void dump_mem(const char *lvl, const char *str, unsigned long bottom,
 		}
 		printk("%s%04lx:%s\n", lvl, first & 0xffff, str);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+}
+
+static void dump_instr(const char *lvl, struct pt_regs *regs)
+=======
 
 	set_fs(fs);
 }
 
 static void __dump_instr(const char *lvl, struct pt_regs *regs)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+}
+
+static void dump_instr(const char *lvl, struct pt_regs *regs)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long addr = instruction_pointer(regs);
 	const int thumb = thumb_mode(regs);
@@ -173,10 +203,33 @@ static void __dump_instr(const char *lvl, struct pt_regs *regs)
 	for (i = -4; i < 1 + !!thumb; i++) {
 		unsigned int val, bad;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		if (!user_mode(regs)) {
+			if (thumb) {
+				u16 val16;
+				bad = get_kernel_nofault(val16, &((u16 *)addr)[i]);
+				val = val16;
+			} else {
+				bad = get_kernel_nofault(val, &((u32 *)addr)[i]);
+			}
+		} else {
+			if (thumb)
+				bad = get_user(val, &((u16 *)addr)[i]);
+			else
+				bad = get_user(val, &((u32 *)addr)[i]);
+		}
+<<<<<<< HEAD
+=======
 		if (thumb)
 			bad = get_user(val, &((u16 *)addr)[i]);
 		else
 			bad = get_user(val, &((u32 *)addr)[i]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!bad)
 			p += sprintf(p, i == 0 ? "(%0*x) " : "%0*x ",
@@ -189,6 +242,9 @@ static void __dump_instr(const char *lvl, struct pt_regs *regs)
 	printk("%sCode: %s\n", lvl, str);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static void dump_instr(const char *lvl, struct pt_regs *regs)
 {
 	mm_segment_t fs;
@@ -203,6 +259,9 @@ static void dump_instr(const char *lvl, struct pt_regs *regs)
 	}
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_ARM_UNWIND
 static inline void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk,
 				  const char *loglvl)
@@ -781,11 +840,17 @@ void abort(void)
 	panic("Oops failed to kill thread");
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 void __init trap_init(void)
 {
 	return;
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_KUSER_HELPERS
 static void __init kuser_init(void *vectors)
 {

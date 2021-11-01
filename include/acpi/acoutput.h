@@ -415,7 +415,15 @@
 /* Conditional execution */
 
 #define ACPI_DEBUG_EXEC(a)              a
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define ACPI_DEBUG_ONLY_MEMBERS(a)      a
+=======
 #define ACPI_DEBUG_ONLY_MEMBERS(a)      a;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ACPI_DEBUG_ONLY_MEMBERS(a)      a
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define _VERBOSE_STRUCTURES
 
 /* Various object display routines for debug */

@@ -436,7 +436,15 @@ EXPORT_SYMBOL(zero_user_segments);
 
 static inline int kmap_local_idx_push(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON_ONCE(in_hardirq() && !irqs_disabled());
+=======
 	WARN_ON_ONCE(in_irq() && !irqs_disabled());
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON_ONCE(in_hardirq() && !irqs_disabled());
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	current->kmap_ctrl.idx += KM_INCR;
 	BUG_ON(current->kmap_ctrl.idx >= KM_MAX_IDX);
 	return current->kmap_ctrl.idx - 1;

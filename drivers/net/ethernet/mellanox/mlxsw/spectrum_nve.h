@@ -29,7 +29,13 @@ struct mlxsw_sp_nve {
 	unsigned int num_max_mc_entries[MLXSW_SP_L3_PROTO_MAX];
 	u32 tunnel_index;
 	u16 ul_rif_index;	/* Reserved for Spectrum */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	unsigned int inc_parsing_depth_refs;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct mlxsw_sp_nve_ops {

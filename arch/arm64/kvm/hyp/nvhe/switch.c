@@ -41,7 +41,15 @@ static void __activate_traps(struct kvm_vcpu *vcpu)
 	___activate_traps(vcpu);
 	__activate_traps_common(vcpu);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	val = vcpu->arch.cptr_el2;
+=======
 	val = CPTR_EL2_DEFAULT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	val = vcpu->arch.cptr_el2;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	val |= CPTR_EL2_TTA | CPTR_EL2_TAM;
 	if (!update_fp_enabled(vcpu)) {
 		val |= CPTR_EL2_TFP | CPTR_EL2_TZ;
@@ -69,12 +77,26 @@ static void __activate_traps(struct kvm_vcpu *vcpu)
 static void __deactivate_traps(struct kvm_vcpu *vcpu)
 {
 	extern char __kvm_hyp_host_vector[];
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u64 cptr;
+
+	___deactivate_traps(vcpu);
+
+=======
 	u64 mdcr_el2, cptr;
 
 	___deactivate_traps(vcpu);
 
 	mdcr_el2 = read_sysreg(mdcr_el2);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 cptr;
+
+	___deactivate_traps(vcpu);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (cpus_have_final_cap(ARM64_WORKAROUND_SPECULATIVE_AT)) {
 		u64 val;
 
@@ -92,6 +114,11 @@ static void __deactivate_traps(struct kvm_vcpu *vcpu)
 		isb();
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	__deactivate_traps_common(vcpu);
+
+=======
 	__deactivate_traps_common();
 
 	mdcr_el2 &= MDCR_EL2_HPMN_MASK;
@@ -99,6 +126,11 @@ static void __deactivate_traps(struct kvm_vcpu *vcpu)
 	mdcr_el2 |= MDCR_EL2_E2TB_MASK << MDCR_EL2_E2TB_SHIFT;
 
 	write_sysreg(mdcr_el2, mdcr_el2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__deactivate_traps_common(vcpu);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	write_sysreg(this_cpu_ptr(&kvm_init_params)->hcr_el2, hcr_el2);
 
 	cptr = CPTR_EL2_DEFAULT;
@@ -170,6 +202,14 @@ int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
 {
 	struct kvm_cpu_context *host_ctxt;
 	struct kvm_cpu_context *guest_ctxt;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct kvm_s2_mmu *mmu;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct kvm_s2_mmu *mmu;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool pmu_switch_needed;
 	u64 exit_code;
 
@@ -213,7 +253,17 @@ int __kvm_vcpu_run(struct kvm_vcpu *vcpu)
 	__sysreg32_restore_state(vcpu);
 	__sysreg_restore_state_nvhe(guest_ctxt);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mmu = kern_hyp_va(vcpu->arch.hw_mmu);
+	__load_stage2(mmu, kern_hyp_va(mmu->arch));
+=======
 	__load_guest_stage2(kern_hyp_va(vcpu->arch.hw_mmu));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mmu = kern_hyp_va(vcpu->arch.hw_mmu);
+	__load_stage2(mmu, kern_hyp_va(mmu->arch));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__activate_traps(vcpu);
 
 	__hyp_vgic_restore_state(vcpu);

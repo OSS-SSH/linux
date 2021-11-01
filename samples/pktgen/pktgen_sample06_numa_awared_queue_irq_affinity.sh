@@ -100,12 +100,22 @@ for ((i = 0; i < $THREADS; i++)); do
     pg_set $dev "udp_src_max $UDP_SRC_MAX"
 done
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+# Run if user hits control-c
+function print_result() {
+=======
 # start_run
 if [ -z "$APPEND" ]; then
     echo "Running... ctrl^C to stop" >&2
     pg_ctrl "start"
     echo "Done" >&2
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# Run if user hits control-c
+function print_result() {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     # Print results
     for ((i = 0; i < $THREADS; i++)); do
         thread=${cpu_array[$((i+F_THREAD))]}
@@ -113,6 +123,26 @@ if [ -z "$APPEND" ]; then
         echo "Device: $dev"
         cat /proc/net/pktgen/$dev | grep -A2 "Result:"
     done
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
+# trap keyboard interrupt (Ctrl-C)
+trap true SIGINT
+
+# start_run
+if [ -z "$APPEND" ]; then
+    echo "Running... ctrl^C to stop" >&2
+    pg_ctrl "start"
+    echo "Done" >&2
+
+    print_result
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 else
     echo "Append mode: config done. Do more or use 'pg_ctrl start' to run"
 fi

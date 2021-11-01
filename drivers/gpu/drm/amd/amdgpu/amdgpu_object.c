@@ -196,7 +196,15 @@ void amdgpu_bo_placement_from_domain(struct amdgpu_bo *abo, u32 domain)
 		c++;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	BUG_ON(c > AMDGPU_BO_MAX_PLACEMENTS);
+=======
 	BUG_ON(c >= AMDGPU_BO_MAX_PLACEMENTS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BUG_ON(c > AMDGPU_BO_MAX_PLACEMENTS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	placement->num_placement = c;
 	placement->placement = places;
@@ -731,7 +739,15 @@ retry:
 /**
  * amdgpu_bo_add_to_shadow_list - add a BO to the shadow list
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @vmbo: BO that will be inserted into the shadow list
+=======
  * @bo: BO that will be inserted into the shadow list
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @vmbo: BO that will be inserted into the shadow list
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Insert a BO to the shadow list.
  */
@@ -913,18 +929,32 @@ int amdgpu_bo_pin_restricted(struct amdgpu_bo *bo, u32 domain,
 		return -EINVAL;
 
 	/* A shared bo cannot be migrated to VRAM */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (bo->tbo.base.import_attach) {
+=======
 	if (bo->prime_shared_count || bo->tbo.base.import_attach) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (bo->tbo.base.import_attach) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (domain & AMDGPU_GEM_DOMAIN_GTT)
 			domain = AMDGPU_GEM_DOMAIN_GTT;
 		else
 			return -EINVAL;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* This assumes only APU display buffers are pinned with (VRAM|GTT).
 	 * See function amdgpu_display_supported_domains()
 	 */
 	domain = amdgpu_bo_get_preferred_pin_domain(adev, domain);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (bo->tbo.pin_count) {
 		uint32_t mem_type = bo->tbo.resource->mem_type;
 		uint32_t mem_flags = bo->tbo.resource->placement;
@@ -949,6 +979,20 @@ int amdgpu_bo_pin_restricted(struct amdgpu_bo *bo, u32 domain,
 		return 0;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* This assumes only APU display buffers are pinned with (VRAM|GTT).
+	 * See function amdgpu_display_supported_domains()
+	 */
+	domain = amdgpu_bo_get_preferred_domain(adev, domain);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (bo->tbo.base.import_attach)
 		dma_buf_pin(bo->tbo.base.import_attach);
 
@@ -1518,14 +1562,34 @@ u64 amdgpu_bo_gpu_offset_no_check(struct amdgpu_bo *bo)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * amdgpu_bo_get_preferred_domain - get preferred domain
+=======
  * amdgpu_bo_get_preferred_pin_domain - get preferred domain for scanout
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * amdgpu_bo_get_preferred_domain - get preferred domain
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @adev: amdgpu device object
  * @domain: allowed :ref:`memory domains <amdgpu_memory_domains>`
  *
  * Returns:
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Which of the allowed domains is preferred for allocating the BO.
+ */
+uint32_t amdgpu_bo_get_preferred_domain(struct amdgpu_device *adev,
+=======
  * Which of the allowed domains is preferred for pinning the BO for scanout.
  */
 uint32_t amdgpu_bo_get_preferred_pin_domain(struct amdgpu_device *adev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Which of the allowed domains is preferred for allocating the BO.
+ */
+uint32_t amdgpu_bo_get_preferred_domain(struct amdgpu_device *adev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    uint32_t domain)
 {
 	if (domain == (AMDGPU_GEM_DOMAIN_VRAM | AMDGPU_GEM_DOMAIN_GTT)) {

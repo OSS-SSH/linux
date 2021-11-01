@@ -2437,11 +2437,35 @@ static void e100_get_drvinfo(struct net_device *netdev,
 		sizeof(info->bus_info));
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define E100_PHY_REGS 0x1D
+static int e100_get_regs_len(struct net_device *netdev)
+{
+	struct nic *nic = netdev_priv(netdev);
+
+	/* We know the number of registers, and the size of the dump buffer.
+	 * Calculate the total size in bytes.
+	 */
+	return (1 + E100_PHY_REGS) * sizeof(u32) + sizeof(nic->mem->dump_buf);
+=======
 #define E100_PHY_REGS 0x1C
 static int e100_get_regs_len(struct net_device *netdev)
 {
 	struct nic *nic = netdev_priv(netdev);
 	return 1 + E100_PHY_REGS + sizeof(nic->mem->dump_buf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define E100_PHY_REGS 0x1D
+static int e100_get_regs_len(struct net_device *netdev)
+{
+	struct nic *nic = netdev_priv(netdev);
+
+	/* We know the number of registers, and the size of the dump buffer.
+	 * Calculate the total size in bytes.
+	 */
+	return (1 + E100_PHY_REGS) * sizeof(u32) + sizeof(nic->mem->dump_buf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void e100_get_regs(struct net_device *netdev,
@@ -2455,6 +2479,24 @@ static void e100_get_regs(struct net_device *netdev,
 	buff[0] = ioread8(&nic->csr->scb.cmd_hi) << 24 |
 		ioread8(&nic->csr->scb.cmd_lo) << 16 |
 		ioread16(&nic->csr->scb.status);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	for (i = 0; i < E100_PHY_REGS; i++)
+		/* Note that we read the registers in reverse order. This
+		 * ordering is the ABI apparently used by ethtool and other
+		 * applications.
+		 */
+		buff[1 + i] = mdio_read(netdev, nic->mii.phy_id,
+					E100_PHY_REGS - 1 - i);
+<<<<<<< HEAD
+	memset(nic->mem->dump_buf, 0, sizeof(nic->mem->dump_buf));
+	e100_exec_cb(nic, NULL, e100_dump);
+	msleep(10);
+	memcpy(&buff[1 + E100_PHY_REGS], nic->mem->dump_buf,
+	       sizeof(nic->mem->dump_buf));
+=======
 	for (i = E100_PHY_REGS; i >= 0; i--)
 		buff[1 + E100_PHY_REGS - i] =
 			mdio_read(netdev, nic->mii.phy_id, i);
@@ -2463,6 +2505,14 @@ static void e100_get_regs(struct net_device *netdev,
 	msleep(10);
 	memcpy(&buff[2 + E100_PHY_REGS], nic->mem->dump_buf,
 		sizeof(nic->mem->dump_buf));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memset(nic->mem->dump_buf, 0, sizeof(nic->mem->dump_buf));
+	e100_exec_cb(nic, NULL, e100_dump);
+	msleep(10);
+	memcpy(&buff[1 + E100_PHY_REGS], nic->mem->dump_buf,
+	       sizeof(nic->mem->dump_buf));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void e100_get_wol(struct net_device *netdev, struct ethtool_wolinfo *wol)
@@ -2715,10 +2765,24 @@ static void e100_get_strings(struct net_device *netdev, u32 stringset, u8 *data)
 {
 	switch (stringset) {
 	case ETH_SS_TEST:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		memcpy(data, e100_gstrings_test, sizeof(e100_gstrings_test));
+		break;
+	case ETH_SS_STATS:
+		memcpy(data, e100_gstrings_stats, sizeof(e100_gstrings_stats));
+=======
 		memcpy(data, *e100_gstrings_test, sizeof(e100_gstrings_test));
 		break;
 	case ETH_SS_STATS:
 		memcpy(data, *e100_gstrings_stats, sizeof(e100_gstrings_stats));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memcpy(data, e100_gstrings_test, sizeof(e100_gstrings_test));
+		break;
+	case ETH_SS_STATS:
+		memcpy(data, e100_gstrings_stats, sizeof(e100_gstrings_stats));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 }
@@ -2809,7 +2873,15 @@ static const struct net_device_ops e100_netdev_ops = {
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_rx_mode	= e100_set_multicast_list,
 	.ndo_set_mac_address	= e100_set_mac_address,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl		= e100_do_ioctl,
+=======
 	.ndo_do_ioctl		= e100_do_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= e100_do_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout		= e100_tx_timeout,
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_poll_controller	= e100_netpoll,

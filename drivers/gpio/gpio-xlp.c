@@ -216,8 +216,16 @@ static void xlp_gpio_generic_handler(struct irq_desc *desc)
 		}
 
 		if (gpio_stat & BIT(gpio % XLP_GPIO_REGSZ))
+<<<<<<< HEAD
+<<<<<<< HEAD
+			generic_handle_domain_irq(priv->chip.irq.domain, gpio);
+=======
 			generic_handle_irq(irq_find_mapping(
 						priv->chip.irq.domain, gpio));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			generic_handle_domain_irq(priv->chip.irq.domain, gpio);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	chained_irq_exit(irqchip, desc);
 }

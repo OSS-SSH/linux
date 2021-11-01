@@ -145,6 +145,14 @@ struct in6_flowlabel_req {
 #define IPV6_TLV_PADN		1
 #define IPV6_TLV_ROUTERALERT	5
 #define IPV6_TLV_CALIPSO	7	/* RFC 5570 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define IPV6_TLV_IOAM		49	/* TEMPORARY IANA allocation for IOAM */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IPV6_TLV_IOAM		49	/* TEMPORARY IANA allocation for IOAM */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IPV6_TLV_JUMBO		194
 #define IPV6_TLV_HAO		201	/* home address option */
 

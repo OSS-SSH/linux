@@ -10,7 +10,24 @@
 
 static u16 hclge_errno_to_resp(int errno)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	int resp = abs(errno);
+
+	/* The status for pf to vf msg cmd is u16, constrainted by HW.
+	 * We need to keep the same type with it.
+	 * The intput errno is the stander error code, it's safely to
+	 * use a u16 to store the abs(errno).
+	 */
+	return (u16)resp;
+<<<<<<< HEAD
+=======
 	return abs(errno);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* hclge_gen_resp_to_vf: used to generate a synchronous response to VF when PF
@@ -47,6 +64,14 @@ static int hclge_gen_resp_to_vf(struct hclge_vport *vport,
 
 	resp_pf_to_vf->dest_vfid = vf_to_pf_req->mbx_src_vfid;
 	resp_pf_to_vf->msg_len = vf_to_pf_req->msg_len;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	resp_pf_to_vf->match_id = vf_to_pf_req->match_id;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	resp_pf_to_vf->match_id = vf_to_pf_req->match_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	resp_pf_to_vf->msg.code = HCLGE_MBX_PF_VF_RESP;
 	resp_pf_to_vf->msg.vf_mbx_msg_code = vf_to_pf_req->msg.code;
@@ -65,6 +90,16 @@ static int hclge_gen_resp_to_vf(struct hclge_vport *vport,
 		memcpy(resp_pf_to_vf->msg.resp_data, resp_msg->data,
 		       resp_msg->len);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	trace_hclge_pf_mbx_send(hdev, resp_pf_to_vf);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	trace_hclge_pf_mbx_send(hdev, resp_pf_to_vf);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = hclge_cmd_send(&hdev->hw, &desc, 1);
 	if (status)
 		dev_err(&hdev->pdev->dev,
@@ -556,7 +591,15 @@ static int hclge_reset_vf(struct hclge_vport *vport)
 	struct hclge_dev *hdev = vport->back;
 
 	dev_warn(&hdev->pdev->dev, "PF received VF reset request from VF %u!",
+<<<<<<< HEAD
+<<<<<<< HEAD
+		 vport->vport_id - HCLGE_VF_VPORT_START_NUM);
+=======
 		 vport->vport_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 vport->vport_id - HCLGE_VF_VPORT_START_NUM);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return hclge_func_reset_cmd(hdev, vport->vport_id);
 }
@@ -580,9 +623,37 @@ static void hclge_get_queue_id_in_pf(struct hclge_vport *vport,
 				     struct hclge_mbx_vf_to_pf_cmd *mbx_req,
 				     struct hclge_respond_to_vf_msg *resp_msg)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct hnae3_handle *handle = &vport->nic;
+	struct hclge_dev *hdev = vport->back;
 	u16 queue_id, qid_in_pf;
 
 	memcpy(&queue_id, mbx_req->msg.data, sizeof(queue_id));
+	if (queue_id >= handle->kinfo.num_tqps) {
+		dev_err(&hdev->pdev->dev, "Invalid queue id(%u) from VF %u\n",
+			queue_id, mbx_req->mbx_src_vfid);
+		return;
+	}
+
+=======
+	u16 queue_id, qid_in_pf;
+
+	memcpy(&queue_id, mbx_req->msg.data, sizeof(queue_id));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hnae3_handle *handle = &vport->nic;
+	struct hclge_dev *hdev = vport->back;
+	u16 queue_id, qid_in_pf;
+
+	memcpy(&queue_id, mbx_req->msg.data, sizeof(queue_id));
+	if (queue_id >= handle->kinfo.num_tqps) {
+		dev_err(&hdev->pdev->dev, "Invalid queue id(%u) from VF %u\n",
+			queue_id, mbx_req->mbx_src_vfid);
+		return;
+	}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qid_in_pf = hclge_covert_handle_qid_global(&vport->nic, queue_id);
 	memcpy(resp_msg->data, &qid_in_pf, sizeof(qid_in_pf));
 	resp_msg->len = sizeof(qid_in_pf);

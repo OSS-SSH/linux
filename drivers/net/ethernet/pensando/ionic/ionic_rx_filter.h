@@ -5,10 +5,34 @@
 #define _IONIC_RX_FILTER_H_
 
 #define IONIC_RXQ_INDEX_ANY		(0xFFFF)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+enum ionic_filter_state {
+	IONIC_FILTER_STATE_SYNCED,
+	IONIC_FILTER_STATE_NEW,
+	IONIC_FILTER_STATE_OLD,
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ionic_rx_filter {
 	u32 flow_id;
 	u32 filter_id;
 	u16 rxq_index;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enum ionic_filter_state state;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum ionic_filter_state state;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ionic_rx_filter_add_cmd cmd;
 	struct hlist_node by_hash;
 	struct hlist_node by_id;
@@ -28,9 +52,31 @@ void ionic_rx_filter_replay(struct ionic_lif *lif);
 int ionic_rx_filters_init(struct ionic_lif *lif);
 void ionic_rx_filters_deinit(struct ionic_lif *lif);
 int ionic_rx_filter_save(struct ionic_lif *lif, u32 flow_id, u16 rxq_index,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			 u32 hash, struct ionic_admin_ctx *ctx,
+			 enum ionic_filter_state state);
+struct ionic_rx_filter *ionic_rx_filter_by_vlan(struct ionic_lif *lif, u16 vid);
+struct ionic_rx_filter *ionic_rx_filter_by_addr(struct ionic_lif *lif, const u8 *addr);
+struct ionic_rx_filter *ionic_rx_filter_rxsteer(struct ionic_lif *lif);
+void ionic_rx_filter_sync(struct ionic_lif *lif);
+int ionic_lif_list_addr(struct ionic_lif *lif, const u8 *addr, bool mode);
+int ionic_rx_filters_need_sync(struct ionic_lif *lif);
+=======
 			 u32 hash, struct ionic_admin_ctx *ctx);
 struct ionic_rx_filter *ionic_rx_filter_by_vlan(struct ionic_lif *lif, u16 vid);
 struct ionic_rx_filter *ionic_rx_filter_by_addr(struct ionic_lif *lif, const u8 *addr);
 struct ionic_rx_filter *ionic_rx_filter_rxsteer(struct ionic_lif *lif);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 u32 hash, struct ionic_admin_ctx *ctx,
+			 enum ionic_filter_state state);
+struct ionic_rx_filter *ionic_rx_filter_by_vlan(struct ionic_lif *lif, u16 vid);
+struct ionic_rx_filter *ionic_rx_filter_by_addr(struct ionic_lif *lif, const u8 *addr);
+struct ionic_rx_filter *ionic_rx_filter_rxsteer(struct ionic_lif *lif);
+void ionic_rx_filter_sync(struct ionic_lif *lif);
+int ionic_lif_list_addr(struct ionic_lif *lif, const u8 *addr, bool mode);
+int ionic_rx_filters_need_sync(struct ionic_lif *lif);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _IONIC_RX_FILTER_H_ */

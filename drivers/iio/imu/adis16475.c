@@ -353,10 +353,26 @@ static int adis16475_set_freq(struct adis16475 *st, const u32 freq)
 	if (dec > st->info->max_dec)
 		dec = st->info->max_dec;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = __adis_write_reg_16(&st->adis, ADIS16475_REG_DEC_RATE, dec);
+	if (ret)
+		goto error;
+
+	adis_dev_unlock(&st->adis);
+=======
 	ret = adis_write_reg_16(&st->adis, ADIS16475_REG_DEC_RATE, dec);
 	if (ret)
 		goto error;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = __adis_write_reg_16(&st->adis, ADIS16475_REG_DEC_RATE, dec);
+	if (ret)
+		goto error;
+
+	adis_dev_unlock(&st->adis);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * If decimation is used, then gyro and accel data will have meaningful
 	 * bits on the LSB registers. This info is used on the trigger handler.

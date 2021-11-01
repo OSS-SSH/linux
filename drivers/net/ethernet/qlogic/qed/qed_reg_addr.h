@@ -504,6 +504,16 @@
 	0x180824UL
 #define  MISC_REG_AEU_GENERAL_ATTN_0 \
 	0x008400UL
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define MISC_REG_AEU_GENERAL_ATTN_32 \
+	0x008480UL
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MISC_REG_AEU_GENERAL_ATTN_32 \
+	0x008480UL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MISC_REG_AEU_GENERAL_ATTN_35 \
 	0x00848cUL
 #define  CAU_REG_SB_ADDR_MEMORY \
@@ -518,6 +528,21 @@
 	0x180804UL
 #define  MISC_REG_AEU_ENABLE1_IGU_OUT_0 \
 	0x00849cUL
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define MISC_REG_AEU_ENABLE4_IGU_OUT_0 \
+	0x0084a8UL
+#define MISC_REG_AEU_ENABLE4_IGU_OUT_0_GENERAL_ATTN32      \
+	(0x1UL << 0)
+#define MISC_REG_AEU_ENABLE4_IGU_OUT_0_GENERAL_ATTN32_SHIFT \
+	0
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MISC_REG_AEU_AFTER_INVERT_1_IGU	\
 	0x0087b4UL
 #define  MISC_REG_AEU_MASK_ATTN_IGU \

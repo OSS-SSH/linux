@@ -97,6 +97,14 @@ struct btrfs_block_group {
 	unsigned int removed:1;
 	unsigned int to_copy:1;
 	unsigned int relocating_repair:1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int chunk_item_inserted:1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int chunk_item_inserted:1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	int disk_cache_state;
 
@@ -268,8 +276,20 @@ void btrfs_reclaim_bgs_work(struct work_struct *work);
 void btrfs_reclaim_bgs(struct btrfs_fs_info *fs_info);
 void btrfs_mark_bg_to_reclaim(struct btrfs_block_group *bg);
 int btrfs_read_block_groups(struct btrfs_fs_info *info);
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct btrfs_block_group *btrfs_make_block_group(struct btrfs_trans_handle *trans,
+						 u64 bytes_used, u64 type,
+						 u64 chunk_offset, u64 size);
+=======
 int btrfs_make_block_group(struct btrfs_trans_handle *trans, u64 bytes_used,
 			   u64 type, u64 chunk_offset, u64 size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct btrfs_block_group *btrfs_make_block_group(struct btrfs_trans_handle *trans,
+						 u64 bytes_used, u64 type,
+						 u64 chunk_offset, u64 size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void btrfs_create_pending_block_groups(struct btrfs_trans_handle *trans);
 int btrfs_inc_block_group_ro(struct btrfs_block_group *cache,
 			     bool do_chunk_alloc);

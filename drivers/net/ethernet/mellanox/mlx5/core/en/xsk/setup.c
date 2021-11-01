@@ -126,7 +126,15 @@ int mlx5e_open_xsk(struct mlx5e_priv *priv, struct mlx5e_params *params,
 	/* Create a separate SQ, so that when the buff pool is disabled, we could
 	 * close this SQ safely and stop receiving CQEs. In other case, e.g., if
 	 * the XDPSQ was used instead, we might run into trouble when the buff pool
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * is disabled and then re-enabled, but the SQ continues receiving CQEs
+=======
 	 * is disabled and then reenabled, but the SQ continues receiving CQEs
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * is disabled and then re-enabled, but the SQ continues receiving CQEs
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * from the old buff pool.
 	 */
 	err = mlx5e_open_xdpsq(c, params, &cparam->xdp_sq, pool, &c->xsksq, true);
@@ -183,6 +191,9 @@ void mlx5e_deactivate_xsk(struct mlx5e_channel *c)
 	mlx5e_deactivate_rq(&c->xskrq);
 	/* TX queue is disabled on close. */
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 static int mlx5e_redirect_xsk_rqt(struct mlx5e_priv *priv, u16 ix, u32 rqn)
 {
@@ -253,3 +264,6 @@ void mlx5e_xsk_redirect_rqts_to_drop(struct mlx5e_priv *priv, struct mlx5e_chann
 		mlx5e_xsk_redirect_rqt_to_drop(priv, i);
 	}
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

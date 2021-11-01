@@ -64,14 +64,28 @@ static int mtu3_ep_enable(struct mtu3_ep *mep)
 	u32 interval = 0;
 	u32 mult = 0;
 	u32 burst = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int max_packet;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	desc = mep->desc;
 	comp_desc = mep->comp_desc;
 	mep->type = usb_endpoint_type(desc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mep->maxp = usb_endpoint_maxp(desc);
+=======
 	max_packet = usb_endpoint_maxp(desc);
 	mep->maxp = max_packet & GENMASK(10, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mep->maxp = usb_endpoint_maxp(desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (mtu->g.speed) {
 	case USB_SPEED_SUPER:
@@ -92,7 +106,15 @@ static int mtu3_ep_enable(struct mtu3_ep *mep)
 				usb_endpoint_xfer_int(desc)) {
 			interval = desc->bInterval;
 			interval = clamp_val(interval, 1, 16) - 1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			mult = usb_endpoint_maxp_mult(desc) - 1;
+=======
 			burst = (max_packet & GENMASK(12, 11)) >> 11;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			mult = usb_endpoint_maxp_mult(desc) - 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 	default:
@@ -469,6 +491,16 @@ static int mtu3_gadget_pullup(struct usb_gadget *gadget, int is_on)
 	dev_dbg(mtu->dev, "%s (%s) for %sactive device\n", __func__,
 		is_on ? "on" : "off", mtu->is_active ? "" : "in");
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pm_runtime_get_sync(mtu->dev);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_get_sync(mtu->dev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* we'd rather not pullup unless the device is active. */
 	spin_lock_irqsave(&mtu->lock, flags);
 
@@ -482,6 +514,14 @@ static int mtu3_gadget_pullup(struct usb_gadget *gadget, int is_on)
 	}
 
 	spin_unlock_irqrestore(&mtu->lock, flags);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pm_runtime_put(mtu->dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_put(mtu->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -499,6 +539,14 @@ static int mtu3_gadget_start(struct usb_gadget *gadget,
 	}
 
 	dev_dbg(mtu->dev, "bind driver %s\n", driver->function);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pm_runtime_get_sync(mtu->dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_get_sync(mtu->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irqsave(&mtu->lock, flags);
 
@@ -509,6 +557,14 @@ static int mtu3_gadget_start(struct usb_gadget *gadget,
 		mtu3_start(mtu);
 
 	spin_unlock_irqrestore(&mtu->lock, flags);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pm_runtime_put(mtu->dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm_runtime_put(mtu->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

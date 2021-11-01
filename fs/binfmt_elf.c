@@ -622,7 +622,15 @@ static unsigned long load_elf_interp(struct elfhdr *interp_elf_ex,
 	eppnt = interp_elf_phdata;
 	for (i = 0; i < interp_elf_ex->e_phnum; i++, eppnt++) {
 		if (eppnt->p_type == PT_LOAD) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			int elf_type = MAP_PRIVATE;
+=======
 			int elf_type = MAP_PRIVATE | MAP_DENYWRITE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			int elf_type = MAP_PRIVATE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			int elf_prot = make_prot(eppnt->p_flags, arch_state,
 						 true, true);
 			unsigned long vaddr = 0;
@@ -630,7 +638,15 @@ static unsigned long load_elf_interp(struct elfhdr *interp_elf_ex,
 
 			vaddr = eppnt->p_vaddr;
 			if (interp_elf_ex->e_type == ET_EXEC || load_addr_set)
+<<<<<<< HEAD
+<<<<<<< HEAD
+				elf_type |= MAP_FIXED;
+=======
 				elf_type |= MAP_FIXED_NOREPLACE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				elf_type |= MAP_FIXED;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			else if (no_base && interp_elf_ex->e_type == ET_DYN)
 				load_addr = -vaddr;
 
@@ -1070,7 +1086,15 @@ out_free_interp:
 		elf_prot = make_prot(elf_ppnt->p_flags, &arch_state,
 				     !!interpreter, false);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		elf_flags = MAP_PRIVATE;
+=======
 		elf_flags = MAP_PRIVATE | MAP_DENYWRITE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		elf_flags = MAP_PRIVATE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		vaddr = elf_ppnt->p_vaddr;
 		/*
@@ -1384,7 +1408,15 @@ static int load_elf_library(struct file *file)
 			(eppnt->p_filesz +
 			 ELF_PAGEOFFSET(eppnt->p_vaddr)),
 			PROT_READ | PROT_WRITE | PROT_EXEC,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			MAP_FIXED_NOREPLACE | MAP_PRIVATE,
+=======
 			MAP_FIXED_NOREPLACE | MAP_PRIVATE | MAP_DENYWRITE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			MAP_FIXED_NOREPLACE | MAP_PRIVATE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			(eppnt->p_offset -
 			 ELF_PAGEOFFSET(eppnt->p_vaddr)));
 	if (error != ELF_PAGESTART(eppnt->p_vaddr))

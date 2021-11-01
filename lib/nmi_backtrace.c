@@ -75,12 +75,18 @@ void nmi_trigger_cpumask_backtrace(const cpumask_t *mask,
 		touch_softlockup_watchdog();
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/*
 	 * Force flush any remote buffers that might be stuck in IRQ context
 	 * and therefore could not run their irq_work.
 	 */
 	printk_safe_flush();
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clear_bit_unlock(0, &backtrace_flag);
 	put_cpu();
 }
@@ -92,8 +98,25 @@ module_param(backtrace_idle, bool, 0644);
 bool nmi_cpu_backtrace(struct pt_regs *regs)
 {
 	int cpu = smp_processor_id();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	unsigned long flags;
 
 	if (cpumask_test_cpu(cpu, to_cpumask(backtrace_mask))) {
+		/*
+		 * Allow nested NMI backtraces while serializing
+		 * against other CPUs.
+		 */
+		printk_cpu_lock_irqsave(flags);
+<<<<<<< HEAD
+=======
+
+	if (cpumask_test_cpu(cpu, to_cpumask(backtrace_mask))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!READ_ONCE(backtrace_idle) && regs && cpu_in_idle(instruction_pointer(regs))) {
 			pr_warn("NMI backtrace for cpu %d skipped: idling at %pS\n",
 				cpu, (void *)instruction_pointer(regs));
@@ -104,6 +127,14 @@ bool nmi_cpu_backtrace(struct pt_regs *regs)
 			else
 				dump_stack();
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+		printk_cpu_unlock_irqrestore(flags);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		printk_cpu_unlock_irqrestore(flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cpumask_clear_cpu(cpu, to_cpumask(backtrace_mask));
 		return true;
 	}

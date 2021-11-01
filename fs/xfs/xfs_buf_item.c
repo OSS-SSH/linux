@@ -428,7 +428,15 @@ xfs_buf_item_format(
 	 * occurs during recovery.
 	 */
 	if (bip->bli_flags & XFS_BLI_INODE_BUF) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (xfs_has_v3inodes(lip->li_mountp) ||
+=======
 		if (xfs_sb_version_has_v3inode(&lip->li_mountp->m_sb) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_has_v3inodes(lip->li_mountp) ||
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    !((bip->bli_flags & XFS_BLI_INODE_ALLOC_BUF) &&
 		      xfs_log_item_in_current_chkpt(lip)))
 			bip->__bli_format.blf_flags |= XFS_BLF_INODE_BUF;
@@ -581,7 +589,15 @@ xfs_buf_item_push(
 	if (bp->b_flags & XBF_WRITE_FAIL) {
 		xfs_buf_alert_ratelimited(bp, "XFS: Failing async write",
 	    "Failing async write on buffer block 0x%llx. Retrying async write.",
+<<<<<<< HEAD
+<<<<<<< HEAD
+					  (long long)xfs_buf_daddr(bp));
+=======
 					  (long long)bp->b_bn);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  (long long)xfs_buf_daddr(bp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!xfs_buf_delwri_queue(bp, buffer_list))
@@ -616,7 +632,15 @@ xfs_buf_item_put(
 	 * that case, the bli is freed on buffer writeback completion.
 	 */
 	aborted = test_bit(XFS_LI_ABORTED, &lip->li_flags) ||
+<<<<<<< HEAD
+<<<<<<< HEAD
+		  xfs_is_shutdown(lip->li_mountp);
+=======
 		  XFS_FORCED_SHUTDOWN(lip->li_mountp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		  xfs_is_shutdown(lip->li_mountp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dirty = bip->bli_flags & XFS_BLI_DIRTY;
 	if (dirty && !aborted)
 		return false;

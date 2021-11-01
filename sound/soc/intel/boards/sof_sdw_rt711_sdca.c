@@ -21,23 +21,54 @@
  * Note this MUST be called before snd_soc_register_card(), so that the props
  * are in place before the codec component driver's probe function parses them.
  */
-static int rt711_sdca_add_codec_device_props(const char *sdw_dev_name)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int rt711_sdca_add_codec_device_props(struct device *sdw_dev)
 {
 	struct property_entry props[MAX_NO_PROPS] = {};
-	struct device *sdw_dev;
+	struct fwnode_handle *fwnode;
 	int ret;
 
-	sdw_dev = bus_find_device_by_name(&sdw_bus_type, NULL, sdw_dev_name);
-	if (!sdw_dev)
-		return -EPROBE_DEFER;
+	if (!SOF_RT711_JDSRC(sof_sdw_quirk))
+		return 0;
 
-	if (SOF_RT711_JDSRC(sof_sdw_quirk)) {
-		props[0] = PROPERTY_ENTRY_U32("realtek,jd-src",
-					      SOF_RT711_JDSRC(sof_sdw_quirk));
-	}
+	props[0] = PROPERTY_ENTRY_U32("realtek,jd-src", SOF_RT711_JDSRC(sof_sdw_quirk));
 
+	fwnode = fwnode_create_software_node(props, NULL);
+	if (IS_ERR(fwnode))
+		return PTR_ERR(fwnode);
+
+	ret = device_add_software_node(sdw_dev, to_software_node(fwnode));
+
+	fwnode_handle_put(fwnode);
+=======
+static int rt711_sdca_add_codec_device_props(const char *sdw_dev_name)
+=======
+static int rt711_sdca_add_codec_device_props(struct device *sdw_dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct property_entry props[MAX_NO_PROPS] = {};
+	struct fwnode_handle *fwnode;
+	int ret;
+
+	if (!SOF_RT711_JDSRC(sof_sdw_quirk))
+		return 0;
+
+	props[0] = PROPERTY_ENTRY_U32("realtek,jd-src", SOF_RT711_JDSRC(sof_sdw_quirk));
+
+<<<<<<< HEAD
 	ret = device_add_properties(sdw_dev, props);
 	put_device(sdw_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fwnode = fwnode_create_software_node(props, NULL);
+	if (IS_ERR(fwnode))
+		return PTR_ERR(fwnode);
+
+	ret = device_add_software_node(sdw_dev, to_software_node(fwnode));
+
+	fwnode_handle_put(fwnode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -135,26 +166,59 @@ static int rt711_sdca_rtd_init(struct snd_soc_pcm_runtime *rtd)
 	return ret;
 }
 
-int sof_sdw_rt711_sdca_exit(struct device *dev, struct snd_soc_dai_link *dai_link)
+<<<<<<< HEAD
+<<<<<<< HEAD
+int sof_sdw_rt711_sdca_exit(struct snd_soc_card *card, struct snd_soc_dai_link *dai_link)
 {
-	struct device *sdw_dev;
+	struct mc_private *ctx = snd_soc_card_get_drvdata(card);
 
-	sdw_dev = bus_find_device_by_name(&sdw_bus_type, NULL,
-					  dai_link->codecs[0].name);
-	if (!sdw_dev)
-		return -EINVAL;
+	device_remove_software_node(ctx->headset_codec_dev);
+	put_device(ctx->headset_codec_dev);
+=======
+int sof_sdw_rt711_sdca_exit(struct device *dev, struct snd_soc_dai_link *dai_link)
+=======
+int sof_sdw_rt711_sdca_exit(struct snd_soc_card *card, struct snd_soc_dai_link *dai_link)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct mc_private *ctx = snd_soc_card_get_drvdata(card);
 
+<<<<<<< HEAD
 	device_remove_properties(sdw_dev);
 	put_device(sdw_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	device_remove_software_node(ctx->headset_codec_dev);
+	put_device(ctx->headset_codec_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int sof_sdw_rt711_sdca_init(struct snd_soc_card *card,
+			    const struct snd_soc_acpi_link_adr *link,
+=======
 int sof_sdw_rt711_sdca_init(const struct snd_soc_acpi_link_adr *link,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int sof_sdw_rt711_sdca_init(struct snd_soc_card *card,
+			    const struct snd_soc_acpi_link_adr *link,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    struct snd_soc_dai_link *dai_links,
 			    struct sof_sdw_codec_info *info,
 			    bool playback)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct mc_private *ctx = snd_soc_card_get_drvdata(card);
+	struct device *sdw_dev;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mc_private *ctx = snd_soc_card_get_drvdata(card);
+	struct device *sdw_dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	/*
@@ -164,9 +228,31 @@ int sof_sdw_rt711_sdca_init(const struct snd_soc_acpi_link_adr *link,
 	if (!playback)
 		return 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	sdw_dev = bus_find_device_by_name(&sdw_bus_type, NULL, dai_links->codecs[0].name);
+	if (!sdw_dev)
+		return -EPROBE_DEFER;
+
+	ret = rt711_sdca_add_codec_device_props(sdw_dev);
+	if (ret < 0) {
+		put_device(sdw_dev);
+<<<<<<< HEAD
+		return ret;
+	}
+	ctx->headset_codec_dev = sdw_dev;
+=======
 	ret = rt711_sdca_add_codec_device_props(dai_links->codecs[0].name);
 	if (ret < 0)
 		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+	}
+	ctx->headset_codec_dev = sdw_dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dai_links->init = rt711_sdca_rtd_init;
 

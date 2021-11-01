@@ -1026,7 +1026,17 @@ static int do_help(int argc, char **argv)
 		"       %1$s %2$s skeleton FILE [name OBJECT_NAME]\n"
 		"       %1$s %2$s help\n"
 		"\n"
+<<<<<<< HEAD
+<<<<<<< HEAD
+		"       " HELP_SPEC_OPTIONS " |\n"
+		"                    {-L|--use-loader} }\n"
+=======
 		"       " HELP_SPEC_OPTIONS "\n"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"       " HELP_SPEC_OPTIONS " |\n"
+		"                    {-L|--use-loader} }\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"",
 		bin_name, "gen");
 

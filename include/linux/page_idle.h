@@ -6,7 +6,15 @@
 #include <linux/page-flags.h>
 #include <linux/page_ext.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifdef CONFIG_PAGE_IDLE_FLAG
+=======
 #ifdef CONFIG_IDLE_PAGE_TRACKING
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_PAGE_IDLE_FLAG
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_64BIT
 static inline bool page_is_young(struct page *page)
@@ -106,7 +114,15 @@ static inline void clear_page_idle(struct page *page)
 }
 #endif /* CONFIG_64BIT */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#else /* !CONFIG_PAGE_IDLE_FLAG */
+=======
 #else /* !CONFIG_IDLE_PAGE_TRACKING */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#else /* !CONFIG_PAGE_IDLE_FLAG */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline bool page_is_young(struct page *page)
 {
@@ -135,6 +151,14 @@ static inline void clear_page_idle(struct page *page)
 {
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#endif /* CONFIG_PAGE_IDLE_FLAG */
+=======
 #endif /* CONFIG_IDLE_PAGE_TRACKING */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* CONFIG_PAGE_IDLE_FLAG */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _LINUX_MM_PAGE_IDLE_H */

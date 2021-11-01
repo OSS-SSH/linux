@@ -83,6 +83,14 @@ MODULE_PARM_DESC(polling_limit_us,
  * struct bcm2835_spi - BCM2835 SPI controller
  * @regs: base address of register map
  * @clk: core clock, divided to calculate serial clock
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @clk_hz: core clock cached speed
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @clk_hz: core clock cached speed
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @irq: interrupt, signals TX FIFO empty or RX FIFO ¾ full
  * @tfr: SPI transfer currently processed
  * @ctlr: SPI controller reverse lookup
@@ -116,6 +124,14 @@ MODULE_PARM_DESC(polling_limit_us,
 struct bcm2835_spi {
 	void __iomem *regs;
 	struct clk *clk;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long clk_hz;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long clk_hz;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int irq;
 	struct spi_transfer *tfr;
 	struct spi_controller *ctlr;
@@ -1045,19 +1061,43 @@ static int bcm2835_spi_transfer_one(struct spi_controller *ctlr,
 {
 	struct bcm2835_spi *bs = spi_controller_get_devdata(ctlr);
 	struct bcm2835_spidev *slv = spi_get_ctldata(spi);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long spi_hz, cdiv;
+=======
 	unsigned long spi_hz, clk_hz, cdiv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long spi_hz, cdiv;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long hz_per_byte, byte_limit;
 	u32 cs = slv->prepare_cs;
 
 	/* set clock */
 	spi_hz = tfr->speed_hz;
-	clk_hz = clk_get_rate(bs->clk);
+<<<<<<< HEAD
+<<<<<<< HEAD
 
-	if (spi_hz >= clk_hz / 2) {
+	if (spi_hz >= bs->clk_hz / 2) {
 		cdiv = 2; /* clk_hz/2 is the fastest we can go */
 	} else if (spi_hz) {
 		/* CDIV must be a multiple of two */
+		cdiv = DIV_ROUND_UP(bs->clk_hz, spi_hz);
+=======
+	clk_hz = clk_get_rate(bs->clk);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	if (spi_hz >= bs->clk_hz / 2) {
+		cdiv = 2; /* clk_hz/2 is the fastest we can go */
+	} else if (spi_hz) {
+		/* CDIV must be a multiple of two */
+<<<<<<< HEAD
 		cdiv = DIV_ROUND_UP(clk_hz, spi_hz);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cdiv = DIV_ROUND_UP(bs->clk_hz, spi_hz);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cdiv += (cdiv % 2);
 
 		if (cdiv >= 65536)
@@ -1065,7 +1105,15 @@ static int bcm2835_spi_transfer_one(struct spi_controller *ctlr,
 	} else {
 		cdiv = 0; /* 0 is the slowest we can go */
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	tfr->effective_speed_hz = cdiv ? (bs->clk_hz / cdiv) : (bs->clk_hz / 65536);
+=======
 	tfr->effective_speed_hz = cdiv ? (clk_hz / cdiv) : (clk_hz / 65536);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tfr->effective_speed_hz = cdiv ? (bs->clk_hz / cdiv) : (bs->clk_hz / 65536);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bcm2835_wr(bs, BCM2835_SPI_CLK, cdiv);
 
 	/* handle all the 3-wire mode */
@@ -1354,6 +1402,14 @@ static int bcm2835_spi_probe(struct platform_device *pdev)
 		return bs->irq ? bs->irq : -ENODEV;
 
 	clk_prepare_enable(bs->clk);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bs->clk_hz = clk_get_rate(bs->clk);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bs->clk_hz = clk_get_rate(bs->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = bcm2835_dma_init(ctlr, &pdev->dev, bs);
 	if (err)

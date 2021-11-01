@@ -934,21 +934,53 @@ static u8 sdhci_calc_timeout(struct sdhci_host *host, struct mmc_command *cmd,
 
 	/*
 	 * If the host controller provides us with an incorrect timeout
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * value, just skip the check and use the maximum. The hardware may take
+=======
 	 * value, just skip the check and use 0xE.  The hardware may take
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * value, just skip the check and use the maximum. The hardware may take
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * longer to time out, but that's much better than having a too-short
 	 * timeout value.
 	 */
 	if (host->quirks & SDHCI_QUIRK_BROKEN_TIMEOUT_VAL)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return host->max_timeout_count;
+
+	/* Unspecified command, asume max */
+	if (cmd == NULL)
+		return host->max_timeout_count;
+=======
 		return 0xE;
 
 	/* Unspecified command, asume max */
 	if (cmd == NULL)
 		return 0xE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return host->max_timeout_count;
+
+	/* Unspecified command, asume max */
+	if (cmd == NULL)
+		return host->max_timeout_count;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	data = cmd->data;
 	/* Unspecified timeout, assume max */
 	if (!data && !cmd->busy_timeout)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return host->max_timeout_count;
+=======
 		return 0xE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return host->max_timeout_count;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* timeout in us */
 	target_timeout = sdhci_target_timeout(host, cmd, data);
@@ -968,15 +1000,35 @@ static u8 sdhci_calc_timeout(struct sdhci_host *host, struct mmc_command *cmd,
 	while (current_timeout < target_timeout) {
 		count++;
 		current_timeout <<= 1;
-		if (count >= 0xF)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (count > host->max_timeout_count)
 			break;
 	}
 
-	if (count >= 0xF) {
+	if (count > host->max_timeout_count) {
 		if (!(host->quirks2 & SDHCI_QUIRK2_DISABLE_HW_TIMEOUT))
 			DBG("Too large timeout 0x%x requested for CMD%d!\n",
 			    count, cmd->opcode);
+		count = host->max_timeout_count;
+=======
+		if (count >= 0xF)
+=======
+		if (count > host->max_timeout_count)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			break;
+	}
+
+	if (count > host->max_timeout_count) {
+		if (!(host->quirks2 & SDHCI_QUIRK2_DISABLE_HW_TIMEOUT))
+			DBG("Too large timeout 0x%x requested for CMD%d!\n",
+			    count, cmd->opcode);
+<<<<<<< HEAD
 		count = 0xE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		count = host->max_timeout_count;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		*too_big = false;
 	}
@@ -1222,6 +1274,14 @@ static int sdhci_external_dma_setup(struct sdhci_host *host,
 	if (!host->mapbase)
 		return -EINVAL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	memset(&cfg, 0, sizeof(cfg));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memset(&cfg, 0, sizeof(cfg));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cfg.src_addr = host->mapbase + SDHCI_BUFFER;
 	cfg.dst_addr = host->mapbase + SDHCI_BUFFER;
 	cfg.src_addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
@@ -3278,8 +3338,25 @@ static void sdhci_data_irq(struct sdhci_host *host, u32 intmask)
 {
 	u32 command;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * CMD19 generates _only_ Buffer Read Ready interrupt if
+	 * use sdhci_send_tuning.
+	 * Need to exclude this case: PIO mode and use mmc_send_tuning,
+	 * If not, sdhci_transfer_pio will never be called, make the
+	 * SDHCI_INT_DATA_AVAIL always there, stuck in irq storm.
+	 */
+	if (intmask & SDHCI_INT_DATA_AVAIL && !host->data) {
+<<<<<<< HEAD
+=======
 	/* CMD19 generates _only_ Buffer Read Ready interrupt */
 	if (intmask & SDHCI_INT_DATA_AVAIL) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		command = SDHCI_GET_CMD(sdhci_readw(host, SDHCI_COMMAND));
 		if (command == MMC_SEND_TUNING_BLOCK ||
 		    command == MMC_SEND_TUNING_BLOCK_HS200) {
@@ -3940,6 +4017,16 @@ struct sdhci_host *sdhci_alloc_host(struct device *dev,
 	 */
 	host->adma_table_cnt = SDHCI_MAX_SEGS * 2 + 1;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	host->max_timeout_count = 0xE;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	host->max_timeout_count = 0xE;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return host;
 }
 

@@ -201,6 +201,57 @@ static struct notifier_block br_switchdev_notifier = {
 	.notifier_call = br_switchdev_event,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* called under rtnl_mutex */
+static int br_switchdev_blocking_event(struct notifier_block *nb,
+				       unsigned long event, void *ptr)
+{
+	struct netlink_ext_ack *extack = netdev_notifier_info_to_extack(ptr);
+	struct net_device *dev = switchdev_notifier_info_to_dev(ptr);
+	struct switchdev_notifier_brport_info *brport_info;
+	const struct switchdev_brport *b;
+	struct net_bridge_port *p;
+	int err = NOTIFY_DONE;
+
+	p = br_port_get_rtnl(dev);
+	if (!p)
+		goto out;
+
+	switch (event) {
+	case SWITCHDEV_BRPORT_OFFLOADED:
+		brport_info = ptr;
+		b = &brport_info->brport;
+
+		err = br_switchdev_port_offload(p, b->dev, b->ctx,
+						b->atomic_nb, b->blocking_nb,
+						b->tx_fwd_offload, extack);
+		err = notifier_from_errno(err);
+		break;
+	case SWITCHDEV_BRPORT_UNOFFLOADED:
+		brport_info = ptr;
+		b = &brport_info->brport;
+
+		br_switchdev_port_unoffload(p, b->ctx, b->atomic_nb,
+					    b->blocking_nb);
+		break;
+	}
+
+out:
+	return err;
+}
+
+static struct notifier_block br_switchdev_blocking_notifier = {
+	.notifier_call = br_switchdev_blocking_event,
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* br_boolopt_toggle - change user-controlled boolean option
  *
  * @br: bridge device
@@ -214,17 +265,47 @@ static struct notifier_block br_switchdev_notifier = {
 int br_boolopt_toggle(struct net_bridge *br, enum br_boolopt_id opt, bool on,
 		      struct netlink_ext_ack *extack)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int err = 0;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err = 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (opt) {
 	case BR_BOOLOPT_NO_LL_LEARN:
 		br_opt_toggle(br, BROPT_NO_LL_LEARN, on);
 		break;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case BR_BOOLOPT_MCAST_VLAN_SNOOPING:
+		err = br_multicast_toggle_vlan_snooping(br, on, extack);
+		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case BR_BOOLOPT_MCAST_VLAN_SNOOPING:
+		err = br_multicast_toggle_vlan_snooping(br, on, extack);
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		/* shouldn't be called with unsupported options */
 		WARN_ON(1);
 		break;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return err;
+=======
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int br_boolopt_get(const struct net_bridge *br, enum br_boolopt_id opt)
@@ -232,6 +313,16 @@ int br_boolopt_get(const struct net_bridge *br, enum br_boolopt_id opt)
 	switch (opt) {
 	case BR_BOOLOPT_NO_LL_LEARN:
 		return br_opt_get(br, BROPT_NO_LL_LEARN);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case BR_BOOLOPT_MCAST_VLAN_SNOOPING:
+		return br_opt_get(br, BROPT_MCAST_VLAN_SNOOPING_ENABLED);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case BR_BOOLOPT_MCAST_VLAN_SNOOPING:
+		return br_opt_get(br, BROPT_MCAST_VLAN_SNOOPING_ENABLED);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		/* shouldn't be called with unsupported options */
 		WARN_ON(1);
@@ -348,11 +439,35 @@ static int __init br_init(void)
 	if (err)
 		goto err_out4;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = register_switchdev_blocking_notifier(&br_switchdev_blocking_notifier);
+	if (err)
+		goto err_out5;
+
+	err = br_netlink_init();
+	if (err)
+		goto err_out6;
+
+	brioctl_set(br_ioctl_stub);
+=======
 	err = br_netlink_init();
 	if (err)
 		goto err_out5;
 
 	brioctl_set(br_ioctl_deviceless_stub);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = register_switchdev_blocking_notifier(&br_switchdev_blocking_notifier);
+	if (err)
+		goto err_out5;
+
+	err = br_netlink_init();
+	if (err)
+		goto err_out6;
+
+	brioctl_set(br_ioctl_stub);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #if IS_ENABLED(CONFIG_ATM_LANE)
 	br_fdb_test_addr_hook = br_fdb_test_addr;
@@ -366,6 +481,16 @@ static int __init br_init(void)
 
 	return 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+err_out6:
+	unregister_switchdev_blocking_notifier(&br_switchdev_blocking_notifier);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_out6:
+	unregister_switchdev_blocking_notifier(&br_switchdev_blocking_notifier);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_out5:
 	unregister_switchdev_notifier(&br_switchdev_notifier);
 err_out4:
@@ -385,6 +510,14 @@ static void __exit br_deinit(void)
 {
 	stp_proto_unregister(&br_stp_proto);
 	br_netlink_fini();
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unregister_switchdev_blocking_notifier(&br_switchdev_blocking_notifier);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unregister_switchdev_blocking_notifier(&br_switchdev_blocking_notifier);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unregister_switchdev_notifier(&br_switchdev_notifier);
 	unregister_netdevice_notifier(&br_device_notifier);
 	brioctl_set(NULL);

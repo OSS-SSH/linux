@@ -361,6 +361,14 @@ static int pic32_spi_dma_config(struct pic32_spi *pic32s, u32 dma_width)
 	struct dma_slave_config cfg;
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	memset(&cfg, 0, sizeof(cfg));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memset(&cfg, 0, sizeof(cfg));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cfg.device_fc = true;
 	cfg.src_addr = pic32s->dma_base + buf_offset;
 	cfg.dst_addr = pic32s->dma_base + buf_offset;

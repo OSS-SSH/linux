@@ -294,6 +294,16 @@ void mlx5_fs_egress_acls_cleanup(struct mlx5_core_dev *dev);
 int mlx5_fs_ingress_acls_init(struct mlx5_core_dev *dev, int total_vports);
 void mlx5_fs_ingress_acls_cleanup(struct mlx5_core_dev *dev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct mlx5_flow_root_namespace *find_root(struct fs_node *node);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct mlx5_flow_root_namespace *find_root(struct fs_node *node);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define fs_get_obj(v, _node)  {v = container_of((_node), typeof(*v), node); }
 
 #define fs_list_for_each_entry(pos, root)		\

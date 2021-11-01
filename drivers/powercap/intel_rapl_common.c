@@ -158,16 +158,40 @@ static int get_energy_counter(struct powercap_zone *power_zone,
 	/* prevent CPU hotplug, make sure the RAPL domain does not go
 	 * away while reading the counter.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rd = power_zone_to_rapl_domain(power_zone);
 
 	if (!rapl_read_data_raw(rd, ENERGY_COUNTER, true, &energy_now)) {
 		*energy_raw = energy_now;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cpus_read_unlock();
+
+		return 0;
+	}
+	cpus_read_unlock();
+=======
 		put_online_cpus();
 
 		return 0;
 	}
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpus_read_unlock();
+
+		return 0;
+	}
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return -EIO;
 }
@@ -216,11 +240,27 @@ static int set_domain_enable(struct powercap_zone *power_zone, bool mode)
 	if (rd->state & DOMAIN_STATE_BIOS_LOCKED)
 		return -EACCES;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+	rapl_write_data_raw(rd, PL1_ENABLE, mode);
+	if (rapl_defaults->set_floor_freq)
+		rapl_defaults->set_floor_freq(rd, mode);
+	cpus_read_unlock();
+=======
 	get_online_cpus();
 	rapl_write_data_raw(rd, PL1_ENABLE, mode);
 	if (rapl_defaults->set_floor_freq)
 		rapl_defaults->set_floor_freq(rd, mode);
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+	rapl_write_data_raw(rd, PL1_ENABLE, mode);
+	if (rapl_defaults->set_floor_freq)
+		rapl_defaults->set_floor_freq(rd, mode);
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -234,13 +274,31 @@ static int get_domain_enable(struct powercap_zone *power_zone, bool *mode)
 		*mode = false;
 		return 0;
 	}
-	get_online_cpus();
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
 	if (rapl_read_data_raw(rd, PL1_ENABLE, true, &val)) {
-		put_online_cpus();
+		cpus_read_unlock();
 		return -EIO;
 	}
 	*mode = val;
+	cpus_read_unlock();
+=======
+	get_online_cpus();
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (rapl_read_data_raw(rd, PL1_ENABLE, true, &val)) {
+		cpus_read_unlock();
+		return -EIO;
+	}
+	*mode = val;
+<<<<<<< HEAD
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -317,7 +375,15 @@ static int set_power_limit(struct powercap_zone *power_zone, int cid,
 	int ret = 0;
 	int id;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rd = power_zone_to_rapl_domain(power_zone);
 	id = contraint_to_pl(rd, cid);
 	if (id < 0) {
@@ -350,7 +416,15 @@ static int set_power_limit(struct powercap_zone *power_zone, int cid,
 	if (!ret)
 		package_power_limit_irq_save(rp);
 set_exit:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -363,7 +437,15 @@ static int get_current_power_limit(struct powercap_zone *power_zone, int cid,
 	int ret = 0;
 	int id;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rd = power_zone_to_rapl_domain(power_zone);
 	id = contraint_to_pl(rd, cid);
 	if (id < 0) {
@@ -382,7 +464,15 @@ static int get_current_power_limit(struct powercap_zone *power_zone, int cid,
 		prim = POWER_LIMIT4;
 		break;
 	default:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cpus_read_unlock();
+=======
 		put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	}
 	if (rapl_read_data_raw(rd, prim, true, &val))
@@ -391,7 +481,15 @@ static int get_current_power_limit(struct powercap_zone *power_zone, int cid,
 		*data = val;
 
 get_exit:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -403,7 +501,15 @@ static int set_time_window(struct powercap_zone *power_zone, int cid,
 	int ret = 0;
 	int id;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rd = power_zone_to_rapl_domain(power_zone);
 	id = contraint_to_pl(rd, cid);
 	if (id < 0) {
@@ -423,7 +529,15 @@ static int set_time_window(struct powercap_zone *power_zone, int cid,
 	}
 
 set_time_exit:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -435,7 +549,15 @@ static int get_time_window(struct powercap_zone *power_zone, int cid,
 	int ret = 0;
 	int id;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rd = power_zone_to_rapl_domain(power_zone);
 	id = contraint_to_pl(rd, cid);
 	if (id < 0) {
@@ -458,14 +580,30 @@ static int get_time_window(struct powercap_zone *power_zone, int cid,
 		val = 0;
 		break;
 	default:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cpus_read_unlock();
+=======
 		put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	}
 	if (!ret)
 		*data = val;
 
 get_time_exit:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -491,7 +629,15 @@ static int get_max_power(struct powercap_zone *power_zone, int id, u64 *data)
 	int prim;
 	int ret = 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rd = power_zone_to_rapl_domain(power_zone);
 	switch (rd->rpl[id].prim_id) {
 	case PL1_ENABLE:
@@ -504,7 +650,15 @@ static int get_max_power(struct powercap_zone *power_zone, int id, u64 *data)
 		prim = MAX_POWER;
 		break;
 	default:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cpus_read_unlock();
+=======
 		put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	}
 	if (rapl_read_data_raw(rd, prim, true, &val))
@@ -516,7 +670,15 @@ static int get_max_power(struct powercap_zone *power_zone, int id, u64 *data)
 	if (rd->rpl[id].prim_id == PL4_ENABLE)
 		*data = *data * 2;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -1358,7 +1520,15 @@ static void power_limit_state_save(void)
 	struct rapl_domain *rd;
 	int nr_pl, ret, i;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry(rp, &rapl_packages, plist) {
 		if (!rp->power_zone)
 			continue;
@@ -1390,7 +1560,15 @@ static void power_limit_state_save(void)
 			}
 		}
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void power_limit_state_restore(void)
@@ -1399,7 +1577,15 @@ static void power_limit_state_restore(void)
 	struct rapl_domain *rd;
 	int nr_pl, i;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry(rp, &rapl_packages, plist) {
 		if (!rp->power_zone)
 			continue;
@@ -1425,7 +1611,15 @@ static void power_limit_state_restore(void)
 			}
 		}
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int rapl_pm_callback(struct notifier_block *nb,

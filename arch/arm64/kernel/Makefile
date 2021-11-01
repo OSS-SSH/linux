@@ -17,7 +17,15 @@ CFLAGS_syscall.o	+= -fno-stack-protector
 # It's not safe to invoke KCOV when portions of the kernel environment aren't
 # available or are out-of-sync with HW state. Since `noinstr` doesn't always
 # inhibit KCOV instrumentation, disable it for the entire compilation unit.
+<<<<<<< HEAD
+<<<<<<< HEAD
+KCOV_INSTRUMENT_entry-common.o := n
+=======
 KCOV_INSTRUMENT_entry.o := n
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+KCOV_INSTRUMENT_entry-common.o := n
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 KCOV_INSTRUMENT_idle.o := n
 
 # Object file lists.

@@ -366,9 +366,19 @@ static struct hi6421_regulator_info
 
 static int hi6421_regulator_enable(struct regulator_dev *rdev)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct hi6421_regulator_pdata *pdata = rdev_get_drvdata(rdev);
+
+=======
 	struct hi6421_regulator_pdata *pdata;
 
 	pdata = dev_get_drvdata(rdev->dev.parent);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hi6421_regulator_pdata *pdata = rdev_get_drvdata(rdev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* hi6421 spec requires regulator enablement must be serialized:
 	 *  - Because when BUCK, LDO switching from off to on, it will have
 	 *    a huge instantaneous current; so you can not turn on two or
@@ -385,9 +395,23 @@ static int hi6421_regulator_enable(struct regulator_dev *rdev)
 
 static unsigned int hi6421_regulator_ldo_get_mode(struct regulator_dev *rdev)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct hi6421_regulator_info *info;
+	unsigned int reg_val;
+
+	info = container_of(rdev->desc, struct hi6421_regulator_info, desc);
+=======
 	struct hi6421_regulator_info *info = rdev_get_drvdata(rdev);
 	unsigned int reg_val;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hi6421_regulator_info *info;
+	unsigned int reg_val;
+
+	info = container_of(rdev->desc, struct hi6421_regulator_info, desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	regmap_read(rdev->regmap, rdev->desc->enable_reg, &reg_val);
 	if (reg_val & info->mode_mask)
 		return REGULATOR_MODE_IDLE;
@@ -397,9 +421,23 @@ static unsigned int hi6421_regulator_ldo_get_mode(struct regulator_dev *rdev)
 
 static unsigned int hi6421_regulator_buck_get_mode(struct regulator_dev *rdev)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct hi6421_regulator_info *info;
+	unsigned int reg_val;
+
+	info = container_of(rdev->desc, struct hi6421_regulator_info, desc);
+=======
 	struct hi6421_regulator_info *info = rdev_get_drvdata(rdev);
 	unsigned int reg_val;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hi6421_regulator_info *info;
+	unsigned int reg_val;
+
+	info = container_of(rdev->desc, struct hi6421_regulator_info, desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	regmap_read(rdev->regmap, rdev->desc->enable_reg, &reg_val);
 	if (reg_val & info->mode_mask)
 		return REGULATOR_MODE_STANDBY;
@@ -410,9 +448,23 @@ static unsigned int hi6421_regulator_buck_get_mode(struct regulator_dev *rdev)
 static int hi6421_regulator_ldo_set_mode(struct regulator_dev *rdev,
 						unsigned int mode)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct hi6421_regulator_info *info;
+	unsigned int new_mode;
+
+	info = container_of(rdev->desc, struct hi6421_regulator_info, desc);
+=======
 	struct hi6421_regulator_info *info = rdev_get_drvdata(rdev);
 	unsigned int new_mode;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hi6421_regulator_info *info;
+	unsigned int new_mode;
+
+	info = container_of(rdev->desc, struct hi6421_regulator_info, desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (mode) {
 	case REGULATOR_MODE_NORMAL:
 		new_mode = 0;
@@ -434,9 +486,23 @@ static int hi6421_regulator_ldo_set_mode(struct regulator_dev *rdev,
 static int hi6421_regulator_buck_set_mode(struct regulator_dev *rdev,
 						unsigned int mode)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct hi6421_regulator_info *info;
+	unsigned int new_mode;
+
+	info = container_of(rdev->desc, struct hi6421_regulator_info, desc);
+=======
 	struct hi6421_regulator_info *info = rdev_get_drvdata(rdev);
 	unsigned int new_mode;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hi6421_regulator_info *info;
+	unsigned int new_mode;
+
+	info = container_of(rdev->desc, struct hi6421_regulator_info, desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (mode) {
 	case REGULATOR_MODE_NORMAL:
 		new_mode = 0;
@@ -459,7 +525,19 @@ static unsigned int
 hi6421_regulator_ldo_get_optimum_mode(struct regulator_dev *rdev,
 			int input_uV, int output_uV, int load_uA)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct hi6421_regulator_info *info;
+
+	info = container_of(rdev->desc, struct hi6421_regulator_info, desc);
+=======
 	struct hi6421_regulator_info *info = rdev_get_drvdata(rdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hi6421_regulator_info *info;
+
+	info = container_of(rdev->desc, struct hi6421_regulator_info, desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (load_uA > info->eco_microamp)
 		return REGULATOR_MODE_NORMAL;
@@ -543,14 +621,28 @@ static int hi6421_regulator_probe(struct platform_device *pdev)
 	if (!pdata)
 		return -ENOMEM;
 	mutex_init(&pdata->lock);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	platform_set_drvdata(pdev, pdata);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = 0; i < ARRAY_SIZE(hi6421_regulator_info); i++) {
 		/* assign per-regulator data */
 		info = &hi6421_regulator_info[i];
 
 		config.dev = pdev->dev.parent;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		config.driver_data = pdata;
+=======
 		config.driver_data = info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		config.driver_data = pdata;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		config.regmap = pmic->regmap;
 
 		rdev = devm_regulator_register(&pdev->dev, &info->desc,

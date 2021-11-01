@@ -470,8 +470,14 @@ int tp3780I_StartDSP(THINKPAD_BD_DATA * pBDData)
 
 int tp3780I_QueryAbilities(THINKPAD_BD_DATA * pBDData, MW_ABILITIES * pAbilities)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int retval = 0;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	PRINTK_2(TRACE_TP3780I,
 		"tp3780i::tp3780I_QueryAbilities entry pBDData %p\n", pBDData);
 
@@ -502,7 +508,15 @@ int tp3780I_QueryAbilities(THINKPAD_BD_DATA * pBDData, MW_ABILITIES * pAbilities
 	PRINTK_1(TRACE_TP3780I,
 		"tp3780i::tp3780I_QueryAbilities exit retval=SUCCESSFUL\n");
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return 0;
+=======
 	return retval;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int tp3780I_ReadWriteDspDStore(THINKPAD_BD_DATA * pBDData, unsigned int uOpcode,

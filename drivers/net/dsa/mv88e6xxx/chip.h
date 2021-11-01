@@ -18,8 +18,23 @@
 #include <linux/timecounter.h>
 #include <net/dsa.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define EDSA_HLEN		8
 #define MV88E6XXX_N_FID		4096
 
+#define MV88E6XXX_FID_STANDALONE	0
+#define MV88E6XXX_FID_BRIDGED		1
+
+<<<<<<< HEAD
+=======
+#define MV88E6XXX_N_FID		4096
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* PVT limits for 4-bit port and 5-bit switch */
 #define MV88E6XXX_MAX_PVT_SWITCHES	32
 #define MV88E6XXX_MAX_PVT_PORTS		16
@@ -245,9 +260,31 @@ struct mv88e6xxx_policy {
 	u16 vid;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct mv88e6xxx_vlan {
+	u16	vid;
+	bool	valid;
+};
+
+<<<<<<< HEAD
 struct mv88e6xxx_port {
 	struct mv88e6xxx_chip *chip;
 	int port;
+	struct mv88e6xxx_vlan bridge_pvid;
+=======
+struct mv88e6xxx_port {
+	struct mv88e6xxx_chip *chip;
+	int port;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct mv88e6xxx_port {
+	struct mv88e6xxx_chip *chip;
+	int port;
+	struct mv88e6xxx_vlan bridge_pvid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 serdes_stats[2];
 	u64 atu_member_violation;
 	u64 atu_miss_violation;

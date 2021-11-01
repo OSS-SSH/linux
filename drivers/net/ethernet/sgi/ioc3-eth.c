@@ -820,7 +820,15 @@ static const struct net_device_ops ioc3_netdev_ops = {
 	.ndo_tx_timeout		= ioc3_timeout,
 	.ndo_get_stats		= ioc3_get_stats,
 	.ndo_set_rx_mode	= ioc3_set_multicast_list,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl		= ioc3_ioctl,
+=======
 	.ndo_do_ioctl		= ioc3_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= ioc3_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address	= ioc3_set_mac_address,
 };

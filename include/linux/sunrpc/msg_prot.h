@@ -20,6 +20,14 @@ enum rpc_auth_flavors {
 	RPC_AUTH_DES   = 3,
 	RPC_AUTH_KRB   = 4,
 	RPC_AUTH_GSS   = 6,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	RPC_AUTH_TLS   = 7,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	RPC_AUTH_TLS   = 7,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	RPC_AUTH_MAXFLAVOR = 8,
 	/* pseudoflavors: */
 	RPC_AUTH_GSS_KRB5  = 390003,

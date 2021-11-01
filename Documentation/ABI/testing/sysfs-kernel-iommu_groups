@@ -42,8 +42,26 @@ Description:	/sys/kernel/iommu_groups/<grp_id>/type shows the type of default
 		========  ======================================================
 		DMA       All the DMA transactions from the device in this group
 		          are translated by the iommu.
+<<<<<<< HEAD
+<<<<<<< HEAD
+		DMA-FQ    As above, but using batched invalidation to lazily
+		          remove translations after use. This may offer reduced
+			  overhead at the cost of reduced memory protection.
+		identity  All the DMA transactions from the device in this group
+		          are not translated by the iommu. Maximum performance
+			  but zero protection.
+=======
 		identity  All the DMA transactions from the device in this group
 		          are not translated by the iommu.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		DMA-FQ    As above, but using batched invalidation to lazily
+		          remove translations after use. This may offer reduced
+			  overhead at the cost of reduced memory protection.
+		identity  All the DMA transactions from the device in this group
+		          are not translated by the iommu. Maximum performance
+			  but zero protection.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		auto      Change to the type the device was booted with.
 		========  ======================================================
 

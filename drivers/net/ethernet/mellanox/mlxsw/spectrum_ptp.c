@@ -975,14 +975,30 @@ static int mlxsw_sp1_ptp_mtpppc_update(struct mlxsw_sp_port *mlxsw_sp_port,
 	}
 
 	if ((ing_types || egr_types) && !(orig_ing_types || orig_egr_types)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		err = mlxsw_sp_parsing_depth_inc(mlxsw_sp);
+=======
 		err = mlxsw_sp_nve_inc_parsing_depth_get(mlxsw_sp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = mlxsw_sp_parsing_depth_inc(mlxsw_sp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			netdev_err(mlxsw_sp_port->dev, "Failed to increase parsing depth");
 			return err;
 		}
 	}
 	if (!(ing_types || egr_types) && (orig_ing_types || orig_egr_types))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		mlxsw_sp_parsing_depth_dec(mlxsw_sp);
+=======
 		mlxsw_sp_nve_inc_parsing_depth_put(mlxsw_sp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mlxsw_sp_parsing_depth_dec(mlxsw_sp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return mlxsw_sp1_ptp_mtpppc_set(mlxsw_sp_port->mlxsw_sp,
 				       ing_types, egr_types);

@@ -235,6 +235,43 @@ static void mock_submit_request(struct i915_request *request)
 	spin_unlock_irqrestore(&engine->hw_lock, flags);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void mock_add_to_engine(struct i915_request *rq)
+{
+	lockdep_assert_held(&rq->engine->sched_engine->lock);
+	list_move_tail(&rq->sched.link, &rq->engine->sched_engine->requests);
+}
+
+static void mock_remove_from_engine(struct i915_request *rq)
+{
+	struct intel_engine_cs *engine, *locked;
+
+	/*
+	 * Virtual engines complicate acquiring the engine timeline lock,
+	 * as their rq->engine pointer is not stable until under that
+	 * engine lock. The simple ploy we use is to take the lock then
+	 * check that the rq still belongs to the newly locked engine.
+	 */
+
+	locked = READ_ONCE(rq->engine);
+	spin_lock_irq(&locked->sched_engine->lock);
+	while (unlikely(locked != (engine = READ_ONCE(rq->engine)))) {
+		spin_unlock(&locked->sched_engine->lock);
+		spin_lock(&engine->sched_engine->lock);
+		locked = engine;
+	}
+	list_del_init(&rq->sched.link);
+	spin_unlock_irq(&locked->sched_engine->lock);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void mock_reset_prepare(struct intel_engine_cs *engine)
 {
 }
@@ -253,10 +290,24 @@ static void mock_reset_cancel(struct intel_engine_cs *engine)
 
 	del_timer_sync(&mock->hw_delay);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	spin_lock_irqsave(&engine->sched_engine->lock, flags);
+
+	/* Mark all submitted requests as skipped. */
+	list_for_each_entry(rq, &engine->sched_engine->requests, sched.link)
+=======
 	spin_lock_irqsave(&engine->active.lock, flags);
 
 	/* Mark all submitted requests as skipped. */
 	list_for_each_entry(rq, &engine->active.requests, sched.link)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_irqsave(&engine->sched_engine->lock, flags);
+
+	/* Mark all submitted requests as skipped. */
+	list_for_each_entry(rq, &engine->sched_engine->requests, sched.link)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		i915_request_put(i915_request_mark_eio(rq));
 	intel_engine_signal_breadcrumbs(engine);
 
@@ -269,7 +320,15 @@ static void mock_reset_cancel(struct intel_engine_cs *engine)
 	}
 	INIT_LIST_HEAD(&mock->hw_queue);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	spin_unlock_irqrestore(&engine->sched_engine->lock, flags);
+=======
 	spin_unlock_irqrestore(&engine->active.lock, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock_irqrestore(&engine->sched_engine->lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void mock_reset_finish(struct intel_engine_cs *engine)
@@ -283,7 +342,17 @@ static void mock_engine_release(struct intel_engine_cs *engine)
 
 	GEM_BUG_ON(timer_pending(&mock->hw_delay));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	i915_sched_engine_put(engine->sched_engine);
+	intel_breadcrumbs_put(engine->breadcrumbs);
+=======
 	intel_breadcrumbs_free(engine->breadcrumbs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	i915_sched_engine_put(engine->sched_engine);
+	intel_breadcrumbs_put(engine->breadcrumbs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	intel_context_unpin(engine->kernel_context);
 	intel_context_put(engine->kernel_context);
@@ -320,6 +389,16 @@ struct intel_engine_cs *mock_engine(struct drm_i915_private *i915,
 	engine->base.emit_flush = mock_emit_flush;
 	engine->base.emit_fini_breadcrumb = mock_emit_breadcrumb;
 	engine->base.submit_request = mock_submit_request;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	engine->base.add_active_request = mock_add_to_engine;
+	engine->base.remove_active_request = mock_remove_from_engine;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	engine->base.add_active_request = mock_add_to_engine;
+	engine->base.remove_active_request = mock_remove_from_engine;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	engine->base.reset.prepare = mock_reset_prepare;
 	engine->base.reset.rewind = mock_reset_rewind;
@@ -345,14 +424,36 @@ int mock_engine_init(struct intel_engine_cs *engine)
 {
 	struct intel_context *ce;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	engine->sched_engine = i915_sched_engine_create(ENGINE_MOCK);
+	if (!engine->sched_engine)
+		return -ENOMEM;
+	engine->sched_engine->private_data = engine;
+
+<<<<<<< HEAD
+=======
 	intel_engine_init_active(engine, ENGINE_MOCK);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_engine_init_execlists(engine);
 	intel_engine_init__pm(engine);
 	intel_engine_init_retire(engine);
 
 	engine->breadcrumbs = intel_breadcrumbs_create(NULL);
 	if (!engine->breadcrumbs)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err_schedule;
+=======
 		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_schedule;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ce = create_kernel_context(engine);
 	if (IS_ERR(ce))
@@ -365,7 +466,19 @@ int mock_engine_init(struct intel_engine_cs *engine)
 	return 0;
 
 err_breadcrumbs:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	intel_breadcrumbs_put(engine->breadcrumbs);
+err_schedule:
+	i915_sched_engine_put(engine->sched_engine);
+=======
 	intel_breadcrumbs_free(engine->breadcrumbs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_breadcrumbs_put(engine->breadcrumbs);
+err_schedule:
+	i915_sched_engine_put(engine->sched_engine);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -ENOMEM;
 }
 

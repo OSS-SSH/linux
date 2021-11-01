@@ -313,9 +313,25 @@ static struct gpio_desc *acpi_request_own_gpiod(struct gpio_chip *chip,
 
 	ret = gpio_set_debounce_timeout(desc, agpio->debounce_timeout);
 	if (ret)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dev_warn(chip->parent,
+			 "Failed to set debounce-timeout for pin 0x%04X, err %d\n",
+			 pin, ret);
+
+	return desc;
+=======
 		gpiochip_free_own_desc(desc);
 
 	return ret ? ERR_PTR(ret) : desc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_warn(chip->parent,
+			 "Failed to set debounce-timeout for pin 0x%04X, err %d\n",
+			 pin, ret);
+
+	return desc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static bool acpi_gpio_in_ignore_list(const char *controller_in, int pin_in)

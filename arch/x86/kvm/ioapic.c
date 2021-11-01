@@ -96,7 +96,15 @@ static unsigned long ioapic_read_indirect(struct kvm_ioapic *ioapic,
 static void rtc_irq_eoi_tracking_reset(struct kvm_ioapic *ioapic)
 {
 	ioapic->rtc_status.pending_eoi = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bitmap_zero(ioapic->rtc_status.dest_map.map, KVM_MAX_VCPU_ID + 1);
+=======
 	bitmap_zero(ioapic->rtc_status.dest_map.map, KVM_MAX_VCPU_ID);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bitmap_zero(ioapic->rtc_status.dest_map.map, KVM_MAX_VCPU_ID + 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void kvm_rtc_eoi_tracking_restore_all(struct kvm_ioapic *ioapic);
@@ -319,8 +327,18 @@ static void ioapic_write_indirect(struct kvm_ioapic *ioapic, u32 val)
 	unsigned index;
 	bool mask_before, mask_after;
 	union kvm_ioapic_redirect_entry *e;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int old_remote_irr, old_delivery_status, old_dest_id, old_dest_mode;
+	DECLARE_BITMAP(vcpu_bitmap, KVM_MAX_VCPUS);
+=======
 	unsigned long vcpu_bitmap;
 	int old_remote_irr, old_delivery_status, old_dest_id, old_dest_mode;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int old_remote_irr, old_delivery_status, old_dest_id, old_dest_mode;
+	DECLARE_BITMAP(vcpu_bitmap, KVM_MAX_VCPUS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (ioapic->ioregsel) {
 	case IOAPIC_REG_VERSION:
@@ -384,9 +402,21 @@ static void ioapic_write_indirect(struct kvm_ioapic *ioapic, u32 val)
 			irq.shorthand = APIC_DEST_NOSHORT;
 			irq.dest_id = e->fields.dest_id;
 			irq.msi_redir_hint = false;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			bitmap_zero(vcpu_bitmap, KVM_MAX_VCPUS);
+			kvm_bitmap_or_dest_vcpus(ioapic->kvm, &irq,
+						 vcpu_bitmap);
+=======
 			bitmap_zero(&vcpu_bitmap, 16);
 			kvm_bitmap_or_dest_vcpus(ioapic->kvm, &irq,
 						 &vcpu_bitmap);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			bitmap_zero(vcpu_bitmap, KVM_MAX_VCPUS);
+			kvm_bitmap_or_dest_vcpus(ioapic->kvm, &irq,
+						 vcpu_bitmap);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (old_dest_mode != e->fields.dest_mode ||
 			    old_dest_id != e->fields.dest_id) {
 				/*
@@ -399,10 +429,24 @@ static void ioapic_write_indirect(struct kvm_ioapic *ioapic, u32 val)
 				    kvm_lapic_irq_dest_mode(
 					!!e->fields.dest_mode);
 				kvm_bitmap_or_dest_vcpus(ioapic->kvm, &irq,
+<<<<<<< HEAD
+<<<<<<< HEAD
+							 vcpu_bitmap);
+			}
+			kvm_make_scan_ioapic_request_mask(ioapic->kvm,
+							  vcpu_bitmap);
+=======
 							 &vcpu_bitmap);
 			}
 			kvm_make_scan_ioapic_request_mask(ioapic->kvm,
 							  &vcpu_bitmap);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+							 vcpu_bitmap);
+			}
+			kvm_make_scan_ioapic_request_mask(ioapic->kvm,
+							  vcpu_bitmap);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			kvm_make_scan_ioapic_request(ioapic->kvm);
 		}

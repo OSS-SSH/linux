@@ -1,4 +1,13 @@
 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifndef _UAPI__ALPHA_SETUP_H
+#define _UAPI__ALPHA_SETUP_H
+
+#define COMMAND_LINE_SIZE	256
+
+#endif /* _UAPI__ALPHA_SETUP_H */
+=======
 #ifndef __ALPHA_SETUP_H
 #define __ALPHA_SETUP_H
 
@@ -41,3 +50,12 @@
 #define INITRD_SIZE		(*(unsigned long *) (PARAM+0x108))
 
 #endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifndef _UAPI__ALPHA_SETUP_H
+#define _UAPI__ALPHA_SETUP_H
+
+#define COMMAND_LINE_SIZE	256
+
+#endif /* _UAPI__ALPHA_SETUP_H */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

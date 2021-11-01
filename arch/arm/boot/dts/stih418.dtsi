@@ -27,6 +27,19 @@
 	};
 
 	soc {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		rng11: rng@8a8a000 {
+			status = "disabled";
+		};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		usb2_picophy1: phy2@0 {
 			compatible = "st,stih407-usb2-phy";
 			reg = <0 0>;
@@ -104,5 +117,22 @@
 			assigned-clock-parents = <&clk_s_c0_pll1 0>;
 			assigned-clock-rates = <200000000>;
 		};
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+		thermal@91a0000 {
+			compatible = "st,stih407-thermal";
+			reg = <0x91a0000 0x28>;
+			clock-names = "thermal";
+			clocks = <&clk_sysin>;
+			interrupts = <GIC_SPI 205 IRQ_TYPE_EDGE_RISING>;
+		};
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };

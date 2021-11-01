@@ -46,6 +46,14 @@ obj-$(CONFIG_PINCTRL_PFC_SHX3)		+= pfc-shx3.o
 
 obj-$(CONFIG_PINCTRL_RZA1)	+= pinctrl-rza1.o
 obj-$(CONFIG_PINCTRL_RZA2)	+= pinctrl-rza2.o
+<<<<<<< HEAD
+<<<<<<< HEAD
+obj-$(CONFIG_PINCTRL_RZG2L)	+= pinctrl-rzg2l.o
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_PINCTRL_RZG2L)	+= pinctrl-rzg2l.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_PINCTRL_RZN1)	+= pinctrl-rzn1.o
 
 ifeq ($(CONFIG_COMPILE_TEST),y)

@@ -263,7 +263,15 @@ void afs_edit_dir_add(struct afs_vnode *vnode,
 		if (b == nr_blocks) {
 			_debug("init %u", b);
 			afs_edit_init_block(meta, block, b);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			afs_set_i_size(vnode, (b + 1) * AFS_DIR_BLOCK_SIZE);
+=======
 			i_size_write(&vnode->vfs_inode, (b + 1) * AFS_DIR_BLOCK_SIZE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			afs_set_i_size(vnode, (b + 1) * AFS_DIR_BLOCK_SIZE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		/* Only lower dir pages have a counter in the header. */
@@ -296,7 +304,15 @@ void afs_edit_dir_add(struct afs_vnode *vnode,
 new_directory:
 	afs_edit_init_block(meta, meta, 0);
 	i_size = AFS_DIR_BLOCK_SIZE;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	afs_set_i_size(vnode, i_size);
+=======
 	i_size_write(&vnode->vfs_inode, i_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	afs_set_i_size(vnode, i_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	slot = AFS_DIR_RESV_BLOCKS0;
 	page = page0;
 	block = meta;

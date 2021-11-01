@@ -129,6 +129,14 @@ struct bond_params {
 	int updelay;
 	int downdelay;
 	int peer_notif_delay;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int lacp_active;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int lacp_active;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int lacp_fast;
 	unsigned int min_links;
 	int ad_select;
@@ -149,11 +157,17 @@ struct bond_params {
 	u8 ad_actor_system[ETH_ALEN + 2];
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 struct bond_parm_tbl {
 	char *modename;
 	int mode;
 };
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct slave {
 	struct net_device *dev; /* first - useful for panic debug */
 	struct bonding *bond; /* our master */
@@ -201,6 +215,20 @@ struct bond_up_slave {
  */
 #define BOND_LINK_NOCHANGE -1
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct bond_ipsec {
+	struct list_head list;
+	struct xfrm_state *xs;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Here are the locking policies for the two bonding locks:
  * Get rcu_read_lock when reading or RTNL when writing slave list.
@@ -249,8 +277,24 @@ struct bonding {
 #endif /* CONFIG_DEBUG_FS */
 	struct rtnl_link_stats64 bond_stats;
 #ifdef CONFIG_XFRM_OFFLOAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct list_head ipsec_list;
+	/* protecting ipsec_list */
+	spinlock_t ipsec_lock;
+#endif /* CONFIG_XFRM_OFFLOAD */
+	struct bpf_prog *xdp_prog;
+=======
 	struct xfrm_state *xs;
 #endif /* CONFIG_XFRM_OFFLOAD */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct list_head ipsec_list;
+	/* protecting ipsec_list */
+	spinlock_t ipsec_lock;
+#endif /* CONFIG_XFRM_OFFLOAD */
+	struct bpf_prog *xdp_prog;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define bond_slave_get_rcu(dev) \
@@ -746,6 +790,9 @@ static inline int bond_get_targets_ip(__be32 *targets, __be32 ip)
 
 /* exported from bond_main.c */
 extern unsigned int bond_net_id;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 extern const struct bond_parm_tbl bond_lacp_tbl[];
 extern const struct bond_parm_tbl xmit_hashtype_tbl[];
 extern const struct bond_parm_tbl arp_validate_tbl[];
@@ -753,6 +800,9 @@ extern const struct bond_parm_tbl arp_all_targets_tbl[];
 extern const struct bond_parm_tbl fail_over_mac_tbl[];
 extern const struct bond_parm_tbl pri_reselect_tbl[];
 extern struct bond_parm_tbl ad_select_tbl[];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* exported from bond_netlink.c */
 extern struct rtnl_link_ops bond_link_ops;

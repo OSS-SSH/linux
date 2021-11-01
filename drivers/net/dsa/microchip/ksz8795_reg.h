@@ -631,6 +631,19 @@
 #define REG_PORT_4_OUT_RATE_3		0xEE
 #define REG_PORT_5_OUT_RATE_3		0xFE
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* 88x3 specific */
+
+#define REG_SW_INSERT_SRC_PVID		0xC2
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* PME */
 
 #define SW_PME_OUTPUT_ENABLE		BIT(1)

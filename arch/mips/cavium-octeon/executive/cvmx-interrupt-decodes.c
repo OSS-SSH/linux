@@ -46,7 +46,19 @@
 
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * __cvmx_interrupt_gmxx_rxx_int_en_enable - enable all interrupt bits in cvmx_gmxx_rxx_int_en_t
+ * @index: interrupt register offset
+ * @block: interrupt register block_id
+=======
  * __cvmx_interrupt_gmxx_rxx_int_en_enable enables all interrupt bits in cvmx_gmxx_rxx_int_en_t
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * __cvmx_interrupt_gmxx_rxx_int_en_enable - enable all interrupt bits in cvmx_gmxx_rxx_int_en_t
+ * @index: interrupt register offset
+ * @block: interrupt register block_id
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void __cvmx_interrupt_gmxx_rxx_int_en_enable(int index, int block)
 {
@@ -227,7 +239,19 @@ void __cvmx_interrupt_gmxx_rxx_int_en_enable(int index, int block)
 	cvmx_write_csr(CVMX_GMXX_RXX_INT_EN(index, block), gmx_rx_int_en.u64);
 }
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * __cvmx_interrupt_pcsx_intx_en_reg_enable - enable all interrupt bits in cvmx_pcsx_intx_en_reg_t
+ * @index: interrupt register offset
+ * @block: interrupt register block_id
+=======
  * __cvmx_interrupt_pcsx_intx_en_reg_enable enables all interrupt bits in cvmx_pcsx_intx_en_reg_t
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * __cvmx_interrupt_pcsx_intx_en_reg_enable - enable all interrupt bits in cvmx_pcsx_intx_en_reg_t
+ * @index: interrupt register offset
+ * @block: interrupt register block_id
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void __cvmx_interrupt_pcsx_intx_en_reg_enable(int index, int block)
 {
@@ -268,7 +292,17 @@ void __cvmx_interrupt_pcsx_intx_en_reg_enable(int index, int block)
 	cvmx_write_csr(CVMX_PCSX_INTX_EN_REG(index, block), pcs_int_en_reg.u64);
 }
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * __cvmx_interrupt_pcsxx_int_en_reg_enable - enable all interrupt bits in cvmx_pcsxx_int_en_reg_t
+ * @index: interrupt register block_id
+=======
  * __cvmx_interrupt_pcsxx_int_en_reg_enable enables all interrupt bits in cvmx_pcsxx_int_en_reg_t
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * __cvmx_interrupt_pcsxx_int_en_reg_enable - enable all interrupt bits in cvmx_pcsxx_int_en_reg_t
+ * @index: interrupt register block_id
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void __cvmx_interrupt_pcsxx_int_en_reg_enable(int index)
 {
@@ -298,7 +332,17 @@ void __cvmx_interrupt_pcsxx_int_en_reg_enable(int index)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * __cvmx_interrupt_spxx_int_msk_enable - enable all interrupt bits in cvmx_spxx_int_msk_t
+ * @index: interrupt register block_id
+=======
  * __cvmx_interrupt_spxx_int_msk_enable enables all interrupt bits in cvmx_spxx_int_msk_t
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * __cvmx_interrupt_spxx_int_msk_enable - enable all interrupt bits in cvmx_spxx_int_msk_t
+ * @index: interrupt register block_id
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void __cvmx_interrupt_spxx_int_msk_enable(int index)
 {
@@ -337,7 +381,17 @@ void __cvmx_interrupt_spxx_int_msk_enable(int index)
 	cvmx_write_csr(CVMX_SPXX_INT_MSK(index), spx_int_msk.u64);
 }
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * __cvmx_interrupt_stxx_int_msk_enable - enable all interrupt bits in cvmx_stxx_int_msk_t
+ * @index: interrupt register block_id
+=======
  * __cvmx_interrupt_stxx_int_msk_enable enables all interrupt bits in cvmx_stxx_int_msk_t
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * __cvmx_interrupt_stxx_int_msk_enable - enable all interrupt bits in cvmx_stxx_int_msk_t
+ * @index: interrupt register block_id
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void __cvmx_interrupt_stxx_int_msk_enable(int index)
 {

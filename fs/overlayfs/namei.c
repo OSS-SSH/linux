@@ -392,7 +392,15 @@ invalid:
 			    upperdentry, d_inode(upperdentry)->i_mode & S_IFMT,
 			    d_inode(origin)->i_mode & S_IFMT);
 	dput(origin);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return -ESTALE;
+=======
 	return -EIO;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return -ESTALE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ovl_check_origin(struct ovl_fs *ofs, struct dentry *upperdentry,
@@ -811,7 +819,15 @@ static int ovl_fix_origin(struct ovl_fs *ofs, struct dentry *dentry,
 	if (err)
 		return err;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = ovl_set_origin(ofs, lower, upper);
+=======
 	err = ovl_set_origin(ofs, dentry, lower, upper);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ovl_set_origin(ofs, lower, upper);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!err)
 		err = ovl_set_impure(dentry->d_parent, upper->d_parent);
 

@@ -295,6 +295,9 @@ TRACE_EVENT(rpc_request,
 		)
 );
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 TRACE_DEFINE_ENUM(RPC_TASK_ASYNC);
 TRACE_DEFINE_ENUM(RPC_TASK_SWAPPER);
 TRACE_DEFINE_ENUM(RPC_TASK_NULLCREDS);
@@ -310,10 +313,21 @@ TRACE_DEFINE_ENUM(RPC_TASK_NOCONNECT);
 TRACE_DEFINE_ENUM(RPC_TASK_NO_RETRANS_TIMEOUT);
 TRACE_DEFINE_ENUM(RPC_TASK_CRED_NOREF);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define rpc_show_task_flags(flags)					\
 	__print_flags(flags, "|",					\
 		{ RPC_TASK_ASYNC, "ASYNC" },				\
 		{ RPC_TASK_SWAPPER, "SWAPPER" },			\
+<<<<<<< HEAD
+<<<<<<< HEAD
+		{ RPC_TASK_MOVEABLE, "MOVEABLE" },			\
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		{ RPC_TASK_MOVEABLE, "MOVEABLE" },			\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		{ RPC_TASK_NULLCREDS, "NULLCREDS" },			\
 		{ RPC_CALL_MAJORSEEN, "MAJORSEEN" },			\
 		{ RPC_TASK_ROOTCREDS, "ROOTCREDS" },			\
@@ -327,6 +341,9 @@ TRACE_DEFINE_ENUM(RPC_TASK_CRED_NOREF);
 		{ RPC_TASK_NO_RETRANS_TIMEOUT, "NORTO" },		\
 		{ RPC_TASK_CRED_NOREF, "CRED_NOREF" })
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 TRACE_DEFINE_ENUM(RPC_TASK_RUNNING);
 TRACE_DEFINE_ENUM(RPC_TASK_QUEUED);
 TRACE_DEFINE_ENUM(RPC_TASK_ACTIVE);
@@ -335,6 +352,9 @@ TRACE_DEFINE_ENUM(RPC_TASK_NEED_RECV);
 TRACE_DEFINE_ENUM(RPC_TASK_MSG_PIN_WAIT);
 TRACE_DEFINE_ENUM(RPC_TASK_SIGNALLED);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define rpc_show_runstate(flags)					\
 	__print_flags(flags, "|",					\
 		{ (1UL << RPC_TASK_RUNNING), "RUNNING" },		\
@@ -945,6 +965,9 @@ TRACE_EVENT(rpc_socket_nospace,
 	)
 );
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 TRACE_DEFINE_ENUM(XPRT_LOCKED);
 TRACE_DEFINE_ENUM(XPRT_CONNECTED);
 TRACE_DEFINE_ENUM(XPRT_CONNECTING);
@@ -956,6 +979,9 @@ TRACE_DEFINE_ENUM(XPRT_CONGESTED);
 TRACE_DEFINE_ENUM(XPRT_CWND_WAIT);
 TRACE_DEFINE_ENUM(XPRT_WRITE_SPACE);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define rpc_show_xprt_state(x)						\
 	__print_flags(x, "|",						\
 		{ (1UL << XPRT_LOCKED),		"LOCKED"},		\
@@ -965,6 +991,16 @@ TRACE_DEFINE_ENUM(XPRT_WRITE_SPACE);
 		{ (1UL << XPRT_BOUND),		"BOUND"},		\
 		{ (1UL << XPRT_BINDING),	"BINDING"},		\
 		{ (1UL << XPRT_CLOSING),	"CLOSING"},		\
+<<<<<<< HEAD
+<<<<<<< HEAD
+		{ (1UL << XPRT_OFFLINE),	"OFFLINE"},		\
+		{ (1UL << XPRT_REMOVE),		"REMOVE"},		\
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		{ (1UL << XPRT_OFFLINE),	"OFFLINE"},		\
+		{ (1UL << XPRT_REMOVE),		"REMOVE"},		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		{ (1UL << XPRT_CONGESTED),	"CONGESTED"},		\
 		{ (1UL << XPRT_CWND_WAIT),	"CWND_WAIT"},		\
 		{ (1UL << XPRT_WRITE_SPACE),	"WRITE_SPACE"})
@@ -1092,10 +1128,24 @@ TRACE_EVENT(xprt_retransmit,
 		__field(u32, xid)
 		__field(int, ntrans)
 		__field(int, version)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__field(unsigned long, timeout)
+		__string(progname,
+			 rqst->rq_task->tk_client->cl_program->name)
+		__string(procname, rpc_proc_name(rqst->rq_task))
+=======
 		__string(progname,
 			 rqst->rq_task->tk_client->cl_program->name)
 		__string(procedure,
 			 rqst->rq_task->tk_msg.rpc_proc->p_name)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__field(unsigned long, timeout)
+		__string(progname,
+			 rqst->rq_task->tk_client->cl_program->name)
+		__string(procname, rpc_proc_name(rqst->rq_task))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	),
 
 	TP_fast_assign(
@@ -1106,17 +1156,43 @@ TRACE_EVENT(xprt_retransmit,
 			task->tk_client->cl_clid : -1;
 		__entry->xid = be32_to_cpu(rqst->rq_xid);
 		__entry->ntrans = rqst->rq_ntrans;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__entry->timeout = task->tk_timeout;
 		__assign_str(progname,
 			     task->tk_client->cl_program->name);
 		__entry->version = task->tk_client->cl_vers;
-		__assign_str(procedure, task->tk_msg.rpc_proc->p_name);
+		__assign_str(procname, rpc_proc_name(task));
 	),
 
 	TP_printk(
-		"task:%u@%u xid=0x%08x %sv%d %s ntrans=%d",
+		"task:%u@%u xid=0x%08x %sv%d %s ntrans=%d timeout=%lu",
 		__entry->task_id, __entry->client_id, __entry->xid,
+		__get_str(progname), __entry->version, __get_str(procname),
+		__entry->ntrans, __entry->timeout
+	)
+=======
+=======
+		__entry->timeout = task->tk_timeout;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		__assign_str(progname,
+			     task->tk_client->cl_program->name);
+		__entry->version = task->tk_client->cl_vers;
+		__assign_str(procname, rpc_proc_name(task));
+	),
+
+	TP_printk(
+		"task:%u@%u xid=0x%08x %sv%d %s ntrans=%d timeout=%lu",
+		__entry->task_id, __entry->client_id, __entry->xid,
+<<<<<<< HEAD
 		__get_str(progname), __entry->version, __get_str(procedure),
 		__entry->ntrans)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__get_str(progname), __entry->version, __get_str(procname),
+		__entry->ntrans, __entry->timeout
+	)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 );
 
 TRACE_EVENT(xprt_ping,
@@ -1568,8 +1644,16 @@ DEFINE_SVCXDRBUF_EVENT(sendto);
 	svc_rqst_flag(SPLICE_OK)					\
 	svc_rqst_flag(VICTIM)						\
 	svc_rqst_flag(BUSY)						\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	svc_rqst_flag_end(DATA)
+=======
 	svc_rqst_flag(DATA)						\
 	svc_rqst_flag_end(AUTHERR)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	svc_rqst_flag_end(DATA)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #undef svc_rqst_flag
 #undef svc_rqst_flag_end
@@ -1611,9 +1695,21 @@ TRACE_DEFINE_ENUM(SVC_COMPLETE);
 		{ SVC_COMPLETE,	"SVC_COMPLETE" })
 
 TRACE_EVENT(svc_authenticate,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	TP_PROTO(const struct svc_rqst *rqst, int auth_res),
+
+	TP_ARGS(rqst, auth_res),
+=======
 	TP_PROTO(const struct svc_rqst *rqst, int auth_res, __be32 auth_stat),
 
 	TP_ARGS(rqst, auth_res, auth_stat),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	TP_PROTO(const struct svc_rqst *rqst, int auth_res),
+
+	TP_ARGS(rqst, auth_res),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	TP_STRUCT__entry(
 		__field(u32, xid)
@@ -1624,7 +1720,15 @@ TRACE_EVENT(svc_authenticate,
 	TP_fast_assign(
 		__entry->xid = be32_to_cpu(rqst->rq_xid);
 		__entry->svc_status = auth_res;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__entry->auth_stat = be32_to_cpu(rqst->rq_auth_stat);
+=======
 		__entry->auth_stat = be32_to_cpu(auth_stat);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__entry->auth_stat = be32_to_cpu(rqst->rq_auth_stat);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	),
 
 	TP_printk("xid=0x%08x auth_res=%s auth_stat=%s",
@@ -1642,7 +1746,15 @@ TRACE_EVENT(svc_process,
 		__field(u32, vers)
 		__field(u32, proc)
 		__string(service, name)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__string(procedure, svc_proc_name(rqst))
+=======
 		__string(procedure, rqst->rq_procinfo->pc_name)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__string(procedure, svc_proc_name(rqst))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__string(addr, rqst->rq_xprt ?
 			 rqst->rq_xprt->xpt_remotebuf : "(null)")
 	),
@@ -1652,7 +1764,15 @@ TRACE_EVENT(svc_process,
 		__entry->vers = rqst->rq_vers;
 		__entry->proc = rqst->rq_proc;
 		__assign_str(service, name);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__assign_str(procedure, svc_proc_name(rqst));
+=======
 		__assign_str(procedure, rqst->rq_procinfo->pc_name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__assign_str(procedure, svc_proc_name(rqst));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__assign_str(addr, rqst->rq_xprt ?
 			     rqst->rq_xprt->xpt_remotebuf : "(null)");
 	),
@@ -1918,7 +2038,15 @@ TRACE_EVENT(svc_stats_latency,
 	TP_STRUCT__entry(
 		__field(u32, xid)
 		__field(unsigned long, execute)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__string(procedure, svc_proc_name(rqst))
+=======
 		__string(procedure, rqst->rq_procinfo->pc_name)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__string(procedure, svc_proc_name(rqst))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__string(addr, rqst->rq_xprt->xpt_remotebuf)
 	),
 
@@ -1926,7 +2054,15 @@ TRACE_EVENT(svc_stats_latency,
 		__entry->xid = be32_to_cpu(rqst->rq_xid);
 		__entry->execute = ktime_to_us(ktime_sub(ktime_get(),
 							 rqst->rq_stime));
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__assign_str(procedure, svc_proc_name(rqst));
+=======
 		__assign_str(procedure, rqst->rq_procinfo->pc_name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__assign_str(procedure, svc_proc_name(rqst));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__assign_str(addr, rqst->rq_xprt->xpt_remotebuf);
 	),
 

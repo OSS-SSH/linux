@@ -1,11 +1,25 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Marvell RVU Admin Function driver
+ *
+ * Copyright (C) 2018 Marvell.
+ *
+=======
 /* Marvell OcteonTx2 RVU Admin Function driver
+=======
+/* Marvell RVU Admin Function driver
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * Copyright (C) 2018 Marvell International Ltd.
+ * Copyright (C) 2018 Marvell.
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/module.h>
@@ -412,5 +426,13 @@ const char *otx2_mbox_id2name(u16 id)
 }
 EXPORT_SYMBOL(otx2_mbox_id2name);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+MODULE_AUTHOR("Marvell.");
+=======
 MODULE_AUTHOR("Marvell International Ltd.");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+MODULE_AUTHOR("Marvell.");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_LICENSE("GPL v2");

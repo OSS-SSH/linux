@@ -98,6 +98,14 @@ struct amd_gpio {
 	struct resource         *res;
 	struct platform_device  *pdev;
 	u32			*saved_regs;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int			irq;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int			irq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*  KERNCZ configuration*/

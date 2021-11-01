@@ -144,8 +144,18 @@ static int netlbl_cipsov4_add_std(struct genl_info *info,
 		return -ENOMEM;
 	doi_def->map.std = kzalloc(sizeof(*doi_def->map.std), GFP_KERNEL);
 	if (doi_def->map.std == NULL) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		kfree(doi_def);
+		return -ENOMEM;
+=======
 		ret_val = -ENOMEM;
 		goto add_std_failure;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		kfree(doi_def);
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	doi_def->type = CIPSO_V4_MAP_TRANS;
 
@@ -187,14 +197,30 @@ static int netlbl_cipsov4_add_std(struct genl_info *info,
 		}
 	doi_def->map.std->lvl.local = kcalloc(doi_def->map.std->lvl.local_size,
 					      sizeof(u32),
+<<<<<<< HEAD
+<<<<<<< HEAD
+					      GFP_KERNEL | __GFP_NOWARN);
+=======
 					      GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					      GFP_KERNEL | __GFP_NOWARN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (doi_def->map.std->lvl.local == NULL) {
 		ret_val = -ENOMEM;
 		goto add_std_failure;
 	}
 	doi_def->map.std->lvl.cipso = kcalloc(doi_def->map.std->lvl.cipso_size,
 					      sizeof(u32),
+<<<<<<< HEAD
+<<<<<<< HEAD
+					      GFP_KERNEL | __GFP_NOWARN);
+=======
 					      GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					      GFP_KERNEL | __GFP_NOWARN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (doi_def->map.std->lvl.cipso == NULL) {
 		ret_val = -ENOMEM;
 		goto add_std_failure;
@@ -263,7 +289,15 @@ static int netlbl_cipsov4_add_std(struct genl_info *info,
 		doi_def->map.std->cat.local = kcalloc(
 					      doi_def->map.std->cat.local_size,
 					      sizeof(u32),
+<<<<<<< HEAD
+<<<<<<< HEAD
+					      GFP_KERNEL | __GFP_NOWARN);
+=======
 					      GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					      GFP_KERNEL | __GFP_NOWARN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (doi_def->map.std->cat.local == NULL) {
 			ret_val = -ENOMEM;
 			goto add_std_failure;
@@ -271,7 +305,15 @@ static int netlbl_cipsov4_add_std(struct genl_info *info,
 		doi_def->map.std->cat.cipso = kcalloc(
 					      doi_def->map.std->cat.cipso_size,
 					      sizeof(u32),
+<<<<<<< HEAD
+<<<<<<< HEAD
+					      GFP_KERNEL | __GFP_NOWARN);
+=======
 					      GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					      GFP_KERNEL | __GFP_NOWARN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (doi_def->map.std->cat.cipso == NULL) {
 			ret_val = -ENOMEM;
 			goto add_std_failure;

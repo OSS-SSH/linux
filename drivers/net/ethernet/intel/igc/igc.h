@@ -33,6 +33,16 @@ void igc_ethtool_set_ops(struct net_device *);
 #define IGC_N_PEROUT	2
 #define IGC_N_SDP	4
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define MAX_FLEX_FILTER			32
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MAX_FLEX_FILTER			32
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum igc_mac_filter_type {
 	IGC_MAC_FILTER_TYPE_DST = 0,
 	IGC_MAC_FILTER_TYPE_SRC
@@ -96,6 +106,22 @@ struct igc_ring {
 	u32 start_time;
 	u32 end_time;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* CBS parameters */
+	bool cbs_enable;                /* indicates if CBS is enabled */
+	s32 idleslope;                  /* idleSlope in kbps */
+	s32 sendslope;                  /* sendSlope in kbps */
+	s32 hicredit;                   /* hiCredit in bytes */
+	s32 locredit;                   /* loCredit in bytes */
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* everything past this point are written often */
 	u16 next_to_clean;
 	u16 next_to_use;
@@ -225,6 +251,14 @@ struct igc_adapter {
 	struct timecounter tc;
 	struct timespec64 prev_ptp_time; /* Pre-reset PTP clock */
 	ktime_t ptp_reset_start; /* Reset time in clock mono */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct system_time_snapshot snapshot;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct system_time_snapshot snapshot;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	char fw_version[32];
 
@@ -287,6 +321,19 @@ extern char igc_driver_name[];
 #define IGC_FLAG_VLAN_PROMISC		BIT(15)
 #define IGC_FLAG_RX_LEGACY		BIT(16)
 #define IGC_FLAG_TSN_QBV_ENABLED	BIT(17)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define IGC_FLAG_TSN_QAV_ENABLED	BIT(18)
+
+#define IGC_FLAG_TSN_ANY_ENABLED \
+	(IGC_FLAG_TSN_QBV_ENABLED | IGC_FLAG_TSN_QAV_ENABLED)
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define IGC_FLAG_RSS_FIELD_IPV4_UDP	BIT(6)
 #define IGC_FLAG_RSS_FIELD_IPV6_UDP	BIT(7)
@@ -476,18 +523,61 @@ struct igc_q_vector {
 };
 
 enum igc_filter_match_flags {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	IGC_FILTER_FLAG_ETHER_TYPE =	BIT(0),
+	IGC_FILTER_FLAG_VLAN_TCI   =	BIT(1),
+	IGC_FILTER_FLAG_SRC_MAC_ADDR =	BIT(2),
+	IGC_FILTER_FLAG_DST_MAC_ADDR =	BIT(3),
+	IGC_FILTER_FLAG_USER_DATA =	BIT(4),
+	IGC_FILTER_FLAG_VLAN_ETYPE =	BIT(5),
+<<<<<<< HEAD
+=======
 	IGC_FILTER_FLAG_ETHER_TYPE =	0x1,
 	IGC_FILTER_FLAG_VLAN_TCI   =	0x2,
 	IGC_FILTER_FLAG_SRC_MAC_ADDR =	0x4,
 	IGC_FILTER_FLAG_DST_MAC_ADDR =	0x8,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct igc_nfc_filter {
 	u8 match_flags;
 	u16 etype;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	__be16 vlan_etype;
 	u16 vlan_tci;
 	u8 src_addr[ETH_ALEN];
 	u8 dst_addr[ETH_ALEN];
+	u8 user_data[8];
+	u8 user_mask[8];
+	u8 flex_index;
+	u8 rx_queue;
+	u8 prio;
+	u8 immediate_irq;
+	u8 drop;
+=======
+	u16 vlan_tci;
+	u8 src_addr[ETH_ALEN];
+	u8 dst_addr[ETH_ALEN];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__be16 vlan_etype;
+	u16 vlan_tci;
+	u8 src_addr[ETH_ALEN];
+	u8 dst_addr[ETH_ALEN];
+	u8 user_data[8];
+	u8 user_mask[8];
+	u8 flex_index;
+	u8 rx_queue;
+	u8 prio;
+	u8 immediate_irq;
+	u8 drop;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct igc_nfc_rule {
@@ -495,12 +585,52 @@ struct igc_nfc_rule {
 	struct igc_nfc_filter filter;
 	u32 location;
 	u16 action;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bool flex;
 };
 
-/* IGC supports a total of 32 NFC rules: 16 MAC address based,, 8 VLAN priority
- * based, and 8 ethertype based.
+/* IGC supports a total of 32 NFC rules: 16 MAC address based, 8 VLAN priority
+ * based, 8 ethertype based and 32 Flex filter based rules.
  */
+#define IGC_MAX_RXNFC_RULES		64
+
+struct igc_flex_filter {
+	u8 index;
+	u8 data[128];
+	u8 mask[16];
+	u8 length;
+	u8 rx_queue;
+	u8 prio;
+	u8 immediate_irq;
+	u8 drop;
+};
+=======
+=======
+	bool flex;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+};
+
+/* IGC supports a total of 32 NFC rules: 16 MAC address based, 8 VLAN priority
+ * based, 8 ethertype based and 32 Flex filter based rules.
+ */
+<<<<<<< HEAD
 #define IGC_MAX_RXNFC_RULES		32
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IGC_MAX_RXNFC_RULES		64
+
+struct igc_flex_filter {
+	u8 index;
+	u8 data[128];
+	u8 mask[16];
+	u8 length;
+	u8 rx_queue;
+	u8 prio;
+	u8 immediate_irq;
+	u8 drop;
+};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* igc_desc_unused - calculate if we have unused descriptors */
 static inline u16 igc_desc_unused(const struct igc_ring *ring)
@@ -578,7 +708,15 @@ static inline s32 igc_read_phy_reg(struct igc_hw *hw, u32 offset, u16 *data)
 	if (hw->phy.ops.read_reg)
 		return hw->phy.ops.read_reg(hw, offset, data);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return -EOPNOTSUPP;
+=======
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return -EOPNOTSUPP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void igc_reinit_locked(struct igc_adapter *);

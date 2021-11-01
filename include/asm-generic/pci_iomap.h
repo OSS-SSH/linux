@@ -18,6 +18,14 @@ extern void __iomem *pci_iomap_range(struct pci_dev *dev, int bar,
 extern void __iomem *pci_iomap_wc_range(struct pci_dev *dev, int bar,
 					unsigned long offset,
 					unsigned long maxlen);
+<<<<<<< HEAD
+<<<<<<< HEAD
+extern void pci_iounmap(struct pci_dev *dev, void __iomem *);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern void pci_iounmap(struct pci_dev *dev, void __iomem *);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Create a virtual mapping cookie for a port on a given PCI device.
  * Do not call this directly, it exists to make it easier for architectures
  * to override */
@@ -50,6 +58,22 @@ static inline void __iomem *pci_iomap_wc_range(struct pci_dev *dev, int bar,
 {
 	return NULL;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline void pci_iounmap(struct pci_dev *dev, void __iomem *addr)
+{ }
+#endif
+
+#endif /* __ASM_GENERIC_PCI_IOMAP_H */
+=======
 #endif
 
 #endif /* __ASM_GENERIC_IO_H */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void pci_iounmap(struct pci_dev *dev, void __iomem *addr)
+{ }
+#endif
+
+#endif /* __ASM_GENERIC_PCI_IOMAP_H */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

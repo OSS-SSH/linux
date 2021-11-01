@@ -232,7 +232,15 @@ static void drm_sched_start_timeout(struct drm_gpu_scheduler *sched)
 {
 	if (sched->timeout != MAX_SCHEDULE_TIMEOUT &&
 	    !list_empty(&sched->pending_list))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		queue_delayed_work(sched->timeout_wq, &sched->work_tdr, sched->timeout);
+=======
 		schedule_delayed_work(&sched->work_tdr, sched->timeout);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		queue_delayed_work(sched->timeout_wq, &sched->work_tdr, sched->timeout);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -244,7 +252,15 @@ static void drm_sched_start_timeout(struct drm_gpu_scheduler *sched)
  */
 void drm_sched_fault(struct drm_gpu_scheduler *sched)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mod_delayed_work(sched->timeout_wq, &sched->work_tdr, 0);
+=======
 	mod_delayed_work(system_wq, &sched->work_tdr, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mod_delayed_work(sched->timeout_wq, &sched->work_tdr, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(drm_sched_fault);
 
@@ -270,7 +286,15 @@ unsigned long drm_sched_suspend_timeout(struct drm_gpu_scheduler *sched)
 	 * Modify the timeout to an arbitrarily large value. This also prevents
 	 * the timeout to be restarted when new submissions arrive
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (mod_delayed_work(sched->timeout_wq, &sched->work_tdr, MAX_SCHEDULE_TIMEOUT)
+=======
 	if (mod_delayed_work(system_wq, &sched->work_tdr, MAX_SCHEDULE_TIMEOUT)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (mod_delayed_work(sched->timeout_wq, &sched->work_tdr, MAX_SCHEDULE_TIMEOUT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			&& time_after(sched_timeout, now))
 		return sched_timeout - now;
 	else
@@ -294,7 +318,15 @@ void drm_sched_resume_timeout(struct drm_gpu_scheduler *sched,
 	if (list_empty(&sched->pending_list))
 		cancel_delayed_work(&sched->work_tdr);
 	else
+<<<<<<< HEAD
+<<<<<<< HEAD
+		mod_delayed_work(sched->timeout_wq, &sched->work_tdr, remaining);
+=======
 		mod_delayed_work(system_wq, &sched->work_tdr, remaining);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mod_delayed_work(sched->timeout_wq, &sched->work_tdr, remaining);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_unlock(&sched->job_list_lock);
 }
@@ -802,10 +834,24 @@ static int drm_sched_main(void *param)
 
 		sched_job = drm_sched_entity_pop_job(entity);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (!sched_job) {
+			complete(&entity->entity_idle);
+			continue;
+		}
+=======
 		complete(&entity->entity_idle);
 
 		if (!sched_job)
 			continue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!sched_job) {
+			complete(&entity->entity_idle);
+			continue;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		s_fence = sched_job->s_fence;
 
@@ -814,6 +860,14 @@ static int drm_sched_main(void *param)
 
 		trace_drm_run_job(sched_job, entity);
 		fence = sched->ops->run_job(sched_job);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		complete(&entity->entity_idle);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		complete(&entity->entity_idle);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		drm_sched_fence_scheduled(s_fence);
 
 		if (!IS_ERR_OR_NULL(fence)) {
@@ -846,6 +900,16 @@ static int drm_sched_main(void *param)
  * @hw_submission: number of hw submissions that can be in flight
  * @hang_limit: number of times to allow a job to hang before dropping it
  * @timeout: timeout value in jiffies for the scheduler
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @timeout_wq: workqueue to use for timeout work. If NULL, the system_wq is
+ *		used
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @timeout_wq: workqueue to use for timeout work. If NULL, the system_wq is
+ *		used
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @score: optional score atomic shared with other schedulers
  * @name: name used for debugging
  *
@@ -853,7 +917,17 @@ static int drm_sched_main(void *param)
  */
 int drm_sched_init(struct drm_gpu_scheduler *sched,
 		   const struct drm_sched_backend_ops *ops,
+<<<<<<< HEAD
+<<<<<<< HEAD
+		   unsigned hw_submission, unsigned hang_limit,
+		   long timeout, struct workqueue_struct *timeout_wq,
+=======
 		   unsigned hw_submission, unsigned hang_limit, long timeout,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		   unsigned hw_submission, unsigned hang_limit,
+		   long timeout, struct workqueue_struct *timeout_wq,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		   atomic_t *score, const char *name)
 {
 	int i, ret;
@@ -861,6 +935,14 @@ int drm_sched_init(struct drm_gpu_scheduler *sched,
 	sched->hw_submission_limit = hw_submission;
 	sched->name = name;
 	sched->timeout = timeout;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	sched->timeout_wq = timeout_wq ? : system_wq;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sched->timeout_wq = timeout_wq ? : system_wq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sched->hang_limit = hang_limit;
 	sched->score = score ? score : &sched->_score;
 	for (i = DRM_SCHED_PRIORITY_MIN; i < DRM_SCHED_PRIORITY_COUNT; i++)

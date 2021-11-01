@@ -32,7 +32,15 @@ struct mii_if_info {
 
 extern int mii_link_ok (struct mii_if_info *mii);
 extern int mii_nway_restart (struct mii_if_info *mii);
+<<<<<<< HEAD
+<<<<<<< HEAD
+extern void mii_ethtool_gset(struct mii_if_info *mii, struct ethtool_cmd *ecmd);
+=======
 extern int mii_ethtool_gset(struct mii_if_info *mii, struct ethtool_cmd *ecmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern void mii_ethtool_gset(struct mii_if_info *mii, struct ethtool_cmd *ecmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void mii_ethtool_get_link_ksettings(
 	struct mii_if_info *mii, struct ethtool_link_ksettings *cmd);
 extern int mii_ethtool_sset(struct mii_if_info *mii, struct ethtool_cmd *ecmd);

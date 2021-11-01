@@ -874,7 +874,15 @@ static int create_watcher(struct hwsp_watcher *w,
 	if (IS_ERR(ce))
 		return PTR_ERR(ce);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ce->ring_size = ringsz;
+=======
 	ce->ring = __intel_context_ring_size(ringsz);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ce->ring_size = ringsz;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	w->rq = intel_context_create_request(ce);
 	intel_context_put(ce);
 	if (IS_ERR(w->rq))

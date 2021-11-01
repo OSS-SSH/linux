@@ -18,6 +18,14 @@
 #include <linux/delay.h>
 #include <linux/of_address.h>
 #include <linux/of_irq.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/platform_device.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/platform_device.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Goes away with OF conversion */
 #include <linux/platform_data/timer-ixp4xx.h>
 
@@ -29,9 +37,15 @@
 #define IXP4XX_OSRT1_OFFSET	0x08  /* Timer 1 Reload */
 #define IXP4XX_OST2_OFFSET	0x0C  /* Timer 2 Timestamp */
 #define IXP4XX_OSRT2_OFFSET	0x10  /* Timer 2 Reload */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define IXP4XX_OSWT_OFFSET	0x14  /* Watchdog Timer */
 #define IXP4XX_OSWE_OFFSET	0x18  /* Watchdog Enable */
 #define IXP4XX_OSWK_OFFSET	0x1C  /* Watchdog Key */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IXP4XX_OSST_OFFSET	0x20  /* Timer Status */
 
 /*
@@ -45,6 +59,13 @@
 #define IXP4XX_OSST_TIMER_1_PEND	0x00000001
 #define IXP4XX_OSST_TIMER_2_PEND	0x00000002
 #define IXP4XX_OSST_TIMER_TS_PEND	0x00000004
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Remaining registers are for the watchdog and defined in the watchdog driver */
+
+struct ixp4xx_timer {
+	void __iomem *base;
+=======
 #define IXP4XX_OSST_TIMER_WDOG_PEND	0x00000008
 #define IXP4XX_OSST_TIMER_WARM_RESET	0x00000010
 
@@ -56,6 +77,13 @@
 struct ixp4xx_timer {
 	void __iomem *base;
 	unsigned int tick_rate;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Remaining registers are for the watchdog and defined in the watchdog driver */
+
+struct ixp4xx_timer {
+	void __iomem *base;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 latch;
 	struct clock_event_device clkevt;
 #ifdef CONFIG_ARM
@@ -181,7 +209,13 @@ static __init int ixp4xx_timer_register(void __iomem *base,
 	if (!tmr)
 		return -ENOMEM;
 	tmr->base = base;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	tmr->tick_rate = timer_freq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * The timer register doesn't allow to specify the two least
@@ -239,6 +273,49 @@ static __init int ixp4xx_timer_register(void __iomem *base,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static struct platform_device ixp4xx_watchdog_device = {
+	.name = "ixp4xx-watchdog",
+	.id = -1,
+};
+
+/*
+ * This probe gets called after the timer is already up and running. The main
+ * function on this platform is to spawn the watchdog device as a child.
+ */
+static int ixp4xx_timer_probe(struct platform_device *pdev)
+{
+	struct device *dev = &pdev->dev;
+
+	/* Pass the base address as platform data and nothing else */
+	ixp4xx_watchdog_device.dev.platform_data = local_ixp4xx_timer->base;
+	ixp4xx_watchdog_device.dev.parent = dev;
+	return platform_device_register(&ixp4xx_watchdog_device);
+}
+
+static const struct of_device_id ixp4xx_timer_dt_id[] = {
+	{ .compatible = "intel,ixp4xx-timer", },
+	{ /* sentinel */ },
+};
+
+static struct platform_driver ixp4xx_timer_driver = {
+	.probe  = ixp4xx_timer_probe,
+	.driver = {
+		.name = "ixp4xx-timer",
+		.of_match_table = ixp4xx_timer_dt_id,
+		.suppress_bind_attrs = true,
+	},
+};
+builtin_platform_driver(ixp4xx_timer_driver);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * ixp4xx_timer_setup() - Timer setup function to be called from boardfiles
  * @timerbase: physical base of timer block

@@ -264,7 +264,15 @@ void __init numa_free_distance(void)
 	size = numa_distance_cnt * numa_distance_cnt *
 		sizeof(numa_distance[0]);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	memblock_free_ptr(numa_distance, size);
+=======
 	memblock_free(__pa(numa_distance), size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memblock_free_ptr(numa_distance, size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numa_distance_cnt = 0;
 	numa_distance = NULL;
 }
@@ -279,6 +287,13 @@ static int __init numa_alloc_distance(void)
 	int i, j;
 
 	size = nr_node_ids * nr_node_ids * sizeof(numa_distance[0]);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	phys = memblock_phys_alloc_range(size, PAGE_SIZE, 0, PFN_PHYS(max_pfn));
+	if (WARN_ON(!phys))
+		return -ENOMEM;
+
+=======
 	phys = memblock_find_in_range(0, PFN_PHYS(max_pfn),
 				      size, PAGE_SIZE);
 	if (WARN_ON(!phys))
@@ -286,6 +301,13 @@ static int __init numa_alloc_distance(void)
 
 	memblock_reserve(phys, size);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phys = memblock_phys_alloc_range(size, PAGE_SIZE, 0, PFN_PHYS(max_pfn));
+	if (WARN_ON(!phys))
+		return -ENOMEM;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numa_distance = __va(phys);
 	numa_distance_cnt = nr_node_ids;
 

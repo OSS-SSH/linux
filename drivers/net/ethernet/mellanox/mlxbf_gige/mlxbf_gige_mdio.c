@@ -145,6 +145,12 @@ static int mlxbf_gige_mdio_write(struct mii_bus *bus, int phy_add,
 int mlxbf_gige_mdio_probe(struct platform_device *pdev, struct mlxbf_gige *priv)
 {
 	struct device *dev = &pdev->dev;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret;
+
+	priv->mdio_io = devm_platform_ioremap_resource(pdev, MLXBF_GIGE_RES_MDIO9);
+=======
 	struct resource *res;
 	int ret;
 
@@ -153,6 +159,12 @@ int mlxbf_gige_mdio_probe(struct platform_device *pdev, struct mlxbf_gige *priv)
 		return -ENODEV;
 
 	priv->mdio_io = devm_ioremap_resource(dev, res);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+	priv->mdio_io = devm_platform_ioremap_resource(pdev, MLXBF_GIGE_RES_MDIO9);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(priv->mdio_io))
 		return PTR_ERR(priv->mdio_io);
 

@@ -16,18 +16,42 @@
  * with our redzone usage.
  *
  *		[	prev sp		] <-------------
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *		[   nv gpr save area	] 5*8		|
+ *		[    tail_call_cnt	] 8		|
+ *		[    local_tmp_var	] 16		|
+=======
  *		[   nv gpr save area	] 6*8		|
  *		[    tail_call_cnt	] 8		|
  *		[    local_tmp_var	] 8		|
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *		[   nv gpr save area	] 5*8		|
+ *		[    tail_call_cnt	] 8		|
+ *		[    local_tmp_var	] 16		|
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * fp (r31) -->	[   ebpf stack space	] upto 512	|
  *		[     frame header	] 32/112	|
  * sp (r1) --->	[    stack pointer	] --------------
  */
 
 /* for gpr non volatile registers BPG_REG_6 to 10 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define BPF_PPC_STACK_SAVE	(5*8)
+/* for bpf JIT code internal usage */
+#define BPF_PPC_STACK_LOCALS	24
+=======
 #define BPF_PPC_STACK_SAVE	(6*8)
 /* for bpf JIT code internal usage */
 #define BPF_PPC_STACK_LOCALS	16
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define BPF_PPC_STACK_SAVE	(5*8)
+/* for bpf JIT code internal usage */
+#define BPF_PPC_STACK_LOCALS	24
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* stack frame excluding BPF stack, ensure this is quadword aligned */
 #define BPF_PPC_STACKFRAME	(STACK_FRAME_MIN_SIZE + \
 				 BPF_PPC_STACK_LOCALS + BPF_PPC_STACK_SAVE)

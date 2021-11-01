@@ -275,13 +275,27 @@ static int __engine_park(struct intel_wakeref *wf)
 	intel_breadcrumbs_park(engine->breadcrumbs);
 
 	/* Must be reset upon idling, or we may miss the busy wakeup. */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	GEM_BUG_ON(engine->sched_engine->queue_priority_hint != INT_MIN);
+=======
 	GEM_BUG_ON(engine->execlists.queue_priority_hint != INT_MIN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	GEM_BUG_ON(engine->sched_engine->queue_priority_hint != INT_MIN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (engine->park)
 		engine->park(engine);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	engine->execlists.no_priolist = false;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* While gt calls i915_vma_parked(), we have to break the lock cycle */
 	intel_gt_pm_put_async(engine->gt);
 	return 0;

@@ -9,7 +9,15 @@
 
 enum HCLGE_MBX_OPCODE {
 	HCLGE_MBX_RESET = 0x01,		/* (VF -> PF) assert reset */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	HCLGE_MBX_ASSERTING_RESET,	/* (PF -> VF) PF is asserting reset */
+=======
 	HCLGE_MBX_ASSERTING_RESET,	/* (PF -> VF) PF is asserting reset*/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	HCLGE_MBX_ASSERTING_RESET,	/* (PF -> VF) PF is asserting reset */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	HCLGE_MBX_SET_UNICAST,		/* (VF -> PF) set UC addr */
 	HCLGE_MBX_SET_MULTICAST,	/* (VF -> PF) set MC addr */
 	HCLGE_MBX_SET_VLAN,		/* (VF -> PF) set VLAN */
@@ -98,6 +106,14 @@ struct hclgevf_mbx_resp_status {
 	u32 origin_mbx_msg;
 	bool received_resp;
 	int resp_status;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u16 match_id;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 match_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 additional_info[HCLGE_MBX_MAX_RESP_DATA_SIZE];
 };
 
@@ -143,7 +159,17 @@ struct hclge_mbx_vf_to_pf_cmd {
 	u8 mbx_need_resp;
 	u8 rsv1[1];
 	u8 msg_len;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u8 rsv2;
+	u16 match_id;
+=======
 	u8 rsv2[3];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 rsv2;
+	u16 match_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hclge_vf_to_pf_msg msg;
 };
 
@@ -153,7 +179,17 @@ struct hclge_mbx_pf_to_vf_cmd {
 	u8 dest_vfid;
 	u8 rsv[3];
 	u8 msg_len;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u8 rsv1;
+	u16 match_id;
+=======
 	u8 rsv1[3];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 rsv1;
+	u16 match_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct hclge_pf_to_vf_msg msg;
 };
 

@@ -1179,8 +1179,18 @@ static int owl_emac_ndo_set_mac_addr(struct net_device *netdev, void *addr)
 	return owl_emac_setup_frame_xmit(netdev_priv(netdev));
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int owl_emac_ndo_eth_ioctl(struct net_device *netdev,
+				  struct ifreq *req, int cmd)
+=======
 static int owl_emac_ndo_do_ioctl(struct net_device *netdev,
 				 struct ifreq *req, int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int owl_emac_ndo_eth_ioctl(struct net_device *netdev,
+				  struct ifreq *req, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (!netif_running(netdev))
 		return -EINVAL;
@@ -1224,7 +1234,15 @@ static const struct net_device_ops owl_emac_netdev_ops = {
 	.ndo_set_rx_mode	= owl_emac_ndo_set_rx_mode,
 	.ndo_set_mac_address	= owl_emac_ndo_set_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl		= owl_emac_ndo_eth_ioctl,
+=======
 	.ndo_do_ioctl		= owl_emac_ndo_do_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= owl_emac_ndo_eth_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout         = owl_emac_ndo_tx_timeout,
 	.ndo_get_stats		= owl_emac_ndo_get_stats,
 };

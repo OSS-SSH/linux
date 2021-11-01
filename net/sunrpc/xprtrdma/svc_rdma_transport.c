@@ -136,9 +136,21 @@ static struct svcxprt_rdma *svc_rdma_create_xprt(struct svc_serv *serv,
 	svc_xprt_init(net, &svc_rdma_class, &cma_xprt->sc_xprt, serv);
 	INIT_LIST_HEAD(&cma_xprt->sc_accept_q);
 	INIT_LIST_HEAD(&cma_xprt->sc_rq_dto_q);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	init_llist_head(&cma_xprt->sc_send_ctxts);
+	init_llist_head(&cma_xprt->sc_recv_ctxts);
+	init_llist_head(&cma_xprt->sc_rw_ctxts);
+=======
 	INIT_LIST_HEAD(&cma_xprt->sc_send_ctxts);
 	init_llist_head(&cma_xprt->sc_recv_ctxts);
 	INIT_LIST_HEAD(&cma_xprt->sc_rw_ctxts);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	init_llist_head(&cma_xprt->sc_send_ctxts);
+	init_llist_head(&cma_xprt->sc_recv_ctxts);
+	init_llist_head(&cma_xprt->sc_rw_ctxts);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	init_waitqueue_head(&cma_xprt->sc_send_wait);
 
 	spin_lock_init(&cma_xprt->sc_lock);
@@ -545,7 +557,13 @@ static void __svc_rdma_free(struct work_struct *work)
 {
 	struct svcxprt_rdma *rdma =
 		container_of(work, struct svcxprt_rdma, sc_work);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct svc_xprt *xprt = &rdma->sc_xprt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* This blocks until the Completion Queues are empty */
 	if (rdma->sc_qp && !IS_ERR(rdma->sc_qp))
@@ -553,12 +571,18 @@ static void __svc_rdma_free(struct work_struct *work)
 
 	svc_rdma_flush_recv_queues(rdma);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* Final put of backchannel client transport */
 	if (xprt->xpt_bc_xprt) {
 		xprt_put(xprt->xpt_bc_xprt);
 		xprt->xpt_bc_xprt = NULL;
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	svc_rdma_destroy_rw_ctxts(rdma);
 	svc_rdma_send_ctxts_destroy(rdma);
 	svc_rdma_recv_ctxts_destroy(rdma);

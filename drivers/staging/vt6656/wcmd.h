@@ -3,8 +3,14 @@
  * Copyright (c) 1996, 2003 VIA Networking Technologies, Inc.
  * All rights reserved.
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  * File: wcmd.h
  *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Purpose: Handles the management command interface functions
  *
  * Author: Lyndon Chen

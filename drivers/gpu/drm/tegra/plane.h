@@ -8,6 +8,14 @@
 
 #include <drm/drm_plane.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct icc_path;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct icc_path;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct tegra_bo;
 struct tegra_dc;
 
@@ -16,6 +24,18 @@ struct tegra_plane {
 	struct tegra_dc *dc;
 	unsigned int offset;
 	unsigned int index;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	struct icc_path *icc_mem;
+	struct icc_path *icc_mem_vfilter;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	struct icc_path *icc_mem;
+	struct icc_path *icc_mem_vfilter;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct tegra_cursor {
@@ -52,6 +72,20 @@ struct tegra_plane_state {
 	/* used for legacy blending support only */
 	struct tegra_plane_legacy_blending_state blending[2];
 	bool opaque;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	/* bandwidths are in ICC units, i.e. kbytes/sec */
+	u32 total_peak_memory_bandwidth;
+	u32 peak_memory_bandwidth;
+	u32 avg_memory_bandwidth;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline struct tegra_plane_state *
@@ -63,6 +97,21 @@ to_tegra_plane_state(struct drm_plane_state *state)
 	return NULL;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static inline const struct tegra_plane_state *
+to_const_tegra_plane_state(const struct drm_plane_state *state)
+{
+	return to_tegra_plane_state((struct drm_plane_state *)state);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern const struct drm_plane_funcs tegra_plane_funcs;
 
 int tegra_plane_prepare_fb(struct drm_plane *plane,
@@ -78,5 +127,13 @@ bool tegra_plane_format_is_indexed(unsigned int format);
 bool tegra_plane_format_is_yuv(unsigned int format, bool *planar, unsigned int *bpc);
 int tegra_plane_setup_legacy_state(struct tegra_plane *tegra,
 				   struct tegra_plane_state *state);
+<<<<<<< HEAD
+<<<<<<< HEAD
+int tegra_plane_interconnect_init(struct tegra_plane *plane);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int tegra_plane_interconnect_init(struct tegra_plane *plane);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* TEGRA_PLANE_H */

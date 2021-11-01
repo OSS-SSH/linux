@@ -148,7 +148,15 @@ static int fme_pr(struct platform_device *pdev, unsigned long arg)
 
 	/*
 	 * it allows userspace to reset the PR region's logic by disabling and
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * reenabling the bridge to clear things out between acceleration runs.
+=======
 	 * reenabling the bridge to clear things out between accleration runs.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * reenabling the bridge to clear things out between acceleration runs.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * so no need to hold the bridges after partial reconfiguration.
 	 */
 	if (region->get_bridges)

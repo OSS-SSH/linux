@@ -3,10 +3,24 @@
 Writing camera sensor drivers
 =============================
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+CSI-2 and parallel (BT.601 and BT.656) busses
+---------------------------------------------
+
+Please see :ref:`transmitter-receiver`.
+=======
 CSI-2
 -----
 
 Please see what is written on :ref:`MIPI_CSI_2`.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+CSI-2 and parallel (BT.601 and BT.656) busses
+---------------------------------------------
+
+Please see :ref:`transmitter-receiver`.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Handling clocks
 ---------------
@@ -26,15 +40,38 @@ user.
 ACPI
 ~~~~
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+Read the ``clock-frequency`` _DSD property to denote the frequency. The driver
+can rely on this frequency being used.
+=======
 Read the "clock-frequency" _DSD property to denote the frequency. The driver can
 rely on this frequency being used.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Read the ``clock-frequency`` _DSD property to denote the frequency. The driver
+can rely on this frequency being used.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Devicetree
 ~~~~~~~~~~
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+The currently preferred way to achieve this is using ``assigned-clocks``,
+``assigned-clock-parents`` and ``assigned-clock-rates`` properties. See
+``Documentation/devicetree/bindings/clock/clock-bindings.txt`` for more
+information. The driver then gets the frequency using ``clk_get_rate()``.
+<<<<<<< HEAD
+=======
 The currently preferred way to achieve this is using "assigned-clock-rates"
 property. See Documentation/devicetree/bindings/clock/clock-bindings.txt for
 more information. The driver then gets the frequency using clk_get_rate().
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 This approach has the drawback that there's no guarantee that the frequency
 hasn't been modified directly or indirectly by another driver, or supported by
@@ -55,7 +92,15 @@ processing pipeline as one or more sub-devices with different cropping and
 scaling configurations. The output size of the device is the result of a series
 of cropping and scaling operations from the device's pixel array's size.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+An example of such a driver is the CCS driver (see ``drivers/media/i2c/ccs``).
+=======
 An example of such a driver is the smiapp driver (see drivers/media/i2c/smiapp).
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+An example of such a driver is the CCS driver (see ``drivers/media/i2c/ccs``).
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Register list based drivers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -67,7 +112,15 @@ level are independent. How a driver picks such configuration is based on the
 format set on a source pad at the end of the device's internal pipeline.
 
 Most sensor drivers are implemented this way, see e.g.
+<<<<<<< HEAD
+<<<<<<< HEAD
+``drivers/media/i2c/imx319.c`` for an example.
+=======
 drivers/media/i2c/imx319.c for an example.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+``drivers/media/i2c/imx319.c`` for an example.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Frame interval configuration
 ----------------------------
@@ -94,9 +147,22 @@ large variety of devices beyond camera sensors. Devices that have no analogue
 crop, use the full source image size, i.e. pixel array size.
 
 Horizontal and vertical blanking are specified by ``V4L2_CID_HBLANK`` and
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+``V4L2_CID_VBLANK``, respectively. The unit of the ``V4L2_CID_HBLANK`` control
+is pixels and the unit of the ``V4L2_CID_VBLANK`` is lines. The pixel rate in
+the sensor's **pixel array** is specified by ``V4L2_CID_PIXEL_RATE`` in the same
+sub-device. The unit of that control is pixels per second.
+<<<<<<< HEAD
+=======
 ``V4L2_CID_VBLANK``, respectively. The unit of these controls are lines. The
 pixel rate is specified by ``V4L2_CID_PIXEL_RATE`` in the same sub-device. The
 unit of that control is Hz.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Register list based drivers need to implement read-only sub-device nodes for the
 purpose. Devices that are not register list based need these to configure the
@@ -125,14 +191,30 @@ general, the device must be powered on at least when its registers are being
 accessed and when it is streaming.
 
 Existing camera sensor drivers may rely on the old
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct v4l2_subdev_core_ops->s_power() callback for bridge or ISP drivers to
+=======
 :c:type:`v4l2_subdev_core_ops`->s_power() callback for bridge or ISP drivers to
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct v4l2_subdev_core_ops->s_power() callback for bridge or ISP drivers to
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 manage their power state. This is however **deprecated**. If you feel you need
 to begin calling an s_power from an ISP or a bridge driver, instead please add
 runtime PM support to the sensor driver you are using. Likewise, new drivers
 should not use s_power.
 
 Please see examples in e.g. ``drivers/media/i2c/ov8856.c`` and
+<<<<<<< HEAD
+<<<<<<< HEAD
+``drivers/media/i2c/ccs/ccs-core.c``. The two drivers work in both ACPI
+=======
 ``drivers/media/i2c/smiapp/smiapp-core.c``. The two drivers work in both ACPI
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+``drivers/media/i2c/ccs/ccs-core.c``. The two drivers work in both ACPI
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 and DT based systems.
 
 Control framework
@@ -149,6 +231,9 @@ used to obtain device's power state after the power state transition:
 The function returns a non-zero value if it succeeded getting the power count or
 runtime PM was disabled, in either of which cases the driver may proceed to
 access the device.
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 Controls
 --------
@@ -162,3 +247,6 @@ frequency used on the bus.
 The transmitter drivers should also implement ``V4L2_CID_PIXEL_RATE`` control in
 order to tell the maximum pixel rate to the receiver. This is required on raw
 camera sensors.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

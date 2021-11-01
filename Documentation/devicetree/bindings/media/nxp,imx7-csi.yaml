@@ -4,7 +4,15 @@
 $id: http://devicetree.org/schemas/media/nxp,imx7-csi.yaml#
 $schema: http://devicetree.org/meta-schemas/core.yaml#
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+title: i.MX7 and i.MX8 CSI bridge (CMOS Sensor Interface)
+=======
 title: i.MX7 CMOS Sensor Interface
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+title: i.MX7 and i.MX8 CSI bridge (CMOS Sensor Interface)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 maintainers:
   - Rui Miguel Silva <rmfrfs@gmail.com>
@@ -15,9 +23,25 @@ description: |
 
 properties:
   compatible:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+    oneOf:
+      - enum:
+          - fsl,imx7-csi
+          - fsl,imx6ul-csi
+      - items:
+          - const: fsl,imx8mm-csi
+          - const: fsl,imx7-csi
+<<<<<<< HEAD
+=======
     enum:
       - fsl,imx7-csi
       - fsl,imx6ul-csi
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   reg:
     maxItems: 1

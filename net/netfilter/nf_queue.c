@@ -21,6 +21,16 @@
 
 #include "nf_internals.h"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct nf_queue_handler __rcu *nf_queue_handler;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct nf_queue_handler __rcu *nf_queue_handler;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Hook for nfnetlink_queue to register its queue handler.
  * We do this so that most of the NFQUEUE code can be modular.
@@ -29,6 +39,14 @@
  * receives, no matter what.
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void nf_register_queue_handler(const struct nf_queue_handler *qh)
+{
+	/* should never happen, we only have one queueing backend in kernel */
+	WARN_ON(rcu_access_pointer(nf_queue_handler));
+	rcu_assign_pointer(nf_queue_handler, qh);
+=======
 /* return EBUSY when somebody else is registered, return EEXIST if the
  * same handler is registered, return 0 in case of success. */
 void nf_register_queue_handler(struct net *net, const struct nf_queue_handler *qh)
@@ -36,13 +54,33 @@ void nf_register_queue_handler(struct net *net, const struct nf_queue_handler *q
 	/* should never happen, we only have one queueing backend in kernel */
 	WARN_ON(rcu_access_pointer(net->nf.queue_handler));
 	rcu_assign_pointer(net->nf.queue_handler, qh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void nf_register_queue_handler(const struct nf_queue_handler *qh)
+{
+	/* should never happen, we only have one queueing backend in kernel */
+	WARN_ON(rcu_access_pointer(nf_queue_handler));
+	rcu_assign_pointer(nf_queue_handler, qh);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(nf_register_queue_handler);
 
 /* The caller must flush their queue before this */
+<<<<<<< HEAD
+<<<<<<< HEAD
+void nf_unregister_queue_handler(void)
+{
+	RCU_INIT_POINTER(nf_queue_handler, NULL);
+=======
 void nf_unregister_queue_handler(struct net *net)
 {
 	RCU_INIT_POINTER(net->nf.queue_handler, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void nf_unregister_queue_handler(void)
+{
+	RCU_INIT_POINTER(nf_queue_handler, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(nf_unregister_queue_handler);
 
@@ -51,18 +89,38 @@ static void nf_queue_entry_release_refs(struct nf_queue_entry *entry)
 	struct nf_hook_state *state = &entry->state;
 
 	/* Release those devices we held, or Alexey will kill me. */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dev_put(state->in);
+	dev_put(state->out);
+=======
 	if (state->in)
 		dev_put(state->in);
 	if (state->out)
 		dev_put(state->out);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(state->in);
+	dev_put(state->out);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (state->sk)
 		sock_put(state->sk);
 
 #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dev_put(entry->physin);
+	dev_put(entry->physout);
+=======
 	if (entry->physin)
 		dev_put(entry->physin);
 	if (entry->physout)
 		dev_put(entry->physout);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(entry->physin);
+	dev_put(entry->physout);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 }
 
@@ -95,18 +153,38 @@ void nf_queue_entry_get_refs(struct nf_queue_entry *entry)
 {
 	struct nf_hook_state *state = &entry->state;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dev_hold(state->in);
+	dev_hold(state->out);
+=======
 	if (state->in)
 		dev_hold(state->in);
 	if (state->out)
 		dev_hold(state->out);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_hold(state->in);
+	dev_hold(state->out);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (state->sk)
 		sock_hold(state->sk);
 
 #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dev_hold(entry->physin);
+	dev_hold(entry->physout);
+=======
 	if (entry->physin)
 		dev_hold(entry->physin);
 	if (entry->physout)
 		dev_hold(entry->physout);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_hold(entry->physin);
+	dev_hold(entry->physout);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 }
 EXPORT_SYMBOL_GPL(nf_queue_entry_get_refs);
@@ -116,7 +194,15 @@ void nf_queue_nf_hook_drop(struct net *net)
 	const struct nf_queue_handler *qh;
 
 	rcu_read_lock();
+<<<<<<< HEAD
+<<<<<<< HEAD
+	qh = rcu_dereference(nf_queue_handler);
+=======
 	qh = rcu_dereference(net->nf.queue_handler);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	qh = rcu_dereference(nf_queue_handler);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (qh)
 		qh->nf_hook_drop(net);
 	rcu_read_unlock();
@@ -157,12 +243,26 @@ static int __nf_queue(struct sk_buff *skb, const struct nf_hook_state *state,
 {
 	struct nf_queue_entry *entry = NULL;
 	const struct nf_queue_handler *qh;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct net *net = state->net;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int route_key_size;
 	int status;
 
 	/* QUEUE == DROP if no one is waiting, to be safe. */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	qh = rcu_dereference(nf_queue_handler);
+=======
 	qh = rcu_dereference(net->nf.queue_handler);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	qh = rcu_dereference(nf_queue_handler);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!qh)
 		return -ESRCH;
 

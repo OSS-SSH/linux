@@ -1459,11 +1459,27 @@ contesto utente
   che hardware.
 
 interruzione hardware
+<<<<<<< HEAD
+<<<<<<< HEAD
+  Richiesta di interruzione hardware. in_hardirq() ritorna vero in un
+  gestore d'interruzioni hardware.
+
+interruzione software / softirq
+  Gestore di interruzioni software: in_hardirq() ritorna falso;
+=======
   Richiesta di interruzione hardware. in_irq() ritorna vero in un
   gestore d'interruzioni hardware.
 
 interruzione software / softirq
   Gestore di interruzioni software: in_irq() ritorna falso;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  Richiesta di interruzione hardware. in_hardirq() ritorna vero in un
+  gestore d'interruzioni hardware.
+
+interruzione software / softirq
+  Gestore di interruzioni software: in_hardirq() ritorna falso;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   in_softirq() ritorna vero. I tasklet e le softirq sono entrambi
   considerati 'interruzioni software'.
 

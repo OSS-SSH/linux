@@ -4,13 +4,27 @@
 
 #include <linux/nospec.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <asm/kvm_host.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/vmx.h>
 
 #include "evmcs.h"
 #include "vmcs.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "x86.h"
+=======
 
 #define __ex(x) __kvm_handle_fault_on_reboot(x)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "x86.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 asmlinkage void vmread_error(unsigned long field, bool fault);
 __attribute__((regparm(0))) void vmread_error_trampoline(unsigned long field,

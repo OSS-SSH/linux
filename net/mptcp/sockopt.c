@@ -157,6 +157,10 @@ static int mptcp_setsockopt_sol_socket_tstamp(struct mptcp_sock *msk, int optnam
 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
 		bool slow = lock_sock_fast(ssk);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		sock_set_timestamp(sk, optname, !!val);
+=======
 		switch (optname) {
 		case SO_TIMESTAMP_OLD:
 		case SO_TIMESTAMP_NEW:
@@ -170,6 +174,10 @@ static int mptcp_setsockopt_sol_socket_tstamp(struct mptcp_sock *msk, int optnam
 			break;
 		}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		sock_set_timestamp(sk, optname, !!val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		unlock_sock_fast(ssk, slow);
 	}
 
@@ -178,7 +186,17 @@ static int mptcp_setsockopt_sol_socket_tstamp(struct mptcp_sock *msk, int optnam
 }
 
 static int mptcp_setsockopt_sol_socket_int(struct mptcp_sock *msk, int optname,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					   sockptr_t optval,
+					   unsigned int optlen)
+=======
 					   sockptr_t optval, unsigned int optlen)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					   sockptr_t optval,
+					   unsigned int optlen)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int val, ret;
 
@@ -205,14 +223,73 @@ static int mptcp_setsockopt_sol_socket_int(struct mptcp_sock *msk, int optname,
 	case SO_TIMESTAMP_NEW:
 	case SO_TIMESTAMPNS_OLD:
 	case SO_TIMESTAMPNS_NEW:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	case SO_TIMESTAMPING_OLD:
 	case SO_TIMESTAMPING_NEW:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return mptcp_setsockopt_sol_socket_tstamp(msk, optname, val);
 	}
 
 	return -ENOPROTOOPT;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int mptcp_setsockopt_sol_socket_timestamping(struct mptcp_sock *msk,
+						    int optname,
+						    sockptr_t optval,
+						    unsigned int optlen)
+{
+	struct mptcp_subflow_context *subflow;
+	struct sock *sk = (struct sock *)msk;
+	struct so_timestamping timestamping;
+	int ret;
+
+	if (optlen == sizeof(timestamping)) {
+		if (copy_from_sockptr(&timestamping, optval,
+				      sizeof(timestamping)))
+			return -EFAULT;
+	} else if (optlen == sizeof(int)) {
+		memset(&timestamping, 0, sizeof(timestamping));
+
+		if (copy_from_sockptr(&timestamping.flags, optval, sizeof(int)))
+			return -EFAULT;
+	} else {
+		return -EINVAL;
+	}
+
+	ret = sock_setsockopt(sk->sk_socket, SOL_SOCKET, optname,
+			      KERNEL_SOCKPTR(&timestamping),
+			      sizeof(timestamping));
+	if (ret)
+		return ret;
+
+	lock_sock(sk);
+
+	mptcp_for_each_subflow(msk, subflow) {
+		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+		bool slow = lock_sock_fast(ssk);
+
+		sock_set_timestamping(sk, optname, timestamping);
+		unlock_sock_fast(ssk, slow);
+	}
+
+	release_sock(sk);
+
+	return 0;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int mptcp_setsockopt_sol_socket_linger(struct mptcp_sock *msk, sockptr_t optval,
 					      unsigned int optlen)
 {
@@ -299,9 +376,27 @@ static int mptcp_setsockopt_sol_socket(struct mptcp_sock *msk, int optname,
 	case SO_TIMESTAMP_NEW:
 	case SO_TIMESTAMPNS_OLD:
 	case SO_TIMESTAMPNS_NEW:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return mptcp_setsockopt_sol_socket_int(msk, optname, optval,
+						       optlen);
+	case SO_TIMESTAMPING_OLD:
+	case SO_TIMESTAMPING_NEW:
+		return mptcp_setsockopt_sol_socket_timestamping(msk, optname,
+								optval, optlen);
+=======
 	case SO_TIMESTAMPING_OLD:
 	case SO_TIMESTAMPING_NEW:
 		return mptcp_setsockopt_sol_socket_int(msk, optname, optval, optlen);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return mptcp_setsockopt_sol_socket_int(msk, optname, optval,
+						       optlen);
+	case SO_TIMESTAMPING_OLD:
+	case SO_TIMESTAMPING_NEW:
+		return mptcp_setsockopt_sol_socket_timestamping(msk, optname,
+								optval, optlen);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SO_LINGER:
 		return mptcp_setsockopt_sol_socket_linger(msk, optval, optlen);
 	case SO_RCVLOWAT:

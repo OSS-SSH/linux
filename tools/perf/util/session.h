@@ -54,8 +54,27 @@ struct decomp {
 
 struct perf_tool;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct perf_session *__perf_session__new(struct perf_data *data,
+					 bool repipe, int repipe_fd,
+					 struct perf_tool *tool);
+
+static inline struct perf_session *perf_session__new(struct perf_data *data,
+						     struct perf_tool *tool)
+{
+	return __perf_session__new(data, false, -1, tool);
+}
+
+<<<<<<< HEAD
+=======
 struct perf_session *perf_session__new(struct perf_data *data,
 				       bool repipe, struct perf_tool *tool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void perf_session__delete(struct perf_session *session);
 
 void perf_event_header__bswap(struct perf_event_header *hdr);

@@ -622,11 +622,17 @@ static int gaudi_config_etr(struct hl_device *hdev,
 			return -EINVAL;
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		gaudi_mmu_prepare_reg(hdev, mmPSOC_GLOBAL_CONF_TRACE_ARUSER,
 						hdev->compute_ctx->asid);
 		gaudi_mmu_prepare_reg(hdev, mmPSOC_GLOBAL_CONF_TRACE_AWUSER,
 						hdev->compute_ctx->asid);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		msb = upper_32_bits(input->buffer_address) >> 8;
 		msb &= PSOC_GLOBAL_CONF_TRACE_ADDR_MSB_MASK;
 		WREG32(mmPSOC_GLOBAL_CONF_TRACE_ADDR, msb);

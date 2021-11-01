@@ -401,7 +401,15 @@ static int watchdog_set_pretimeout(struct watchdog_device *wdd,
 	if (watchdog_pretimeout_invalid(wdd, timeout))
 		return -EINVAL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (wdd->ops->set_pretimeout && (wdd->info->options & WDIOF_PRETIMEOUT))
+=======
 	if (wdd->ops->set_pretimeout)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (wdd->ops->set_pretimeout && (wdd->info->options & WDIOF_PRETIMEOUT))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = wdd->ops->set_pretimeout(wdd, timeout);
 	else
 		wdd->pretimeout = timeout;
@@ -1096,6 +1104,16 @@ static void watchdog_cdev_unregister(struct watchdog_device *wdd)
 		watchdog_stop(wdd);
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	watchdog_hrtimer_pretimeout_stop(wdd);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	watchdog_hrtimer_pretimeout_stop(wdd);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&wd_data->lock);
 	wd_data->wdd = NULL;
 	wdd->wd_data = NULL;
@@ -1103,7 +1121,13 @@ static void watchdog_cdev_unregister(struct watchdog_device *wdd)
 
 	hrtimer_cancel(&wd_data->timer);
 	kthread_cancel_work_sync(&wd_data->work);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	watchdog_hrtimer_pretimeout_stop(wdd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	put_device(&wd_data->dev);
 }
@@ -1172,7 +1196,20 @@ int watchdog_set_last_hw_keepalive(struct watchdog_device *wdd,
 
 	wd_data->last_hw_keepalive = ktime_sub(now, ms_to_ktime(last_ping_ms));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (watchdog_hw_running(wdd) && handle_boot_enabled)
+		return __watchdog_ping(wdd);
+
+	return 0;
+<<<<<<< HEAD
+=======
 	return __watchdog_ping(wdd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(watchdog_set_last_hw_keepalive);
 
@@ -1227,6 +1264,62 @@ void __exit watchdog_dev_exit(void)
 	kthread_destroy_worker(watchdog_kworker);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int watchdog_dev_suspend(struct watchdog_device *wdd)
+{
+	struct watchdog_core_data *wd_data = wdd->wd_data;
+	int ret = 0;
+
+	if (!wdd->wd_data)
+		return -ENODEV;
+
+	/* ping for the last time before suspend */
+	mutex_lock(&wd_data->lock);
+	if (watchdog_worker_should_ping(wd_data))
+		ret = __watchdog_ping(wd_data->wdd);
+	mutex_unlock(&wd_data->lock);
+
+	if (ret)
+		return ret;
+
+	/*
+	 * make sure that watchdog worker will not kick in when the wdog is
+	 * suspended
+	 */
+	hrtimer_cancel(&wd_data->timer);
+	kthread_cancel_work_sync(&wd_data->work);
+
+	return 0;
+}
+
+int watchdog_dev_resume(struct watchdog_device *wdd)
+{
+	struct watchdog_core_data *wd_data = wdd->wd_data;
+	int ret = 0;
+
+	if (!wdd->wd_data)
+		return -ENODEV;
+
+	/*
+	 * __watchdog_ping will also retrigger hrtimer and therefore restore the
+	 * ping worker if needed.
+	 */
+	mutex_lock(&wd_data->lock);
+	if (watchdog_worker_should_ping(wd_data))
+		ret = __watchdog_ping(wd_data->wdd);
+	mutex_unlock(&wd_data->lock);
+
+	return ret;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 module_param(handle_boot_enabled, bool, 0444);
 MODULE_PARM_DESC(handle_boot_enabled,
 	"Watchdog core auto-updates boot enabled watchdogs before userspace takes over (default="

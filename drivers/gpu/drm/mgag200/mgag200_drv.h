@@ -43,6 +43,31 @@
 #define ATTR_INDEX 0x1fc0
 #define ATTR_DATA 0x1fc1
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define WREG_MISC(v)						\
+	WREG8(MGA_MISC_OUT, v)
+
+#define RREG_MISC(v)						\
+	((v) = RREG8(MGA_MISC_IN))
+
+#define WREG_MISC_MASKED(v, mask)				\
+	do {							\
+		u8 misc_;					\
+		u8 mask_ = (mask);				\
+		RREG_MISC(misc_);				\
+		misc_ &= ~mask_;				\
+		misc_ |= ((v) & mask_);				\
+		WREG_MISC(misc_);				\
+	} while (0)
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define WREG_ATTR(reg, v)					\
 	do {							\
 		RREG8(0x1fda);					\
@@ -110,6 +135,57 @@
 #define MGAG200_MAX_FB_HEIGHT 4096
 #define MGAG200_MAX_FB_WIDTH 4096
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct mga_device;
+struct mgag200_pll;
+
+/*
+ * Stores parameters for programming the PLLs
+ *
+ * Fref: reference frequency (A: 25.175 Mhz, B: 28.361, C: XX Mhz)
+ * Fo: output frequency
+ * Fvco = Fref * (N / M)
+ * Fo = Fvco / P
+ *
+ * S = [0..3]
+ */
+struct mgag200_pll_values {
+	unsigned int m;
+	unsigned int n;
+	unsigned int p;
+	unsigned int s;
+};
+
+struct mgag200_pll_funcs {
+	int (*compute)(struct mgag200_pll *pll, long clock, struct mgag200_pll_values *pllc);
+	void (*update)(struct mgag200_pll *pll, const struct mgag200_pll_values *pllc);
+};
+
+struct mgag200_pll {
+	struct mga_device *mdev;
+
+	const struct mgag200_pll_funcs *funcs;
+};
+
+struct mgag200_crtc_state {
+	struct drm_crtc_state base;
+
+	struct mgag200_pll_values pixpllc;
+};
+
+static inline struct mgag200_crtc_state *to_mgag200_crtc_state(struct drm_crtc_state *base)
+{
+	return container_of(base, struct mgag200_crtc_state, base);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define to_mga_connector(x) container_of(x, struct mga_connector, base)
 
 struct mga_i2c_chan {
@@ -166,8 +242,14 @@ struct mga_device {
 
 	enum mga_type			type;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int bpp_shifts[4];
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int fb_mtrr;
 
 	union {
@@ -182,8 +264,18 @@ struct mga_device {
 		} g200se;
 	} model;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct mga_connector connector;
+	struct mgag200_pll pixpll;
+=======
 
 	struct mga_connector connector;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mga_connector connector;
+	struct mgag200_pll pixpll;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct drm_simple_display_pipe display_pipe;
 };
 
@@ -192,6 +284,9 @@ static inline struct mga_device *to_mga_device(struct drm_device *dev)
 	return container_of(dev, struct mga_device, base);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static inline enum mga_type
 mgag200_type_from_driver_data(kernel_ulong_t driver_data)
 {
@@ -204,6 +299,9 @@ mgag200_flags_from_driver_data(kernel_ulong_t driver_data)
 	return driver_data & MGAG200_FLAG_MASK;
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				/* mgag200_mode.c */
 int mgag200_modeset_init(struct mga_device *mdev);
 
@@ -214,4 +312,16 @@ void mgag200_i2c_destroy(struct mga_i2c_chan *i2c);
 				/* mgag200_mm.c */
 int mgag200_mm_init(struct mga_device *mdev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+				/* mgag200_pll.c */
+int mgag200_pixpll_init(struct mgag200_pll *pixpll, struct mga_device *mdev);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				/* mgag200_pll.c */
+int mgag200_pixpll_init(struct mgag200_pll *pixpll, struct mga_device *mdev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif				/* __MGAG200_DRV_H__ */

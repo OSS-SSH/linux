@@ -76,6 +76,14 @@ static void dwc2_set_s3c6400_params(struct dwc2_hsotg *hsotg)
 	struct dwc2_core_params *p = &hsotg->params;
 
 	p->power_down = DWC2_POWER_DOWN_PARAM_NONE;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	p->no_clock_gating = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	p->no_clock_gating = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	p->phy_utmi_width = 8;
 }
 

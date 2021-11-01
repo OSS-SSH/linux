@@ -176,7 +176,13 @@ static void iproc_gpio_irq_handler(struct irq_desc *desc)
 
 		for_each_set_bit(bit, &val, NGPIOS_PER_BANK) {
 			unsigned pin = NGPIOS_PER_BANK * i + bit;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			int child_irq = irq_find_mapping(gc->irq.domain, pin);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			/*
 			 * Clear the interrupt before invoking the
@@ -185,7 +191,15 @@ static void iproc_gpio_irq_handler(struct irq_desc *desc)
 			writel(BIT(bit), chip->base + (i * GPIO_BANK_SIZE) +
 			       IPROC_GPIO_INT_CLR_OFFSET);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			generic_handle_domain_irq(gc->irq.domain, pin);
+=======
 			generic_handle_irq(child_irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			generic_handle_domain_irq(gc->irq.domain, pin);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 

@@ -1140,8 +1140,18 @@ static bool s5p_jpeg_parse_hdr(struct s5p_jpeg_q_data *result,
 			continue;
 		length = 0;
 		switch (c) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		/* JPEG_MARKER_SOF0: baseline JPEG */
+		case JPEG_MARKER_SOF0:
+=======
 		/* SOF0: baseline JPEG */
 		case SOF0:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* JPEG_MARKER_SOF0: baseline JPEG */
+		case JPEG_MARKER_SOF0:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (get_word_be(&jpeg_buffer, &word))
 				break;
 			length = (long)word - 2;
@@ -1172,7 +1182,15 @@ static bool s5p_jpeg_parse_hdr(struct s5p_jpeg_q_data *result,
 			notfound = 0;
 			break;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		case JPEG_MARKER_DQT:
+=======
 		case DQT:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case JPEG_MARKER_DQT:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (get_word_be(&jpeg_buffer, &word))
 				break;
 			length = (long)word - 2;
@@ -1185,7 +1203,15 @@ static bool s5p_jpeg_parse_hdr(struct s5p_jpeg_q_data *result,
 			skip(&jpeg_buffer, length);
 			break;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		case JPEG_MARKER_DHT:
+=======
 		case DHT:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case JPEG_MARKER_DHT:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (get_word_be(&jpeg_buffer, &word))
 				break;
 			length = (long)word - 2;
@@ -1198,15 +1224,36 @@ static bool s5p_jpeg_parse_hdr(struct s5p_jpeg_q_data *result,
 			skip(&jpeg_buffer, length);
 			break;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		case JPEG_MARKER_SOS:
+=======
 		case SOS:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case JPEG_MARKER_SOS:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sos = jpeg_buffer.curr - 2; /* 0xffda */
 			break;
 
 		/* skip payload-less markers */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		case JPEG_MARKER_RST ... JPEG_MARKER_RST + 7:
+		case JPEG_MARKER_SOI:
+		case JPEG_MARKER_EOI:
+		case JPEG_MARKER_TEM:
+<<<<<<< HEAD
+=======
 		case RST ... RST + 7:
 		case SOI:
 		case EOI:
 		case TEM:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 
 		/* skip uninteresting payload markers */

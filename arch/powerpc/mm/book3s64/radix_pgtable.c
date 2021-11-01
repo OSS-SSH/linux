@@ -679,7 +679,17 @@ void radix__early_init_mmu_secondary(void)
 	mtspr(SPRN_UAMOR, 0);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Called during kexec sequence with MMU off */
+notrace void radix__mmu_cleanup_all(void)
+=======
 void radix__mmu_cleanup_all(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Called during kexec sequence with MMU off */
+notrace void radix__mmu_cleanup_all(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long lpcr;
 

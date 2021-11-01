@@ -175,7 +175,15 @@ int svm_range_split_by_granularity(struct kfd_process *p, struct mm_struct *mm,
 			       unsigned long addr, struct svm_range *parent,
 			       struct svm_range *prange);
 int svm_range_restore_pages(struct amdgpu_device *adev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			    unsigned int pasid, uint64_t addr, bool write_fault);
+=======
 			    unsigned int pasid, uint64_t addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    unsigned int pasid, uint64_t addr, bool write_fault);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int svm_range_schedule_evict_svm_bo(struct amdgpu_amdkfd_fence *fence);
 void svm_range_add_list_work(struct svm_range_list *svms,
 			     struct svm_range *prange, struct mm_struct *mm,
@@ -209,7 +217,17 @@ static inline void svm_range_list_fini(struct kfd_process *p)
 }
 
 static inline int svm_range_restore_pages(struct amdgpu_device *adev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					  unsigned int pasid, uint64_t addr,
+					  bool write_fault)
+=======
 					  unsigned int pasid, uint64_t addr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  unsigned int pasid, uint64_t addr,
+					  bool write_fault)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return -EFAULT;
 }

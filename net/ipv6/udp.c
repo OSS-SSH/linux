@@ -133,7 +133,17 @@ static int compute_score(struct sock *sk, struct net *net,
 	dev_match = udp_sk_bound_dev_eq(net, sk->sk_bound_dev_if, dif, sdif);
 	if (!dev_match)
 		return -1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (sk->sk_bound_dev_if)
+		score++;
+=======
 	score++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (sk->sk_bound_dev_if)
+		score++;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (READ_ONCE(sk->sk_incoming_cpu) == raw_smp_processor_id())
 		score++;
@@ -502,12 +512,32 @@ static struct sock *__udp6_lib_err_encap(struct net *net,
 					 const struct ipv6hdr *hdr, int offset,
 					 struct udphdr *uh,
 					 struct udp_table *udptable,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					 struct sock *sk,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					 struct sock *sk,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 struct sk_buff *skb,
 					 struct inet6_skb_parm *opt,
 					 u8 type, u8 code, __be32 info)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int (*lookup)(struct sock *sk, struct sk_buff *skb);
+	int network_offset, transport_offset;
+	struct udp_sock *up;
+=======
 	int network_offset, transport_offset;
 	struct sock *sk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*lookup)(struct sock *sk, struct sk_buff *skb);
+	int network_offset, transport_offset;
+	struct udp_sock *up;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	network_offset = skb_network_offset(skb);
 	transport_offset = skb_transport_offset(skb);
@@ -518,18 +548,53 @@ static struct sock *__udp6_lib_err_encap(struct net *net,
 	/* Transport header needs to point to the UDP header */
 	skb_set_transport_header(skb, offset);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (sk) {
+		up = udp_sk(sk);
+
+		lookup = READ_ONCE(up->encap_err_lookup);
+		if (lookup && lookup(sk, skb))
+			sk = NULL;
+
+		goto out;
+	}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sk = __udp6_lib_lookup(net, &hdr->daddr, uh->source,
 			       &hdr->saddr, uh->dest,
 			       inet6_iif(skb), 0, udptable, skb);
 	if (sk) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		up = udp_sk(sk);
+=======
 		int (*lookup)(struct sock *sk, struct sk_buff *skb);
 		struct udp_sock *up = udp_sk(sk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		up = udp_sk(sk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		lookup = READ_ONCE(up->encap_err_lookup);
 		if (!lookup || lookup(sk, skb))
 			sk = NULL;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+out:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!sk) {
 		sk = ERR_PTR(__udp6_lib_err_encap_no_sk(skb, opt, type, code,
 							offset, info));
@@ -558,16 +623,38 @@ int __udp6_lib_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
 
 	sk = __udp6_lib_lookup(net, daddr, uh->dest, saddr, uh->source,
 			       inet6_iif(skb), inet6_sdif(skb), udptable, NULL);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
 	if (!sk || udp_sk(sk)->encap_type) {
 		/* No socket for error: try tunnels before discarding */
-		sk = ERR_PTR(-ENOENT);
 		if (static_branch_unlikely(&udpv6_encap_needed_key)) {
 			sk = __udp6_lib_err_encap(net, hdr, offset, uh,
-						  udptable, skb,
+						  udptable, sk, skb,
 						  opt, type, code, info);
 			if (!sk)
 				return 0;
+		} else
+			sk = ERR_PTR(-ENOENT);
+=======
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!sk || udp_sk(sk)->encap_type) {
+		/* No socket for error: try tunnels before discarding */
+		if (static_branch_unlikely(&udpv6_encap_needed_key)) {
+			sk = __udp6_lib_err_encap(net, hdr, offset, uh,
+						  udptable, sk, skb,
+						  opt, type, code, info);
+			if (!sk)
+				return 0;
+<<<<<<< HEAD
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		} else
+			sk = ERR_PTR(-ENOENT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (IS_ERR(sk)) {
 			__ICMP6_INC_STATS(net, __in6_dev_get(skb->dev),
@@ -1290,13 +1377,29 @@ int udpv6_sendmsg(struct sock *sk, struct msghdr *msg, size_t len)
 	int addr_len = msg->msg_namelen;
 	bool connected = false;
 	int ulen = len;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
+=======
 	int corkreq = up->corkflag || msg->msg_flags&MSG_MORE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int corkreq = READ_ONCE(up->corkflag) || msg->msg_flags&MSG_MORE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 	int is_udplite = IS_UDPLITE(sk);
 	int (*getfrag)(void *, char *, int, int, int, struct sk_buff *);
 
 	ipcm6_init(&ipc6);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ipc6.gso_size = READ_ONCE(up->gso_size);
+=======
 	ipc6.gso_size = up->gso_size;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ipc6.gso_size = READ_ONCE(up->gso_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ipc6.sockc.tsflags = sk->sk_tsflags;
 	ipc6.sockc.mark = sk->sk_mark;
 
@@ -1462,7 +1565,15 @@ do_udp_sendmsg:
 		fl6.saddr = np->saddr;
 	fl6.fl6_sport = inet->inet_sport;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (cgroup_bpf_enabled(CGROUP_UDP6_SENDMSG) && !connected) {
+=======
 	if (cgroup_bpf_enabled(BPF_CGROUP_UDP6_SENDMSG) && !connected) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (cgroup_bpf_enabled(CGROUP_UDP6_SENDMSG) && !connected) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = BPF_CGROUP_RUN_PROG_UDP6_SENDMSG_LOCK(sk,
 					   (struct sockaddr *)sin6, &fl6.saddr);
 		if (err)

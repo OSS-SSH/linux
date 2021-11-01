@@ -79,9 +79,21 @@ a different secondary CPU release mechanism)
 linux,usable-memory-range
 -------------------------
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+This property holds a base address and size, describing a limited region in
+which memory may be considered available for use by the kernel. Memory outside
+of this range is not available for use.
+=======
 This property (arm64 only) holds a base address and size, describing a
 limited region in which memory may be considered available for use by
 the kernel. Memory outside of this range is not available for use.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+This property holds a base address and size, describing a limited region in
+which memory may be considered available for use by the kernel. Memory outside
+of this range is not available for use.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 This property describes a limitation: memory within this range is only
 valid when also described through another mechanism that the kernel
@@ -106,9 +118,21 @@ respectively, of the root node.
 linux,elfcorehdr
 ----------------
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+This property holds the memory range, the address and the size, of the elf
+core header which mainly describes the panicked kernel's memory layout as
+PT_LOAD segments of elf format.
+=======
 This property (currently used only on arm64) holds the memory range,
 the address and the size, of the elf core header which mainly describes
 the panicked kernel's memory layout as PT_LOAD segments of elf format.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+This property holds the memory range, the address and the size, of the elf
+core header which mainly describes the panicked kernel's memory layout as
+PT_LOAD segments of elf format.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 e.g.
 
 / {

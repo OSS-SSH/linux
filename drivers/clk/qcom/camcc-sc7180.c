@@ -1652,32 +1652,78 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
 	struct regmap *regmap;
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = devm_pm_runtime_enable(&pdev->dev);
+	if (ret < 0)
+		return ret;
+
+	ret = devm_pm_clk_create(&pdev->dev);
+<<<<<<< HEAD
+=======
 	pm_runtime_enable(&pdev->dev);
 	ret = pm_clk_create(&pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 
 	ret = pm_clk_add(&pdev->dev, "xo");
 	if (ret < 0) {
 		dev_err(&pdev->dev, "Failed to acquire XO clock\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return ret;
+=======
 		goto disable_pm_runtime;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = pm_clk_add(&pdev->dev, "iface");
 	if (ret < 0) {
 		dev_err(&pdev->dev, "Failed to acquire iface clock\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return ret;
+=======
 		goto disable_pm_runtime;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = pm_runtime_get(&pdev->dev);
 	if (ret)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return ret;
+=======
 		goto destroy_pm_clk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	regmap = qcom_cc_map(pdev, &cam_cc_sc7180_desc);
 	if (IS_ERR(regmap)) {
 		ret = PTR_ERR(regmap);
 		pm_runtime_put(&pdev->dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return ret;
+=======
 		goto destroy_pm_clk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	clk_fabia_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
@@ -1689,6 +1735,13 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
 	pm_runtime_put(&pdev->dev);
 	if (ret < 0) {
 		dev_err(&pdev->dev, "Failed to register CAM CC clocks\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return ret;
+	}
+
+	return 0;
+=======
 		goto destroy_pm_clk;
 	}
 
@@ -1701,6 +1754,13 @@ disable_pm_runtime:
 	pm_runtime_disable(&pdev->dev);
 
 	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+	}
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct dev_pm_ops cam_cc_pm_ops = {

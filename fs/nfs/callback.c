@@ -429,6 +429,16 @@ check_gss_callback_principal(struct nfs_client *clp, struct svc_rqst *rqstp)
  */
 static int nfs_callback_authenticate(struct svc_rqst *rqstp)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	rqstp->rq_auth_stat = rpc_autherr_badcred;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rqstp->rq_auth_stat = rpc_autherr_badcred;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (rqstp->rq_authop->flavour) {
 	case RPC_AUTH_NULL:
 		if (rqstp->rq_proc != CB_NULL)
@@ -439,6 +449,16 @@ static int nfs_callback_authenticate(struct svc_rqst *rqstp)
 		 if (svc_is_backchannel(rqstp))
 			return SVC_DENIED;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	rqstp->rq_auth_stat = rpc_auth_ok;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	rqstp->rq_auth_stat = rpc_auth_ok;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return SVC_OK;
 }
 

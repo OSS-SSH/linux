@@ -456,7 +456,15 @@
 			#mbox-cells = <2>;
 		};
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		qupv3_id_0: geniqup@9c0000 {
+=======
 		qupv3_id_1: geniqup@9c0000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		qupv3_id_0: geniqup@9c0000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			compatible = "qcom,geni-se-qup";
 			reg = <0x0 0x009c0000 0x0 0x6000>;
 			clock-names = "m-ahb", "s-ahb";
@@ -481,6 +489,40 @@
 			};
 		};
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		qupv3_id_1: geniqup@ac0000 {
+			compatible = "qcom,geni-se-qup";
+			reg = <0x0 0x00ac0000 0x0 0x6000>;
+			clock-names = "m-ahb", "s-ahb";
+			clocks = <&gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
+				 <&gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
+			#address-cells = <2>;
+			#size-cells = <2>;
+			ranges;
+			status = "disabled";
+
+			i2c13: i2c@a94000 {
+				compatible = "qcom,geni-i2c";
+				reg = <0 0x00a94000 0 0x4000>;
+				clock-names = "se";
+				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
+				pinctrl-names = "default";
+				pinctrl-0 = <&qup_i2c13_default_state>;
+				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
+				#address-cells = <1>;
+				#size-cells = <0>;
+				status = "disabled";
+			};
+		};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		apps_smmu: iommu@15000000 {
 			compatible = "qcom,sm8350-smmu-500", "arm,mmu-500";
 			reg = <0 0x15000000 0 0x100000>;
@@ -666,12 +708,26 @@
 			clocks = <&rpmhcc RPMH_IPA_CLK>;
 			clock-names = "core";
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			interconnects = <&aggre2_noc MASTER_IPA &mc_virt SLAVE_EBI1>,
+					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_IPA_CFG>;
+			interconnect-names = "memory",
+					     "config";
+=======
 			interconnects = <&aggre2_noc MASTER_IPA &gem_noc SLAVE_LLCC>,
 					<&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1>,
 					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_IPA_CFG>;
 			interconnect-names = "ipa_to_llcc",
 					     "llcc_to_ebi1",
 					     "appss_to_ipa";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			interconnects = <&aggre2_noc MASTER_IPA &mc_virt SLAVE_EBI1>,
+					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_IPA_CFG>;
+			interconnect-names = "memory",
+					     "config";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			qcom,smem-states = <&ipa_smp2p_out 0>,
 					   <&ipa_smp2p_out 1>;
@@ -801,6 +857,14 @@
 			interrupt-controller;
 			#interrupt-cells = <2>;
 			gpio-ranges = <&tlmm 0 0 204>;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			wakeup-parent = <&pdc>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			wakeup-parent = <&pdc>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			qup_uart3_default_state: qup-uart3-default-state {
 				rx {
@@ -812,6 +876,28 @@
 					function = "qup3";
 				};
 			};
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+			qup_i2c13_default_state: qup-i2c13-default-state {
+				mux {
+					pins = "gpio0", "gpio1";
+					function = "qup13";
+				};
+
+				config {
+					pins = "gpio0", "gpio1";
+					drive-strength = <2>;
+					bias-pull-up;
+				};
+			};
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		rng: rng@10d3000 {
@@ -1273,7 +1359,15 @@
 
 			resets = <&gcc GCC_USB30_PRIM_BCR>;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			usb_1_dwc3: usb@a600000 {
+=======
 			usb_1_dwc3: dwc3@a600000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			usb_1_dwc3: usb@a600000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				compatible = "snps,dwc3";
 				reg = <0 0x0a600000 0 0xcd00>;
 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
@@ -1317,7 +1411,15 @@
 
 			resets = <&gcc GCC_USB30_SEC_BCR>;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			usb_2_dwc3: usb@a800000 {
+=======
 			usb_2_dwc3: dwc3@a800000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			usb_2_dwc3: usb@a800000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				compatible = "snps,dwc3";
 				reg = <0 0x0a800000 0 0xcd00>;
 				interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;

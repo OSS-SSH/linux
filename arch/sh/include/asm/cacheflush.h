@@ -63,6 +63,16 @@ static inline void flush_anon_page(struct vm_area_struct *vma,
 	if (boot_cpu_data.dcache.n_aliases && PageAnon(page))
 		__flush_anon_page(page, vmaddr);
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+#define ARCH_IMPLEMENTS_FLUSH_KERNEL_VMAP_RANGE 1
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+#define ARCH_IMPLEMENTS_FLUSH_KERNEL_VMAP_RANGE 1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void flush_kernel_vmap_range(void *addr, int size)
 {
 	__flush_wback_region(addr, size);
@@ -72,12 +82,18 @@ static inline void invalidate_kernel_vmap_range(void *addr, int size)
 	__flush_invalidate_region(addr, size);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define ARCH_HAS_FLUSH_KERNEL_DCACHE_PAGE
 static inline void flush_kernel_dcache_page(struct page *page)
 {
 	flush_dcache_page(page);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void copy_to_user_page(struct vm_area_struct *vma,
 	struct page *page, unsigned long vaddr, void *dst, const void *src,
 	unsigned long len);

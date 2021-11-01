@@ -261,8 +261,18 @@ int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value)
 			return ret;
 		}
 		return -EINVAL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case MSM_PARAM_PRIORITIES:
+		*value = gpu->nr_rings * NR_SCHED_PRIORITIES;
+=======
 	case MSM_PARAM_NR_RINGS:
 		*value = gpu->nr_rings;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case MSM_PARAM_PRIORITIES:
+		*value = gpu->nr_rings * NR_SCHED_PRIORITIES;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	case MSM_PARAM_PP_PGTABLE:
 		*value = 0;
@@ -390,7 +400,15 @@ struct drm_gem_object *adreno_fw_create_bo(struct msm_gpu *gpu,
 	struct drm_gem_object *bo;
 	void *ptr;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ptr = msm_gem_kernel_new(gpu->dev, fw->size - 4,
+=======
 	ptr = msm_gem_kernel_new_locked(gpu->dev, fw->size - 4,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ptr = msm_gem_kernel_new(gpu->dev, fw->size - 4,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		MSM_BO_WC | MSM_BO_GPU_READONLY, gpu->aspace, &bo, iova);
 
 	if (IS_ERR(ptr))

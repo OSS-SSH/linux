@@ -41,10 +41,24 @@ static struct sk_buff *mtk_tag_xmit(struct sk_buff *skb,
 	default:
 		xmit_tpid = MTK_HDR_XMIT_UNTAGGED;
 		skb_push(skb, MTK_HDR_LEN);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dsa_alloc_etype_header(skb, MTK_HDR_LEN);
+	}
+
+	mtk_tag = dsa_etype_header_pos_tx(skb);
+=======
 		memmove(skb->data, skb->data + MTK_HDR_LEN, 2 * ETH_ALEN);
 	}
 
 	mtk_tag = skb->data + 2 * ETH_ALEN;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dsa_alloc_etype_header(skb, MTK_HDR_LEN);
+	}
+
+	mtk_tag = dsa_etype_header_pos_tx(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Mark tag attribute on special tag insertion to notify hardware
 	 * whether that's a combined special tag with 802.1Q header.
@@ -61,8 +75,16 @@ static struct sk_buff *mtk_tag_xmit(struct sk_buff *skb,
 	return skb;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static struct sk_buff *mtk_tag_rcv(struct sk_buff *skb, struct net_device *dev)
+=======
 static struct sk_buff *mtk_tag_rcv(struct sk_buff *skb, struct net_device *dev,
 				   struct packet_type *pt)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct sk_buff *mtk_tag_rcv(struct sk_buff *skb, struct net_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u16 hdr;
 	int port;
@@ -71,19 +93,35 @@ static struct sk_buff *mtk_tag_rcv(struct sk_buff *skb, struct net_device *dev,
 	if (unlikely(!pskb_may_pull(skb, MTK_HDR_LEN)))
 		return NULL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	phdr = dsa_etype_header_pos_rx(skb);
+=======
 	/* The MTK header is added by the switch between src addr
 	 * and ethertype at this point, skb->data points to 2 bytes
 	 * after src addr so header should be 2 bytes right before.
 	 */
 	phdr = (__be16 *)(skb->data - 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phdr = dsa_etype_header_pos_rx(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hdr = ntohs(*phdr);
 
 	/* Remove MTK tag and recalculate checksum. */
 	skb_pull_rcsum(skb, MTK_HDR_LEN);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dsa_strip_etype_header(skb, MTK_HDR_LEN);
+=======
 	memmove(skb->data - ETH_HLEN,
 		skb->data - ETH_HLEN - MTK_HDR_LEN,
 		2 * ETH_ALEN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dsa_strip_etype_header(skb, MTK_HDR_LEN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Get source port information */
 	port = (hdr & MTK_HDR_RECV_SOURCE_PORT_MASK);
@@ -92,7 +130,15 @@ static struct sk_buff *mtk_tag_rcv(struct sk_buff *skb, struct net_device *dev,
 	if (!skb->dev)
 		return NULL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dsa_default_offload_fwd_mark(skb);
+=======
 	skb->offload_fwd_mark = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dsa_default_offload_fwd_mark(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return skb;
 }

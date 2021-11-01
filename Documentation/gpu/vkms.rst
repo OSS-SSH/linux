@@ -98,9 +98,29 @@ with VKMS maintainers.
 IGT better support
 ------------------
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+Debugging:
+
+- kms_plane: some test cases are failing due to timeout on capturing CRC;
+
+- kms_flip: when running test cases in sequence, some successful individual
+  test cases are failing randomly; when individually, some successful test
+  cases display in the log the following error::
+
+  [drm:vkms_prepare_fb [vkms]] ERROR vmap failed: -4
+
+Virtual hardware (vblank-less) mode:
+<<<<<<< HEAD
+=======
 - Investigate: (1) test cases on kms_plane that are failing due to timeout on
   capturing CRC; (2) when running kms_flip test cases in sequence, some
   successful individual test cases are failing randomly.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 - VKMS already has support for vblanks simulated via hrtimers, which can be
   tested with kms_flip test; in some way, we can say that VKMS already mimics
@@ -116,7 +136,27 @@ Add Plane Features
 
 There's lots of plane features we could add support for:
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+- Multiple overlay planes. [Good to get started]
+
+- Clearing primary plane: clear primary plane before plane composition (at the
+  start) for correctness of pixel blend ops. It also guarantees alpha channel
+  is cleared in the target buffer for stable crc. [Good to get started]
+
+- ARGB format on primary plane: blend the primary plane into background with
+  translucent alpha.
+
+- Support when the primary plane isn't exactly matching the output size: blend
+  the primary plane into the black background.
+<<<<<<< HEAD
+=======
 - Real overlay planes, not just cursor.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 - Full alpha blending on all planes.
 
@@ -129,6 +169,11 @@ There's lots of plane features we could add support for:
   cursor api).
 
 For all of these, we also want to review the igt test coverage and make sure
+<<<<<<< HEAD
+<<<<<<< HEAD
+all relevant igt testcases work on vkms. They are good options for internship
+project.
+=======
 all relevant igt testcases work on vkms.
 
 Prime Buffer Sharing
@@ -136,6 +181,11 @@ Prime Buffer Sharing
 
 - Syzbot report - WARNING in vkms_gem_free_object:
   https://syzkaller.appspot.com/bug?extid=e7ad70d406e74d8fc9d0
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+all relevant igt testcases work on vkms. They are good options for internship
+project.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Runtime Configuration
 ---------------------
@@ -153,7 +203,15 @@ module. Use/Test-cases:
   the refresh rate.
 
 The currently proposed solution is to expose vkms configuration through
+<<<<<<< HEAD
+<<<<<<< HEAD
+configfs. All existing module options should be supported through configfs
+=======
 configfs.  All existing module options should be supported through configfs
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+configfs. All existing module options should be supported through configfs
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 too.
 
 Writeback support
@@ -162,6 +220,14 @@ Writeback support
 - The writeback and CRC capture operations share the use of composer_enabled
   boolean to ensure vblanks. Probably, when these operations work together,
   composer_enabled needs to refcounting the composer state to proper work.
+<<<<<<< HEAD
+<<<<<<< HEAD
+  [Good to get started]
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  [Good to get started]
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 - Add support for cloned writeback outputs and related test cases using a
   cloned output in the IGT kms_writeback.

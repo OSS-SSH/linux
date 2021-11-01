@@ -24,6 +24,10 @@ int ipc_imem_sys_wwan_open(struct iosm_imem *ipc_imem, int if_id)
 		return -EIO;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return ipc_mux_open_session(ipc_imem->mux, if_id);
+=======
 	/* check for the interafce id
 	 * if if_id 1 to 8 then create IP MUX channel sessions.
 	 * To start MUX session from 0 as network interface id would start
@@ -33,6 +37,10 @@ int ipc_imem_sys_wwan_open(struct iosm_imem *ipc_imem, int if_id)
 		return ipc_mux_open_session(ipc_imem->mux, if_id - 1);
 
 	return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ipc_mux_open_session(ipc_imem->mux, if_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Release a net link to CP. */
@@ -41,7 +49,15 @@ void ipc_imem_sys_wwan_close(struct iosm_imem *ipc_imem, int if_id,
 {
 	if (ipc_imem->mux && if_id >= IP_MUX_SESSION_START &&
 	    if_id <= IP_MUX_SESSION_END)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ipc_mux_close_session(ipc_imem->mux, if_id);
+=======
 		ipc_mux_close_session(ipc_imem->mux, if_id - 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ipc_mux_close_session(ipc_imem->mux, if_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Tasklet call to do uplink transfer. */
@@ -83,6 +99,11 @@ int ipc_imem_sys_wwan_transmit(struct iosm_imem *ipc_imem,
 		goto out;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Route the UL packet through IP MUX Layer */
+	ret = ipc_mux_ul_trigger_encode(ipc_imem->mux, if_id, skb);
+=======
 	if (if_id >= IP_MUX_SESSION_START && if_id <= IP_MUX_SESSION_END)
 		/* Route the UL packet through IP MUX Layer */
 		ret = ipc_mux_ul_trigger_encode(ipc_imem->mux,
@@ -90,6 +111,11 @@ int ipc_imem_sys_wwan_transmit(struct iosm_imem *ipc_imem,
 	else
 		dev_err(ipc_imem->dev,
 			"invalid if_id %d: ", if_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Route the UL packet through IP MUX Layer */
+	ret = ipc_mux_ul_trigger_encode(ipc_imem->mux, if_id, skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	return ret;
 }

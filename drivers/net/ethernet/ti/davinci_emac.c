@@ -383,12 +383,34 @@ static void emac_get_drvinfo(struct net_device *ndev,
  * emac_get_coalesce - Get interrupt coalesce settings for this device
  * @ndev : The DaVinci EMAC network adapter
  * @coal : ethtool coalesce settings structure
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @kernel_coal: ethtool CQE mode setting structure
+ * @extack: extack for reporting error messages
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @kernel_coal: ethtool CQE mode setting structure
+ * @extack: extack for reporting error messages
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Fetch the current interrupt coalesce settings
  *
  */
 static int emac_get_coalesce(struct net_device *ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			     struct ethtool_coalesce *coal,
+			     struct kernel_ethtool_coalesce *kernel_coal,
+			     struct netlink_ext_ack *extack)
+=======
 				struct ethtool_coalesce *coal)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct ethtool_coalesce *coal,
+			     struct kernel_ethtool_coalesce *kernel_coal,
+			     struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct emac_priv *priv = netdev_priv(ndev);
 
@@ -401,12 +423,34 @@ static int emac_get_coalesce(struct net_device *ndev,
  * emac_set_coalesce - Set interrupt coalesce settings for this device
  * @ndev : The DaVinci EMAC network adapter
  * @coal : ethtool coalesce settings structure
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @kernel_coal: ethtool CQE mode setting structure
+ * @extack: extack for reporting error messages
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @kernel_coal: ethtool CQE mode setting structure
+ * @extack: extack for reporting error messages
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Set interrupt coalesce parameters
  *
  */
 static int emac_set_coalesce(struct net_device *ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			     struct ethtool_coalesce *coal,
+			     struct kernel_ethtool_coalesce *kernel_coal,
+			     struct netlink_ext_ack *extack)
+=======
 				struct ethtool_coalesce *coal)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     struct ethtool_coalesce *coal,
+			     struct kernel_ethtool_coalesce *kernel_coal,
+			     struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct emac_priv *priv = netdev_priv(ndev);
 	u32 int_ctrl, num_interrupts = 0;
@@ -943,7 +987,15 @@ static int emac_dev_xmit(struct sk_buff *skb, struct net_device *ndev)
 		goto fail_tx;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret_code = skb_put_padto(skb, EMAC_DEF_MIN_ETHPKTSIZE);
+=======
 	ret_code = skb_padto(skb, EMAC_DEF_MIN_ETHPKTSIZE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret_code = skb_put_padto(skb, EMAC_DEF_MIN_ETHPKTSIZE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(ret_code < 0)) {
 		if (netif_msg_tx_err(priv) && net_ratelimit())
 			dev_err(emac_dev, "DaVinci EMAC: packet pad failed");
@@ -1462,7 +1514,15 @@ static int emac_dev_open(struct net_device *ndev)
 		struct ethtool_coalesce coal;
 
 		coal.rx_coalesce_usecs = (priv->coal_intvl << 4);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		emac_set_coalesce(ndev, &coal, NULL, NULL);
+=======
 		emac_set_coalesce(ndev, &coal);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		emac_set_coalesce(ndev, &coal, NULL, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	cpdma_ctlr_start(priv->dma);
@@ -1670,7 +1730,15 @@ static const struct net_device_ops emac_netdev_ops = {
 	.ndo_start_xmit		= emac_dev_xmit,
 	.ndo_set_rx_mode	= emac_dev_mcast_set,
 	.ndo_set_mac_address	= emac_dev_setmac_addr,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl		= emac_devioctl,
+=======
 	.ndo_do_ioctl		= emac_devioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= emac_devioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout		= emac_dev_tx_timeout,
 	.ndo_get_stats		= emac_dev_getnetstats,
 #ifdef CONFIG_NET_POLL_CONTROLLER

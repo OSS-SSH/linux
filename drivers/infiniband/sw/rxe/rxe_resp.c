@@ -318,7 +318,15 @@ static enum resp_states get_srq_wqe(struct rxe_qp *qp)
 		pr_warn("%s: invalid num_sge in SRQ entry\n", __func__);
 		return RESPST_ERR_MALFORMED_WQE;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	size = sizeof(*wqe) + wqe->dma.num_sge*sizeof(struct rxe_sge);
+=======
 	size = sizeof(wqe) + wqe->dma.num_sge*sizeof(struct rxe_sge);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	size = sizeof(*wqe) + wqe->dma.num_sge*sizeof(struct rxe_sge);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memcpy(&qp->resp.srq_wqe, wqe, size);
 
 	qp->resp.wqe = &qp->resp.srq_wqe.wqe;
@@ -536,7 +544,15 @@ static enum resp_states send_data_in(struct rxe_qp *qp, void *data_addr,
 	int err;
 
 	err = copy_data(qp->pd, IB_ACCESS_LOCAL_WRITE, &qp->resp.wqe->dma,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			data_addr, data_len, RXE_TO_MR_OBJ);
+=======
 			data_addr, data_len, RXE_TO_MR_OBJ, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			data_addr, data_len, RXE_TO_MR_OBJ);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(err))
 		return (err == -ENOSPC) ? RESPST_ERR_LENGTH
 					: RESPST_ERR_MALFORMED_WQE;
@@ -552,7 +568,15 @@ static enum resp_states write_data_in(struct rxe_qp *qp,
 	int data_len = payload_size(pkt);
 
 	err = rxe_mr_copy(qp->resp.mr, qp->resp.va + qp->resp.offset,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			  payload_addr(pkt), data_len, RXE_TO_MR_OBJ);
+=======
 			  payload_addr(pkt), data_len, RXE_TO_MR_OBJ, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			  payload_addr(pkt), data_len, RXE_TO_MR_OBJ);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		rc = RESPST_ERR_RKEY_VIOLATION;
 		goto out;
@@ -613,6 +637,13 @@ static struct sk_buff *prepare_ack_packet(struct rxe_qp *qp,
 					  int opcode,
 					  int payload,
 					  u32 psn,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					  u8 syndrome)
+{
+	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
+	struct sk_buff *skb;
+=======
 					  u8 syndrome,
 					  u32 *crcp)
 {
@@ -620,6 +651,13 @@ static struct sk_buff *prepare_ack_packet(struct rxe_qp *qp,
 	struct sk_buff *skb;
 	u32 crc = 0;
 	u32 *p;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  u8 syndrome)
+{
+	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
+	struct sk_buff *skb;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int paylen;
 	int pad;
 	int err;
@@ -651,12 +689,23 @@ static struct sk_buff *prepare_ack_packet(struct rxe_qp *qp,
 	if (ack->mask & RXE_ATMACK_MASK)
 		atmack_set_orig(ack, qp->resp.atomic_orig);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = rxe_prepare(ack, skb);
+=======
 	err = rxe_prepare(ack, skb, &crc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = rxe_prepare(ack, skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		kfree_skb(skb);
 		return NULL;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (crcp) {
 		/* CRC computation will be continued by the caller */
 		*crcp = crc;
@@ -665,6 +714,9 @@ static struct sk_buff *prepare_ack_packet(struct rxe_qp *qp,
 		*p = ~crc;
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return skb;
 }
 
@@ -682,8 +734,14 @@ static enum resp_states read_reply(struct rxe_qp *qp,
 	int opcode;
 	int err;
 	struct resp_res *res = qp->resp.res;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	u32 icrc;
 	u32 *p;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!res) {
 		/* This is the first time we process that request. Get a
@@ -742,24 +800,52 @@ static enum resp_states read_reply(struct rxe_qp *qp,
 	payload = min_t(int, res->read.resid, mtu);
 
 	skb = prepare_ack_packet(qp, req_pkt, &ack_pkt, opcode, payload,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 res->cur_psn, AETH_ACK_UNLIMITED);
+=======
 				 res->cur_psn, AETH_ACK_UNLIMITED, &icrc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 res->cur_psn, AETH_ACK_UNLIMITED);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!skb)
 		return RESPST_ERR_RNR;
 
 	err = rxe_mr_copy(res->read.mr, res->read.va, payload_addr(&ack_pkt),
+<<<<<<< HEAD
+<<<<<<< HEAD
+			  payload, RXE_FROM_MR_OBJ);
+=======
 			  payload, RXE_FROM_MR_OBJ, &icrc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			  payload, RXE_FROM_MR_OBJ);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		pr_err("Failed copying memory\n");
 
 	if (bth_pad(&ack_pkt)) {
-		struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
+<<<<<<< HEAD
+<<<<<<< HEAD
 		u8 *pad = payload_addr(&ack_pkt) + payload;
 
 		memset(pad, 0, bth_pad(&ack_pkt));
-		icrc = rxe_crc32(rxe, icrc, pad, bth_pad(&ack_pkt));
 	}
+=======
+		struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		u8 *pad = payload_addr(&ack_pkt) + payload;
+
+		memset(pad, 0, bth_pad(&ack_pkt));
+	}
+<<<<<<< HEAD
 	p = payload_addr(&ack_pkt) + payload + bth_pad(&ack_pkt);
 	*p = ~icrc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = rxe_xmit_packet(qp, &ack_pkt, skb);
 	if (err) {
@@ -984,7 +1070,15 @@ static int send_ack(struct rxe_qp *qp, struct rxe_pkt_info *pkt,
 	struct sk_buff *skb;
 
 	skb = prepare_ack_packet(qp, pkt, &ack_pkt, IB_OPCODE_RC_ACKNOWLEDGE,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 0, psn, syndrome);
+=======
 				 0, psn, syndrome, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 0, psn, syndrome);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!skb) {
 		err = -ENOMEM;
 		goto err1;
@@ -1008,7 +1102,15 @@ static int send_atomic_ack(struct rxe_qp *qp, struct rxe_pkt_info *pkt,
 
 	skb = prepare_ack_packet(qp, pkt, &ack_pkt,
 				 IB_OPCODE_RC_ATOMIC_ACKNOWLEDGE, 0, pkt->psn,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 syndrome);
+=======
 				 syndrome, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 syndrome);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!skb) {
 		rc = -ENOMEM;
 		goto out;

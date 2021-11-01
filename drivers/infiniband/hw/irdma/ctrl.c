@@ -2845,7 +2845,15 @@ static u64 irdma_sc_decode_fpm_commit(struct irdma_sc_dev *dev, __le64 *buf,
  * parses fpm commit info and copy base value
  * of hmc objects in hmc_info
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void
+=======
 static enum irdma_status_code
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 irdma_sc_parse_fpm_commit_buf(struct irdma_sc_dev *dev, __le64 *buf,
 			      struct irdma_hmc_obj_info *info, u32 *sd)
 {
@@ -2915,7 +2923,13 @@ irdma_sc_parse_fpm_commit_buf(struct irdma_sc_dev *dev, __le64 *buf,
 	else
 		*sd = (u32)(size >> 21);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -4187,11 +4201,23 @@ enum irdma_status_code irdma_sc_get_next_aeqe(struct irdma_sc_aeq *aeq,
  * @dev: sc device struct
  * @count: allocate count
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+void irdma_sc_repost_aeq_entries(struct irdma_sc_dev *dev, u32 count)
+{
+	writel(count, dev->hw_regs[IRDMA_AEQALLOC]);
+=======
 enum irdma_status_code irdma_sc_repost_aeq_entries(struct irdma_sc_dev *dev, u32 count)
 {
 	writel(count, dev->hw_regs[IRDMA_AEQALLOC]);
 
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void irdma_sc_repost_aeq_entries(struct irdma_sc_dev *dev, u32 count)
+{
+	writel(count, dev->hw_regs[IRDMA_AEQALLOC]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -4434,9 +4460,21 @@ static enum irdma_status_code irdma_sc_cfg_iw_fpm(struct irdma_sc_dev *dev,
 	ret_code = irdma_sc_commit_fpm_val(dev->cqp, 0, hmc_info->hmc_fn_id,
 					   &commit_fpm_mem, true, wait_type);
 	if (!ret_code)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		irdma_sc_parse_fpm_commit_buf(dev, dev->fpm_commit_buf,
+					      hmc_info->hmc_obj,
+					      &hmc_info->sd_table.sd_cnt);
+=======
 		ret_code = irdma_sc_parse_fpm_commit_buf(dev, dev->fpm_commit_buf,
 							 hmc_info->hmc_obj,
 							 &hmc_info->sd_table.sd_cnt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		irdma_sc_parse_fpm_commit_buf(dev, dev->fpm_commit_buf,
+					      hmc_info->hmc_obj,
+					      &hmc_info->sd_table.sd_cnt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	print_hex_dump_debug("HMC: COMMIT FPM BUFFER", DUMP_PREFIX_OFFSET, 16,
 			     8, commit_fpm_mem.va, IRDMA_COMMIT_FPM_BUF_SIZE,
 			     false);

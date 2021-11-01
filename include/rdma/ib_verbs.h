@@ -2268,8 +2268,24 @@ struct iw_cm_conn_param;
 			 !__same_type(((struct drv_struct *)NULL)->member,     \
 				      struct ib_struct)))
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define rdma_zalloc_drv_obj_gfp(ib_dev, ib_type, gfp)                          \
+	((struct ib_type *)rdma_zalloc_obj(ib_dev, ib_dev->ops.size_##ib_type, \
+					   gfp, false))
+
+#define rdma_zalloc_drv_obj_numa(ib_dev, ib_type)                              \
+	((struct ib_type *)rdma_zalloc_obj(ib_dev, ib_dev->ops.size_##ib_type, \
+					   GFP_KERNEL, true))
+<<<<<<< HEAD
+=======
 #define rdma_zalloc_drv_obj_gfp(ib_dev, ib_type, gfp)                         \
 	((struct ib_type *)kzalloc(ib_dev->ops.size_##ib_type, gfp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define rdma_zalloc_drv_obj(ib_dev, ib_type)                                   \
 	rdma_zalloc_drv_obj_gfp(ib_dev, ib_type, GFP_KERNEL)
@@ -2435,9 +2451,19 @@ struct ib_device_ops {
 			  struct ib_udata *udata);
 	int (*query_srq)(struct ib_srq *srq, struct ib_srq_attr *srq_attr);
 	int (*destroy_srq)(struct ib_srq *srq, struct ib_udata *udata);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int (*create_qp)(struct ib_qp *qp, struct ib_qp_init_attr *qp_init_attr,
+			 struct ib_udata *udata);
+=======
 	struct ib_qp *(*create_qp)(struct ib_pd *pd,
 				   struct ib_qp_init_attr *qp_init_attr,
 				   struct ib_udata *udata);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*create_qp)(struct ib_qp *qp, struct ib_qp_init_attr *qp_init_attr,
+			 struct ib_udata *udata);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*modify_qp)(struct ib_qp *qp, struct ib_qp_attr *qp_attr,
 			 int qp_attr_mask, struct ib_udata *udata);
 	int (*query_qp)(struct ib_qp *qp, struct ib_qp_attr *qp_attr,
@@ -2635,11 +2661,34 @@ struct ib_device_ops {
 	int (*query_ucontext)(struct ib_ucontext *context,
 			      struct uverbs_attr_bundle *attrs);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * Provide NUMA node. This API exists for rdmavt/hfi1 only.
+	 * Everyone else relies on Linux memory management model.
+	 */
+	int (*get_numa_node)(struct ib_device *dev);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DECLARE_RDMA_OBJ_SIZE(ib_ah);
 	DECLARE_RDMA_OBJ_SIZE(ib_counters);
 	DECLARE_RDMA_OBJ_SIZE(ib_cq);
 	DECLARE_RDMA_OBJ_SIZE(ib_mw);
 	DECLARE_RDMA_OBJ_SIZE(ib_pd);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DECLARE_RDMA_OBJ_SIZE(ib_qp);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DECLARE_RDMA_OBJ_SIZE(ib_qp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DECLARE_RDMA_OBJ_SIZE(ib_rwq_ind_table);
 	DECLARE_RDMA_OBJ_SIZE(ib_srq);
 	DECLARE_RDMA_OBJ_SIZE(ib_ucontext);
@@ -2746,6 +2795,24 @@ struct ib_device {
 	u32 lag_flags;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static inline void *rdma_zalloc_obj(struct ib_device *dev, size_t size,
+				    gfp_t gfp, bool is_numa_aware)
+{
+	if (is_numa_aware && dev->ops.get_numa_node)
+		return kzalloc_node(size, gfp, dev->ops.get_numa_node(dev));
+
+	return kzalloc(size, gfp);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ib_client_nl_info;
 struct ib_client {
 	const char *name;
@@ -3668,6 +3735,27 @@ static inline int ib_post_srq_recv(struct ib_srq *srq,
 					      bad_recv_wr ? : &dummy);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct ib_qp *ib_create_qp_kernel(struct ib_pd *pd,
+				  struct ib_qp_init_attr *qp_init_attr,
+				  const char *caller);
+/**
+ * ib_create_qp - Creates a kernel QP associated with the specific protection
+ * domain.
+ * @pd: The protection domain associated with the QP.
+ * @init_attr: A list of initial attributes required to create the
+ *   QP.  If QP creation succeeds, then the attributes are updated to
+ *   the actual capabilities of the created QP.
+ */
+<<<<<<< HEAD
+static inline struct ib_qp *ib_create_qp(struct ib_pd *pd,
+					 struct ib_qp_init_attr *init_attr)
+{
+	return ib_create_qp_kernel(pd, init_attr, KBUILD_MODNAME);
+=======
 struct ib_qp *ib_create_named_qp(struct ib_pd *pd,
 				 struct ib_qp_init_attr *qp_init_attr,
 				 const char *caller);
@@ -3675,6 +3763,13 @@ static inline struct ib_qp *ib_create_qp(struct ib_pd *pd,
 					 struct ib_qp_init_attr *init_attr)
 {
 	return ib_create_named_qp(pd, init_attr, KBUILD_MODNAME);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline struct ib_qp *ib_create_qp(struct ib_pd *pd,
+					 struct ib_qp_init_attr *init_attr)
+{
+	return ib_create_qp_kernel(pd, init_attr, KBUILD_MODNAME);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -4058,6 +4153,43 @@ static inline void ib_dma_unmap_sg_attrs(struct ib_device *dev,
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * ib_dma_map_sgtable_attrs - Map a scatter/gather table to DMA addresses
+ * @dev: The device for which the DMA addresses are to be created
+ * @sg: The sg_table object describing the buffer
+ * @direction: The direction of the DMA
+ * @attrs: Optional DMA attributes for the map operation
+ */
+static inline int ib_dma_map_sgtable_attrs(struct ib_device *dev,
+					   struct sg_table *sgt,
+					   enum dma_data_direction direction,
+					   unsigned long dma_attrs)
+{
+	if (ib_uses_virt_dma(dev)) {
+		ib_dma_virt_map_sg(dev, sgt->sgl, sgt->orig_nents);
+		return 0;
+	}
+	return dma_map_sgtable(dev->dma_device, sgt, direction, dma_attrs);
+}
+
+static inline void ib_dma_unmap_sgtable_attrs(struct ib_device *dev,
+					      struct sg_table *sgt,
+					      enum dma_data_direction direction,
+					      unsigned long dma_attrs)
+{
+	if (!ib_uses_virt_dma(dev))
+		dma_unmap_sgtable(dev->dma_device, sgt, direction, dma_attrs);
+}
+
+/**
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ib_dma_map_sg - Map a scatter/gather list to DMA addresses
  * @dev: The device for which the DMA addresses are to be created
  * @sg: The array of scatter/gather entries

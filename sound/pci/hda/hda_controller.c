@@ -25,6 +25,14 @@
 #include <sound/core.h>
 #include <sound/initval.h>
 #include "hda_controller.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "hda_local.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "hda_local.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define CREATE_TRACE_POINTS
 #include "hda_controller_trace.h"
@@ -669,6 +677,9 @@ static int azx_pcm_open(struct snd_pcm_substream *substream)
 	return err;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static int azx_pcm_mmap(struct snd_pcm_substream *substream,
 			struct vm_area_struct *area)
 {
@@ -679,6 +690,9 @@ static int azx_pcm_mmap(struct snd_pcm_substream *substream,
 	return snd_pcm_lib_default_mmap(substream, area);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct snd_pcm_ops azx_pcm_ops = {
 	.open = azx_pcm_open,
 	.close = azx_pcm_close,
@@ -688,7 +702,13 @@ static const struct snd_pcm_ops azx_pcm_ops = {
 	.trigger = azx_pcm_trigger,
 	.pointer = azx_pcm_pointer,
 	.get_time_info =  azx_get_time_info,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.mmap = azx_pcm_mmap,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static void azx_pcm_free(struct snd_pcm *pcm)
@@ -753,7 +773,15 @@ int snd_hda_attach_pcm_stream(struct hda_bus *_bus, struct hda_codec *codec,
 	if (size > MAX_PREALLOC_SIZE)
 		size = MAX_PREALLOC_SIZE;
 	if (chip->uc_buffer)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		type = SNDRV_DMA_TYPE_DEV_WC_SG;
+=======
 		type = SNDRV_DMA_TYPE_DEV_UC_SG;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		type = SNDRV_DMA_TYPE_DEV_WC_SG;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_pcm_set_managed_buffer_all(pcm, type, chip->card->dev,
 				       size, MAX_PREALLOC_SIZE);
 	return 0;
@@ -1259,17 +1287,54 @@ EXPORT_SYMBOL_GPL(azx_probe_codecs);
 int azx_codec_configure(struct azx *chip)
 {
 	struct hda_codec *codec, *next;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int success = 0;
 
-	/* use _safe version here since snd_hda_codec_configure() deregisters
-	 * the device upon error and deletes itself from the bus list.
-	 */
-	list_for_each_codec_safe(codec, next, &chip->bus) {
-		snd_hda_codec_configure(codec);
+	list_for_each_codec(codec, &chip->bus) {
+		if (!snd_hda_codec_configure(codec))
+			success++;
 	}
 
+	if (success) {
+		/* unregister failed codecs if any codec has been probed */
+		list_for_each_codec_safe(codec, next, &chip->bus) {
+			if (!codec->configured) {
+				codec_err(codec, "Unable to configure, disabling\n");
+				snd_hdac_device_unregister(&codec->core);
+			}
+		}
+	}
+
+	return success ? 0 : -ENODEV;
+=======
+=======
+	int success = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	list_for_each_codec(codec, &chip->bus) {
+		if (!snd_hda_codec_configure(codec))
+			success++;
+	}
+
+<<<<<<< HEAD
 	if (!azx_bus(chip)->num_codecs)
 		return -ENODEV;
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (success) {
+		/* unregister failed codecs if any codec has been probed */
+		list_for_each_codec_safe(codec, next, &chip->bus) {
+			if (!codec->configured) {
+				codec_err(codec, "Unable to configure, disabling\n");
+				snd_hdac_device_unregister(&codec->core);
+			}
+		}
+	}
+
+	return success ? 0 : -ENODEV;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(azx_codec_configure);
 

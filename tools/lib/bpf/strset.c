@@ -88,6 +88,14 @@ void strset__free(struct strset *set)
 
 	hashmap__free(set->strs_hash);
 	free(set->strs_data);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	free(set);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	free(set);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 size_t strset__data_size(const struct strset *set)

@@ -227,7 +227,15 @@ enum {
 #define FAMILY_YELLOW_CARP                     146
 
 #define YELLOW_CARP_A0 0x01
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define YELLOW_CARP_B0 0x1A
+=======
 #define YELLOW_CARP_B0 0x02		// TODO: DCN31 - update with correct B0 ID
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define YELLOW_CARP_B0 0x1A
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define YELLOW_CARP_UNKNOWN 0xFF
 
 #ifndef ASICREV_IS_YELLOW_CARP

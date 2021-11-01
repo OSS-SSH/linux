@@ -533,6 +533,32 @@ __releases(&map->spinlock)
 	spin_unlock_irqrestore(&map->spinlock, map->spinlock_flags);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void regmap_lock_raw_spinlock(void *__map)
+__acquires(&map->raw_spinlock)
+{
+	struct regmap *map = __map;
+	unsigned long flags;
+
+	raw_spin_lock_irqsave(&map->raw_spinlock, flags);
+	map->raw_spinlock_flags = flags;
+}
+
+static void regmap_unlock_raw_spinlock(void *__map)
+__releases(&map->raw_spinlock)
+{
+	struct regmap *map = __map;
+	raw_spin_unlock_irqrestore(&map->raw_spinlock, map->raw_spinlock_flags);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void dev_get_regmap_release(struct device *dev, void *res)
 {
 	/*
@@ -770,11 +796,33 @@ struct regmap *__regmap_init(struct device *dev,
 	} else {
 		if ((bus && bus->fast_io) ||
 		    config->fast_io) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			if (config->use_raw_spinlock) {
+				raw_spin_lock_init(&map->raw_spinlock);
+				map->lock = regmap_lock_raw_spinlock;
+				map->unlock = regmap_unlock_raw_spinlock;
+				lockdep_set_class_and_name(&map->raw_spinlock,
+							   lock_key, lock_name);
+			} else {
+				spin_lock_init(&map->spinlock);
+				map->lock = regmap_lock_spinlock;
+				map->unlock = regmap_unlock_spinlock;
+				lockdep_set_class_and_name(&map->spinlock,
+							   lock_key, lock_name);
+			}
+<<<<<<< HEAD
+=======
 			spin_lock_init(&map->spinlock);
 			map->lock = regmap_lock_spinlock;
 			map->unlock = regmap_unlock_spinlock;
 			lockdep_set_class_and_name(&map->spinlock,
 						   lock_key, lock_name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			mutex_init(&map->mutex);
 			map->lock = regmap_lock_mutex;
@@ -1126,10 +1174,23 @@ skip_format_initialization:
 		/* Make sure, that this register range has no selector
 		   or data window within its boundary */
 		for (j = 0; j < config->num_ranges; j++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			unsigned int sel_reg = config->ranges[j].selector_reg;
+			unsigned int win_min = config->ranges[j].window_start;
+			unsigned int win_max = win_min +
+					       config->ranges[j].window_len - 1;
+<<<<<<< HEAD
+=======
 			unsigned sel_reg = config->ranges[j].selector_reg;
 			unsigned win_min = config->ranges[j].window_start;
 			unsigned win_max = win_min +
 					   config->ranges[j].window_len - 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			/* Allow data window inside its own virtual range */
 			if (j == i)
@@ -1298,7 +1359,15 @@ EXPORT_SYMBOL_GPL(devm_regmap_field_alloc);
  */
 int regmap_field_bulk_alloc(struct regmap *regmap,
 			    struct regmap_field **rm_field,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			    const struct reg_field *reg_field,
+=======
 			    struct reg_field *reg_field,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    const struct reg_field *reg_field,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    int num_fields)
 {
 	struct regmap_field *rf;
@@ -1334,7 +1403,15 @@ EXPORT_SYMBOL_GPL(regmap_field_bulk_alloc);
 int devm_regmap_field_bulk_alloc(struct device *dev,
 				 struct regmap *regmap,
 				 struct regmap_field **rm_field,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 const struct reg_field *reg_field,
+=======
 				 struct reg_field *reg_field,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 const struct reg_field *reg_field,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 int num_fields)
 {
 	struct regmap_field *rf;
@@ -1667,7 +1744,15 @@ static int _regmap_raw_write_impl(struct regmap *map, unsigned int reg,
 			if (ret) {
 				dev_err(map->dev,
 					"Error in caching of register: %x ret: %d\n",
+<<<<<<< HEAD
+<<<<<<< HEAD
+					reg + regmap_get_offset(map, i), ret);
+=======
 					reg + i, ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					reg + regmap_get_offset(map, i), ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return ret;
 			}
 		}

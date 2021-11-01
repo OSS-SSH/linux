@@ -147,7 +147,15 @@ void mlx5e_tc_encap_flows_add(struct mlx5e_priv *priv,
 	mlx5e_rep_queue_neigh_stats_work(priv);
 
 	list_for_each_entry(flow, flow_list, tmp_list) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (!mlx5e_is_offloaded_flow(flow) || !flow_flag_test(flow, SLOW))
+=======
 		if (!mlx5e_is_offloaded_flow(flow))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!mlx5e_is_offloaded_flow(flow) || !flow_flag_test(flow, SLOW))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		attr = flow->attr;
 		esw_attr = attr->esw_attr;
@@ -188,7 +196,15 @@ void mlx5e_tc_encap_flows_del(struct mlx5e_priv *priv,
 	int err;
 
 	list_for_each_entry(flow, flow_list, tmp_list) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (!mlx5e_is_offloaded_flow(flow) || flow_flag_test(flow, SLOW))
+=======
 		if (!mlx5e_is_offloaded_flow(flow))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!mlx5e_is_offloaded_flow(flow) || flow_flag_test(flow, SLOW))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		attr = flow->attr;
 		esw_attr = attr->esw_attr;

@@ -9,6 +9,14 @@
 #include "hnae3.h"
 
 #define HCLGE_CMDQ_TX_TIMEOUT		30000
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define HCLGE_CMDQ_CLEAR_WAIT_TIME	200
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HCLGE_CMDQ_CLEAR_WAIT_TIME	200
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HCLGE_DESC_DATA_LEN		6
 
 struct hclge_dev;
@@ -270,6 +278,18 @@ enum hclge_opcode_type {
 	/* Led command */
 	HCLGE_OPC_LED_STATUS_CFG	= 0xB000,
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* clear hardware resource command */
+	HCLGE_OPC_CLEAR_HW_RESOURCE	= 0x700B,
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* clear hardware resource command */
+	HCLGE_OPC_CLEAR_HW_RESOURCE	= 0x700B,
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* NCL config command */
 	HCLGE_OPC_QUERY_NCL_CONFIG	= 0x7011,
 
@@ -316,6 +336,18 @@ enum hclge_opcode_type {
 	/* PHY command */
 	HCLGE_OPC_PHY_LINK_KSETTING	= 0x7025,
 	HCLGE_OPC_PHY_REG		= 0x7026,
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	/* Query link diagnosis info command */
+	HCLGE_OPC_QUERY_LINK_DIAGNOSIS	= 0x702A,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* Query link diagnosis info command */
+	HCLGE_OPC_QUERY_LINK_DIAGNOSIS	= 0x702A,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define HCLGE_TQP_REG_OFFSET		0x80000
@@ -446,7 +478,15 @@ struct hclge_tc_thrd {
 };
 
 struct hclge_priv_buf {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct hclge_waterline wl;	/* Waterline for low and high */
+=======
 	struct hclge_waterline wl;	/* Waterline for low and high*/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct hclge_waterline wl;	/* Waterline for low and high */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 buf_size;	/* TC private buffer size */
 	u32 tx_buf_size;
 	u32 enable;	/* Enable TC private buffer or not */
@@ -1010,6 +1050,9 @@ struct hclge_common_lb_cmd {
 
 #define HCLGE_TYPE_CRQ			0
 #define HCLGE_TYPE_CSQ			1
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define HCLGE_NIC_CSQ_BASEADDR_L_REG	0x27000
 #define HCLGE_NIC_CSQ_BASEADDR_H_REG	0x27004
 #define HCLGE_NIC_CSQ_DEPTH_REG		0x27008
@@ -1020,6 +1063,9 @@ struct hclge_common_lb_cmd {
 #define HCLGE_NIC_CRQ_DEPTH_REG		0x27020
 #define HCLGE_NIC_CRQ_TAIL_REG		0x27024
 #define HCLGE_NIC_CRQ_HEAD_REG		0x27028
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* this bit indicates that the driver is ready for hardware reset */
 #define HCLGE_NIC_SW_RST_RDY_B		16
@@ -1194,6 +1240,28 @@ struct hclge_dev_specs_1_cmd {
 	u8 rsv1[18];
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* mac speed type defined in firmware command */
+enum HCLGE_FIRMWARE_MAC_SPEED {
+	HCLGE_FW_MAC_SPEED_1G,
+	HCLGE_FW_MAC_SPEED_10G,
+	HCLGE_FW_MAC_SPEED_25G,
+	HCLGE_FW_MAC_SPEED_40G,
+	HCLGE_FW_MAC_SPEED_50G,
+	HCLGE_FW_MAC_SPEED_100G,
+	HCLGE_FW_MAC_SPEED_10M,
+	HCLGE_FW_MAC_SPEED_100M,
+	HCLGE_FW_MAC_SPEED_200G,
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define HCLGE_PHY_LINK_SETTING_BD_NUM		2
 
 struct hclge_phy_link_ksetting_0_cmd {
@@ -1224,6 +1292,21 @@ struct hclge_phy_reg_cmd {
 	u8 rsv1[18];
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* capabilities bits map between imp firmware and local driver */
+struct hclge_caps_bit_map {
+	u16 imp_bit;
+	u16 local_bit;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int hclge_cmd_init(struct hclge_dev *hdev);
 static inline void hclge_write_reg(void __iomem *base, u32 reg, u32 value)
 {

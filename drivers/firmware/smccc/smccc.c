@@ -9,6 +9,14 @@
 #include <linux/init.h>
 #include <linux/arm-smccc.h>
 #include <linux/kernel.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/platform_device.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/platform_device.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/archrandom.h>
 
 static u32 smccc_version = ARM_SMCCC_VERSION_1_0;
@@ -42,3 +50,28 @@ u32 arm_smccc_get_version(void)
 	return smccc_version;
 }
 EXPORT_SYMBOL_GPL(arm_smccc_get_version);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+static int __init smccc_devices_init(void)
+{
+	struct platform_device *pdev;
+
+	if (smccc_trng_available) {
+		pdev = platform_device_register_simple("smccc_trng", -1,
+						       NULL, 0);
+		if (IS_ERR(pdev))
+			pr_err("smccc_trng: could not register device: %ld\n",
+			       PTR_ERR(pdev));
+	}
+
+	return 0;
+}
+device_initcall(smccc_devices_init);
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

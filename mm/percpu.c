@@ -146,7 +146,13 @@ static unsigned int pcpu_high_unit_cpu __ro_after_init;
 
 /* the address of the first chunk which starts with the kernel static area */
 void *pcpu_base_addr __ro_after_init;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 EXPORT_SYMBOL_GPL(pcpu_base_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const int *pcpu_unit_map __ro_after_init;		/* cpu -> unit */
 const unsigned long *pcpu_unit_offsets __ro_after_init;	/* cpu -> unit offset */
@@ -1520,9 +1526,15 @@ static void pcpu_free_chunk(struct pcpu_chunk *chunk)
  * Pages in [@page_start,@page_end) have been populated to @chunk.  Update
  * the bookkeeping information accordingly.  Must be called after each
  * successful population.
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  *
  * If this is @for_alloc, do not increment pcpu_nr_empty_pop_pages because it
  * is to serve an allocation in that area.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static void pcpu_chunk_populated(struct pcpu_chunk *chunk, int page_start,
 				 int page_end)

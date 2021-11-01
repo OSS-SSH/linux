@@ -76,7 +76,15 @@ static int amdgpu_gart_dummy_page_init(struct amdgpu_device *adev)
 	if (adev->dummy_page_addr)
 		return 0;
 	adev->dummy_page_addr = dma_map_page(&adev->pdev->dev, dummy_page, 0,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					     PAGE_SIZE, DMA_BIDIRECTIONAL);
+=======
 					     PAGE_SIZE, PCI_DMA_BIDIRECTIONAL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					     PAGE_SIZE, DMA_BIDIRECTIONAL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dma_mapping_error(&adev->pdev->dev, adev->dummy_page_addr)) {
 		dev_err(&adev->pdev->dev, "Failed to DMA MAP the dummy page\n");
 		adev->dummy_page_addr = 0;
@@ -96,8 +104,18 @@ void amdgpu_gart_dummy_page_fini(struct amdgpu_device *adev)
 {
 	if (!adev->dummy_page_addr)
 		return;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dma_unmap_page(&adev->pdev->dev, adev->dummy_page_addr, PAGE_SIZE,
+		       DMA_BIDIRECTIONAL);
+=======
 	pci_unmap_page(adev->pdev, adev->dummy_page_addr,
 		       PAGE_SIZE, PCI_DMA_BIDIRECTIONAL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_unmap_page(&adev->pdev->dev, adev->dummy_page_addr, PAGE_SIZE,
+		       DMA_BIDIRECTIONAL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	adev->dummy_page_addr = 0;
 }
 

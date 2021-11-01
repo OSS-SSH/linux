@@ -90,18 +90,50 @@ enum vm_mem_backing_src_type {
 	NUM_SRC_TYPES,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define DEFAULT_VM_MEM_SRC VM_MEM_SRC_ANONYMOUS
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DEFAULT_VM_MEM_SRC VM_MEM_SRC_ANONYMOUS
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct vm_mem_backing_src_alias {
 	const char *name;
 	uint32_t flag;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define MIN_RUN_DELAY_NS	200000UL
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MIN_RUN_DELAY_NS	200000UL
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool thp_configured(void);
 size_t get_trans_hugepagesz(void);
 size_t get_def_hugetlb_pagesz(void);
 const struct vm_mem_backing_src_alias *vm_mem_backing_src_alias(uint32_t i);
 size_t get_backing_src_pagesz(uint32_t i);
+<<<<<<< HEAD
+<<<<<<< HEAD
+void backing_src_help(const char *flag);
+enum vm_mem_backing_src_type parse_backing_src_type(const char *type_name);
+long get_run_delay(void);
+=======
 void backing_src_help(void);
 enum vm_mem_backing_src_type parse_backing_src_type(const char *type_name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void backing_src_help(const char *flag);
+enum vm_mem_backing_src_type parse_backing_src_type(const char *type_name);
+long get_run_delay(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Whether or not the given source type is shared memory (as opposed to

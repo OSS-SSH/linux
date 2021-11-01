@@ -49,8 +49,16 @@ static int copy_bio_to_actor(struct bio *bio,
 
 		bytes_to_copy = min_t(int, bytes_to_copy,
 				      req_length - copied_bytes);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		memcpy(actor_addr + actor_offset, bvec_virt(bvec) + offset,
+=======
 		memcpy(actor_addr + actor_offset,
 		       page_address(bvec->bv_page) + bvec->bv_offset + offset,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memcpy(actor_addr + actor_offset, bvec_virt(bvec) + offset,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       bytes_to_copy);
 
 		actor_offset += bytes_to_copy;
@@ -177,7 +185,15 @@ int squashfs_read_data(struct super_block *sb, u64 index, int length,
 			goto out_free_bio;
 		}
 		/* Extract the length of the metadata block */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		data = bvec_virt(bvec);
+=======
 		data = page_address(bvec->bv_page) + bvec->bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		data = bvec_virt(bvec);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		length = data[offset];
 		if (offset < bvec->bv_len - 1) {
 			length |= data[offset + 1] << 8;
@@ -186,7 +202,15 @@ int squashfs_read_data(struct super_block *sb, u64 index, int length,
 				res = -EIO;
 				goto out_free_bio;
 			}
+<<<<<<< HEAD
+<<<<<<< HEAD
+			data = bvec_virt(bvec);
+=======
 			data = page_address(bvec->bv_page) + bvec->bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			data = bvec_virt(bvec);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			length |= data[0] << 8;
 		}
 		bio_free_pages(bio);

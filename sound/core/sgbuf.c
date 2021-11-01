@@ -43,8 +43,18 @@ static void snd_dma_sg_free(struct snd_dma_buffer *dmab)
 	dmab->area = NULL;
 
 	tmpb.dev.type = SNDRV_DMA_TYPE_DEV;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC_SG)
+		tmpb.dev.type = SNDRV_DMA_TYPE_DEV_WC;
+=======
 	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_UC_SG)
 		tmpb.dev.type = SNDRV_DMA_TYPE_DEV_UC;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC_SG)
+		tmpb.dev.type = SNDRV_DMA_TYPE_DEV_WC;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tmpb.dev.dev = sgbuf->dev;
 	for (i = 0; i < sgbuf->pages; i++) {
 		if (!(sgbuf->table[i].addr & ~PAGE_MASK))
@@ -63,7 +73,15 @@ static void snd_dma_sg_free(struct snd_dma_buffer *dmab)
 
 #define MAX_ALLOC_PAGES		32
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void *snd_dma_sg_alloc(struct snd_dma_buffer *dmab, size_t size)
+=======
 static int snd_dma_sg_alloc(struct snd_dma_buffer *dmab, size_t size)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void *snd_dma_sg_alloc(struct snd_dma_buffer *dmab, size_t size)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct snd_sg_buf *sgbuf;
 	unsigned int i, pages, chunk, maxpages;
@@ -72,12 +90,32 @@ static int snd_dma_sg_alloc(struct snd_dma_buffer *dmab, size_t size)
 	struct page **pgtable;
 	int type = SNDRV_DMA_TYPE_DEV;
 	pgprot_t prot = PAGE_KERNEL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	void *area;
+
+	dmab->private_data = sgbuf = kzalloc(sizeof(*sgbuf), GFP_KERNEL);
+	if (!sgbuf)
+		return NULL;
+	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC_SG) {
+		type = SNDRV_DMA_TYPE_DEV_WC;
+=======
 
 	dmab->private_data = sgbuf = kzalloc(sizeof(*sgbuf), GFP_KERNEL);
 	if (!sgbuf)
 		return -ENOMEM;
 	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_UC_SG) {
 		type = SNDRV_DMA_TYPE_DEV_UC;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	void *area;
+
+	dmab->private_data = sgbuf = kzalloc(sizeof(*sgbuf), GFP_KERNEL);
+	if (!sgbuf)
+		return NULL;
+	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC_SG) {
+		type = SNDRV_DMA_TYPE_DEV_WC;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef pgprot_noncached
 		prot = pgprot_noncached(PAGE_KERNEL);
 #endif
@@ -127,14 +165,34 @@ static int snd_dma_sg_alloc(struct snd_dma_buffer *dmab, size_t size)
 	}
 
 	sgbuf->size = size;
-	dmab->area = vmap(sgbuf->page_table, sgbuf->pages, VM_MAP, prot);
-	if (! dmab->area)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	area = vmap(sgbuf->page_table, sgbuf->pages, VM_MAP, prot);
+	if (!area)
 		goto _failed;
-	return 0;
+	return area;
 
  _failed:
 	snd_dma_sg_free(dmab); /* free the table */
+	return NULL;
+=======
+	dmab->area = vmap(sgbuf->page_table, sgbuf->pages, VM_MAP, prot);
+	if (! dmab->area)
+=======
+	area = vmap(sgbuf->page_table, sgbuf->pages, VM_MAP, prot);
+	if (!area)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		goto _failed;
+	return area;
+
+ _failed:
+	snd_dma_sg_free(dmab); /* free the table */
+<<<<<<< HEAD
 	return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static dma_addr_t snd_dma_sg_get_addr(struct snd_dma_buffer *dmab,
@@ -182,10 +240,35 @@ static unsigned int snd_dma_sg_get_chunk_size(struct snd_dma_buffer *dmab,
 	return size;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int snd_dma_sg_mmap(struct snd_dma_buffer *dmab,
+			   struct vm_area_struct *area)
+{
+	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC_SG)
+		area->vm_page_prot = pgprot_writecombine(area->vm_page_prot);
+	return -ENOENT; /* continue with the default mmap handler */
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 const struct snd_malloc_ops snd_dma_sg_ops = {
 	.alloc = snd_dma_sg_alloc,
 	.free = snd_dma_sg_free,
 	.get_addr = snd_dma_sg_get_addr,
 	.get_page = snd_dma_sg_get_page,
 	.get_chunk_size = snd_dma_sg_get_chunk_size,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.mmap = snd_dma_sg_mmap,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.mmap = snd_dma_sg_mmap,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

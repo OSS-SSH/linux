@@ -80,6 +80,14 @@ struct task_struct init_task
 	.normal_prio	= MAX_PRIO - 20,
 	.policy		= SCHED_NORMAL,
 	.cpus_ptr	= &init_task.cpus_mask,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.user_cpus_ptr	= NULL,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.user_cpus_ptr	= NULL,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.cpus_mask	= CPU_MASK_ALL,
 	.nr_cpus_allowed= NR_CPUS,
 	.mm		= NULL,

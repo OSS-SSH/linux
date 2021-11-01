@@ -134,6 +134,18 @@ void snd_device_initialize(struct device *dev, struct snd_card *card)
 }
 EXPORT_SYMBOL_GPL(snd_device_initialize);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int snd_card_init(struct snd_card *card, struct device *parent,
+			 int idx, const char *xid, struct module *module,
+			 size_t extra_size);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int snd_card_init(struct snd_card *card, struct device *parent,
+			 int idx, const char *xid, struct module *module,
+			 size_t extra_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int snd_card_do_free(struct snd_card *card);
 static const struct attribute_group card_dev_attr_group;
 
@@ -163,9 +175,15 @@ int snd_card_new(struct device *parent, int idx, const char *xid,
 {
 	struct snd_card *card;
 	int err;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #ifdef CONFIG_SND_DEBUG
 	char name[8];
 #endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (snd_BUG_ON(!card_ret))
 		return -EINVAL;
@@ -176,6 +194,83 @@ int snd_card_new(struct device *parent, int idx, const char *xid,
 	card = kzalloc(sizeof(*card) + extra_size, GFP_KERNEL);
 	if (!card)
 		return -ENOMEM;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	err = snd_card_init(card, parent, idx, xid, module, extra_size);
+	if (err < 0) {
+		kfree(card);
+		return err;
+	}
+
+	*card_ret = card;
+	return 0;
+}
+EXPORT_SYMBOL(snd_card_new);
+
+static void __snd_card_release(struct device *dev, void *data)
+{
+	snd_card_free(data);
+}
+
+/**
+ * snd_devm_card_new - managed snd_card object creation
+ * @parent: the parent device object
+ * @idx: card index (address) [0 ... (SNDRV_CARDS-1)]
+ * @xid: card identification (ASCII string)
+ * @module: top level module for locking
+ * @extra_size: allocate this extra size after the main soundcard structure
+ * @card_ret: the pointer to store the created card instance
+ *
+ * This function works like snd_card_new() but manages the allocated resource
+ * via devres, i.e. you don't need to free explicitly.
+ *
+ * When a snd_card object is created with this function and registered via
+ * snd_card_register(), the very first devres action to call snd_card_free()
+ * is added automatically.  In that way, the resource disconnection is assured
+ * at first, then released in the expected order.
+ */
+int snd_devm_card_new(struct device *parent, int idx, const char *xid,
+		      struct module *module, size_t extra_size,
+		      struct snd_card **card_ret)
+{
+	struct snd_card *card;
+	int err;
+
+	*card_ret = NULL;
+	card = devres_alloc(__snd_card_release, sizeof(*card) + extra_size,
+			    GFP_KERNEL);
+	if (!card)
+		return -ENOMEM;
+	card->managed = true;
+	err = snd_card_init(card, parent, idx, xid, module, extra_size);
+	if (err < 0) {
+		devres_free(card);
+		return err;
+	}
+
+	devres_add(parent, card);
+	*card_ret = card;
+	return 0;
+}
+EXPORT_SYMBOL_GPL(snd_devm_card_new);
+
+static int snd_card_init(struct snd_card *card, struct device *parent,
+			 int idx, const char *xid, struct module *module,
+			 size_t extra_size)
+{
+	int err;
+#ifdef CONFIG_SND_DEBUG
+	char name[8];
+#endif
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (extra_size > 0)
 		card->private_data = (char *)card + sizeof(struct snd_card);
 	if (xid)
@@ -197,7 +292,13 @@ int snd_card_new(struct device *parent, int idx, const char *xid,
 		mutex_unlock(&snd_card_mutex);
 		dev_err(parent, "cannot find the slot for index %d (range 0-%i), error: %d\n",
 			 idx, snd_ecards_limit - 1, err);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		kfree(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
 	}
 	set_bit(idx, snd_cards_lock);		/* lock it */
@@ -256,8 +357,14 @@ int snd_card_new(struct device *parent, int idx, const char *xid,
 	sprintf(name, "card%d", idx);
 	card->debugfs_root = debugfs_create_dir(name, sound_debugfs_root);
 #endif
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 	*card_ret = card;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
       __error_ctl:
@@ -266,7 +373,13 @@ int snd_card_new(struct device *parent, int idx, const char *xid,
 	put_device(&card->card_dev);
   	return err;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 EXPORT_SYMBOL(snd_card_new);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * snd_card_ref - Get the card object from the index
@@ -481,6 +594,14 @@ EXPORT_SYMBOL_GPL(snd_card_disconnect_sync);
 
 static int snd_card_do_free(struct snd_card *card)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	card->releasing = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	card->releasing = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_SND_MIXER_OSS)
 	if (snd_mixer_oss_notify_callback)
 		snd_mixer_oss_notify_callback(card, SND_MIXER_OSS_NOTIFY_FREE);
@@ -498,7 +619,17 @@ static int snd_card_do_free(struct snd_card *card)
 #endif
 	if (card->release_completion)
 		complete(card->release_completion);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!card->managed)
+		kfree(card);
+=======
 	kfree(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!card->managed)
+		kfree(card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -539,6 +670,24 @@ int snd_card_free(struct snd_card *card)
 	DECLARE_COMPLETION_ONSTACK(released);
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* The call of snd_card_free() is allowed from various code paths;
+	 * a manual call from the driver and the call via devres_free, and
+	 * we need to avoid double-free. Moreover, the release via devres
+	 * may call snd_card_free() twice due to its nature, we need to have
+	 * the check here at the beginning.
+	 */
+	if (card->releasing)
+		return 0;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	card->release_completion = &released;
 	ret = snd_card_free_when_closed(card);
 	if (ret)
@@ -745,6 +894,20 @@ int snd_card_add_dev_attr(struct snd_card *card,
 }
 EXPORT_SYMBOL_GPL(snd_card_add_dev_attr);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void trigger_card_free(void *data)
+{
+	snd_card_free(data);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  *  snd_card_register - register the soundcard
  *  @card: soundcard structure
@@ -768,6 +931,24 @@ int snd_card_register(struct snd_card *card)
 		if (err < 0)
 			return err;
 		card->registered = true;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	} else {
+		if (card->managed)
+			devm_remove_action(card->dev, trigger_card_free, card);
+	}
+
+	if (card->managed) {
+		err = devm_add_action(card->dev, trigger_card_free, card);
+		if (err < 0)
+			return err;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = snd_device_register_all(card);

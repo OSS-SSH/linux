@@ -538,12 +538,34 @@ int register_lines(struct line_driver *line_driver,
 		   const struct tty_operations *ops,
 		   struct line *lines, int nlines)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct tty_driver *driver;
+	int err;
+	int i;
+
+	driver = tty_alloc_driver(nlines, TTY_DRIVER_REAL_RAW |
+			TTY_DRIVER_DYNAMIC_DEV);
+	if (IS_ERR(driver))
+		return PTR_ERR(driver);
+=======
 	struct tty_driver *driver = alloc_tty_driver(nlines);
 	int err;
 	int i;
 
 	if (!driver)
 		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct tty_driver *driver;
+	int err;
+	int i;
+
+	driver = tty_alloc_driver(nlines, TTY_DRIVER_REAL_RAW |
+			TTY_DRIVER_DYNAMIC_DEV);
+	if (IS_ERR(driver))
+		return PTR_ERR(driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	driver->driver_name = line_driver->name;
 	driver->name = line_driver->device_name;
@@ -551,9 +573,19 @@ int register_lines(struct line_driver *line_driver,
 	driver->minor_start = line_driver->minor_start;
 	driver->type = line_driver->type;
 	driver->subtype = line_driver->subtype;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	driver->init_termios = tty_std_termios;
+
+=======
 	driver->flags = TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV;
 	driver->init_termios = tty_std_termios;
 	
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	driver->init_termios = tty_std_termios;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < nlines; i++) {
 		tty_port_init(&lines[i].port);
 		lines[i].port.ops = &line_port_ops;
@@ -567,7 +599,15 @@ int register_lines(struct line_driver *line_driver,
 	if (err) {
 		printk(KERN_ERR "register_lines : can't register %s driver\n",
 		       line_driver->name);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		tty_driver_kref_put(driver);
+=======
 		put_tty_driver(driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tty_driver_kref_put(driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (i = 0; i < nlines; i++)
 			tty_port_destroy(&lines[i].port);
 		return err;

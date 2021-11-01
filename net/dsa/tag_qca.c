@@ -36,8 +36,18 @@ static struct sk_buff *qca_tag_xmit(struct sk_buff *skb, struct net_device *dev)
 
 	skb_push(skb, QCA_HDR_LEN);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dsa_alloc_etype_header(skb, QCA_HDR_LEN);
+	phdr = dsa_etype_header_pos_tx(skb);
+=======
 	memmove(skb->data, skb->data + QCA_HDR_LEN, 2 * ETH_ALEN);
 	phdr = (__be16 *)(skb->data + 2 * ETH_ALEN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dsa_alloc_etype_header(skb, QCA_HDR_LEN);
+	phdr = dsa_etype_header_pos_tx(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Set the version field, and set destination port information */
 	hdr = QCA_HDR_VERSION << QCA_HDR_XMIT_VERSION_S |
@@ -48,8 +58,16 @@ static struct sk_buff *qca_tag_xmit(struct sk_buff *skb, struct net_device *dev)
 	return skb;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static struct sk_buff *qca_tag_rcv(struct sk_buff *skb, struct net_device *dev)
+=======
 static struct sk_buff *qca_tag_rcv(struct sk_buff *skb, struct net_device *dev,
 				   struct packet_type *pt)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct sk_buff *qca_tag_rcv(struct sk_buff *skb, struct net_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u8 ver;
 	u16  hdr;
@@ -59,11 +77,19 @@ static struct sk_buff *qca_tag_rcv(struct sk_buff *skb, struct net_device *dev,
 	if (unlikely(!pskb_may_pull(skb, QCA_HDR_LEN)))
 		return NULL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	phdr = dsa_etype_header_pos_rx(skb);
+=======
 	/* The QCA header is added by the switch between src addr and Ethertype
 	 * At this point, skb->data points to ethertype so header should be
 	 * right before
 	 */
 	phdr = (__be16 *)(skb->data - 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phdr = dsa_etype_header_pos_rx(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hdr = ntohs(*phdr);
 
 	/* Make sure the version is correct */
@@ -73,8 +99,16 @@ static struct sk_buff *qca_tag_rcv(struct sk_buff *skb, struct net_device *dev,
 
 	/* Remove QCA tag and recalculate checksum */
 	skb_pull_rcsum(skb, QCA_HDR_LEN);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dsa_strip_etype_header(skb, QCA_HDR_LEN);
+=======
 	memmove(skb->data - ETH_HLEN, skb->data - ETH_HLEN - QCA_HDR_LEN,
 		ETH_HLEN - QCA_HDR_LEN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dsa_strip_etype_header(skb, QCA_HDR_LEN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Get source port information */
 	port = (hdr & QCA_HDR_RECV_SOURCE_PORT_MASK);

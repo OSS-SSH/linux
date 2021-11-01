@@ -34,8 +34,18 @@ void test_reference_tracking(void)
 		if (!test__start_subtest(title))
 			continue;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		/* Expect verifier failure if test name has 'err' */
+		if (strstr(title, "err_") != NULL) {
+=======
 		/* Expect verifier failure if test name has 'fail' */
 		if (strstr(title, "fail") != NULL) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* Expect verifier failure if test name has 'err' */
+		if (strstr(title, "err_") != NULL) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			libbpf_print_fn_t old_print_fn;
 
 			old_print_fn = libbpf_set_print(NULL);

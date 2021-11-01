@@ -181,6 +181,16 @@ SECTIONS
 	/* everything from this point to __init_begin will be marked RO NX */
 	RO_DATA(PAGE_SIZE)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	HYPERVISOR_DATA_SECTIONS
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	HYPERVISOR_DATA_SECTIONS
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	idmap_pg_dir = .;
 	. += IDMAP_DIR_SIZE;
 	idmap_pg_end = .;
@@ -260,8 +270,14 @@ SECTIONS
 	_sdata = .;
 	RW_DATA(L1_CACHE_BYTES, PAGE_SIZE, THREAD_ALIGN)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	HYPERVISOR_DATA_SECTIONS
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Data written with the MMU off but read with the MMU on requires
 	 * cache lines to be invalidated, discarding up to a Cache Writeback

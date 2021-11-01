@@ -31,30 +31,77 @@
 
 #include <linux/mm.h>
 #include <linux/log2.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <asm-generic/pgalloc.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm-generic/pgalloc.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline void
 pmd_populate_kernel(struct mm_struct *mm, pmd_t *pmd, pte_t *pte)
 {
-	pmd_set(pmd, pte);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * The cast to long below is OK in 32-bit PAE40 regime with long long pte
+	 * Despite "wider" pte, the pte table needs to be in non-PAE low memory
+	 * as all higher levels can only hold long pointers.
+	 *
+	 * The cast itself is needed given simplistic definition of set_pmd()
+	 */
+	set_pmd(pmd, __pmd((unsigned long)pte));
+<<<<<<< HEAD
 }
 
-static inline void
-pmd_populate(struct mm_struct *mm, pmd_t *pmd, pgtable_t ptep)
+static inline void pmd_populate(struct mm_struct *mm, pmd_t *pmd, pgtable_t pte_page)
 {
+	set_pmd(pmd, __pmd((unsigned long)page_address(pte_page)));
+=======
+	pmd_set(pmd, pte);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
+
+static inline void pmd_populate(struct mm_struct *mm, pmd_t *pmd, pgtable_t pte_page)
+{
+<<<<<<< HEAD
 	pmd_set(pmd, (pte_t *) ptep);
 }
 
 static inline int __get_order_pgd(void)
 {
 	return get_order(PTRS_PER_PGD * sizeof(pgd_t));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_pmd(pmd, __pmd((unsigned long)page_address(pte_page)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline pgd_t *pgd_alloc(struct mm_struct *mm)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pgd_t *ret = (pgd_t *) __get_free_page(GFP_KERNEL);
+
+	if (ret) {
+		int num, num2;
+=======
 	int num, num2;
 	pgd_t *ret = (pgd_t *) __get_free_pages(GFP_KERNEL, __get_order_pgd());
 
 	if (ret) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pgd_t *ret = (pgd_t *) __get_free_page(GFP_KERNEL);
+
+	if (ret) {
+		int num, num2;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		num = USER_PTRS_PER_PGD + USER_KERNEL_GUTTER / PGDIR_SIZE;
 		memzero(ret, num * sizeof(pgd_t));
 
@@ -68,6 +115,30 @@ static inline pgd_t *pgd_alloc(struct mm_struct *mm)
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#if CONFIG_PGTABLE_LEVELS > 3
+
+static inline void p4d_populate(struct mm_struct *mm, p4d_t *p4dp, pud_t *pudp)
+{
+	set_p4d(p4dp, __p4d((unsigned long)pudp));
+}
+
+#define __pud_free_tlb(tlb, pmd, addr)  pud_free((tlb)->mm, pmd)
+
+#endif
+
+#if CONFIG_PGTABLE_LEVELS > 2
+
+static inline void pud_populate(struct mm_struct *mm, pud_t *pudp, pmd_t *pmdp)
+{
+	set_pud(pudp, __pud((unsigned long)pmdp));
+}
+
+#define __pmd_free_tlb(tlb, pmd, addr)  pmd_free((tlb)->mm, pmd)
+
+#endif
+=======
 static inline void pgd_free(struct mm_struct *mm, pgd_t *pgd)
 {
 	free_pages((unsigned long)pgd, __get_order_pgd());
@@ -81,51 +152,38 @@ static inline void pgd_free(struct mm_struct *mm, pgd_t *pgd)
  * Thus we need to programatically assert the size constraint
  * All of this is const math, allowing gcc to do constant folding/propagation.
  */
+=======
+#if CONFIG_PGTABLE_LEVELS > 3
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-static inline int __get_order_pte(void)
+static inline void p4d_populate(struct mm_struct *mm, p4d_t *p4dp, pud_t *pudp)
 {
-	return get_order(PTRS_PER_PTE * sizeof(pte_t));
+	set_p4d(p4dp, __p4d((unsigned long)pudp));
 }
 
-static inline pte_t *pte_alloc_one_kernel(struct mm_struct *mm)
+#define __pud_free_tlb(tlb, pmd, addr)  pud_free((tlb)->mm, pmd)
+
+#endif
+
+#if CONFIG_PGTABLE_LEVELS > 2
+
+static inline void pud_populate(struct mm_struct *mm, pud_t *pudp, pmd_t *pmdp)
 {
-	pte_t *pte;
-
-	pte = (pte_t *) __get_free_pages(GFP_KERNEL | __GFP_ZERO,
-					 __get_order_pte());
-
-	return pte;
+	set_pud(pudp, __pud((unsigned long)pmdp));
 }
 
-static inline pgtable_t
-pte_alloc_one(struct mm_struct *mm)
-{
-	pgtable_t pte_pg;
-	struct page *page;
+#define __pmd_free_tlb(tlb, pmd, addr)  pmd_free((tlb)->mm, pmd)
 
-	pte_pg = (pgtable_t)__get_free_pages(GFP_KERNEL, __get_order_pte());
-	if (!pte_pg)
-		return 0;
-	memzero((void *)pte_pg, PTRS_PER_PTE * sizeof(pte_t));
-	page = virt_to_page(pte_pg);
-	if (!pgtable_pte_page_ctor(page)) {
-		__free_page(page);
-		return 0;
-	}
-
-	return pte_pg;
-}
-
-static inline void pte_free_kernel(struct mm_struct *mm, pte_t *pte)
-{
-	free_pages((unsigned long)pte, __get_order_pte()); /* takes phy addr */
-}
-
+<<<<<<< HEAD
 static inline void pte_free(struct mm_struct *mm, pgtable_t ptep)
 {
 	pgtable_pte_page_dtor(virt_to_page(ptep));
 	free_pages((unsigned long)ptep, __get_order_pte());
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define __pte_free_tlb(tlb, pte, addr)  pte_free((tlb)->mm, pte)
 

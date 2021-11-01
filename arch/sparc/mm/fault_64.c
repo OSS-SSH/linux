@@ -176,7 +176,15 @@ static void do_fault_siginfo(int code, int sig, struct pt_regs *regs,
 	if (unlikely(show_unhandled_signals))
 		show_signal_msg(regs, sig, code, addr, current);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	force_sig_fault(sig, code, (void __user *) addr);
+=======
 	force_sig_fault(sig, code, (void __user *) addr, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	force_sig_fault(sig, code, (void __user *) addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static unsigned int get_fault_insn(struct pt_regs *regs, unsigned int insn)

@@ -518,7 +518,15 @@ size_t parport_ieee1284_ecp_read_data (struct parport *port,
 				goto out;
 
 			/* Yield the port for a while. */
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (dev->port->irq != PARPORT_IRQ_NONE) {
+=======
 			if (count && dev->port->irq != PARPORT_IRQ_NONE) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (dev->port->irq != PARPORT_IRQ_NONE) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				parport_release (dev);
 				schedule_timeout_interruptible(msecs_to_jiffies(40));
 				parport_claim_or_block (dev);

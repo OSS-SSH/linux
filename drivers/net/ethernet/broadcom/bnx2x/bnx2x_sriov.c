@@ -1224,7 +1224,15 @@ int bnx2x_iov_init_one(struct bnx2x *bp, int int_mode_param,
 
 	/* SR-IOV capability was enabled but there are no VFs*/
 	if (iov->total == 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		err = 0;
+=======
 		err = -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto failed;
 	}
 
@@ -1858,7 +1866,13 @@ void bnx2x_iov_adjust_stats_req(struct bnx2x *bp)
 {
 	int i;
 	int first_queue_query_index, num_queues_req;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	dma_addr_t cur_data_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct stats_query_entry *cur_query_entry;
 	u8 stats_count = 0;
 	bool is_fcoe = false;
@@ -1879,10 +1893,16 @@ void bnx2x_iov_adjust_stats_req(struct bnx2x *bp)
 	       BNX2X_NUM_ETH_QUEUES(bp), is_fcoe, first_queue_query_index,
 	       first_queue_query_index + num_queues_req);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	cur_data_offset = bp->fw_stats_data_mapping +
 		offsetof(struct bnx2x_fw_stats_data, queue_stats) +
 		num_queues_req * sizeof(struct per_queue_stats);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cur_query_entry = &bp->fw_stats_req->
 		query[first_queue_query_index + num_queues_req];
 
@@ -1933,7 +1953,13 @@ void bnx2x_iov_adjust_stats_req(struct bnx2x *bp)
 			       cur_query_entry->funcID,
 			       j, cur_query_entry->index);
 			cur_query_entry++;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			cur_data_offset += sizeof(struct per_queue_stats);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			stats_count++;
 
 			/* all stats are coalesced to the leading queue */

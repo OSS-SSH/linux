@@ -381,7 +381,15 @@ static int ps3_system_bus_probe(struct device *_dev)
 	return result;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void ps3_system_bus_remove(struct device *_dev)
+=======
 static int ps3_system_bus_remove(struct device *_dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void ps3_system_bus_remove(struct device *_dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ps3_system_bus_device *dev = ps3_dev_to_system_bus_dev(_dev);
 	struct ps3_system_bus_driver *drv;
@@ -399,7 +407,13 @@ static int ps3_system_bus_remove(struct device *_dev)
 			__func__, __LINE__, drv->core.name);
 
 	pr_debug(" <- %s:%d: %s\n", __func__, __LINE__, dev_name(&dev->core));
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void ps3_system_bus_shutdown(struct device *_dev)
@@ -663,7 +677,15 @@ static int ps3_ioc0_map_sg(struct device *_dev, struct scatterlist *sg,
 			   unsigned long attrs)
 {
 	BUG();
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return -EINVAL;
+=======
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void ps3_sb_unmap_sg(struct device *_dev, struct scatterlist *sg,

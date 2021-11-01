@@ -2,12 +2,30 @@
 
 .. include:: ../disclaimer-zh_CN.rst
 
-:Original: :doc:`../../../riscv/index`
-:Translator: Yanteng Si <siyanteng@loongson.cn>
+<<<<<<< HEAD
+<<<<<<< HEAD
+:Original: Documentation/riscv/index.rst
+
+:翻译:
+
+ 司延腾 Yanteng Si <siyanteng@loongson.cn>
 
 .. _cn_riscv_index:
 
+=======
+:Original: :doc:`../../../riscv/index`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+=======
+:Original: Documentation/riscv/index.rst
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+:翻译:
+
+ 司延腾 Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_riscv_index:
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ===============
 RISC-V 体系结构
 ===============

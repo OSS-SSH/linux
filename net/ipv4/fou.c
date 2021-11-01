@@ -230,8 +230,18 @@ static struct sk_buff *fou_gro_receive(struct sock *sk,
 				       struct list_head *head,
 				       struct sk_buff *skb)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct net_offload __rcu **offloads;
+	u8 proto = fou_from_sock(sk)->protocol;
+=======
 	u8 proto = fou_from_sock(sk)->protocol;
 	const struct net_offload **offloads;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct net_offload __rcu **offloads;
+	u8 proto = fou_from_sock(sk)->protocol;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct net_offload *ops;
 	struct sk_buff *pp = NULL;
 
@@ -263,10 +273,25 @@ out_unlock:
 static int fou_gro_complete(struct sock *sk, struct sk_buff *skb,
 			    int nhoff)
 {
-	const struct net_offload *ops;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct net_offload __rcu **offloads;
 	u8 proto = fou_from_sock(sk)->protocol;
+	const struct net_offload *ops;
 	int err = -ENOSYS;
+=======
+	const struct net_offload *ops;
+=======
+	const struct net_offload __rcu **offloads;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	u8 proto = fou_from_sock(sk)->protocol;
+	const struct net_offload *ops;
+	int err = -ENOSYS;
+<<<<<<< HEAD
 	const struct net_offload **offloads;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rcu_read_lock();
 	offloads = NAPI_GRO_CB(skb)->is_ipv6 ? inet6_offloads : inet_offloads;
@@ -311,7 +336,15 @@ static struct sk_buff *gue_gro_receive(struct sock *sk,
 				       struct list_head *head,
 				       struct sk_buff *skb)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct net_offload __rcu **offloads;
+=======
 	const struct net_offload **offloads;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct net_offload __rcu **offloads;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct net_offload *ops;
 	struct sk_buff *pp = NULL;
 	struct sk_buff *p;
@@ -457,8 +490,18 @@ out:
 
 static int gue_gro_complete(struct sock *sk, struct sk_buff *skb, int nhoff)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct guehdr *guehdr = (struct guehdr *)(skb->data + nhoff);
+	const struct net_offload __rcu **offloads;
+=======
 	const struct net_offload **offloads;
 	struct guehdr *guehdr = (struct guehdr *)(skb->data + nhoff);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct guehdr *guehdr = (struct guehdr *)(skb->data + nhoff);
+	const struct net_offload __rcu **offloads;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct net_offload *ops;
 	unsigned int guehlen = 0;
 	u8 proto;

@@ -1824,7 +1824,15 @@ static void intel_enable_sdvo(struct intel_atomic_state *state,
 	struct drm_device *dev = encoder->base.dev;
 	struct drm_i915_private *dev_priv = to_i915(dev);
 	struct intel_sdvo *intel_sdvo = to_sdvo(encoder);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct intel_crtc *crtc = to_intel_crtc(pipe_config->uapi.crtc);
+=======
 	struct intel_crtc *intel_crtc = to_intel_crtc(pipe_config->uapi.crtc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct intel_crtc *crtc = to_intel_crtc(pipe_config->uapi.crtc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 temp;
 	bool input1, input2;
 	int i;
@@ -1835,7 +1843,15 @@ static void intel_enable_sdvo(struct intel_atomic_state *state,
 	intel_sdvo_write_sdvox(intel_sdvo, temp);
 
 	for (i = 0; i < 2; i++)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		intel_wait_for_vblank(dev_priv, crtc->pipe);
+=======
 		intel_wait_for_vblank(dev_priv, intel_crtc->pipe);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		intel_wait_for_vblank(dev_priv, crtc->pipe);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	success = intel_sdvo_get_trained_inputs(intel_sdvo, &input1, &input2);
 	/*

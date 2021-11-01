@@ -149,7 +149,15 @@ arc_unwind_core(struct task_struct *tsk, struct pt_regs *regs,
 #else
 	/* On ARC, only Dward based unwinder works. fp based backtracing is
 	 * not possible (-fno-omit-frame-pointer) because of the way function
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * prologue is setup (callee regs saved and then fp set and not other
+=======
 	 * prelogue is setup (callee regs saved and then fp set and not other
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * prologue is setup (callee regs saved and then fp set and not other
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * way around
 	 */
 	pr_warn_once("CONFIG_ARC_DW2_UNWIND needs to be enabled\n");

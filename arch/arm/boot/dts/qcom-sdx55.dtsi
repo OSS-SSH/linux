@@ -143,7 +143,15 @@
 			reg = <0x8ff00000 0x100000>;
 		};
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		tz_apps_mem: memory@90000000 {
+=======
 		tz_apps_mem: memory@0x90000000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tz_apps_mem: memory@90000000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			no-map;
 			reg = <0x90000000 0x500000>;
 		};

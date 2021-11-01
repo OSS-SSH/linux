@@ -31,6 +31,14 @@
 #include <linux/export.h>
 #include <linux/sched.h>
 #include <linux/sched/clock.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/sched/cputime.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/sched/cputime.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/kernel.h>
 #include <linux/param.h>
 #include <linux/string.h>
@@ -52,8 +60,14 @@
 #include <linux/irq_work.h>
 #include <linux/of_clk.h>
 #include <linux/suspend.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <linux/sched/cputime.h>
 #include <linux/sched/clock.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/processor.h>
 #include <asm/trace.h>
 
@@ -586,7 +600,15 @@ DEFINE_INTERRUPT_HANDLER_ASYNC(timer_interrupt)
 
 #if defined(CONFIG_PPC32) && defined(CONFIG_PPC_PMAC)
 	if (atomic_read(&ppc_n_lost_interrupts) != 0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__do_IRQ(regs);
+=======
 		do_IRQ(regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__do_IRQ(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	old_regs = set_irq_regs(regs);

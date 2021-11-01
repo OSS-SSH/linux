@@ -24,13 +24,27 @@ static void __do_clflush(struct drm_i915_gem_object *obj)
 	i915_gem_object_flush_frontbuffer(obj, ORIGIN_CPU);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void clflush_work(struct dma_fence_work *base)
+=======
 static int clflush_work(struct dma_fence_work *base)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void clflush_work(struct dma_fence_work *base)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct clflush *clflush = container_of(base, typeof(*clflush), base);
 
 	__do_clflush(clflush->obj);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void clflush_release(struct dma_fence_work *base)

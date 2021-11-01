@@ -97,14 +97,33 @@ static const struct fs_parameter_spec virtio_fs_parameters[] = {
 	{}
 };
 
-static int virtio_fs_parse_param(struct fs_context *fc,
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int virtio_fs_parse_param(struct fs_context *fsc,
 				 struct fs_parameter *param)
 {
 	struct fs_parse_result result;
-	struct fuse_fs_context *ctx = fc->fs_private;
+	struct fuse_fs_context *ctx = fsc->fs_private;
 	int opt;
 
+	opt = fs_parse(fsc, virtio_fs_parameters, param, &result);
+=======
+static int virtio_fs_parse_param(struct fs_context *fc,
+=======
+static int virtio_fs_parse_param(struct fs_context *fsc,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+				 struct fs_parameter *param)
+{
+	struct fs_parse_result result;
+	struct fuse_fs_context *ctx = fsc->fs_private;
+	int opt;
+
+<<<<<<< HEAD
 	opt = fs_parse(fc, virtio_fs_parameters, param, &result);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	opt = fs_parse(fsc, virtio_fs_parameters, param, &result);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (opt < 0)
 		return opt;
 
@@ -119,9 +138,21 @@ static int virtio_fs_parse_param(struct fs_context *fc,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void virtio_fs_free_fsc(struct fs_context *fsc)
+{
+	struct fuse_fs_context *ctx = fsc->fs_private;
+=======
 static void virtio_fs_free_fc(struct fs_context *fc)
 {
 	struct fuse_fs_context *ctx = fc->fs_private;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void virtio_fs_free_fsc(struct fs_context *fsc)
+{
+	struct fuse_fs_context *ctx = fsc->fs_private;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree(ctx);
 }
@@ -1488,7 +1519,15 @@ out_err:
 }
 
 static const struct fs_context_operations virtio_fs_context_ops = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.free		= virtio_fs_free_fsc,
+=======
 	.free		= virtio_fs_free_fc,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.free		= virtio_fs_free_fsc,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.parse_param	= virtio_fs_parse_param,
 	.get_tree	= virtio_fs_get_tree,
 };

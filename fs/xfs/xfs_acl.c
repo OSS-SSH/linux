@@ -125,7 +125,15 @@ xfs_acl_to_disk(struct xfs_acl *aclp, const struct posix_acl *acl)
 }
 
 struct posix_acl *
+<<<<<<< HEAD
+<<<<<<< HEAD
+xfs_get_acl(struct inode *inode, int type, bool rcu)
+=======
 xfs_get_acl(struct inode *inode, int type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+xfs_get_acl(struct inode *inode, int type, bool rcu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xfs_inode	*ip = XFS_I(inode);
 	struct xfs_mount	*mp = ip->i_mount;
@@ -137,6 +145,18 @@ xfs_get_acl(struct inode *inode, int type)
 	};
 	int			error;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	trace_xfs_get_acl(ip);
 
 	switch (type) {
@@ -232,7 +252,15 @@ xfs_acl_set_mode(
 	inode->i_ctime = current_time(inode);
 	xfs_trans_log_inode(tp, ip, XFS_ILOG_CORE);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_wsync(mp))
+=======
 	if (mp->m_flags & XFS_MOUNT_WSYNC)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_wsync(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_trans_set_sync(tp);
 	return xfs_trans_commit(tp);
 }

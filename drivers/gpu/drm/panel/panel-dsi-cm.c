@@ -574,7 +574,15 @@ static int dsicm_probe(struct mipi_dsi_device *dsi)
 	dsi->lanes = 2;
 	dsi->format = MIPI_DSI_FMT_RGB888;
 	dsi->mode_flags = MIPI_DSI_CLOCK_NON_CONTINUOUS |
+<<<<<<< HEAD
+<<<<<<< HEAD
+			  MIPI_DSI_MODE_NO_EOT_PACKET;
+=======
 			  MIPI_DSI_MODE_EOT_PACKET;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			  MIPI_DSI_MODE_NO_EOT_PACKET;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dsi->hs_rate = ddata->panel_data->max_hs_rate;
 	dsi->lp_rate = ddata->panel_data->max_lp_rate;
 

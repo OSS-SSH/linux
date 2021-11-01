@@ -227,7 +227,15 @@ do_entArith(unsigned long summary, unsigned long write_mask,
 	}
 	die_if_kernel("Arithmetic fault", regs, 0, NULL);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	send_sig_fault_trapno(SIGFPE, si_code, (void __user *) regs->pc, 0, current);
+=======
 	send_sig_fault(SIGFPE, si_code, (void __user *) regs->pc, 0, current);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	send_sig_fault_trapno(SIGFPE, si_code, (void __user *) regs->pc, 0, current);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 asmlinkage void
@@ -268,13 +276,31 @@ do_entIF(unsigned long type, struct pt_regs *regs)
 			regs->pc -= 4;	/* make pc point to former bpt */
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		send_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *)regs->pc,
+=======
 		send_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *)regs->pc, 0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		send_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *)regs->pc,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       current);
 		return;
 
 	      case 1: /* bugcheck */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		send_sig_fault_trapno(SIGTRAP, TRAP_UNK,
+				      (void __user *) regs->pc, 0, current);
+=======
 		send_sig_fault(SIGTRAP, TRAP_UNK, (void __user *) regs->pc, 0,
 			       current);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		send_sig_fault_trapno(SIGTRAP, TRAP_UNK,
+				      (void __user *) regs->pc, 0, current);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 		
 	      case 2: /* gentrap */
@@ -335,8 +361,18 @@ do_entIF(unsigned long type, struct pt_regs *regs)
 			break;
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		send_sig_fault_trapno(signo, code, (void __user *) regs->pc,
+				      regs->r16, current);
+=======
 		send_sig_fault(signo, code, (void __user *) regs->pc, regs->r16,
 			       current);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		send_sig_fault_trapno(signo, code, (void __user *) regs->pc,
+				      regs->r16, current);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	      case 4: /* opDEC */
@@ -360,9 +396,21 @@ do_entIF(unsigned long type, struct pt_regs *regs)
 			if (si_code == 0)
 				return;
 			if (si_code > 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+				send_sig_fault_trapno(SIGFPE, si_code,
+						      (void __user *) regs->pc,
+						      0, current);
+=======
 				send_sig_fault(SIGFPE, si_code,
 					       (void __user *) regs->pc, 0,
 					       current);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				send_sig_fault_trapno(SIGFPE, si_code,
+						      (void __user *) regs->pc,
+						      0, current);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return;
 			}
 		}
@@ -387,7 +435,15 @@ do_entIF(unsigned long type, struct pt_regs *regs)
 		      ;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	send_sig_fault(SIGILL, ILL_ILLOPC, (void __user *)regs->pc, current);
+=======
 	send_sig_fault(SIGILL, ILL_ILLOPC, (void __user *)regs->pc, 0, current);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	send_sig_fault(SIGILL, ILL_ILLOPC, (void __user *)regs->pc, current);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* There is an ifdef in the PALcode in MILO that enables a 
@@ -402,7 +458,15 @@ do_entDbg(struct pt_regs *regs)
 {
 	die_if_kernel("Instruction fault", regs, 0, NULL);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	force_sig_fault(SIGILL, ILL_ILLOPC, (void __user *)regs->pc);
+=======
 	force_sig_fault(SIGILL, ILL_ILLOPC, (void __user *)regs->pc, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	force_sig_fault(SIGILL, ILL_ILLOPC, (void __user *)regs->pc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 
@@ -730,7 +794,15 @@ do_entUnaUser(void __user * va, unsigned long opcode,
 	long error;
 
 	/* Check the UAC bits to decide what the user wants us to do
+<<<<<<< HEAD
+<<<<<<< HEAD
+	   with the unaligned access.  */
+=======
 	   with the unaliged access.  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	   with the unaligned access.  */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!(current_thread_info()->status & TS_UAC_NOPRINT)) {
 		if (__ratelimit(&ratelimit)) {
@@ -964,12 +1036,28 @@ give_sigsegv:
 			si_code = SEGV_MAPERR;
 		mmap_read_unlock(mm);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	send_sig_fault(SIGSEGV, si_code, va, current);
+=======
 	send_sig_fault(SIGSEGV, si_code, va, 0, current);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	send_sig_fault(SIGSEGV, si_code, va, current);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return;
 
 give_sigbus:
 	regs->pc -= 4;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	send_sig_fault(SIGBUS, BUS_ADRALN, va, current);
+=======
 	send_sig_fault(SIGBUS, BUS_ADRALN, va, 0, current);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	send_sig_fault(SIGBUS, BUS_ADRALN, va, current);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return;
 }
 

@@ -10,7 +10,15 @@ ipv6-objs :=	af_inet6.o anycast.o ip6_output.o ip6_input.o addrconf.o \
 		route.o ip6_fib.o ipv6_sockglue.o ndisc.o udp.o udplite.o \
 		raw.o icmp.o mcast.o reassembly.o tcp_ipv6.o ping.o \
 		exthdrs.o datagram.o ip6_flowlabel.o inet6_connection_sock.o \
+<<<<<<< HEAD
+<<<<<<< HEAD
+		udp_offload.o seg6.o fib6_notifier.o rpl.o ioam6.o
+=======
 		udp_offload.o seg6.o fib6_notifier.o rpl.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		udp_offload.o seg6.o fib6_notifier.o rpl.o ioam6.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 ipv6-offload :=	ip6_offload.o tcpv6_offload.o exthdrs_offload.o
 
@@ -27,6 +35,14 @@ ipv6-$(CONFIG_NETLABEL) += calipso.o
 ipv6-$(CONFIG_IPV6_SEG6_LWTUNNEL) += seg6_iptunnel.o seg6_local.o
 ipv6-$(CONFIG_IPV6_SEG6_HMAC) += seg6_hmac.o
 ipv6-$(CONFIG_IPV6_RPL_LWTUNNEL) += rpl_iptunnel.o
+<<<<<<< HEAD
+<<<<<<< HEAD
+ipv6-$(CONFIG_IPV6_IOAM6_LWTUNNEL) += ioam6_iptunnel.o
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ipv6-$(CONFIG_IPV6_IOAM6_LWTUNNEL) += ioam6_iptunnel.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 ipv6-objs += $(ipv6-y)
 

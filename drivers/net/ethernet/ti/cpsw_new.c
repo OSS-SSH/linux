@@ -28,6 +28,14 @@
 #include <linux/kmemleak.h>
 #include <linux/sys_soc.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <net/switchdev.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <net/switchdev.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <net/page_pool.h>
 #include <net/pkt_cls.h>
 #include <net/devlink.h>
@@ -374,7 +382,15 @@ static void cpsw_rx_handler(void *token, int len, int status)
 	skb->protocol = eth_type_trans(skb, ndev);
 
 	/* mark skb for recycling */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	skb_mark_for_recycle(skb);
+=======
 	skb_mark_for_recycle(skb, page, pool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	skb_mark_for_recycle(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	netif_receive_skb(skb);
 
 	ndev->stats.rx_bytes += len;
@@ -501,7 +517,15 @@ static void cpsw_restore(struct cpsw_priv *priv)
 
 static void cpsw_init_stp_ale_entry(struct cpsw_common *cpsw)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	static const char stpa[] = {0x01, 0x80, 0xc2, 0x0, 0x0, 0x0};
+=======
 	char stpa[] = {0x01, 0x80, 0xc2, 0x0, 0x0, 0x0};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	static const char stpa[] = {0x01, 0x80, 0xc2, 0x0, 0x0, 0x0};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cpsw_ale_add_mcast(cpsw->ale, stpa,
 			   ALE_PORT_HOST, ALE_SUPER, 0,
@@ -893,7 +917,15 @@ static int cpsw_ndo_open(struct net_device *ndev)
 		struct ethtool_coalesce coal;
 
 		coal.rx_coalesce_usecs = cpsw->coal_intvl;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cpsw_set_coalesce(ndev, &coal, NULL, NULL);
+=======
 		cpsw_set_coalesce(ndev, &coal);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpsw_set_coalesce(ndev, &coal, NULL, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	cpdma_ctlr_start(cpsw->dma);
@@ -920,7 +952,15 @@ static netdev_tx_t cpsw_ndo_start_xmit(struct sk_buff *skb,
 	struct cpdma_chan *txch;
 	int ret, q_idx;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (skb_put_padto(skb, READ_ONCE(priv->tx_packet_min))) {
+=======
 	if (skb_padto(skb, CPSW_MIN_PACKET_SIZE)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (skb_put_padto(skb, READ_ONCE(priv->tx_packet_min))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cpsw_err(priv, tx_err, "packet pad failed\n");
 		ndev->stats.tx_dropped++;
 		return NET_XMIT_DROP;
@@ -1100,7 +1140,15 @@ static int cpsw_ndo_xdp_xmit(struct net_device *ndev, int n,
 
 	for (i = 0; i < n; i++) {
 		xdpf = frames[i];
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (xdpf->len < READ_ONCE(priv->tx_packet_min))
+=======
 		if (xdpf->len < CPSW_MIN_PACKET_SIZE)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xdpf->len < READ_ONCE(priv->tx_packet_min))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 
 		if (cpsw_xdp_tx_frame(priv, xdpf, NULL, priv->emac_port))
@@ -1127,7 +1175,15 @@ static const struct net_device_ops cpsw_netdev_ops = {
 	.ndo_stop		= cpsw_ndo_stop,
 	.ndo_start_xmit		= cpsw_ndo_start_xmit,
 	.ndo_set_mac_address	= cpsw_ndo_set_mac_address,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl		= cpsw_ndo_ioctl,
+=======
 	.ndo_do_ioctl		= cpsw_ndo_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= cpsw_ndo_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_tx_timeout		= cpsw_ndo_tx_timeout,
 	.ndo_set_rx_mode	= cpsw_ndo_set_rx_mode,
@@ -1389,6 +1445,14 @@ static int cpsw_create_ports(struct cpsw_common *cpsw)
 		priv->dev  = dev;
 		priv->msg_enable = netif_msg_init(debug_level, CPSW_DEBUG);
 		priv->emac_port = i + 1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		priv->tx_packet_min = CPSW_MIN_PACKET_SIZE;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		priv->tx_packet_min = CPSW_MIN_PACKET_SIZE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (is_valid_ether_addr(slave_data->mac_addr)) {
 			ether_addr_copy(priv->mac_addr, slave_data->mac_addr);
@@ -1499,10 +1563,28 @@ static void cpsw_port_offload_fwd_mark_update(struct cpsw_common *cpsw)
 }
 
 static int cpsw_netdevice_port_link(struct net_device *ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				    struct net_device *br_ndev,
+				    struct netlink_ext_ack *extack)
+{
+	struct cpsw_priv *priv = netdev_priv(ndev);
+	struct cpsw_common *cpsw = priv->cpsw;
+	int err;
+=======
 				    struct net_device *br_ndev)
 {
 	struct cpsw_priv *priv = netdev_priv(ndev);
 	struct cpsw_common *cpsw = priv->cpsw;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    struct net_device *br_ndev,
+				    struct netlink_ext_ack *extack)
+{
+	struct cpsw_priv *priv = netdev_priv(ndev);
+	struct cpsw_common *cpsw = priv->cpsw;
+	int err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!cpsw->br_members) {
 		cpsw->hw_bridge_dev = br_ndev;
@@ -1514,6 +1596,20 @@ static int cpsw_netdevice_port_link(struct net_device *ndev,
 			return -EOPNOTSUPP;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	err = switchdev_bridge_port_offload(ndev, ndev, NULL, NULL, NULL,
+					    false, extack);
+	if (err)
+		return err;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cpsw->br_members |= BIT(priv->emac_port);
 
 	cpsw_port_offload_fwd_mark_update(cpsw);
@@ -1526,6 +1622,16 @@ static void cpsw_netdevice_port_unlink(struct net_device *ndev)
 	struct cpsw_priv *priv = netdev_priv(ndev);
 	struct cpsw_common *cpsw = priv->cpsw;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	switchdev_bridge_port_unoffload(ndev, NULL, NULL, NULL);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	switchdev_bridge_port_unoffload(ndev, NULL, NULL, NULL);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cpsw->br_members &= ~BIT(priv->emac_port);
 
 	cpsw_port_offload_fwd_mark_update(cpsw);
@@ -1538,6 +1644,14 @@ static void cpsw_netdevice_port_unlink(struct net_device *ndev)
 static int cpsw_netdevice_event(struct notifier_block *unused,
 				unsigned long event, void *ptr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct netlink_ext_ack *extack = netdev_notifier_info_to_extack(ptr);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct netlink_ext_ack *extack = netdev_notifier_info_to_extack(ptr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_device *ndev = netdev_notifier_info_to_dev(ptr);
 	struct netdev_notifier_changeupper_info *info;
 	int ret = NOTIFY_DONE;
@@ -1552,7 +1666,17 @@ static int cpsw_netdevice_event(struct notifier_block *unused,
 		if (netif_is_bridge_master(info->upper_dev)) {
 			if (info->linking)
 				ret = cpsw_netdevice_port_link(ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+							       info->upper_dev,
+							       extack);
+=======
 							       info->upper_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+							       info->upper_dev,
+							       extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			else
 				cpsw_netdevice_port_unlink(ndev);
 		}
@@ -1686,6 +1810,14 @@ static int cpsw_dl_switch_mode_set(struct devlink *dl, u32 id,
 
 			priv = netdev_priv(sl_ndev);
 			slave->port_vlan = vlan;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			WRITE_ONCE(priv->tx_packet_min, CPSW_MIN_PACKET_SIZE_VLAN);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			WRITE_ONCE(priv->tx_packet_min, CPSW_MIN_PACKET_SIZE_VLAN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (netif_running(sl_ndev))
 				cpsw_port_add_switch_def_ale_entries(priv,
 								     slave);
@@ -1714,6 +1846,14 @@ static int cpsw_dl_switch_mode_set(struct devlink *dl, u32 id,
 
 			priv = netdev_priv(slave->ndev);
 			slave->port_vlan = slave->data->dual_emac_res_vlan;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			WRITE_ONCE(priv->tx_packet_min, CPSW_MIN_PACKET_SIZE);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			WRITE_ONCE(priv->tx_packet_min, CPSW_MIN_PACKET_SIZE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			cpsw_port_add_dual_emac_def_ale_entries(priv, slave);
 		}
 
@@ -1788,14 +1928,30 @@ static int cpsw_register_devlink(struct cpsw_common *cpsw)
 	struct cpsw_devlink *dl_priv;
 	int ret = 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpsw->devlink = devlink_alloc(&cpsw_devlink_ops, sizeof(*dl_priv), dev);
+=======
 	cpsw->devlink = devlink_alloc(&cpsw_devlink_ops, sizeof(*dl_priv));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpsw->devlink = devlink_alloc(&cpsw_devlink_ops, sizeof(*dl_priv), dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!cpsw->devlink)
 		return -ENOMEM;
 
 	dl_priv = devlink_priv(cpsw->devlink);
 	dl_priv->cpsw = cpsw;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = devlink_register(cpsw->devlink);
+=======
 	ret = devlink_register(cpsw->devlink, dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = devlink_register(cpsw->devlink);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		dev_err(dev, "DL reg fail ret:%d\n", ret);
 		goto dl_free;

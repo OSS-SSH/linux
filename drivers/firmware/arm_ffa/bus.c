@@ -46,10 +46,31 @@ static int ffa_device_probe(struct device *dev)
 	struct ffa_driver *ffa_drv = to_ffa_driver(dev->driver);
 	struct ffa_device *ffa_dev = to_ffa_dev(dev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return ffa_drv->probe(ffa_dev);
+}
+
+static void ffa_device_remove(struct device *dev)
+{
+	struct ffa_driver *ffa_drv = to_ffa_driver(dev->driver);
+
+	ffa_drv->remove(to_ffa_dev(dev));
+=======
 	if (!ffa_device_match(dev, dev->driver))
 		return -ENODEV;
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ffa_drv->probe(ffa_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+}
+
+static void ffa_device_remove(struct device *dev)
+{
+	struct ffa_driver *ffa_drv = to_ffa_driver(dev->driver);
+
+	ffa_drv->remove(to_ffa_dev(dev));
 }
 
 static int ffa_device_uevent(struct device *dev, struct kobj_uevent_env *env)
@@ -89,6 +110,14 @@ struct bus_type ffa_bus_type = {
 	.name		= "arm_ffa",
 	.match		= ffa_device_match,
 	.probe		= ffa_device_probe,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.remove		= ffa_device_remove,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.remove		= ffa_device_remove,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.uevent		= ffa_device_uevent,
 	.dev_groups	= ffa_device_attributes_groups,
 };
@@ -99,6 +128,18 @@ int ffa_driver_register(struct ffa_driver *driver, struct module *owner,
 {
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!driver->probe)
+		return -EINVAL;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!driver->probe)
+		return -EINVAL;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	driver->driver.bus = &ffa_bus_type;
 	driver->driver.name = driver->name;
 	driver->driver.owner = owner;
@@ -127,7 +168,15 @@ static void ffa_release_device(struct device *dev)
 
 static int __ffa_devices_unregister(struct device *dev, void *data)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	device_unregister(dev);
+=======
 	ffa_release_device(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	device_unregister(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

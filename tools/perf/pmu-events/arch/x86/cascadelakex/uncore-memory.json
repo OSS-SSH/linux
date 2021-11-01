@@ -65,6 +65,9 @@
         "Unit": "iMC"
     },
     {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
         "BriefDescription": "Pre-charge for writes",
         "Counter": "0,1,2,3",
         "EventCode": "0x2",
@@ -74,6 +77,9 @@
         "Unit": "iMC"
     },
     {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "BriefDescription": "Write requests allocated in the PMM Write Pending Queue for Intel Optane DC persistent memory",
         "Counter": "0,1,2,3",
         "EventCode": "0xE3",
@@ -90,32 +96,80 @@
         "Unit": "iMC"
     },
     {
+<<<<<<< HEAD
+<<<<<<< HEAD
+        "BriefDescription": "Intel Optane DC persistent memory bandwidth read (MB/sec). Derived from unc_m_pmm_rpq_inserts",
+=======
         "BriefDescription": "Intel Optane DC persistent memory bandwidth read (MB). Derived from unc_m_pmm_rpq_inserts",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        "BriefDescription": "Intel Optane DC persistent memory bandwidth read (MB/sec). Derived from unc_m_pmm_rpq_inserts",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "Counter": "0,1,2,3",
         "EventCode": "0xE3",
         "EventName": "UNC_M_PMM_BANDWIDTH.READ",
         "PerPkg": "1",
+<<<<<<< HEAD
+<<<<<<< HEAD
+        "ScaleUnit": "6.103515625E-5MB/sec",
+        "Unit": "iMC"
+    },
+    {
+        "BriefDescription": "Intel Optane DC persistent memory bandwidth write (MB/sec). Derived from unc_m_pmm_wpq_inserts",
+=======
         "ScaleUnit": "6.103515625E-5MB",
         "Unit": "iMC"
     },
     {
         "BriefDescription": "Intel Optane DC persistent memory bandwidth write (MB). Derived from unc_m_pmm_wpq_inserts",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        "ScaleUnit": "6.103515625E-5MB/sec",
+        "Unit": "iMC"
+    },
+    {
+        "BriefDescription": "Intel Optane DC persistent memory bandwidth write (MB/sec). Derived from unc_m_pmm_wpq_inserts",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "Counter": "0,1,2,3",
         "EventCode": "0xE7",
         "EventName": "UNC_M_PMM_BANDWIDTH.WRITE",
         "PerPkg": "1",
+<<<<<<< HEAD
+<<<<<<< HEAD
+        "ScaleUnit": "6.103515625E-5MB/sec",
+        "Unit": "iMC"
+    },
+    {
+        "BriefDescription": "Intel Optane DC persistent memory bandwidth total (MB/sec). Derived from unc_m_pmm_rpq_inserts",
+=======
         "ScaleUnit": "6.103515625E-5MB",
         "Unit": "iMC"
     },
     {
         "BriefDescription": "Intel Optane DC persistent memory bandwidth total (MB). Derived from unc_m_pmm_rpq_inserts",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        "ScaleUnit": "6.103515625E-5MB/sec",
+        "Unit": "iMC"
+    },
+    {
+        "BriefDescription": "Intel Optane DC persistent memory bandwidth total (MB/sec). Derived from unc_m_pmm_rpq_inserts",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "Counter": "0,1,2,3",
         "EventCode": "0xE3",
         "EventName": "UNC_M_PMM_BANDWIDTH.TOTAL",
         "MetricExpr": "UNC_M_PMM_RPQ_INSERTS + UNC_M_PMM_WPQ_INSERTS",
         "MetricName": "UNC_M_PMM_BANDWIDTH.TOTAL",
         "PerPkg": "1",
+<<<<<<< HEAD
+<<<<<<< HEAD
+        "ScaleUnit": "6.103515625E-5MB/sec",
+=======
         "ScaleUnit": "6.103515625E-5MB",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        "ScaleUnit": "6.103515625E-5MB/sec",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         "Unit": "iMC"
     },
     {

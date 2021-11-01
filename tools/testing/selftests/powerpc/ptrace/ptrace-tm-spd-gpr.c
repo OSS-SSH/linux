@@ -65,7 +65,15 @@ trans:
 		: [gpr_1]"i"(GPR_1), [gpr_2]"i"(GPR_2), [gpr_4]"i"(GPR_4),
 		[sprn_texasr] "i" (SPRN_TEXASR), [flt_1] "b" (&a),
 		[flt_4] "b" (&d)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		: "memory", "r0", "r5", "r6", "r7",
+=======
 		: "memory", "r5", "r6", "r7",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		: "memory", "r0", "r5", "r6", "r7",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"r8", "r9", "r10", "r11", "r12", "r13", "r14", "r15",
 		"r16", "r17", "r18", "r19", "r20", "r21", "r22", "r23",
 		"r24", "r25", "r26", "r27", "r28", "r29", "r30", "r31"
@@ -119,6 +127,14 @@ int ptrace_tm_spd_gpr(void)
 	int ret, status;
 
 	SKIP_IF(!have_htm());
+<<<<<<< HEAD
+<<<<<<< HEAD
+	SKIP_IF(htm_is_synthetic());
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SKIP_IF(htm_is_synthetic());
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	shm_id = shmget(IPC_PRIVATE, sizeof(int) * 3, 0777|IPC_CREAT);
 	pid = fork();
 	if (pid < 0) {

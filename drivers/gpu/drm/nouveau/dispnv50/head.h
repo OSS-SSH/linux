@@ -21,6 +21,14 @@ struct nv50_head {
 
 struct nv50_head *nv50_head_create(struct drm_device *, int index);
 void nv50_head_flush_set(struct nv50_head *head, struct nv50_head_atom *asyh);
+<<<<<<< HEAD
+<<<<<<< HEAD
+void nv50_head_flush_set_wndw(struct nv50_head *head, struct nv50_head_atom *asyh);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void nv50_head_flush_set_wndw(struct nv50_head *head, struct nv50_head_atom *asyh);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void nv50_head_flush_clr(struct nv50_head *head,
 			 struct nv50_head_atom *asyh, bool flush);
 

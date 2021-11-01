@@ -586,13 +586,29 @@ int vmw_validation_bo_validate(struct vmw_validation_context *ctx, bool intr)
 			container_of(entry->base.bo, typeof(*vbo), base);
 
 		if (entry->cpu_blit) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			struct ttm_operation_ctx ttm_ctx = {
+=======
 			struct ttm_operation_ctx ctx = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			struct ttm_operation_ctx ttm_ctx = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				.interruptible = intr,
 				.no_wait_gpu = false
 			};
 
 			ret = ttm_bo_validate(entry->base.bo,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					      &vmw_nonfixed_placement, &ttm_ctx);
+=======
 					      &vmw_nonfixed_placement, &ctx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					      &vmw_nonfixed_placement, &ttm_ctx);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			ret = vmw_validation_bo_validate_single
 			(entry->base.bo, intr, entry->as_mob);

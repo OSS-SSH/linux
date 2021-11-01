@@ -87,9 +87,25 @@
 #define GEN11_CSB_WRITE_PTR_MASK	(GEN11_CSB_PTR_MASK << 0)
 
 #define MAX_CONTEXT_HW_ID	(1 << 21) /* exclusive */
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define GEN11_MAX_CONTEXT_HW_ID	(1 << 11) /* exclusive */
+/* in Gen12 ID 0x7FF is reserved to indicate idle */
+#define GEN12_MAX_CONTEXT_HW_ID	(GEN11_MAX_CONTEXT_HW_ID - 1)
+/* in Xe_HP ID 0xFFFF is reserved to indicate "invalid context" */
+#define XEHP_MAX_CONTEXT_HW_ID	0xFFFF
+=======
 #define MAX_GUC_CONTEXT_HW_ID	(1 << 20) /* exclusive */
 #define GEN11_MAX_CONTEXT_HW_ID	(1 << 11) /* exclusive */
 /* in Gen12 ID 0x7FF is reserved to indicate idle */
 #define GEN12_MAX_CONTEXT_HW_ID	(GEN11_MAX_CONTEXT_HW_ID - 1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define GEN11_MAX_CONTEXT_HW_ID	(1 << 11) /* exclusive */
+/* in Gen12 ID 0x7FF is reserved to indicate idle */
+#define GEN12_MAX_CONTEXT_HW_ID	(GEN11_MAX_CONTEXT_HW_ID - 1)
+/* in Xe_HP ID 0xFFFF is reserved to indicate "invalid context" */
+#define XEHP_MAX_CONTEXT_HW_ID	0xFFFF
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _INTEL_LRC_REG_H_ */

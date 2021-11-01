@@ -1,7 +1,15 @@
 What:		/dev/wmi/dell-smbios
 Date:		November 2017
 KernelVersion:	4.15
+<<<<<<< HEAD
+<<<<<<< HEAD
+Contact:	Dell.Client.Kernel@dell.com
+=======
 Contact:	"Mario Limonciello" <mario.limonciello@dell.com>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Contact:	Dell.Client.Kernel@dell.com
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Description:
 		Perform SMBIOS calls on supported Dell machines.
 		through the Dell ACPI-WMI interface.

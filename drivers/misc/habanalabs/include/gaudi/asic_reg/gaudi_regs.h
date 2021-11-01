@@ -126,6 +126,18 @@
 #define mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_SOB_OBJ_1                     0x4F2004
 #define mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_SOB_OBJ_2047                  0x4F3FFC
 #define mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_MON_PAY_ADDRL_0               0x4F4000
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_MON_PAY_ADDRH_0               0x4F4800
+#define mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_MON_PAY_DATA_0                0x4F5000
+#define mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_MON_ARM_0                     0x4F5800
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_MON_PAY_ADDRH_0               0x4F4800
+#define mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_MON_PAY_DATA_0                0x4F5000
+#define mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_MON_ARM_0                     0x4F5800
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_MON_STATUS_0                  0x4F6000
 #define mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_MON_STATUS_511                0x4F67FC
 
@@ -305,6 +317,16 @@
 #define mmPCIE_AUX_FLR_CTRL                                          0xC07394
 #define mmPCIE_AUX_DBI                                               0xC07490
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define mmPCIE_CORE_MSI_REQ                                          0xC04100
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define mmPCIE_CORE_MSI_REQ                                          0xC04100
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define mmPSOC_PCI_PLL_NR                                            0xC72100
 #define mmSRAM_W_PLL_NR                                              0x4C8100
 #define mmPSOC_HBM_PLL_NR                                            0xC74100

@@ -1,4 +1,12 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+Invensense ICS-43432-compatible MEMS microphone with I2S output.
+=======
 Invensense ICS-43432 MEMS microphone with I2S output.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Invensense ICS-43432-compatible MEMS microphone with I2S output.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 There are no software configuration options for this device, indeed, the only
 host connection is the I2S interface. Apart from requirements on clock
@@ -8,7 +16,19 @@ contain audio data. A hardware pin determines if the device outputs data
 on the left or right channel of the I2S frame.
 
 Required properties:
+<<<<<<< HEAD
+<<<<<<< HEAD
+  - compatible: should be one of the following.
+     "invensense,ics43432": For the Invensense ICS43432
+     "cui,cmm-4030d-261": For the CUI CMM-4030D-261-I2S-TR
+=======
   - compatible : Must be "invensense,ics43432"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  - compatible: should be one of the following.
+     "invensense,ics43432": For the Invensense ICS43432
+     "cui,cmm-4030d-261": For the CUI CMM-4030D-261-I2S-TR
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Example:
 

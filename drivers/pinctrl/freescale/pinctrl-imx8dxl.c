@@ -155,7 +155,15 @@ static const struct pinctrl_pin_desc imx8dxl_pinctrl_pads[] = {
 };
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct imx_pinctrl_soc_info imx8dxl_pinctrl_info = {
+=======
 static struct imx_pinctrl_soc_info imx8dxl_pinctrl_info = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct imx_pinctrl_soc_info imx8dxl_pinctrl_info = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.pins = imx8dxl_pinctrl_pads,
 	.npins = ARRAY_SIZE(imx8dxl_pinctrl_pads),
 	.flags = IMX_USE_SCU,

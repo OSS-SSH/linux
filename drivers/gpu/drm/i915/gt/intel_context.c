@@ -7,13 +7,29 @@
 #include "gem/i915_gem_pm.h"
 
 #include "i915_drv.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "i915_trace.h"
+=======
 #include "i915_globals.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "i915_trace.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "intel_context.h"
 #include "intel_engine.h"
 #include "intel_engine_pm.h"
 #include "intel_ring.h"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static struct kmem_cache *slab_ce;
+
+static struct intel_context *intel_context_alloc(void)
+{
+	return kmem_cache_zalloc(slab_ce, GFP_KERNEL);
+=======
 static struct i915_global_context {
 	struct i915_global base;
 	struct kmem_cache *slab_ce;
@@ -22,13 +38,31 @@ static struct i915_global_context {
 static struct intel_context *intel_context_alloc(void)
 {
 	return kmem_cache_zalloc(global.slab_ce, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct kmem_cache *slab_ce;
+
+static struct intel_context *intel_context_alloc(void)
+{
+	return kmem_cache_zalloc(slab_ce, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void rcu_context_free(struct rcu_head *rcu)
 {
 	struct intel_context *ce = container_of(rcu, typeof(*ce), rcu);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	trace_intel_context_free(ce);
+	kmem_cache_free(slab_ce, ce);
+=======
 	kmem_cache_free(global.slab_ce, ce);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	trace_intel_context_free(ce);
+	kmem_cache_free(slab_ce, ce);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void intel_context_free(struct intel_context *ce)
@@ -46,6 +80,14 @@ intel_context_create(struct intel_engine_cs *engine)
 		return ERR_PTR(-ENOMEM);
 
 	intel_context_init(ce, engine);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	trace_intel_context_create(ce);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	trace_intel_context_create(ce);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ce;
 }
 
@@ -80,7 +122,15 @@ static int intel_context_active_acquire(struct intel_context *ce)
 
 	__i915_active_acquire(&ce->active);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (intel_context_is_barrier(ce) || intel_engine_uses_guc(ce->engine))
+=======
 	if (intel_context_is_barrier(ce))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (intel_context_is_barrier(ce) || intel_engine_uses_guc(ce->engine))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	/* Preallocate tracking nodes */
@@ -268,6 +318,16 @@ int __intel_context_do_pin_ww(struct intel_context *ce,
 
 	GEM_BUG_ON(!intel_context_is_pinned(ce)); /* no overflow! */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	trace_intel_context_do_pin(ce);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	trace_intel_context_do_pin(ce);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_unlock:
 	mutex_unlock(&ce->pin_mutex);
 err_post_unpin:
@@ -306,9 +366,21 @@ retry:
 	return err;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void __intel_context_do_unpin(struct intel_context *ce, int sub)
+{
+	if (!atomic_sub_and_test(sub, &ce->pin_count))
+=======
 void intel_context_unpin(struct intel_context *ce)
 {
 	if (!atomic_dec_and_test(&ce->pin_count))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void __intel_context_do_unpin(struct intel_context *ce, int sub)
+{
+	if (!atomic_sub_and_test(sub, &ce->pin_count))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	CE_TRACE(ce, "unpin\n");
@@ -323,6 +395,14 @@ void intel_context_unpin(struct intel_context *ce)
 	 */
 	intel_context_get(ce);
 	intel_context_active_release(ce);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	trace_intel_context_do_unpin(ce);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	trace_intel_context_do_unpin(ce);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	intel_context_put(ce);
 }
 
@@ -360,6 +440,22 @@ static int __intel_context_active(struct i915_active *active)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int __i915_sw_fence_call
+sw_fence_dummy_notify(struct i915_sw_fence *sf,
+		      enum i915_sw_fence_notify state)
+{
+	return NOTIFY_DONE;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void
 intel_context_init(struct intel_context *ce, struct intel_engine_cs *engine)
 {
@@ -371,7 +467,17 @@ intel_context_init(struct intel_context *ce, struct intel_engine_cs *engine)
 	ce->engine = engine;
 	ce->ops = engine->cops;
 	ce->sseu = engine->sseu;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ce->ring = NULL;
+	ce->ring_size = SZ_4K;
+=======
 	ce->ring = __intel_context_ring_size(SZ_4K);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ce->ring = NULL;
+	ce->ring_size = SZ_4K;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ewma_runtime_init(&ce->runtime.avg);
 
@@ -383,6 +489,31 @@ intel_context_init(struct intel_context *ce, struct intel_engine_cs *engine)
 
 	mutex_init(&ce->pin_mutex);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	spin_lock_init(&ce->guc_state.lock);
+	INIT_LIST_HEAD(&ce->guc_state.fences);
+
+	spin_lock_init(&ce->guc_active.lock);
+	INIT_LIST_HEAD(&ce->guc_active.requests);
+
+	ce->guc_id = GUC_INVALID_LRC_ID;
+	INIT_LIST_HEAD(&ce->guc_id_link);
+
+	/*
+	 * Initialize fence to be complete as this is expected to be complete
+	 * unless there is a pending schedule disable outstanding.
+	 */
+	i915_sw_fence_init(&ce->guc_blocked, sw_fence_dummy_notify);
+	i915_sw_fence_commit(&ce->guc_blocked);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	i915_active_init(&ce->active,
 			 __intel_context_active, __intel_context_retire, 0);
 }
@@ -395,30 +526,44 @@ void intel_context_fini(struct intel_context *ce)
 
 	mutex_destroy(&ce->pin_mutex);
 	i915_active_fini(&ce->active);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	i915_sw_fence_fini(&ce->guc_blocked);
 }
 
-static void i915_global_context_shrink(void)
+void i915_context_module_exit(void)
 {
-	kmem_cache_shrink(global.slab_ce);
+	kmem_cache_destroy(slab_ce);
 }
 
-static void i915_global_context_exit(void)
+int __init i915_context_module_init(void)
 {
-	kmem_cache_destroy(global.slab_ce);
-}
-
-static struct i915_global_context global = { {
-	.shrink = i915_global_context_shrink,
-	.exit = i915_global_context_exit,
-} };
-
-int __init i915_global_context_init(void)
-{
-	global.slab_ce = KMEM_CACHE(intel_context, SLAB_HWCACHE_ALIGN);
-	if (!global.slab_ce)
+	slab_ce = KMEM_CACHE(intel_context, SLAB_HWCACHE_ALIGN);
+	if (!slab_ce)
 		return -ENOMEM;
 
+=======
+=======
+	i915_sw_fence_fini(&ce->guc_blocked);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
+
+void i915_context_module_exit(void)
+{
+	kmem_cache_destroy(slab_ce);
+}
+
+int __init i915_context_module_init(void)
+{
+	slab_ce = KMEM_CACHE(intel_context, SLAB_HWCACHE_ALIGN);
+	if (!slab_ce)
+		return -ENOMEM;
+
+<<<<<<< HEAD
 	i915_global_register(&global.base);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -499,6 +644,35 @@ retry:
 	return rq;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct i915_request *intel_context_find_active_request(struct intel_context *ce)
+{
+	struct i915_request *rq, *active = NULL;
+	unsigned long flags;
+
+	GEM_BUG_ON(!intel_engine_uses_guc(ce->engine));
+
+	spin_lock_irqsave(&ce->guc_active.lock, flags);
+	list_for_each_entry_reverse(rq, &ce->guc_active.requests,
+				    sched.link) {
+		if (i915_request_completed(rq))
+			break;
+
+		active = rq;
+	}
+	spin_unlock_irqrestore(&ce->guc_active.lock, flags);
+
+	return active;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_DRM_I915_SELFTEST)
 #include "selftest_context.c"
 #endif

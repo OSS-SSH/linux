@@ -26,6 +26,16 @@
 #include "xfs_error.h"
 #include "xfs_buf_item.h"
 #include "xfs_ag.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "xfs_quota.h"
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "xfs_quota.h"
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define BLK_AVG(blk1, blk2)	((blk1+blk2) >> 1)
 
@@ -79,8 +89,14 @@ xlog_alloc_buffer(
 	struct xlog	*log,
 	int		nbblks)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int align_mask = xfs_buftarg_dma_alignment(log->l_targ);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Pass log block 0 since we don't have an addr yet, buffer will be
 	 * verified on read.
@@ -108,7 +124,15 @@ xlog_alloc_buffer(
 	if (nbblks > 1 && log->l_sectBBsize > 1)
 		nbblks += log->l_sectBBsize;
 	nbblks = round_up(nbblks, log->l_sectBBsize);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return kvzalloc(BBTOB(nbblks), GFP_KERNEL | __GFP_RETRY_MAYFAIL);
+=======
 	return kmem_alloc_io(BBTOB(nbblks), align_mask, KM_MAYFAIL | KM_ZERO);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return kvzalloc(BBTOB(nbblks), GFP_KERNEL | __GFP_RETRY_MAYFAIL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -146,7 +170,15 @@ xlog_do_io(
 
 	error = xfs_rw_bdev(log->l_targ->bt_bdev, log->l_logBBstart + blk_no,
 			BBTOB(nbblks), data, op);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (error && !xlog_is_shutdown(log)) {
+=======
 	if (error && !XFS_FORCED_SHUTDOWN(log->l_mp)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (error && !xlog_is_shutdown(log)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_alert(log->l_mp,
 			  "log recovery %s I/O error at daddr 0x%llx len %d error %d",
 			  op == REQ_OP_WRITE ? "write" : "read",
@@ -375,7 +407,15 @@ out:
 static inline int
 xlog_logrec_hblks(struct xlog *log, struct xlog_rec_header *rh)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_logv2(log->l_mp)) {
+=======
 	if (xfs_sb_version_haslogv2(&log->l_mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_logv2(log->l_mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int	h_size = be32_to_cpu(rh->h_size);
 
 		if ((be32_to_cpu(rh->h_version) & XLOG_VERSION_2) &&
@@ -1347,7 +1387,15 @@ xlog_find_tail(
 	 * headers if we have a filesystem using non-persistent counters.
 	 */
 	if (clean)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		set_bit(XFS_OPSTATE_CLEAN, &log->l_mp->m_opstate);
+=======
 		log->l_mp->m_flags |= XFS_MOUNT_WAS_CLEAN;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		set_bit(XFS_OPSTATE_CLEAN, &log->l_mp->m_opstate);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Make sure that there are no blocks in front of the head
@@ -1504,7 +1552,15 @@ xlog_add_record(
 	recp->h_magicno = cpu_to_be32(XLOG_HEADER_MAGIC_NUM);
 	recp->h_cycle = cpu_to_be32(cycle);
 	recp->h_version = cpu_to_be32(
+<<<<<<< HEAD
+<<<<<<< HEAD
+			xfs_has_logv2(log->l_mp) ? 2 : 1);
+=======
 			xfs_sb_version_haslogv2(&log->l_mp->m_sb) ? 2 : 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			xfs_has_logv2(log->l_mp) ? 2 : 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	recp->h_lsn = cpu_to_be64(xlog_assign_lsn(cycle, block));
 	recp->h_tail_lsn = cpu_to_be64(xlog_assign_lsn(tail_cycle, tail_block));
 	recp->h_fmt = cpu_to_be32(XLOG_FMT);
@@ -1756,6 +1812,39 @@ xlog_recover_release_intent(
 	spin_unlock(&ailp->ail_lock);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int
+xlog_recover_iget(
+	struct xfs_mount	*mp,
+	xfs_ino_t		ino,
+	struct xfs_inode	**ipp)
+{
+	int			error;
+
+	error = xfs_iget(mp, NULL, ino, 0, 0, ipp);
+	if (error)
+		return error;
+
+	error = xfs_qm_dqattach(*ipp);
+	if (error) {
+		xfs_irele(*ipp);
+		return error;
+	}
+
+	if (VFS_I(*ipp)->i_nlink == 0)
+		xfs_iflags_set(*ipp, XFS_IRECOVERY);
+
+	return 0;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /******************************************************************************
  *
  *		Log recover routines
@@ -2062,7 +2151,19 @@ xlog_recover_add_to_cont_trans(
 	old_ptr = item->ri_buf[item->ri_cnt-1].i_addr;
 	old_len = item->ri_buf[item->ri_cnt-1].i_len;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ptr = kvrealloc(old_ptr, old_len, len + old_len, GFP_KERNEL);
+	if (!ptr)
+		return -ENOMEM;
+=======
 	ptr = krealloc(old_ptr, len + old_len, GFP_KERNEL | __GFP_NOFAIL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ptr = kvrealloc(old_ptr, old_len, len + old_len, GFP_KERNEL);
+	if (!ptr)
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memcpy(&ptr[old_len], dp, len);
 	item->ri_buf[item->ri_cnt-1].i_len += len;
 	item->ri_buf[item->ri_cnt-1].i_addr = ptr;
@@ -2786,6 +2887,22 @@ xlog_recover_process_iunlinks(
 		}
 		xfs_buf_rele(agibp);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	/*
+	 * Flush the pending unlinked inodes to ensure that the inactivations
+	 * are fully completed on disk and the incore inodes can be reclaimed
+	 * before we signal that recovery is complete.
+	 */
+	xfs_inodegc_flush(mp);
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 STATIC void
@@ -2802,7 +2919,15 @@ xlog_unpack_data(
 		dp += BBSIZE;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_logv2(log->l_mp)) {
+=======
 	if (xfs_sb_version_haslogv2(&log->l_mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_logv2(log->l_mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xlog_in_core_2_t *xhdr = (xlog_in_core_2_t *)rhead;
 		for ( ; i < BTOBB(be32_to_cpu(rhead->h_len)); i++) {
 			j = i / (XLOG_HEADER_CYCLE_SIZE / BBSIZE);
@@ -2850,7 +2975,15 @@ xlog_recover_process(
 	 * the kernel from one that does not add CRCs by default.
 	 */
 	if (crc != old_crc) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (old_crc || xfs_has_crc(log->l_mp)) {
+=======
 		if (old_crc || xfs_sb_version_hascrc(&log->l_mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (old_crc || xfs_has_crc(log->l_mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xfs_alert(log->l_mp,
 		"log record CRC mismatch: found 0x%x, expected 0x%x.",
 					le32_to_cpu(old_crc),
@@ -2862,7 +2995,15 @@ xlog_recover_process(
 		 * If the filesystem is CRC enabled, this mismatch becomes a
 		 * fatal log corruption failure.
 		 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (xfs_has_crc(log->l_mp)) {
+=======
 		if (xfs_sb_version_hascrc(&log->l_mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_has_crc(log->l_mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			XFS_ERROR_REPORT(__func__, XFS_ERRLEVEL_LOW, log->l_mp);
 			return -EFSCORRUPTED;
 		}
@@ -2948,7 +3089,15 @@ xlog_do_recovery_pass(
 	 * Read the header of the tail block and get the iclog buffer size from
 	 * h_size.  Use this to tell how many sectors make up the log header.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_logv2(log->l_mp)) {
+=======
 	if (xfs_sb_version_haslogv2(&log->l_mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_logv2(log->l_mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * When using variable length iclogs, read first sector of
 		 * iclog header and extract the header size from it.  Get a
@@ -3280,10 +3429,18 @@ xlog_do_recover(
 	if (error)
 		return error;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xlog_is_shutdown(log))
+=======
 	/*
 	 * If IO errors happened during recovery, bail out.
 	 */
 	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xlog_is_shutdown(log))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	/*
@@ -3305,7 +3462,15 @@ xlog_do_recover(
 	xfs_buf_hold(bp);
 	error = _xfs_buf_read(bp, XBF_READ);
 	if (error) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (!xlog_is_shutdown(log)) {
+=======
 		if (!XFS_FORCED_SHUTDOWN(mp)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!xlog_is_shutdown(log)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xfs_buf_ioerror_alert(bp, __this_address);
 			ASSERT(0);
 		}
@@ -3318,6 +3483,14 @@ xlog_do_recover(
 	xfs_buf_relse(bp);
 
 	/* re-initialise in-core superblock and geometry structures */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mp->m_features |= xfs_sb_version_to_features(sbp);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mp->m_features |= xfs_sb_version_to_features(sbp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_reinit_percpu_counters(mp);
 	error = xfs_initialize_perag(mp, sbp->sb_agcount, &mp->m_maxagi);
 	if (error) {
@@ -3329,7 +3502,15 @@ xlog_do_recover(
 	xlog_recover_check_summary(log);
 
 	/* Normal transactions can now occur */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	clear_bit(XLOG_ACTIVE_RECOVERY, &log->l_opstate);
+=======
 	log->l_flags &= ~XLOG_ACTIVE_RECOVERY;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clear_bit(XLOG_ACTIVE_RECOVERY, &log->l_opstate);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -3355,7 +3536,15 @@ xlog_recover(
 	 * could not be verified. Check the superblock LSN against the current
 	 * LSN now that it's known.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_crc(log->l_mp) &&
+=======
 	if (xfs_sb_version_hascrc(&log->l_mp->m_sb) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_crc(log->l_mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    !xfs_log_check_lsn(log->l_mp, log->l_mp->m_sb.sb_lsn))
 		return -EINVAL;
 
@@ -3382,7 +3571,15 @@ xlog_recover(
 		 * (e.g. unsupported transactions, then simply reject the
 		 * attempt at recovery before touching anything.
 		 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (xfs_sb_is_v5(&log->l_mp->m_sb) &&
+=======
 		if (XFS_SB_VERSION_NUM(&log->l_mp->m_sb) == XFS_SB_VERSION_5 &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (xfs_sb_is_v5(&log->l_mp->m_sb) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    xfs_sb_has_incompat_log_feature(&log->l_mp->m_sb,
 					XFS_SB_FEAT_INCOMPAT_LOG_UNKNOWN)) {
 			xfs_warn(log->l_mp,
@@ -3413,12 +3610,32 @@ xlog_recover(
 						     : "internal");
 
 		error = xlog_do_recover(log, head_blk, tail_blk);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		set_bit(XLOG_RECOVERY_NEEDED, &log->l_opstate);
+=======
 		log->l_flags |= XLOG_RECOVERY_NEEDED;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		set_bit(XLOG_RECOVERY_NEEDED, &log->l_opstate);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return error;
 }
 
 /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * In the first part of recovery we replay inodes and buffers and build up the
+ * list of intents which need to be processed. Here we process the intents and
+ * clean up the on disk unlinked inode lists. This is separated from the first
+ * part of recovery so that the root and real-time bitmap inodes can be read in
+ * from disk in between the two stages.  This is necessary so that we can free
+ * space in the real-time portion of the file system.
+<<<<<<< HEAD
+=======
  * In the first part of recovery we replay inodes and buffers and build
  * up the list of extent free items which need to be processed.  Here
  * we process the extent free items and clean up the on disk unlinked
@@ -3426,11 +3643,58 @@ xlog_recover(
  * that the root and real-time bitmap inodes can be read in from disk in
  * between the two stages.  This is necessary so that we can free space
  * in the real-time portion of the file system.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int
 xlog_recover_finish(
 	struct xlog	*log)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int	error;
+
+	error = xlog_recover_process_intents(log);
+	if (error) {
+		/*
+		 * Cancel all the unprocessed intent items now so that we don't
+		 * leave them pinned in the AIL.  This can cause the AIL to
+		 * livelock on the pinned item if anyone tries to push the AIL
+		 * (inode reclaim does this) before we get around to
+		 * xfs_log_mount_cancel.
+		 */
+		xlog_recover_cancel_intents(log);
+		xfs_alert(log->l_mp, "Failed to recover intents");
+		xfs_force_shutdown(log->l_mp, SHUTDOWN_LOG_IO_ERROR);
+		return error;
+	}
+
+	/*
+	 * Sync the log to get all the intents out of the AIL.  This isn't
+	 * absolutely necessary, but it helps in case the unlink transactions
+	 * would have problems pushing the intents out of the way.
+	 */
+	xfs_log_force(log->l_mp, XFS_LOG_SYNC);
+
+	/*
+	 * Now that we've recovered the log and all the intents, we can clear
+	 * the log incompat feature bits in the superblock because there's no
+	 * longer anything to protect.  We rely on the AIL push to write out the
+	 * updated superblock after everything else.
+	 */
+	if (xfs_clear_incompat_log_features(log->l_mp)) {
+		error = xfs_sync_sb(log->l_mp, false);
+		if (error < 0) {
+			xfs_alert(log->l_mp,
+	"Failed to clear log incompat features on recovery");
+			return error;
+		}
+	}
+
+	xlog_recover_process_iunlinks(log);
+	xlog_recover_check_summary(log);
+=======
 	/*
 	 * Now we're ready to do the transactions needed for the
 	 * rest of recovery.  Start with completing all the extent
@@ -3455,26 +3719,53 @@ xlog_recover_finish(
 			xfs_alert(log->l_mp, "Failed to recover intents");
 			return error;
 		}
+=======
+	int	error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+	error = xlog_recover_process_intents(log);
+	if (error) {
 		/*
-		 * Sync the log to get all the intents out of the AIL.
-		 * This isn't absolutely necessary, but it helps in
-		 * case the unlink transactions would have problems
-		 * pushing the intents out of the way.
+		 * Cancel all the unprocessed intent items now so that we don't
+		 * leave them pinned in the AIL.  This can cause the AIL to
+		 * livelock on the pinned item if anyone tries to push the AIL
+		 * (inode reclaim does this) before we get around to
+		 * xfs_log_mount_cancel.
 		 */
-		xfs_log_force(log->l_mp, XFS_LOG_SYNC);
-
-		xlog_recover_process_iunlinks(log);
-
-		xlog_recover_check_summary(log);
-
-		xfs_notice(log->l_mp, "Ending recovery (logdev: %s)",
-				log->l_mp->m_logname ? log->l_mp->m_logname
-						     : "internal");
-		log->l_flags &= ~XLOG_RECOVERY_NEEDED;
-	} else {
-		xfs_info(log->l_mp, "Ending clean mount");
+		xlog_recover_cancel_intents(log);
+		xfs_alert(log->l_mp, "Failed to recover intents");
+		xfs_force_shutdown(log->l_mp, SHUTDOWN_LOG_IO_ERROR);
+		return error;
 	}
+
+	/*
+	 * Sync the log to get all the intents out of the AIL.  This isn't
+	 * absolutely necessary, but it helps in case the unlink transactions
+	 * would have problems pushing the intents out of the way.
+	 */
+	xfs_log_force(log->l_mp, XFS_LOG_SYNC);
+
+	/*
+	 * Now that we've recovered the log and all the intents, we can clear
+	 * the log incompat feature bits in the superblock because there's no
+	 * longer anything to protect.  We rely on the AIL push to write out the
+	 * updated superblock after everything else.
+	 */
+	if (xfs_clear_incompat_log_features(log->l_mp)) {
+		error = xfs_sync_sb(log->l_mp, false);
+		if (error < 0) {
+			xfs_alert(log->l_mp,
+	"Failed to clear log incompat features on recovery");
+			return error;
+		}
+	}
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	xlog_recover_process_iunlinks(log);
+	xlog_recover_check_summary(log);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -3482,7 +3773,15 @@ void
 xlog_recover_cancel(
 	struct xlog	*log)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xlog_recovery_needed(log))
+=======
 	if (log->l_flags & XLOG_RECOVERY_NEEDED)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xlog_recovery_needed(log))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xlog_recover_cancel_intents(log);
 }
 

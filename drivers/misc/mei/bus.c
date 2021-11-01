@@ -31,7 +31,15 @@
  *
  * Return: written size bytes or < 0 on error
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+ssize_t __mei_cl_send(struct mei_cl *cl, const u8 *buf, size_t length, u8 vtag,
+=======
 ssize_t __mei_cl_send(struct mei_cl *cl, u8 *buf, size_t length, u8 vtag,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ssize_t __mei_cl_send(struct mei_cl *cl, const u8 *buf, size_t length, u8 vtag,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		      unsigned int mode)
 {
 	struct mei_device *bus;
@@ -232,8 +240,18 @@ out:
  *  * < 0 on error
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+ssize_t mei_cldev_send_vtag(struct mei_cl_device *cldev, const u8 *buf,
+			    size_t length, u8 vtag)
+=======
 ssize_t mei_cldev_send_vtag(struct mei_cl_device *cldev, u8 *buf, size_t length,
 			    u8 vtag)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ssize_t mei_cldev_send_vtag(struct mei_cl_device *cldev, const u8 *buf,
+			    size_t length, u8 vtag)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mei_cl *cl = cldev->cl;
 
@@ -296,7 +314,15 @@ EXPORT_SYMBOL_GPL(mei_cldev_recv_nonblock_vtag);
  *  * written size in bytes
  *  * < 0 on error
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+ssize_t mei_cldev_send(struct mei_cl_device *cldev, const u8 *buf, size_t length)
+=======
 ssize_t mei_cldev_send(struct mei_cl_device *cldev, u8 *buf, size_t length)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ssize_t mei_cldev_send(struct mei_cl_device *cldev, const u8 *buf, size_t length)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return mei_cldev_send_vtag(cldev, buf, length, 0);
 }
@@ -552,7 +578,15 @@ EXPORT_SYMBOL_GPL(mei_cldev_ver);
  *
  * Return: true if me client is initialized and connected
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+bool mei_cldev_enabled(const struct mei_cl_device *cldev)
+=======
 bool mei_cldev_enabled(struct mei_cl_device *cldev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool mei_cldev_enabled(const struct mei_cl_device *cldev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return mei_cl_is_connected(cldev->cl);
 }
@@ -771,8 +805,18 @@ EXPORT_SYMBOL_GPL(mei_cldev_disable);
  * Return: id on success; NULL if no id is matching
  */
 static const
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct mei_cl_device_id *mei_cl_device_find(const struct mei_cl_device *cldev,
+					    const struct mei_cl_driver *cldrv)
+=======
 struct mei_cl_device_id *mei_cl_device_find(struct mei_cl_device *cldev,
 					    struct mei_cl_driver *cldrv)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct mei_cl_device_id *mei_cl_device_find(const struct mei_cl_device *cldev,
+					    const struct mei_cl_driver *cldrv)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const struct mei_cl_device_id *id;
 	const uuid_le *uuid;
@@ -815,8 +859,18 @@ struct mei_cl_device_id *mei_cl_device_find(struct mei_cl_device *cldev,
  */
 static int mei_cl_device_match(struct device *dev, struct device_driver *drv)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct mei_cl_device *cldev = to_mei_cl_device(dev);
+	const struct mei_cl_driver *cldrv = to_mei_cl_driver(drv);
+=======
 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
 	struct mei_cl_driver *cldrv = to_mei_cl_driver(drv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct mei_cl_device *cldev = to_mei_cl_device(dev);
+	const struct mei_cl_driver *cldrv = to_mei_cl_driver(drv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct mei_cl_device_id *found_id;
 
 	if (!cldev)
@@ -884,7 +938,15 @@ static int mei_cl_device_probe(struct device *dev)
  *
  * Return:  0 on success; < 0 otherwise
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void mei_cl_device_remove(struct device *dev)
+=======
 static int mei_cl_device_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void mei_cl_device_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mei_cl_device *cldev = to_mei_cl_device(dev);
 	struct mei_cl_driver *cldrv = to_mei_cl_driver(dev->driver);
@@ -896,8 +958,14 @@ static int mei_cl_device_remove(struct device *dev)
 
 	mei_cl_bus_module_put(cldev);
 	module_put(THIS_MODULE);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t name_show(struct device *dev, struct device_attribute *a,

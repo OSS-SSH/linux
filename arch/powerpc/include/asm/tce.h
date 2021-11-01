@@ -19,6 +19,10 @@
 #define TCE_VB			0
 #define TCE_PCI			1
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define TCE_ENTRY_SIZE		8		/* each TCE is 64 bits */
+=======
 /* TCE page size is 4096 bytes (1 << 12) */
 
 #define TCE_SHIFT	12
@@ -28,6 +32,10 @@
 
 #define TCE_RPN_MASK		0xfffffffffful  /* 40-bit RPN (4K pages) */
 #define TCE_RPN_SHIFT		12
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define TCE_ENTRY_SIZE		8		/* each TCE is 64 bits */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define TCE_VALID		0x800		/* TCE valid */
 #define TCE_ALLIO		0x400		/* TCE valid for all lpars */
 #define TCE_PCI_WRITE		0x2		/* write from PCI allowed */

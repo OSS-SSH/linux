@@ -62,8 +62,18 @@ void *mwifiex_process_sta_txpd(struct mwifiex_private *priv,
 
 	pkt_type = mwifiex_is_skb_mgmt_frame(skb) ? PKT_TYPE_MGMT : 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pad = ((uintptr_t)skb->data - (sizeof(*local_tx_pd) + hroom)) &
+	       (MWIFIEX_DMA_ALIGN_SZ - 1);
+=======
 	pad = ((void *)skb->data - (sizeof(*local_tx_pd) + hroom)-
 			 NULL) & (MWIFIEX_DMA_ALIGN_SZ - 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pad = ((uintptr_t)skb->data - (sizeof(*local_tx_pd) + hroom)) &
+	       (MWIFIEX_DMA_ALIGN_SZ - 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	skb_push(skb, sizeof(*local_tx_pd) + pad);
 
 	local_tx_pd = (struct txpd *) skb->data;

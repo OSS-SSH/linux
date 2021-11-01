@@ -1,7 +1,15 @@
 /*
  * Linux driver for VMware's vmxnet3 ethernet NIC.
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Copyright (C) 2008-2021, VMware, Inc. All Rights Reserved.
+=======
  * Copyright (C) 2008-2020, VMware, Inc. All Rights Reserved.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2008-2021, VMware, Inc. All Rights Reserved.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the
@@ -314,10 +322,24 @@ vmxnet3_unmap_tx_buf(struct vmxnet3_tx_buf_info *tbi,
 {
 	if (tbi->map_type == VMXNET3_MAP_SINGLE)
 		dma_unmap_single(&pdev->dev, tbi->dma_addr, tbi->len,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 DMA_TO_DEVICE);
+	else if (tbi->map_type == VMXNET3_MAP_PAGE)
+		dma_unmap_page(&pdev->dev, tbi->dma_addr, tbi->len,
+			       DMA_TO_DEVICE);
+=======
 				 PCI_DMA_TODEVICE);
 	else if (tbi->map_type == VMXNET3_MAP_PAGE)
 		dma_unmap_page(&pdev->dev, tbi->dma_addr, tbi->len,
 			       PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 DMA_TO_DEVICE);
+	else if (tbi->map_type == VMXNET3_MAP_PAGE)
+		dma_unmap_page(&pdev->dev, tbi->dma_addr, tbi->len,
+			       DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		BUG_ON(tbi->map_type != VMXNET3_MAP_NONE);
 
@@ -585,7 +607,15 @@ vmxnet3_rq_alloc_rx_buf(struct vmxnet3_rx_queue *rq, u32 ring_idx,
 				rbi->dma_addr = dma_map_single(
 						&adapter->pdev->dev,
 						rbi->skb->data, rbi->len,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						DMA_FROM_DEVICE);
+=======
 						PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (dma_mapping_error(&adapter->pdev->dev,
 						      rbi->dma_addr)) {
 					dev_kfree_skb_any(rbi->skb);
@@ -609,7 +639,15 @@ vmxnet3_rq_alloc_rx_buf(struct vmxnet3_rx_queue *rq, u32 ring_idx,
 				rbi->dma_addr = dma_map_page(
 						&adapter->pdev->dev,
 						rbi->page, 0, PAGE_SIZE,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						DMA_FROM_DEVICE);
+=======
 						PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (dma_mapping_error(&adapter->pdev->dev,
 						      rbi->dma_addr)) {
 					put_page(rbi->page);
@@ -723,7 +761,15 @@ vmxnet3_map_pkt(struct sk_buff *skb, struct vmxnet3_tx_ctx *ctx,
 		tbi->map_type = VMXNET3_MAP_SINGLE;
 		tbi->dma_addr = dma_map_single(&adapter->pdev->dev,
 				skb->data + buf_offset, buf_size,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				DMA_TO_DEVICE);
+=======
 				PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (dma_mapping_error(&adapter->pdev->dev, tbi->dma_addr))
 			return -EFAULT;
 
@@ -1449,7 +1495,15 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
 				new_dma_addr =
 					dma_map_single(&adapter->pdev->dev,
 						       new_skb->data, rbi->len,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						       DMA_FROM_DEVICE);
+=======
 						       PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						       DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (dma_mapping_error(&adapter->pdev->dev,
 						      new_dma_addr)) {
 					dev_kfree_skb(new_skb);
@@ -1467,7 +1521,15 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
 				dma_unmap_single(&adapter->pdev->dev,
 						 rbi->dma_addr,
 						 rbi->len,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						 DMA_FROM_DEVICE);
+=======
 						 PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						 DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				/* Immediate refill */
 				rbi->skb = new_skb;
@@ -1478,10 +1540,45 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
 
 #ifdef VMXNET3_RSS
 			if (rcd->rssType != VMXNET3_RCD_RSS_TYPE_NONE &&
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			    (adapter->netdev->features & NETIF_F_RXHASH)) {
+				enum pkt_hash_types hash_type;
+
+				switch (rcd->rssType) {
+				case VMXNET3_RCD_RSS_TYPE_IPV4:
+				case VMXNET3_RCD_RSS_TYPE_IPV6:
+					hash_type = PKT_HASH_TYPE_L3;
+					break;
+				case VMXNET3_RCD_RSS_TYPE_TCPIPV4:
+				case VMXNET3_RCD_RSS_TYPE_TCPIPV6:
+				case VMXNET3_RCD_RSS_TYPE_UDPIPV4:
+				case VMXNET3_RCD_RSS_TYPE_UDPIPV6:
+					hash_type = PKT_HASH_TYPE_L4;
+					break;
+				default:
+					hash_type = PKT_HASH_TYPE_L3;
+					break;
+				}
+<<<<<<< HEAD
+				skb_set_hash(ctx->skb,
+					     le32_to_cpu(rcd->rssHash),
+					     hash_type);
+			}
+=======
 			    (adapter->netdev->features & NETIF_F_RXHASH))
 				skb_set_hash(ctx->skb,
 					     le32_to_cpu(rcd->rssHash),
 					     PKT_HASH_TYPE_L3);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				skb_set_hash(ctx->skb,
+					     le32_to_cpu(rcd->rssHash),
+					     hash_type);
+			}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 			skb_put(ctx->skb, rcd->len);
 
@@ -1528,7 +1625,15 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
 				new_dma_addr = dma_map_page(&adapter->pdev->dev,
 							    new_page,
 							    0, PAGE_SIZE,
+<<<<<<< HEAD
+<<<<<<< HEAD
+							    DMA_FROM_DEVICE);
+=======
 							    PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+							    DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (dma_mapping_error(&adapter->pdev->dev,
 						      new_dma_addr)) {
 					put_page(new_page);
@@ -1541,7 +1646,15 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx_queue *rq,
 
 				dma_unmap_page(&adapter->pdev->dev,
 					       rbi->dma_addr, rbi->len,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					       DMA_FROM_DEVICE);
+=======
 					       PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					       DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				vmxnet3_append_frag(ctx->skb, rcd, rbi);
 
@@ -1659,13 +1772,29 @@ vmxnet3_rq_cleanup(struct vmxnet3_rx_queue *rq,
 			if (rxd->btype == VMXNET3_RXD_BTYPE_HEAD &&
 					rq->buf_info[ring_idx][i].skb) {
 				dma_unmap_single(&adapter->pdev->dev, rxd->addr,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						 rxd->len, DMA_FROM_DEVICE);
+=======
 						 rxd->len, PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						 rxd->len, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				dev_kfree_skb(rq->buf_info[ring_idx][i].skb);
 				rq->buf_info[ring_idx][i].skb = NULL;
 			} else if (rxd->btype == VMXNET3_RXD_BTYPE_BODY &&
 					rq->buf_info[ring_idx][i].page) {
 				dma_unmap_page(&adapter->pdev->dev, rxd->addr,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					       rxd->len, DMA_FROM_DEVICE);
+=======
 					       rxd->len, PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					       rxd->len, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				put_page(rq->buf_info[ring_idx][i].page);
 				rq->buf_info[ring_idx][i].page = NULL;
 			}
@@ -2401,7 +2530,15 @@ vmxnet3_set_mc(struct net_device *netdev)
 							&adapter->pdev->dev,
 							new_table,
 							sz,
+<<<<<<< HEAD
+<<<<<<< HEAD
+							DMA_TO_DEVICE);
+=======
 							PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+							DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (!dma_mapping_error(&adapter->pdev->dev,
 						       new_table_pa)) {
 					new_mode |= VMXNET3_RXM_MCAST;
@@ -2437,7 +2574,15 @@ vmxnet3_set_mc(struct net_device *netdev)
 
 	if (new_table_pa_valid)
 		dma_unmap_single(&adapter->pdev->dev, new_table_pa,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 rxConf->mfTableLen, DMA_TO_DEVICE);
+=======
 				 rxConf->mfTableLen, PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 rxConf->mfTableLen, DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(new_table);
 }
 
@@ -2460,6 +2605,14 @@ vmxnet3_setup_driver_shared(struct vmxnet3_adapter *adapter)
 {
 	struct Vmxnet3_DriverShared *shared = adapter->shared;
 	struct Vmxnet3_DSDevRead *devRead = &shared->devRead;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct Vmxnet3_DSDevReadExt *devReadExt = &shared->devReadExt;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct Vmxnet3_DSDevReadExt *devReadExt = &shared->devReadExt;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct Vmxnet3_TxQueueConf *tqc;
 	struct Vmxnet3_RxQueueConf *rqc;
 	int i;
@@ -2572,6 +2725,32 @@ vmxnet3_setup_driver_shared(struct vmxnet3_adapter *adapter)
 #endif /* VMXNET3_RSS */
 
 	/* intr settings */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!VMXNET3_VERSION_GE_6(adapter) ||
+	    !adapter->queuesExtEnabled) {
+		devRead->intrConf.autoMask = adapter->intr.mask_mode ==
+					     VMXNET3_IMM_AUTO;
+		devRead->intrConf.numIntrs = adapter->intr.num_intrs;
+		for (i = 0; i < adapter->intr.num_intrs; i++)
+			devRead->intrConf.modLevels[i] = adapter->intr.mod_levels[i];
+
+		devRead->intrConf.eventIntrIdx = adapter->intr.event_intr_idx;
+		devRead->intrConf.intrCtrl |= cpu_to_le32(VMXNET3_IC_DISABLE_ALL);
+	} else {
+		devReadExt->intrConfExt.autoMask = adapter->intr.mask_mode ==
+						   VMXNET3_IMM_AUTO;
+		devReadExt->intrConfExt.numIntrs = adapter->intr.num_intrs;
+		for (i = 0; i < adapter->intr.num_intrs; i++)
+			devReadExt->intrConfExt.modLevels[i] = adapter->intr.mod_levels[i];
+<<<<<<< HEAD
+
+		devReadExt->intrConfExt.eventIntrIdx = adapter->intr.event_intr_idx;
+		devReadExt->intrConfExt.intrCtrl |= cpu_to_le32(VMXNET3_IC_DISABLE_ALL);
+	}
+=======
 	devRead->intrConf.autoMask = adapter->intr.mask_mode ==
 				     VMXNET3_IMM_AUTO;
 	devRead->intrConf.numIntrs = adapter->intr.num_intrs;
@@ -2580,6 +2759,13 @@ vmxnet3_setup_driver_shared(struct vmxnet3_adapter *adapter)
 
 	devRead->intrConf.eventIntrIdx = adapter->intr.event_intr_idx;
 	devRead->intrConf.intrCtrl |= cpu_to_le32(VMXNET3_IC_DISABLE_ALL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		devReadExt->intrConfExt.eventIntrIdx = adapter->intr.event_intr_idx;
+		devReadExt->intrConfExt.intrCtrl |= cpu_to_le32(VMXNET3_IC_DISABLE_ALL);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* rx filter settings */
 	devRead->rxFilterConf.rxMode = 0;
@@ -2717,6 +2903,14 @@ vmxnet3_activate_dev(struct vmxnet3_adapter *adapter)
 	 * tx queue if the link is up.
 	 */
 	vmxnet3_check_link(adapter, true);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	netif_tx_wake_all_queues(adapter->netdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	netif_tx_wake_all_queues(adapter->netdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < adapter->num_rx_queues; i++)
 		napi_enable(&adapter->rx_queue[i].napi);
 	vmxnet3_enable_all_intrs(adapter);
@@ -3372,6 +3566,16 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 	int size;
 	int num_tx_queues;
 	int num_rx_queues;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int queues;
+	unsigned long flags;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int queues;
+	unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!pci_msi_enabled())
 		enable_mq = 0;
@@ -3383,7 +3587,13 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 	else
 #endif
 		num_rx_queues = 1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	num_rx_queues = rounddown_pow_of_two(num_rx_queues);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (enable_mq)
 		num_tx_queues = min(VMXNET3_DEVICE_MAX_TX_QUEUES,
@@ -3391,6 +3601,11 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 	else
 		num_tx_queues = 1;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	netdev = alloc_etherdev_mq(sizeof(struct vmxnet3_adapter),
+				   max(num_tx_queues, num_rx_queues));
+=======
 	num_tx_queues = rounddown_pow_of_two(num_tx_queues);
 	netdev = alloc_etherdev_mq(sizeof(struct vmxnet3_adapter),
 				   max(num_tx_queues, num_rx_queues));
@@ -3398,6 +3613,11 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 		 "# of Tx queues : %d, # of Rx queues : %d\n",
 		 num_tx_queues, num_rx_queues);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	netdev = alloc_etherdev_mq(sizeof(struct vmxnet3_adapter),
+				   max(num_tx_queues, num_rx_queues));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!netdev)
 		return -ENOMEM;
 
@@ -3410,6 +3630,15 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 	adapter->rx_ring_size = VMXNET3_DEF_RX_RING_SIZE;
 	adapter->rx_ring2_size = VMXNET3_DEF_RX_RING2_SIZE;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64)) == 0) {
+		dma64 = true;
+	} else {
+		err = dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
+		if (err) {
+			dev_err(&pdev->dev, "dma_set_mask failed\n");
+=======
 	if (pci_set_dma_mask(pdev, DMA_BIT_MASK(64)) == 0) {
 		if (pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64)) != 0) {
 			dev_err(&pdev->dev,
@@ -3423,6 +3652,15 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 			dev_err(&pdev->dev,
 				"pci_set_dma_mask failed\n");
 			err = -EIO;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64)) == 0) {
+		dma64 = true;
+	} else {
+		err = dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
+		if (err) {
+			dev_err(&pdev->dev, "dma_set_mask failed\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto err_set_mask;
 		}
 		dma64 = false;
@@ -3431,7 +3669,15 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 	spin_lock_init(&adapter->cmd_lock);
 	adapter->adapter_pa = dma_map_single(&adapter->pdev->dev, adapter,
 					     sizeof(struct vmxnet3_adapter),
+<<<<<<< HEAD
+<<<<<<< HEAD
+					     DMA_TO_DEVICE);
+=======
 					     PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					     DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dma_mapping_error(&adapter->pdev->dev, adapter->adapter_pa)) {
 		dev_err(&pdev->dev, "Failed to map dma\n");
 		err = -EFAULT;
@@ -3447,6 +3693,9 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 		goto err_alloc_shared;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	adapter->num_rx_queues = num_rx_queues;
 	adapter->num_tx_queues = num_tx_queues;
 	adapter->rx_buf_per_pkt = 1;
@@ -3486,12 +3735,35 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 	}
 #endif /* VMXNET3_RSS */
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = vmxnet3_alloc_pci_resources(adapter);
 	if (err < 0)
 		goto err_alloc_pci;
 
 	ver = VMXNET3_READ_BAR1_REG(adapter, VMXNET3_REG_VRRS);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (ver & (1 << VMXNET3_REV_6)) {
+		VMXNET3_WRITE_BAR1_REG(adapter,
+				       VMXNET3_REG_VRRS,
+				       1 << VMXNET3_REV_6);
+		adapter->version = VMXNET3_REV_6 + 1;
+	} else if (ver & (1 << VMXNET3_REV_5)) {
+		VMXNET3_WRITE_BAR1_REG(adapter,
+				       VMXNET3_REG_VRRS,
+				       1 << VMXNET3_REV_5);
+		adapter->version = VMXNET3_REV_5 + 1;
+	} else if (ver & (1 << VMXNET3_REV_4)) {
+<<<<<<< HEAD
+=======
 	if (ver & (1 << VMXNET3_REV_4)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		VMXNET3_WRITE_BAR1_REG(adapter,
 				       VMXNET3_REG_VRRS,
 				       1 << VMXNET3_REV_4);
@@ -3529,6 +3801,86 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 		goto err_ver;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (VMXNET3_VERSION_GE_6(adapter)) {
+		spin_lock_irqsave(&adapter->cmd_lock, flags);
+		VMXNET3_WRITE_BAR1_REG(adapter, VMXNET3_REG_CMD,
+				       VMXNET3_CMD_GET_MAX_QUEUES_CONF);
+		queues = VMXNET3_READ_BAR1_REG(adapter, VMXNET3_REG_CMD);
+		spin_unlock_irqrestore(&adapter->cmd_lock, flags);
+		if (queues > 0) {
+			adapter->num_rx_queues = min(num_rx_queues, ((queues >> 8) & 0xff));
+			adapter->num_tx_queues = min(num_tx_queues, (queues & 0xff));
+		} else {
+			adapter->num_rx_queues = min(num_rx_queues,
+						     VMXNET3_DEVICE_DEFAULT_RX_QUEUES);
+			adapter->num_tx_queues = min(num_tx_queues,
+						     VMXNET3_DEVICE_DEFAULT_TX_QUEUES);
+		}
+		if (adapter->num_rx_queues > VMXNET3_MAX_RX_QUEUES ||
+		    adapter->num_tx_queues > VMXNET3_MAX_TX_QUEUES) {
+			adapter->queuesExtEnabled = true;
+		} else {
+			adapter->queuesExtEnabled = false;
+		}
+	} else {
+		adapter->queuesExtEnabled = false;
+		num_rx_queues = rounddown_pow_of_two(num_rx_queues);
+		num_tx_queues = rounddown_pow_of_two(num_tx_queues);
+		adapter->num_rx_queues = min(num_rx_queues,
+					     VMXNET3_DEVICE_DEFAULT_RX_QUEUES);
+		adapter->num_tx_queues = min(num_tx_queues,
+					     VMXNET3_DEVICE_DEFAULT_TX_QUEUES);
+	}
+	dev_info(&pdev->dev,
+		 "# of Tx queues : %d, # of Rx queues : %d\n",
+		 adapter->num_tx_queues, adapter->num_rx_queues);
+
+	adapter->rx_buf_per_pkt = 1;
+
+	size = sizeof(struct Vmxnet3_TxQueueDesc) * adapter->num_tx_queues;
+	size += sizeof(struct Vmxnet3_RxQueueDesc) * adapter->num_rx_queues;
+	adapter->tqd_start = dma_alloc_coherent(&adapter->pdev->dev, size,
+						&adapter->queue_desc_pa,
+						GFP_KERNEL);
+
+	if (!adapter->tqd_start) {
+		dev_err(&pdev->dev, "Failed to allocate memory\n");
+		err = -ENOMEM;
+		goto err_ver;
+	}
+	adapter->rqd_start = (struct Vmxnet3_RxQueueDesc *)(adapter->tqd_start +
+							    adapter->num_tx_queues);
+
+	adapter->pm_conf = dma_alloc_coherent(&adapter->pdev->dev,
+					      sizeof(struct Vmxnet3_PMConf),
+					      &adapter->pm_conf_pa,
+					      GFP_KERNEL);
+	if (adapter->pm_conf == NULL) {
+		err = -ENOMEM;
+		goto err_alloc_pm;
+	}
+
+#ifdef VMXNET3_RSS
+
+	adapter->rss_conf = dma_alloc_coherent(&adapter->pdev->dev,
+					       sizeof(struct UPT1_RSSConf),
+					       &adapter->rss_conf_pa,
+					       GFP_KERNEL);
+	if (adapter->rss_conf == NULL) {
+		err = -ENOMEM;
+		goto err_alloc_rss;
+	}
+#endif /* VMXNET3_RSS */
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (VMXNET3_VERSION_GE_3(adapter)) {
 		adapter->coal_conf =
 			dma_alloc_coherent(&adapter->pdev->dev,
@@ -3538,7 +3890,15 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 					   GFP_KERNEL);
 		if (!adapter->coal_conf) {
 			err = -ENOMEM;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			goto err_coal_conf;
+=======
 			goto err_ver;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto err_coal_conf;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		adapter->coal_conf->coalMode = VMXNET3_COALESCE_DISABLED;
 		adapter->default_coal_mode = true;
@@ -3581,9 +3941,27 @@ vmxnet3_probe_device(struct pci_dev *pdev,
 	vmxnet3_set_ethtool_ops(netdev);
 	netdev->watchdog_timeo = 5 * HZ;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* MTU range: 60 - 9190 */
+	netdev->min_mtu = VMXNET3_MIN_MTU;
+	if (VMXNET3_VERSION_GE_6(adapter))
+		netdev->max_mtu = VMXNET3_V6_MAX_MTU;
+	else
+		netdev->max_mtu = VMXNET3_MAX_MTU;
+=======
 	/* MTU range: 60 - 9000 */
 	netdev->min_mtu = VMXNET3_MIN_MTU;
 	netdev->max_mtu = VMXNET3_MAX_MTU;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* MTU range: 60 - 9190 */
+	netdev->min_mtu = VMXNET3_MIN_MTU;
+	if (VMXNET3_VERSION_GE_6(adapter))
+		netdev->max_mtu = VMXNET3_V6_MAX_MTU;
+	else
+		netdev->max_mtu = VMXNET3_MAX_MTU;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	INIT_WORK(&adapter->work, vmxnet3_reset_work);
 	set_bit(VMXNET3_STATE_BIT_QUIESCED, &adapter->state);
@@ -3621,9 +3999,17 @@ err_register:
 				  adapter->coal_conf, adapter->coal_conf_pa);
 	}
 	vmxnet3_free_intr_resources(adapter);
+<<<<<<< HEAD
+<<<<<<< HEAD
+err_coal_conf:
+=======
 err_ver:
 	vmxnet3_free_pci_resources(adapter);
 err_alloc_pci:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_coal_conf:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef VMXNET3_RSS
 	dma_free_coherent(&adapter->pdev->dev, sizeof(struct UPT1_RSSConf),
 			  adapter->rss_conf, adapter->rss_conf_pa);
@@ -3634,13 +4020,33 @@ err_alloc_rss:
 err_alloc_pm:
 	dma_free_coherent(&adapter->pdev->dev, size, adapter->tqd_start,
 			  adapter->queue_desc_pa);
+<<<<<<< HEAD
+<<<<<<< HEAD
+err_ver:
+	vmxnet3_free_pci_resources(adapter);
+err_alloc_pci:
+=======
 err_alloc_queue_desc:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_ver:
+	vmxnet3_free_pci_resources(adapter);
+err_alloc_pci:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_free_coherent(&adapter->pdev->dev,
 			  sizeof(struct Vmxnet3_DriverShared),
 			  adapter->shared, adapter->shared_pa);
 err_alloc_shared:
 	dma_unmap_single(&adapter->pdev->dev, adapter->adapter_pa,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			 sizeof(struct vmxnet3_adapter), DMA_TO_DEVICE);
+=======
 			 sizeof(struct vmxnet3_adapter), PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 sizeof(struct vmxnet3_adapter), DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_set_mask:
 	free_netdev(netdev);
 	return err;
@@ -3653,7 +4059,17 @@ vmxnet3_remove_device(struct pci_dev *pdev)
 	struct net_device *netdev = pci_get_drvdata(pdev);
 	struct vmxnet3_adapter *adapter = netdev_priv(netdev);
 	int size = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int num_rx_queues, rx_queues;
+	unsigned long flags;
+=======
 	int num_rx_queues;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int num_rx_queues, rx_queues;
+	unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef VMXNET3_RSS
 	if (enable_mq)
@@ -3662,7 +4078,34 @@ vmxnet3_remove_device(struct pci_dev *pdev)
 	else
 #endif
 		num_rx_queues = 1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!VMXNET3_VERSION_GE_6(adapter)) {
+		num_rx_queues = rounddown_pow_of_two(num_rx_queues);
+	}
+	if (VMXNET3_VERSION_GE_6(adapter)) {
+		spin_lock_irqsave(&adapter->cmd_lock, flags);
+		VMXNET3_WRITE_BAR1_REG(adapter, VMXNET3_REG_CMD,
+				       VMXNET3_CMD_GET_MAX_QUEUES_CONF);
+		rx_queues = VMXNET3_READ_BAR1_REG(adapter, VMXNET3_REG_CMD);
+		spin_unlock_irqrestore(&adapter->cmd_lock, flags);
+		if (rx_queues > 0)
+			rx_queues = (rx_queues >> 8) & 0xff;
+		else
+			rx_queues = min(num_rx_queues, VMXNET3_DEVICE_DEFAULT_RX_QUEUES);
+		num_rx_queues = min(num_rx_queues, rx_queues);
+	} else {
+		num_rx_queues = min(num_rx_queues,
+				    VMXNET3_DEVICE_DEFAULT_RX_QUEUES);
+	}
+<<<<<<< HEAD
+=======
 	num_rx_queues = rounddown_pow_of_two(num_rx_queues);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cancel_work_sync(&adapter->work);
 
@@ -3690,7 +4133,15 @@ vmxnet3_remove_device(struct pci_dev *pdev)
 			  sizeof(struct Vmxnet3_DriverShared),
 			  adapter->shared, adapter->shared_pa);
 	dma_unmap_single(&adapter->pdev->dev, adapter->adapter_pa,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			 sizeof(struct vmxnet3_adapter), DMA_TO_DEVICE);
+=======
 			 sizeof(struct vmxnet3_adapter), PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 sizeof(struct vmxnet3_adapter), DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free_netdev(netdev);
 }
 

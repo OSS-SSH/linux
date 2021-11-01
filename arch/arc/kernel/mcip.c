@@ -352,7 +352,15 @@ static void idu_cascade_isr(struct irq_desc *desc)
 	irq_hw_number_t idu_hwirq = core_hwirq - FIRST_EXT_IRQ;
 
 	chained_irq_enter(core_chip, desc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	generic_handle_domain_irq(idu_domain, idu_hwirq);
+=======
 	generic_handle_irq(irq_find_mapping(idu_domain, idu_hwirq));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	generic_handle_domain_irq(idu_domain, idu_hwirq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	chained_irq_exit(core_chip, desc);
 }
 

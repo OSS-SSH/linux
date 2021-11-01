@@ -17,6 +17,21 @@ typedef __u16 __sum16;
 #define VIP_NUM 5
 #define MAGIC_BYTES 123
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct network_helper_opts {
+	const char *cc;
+	int timeout_ms;
+	bool must_fail;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* ipv4 test vector */
 struct ipv4_packet {
 	struct ethhdr eth;
@@ -36,11 +51,36 @@ extern struct ipv6_packet pkt_v6;
 int settimeo(int fd, int timeout_ms);
 int start_server(int family, int type, const char *addr, __u16 port,
 		 int timeout_ms);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int *start_reuseport_server(int family, int type, const char *addr_str,
+			    __u16 port, int timeout_ms,
+			    unsigned int nr_listens);
+void free_fds(int *fds, unsigned int nr_close_fds);
+<<<<<<< HEAD
 int connect_to_fd(int server_fd, int timeout_ms);
+int connect_to_fd_opts(int server_fd, const struct network_helper_opts *opts);
+=======
+int connect_to_fd(int server_fd, int timeout_ms);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int connect_to_fd(int server_fd, int timeout_ms);
+int connect_to_fd_opts(int server_fd, const struct network_helper_opts *opts);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int connect_fd_to_fd(int client_fd, int server_fd, int timeout_ms);
 int fastopen_connect(int server_fd, const char *data, unsigned int data_len,
 		     int timeout_ms);
 int make_sockaddr(int family, const char *addr_str, __u16 port,
 		  struct sockaddr_storage *addr, socklen_t *len);
+<<<<<<< HEAD
+<<<<<<< HEAD
+char *ping_command(int family);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+char *ping_command(int family);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

@@ -426,7 +426,15 @@ static int renoir_od_edit_dpm_table(struct smu_context *smu,
 		} else {
 			if (smu->gfx_actual_hard_min_freq > smu->gfx_actual_soft_max_freq) {
 				dev_err(smu->adev->dev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					"The setting minimum sclk (%d) MHz is greater than the setting maximum sclk (%d) MHz\n",
+=======
 					"The setting minimun sclk (%d) MHz is greater than the setting maximum sclk (%d) MHz\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					"The setting minimum sclk (%d) MHz is greater than the setting maximum sclk (%d) MHz\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					smu->gfx_actual_hard_min_freq,
 					smu->gfx_actual_soft_max_freq);
 				return -EINVAL;
@@ -497,6 +505,16 @@ static int renoir_print_clk_levels(struct smu_context *smu,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	smu_cmn_get_sysfs_buf(&buf, &size);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	smu_cmn_get_sysfs_buf(&buf, &size);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (clk_type) {
 	case SMU_OD_RANGE:
 		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
@@ -510,16 +528,36 @@ static int renoir_print_clk_levels(struct smu_context *smu,
 						0, &max);
 			if (ret)
 				return ret;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			size += sysfs_emit_at(buf, size, "OD_RANGE\nSCLK: %10uMhz %10uMhz\n", min, max);
+=======
 			size += sprintf(buf + size, "OD_RANGE\nSCLK: %10uMhz %10uMhz\n", min, max);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "OD_RANGE\nSCLK: %10uMhz %10uMhz\n", min, max);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 	case SMU_OD_SCLK:
 		if (smu_dpm_ctx->dpm_level == AMD_DPM_FORCED_LEVEL_MANUAL) {
 			min = (smu->gfx_actual_hard_min_freq > 0) ? smu->gfx_actual_hard_min_freq : smu->gfx_default_hard_min_freq;
 			max = (smu->gfx_actual_soft_max_freq > 0) ? smu->gfx_actual_soft_max_freq : smu->gfx_default_soft_max_freq;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			size += sysfs_emit_at(buf, size, "OD_SCLK\n");
+			size += sysfs_emit_at(buf, size, "0:%10uMhz\n", min);
+			size += sysfs_emit_at(buf, size, "1:%10uMhz\n", max);
+=======
 			size += sprintf(buf + size, "OD_SCLK\n");
 			size += sprintf(buf + size, "0:%10uMhz\n", min);
 			size += sprintf(buf + size, "1:%10uMhz\n", max);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "OD_SCLK\n");
+			size += sysfs_emit_at(buf, size, "0:%10uMhz\n", min);
+			size += sysfs_emit_at(buf, size, "1:%10uMhz\n", max);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 	case SMU_GFXCLK:
@@ -536,12 +574,29 @@ static int renoir_print_clk_levels(struct smu_context *smu,
 			else
 				i = 1;
 
-			size += sprintf(buf + size, "0: %uMhz %s\n", min,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			size += sysfs_emit_at(buf, size, "0: %uMhz %s\n", min,
 					i == 0 ? "*" : "");
-			size += sprintf(buf + size, "1: %uMhz %s\n",
+			size += sysfs_emit_at(buf, size, "1: %uMhz %s\n",
 					i == 1 ? cur_value : RENOIR_UMD_PSTATE_GFXCLK,
 					i == 1 ? "*" : "");
+			size += sysfs_emit_at(buf, size, "2: %uMhz %s\n", max,
+=======
+			size += sprintf(buf + size, "0: %uMhz %s\n", min,
+=======
+			size += sysfs_emit_at(buf, size, "0: %uMhz %s\n", min,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+					i == 0 ? "*" : "");
+			size += sysfs_emit_at(buf, size, "1: %uMhz %s\n",
+					i == 1 ? cur_value : RENOIR_UMD_PSTATE_GFXCLK,
+					i == 1 ? "*" : "");
+<<<<<<< HEAD
 			size += sprintf(buf + size, "2: %uMhz %s\n", max,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "2: %uMhz %s\n", max,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					i == 2 ? "*" : "");
 		}
 		return size;
@@ -588,14 +643,30 @@ static int renoir_print_clk_levels(struct smu_context *smu,
 				return ret;
 			if (!value)
 				continue;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n", i, value,
+=======
 			size += sprintf(buf + size, "%d: %uMhz %s\n", i, value,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n", i, value,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					cur_value == value ? "*" : "");
 			if (cur_value == value)
 				cur_value_match_level = true;
 		}
 
 		if (!cur_value_match_level)
+<<<<<<< HEAD
+<<<<<<< HEAD
+			size += sysfs_emit_at(buf, size, "   %uMhz *\n", cur_value);
+=======
 			size += sprintf(buf + size, "   %uMhz *\n", cur_value);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			size += sysfs_emit_at(buf, size, "   %uMhz *\n", cur_value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		break;
 	default:
@@ -1118,7 +1189,15 @@ static int renoir_get_power_profile_mode(struct smu_context *smu,
 		if (workload_type < 0)
 			continue;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		size += sysfs_emit_at(buf, size, "%2d %14s%s\n",
+=======
 		size += sprintf(buf + size, "%2d %14s%s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		size += sysfs_emit_at(buf, size, "%2d %14s%s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			i, profile_name[i], (i == smu->power_profile_mode) ? "*" : " ");
 	}
 

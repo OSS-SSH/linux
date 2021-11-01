@@ -361,8 +361,14 @@ void rxe_rcv(struct sk_buff *skb)
 	int err;
 	struct rxe_pkt_info *pkt = SKB_TO_PKT(skb);
 	struct rxe_dev *rxe = pkt->rxe;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	__be32 *icrcp;
 	u32 calc_icrc, pack_icrc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (unlikely(skb->len < RXE_BTH_BYTES))
 		goto drop;
@@ -384,6 +390,12 @@ void rxe_rcv(struct sk_buff *skb)
 	if (unlikely(err))
 		goto drop;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = rxe_icrc_check(skb, pkt);
+	if (unlikely(err))
+		goto drop;
+=======
 	/* Verify ICRC */
 	icrcp = (__be32 *)(pkt->hdr + pkt->paylen - RXE_ICRC_SIZE);
 	pack_icrc = be32_to_cpu(*icrcp);
@@ -404,6 +416,12 @@ void rxe_rcv(struct sk_buff *skb)
 
 		goto drop;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = rxe_icrc_check(skb, pkt);
+	if (unlikely(err))
+		goto drop;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rxe_counter_inc(rxe, RXE_CNT_RCVD_PKTS);
 

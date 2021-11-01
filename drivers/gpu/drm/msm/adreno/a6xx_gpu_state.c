@@ -112,7 +112,15 @@ static void *state_kmemdup(struct a6xx_gpu_state *a6xx_state, void *src,
 static int a6xx_crashdumper_init(struct msm_gpu *gpu,
 		struct a6xx_crashdumper *dumper)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dumper->ptr = msm_gem_kernel_new(gpu->dev,
+=======
 	dumper->ptr = msm_gem_kernel_new_locked(gpu->dev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dumper->ptr = msm_gem_kernel_new(gpu->dev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		SZ_1M, MSM_BO_WC, gpu->aspace,
 		&dumper->bo, &dumper->iova);
 
@@ -961,7 +969,15 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu)
 		a6xx_get_clusters(gpu, a6xx_state, dumper);
 		a6xx_get_dbgahb_clusters(gpu, a6xx_state, dumper);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		msm_gem_kernel_put(dumper->bo, gpu->aspace);
+=======
 		msm_gem_kernel_put(dumper->bo, gpu->aspace, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		msm_gem_kernel_put(dumper->bo, gpu->aspace);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (snapshot_debugbus)

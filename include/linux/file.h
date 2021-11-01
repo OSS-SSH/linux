@@ -94,6 +94,18 @@ extern void fd_install(unsigned int fd, struct file *file);
 
 extern int __receive_fd(struct file *file, int __user *ufd,
 			unsigned int o_flags);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+extern int receive_fd(struct file *file, unsigned int o_flags);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+extern int receive_fd(struct file *file, unsigned int o_flags);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int receive_fd_user(struct file *file, int __user *ufd,
 				  unsigned int o_flags)
 {
@@ -101,10 +113,16 @@ static inline int receive_fd_user(struct file *file, int __user *ufd,
 		return -EFAULT;
 	return __receive_fd(file, ufd, o_flags);
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static inline int receive_fd(struct file *file, unsigned int o_flags)
 {
 	return __receive_fd(file, NULL, o_flags);
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int receive_fd_replace(int new_fd, struct file *file, unsigned int o_flags);
 
 extern void flush_delayed_fput(void);

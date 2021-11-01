@@ -213,6 +213,14 @@
 #define E1000_FACTPS	0x05B30	/* Function Active and Power State to MNG */
 #define E1000_SWSM	0x05B50	/* SW Semaphore */
 #define E1000_FWSM	0x05B54	/* FW Semaphore */
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define E1000_EXFWSM	0x05B58	/* Extended FW Semaphore */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define E1000_EXFWSM	0x05B58	/* Extended FW Semaphore */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Driver-only SW semaphore (not used by BOOT agents) */
 #define E1000_SWSM2	0x05B58
 #define E1000_FFLT_DBG	0x05F04	/* Debug Register */

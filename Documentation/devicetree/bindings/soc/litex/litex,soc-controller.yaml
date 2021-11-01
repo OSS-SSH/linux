@@ -35,7 +35,13 @@ examples:
     soc_ctrl0: soc-controller@f0000000 {
         compatible = "litex,soc-controller";
         reg = <0xf0000000 0xc>;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
         status = "okay";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     };
 
 ...

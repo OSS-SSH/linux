@@ -27,6 +27,14 @@ ssize_t led_trigger_read(struct file *filp, struct kobject *kobj,
 ssize_t led_trigger_write(struct file *filp, struct kobject *kobj,
 			struct bin_attribute *bin_attr, char *buf,
 			loff_t pos, size_t count);
+<<<<<<< HEAD
+<<<<<<< HEAD
+enum led_default_state led_init_default_state_get(struct fwnode_handle *fwnode);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+enum led_default_state led_init_default_state_get(struct fwnode_handle *fwnode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern struct rw_semaphore leds_list_lock;
 extern struct list_head leds_list;

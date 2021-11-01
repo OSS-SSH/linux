@@ -20,11 +20,29 @@ allOf:
 
 properties:
   compatible:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+    oneOf:
+      - enum:
+          - x-powers,axp202-usb-power-supply
+          - x-powers,axp221-usb-power-supply
+          - x-powers,axp223-usb-power-supply
+          - x-powers,axp813-usb-power-supply
+      - items:
+          - const: x-powers,axp803-usb-power-supply
+          - const: x-powers,axp813-usb-power-supply
+<<<<<<< HEAD
+=======
     enum:
       - x-powers,axp202-usb-power-supply
       - x-powers,axp221-usb-power-supply
       - x-powers,axp223-usb-power-supply
       - x-powers,axp813-usb-power-supply
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 required:

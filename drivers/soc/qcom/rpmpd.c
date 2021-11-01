@@ -346,6 +346,42 @@ static const struct rpmpd_desc sdm660_desc = {
 	.max_state = RPM_SMD_LEVEL_TURBO,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* sm4250/6115 RPM Power domains */
+DEFINE_RPMPD_PAIR(sm6115, vddcx, vddcx_ao, RWCX, LEVEL, 0);
+DEFINE_RPMPD_VFL(sm6115, vddcx_vfl, RWCX, 0);
+
+DEFINE_RPMPD_PAIR(sm6115, vddmx, vddmx_ao, RWMX, LEVEL, 0);
+DEFINE_RPMPD_VFL(sm6115, vddmx_vfl, RWMX, 0);
+
+DEFINE_RPMPD_LEVEL(sm6115, vdd_lpi_cx, RWLC, 0);
+DEFINE_RPMPD_LEVEL(sm6115, vdd_lpi_mx, RWLM, 0);
+
+static struct rpmpd *sm6115_rpmpds[] = {
+	[SM6115_VDDCX] =		&sm6115_vddcx,
+	[SM6115_VDDCX_AO] =		&sm6115_vddcx_ao,
+	[SM6115_VDDCX_VFL] =		&sm6115_vddcx_vfl,
+	[SM6115_VDDMX] =		&sm6115_vddmx,
+	[SM6115_VDDMX_AO] =		&sm6115_vddmx_ao,
+	[SM6115_VDDMX_VFL] =		&sm6115_vddmx_vfl,
+	[SM6115_VDD_LPI_CX] =		&sm6115_vdd_lpi_cx,
+	[SM6115_VDD_LPI_MX] =		&sm6115_vdd_lpi_mx,
+};
+
+static const struct rpmpd_desc sm6115_desc = {
+	.rpmpds = sm6115_rpmpds,
+	.num_pds = ARRAY_SIZE(sm6115_rpmpds),
+	.max_state = RPM_SMD_LEVEL_TURBO_NO_CPR,
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id rpmpd_match_table[] = {
 	{ .compatible = "qcom,mdm9607-rpmpd", .data = &mdm9607_desc },
 	{ .compatible = "qcom,msm8916-rpmpd", .data = &msm8916_desc },
@@ -356,6 +392,14 @@ static const struct of_device_id rpmpd_match_table[] = {
 	{ .compatible = "qcom,msm8998-rpmpd", .data = &msm8998_desc },
 	{ .compatible = "qcom,qcs404-rpmpd", .data = &qcs404_desc },
 	{ .compatible = "qcom,sdm660-rpmpd", .data = &sdm660_desc },
+<<<<<<< HEAD
+<<<<<<< HEAD
+	{ .compatible = "qcom,sm6115-rpmpd", .data = &sm6115_desc },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .compatible = "qcom,sm6115-rpmpd", .data = &sm6115_desc },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ }
 };
 MODULE_DEVICE_TABLE(of, rpmpd_match_table);

@@ -55,6 +55,14 @@ nlmsvc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
 	struct nlm_host		*host = NULL;
 	struct nlm_file		*file = NULL;
 	struct nlm_lock		*lock = &argp->lock;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int			mode;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int			mode;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__be32			error = 0;
 
 	/* nfsd callbacks must have been installed for this procedure */
@@ -69,13 +77,31 @@ nlmsvc_retrieve_args(struct svc_rqst *rqstp, struct nlm_args *argp,
 
 	/* Obtain file pointer. Not used by FREE_ALL call. */
 	if (filp != NULL) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		error = cast_status(nlm_lookup_file(rqstp, &file, lock));
+=======
 		error = cast_status(nlm_lookup_file(rqstp, &file, &lock->fh));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		error = cast_status(nlm_lookup_file(rqstp, &file, lock));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (error != 0)
 			goto no_locks;
 		*filp = file;
 
 		/* Set up the missing parts of the file_lock structure */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		mode = lock_to_openmode(&lock->fl);
+		lock->fl.fl_file  = file->f_file[mode];
+=======
 		lock->fl.fl_file  = file->f_file;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mode = lock_to_openmode(&lock->fl);
+		lock->fl.fl_file  = file->f_file[mode];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lock->fl.fl_pid = current->tgid;
 		lock->fl.fl_lmops = &nlmsvc_lock_operations;
 		nlmsvc_locks_init_private(&lock->fl, host, (pid_t)lock->svid);

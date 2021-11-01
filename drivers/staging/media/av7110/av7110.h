@@ -9,12 +9,28 @@
 #include <linux/input.h>
 #include <linux/time.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/dvb/video.h>
+#include <linux/dvb/audio.h>
+#include <linux/dvb/dmx.h>
+#include <linux/dvb/ca.h>
+#include <linux/dvb/osd.h>
+=======
 #include "video.h"
 #include "audio.h"
 #include "osd.h"
 
 #include <linux/dvb/dmx.h>
 #include <linux/dvb/ca.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/dvb/video.h>
+#include <linux/dvb/audio.h>
+#include <linux/dvb/dmx.h>
+#include <linux/dvb/ca.h>
+#include <linux/dvb/osd.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/dvb/net.h>
 #include <linux/mutex.h>
 

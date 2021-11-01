@@ -583,8 +583,18 @@ void __init acpi_table_upgrade(void)
 	}
 
 	acpi_tables_addr =
+<<<<<<< HEAD
+<<<<<<< HEAD
+		memblock_phys_alloc_range(all_tables_size, PAGE_SIZE,
+					  0, ACPI_TABLE_UPGRADE_MAX_PHYS);
+=======
 		memblock_find_in_range(0, ACPI_TABLE_UPGRADE_MAX_PHYS,
 				       all_tables_size, PAGE_SIZE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memblock_phys_alloc_range(all_tables_size, PAGE_SIZE,
+					  0, ACPI_TABLE_UPGRADE_MAX_PHYS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!acpi_tables_addr) {
 		WARN_ON(1);
 		return;
@@ -599,7 +609,13 @@ void __init acpi_table_upgrade(void)
 	 * Both memblock_reserve and e820__range_add (via arch_reserve_mem_area)
 	 * works fine.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	memblock_reserve(acpi_tables_addr, all_tables_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	arch_reserve_mem_area(acpi_tables_addr, all_tables_size);
 
 	/*

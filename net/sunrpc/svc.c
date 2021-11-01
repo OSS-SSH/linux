@@ -31,6 +31,16 @@
 
 #include <trace/events/sunrpc.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "fail.h"
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "fail.h"
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define RPCDBG_FACILITY	RPCDBG_SVCDSP
 
 static void svc_unregister(const struct svc_serv *serv, struct net *net);
@@ -838,6 +848,36 @@ svc_set_num_threads_sync(struct svc_serv *serv, struct svc_pool *pool, int nrser
 }
 EXPORT_SYMBOL_GPL(svc_set_num_threads_sync);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/**
+ * svc_rqst_replace_page - Replace one page in rq_pages[]
+ * @rqstp: svc_rqst with pages to replace
+ * @page: replacement page
+ *
+ * When replacing a page in rq_pages, batch the release of the
+ * replaced pages to avoid hammering the page allocator.
+ */
+void svc_rqst_replace_page(struct svc_rqst *rqstp, struct page *page)
+{
+	if (*rqstp->rq_next_page) {
+		if (!pagevec_space(&rqstp->rq_pvec))
+			__pagevec_release(&rqstp->rq_pvec);
+		pagevec_add(&rqstp->rq_pvec, *rqstp->rq_next_page);
+	}
+
+	get_page(page);
+	*(rqstp->rq_next_page++) = page;
+}
+EXPORT_SYMBOL_GPL(svc_rqst_replace_page);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Called from a server thread as it's exiting. Caller must hold the "service
  * mutex" for the service.
@@ -1163,6 +1203,9 @@ void svc_printk(struct svc_rqst *rqstp, const char *fmt, ...)
 static __printf(2,3) void svc_printk(struct svc_rqst *rqstp, const char *fmt, ...) {}
 #endif
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 __be32
 svc_return_autherr(struct svc_rqst *rqstp, __be32 auth_err)
 {
@@ -1179,6 +1222,9 @@ svc_get_autherr(struct svc_rqst *rqstp, __be32 *statp)
 	return rpc_auth_ok;
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 svc_generic_dispatch(struct svc_rqst *rqstp, __be32 *statp)
 {
@@ -1202,7 +1248,15 @@ svc_generic_dispatch(struct svc_rqst *rqstp, __be32 *statp)
 	    test_bit(RQ_DROPME, &rqstp->rq_flags))
 		return 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (rqstp->rq_auth_stat != rpc_auth_ok)
+=======
 	if (test_bit(RQ_AUTHERR, &rqstp->rq_flags))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rqstp->rq_auth_stat != rpc_auth_ok)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 1;
 
 	if (*statp != rpc_success)
@@ -1283,7 +1337,15 @@ svc_process_common(struct svc_rqst *rqstp, struct kvec *argv, struct kvec *resv)
 	struct svc_process_info process;
 	__be32			*statp;
 	u32			prog, vers;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	__be32			rpc_stat;
+=======
 	__be32			auth_stat, rpc_stat;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__be32			rpc_stat;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			auth_res;
 	__be32			*reply_statp;
 
@@ -1326,14 +1388,29 @@ svc_process_common(struct svc_rqst *rqstp, struct kvec *argv, struct kvec *resv)
 	 * We do this before anything else in order to get a decent
 	 * auth verifier.
 	 */
-	auth_res = svc_authenticate(rqstp, &auth_stat);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	auth_res = svc_authenticate(rqstp);
 	/* Also give the program a chance to reject this call: */
-	if (auth_res == SVC_OK && progp) {
-		auth_stat = rpc_autherr_badcred;
+	if (auth_res == SVC_OK && progp)
 		auth_res = progp->pg_authenticate(rqstp);
-	}
 	if (auth_res != SVC_OK)
+		trace_svc_authenticate(rqstp, auth_res);
+=======
+	auth_res = svc_authenticate(rqstp, &auth_stat);
+=======
+	auth_res = svc_authenticate(rqstp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* Also give the program a chance to reject this call: */
+	if (auth_res == SVC_OK && progp)
+		auth_res = progp->pg_authenticate(rqstp);
+	if (auth_res != SVC_OK)
+<<<<<<< HEAD
 		trace_svc_authenticate(rqstp, auth_res, auth_stat);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		trace_svc_authenticate(rqstp, auth_res);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (auth_res) {
 	case SVC_OK:
 		break;
@@ -1392,15 +1469,33 @@ svc_process_common(struct svc_rqst *rqstp, struct kvec *argv, struct kvec *resv)
 			goto release_dropit;
 		if (*statp == rpc_garbage_args)
 			goto err_garbage;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		auth_stat = svc_get_autherr(rqstp, statp);
 		if (auth_stat != rpc_auth_ok)
 			goto err_release_bad_auth;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		dprintk("svc: calling dispatcher\n");
 		if (!process.dispatch(rqstp, statp))
 			goto release_dropit; /* Release reply info */
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (rqstp->rq_auth_stat != rpc_auth_ok)
+		goto err_release_bad_auth;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rqstp->rq_auth_stat != rpc_auth_ok)
+		goto err_release_bad_auth;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Check RPC status result */
 	if (*statp != rpc_success)
 		resv->iov_len = ((void*)statp)  - resv->iov_base + 4;
@@ -1450,13 +1545,31 @@ err_release_bad_auth:
 	if (procp->pc_release)
 		procp->pc_release(rqstp);
 err_bad_auth:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dprintk("svc: authentication failed (%d)\n",
+		be32_to_cpu(rqstp->rq_auth_stat));
+=======
 	dprintk("svc: authentication failed (%d)\n", ntohl(auth_stat));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dprintk("svc: authentication failed (%d)\n",
+		be32_to_cpu(rqstp->rq_auth_stat));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	serv->sv_stats->rpcbadauth++;
 	/* Restore write pointer to location of accept status: */
 	xdr_ressize_check(rqstp, reply_statp);
 	svc_putnl(resv, 1);	/* REJECT */
 	svc_putnl(resv, 1);	/* AUTH_ERROR */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	svc_putu32(resv, rqstp->rq_auth_stat);	/* status */
+=======
 	svc_putnl(resv, ntohl(auth_stat));	/* status */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	svc_putu32(resv, rqstp->rq_auth_stat);	/* status */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	goto sendit;
 
 err_bad_prog:
@@ -1503,6 +1616,21 @@ svc_process(struct svc_rqst *rqstp)
 	struct svc_serv		*serv = rqstp->rq_server;
 	u32			dir;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#if IS_ENABLED(CONFIG_FAIL_SUNRPC)
+	if (!fail_sunrpc.ignore_server_disconnect &&
+	    should_fail(&fail_sunrpc.attr, 1))
+		svc_xprt_deferred_close(rqstp->rq_xprt);
+#endif
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Setup response xdr_buf.
 	 * Initially it has just one page
@@ -1630,6 +1758,30 @@ u32 svc_max_payload(const struct svc_rqst *rqstp)
 EXPORT_SYMBOL_GPL(svc_max_payload);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * svc_proc_name - Return RPC procedure name in string form
+ * @rqstp: svc_rqst to operate on
+ *
+ * Return value:
+ *   Pointer to a NUL-terminated string
+ */
+const char *svc_proc_name(const struct svc_rqst *rqstp)
+{
+	if (rqstp && rqstp->rq_procinfo)
+		return rqstp->rq_procinfo->pc_name;
+	return "unknown";
+}
+
+
+/**
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * svc_encode_result_payload - mark a range of bytes as a result payload
  * @rqstp: svc_rqst to operate on
  * @offset: payload's byte offset in rqstp->rq_res

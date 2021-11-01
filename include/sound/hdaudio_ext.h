@@ -51,7 +51,15 @@ enum hdac_ext_stream_type {
  * @decoupled: stream host and link is decoupled
  * @link_locked: link is locked
  * @link_prepared: link is prepared
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @link_substream: link substream
+=======
  * link_substream: link substream
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @link_substream: link substream
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct hdac_ext_stream {
 	struct hdac_stream hstream;

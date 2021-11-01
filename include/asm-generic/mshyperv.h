@@ -22,6 +22,14 @@
 #include <linux/atomic.h>
 #include <linux/bitops.h>
 #include <linux/cpumask.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/nmi.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/nmi.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/ptrace.h>
 #include <asm/hyperv-tlfs.h>
 
@@ -38,6 +46,18 @@ struct ms_hyperv_info {
 };
 extern struct ms_hyperv_info ms_hyperv;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+extern void  __percpu  **hyperv_pcpu_input_arg;
+extern void  __percpu  **hyperv_pcpu_output_arg;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern void  __percpu  **hyperv_pcpu_input_arg;
+extern void  __percpu  **hyperv_pcpu_output_arg;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern u64 hv_do_hypercall(u64 control, void *inputaddr, void *outputaddr);
 extern u64 hv_do_fast_hypercall8(u16 control, u64 input8);
 
@@ -151,6 +171,16 @@ void hv_remove_crash_handler(void);
 extern int vmbus_interrupt;
 extern int vmbus_irq;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+extern bool hv_root_partition;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern bool hv_root_partition;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_HYPERV)
 /*
  * Hypervisor's notion of virtual processor ID is different from
@@ -161,9 +191,28 @@ extern int vmbus_irq;
 extern u32 *hv_vp_index;
 extern u32 hv_max_vp_index;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+extern u64 (*hv_read_reference_counter)(void);
+
 /* Sentinel value for an uninitialized entry in hv_vp_index array */
 #define VP_INVAL	U32_MAX
 
+int __init hv_common_init(void);
+void __init hv_common_free(void);
+int hv_common_cpu_init(unsigned int cpu);
+int hv_common_cpu_die(unsigned int cpu);
+
+<<<<<<< HEAD
+=======
+/* Sentinel value for an uninitialized entry in hv_vp_index array */
+#define VP_INVAL	U32_MAX
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void *hv_alloc_hyperv_page(void);
 void *hv_alloc_hyperv_zeroed_page(void);
 void hv_free_hyperv_page(unsigned long addr);
@@ -184,10 +233,28 @@ static inline int hv_cpu_number_to_vp_number(int cpu_number)
 	return hv_vp_index[cpu_number];
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline int __cpumask_to_vpset(struct hv_vpset *vpset,
+				    const struct cpumask *cpus,
+				    bool exclude_self)
+{
+	int cpu, vcpu, vcpu_bank, vcpu_offset, nr_bank = 1;
+	int this_cpu = smp_processor_id();
+=======
 static inline int cpumask_to_vpset(struct hv_vpset *vpset,
 				    const struct cpumask *cpus)
 {
 	int cpu, vcpu, vcpu_bank, vcpu_offset, nr_bank = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int __cpumask_to_vpset(struct hv_vpset *vpset,
+				    const struct cpumask *cpus,
+				    bool exclude_self)
+{
+	int cpu, vcpu, vcpu_bank, vcpu_offset, nr_bank = 1;
+	int this_cpu = smp_processor_id();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* valid_bank_mask can represent up to 64 banks */
 	if (hv_max_vp_index / 64 >= 64)
@@ -205,6 +272,16 @@ static inline int cpumask_to_vpset(struct hv_vpset *vpset,
 	 * Some banks may end up being empty but this is acceptable.
 	 */
 	for_each_cpu(cpu, cpus) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (exclude_self && cpu == this_cpu)
+			continue;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (exclude_self && cpu == this_cpu)
+			continue;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		vcpu = hv_cpu_number_to_vp_number(cpu);
 		if (vcpu == VP_INVAL)
 			return -1;
@@ -219,6 +296,28 @@ static inline int cpumask_to_vpset(struct hv_vpset *vpset,
 	return nr_bank;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static inline int cpumask_to_vpset(struct hv_vpset *vpset,
+				    const struct cpumask *cpus)
+{
+	return __cpumask_to_vpset(vpset, cpus, false);
+}
+
+static inline int cpumask_to_vpset_noself(struct hv_vpset *vpset,
+				    const struct cpumask *cpus)
+{
+	WARN_ON_ONCE(preemptible());
+	return __cpumask_to_vpset(vpset, cpus, true);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void hyperv_report_panic(struct pt_regs *regs, long err, bool in_die);
 bool hv_is_hyperv_initialized(void);
 bool hv_is_hibernation_supported(void);

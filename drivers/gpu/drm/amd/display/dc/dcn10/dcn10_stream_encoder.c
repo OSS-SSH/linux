@@ -522,16 +522,44 @@ void enc1_stream_encoder_hdmi_set_stream_attribute(
 	switch (crtc_timing->display_color_depth) {
 	case COLOR_DEPTH_888:
 		REG_UPDATE(HDMI_CONTROL, HDMI_DEEP_COLOR_DEPTH, 0);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		DC_LOG_DEBUG("HDMI source set to 24BPP deep color depth\n");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		DC_LOG_DEBUG("HDMI source set to 24BPP deep color depth\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case COLOR_DEPTH_101010:
 		if (crtc_timing->pixel_encoding == PIXEL_ENCODING_YCBCR422) {
 			REG_UPDATE_2(HDMI_CONTROL,
 					HDMI_DEEP_COLOR_DEPTH, 1,
 					HDMI_DEEP_COLOR_ENABLE, 0);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			DC_LOG_DEBUG("HDMI source 30BPP deep color depth"  \
+				"disabled for YCBCR422 pixel encoding\n");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			DC_LOG_DEBUG("HDMI source 30BPP deep color depth"  \
+				"disabled for YCBCR422 pixel encoding\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			REG_UPDATE_2(HDMI_CONTROL,
 					HDMI_DEEP_COLOR_DEPTH, 1,
 					HDMI_DEEP_COLOR_ENABLE, 1);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			DC_LOG_DEBUG("HDMI source 30BPP deep color depth"  \
+				"enabled for YCBCR422 non-pixel encoding\n");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			DC_LOG_DEBUG("HDMI source 30BPP deep color depth"  \
+				"enabled for YCBCR422 non-pixel encoding\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		break;
 	case COLOR_DEPTH_121212:
@@ -539,16 +567,46 @@ void enc1_stream_encoder_hdmi_set_stream_attribute(
 			REG_UPDATE_2(HDMI_CONTROL,
 					HDMI_DEEP_COLOR_DEPTH, 2,
 					HDMI_DEEP_COLOR_ENABLE, 0);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			DC_LOG_DEBUG("HDMI source 36BPP deep color depth"  \
+				"disabled for YCBCR422 pixel encoding\n");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			DC_LOG_DEBUG("HDMI source 36BPP deep color depth"  \
+				"disabled for YCBCR422 pixel encoding\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			REG_UPDATE_2(HDMI_CONTROL,
 					HDMI_DEEP_COLOR_DEPTH, 2,
 					HDMI_DEEP_COLOR_ENABLE, 1);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			DC_LOG_DEBUG("HDMI source 36BPP deep color depth"  \
+				"enabled for non-pixel YCBCR422 encoding\n");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			DC_LOG_DEBUG("HDMI source 36BPP deep color depth"  \
+				"enabled for non-pixel YCBCR422 encoding\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		break;
 	case COLOR_DEPTH_161616:
 		REG_UPDATE_2(HDMI_CONTROL,
 				HDMI_DEEP_COLOR_DEPTH, 3,
 				HDMI_DEEP_COLOR_ENABLE, 1);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		DC_LOG_DEBUG("HDMI source deep color depth enabled in"  \
+				"reserved mode\n");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		DC_LOG_DEBUG("HDMI source deep color depth enabled in"  \
+				"reserved mode\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		break;

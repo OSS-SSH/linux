@@ -677,11 +677,29 @@ static int xge_probe(struct platform_device *pdev)
 	ret = register_netdev(ndev);
 	if (ret) {
 		netdev_err(ndev, "Failed to register netdev\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err_mdio_remove;
+=======
 		goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_mdio_remove;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+err_mdio_remove:
+	xge_mdio_remove(ndev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_mdio_remove:
+	xge_mdio_remove(ndev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err:
 	free_netdev(ndev);
 

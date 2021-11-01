@@ -714,6 +714,21 @@ static int at24_probe(struct i2c_client *client)
 	}
 
 	/*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	 * We initialize nvmem_config.id to NVMEM_DEVID_AUTO even if the
+	 * label property is set as some platform can have multiple eeproms
+	 * with same label and we can not register each of those with same
+	 * label. Failing to register those eeproms trigger cascade failure
+	 * on such platform.
+<<<<<<< HEAD
+	 */
+	nvmem_config.id = NVMEM_DEVID_AUTO;
+
+	if (device_property_present(dev, "label")) {
+=======
 	 * If the 'label' property is not present for the AT24 EEPROM,
 	 * then nvmem_config.id is initialised to NVMEM_DEVID_AUTO,
 	 * and this will append the 'devid' to the name of the NVMEM
@@ -722,15 +737,29 @@ static int at24_probe(struct i2c_client *client)
 	 * present then this means that the name is specified by the
 	 * firmware and this name should be used verbatim and so it is
 	 * not necessary to append the 'devid'.
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
+	nvmem_config.id = NVMEM_DEVID_AUTO;
+
 	if (device_property_present(dev, "label")) {
+<<<<<<< HEAD
 		nvmem_config.id = NVMEM_DEVID_NONE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = device_property_read_string(dev, "label",
 						  &nvmem_config.name);
 		if (err)
 			return err;
 	} else {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		nvmem_config.id = NVMEM_DEVID_AUTO;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nvmem_config.name = dev_name(dev);
 	}
 

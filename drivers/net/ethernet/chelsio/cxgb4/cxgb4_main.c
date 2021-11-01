@@ -2643,6 +2643,18 @@ static void detach_ulds(struct adapter *adap)
 {
 	unsigned int i;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!is_uld(adap))
+		return;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!is_uld(adap))
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&uld_mutex);
 	list_del(&adap->list_node);
 
@@ -3869,7 +3881,15 @@ static const struct net_device_ops cxgb4_netdev_ops = {
 	.ndo_set_mac_address  = cxgb_set_mac_addr,
 	.ndo_set_features     = cxgb_set_features,
 	.ndo_validate_addr    = eth_validate_addr,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl         = cxgb_ioctl,
+=======
 	.ndo_do_ioctl         = cxgb_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl         = cxgb_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu       = cxgb_change_mtu,
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_poll_controller  = cxgb_netpoll,
@@ -4005,7 +4025,15 @@ static void adap_free_hma_mem(struct adapter *adapter)
 
 	if (adapter->hma.flags & HMA_DMA_MAPPED_FLAG) {
 		dma_unmap_sg(adapter->pdev_dev, adapter->hma.sgt->sgl,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			     adapter->hma.sgt->nents, DMA_BIDIRECTIONAL);
+=======
 			     adapter->hma.sgt->nents, PCI_DMA_BIDIRECTIONAL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     adapter->hma.sgt->nents, DMA_BIDIRECTIONAL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adapter->hma.flags &= ~HMA_DMA_MAPPED_FLAG;
 	}
 
@@ -5065,6 +5093,14 @@ static int adap_init0(struct adapter *adap, int vpd_skip)
 		ret = -ENOMEM;
 		goto bye;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bitmap_zero(adap->sge.blocked_fl, adap->sge.egr_sz);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bitmap_zero(adap->sge.blocked_fl, adap->sge.egr_sz);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	params[0] = FW_PARAM_PFVF(CLIP_START);
@@ -6159,8 +6195,16 @@ static void print_port_info(const struct net_device *dev)
 		--bufp;
 	sprintf(bufp, "BASE-%s", t4_get_port_type_description(pi->port_type));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	netdev_info(dev, "Chelsio %s %s\n", adap->params.vpd.id, buf);
+=======
 	netdev_info(dev, "%s: Chelsio %s (%s) %s\n",
 		    dev->name, adap->params.vpd.id, adap->name, buf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	netdev_info(dev, "Chelsio %s %s\n", adap->params.vpd.id, buf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -6684,16 +6728,25 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 		return 0;
 	}
 
-	if (!pci_set_dma_mask(pdev, DMA_BIT_MASK(64))) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64))) {
 		highdma = true;
-		err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
-		if (err) {
-			dev_err(&pdev->dev, "unable to obtain 64-bit DMA for "
-				"coherent allocations\n");
-			goto out_free_adapter;
-		}
 	} else {
+		err = dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
+=======
+	if (!pci_set_dma_mask(pdev, DMA_BIT_MASK(64))) {
+=======
+	if (!dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		highdma = true;
+	} else {
+<<<<<<< HEAD
 		err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = dma_set_mask(&pdev->dev, DMA_BIT_MASK(32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			dev_err(&pdev->dev, "no usable DMA configuration\n");
 			goto out_free_adapter;
@@ -6785,6 +6838,14 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 
 	setup_memwin(adapter);
 	err = adap_init0(adapter, 0);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (err)
+		goto out_unmap_bar;
+
+	setup_memwin_rdma(adapter);
+
+=======
 #ifdef CONFIG_DEBUG_FS
 	bitmap_zero(adapter->sge.blocked_fl, adapter->sge.egr_sz);
 #endif
@@ -6792,6 +6853,14 @@ static int init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (err)
 		goto out_unmap_bar;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err)
+		goto out_unmap_bar;
+
+	setup_memwin_rdma(adapter);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* configure SGE_STAT_CFG_A to read WC stats */
 	if (!is_t4(adapter->params.chip))
 		t4_write_reg(adapter, SGE_STAT_CFG_A, STATSOURCE_T5_V(7) |
@@ -7141,10 +7210,26 @@ static void remove_one(struct pci_dev *pdev)
 		 */
 		destroy_workqueue(adapter->workq);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		detach_ulds(adapter);
+
+		for_each_port(adapter, i)
+			if (adapter->port[i]->reg_state == NETREG_REGISTERED)
+				unregister_netdev(adapter->port[i]);
+
+		t4_uld_clean_up(adapter);
+<<<<<<< HEAD
+=======
 		if (is_uld(adapter)) {
 			detach_ulds(adapter);
 			t4_uld_clean_up(adapter);
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		adap_free_hma_mem(adapter);
 
@@ -7152,10 +7237,16 @@ static void remove_one(struct pci_dev *pdev)
 
 		cxgb4_free_mps_ref_entries(adapter);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		for_each_port(adapter, i)
 			if (adapter->port[i]->reg_state == NETREG_REGISTERED)
 				unregister_netdev(adapter->port[i]);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		debugfs_remove_recursive(adapter->debugfs_root);
 
 		if (!is_t4(adapter->params.chip))

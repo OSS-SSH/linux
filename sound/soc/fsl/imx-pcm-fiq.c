@@ -81,7 +81,13 @@ static int snd_imx_pcm_hw_params(struct snd_soc_component *component,
 	iprtd->offset = 0;
 	iprtd->poll_time_ns = 1000000000 / params_rate(params) *
 				params_period_size(params);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -213,6 +219,9 @@ static int snd_imx_close(struct snd_soc_component *component,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static int snd_imx_pcm_mmap(struct snd_soc_component *component,
 			    struct snd_pcm_substream *substream,
 			    struct vm_area_struct *vma)
@@ -247,6 +256,9 @@ static int imx_pcm_preallocate_dma_buffer(struct snd_pcm *pcm, int stream)
 	return 0;
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int imx_pcm_new(struct snd_soc_pcm_runtime *rtd)
 {
 	struct snd_card *card = rtd->card->snd_card;
@@ -257,6 +269,12 @@ static int imx_pcm_new(struct snd_soc_pcm_runtime *rtd)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV_WC,
+					    pcm->card->dev,
+					    IMX_SSI_DMABUF_SIZE);
+=======
 	if (pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream) {
 		ret = imx_pcm_preallocate_dma_buffer(pcm,
 			SNDRV_PCM_STREAM_PLAYBACK);
@@ -272,6 +290,12 @@ static int imx_pcm_new(struct snd_soc_pcm_runtime *rtd)
 	}
 
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV_WC,
+					    pcm->card->dev,
+					    IMX_SSI_DMABUF_SIZE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ssi_irq;
@@ -307,6 +331,9 @@ static int snd_imx_pcm_new(struct snd_soc_component *component,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static void imx_pcm_free(struct snd_pcm *pcm)
 {
 	struct snd_pcm_substream *substream;
@@ -327,12 +354,21 @@ static void imx_pcm_free(struct snd_pcm *pcm)
 	}
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void snd_imx_pcm_free(struct snd_soc_component *component,
 			     struct snd_pcm *pcm)
 {
 	mxc_set_irq_fiq(ssi_irq, 0);
 	release_fiq(&fh);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	imx_pcm_free(pcm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct snd_soc_component_driver imx_soc_component_fiq = {
@@ -342,7 +378,13 @@ static const struct snd_soc_component_driver imx_soc_component_fiq = {
 	.prepare	= snd_imx_pcm_prepare,
 	.trigger	= snd_imx_pcm_trigger,
 	.pointer	= snd_imx_pcm_pointer,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.mmap		= snd_imx_pcm_mmap,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.pcm_construct	= snd_imx_pcm_new,
 	.pcm_destruct	= snd_imx_pcm_free,
 };

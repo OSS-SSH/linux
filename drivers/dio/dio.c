@@ -219,7 +219,15 @@ static int __init dio_init(void)
                 /* Found a board, allocate it an entry in the list */
 		dev = kzalloc(sizeof(struct dio_dev), GFP_KERNEL);
 		if (!dev)
+<<<<<<< HEAD
+<<<<<<< HEAD
+			return -ENOMEM;
+=======
 			return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		dev->bus = &dio_bus;
 		dev->dev.parent = &dio_bus.dev;

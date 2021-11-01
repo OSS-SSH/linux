@@ -9,17 +9,31 @@
 
 #include <linux/kernel.h>
 #include <linux/module.h>
-#include <linux/slab.h>
-#include <linux/errno.h>
-#include <linux/types.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/mutex.h>
 #include <linux/interrupt.h>
-#include <linux/i2c.h>
-#include <linux/irq.h>
-#include <linux/delay.h>
+#include <linux/sysfs.h>
 #include <linux/iio/iio.h>
 #include <linux/iio/sysfs.h>
 #include <linux/iio/trigger.h>
+=======
+#include <linux/slab.h>
+#include <linux/errno.h>
+#include <linux/types.h>
+=======
+#include <linux/mutex.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#include <linux/interrupt.h>
+#include <linux/sysfs.h>
+#include <linux/iio/iio.h>
+#include <linux/iio/sysfs.h>
+#include <linux/iio/trigger.h>
+<<<<<<< HEAD
 #include <linux/iio/buffer.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/iio/common/st_sensors.h>
 #include "st_gyro.h"
@@ -517,7 +531,15 @@ int st_gyro_common_probe(struct iio_dev *indio_dev)
 		err = st_sensors_allocate_trigger(indio_dev,
 						  ST_GYRO_TRIGGER_OPS);
 		if (err < 0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+			return err;
+=======
 			goto st_gyro_probe_trigger_error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = iio_device_register(indio_dev);
@@ -532,8 +554,14 @@ int st_gyro_common_probe(struct iio_dev *indio_dev)
 st_gyro_device_register_error:
 	if (gdata->irq > 0)
 		st_sensors_deallocate_trigger(indio_dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 st_gyro_probe_trigger_error:
 	st_gyro_deallocate_ring(indio_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 EXPORT_SYMBOL(st_gyro_common_probe);
@@ -545,8 +573,14 @@ void st_gyro_common_remove(struct iio_dev *indio_dev)
 	iio_device_unregister(indio_dev);
 	if (gdata->irq > 0)
 		st_sensors_deallocate_trigger(indio_dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 	st_gyro_deallocate_ring(indio_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(st_gyro_common_remove);
 

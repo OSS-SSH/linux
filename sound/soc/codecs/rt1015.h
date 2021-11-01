@@ -444,8 +444,14 @@ struct rt1015_priv {
 	int bypass_boost;
 	int dac_is_used;
 	int cali_done;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int hw_config;
 	struct delayed_work flush_work;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #endif /* __RT1015_H__ */

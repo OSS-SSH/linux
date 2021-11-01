@@ -223,7 +223,17 @@ int saa7134_pgtable_alloc(struct pci_dev *pci, struct saa7134_pgtable *pt)
 	__le32       *cpu;
 	dma_addr_t   dma_addr = 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpu = dma_alloc_coherent(&pci->dev, SAA7134_PGTABLE_SIZE, &dma_addr,
+				 GFP_KERNEL);
+=======
 	cpu = pci_alloc_consistent(pci, SAA7134_PGTABLE_SIZE, &dma_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpu = dma_alloc_coherent(&pci->dev, SAA7134_PGTABLE_SIZE, &dma_addr,
+				 GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (NULL == cpu)
 		return -ENOMEM;
 	pt->size = SAA7134_PGTABLE_SIZE;
@@ -254,7 +264,15 @@ void saa7134_pgtable_free(struct pci_dev *pci, struct saa7134_pgtable *pt)
 {
 	if (NULL == pt->cpu)
 		return;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dma_free_coherent(&pci->dev, pt->size, pt->cpu, pt->dma);
+=======
 	pci_free_consistent(pci, pt->size, pt->cpu, pt->dma);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_free_coherent(&pci->dev, pt->size, pt->cpu, pt->dma);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pt->cpu = NULL;
 }
 
@@ -1092,7 +1110,15 @@ static int saa7134_initdev(struct pci_dev *pci_dev,
 		dev->pci_lat,
 		(unsigned long long)pci_resource_start(pci_dev, 0));
 	pci_set_master(pci_dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = dma_set_mask(&pci_dev->dev, DMA_BIT_MASK(32));
+=======
 	err = pci_set_dma_mask(pci_dev, DMA_BIT_MASK(32));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = dma_set_mask(&pci_dev->dev, DMA_BIT_MASK(32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		pr_warn("%s: Oops: no 32bit PCI DMA ???\n", dev->name);
 		goto err_v4l2_unregister;

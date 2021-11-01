@@ -85,6 +85,14 @@ struct byt_rt5651_private {
 	struct gpio_desc *ext_amp_gpio;
 	struct gpio_desc *hp_detect;
 	struct snd_soc_jack jack;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct device *codec_dev;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct device *codec_dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct acpi_gpio_mapping *byt_rt5651_gpios;
@@ -527,10 +535,30 @@ static const struct dmi_system_id byt_rt5651_quirk_table[] = {
  * Note this MUST be called before snd_soc_register_card(), so that the props
  * are in place before the codec component driver's probe function parses them.
  */
-static int byt_rt5651_add_codec_device_props(struct device *i2c_dev)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int byt_rt5651_add_codec_device_props(struct device *i2c_dev,
+					     struct byt_rt5651_private *priv)
 {
 	struct property_entry props[MAX_NO_PROPS] = {};
+	struct fwnode_handle *fwnode;
 	int cnt = 0;
+	int ret;
+=======
+static int byt_rt5651_add_codec_device_props(struct device *i2c_dev)
+=======
+static int byt_rt5651_add_codec_device_props(struct device *i2c_dev,
+					     struct byt_rt5651_private *priv)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct property_entry props[MAX_NO_PROPS] = {};
+	struct fwnode_handle *fwnode;
+	int cnt = 0;
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	props[cnt++] = PROPERTY_ENTRY_U32("realtek,jack-detect-source",
 				BYT_RT5651_JDSRC(byt_rt5651_quirk));
@@ -547,7 +575,27 @@ static int byt_rt5651_add_codec_device_props(struct device *i2c_dev)
 	if (byt_rt5651_quirk & BYT_RT5651_JD_NOT_INV)
 		props[cnt++] = PROPERTY_ENTRY_BOOL("realtek,jack-detect-not-inverted");
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	fwnode = fwnode_create_software_node(props, NULL);
+	if (IS_ERR(fwnode)) {
+		/* put_device(i2c_dev) is handled in caller */
+		return PTR_ERR(fwnode);
+	}
+
+	ret = device_add_software_node(i2c_dev, to_software_node(fwnode));
+
+	fwnode_handle_put(fwnode);
+
+	return ret;
+<<<<<<< HEAD
+=======
 	return device_add_properties(i2c_dev, props);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int byt_rt5651_init(struct snd_soc_pcm_runtime *runtime)
@@ -920,13 +968,30 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
 		byt_rt5651_dais[dai_index].codecs->name = byt_rt5651_codec_name;
 	} else {
 		dev_err(&pdev->dev, "Error cannot find '%s' dev\n", mach->id);
-		return -ENODEV;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return -ENXIO;
 	}
 
-	codec_dev = bus_find_device_by_name(&i2c_bus_type, NULL,
-					    byt_rt5651_codec_name);
+	codec_dev = acpi_get_first_physical_node(adev);
 	if (!codec_dev)
 		return -EPROBE_DEFER;
+	priv->codec_dev = get_device(codec_dev);
+=======
+		return -ENODEV;
+=======
+		return -ENXIO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	}
+
+	codec_dev = acpi_get_first_physical_node(adev);
+	if (!codec_dev)
+		return -EPROBE_DEFER;
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	priv->codec_dev = get_device(codec_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * swap SSP0 if bytcr is detected
@@ -994,11 +1059,23 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
 	}
 
 	/* Must be called before register_card, also see declaration comment. */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret_val = byt_rt5651_add_codec_device_props(codec_dev, priv);
+	if (ret_val)
+		goto err_device;
+=======
 	ret_val = byt_rt5651_add_codec_device_props(codec_dev);
 	if (ret_val) {
 		put_device(codec_dev);
 		return ret_val;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret_val = byt_rt5651_add_codec_device_props(codec_dev, priv);
+	if (ret_val)
+		goto err_device;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Cherry Trail devices use an external amplifier enable gpio */
 	if (soc_intel_is_cht() && !byt_rt5651_gpios)
@@ -1022,8 +1099,16 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
 					ret_val);
 				fallthrough;
 			case -EPROBE_DEFER:
+<<<<<<< HEAD
+<<<<<<< HEAD
+				goto err;
+=======
 				put_device(codec_dev);
 				return ret_val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				goto err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 		priv->hp_detect = devm_fwnode_gpiod_get(&pdev->dev,
@@ -1042,14 +1127,28 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
 					ret_val);
 				fallthrough;
 			case -EPROBE_DEFER:
+<<<<<<< HEAD
+<<<<<<< HEAD
+				goto err;
+=======
 				put_device(codec_dev);
 				return ret_val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				goto err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	put_device(codec_dev);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	log_quirks(&pdev->dev);
 
 	if ((byt_rt5651_quirk & BYT_RT5651_SSP2_AIF2) ||
@@ -1073,7 +1172,15 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
 			 * for all other errors, including -EPROBE_DEFER
 			 */
 			if (ret_val != -ENOENT)
+<<<<<<< HEAD
+<<<<<<< HEAD
+				goto err;
+=======
 				return ret_val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				goto err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			byt_rt5651_quirk &= ~BYT_RT5651_MCLK_EN;
 		}
 	}
@@ -1102,7 +1209,15 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
 	ret_val = snd_soc_fixup_dai_links_platform_name(&byt_rt5651_card,
 							platform_name);
 	if (ret_val)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err;
+=======
 		return ret_val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sof_parent = snd_soc_acpi_sof_parent(&pdev->dev);
 
@@ -1124,10 +1239,56 @@ static int snd_byt_rt5651_mc_probe(struct platform_device *pdev)
 	if (ret_val) {
 		dev_err(&pdev->dev, "devm_snd_soc_register_card failed %d\n",
 			ret_val);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err;
+	}
+	platform_set_drvdata(pdev, &byt_rt5651_card);
+	return ret_val;
+
+err:
+	device_remove_software_node(priv->codec_dev);
+err_device:
+	put_device(priv->codec_dev);
+	return ret_val;
+}
+
+static int snd_byt_rt5651_mc_remove(struct platform_device *pdev)
+{
+	struct snd_soc_card *card = platform_get_drvdata(pdev);
+	struct byt_rt5651_private *priv = snd_soc_card_get_drvdata(card);
+
+	device_remove_software_node(priv->codec_dev);
+	put_device(priv->codec_dev);
+	return 0;
+=======
 		return ret_val;
 	}
 	platform_set_drvdata(pdev, &byt_rt5651_card);
 	return ret_val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err;
+	}
+	platform_set_drvdata(pdev, &byt_rt5651_card);
+	return ret_val;
+
+err:
+	device_remove_software_node(priv->codec_dev);
+err_device:
+	put_device(priv->codec_dev);
+	return ret_val;
+}
+
+static int snd_byt_rt5651_mc_remove(struct platform_device *pdev)
+{
+	struct snd_soc_card *card = platform_get_drvdata(pdev);
+	struct byt_rt5651_private *priv = snd_soc_card_get_drvdata(card);
+
+	device_remove_software_node(priv->codec_dev);
+	put_device(priv->codec_dev);
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct platform_driver snd_byt_rt5651_mc_driver = {
@@ -1135,6 +1296,14 @@ static struct platform_driver snd_byt_rt5651_mc_driver = {
 		.name = "bytcr_rt5651",
 	},
 	.probe = snd_byt_rt5651_mc_probe,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.remove = snd_byt_rt5651_mc_remove,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.remove = snd_byt_rt5651_mc_remove,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 module_platform_driver(snd_byt_rt5651_mc_driver);

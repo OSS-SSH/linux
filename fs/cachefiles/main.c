@@ -69,6 +69,12 @@ static int __init cachefiles_init(void)
 		goto error_object_jar;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pr_info("Loaded\n");
+	return 0;
+
+=======
 	ret = cachefiles_proc_init();
 	if (ret < 0)
 		goto error_proc;
@@ -78,6 +84,12 @@ static int __init cachefiles_init(void)
 
 error_proc:
 	kmem_cache_destroy(cachefiles_object_jar);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_info("Loaded\n");
+	return 0;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 error_object_jar:
 	misc_deregister(&cachefiles_dev);
 error_dev:
@@ -94,7 +106,13 @@ static void __exit cachefiles_exit(void)
 {
 	pr_info("Unloading\n");
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	cachefiles_proc_cleanup();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kmem_cache_destroy(cachefiles_object_jar);
 	misc_deregister(&cachefiles_dev);
 }

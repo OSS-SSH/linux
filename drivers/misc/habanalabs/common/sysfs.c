@@ -9,8 +9,16 @@
 
 #include <linux/pci.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+long hl_get_frequency(struct hl_device *hdev, u32 pll_index, bool curr)
+=======
 long hl_get_frequency(struct hl_device *hdev, u32 pll_index,
 								bool curr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+long hl_get_frequency(struct hl_device *hdev, u32 pll_index, bool curr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpucp_packet pkt;
 	u32 used_pll_idx;
@@ -44,8 +52,16 @@ long hl_get_frequency(struct hl_device *hdev, u32 pll_index,
 	return (long) result;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void hl_set_frequency(struct hl_device *hdev, u32 pll_index, u64 freq)
+=======
 void hl_set_frequency(struct hl_device *hdev, u32 pll_index,
 								u64 freq)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void hl_set_frequency(struct hl_device *hdev, u32 pll_index, u64 freq)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpucp_packet pkt;
 	u32 used_pll_idx;
@@ -285,6 +301,15 @@ static ssize_t status_show(struct device *dev, struct device_attribute *attr,
 				char *buf)
 {
 	struct hl_device *hdev = dev_get_drvdata(dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	char str[HL_STR_MAX];
+
+	strscpy(str, hdev->status[hl_device_status(hdev)], HL_STR_MAX);
+
+	/* use uppercase for backward compatibility */
+	str[0] = 'A' + (str[0] - 'a');
+=======
 	char *str;
 
 	if (atomic_read(&hdev->in_reset))
@@ -295,6 +320,15 @@ static ssize_t status_show(struct device *dev, struct device_attribute *attr,
 		str = "Needs Reset";
 	else
 		str = "Operational";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	char str[HL_STR_MAX];
+
+	strscpy(str, hdev->status[hl_device_status(hdev)], HL_STR_MAX);
+
+	/* use uppercase for backward compatibility */
+	str[0] = 'A' + (str[0] - 'a');
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return sprintf(buf, "%s\n", str);
 }

@@ -673,12 +673,32 @@ ssize_t erofs_listxattr(struct dentry *dentry,
 }
 
 #ifdef CONFIG_EROFS_FS_POSIX_ACL
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct posix_acl *erofs_get_acl(struct inode *inode, int type, bool rcu)
+=======
 struct posix_acl *erofs_get_acl(struct inode *inode, int type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct posix_acl *erofs_get_acl(struct inode *inode, int type, bool rcu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct posix_acl *acl;
 	int prefix, rc;
 	char *value = NULL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (type) {
 	case ACL_TYPE_ACCESS:
 		prefix = EROFS_XATTR_INDEX_POSIX_ACL_ACCESS;

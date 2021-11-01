@@ -22,7 +22,15 @@ static void ice_set_tx_tstamp(struct ice_pf *pf, bool on)
 		return;
 
 	/* Set the timestamp enable flag for all the Tx rings */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ice_for_each_txq(vsi, i) {
+=======
 	ice_for_each_rxq(vsi, i) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ice_for_each_txq(vsi, i) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!vsi->tx_rings[i])
 			continue;
 		vsi->tx_rings[i]->ptp_tx = on;
@@ -656,7 +664,15 @@ static int ice_ptp_cfg_clkout(struct ice_pf *pf, unsigned int chan,
 	 * maintaining phase
 	 */
 	if (start_time < current_time)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		start_time = div64_u64(current_time + NSEC_PER_SEC - 1,
+=======
 		start_time = div64_u64(current_time + NSEC_PER_MSEC - 1,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		start_time = div64_u64(current_time + NSEC_PER_SEC - 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       NSEC_PER_SEC) * NSEC_PER_SEC + phase;
 
 	start_time -= E810_OUT_PROP_DELAY_NS;
@@ -689,6 +705,50 @@ err:
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * ice_ptp_disable_all_clkout - Disable all currently configured outputs
+ * @pf: pointer to the PF structure
+ *
+ * Disable all currently configured clock outputs. This is necessary before
+ * certain changes to the PTP hardware clock. Use ice_ptp_enable_all_clkout to
+ * re-enable the clocks again.
+ */
+static void ice_ptp_disable_all_clkout(struct ice_pf *pf)
+{
+	uint i;
+
+	for (i = 0; i < pf->ptp.info.n_per_out; i++)
+		if (pf->ptp.perout_channels[i].ena)
+			ice_ptp_cfg_clkout(pf, i, NULL, false);
+}
+
+/**
+ * ice_ptp_enable_all_clkout - Enable all configured periodic clock outputs
+ * @pf: pointer to the PF structure
+ *
+ * Enable all currently configured clock outputs. Use this after
+ * ice_ptp_disable_all_clkout to reconfigure the output signals according to
+ * their configuration.
+ */
+static void ice_ptp_enable_all_clkout(struct ice_pf *pf)
+{
+	uint i;
+
+	for (i = 0; i < pf->ptp.info.n_per_out; i++)
+		if (pf->ptp.perout_channels[i].ena)
+			ice_ptp_cfg_clkout(pf, i, &pf->ptp.perout_channels[i],
+					   false);
+}
+
+/**
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ice_ptp_gpio_enable_e810 - Enable/disable ancillary features of PHC
  * @info: the driver's PTP info structure
  * @rq: The requested feature to change
@@ -783,12 +843,34 @@ ice_ptp_settime64(struct ptp_clock_info *info, const struct timespec64 *ts)
 		goto exit;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Disable periodic outputs */
+	ice_ptp_disable_all_clkout(pf);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Disable periodic outputs */
+	ice_ptp_disable_all_clkout(pf);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = ice_ptp_write_init(pf, &ts64);
 	ice_ptp_unlock(hw);
 
 	if (!err)
 		ice_ptp_update_cached_phctime(pf);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Reenable periodic outputs */
+	ice_ptp_enable_all_clkout(pf);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Reenable periodic outputs */
+	ice_ptp_enable_all_clkout(pf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 exit:
 	if (err) {
 		dev_err(ice_pf_to_dev(pf), "PTP failed to set time %d\n", err);
@@ -842,8 +924,25 @@ static int ice_ptp_adjtime(struct ptp_clock_info *info, s64 delta)
 		return -EBUSY;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* Disable periodic outputs */
+	ice_ptp_disable_all_clkout(pf);
+
 	err = ice_ptp_write_adj(pf, delta);
 
+	/* Reenable periodic outputs */
+	ice_ptp_enable_all_clkout(pf);
+
+<<<<<<< HEAD
+=======
+	err = ice_ptp_write_adj(pf, delta);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ice_ptp_unlock(hw);
 
 	if (err) {
@@ -1064,6 +1163,9 @@ static long ice_ptp_create_clock(struct ice_pf *pf)
 	info = &pf->ptp.info;
 	dev = ice_pf_to_dev(pf);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* Allocate memory for kernel pins interface */
 	if (info->n_pins) {
 		info->pin_config = devm_kcalloc(dev, info->n_pins,
@@ -1075,6 +1177,9 @@ static long ice_ptp_create_clock(struct ice_pf *pf)
 		}
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Attempt to register the clock before enabling the hardware. */
 	clock = ptp_clock_register(info, dev);
 	if (IS_ERR(clock))
@@ -1281,14 +1386,37 @@ ice_ptp_flush_tx_tracker(struct ice_pf *pf, struct ice_ptp_tx *tx)
 	for (idx = 0; idx < tx->len; idx++) {
 		u8 phy_idx = idx + tx->quad_offset;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		spin_lock(&tx->lock);
+=======
 		/* Clear any potential residual timestamp in the PHY block */
 		if (!pf->hw.reset_ongoing)
 			ice_clear_phy_tstamp(&pf->hw, tx->quad, phy_idx);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		spin_lock(&tx->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (tx->tstamps[idx].skb) {
 			dev_kfree_skb_any(tx->tstamps[idx].skb);
 			tx->tstamps[idx].skb = NULL;
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		clear_bit(idx, tx->in_use);
+		spin_unlock(&tx->lock);
+
+		/* Clear any potential residual timestamp in the PHY block */
+		if (!pf->hw.reset_ongoing)
+			ice_clear_phy_tstamp(&pf->hw, tx->quad, phy_idx);
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -1550,6 +1678,18 @@ void ice_ptp_release(struct ice_pf *pf)
 	if (!pf->ptp.clock)
 		return;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Disable periodic outputs */
+	ice_ptp_disable_all_clkout(pf);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Disable periodic outputs */
+	ice_ptp_disable_all_clkout(pf);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ice_clear_ptp_clock_index(pf);
 	ptp_clock_unregister(pf->ptp.clock);
 	pf->ptp.clock = NULL;

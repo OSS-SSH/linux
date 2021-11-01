@@ -8,9 +8,21 @@ ATOMICTBL=${ATOMICDIR}/atomics.tbl
 LINUXDIR=${ATOMICDIR}/../..
 
 cat <<EOF |
+<<<<<<< HEAD
+<<<<<<< HEAD
+gen-atomic-instrumented.sh      linux/atomic/atomic-instrumented.h
+gen-atomic-long.sh              linux/atomic/atomic-long.h
+gen-atomic-fallback.sh          linux/atomic/atomic-arch-fallback.h
+=======
 gen-atomic-instrumented.sh      asm-generic/atomic-instrumented.h
 gen-atomic-long.sh              asm-generic/atomic-long.h
 gen-atomic-fallback.sh          linux/atomic-arch-fallback.h		arch_
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+gen-atomic-instrumented.sh      linux/atomic/atomic-instrumented.h
+gen-atomic-long.sh              linux/atomic/atomic-long.h
+gen-atomic-fallback.sh          linux/atomic/atomic-arch-fallback.h
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EOF
 while read script header args; do
 	/bin/sh ${ATOMICDIR}/${script} ${ATOMICTBL} ${args} > ${LINUXDIR}/include/${header}

@@ -1159,12 +1159,32 @@ __skip_mpu:
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int snd_miro_opti_check(struct snd_card *card, struct snd_miro *chip)
+{
+	unsigned char value;
+
+	chip->res_mc_base =
+		devm_request_region(card->dev, chip->mc_base,
+				    chip->mc_base_size, "OPTi9xx MC");
+=======
 static int snd_miro_opti_check(struct snd_miro *chip)
 {
 	unsigned char value;
 
 	chip->res_mc_base = request_region(chip->mc_base, chip->mc_base_size,
 					   "OPTi9xx MC");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int snd_miro_opti_check(struct snd_card *card, struct snd_miro *chip)
+{
+	unsigned char value;
+
+	chip->res_mc_base =
+		devm_request_region(card->dev, chip->mc_base,
+				    chip->mc_base_size, "OPTi9xx MC");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (chip->res_mc_base == NULL)
 		return -ENOMEM;
 
@@ -1173,7 +1193,15 @@ static int snd_miro_opti_check(struct snd_miro *chip)
 		if (value == snd_miro_read(chip, OPTi9XX_MC_REG(1)))
 			return 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	devm_release_resource(card->dev, chip->res_mc_base);
+=======
 	release_and_free_resource(chip->res_mc_base);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	devm_release_resource(card->dev, chip->res_mc_base);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	chip->res_mc_base = NULL;
 
 	return -ENODEV;
@@ -1190,7 +1218,15 @@ static int snd_card_miro_detect(struct snd_card *card,
 		if (err < 0)
 			return err;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		err = snd_miro_opti_check(card, chip);
+=======
 		err = snd_miro_opti_check(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = snd_miro_opti_check(card, chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err == 0)
 			return 1;
 	}
@@ -1214,7 +1250,17 @@ static int snd_card_miro_aci_detect(struct snd_card *card,
 	regval=inb(miro->mc_base + 4);
 	aci->aci_port = (regval & 0x10) ? 0x344 : 0x354;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	miro->res_aci_port =
+		devm_request_region(card->dev, aci->aci_port, 3, "miro aci");
+=======
 	miro->res_aci_port = request_region(aci->aci_port, 3, "miro aci");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	miro->res_aci_port =
+		devm_request_region(card->dev, aci->aci_port, 3, "miro aci");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (miro->res_aci_port == NULL) {
 		snd_printk(KERN_ERR "aci i/o area 0x%lx-0x%lx already used.\n", 
 			   aci->aci_port, aci->aci_port+2);
@@ -1253,6 +1299,9 @@ static int snd_card_miro_aci_detect(struct snd_card *card,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static void snd_card_miro_free(struct snd_card *card)
 {
 	struct snd_miro *miro = card->private_data;
@@ -1263,6 +1312,9 @@ static void snd_card_miro_free(struct snd_card *card)
 	release_and_free_resource(miro->res_mc_base);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int snd_miro_probe(struct snd_card *card)
 {
 	int error;
@@ -1271,9 +1323,22 @@ static int snd_miro_probe(struct snd_card *card)
 	struct snd_rawmidi *rmidi;
 
 	if (!miro->res_mc_base) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		miro->res_mc_base = devm_request_region(card->dev,
+							miro->mc_base,
+							miro->mc_base_size,
+							"miro (OPTi9xx MC)");
+<<<<<<< HEAD
+=======
 		miro->res_mc_base = request_region(miro->mc_base,
 						miro->mc_base_size,
 						"miro (OPTi9xx MC)");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (miro->res_mc_base == NULL) {
 			snd_printk(KERN_ERR "request for OPTI9xx MC failed\n");
 			return -ENOMEM;
@@ -1408,17 +1473,39 @@ static int snd_miro_isa_probe(struct device *devptr, unsigned int n)
 	struct snd_miro *miro;
 	struct snd_card *card;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	error = snd_devm_card_new(devptr, index, id, THIS_MODULE,
+				  sizeof(struct snd_miro), &card);
+	if (error < 0)
+		return error;
+
+=======
 	error = snd_card_new(devptr, index, id, THIS_MODULE,
 			     sizeof(struct snd_miro), &card);
 	if (error < 0)
 		return error;
 
 	card->private_free = snd_card_miro_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	error = snd_devm_card_new(devptr, index, id, THIS_MODULE,
+				  sizeof(struct snd_miro), &card);
+	if (error < 0)
+		return error;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	miro = card->private_data;
 
 	error = snd_card_miro_detect(card, miro);
 	if (error < 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		snd_card_free(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		snd_printk(KERN_ERR "unable to detect OPTi9xx chip\n");
 		return -ENODEV;
 	}
@@ -1426,7 +1513,13 @@ static int snd_miro_isa_probe(struct device *devptr, unsigned int n)
 	if (port == SNDRV_AUTO_PORT) {
 		port = snd_legacy_find_free_ioport(possible_ports, 4);
 		if (port < 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			snd_card_free(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			snd_printk(KERN_ERR "unable to find a free WSS port\n");
 			return -EBUSY;
 		}
@@ -1435,7 +1528,13 @@ static int snd_miro_isa_probe(struct device *devptr, unsigned int n)
 	if (mpu_port == SNDRV_AUTO_PORT) {
 		mpu_port = snd_legacy_find_free_ioport(possible_mpu_ports, 2);
 		if (mpu_port < 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			snd_card_free(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			snd_printk(KERN_ERR
 				   "unable to find a free MPU401 port\n");
 			return -EBUSY;
@@ -1445,7 +1544,13 @@ static int snd_miro_isa_probe(struct device *devptr, unsigned int n)
 	if (irq == SNDRV_AUTO_IRQ) {
 		irq = snd_legacy_find_free_irq(possible_irqs);
 		if (irq < 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			snd_card_free(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			snd_printk(KERN_ERR "unable to find a free IRQ\n");
 			return -EBUSY;
 		}
@@ -1453,7 +1558,13 @@ static int snd_miro_isa_probe(struct device *devptr, unsigned int n)
 	if (mpu_irq == SNDRV_AUTO_IRQ) {
 		mpu_irq = snd_legacy_find_free_irq(possible_mpu_irqs);
 		if (mpu_irq < 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			snd_card_free(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			snd_printk(KERN_ERR
 				   "unable to find a free MPU401 IRQ\n");
 			return -EBUSY;
@@ -1462,7 +1573,13 @@ static int snd_miro_isa_probe(struct device *devptr, unsigned int n)
 	if (dma1 == SNDRV_AUTO_DMA) {
 		dma1 = snd_legacy_find_free_dma(possible_dma1s);
 		if (dma1 < 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			snd_card_free(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			snd_printk(KERN_ERR "unable to find a free DMA1\n");
 			return -EBUSY;
 		}
@@ -1470,34 +1587,62 @@ static int snd_miro_isa_probe(struct device *devptr, unsigned int n)
 	if (dma2 == SNDRV_AUTO_DMA) {
 		dma2 = snd_legacy_find_free_dma(possible_dma2s[dma1 % 4]);
 		if (dma2 < 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			snd_card_free(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			snd_printk(KERN_ERR "unable to find a free DMA2\n");
 			return -EBUSY;
 		}
 	}
 
 	error = snd_miro_probe(card);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (error < 0)
+		return error;
+=======
 	if (error < 0) {
 		snd_card_free(card);
 		return error;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (error < 0)
+		return error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_set_drvdata(devptr, card);
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static void snd_miro_isa_remove(struct device *devptr,
 			       unsigned int dev)
 {
 	snd_card_free(dev_get_drvdata(devptr));
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DEV_NAME "miro"
 
 static struct isa_driver snd_miro_driver = {
 	.match		= snd_miro_isa_match,
 	.probe		= snd_miro_isa_probe,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.remove		= snd_miro_isa_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* FIXME: suspend/resume */
 	.driver		= {
 		.name	= DEV_NAME
@@ -1578,39 +1723,74 @@ static int snd_miro_pnp_probe(struct pnp_card_link *pcard,
 		return -EBUSY;
 	if (!isapnp)
 		return -ENODEV;
-	err = snd_card_new(&pcard->card->dev, index, id, THIS_MODULE,
-			   sizeof(struct snd_miro), &card);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = snd_devm_card_new(&pcard->card->dev, index, id, THIS_MODULE,
+				sizeof(struct snd_miro), &card);
 	if (err < 0)
 		return err;
 
-	card->private_free = snd_card_miro_free;
 	miro = card->private_data;
 
 	err = snd_card_miro_pnp(miro, pcard, pid);
-	if (err) {
-		snd_card_free(card);
+	if (err)
 		return err;
-	}
 
 	/* only miroSOUND PCM20 and PCM12 == OPTi924 */
 	err = snd_miro_init(miro, OPTi9XX_HW_82C924);
-	if (err) {
-		snd_card_free(card);
+	if (err)
 		return err;
-	}
 
-	err = snd_miro_opti_check(miro);
+	err = snd_miro_opti_check(card, miro);
 	if (err) {
 		snd_printk(KERN_ERR "OPTI chip not found\n");
+=======
+	err = snd_card_new(&pcard->card->dev, index, id, THIS_MODULE,
+			   sizeof(struct snd_miro), &card);
+=======
+	err = snd_devm_card_new(&pcard->card->dev, index, id, THIS_MODULE,
+				sizeof(struct snd_miro), &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (err < 0)
+		return err;
+
+	miro = card->private_data;
+
+	err = snd_card_miro_pnp(miro, pcard, pid);
+	if (err)
+		return err;
+
+	/* only miroSOUND PCM20 and PCM12 == OPTi924 */
+	err = snd_miro_init(miro, OPTi9XX_HW_82C924);
+	if (err)
+		return err;
+
+	err = snd_miro_opti_check(card, miro);
+	if (err) {
+		snd_printk(KERN_ERR "OPTI chip not found\n");
+<<<<<<< HEAD
 		snd_card_free(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
 	}
 
 	err = snd_miro_probe(card);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (err < 0)
+		return err;
+=======
 	if (err < 0) {
 		snd_card_free(card);
 		return err;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pnp_set_card_drvdata(pcard, card);
 	snd_miro_pnp_is_probed = 1;
 	return 0;
@@ -1618,8 +1798,14 @@ static int snd_miro_pnp_probe(struct pnp_card_link *pcard,
 
 static void snd_miro_pnp_remove(struct pnp_card_link *pcard)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	snd_card_free(pnp_get_card_drvdata(pcard));
 	pnp_set_card_drvdata(pcard, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_miro_pnp_is_probed = 0;
 }
 

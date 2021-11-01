@@ -3658,7 +3658,15 @@ qla4_82xx_read_flash_data(struct scsi_qla_host *ha, uint32_t *dwptr,
 			    "Do ROM fast read failed\n");
 			goto done_read;
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dwptr[i] = cpu_to_le32(val);
+=======
 		dwptr[i] = __constant_cpu_to_le32(val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dwptr[i] = cpu_to_le32(val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 done_read:
@@ -3721,9 +3729,21 @@ qla4_8xxx_get_flt_info(struct scsi_qla_host *ha, uint32_t flt_addr)
 			goto no_flash_data;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (*wptr == cpu_to_le16(0xffff))
+		goto no_flash_data;
+	if (flt->version != cpu_to_le16(1)) {
+=======
 	if (*wptr == __constant_cpu_to_le16(0xffff))
 		goto no_flash_data;
 	if (flt->version != __constant_cpu_to_le16(1)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (*wptr == cpu_to_le16(0xffff))
+		goto no_flash_data;
+	if (flt->version != cpu_to_le16(1)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		DEBUG2(ql4_printk(KERN_INFO, ha, "Unsupported FLT detected: "
 			"version=0x%x length=0x%x checksum=0x%x.\n",
 			le16_to_cpu(flt->version), le16_to_cpu(flt->length),
@@ -3826,7 +3846,15 @@ qla4_82xx_get_fdt_info(struct scsi_qla_host *ha)
 	qla4_82xx_read_optrom_data(ha, (uint8_t *)ha->request_ring,
 	    hw->flt_region_fdt << 2, OPTROM_BURST_SIZE);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (*wptr == cpu_to_le16(0xffff))
+=======
 	if (*wptr == __constant_cpu_to_le16(0xffff))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (*wptr == cpu_to_le16(0xffff))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto no_flash_data;
 
 	if (fdt->sig[0] != 'Q' || fdt->sig[1] != 'L' || fdt->sig[2] != 'I' ||
@@ -3883,7 +3911,15 @@ qla4_82xx_get_idc_param(struct scsi_qla_host *ha)
 	qla4_82xx_read_optrom_data(ha, (uint8_t *)ha->request_ring,
 			QLA82XX_IDC_PARAM_ADDR , 8);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (*wptr == cpu_to_le32(0xffffffff)) {
+=======
 	if (*wptr == __constant_cpu_to_le32(0xffffffff)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (*wptr == cpu_to_le32(0xffffffff)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ha->nx_dev_init_timeout = ROM_DEV_INIT_TIMEOUT;
 		ha->nx_reset_timeout = ROM_DRV_RESET_ACK_TIMEOUT;
 	} else {

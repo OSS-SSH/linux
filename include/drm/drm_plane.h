@@ -186,6 +186,18 @@ struct drm_plane_state {
 	 * since last plane update) as an array of &drm_mode_rect in framebuffer
 	 * coodinates of the attached framebuffer. Note that unlike plane src,
 	 * damage clips are not in 16.16 fixed point.
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 *
+	 * See drm_plane_get_damage_clips() and
+	 * drm_plane_get_damage_clips_count() for accessing these.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 *
+	 * See drm_plane_get_damage_clips() and
+	 * drm_plane_get_damage_clips_count() for accessing these.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	struct drm_property_blob *fb_damage_clips;
 
@@ -894,6 +906,15 @@ static inline struct drm_plane *drm_plane_find(struct drm_device *dev,
 
 bool drm_any_plane_has_format(struct drm_device *dev,
 			      u32 format, u64 modifier);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+void drm_plane_enable_fb_damage_clips(struct drm_plane *plane);
+unsigned int
+drm_plane_get_damage_clips_count(const struct drm_plane_state *state);
+struct drm_mode_rect *
+drm_plane_get_damage_clips(const struct drm_plane_state *state);
+=======
 /**
  * drm_plane_get_damage_clips_count - Returns damage clips count.
  * @state: Plane state.
@@ -926,6 +947,15 @@ drm_plane_get_damage_clips(const struct drm_plane_state *state)
 	return (struct drm_mode_rect *)((state && state->fb_damage_clips) ?
 					state->fb_damage_clips->data : NULL);
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+void drm_plane_enable_fb_damage_clips(struct drm_plane *plane);
+unsigned int
+drm_plane_get_damage_clips_count(const struct drm_plane_state *state);
+struct drm_mode_rect *
+drm_plane_get_damage_clips(const struct drm_plane_state *state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int drm_plane_create_scaling_filter_property(struct drm_plane *plane,
 					     unsigned int supported_filters);

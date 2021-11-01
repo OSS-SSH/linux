@@ -58,7 +58,15 @@ xfs_trans_log_dquot(
 
 	/* Upgrade the dquot to bigtime format if possible. */
 	if (dqp->q_id != 0 &&
+<<<<<<< HEAD
+<<<<<<< HEAD
+	    xfs_has_bigtime(tp->t_mountp) &&
+=======
 	    xfs_sb_version_hasbigtime(&tp->t_mountp->m_sb) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    xfs_has_bigtime(tp->t_mountp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    !(dqp->q_type & XFS_DQTYPE_BIGTIME))
 		dqp->q_type |= XFS_DQTYPE_BIGTIME;
 
@@ -132,8 +140,16 @@ xfs_trans_mod_dquot_byino(
 {
 	xfs_mount_t	*mp = tp->t_mountp;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!XFS_IS_QUOTA_ON(mp) ||
+=======
 	if (!XFS_IS_QUOTA_RUNNING(mp) ||
 	    !XFS_IS_QUOTA_ON(mp) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!XFS_IS_QUOTA_ON(mp) ||
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    xfs_is_quota_inode(&mp->m_sb, ip->i_ino))
 		return;
 
@@ -192,7 +208,15 @@ xfs_trans_mod_dquot(
 	struct xfs_dqtrx	*qtrx;
 
 	ASSERT(tp);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ASSERT(XFS_IS_QUOTA_ON(tp->t_mountp));
+=======
 	ASSERT(XFS_IS_QUOTA_RUNNING(tp->t_mountp));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ASSERT(XFS_IS_QUOTA_ON(tp->t_mountp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qtrx = NULL;
 
 	if (!delta)
@@ -738,7 +762,15 @@ xfs_trans_reserve_quota_bydquots(
 {
 	int		error;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!XFS_IS_QUOTA_ON(mp))
+=======
 	if (!XFS_IS_QUOTA_RUNNING(mp) || !XFS_IS_QUOTA_ON(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!XFS_IS_QUOTA_ON(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	ASSERT(flags & XFS_QMOPT_RESBLK_MASK);
@@ -795,7 +827,15 @@ xfs_trans_reserve_quota_nblks(
 	unsigned int		qflags = 0;
 	int			error;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!XFS_IS_QUOTA_ON(mp))
+=======
 	if (!XFS_IS_QUOTA_RUNNING(mp) || !XFS_IS_QUOTA_ON(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!XFS_IS_QUOTA_ON(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	ASSERT(!xfs_is_quota_inode(&mp->m_sb, ip->i_ino));
@@ -836,13 +876,24 @@ xfs_trans_reserve_quota_icreate(
 {
 	struct xfs_mount	*mp = tp->t_mountp;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!XFS_IS_QUOTA_ON(mp))
+=======
 	if (!XFS_IS_QUOTA_RUNNING(mp) || !XFS_IS_QUOTA_ON(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!XFS_IS_QUOTA_ON(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	return xfs_trans_reserve_quota_bydquots(tp, mp, udqp, gdqp, pdqp,
 			dblocks, 1, XFS_QMOPT_RES_REGBLKS);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /*
  * This routine is called to allocate a quotaoff log item.
  */
@@ -881,6 +932,9 @@ xfs_trans_log_quotaoff_item(
 	set_bit(XFS_LI_DIRTY, &qlp->qql_item.li_flags);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 STATIC void
 xfs_trans_alloc_dqinfo(
 	xfs_trans_t	*tp)

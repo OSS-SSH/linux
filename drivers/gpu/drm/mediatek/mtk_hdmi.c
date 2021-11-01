@@ -1293,11 +1293,21 @@ static int mtk_hdmi_bridge_attach(struct drm_bridge *bridge,
 	if (hdmi->next_bridge) {
 		ret = drm_bridge_attach(bridge->encoder, hdmi->next_bridge,
 					bridge, flags);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (ret)
+			return ret;
+=======
 		if (ret) {
 			dev_err(hdmi->dev,
 				"Failed to attach external bridge: %d\n", ret);
 			return ret;
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret)
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mtk_cec_set_hpd_event(hdmi->cec_dev, mtk_hdmi_hpd_event, hdmi->dev);

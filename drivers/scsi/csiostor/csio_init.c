@@ -1254,3 +1254,11 @@ MODULE_DEVICE_TABLE(pci, csio_pci_tbl);
 MODULE_VERSION(CSIO_DRV_VERSION);
 MODULE_FIRMWARE(FW_FNAME_T5);
 MODULE_FIRMWARE(FW_FNAME_T6);
+<<<<<<< HEAD
+<<<<<<< HEAD
+MODULE_SOFTDEP("pre: cxgb4");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+MODULE_SOFTDEP("pre: cxgb4");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

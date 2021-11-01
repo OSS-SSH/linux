@@ -489,7 +489,13 @@ int ieee80211_ibss_csa_beacon(struct ieee80211_sub_if_data *sdata,
 	const struct cfg80211_bss_ies *ies;
 	u16 capability = WLAN_CAPABILITY_IBSS;
 	u64 tsf;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int ret = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sdata_assert_lock(sdata);
 
@@ -501,10 +507,20 @@ int ieee80211_ibss_csa_beacon(struct ieee80211_sub_if_data *sdata,
 				ifibss->ssid_len, IEEE80211_BSS_TYPE_IBSS,
 				IEEE80211_PRIVACY(ifibss->privacy));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (WARN_ON(!cbss))
+		return -EINVAL;
+=======
 	if (WARN_ON(!cbss)) {
 		ret = -EINVAL;
 		goto out;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (WARN_ON(!cbss))
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rcu_read_lock();
 	ies = rcu_dereference(cbss->ies);
@@ -520,18 +536,34 @@ int ieee80211_ibss_csa_beacon(struct ieee80211_sub_if_data *sdata,
 					   sdata->vif.bss_conf.basic_rates,
 					   capability, tsf, &ifibss->chandef,
 					   NULL, csa_settings);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!presp)
+		return -ENOMEM;
+=======
 	if (!presp) {
 		ret = -ENOMEM;
 		goto out;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!presp)
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rcu_assign_pointer(ifibss->presp, presp);
 	if (old_presp)
 		kfree_rcu(old_presp, rcu_head);
 
 	return BSS_CHANGED_BEACON;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  out:
 	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int ieee80211_ibss_finish_csa(struct ieee80211_sub_if_data *sdata)

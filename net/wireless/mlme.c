@@ -452,9 +452,15 @@ static void cfg80211_mgmt_registrations_update(struct wireless_dev *wdev)
 
 	lockdep_assert_held(&rdev->wiphy.mtx);
 
+<<<<<<< HEAD
+	spin_lock_bh(&wdev->mgmt_registrations_lock);
+	if (!wdev->mgmt_registrations_need_update) {
+		spin_unlock_bh(&wdev->mgmt_registrations_lock);
+=======
 	spin_lock_bh(&rdev->mgmt_registrations_lock);
 	if (!wdev->mgmt_registrations_need_update) {
 		spin_unlock_bh(&rdev->mgmt_registrations_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 	}
 
@@ -479,7 +485,11 @@ static void cfg80211_mgmt_registrations_update(struct wireless_dev *wdev)
 	rcu_read_unlock();
 
 	wdev->mgmt_registrations_need_update = 0;
+<<<<<<< HEAD
+	spin_unlock_bh(&wdev->mgmt_registrations_lock);
+=======
 	spin_unlock_bh(&rdev->mgmt_registrations_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rdev_update_mgmt_frame_registrations(rdev, wdev, &upd);
 }
@@ -503,7 +513,10 @@ int cfg80211_mlme_register_mgmt(struct wireless_dev *wdev, u32 snd_portid,
 				int match_len, bool multicast_rx,
 				struct netlink_ext_ack *extack)
 {
+<<<<<<< HEAD
+=======
 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wdev->wiphy);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct cfg80211_mgmt_registration *reg, *nreg;
 	int err = 0;
 	u16 mgmt_type;
@@ -549,7 +562,11 @@ int cfg80211_mlme_register_mgmt(struct wireless_dev *wdev, u32 snd_portid,
 	if (!nreg)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+	spin_lock_bh(&wdev->mgmt_registrations_lock);
+=======
 	spin_lock_bh(&rdev->mgmt_registrations_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	list_for_each_entry(reg, &wdev->mgmt_registrations, list) {
 		int mlen = min(match_len, reg->match_len);
@@ -584,7 +601,11 @@ int cfg80211_mlme_register_mgmt(struct wireless_dev *wdev, u32 snd_portid,
 		list_add(&nreg->list, &wdev->mgmt_registrations);
 	}
 	wdev->mgmt_registrations_need_update = 1;
+<<<<<<< HEAD
+	spin_unlock_bh(&wdev->mgmt_registrations_lock);
+=======
 	spin_unlock_bh(&rdev->mgmt_registrations_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cfg80211_mgmt_registrations_update(wdev);
 
@@ -592,7 +613,11 @@ int cfg80211_mlme_register_mgmt(struct wireless_dev *wdev, u32 snd_portid,
 
  out:
 	kfree(nreg);
+<<<<<<< HEAD
+	spin_unlock_bh(&wdev->mgmt_registrations_lock);
+=======
 	spin_unlock_bh(&rdev->mgmt_registrations_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return err;
 }
@@ -603,7 +628,11 @@ void cfg80211_mlme_unregister_socket(struct wireless_dev *wdev, u32 nlportid)
 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wiphy);
 	struct cfg80211_mgmt_registration *reg, *tmp;
 
+<<<<<<< HEAD
+	spin_lock_bh(&wdev->mgmt_registrations_lock);
+=======
 	spin_lock_bh(&rdev->mgmt_registrations_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	list_for_each_entry_safe(reg, tmp, &wdev->mgmt_registrations, list) {
 		if (reg->nlportid != nlportid)
@@ -616,7 +645,11 @@ void cfg80211_mlme_unregister_socket(struct wireless_dev *wdev, u32 nlportid)
 		schedule_work(&rdev->mgmt_registrations_update_wk);
 	}
 
+<<<<<<< HEAD
+	spin_unlock_bh(&wdev->mgmt_registrations_lock);
+=======
 	spin_unlock_bh(&rdev->mgmt_registrations_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (nlportid && rdev->crit_proto_nlportid == nlportid) {
 		rdev->crit_proto_nlportid = 0;
@@ -629,16 +662,26 @@ void cfg80211_mlme_unregister_socket(struct wireless_dev *wdev, u32 nlportid)
 
 void cfg80211_mlme_purge_registrations(struct wireless_dev *wdev)
 {
+<<<<<<< HEAD
+	struct cfg80211_mgmt_registration *reg, *tmp;
+
+	spin_lock_bh(&wdev->mgmt_registrations_lock);
+=======
 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wdev->wiphy);
 	struct cfg80211_mgmt_registration *reg, *tmp;
 
 	spin_lock_bh(&rdev->mgmt_registrations_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	list_for_each_entry_safe(reg, tmp, &wdev->mgmt_registrations, list) {
 		list_del(&reg->list);
 		kfree(reg);
 	}
 	wdev->mgmt_registrations_need_update = 1;
+<<<<<<< HEAD
+	spin_unlock_bh(&wdev->mgmt_registrations_lock);
+=======
 	spin_unlock_bh(&rdev->mgmt_registrations_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cfg80211_mgmt_registrations_update(wdev);
 }
@@ -786,7 +829,11 @@ bool cfg80211_rx_mgmt_khz(struct wireless_dev *wdev, int freq, int sig_dbm,
 	data = buf + ieee80211_hdrlen(mgmt->frame_control);
 	data_len = len - ieee80211_hdrlen(mgmt->frame_control);
 
+<<<<<<< HEAD
+	spin_lock_bh(&wdev->mgmt_registrations_lock);
+=======
 	spin_lock_bh(&rdev->mgmt_registrations_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	list_for_each_entry(reg, &wdev->mgmt_registrations, list) {
 		if (reg->frame_type != ftype)
@@ -810,7 +857,11 @@ bool cfg80211_rx_mgmt_khz(struct wireless_dev *wdev, int freq, int sig_dbm,
 		break;
 	}
 
+<<<<<<< HEAD
+	spin_unlock_bh(&wdev->mgmt_registrations_lock);
+=======
 	spin_unlock_bh(&rdev->mgmt_registrations_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	trace_cfg80211_return_bool(result);
 	return result;

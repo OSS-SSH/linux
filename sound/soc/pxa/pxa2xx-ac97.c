@@ -202,15 +202,29 @@ static struct snd_soc_dai_driver pxa_ac97_dai_driver[] = {
 static const struct snd_soc_component_driver pxa_ac97_component = {
 	.name		= "pxa-ac97",
 	.pcm_construct	= pxa2xx_soc_pcm_new,
-	.pcm_destruct	= pxa2xx_soc_pcm_free,
+<<<<<<< HEAD
+<<<<<<< HEAD
 	.open		= pxa2xx_soc_pcm_open,
 	.close		= pxa2xx_soc_pcm_close,
 	.hw_params	= pxa2xx_soc_pcm_hw_params,
-	.hw_free	= pxa2xx_soc_pcm_hw_free,
 	.prepare	= pxa2xx_soc_pcm_prepare,
 	.trigger	= pxa2xx_soc_pcm_trigger,
 	.pointer	= pxa2xx_soc_pcm_pointer,
+=======
+	.pcm_destruct	= pxa2xx_soc_pcm_free,
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	.open		= pxa2xx_soc_pcm_open,
+	.close		= pxa2xx_soc_pcm_close,
+	.hw_params	= pxa2xx_soc_pcm_hw_params,
+	.prepare	= pxa2xx_soc_pcm_prepare,
+	.trigger	= pxa2xx_soc_pcm_trigger,
+	.pointer	= pxa2xx_soc_pcm_pointer,
+<<<<<<< HEAD
 	.mmap		= pxa2xx_soc_pcm_mmap,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #ifdef CONFIG_OF

@@ -31,7 +31,13 @@ obj-$(CONFIG_USB_SL811_HCD)	+= host/
 obj-$(CONFIG_USB_ISP1362_HCD)	+= host/
 obj-$(CONFIG_USB_U132_HCD)	+= host/
 obj-$(CONFIG_USB_R8A66597_HCD)	+= host/
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 obj-$(CONFIG_USB_HWA_HCD)	+= host/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_USB_FSL_USB2)	+= host/
 obj-$(CONFIG_USB_FOTG210_HCD)	+= host/
 obj-$(CONFIG_USB_MAX3421_HCD)	+= host/

@@ -242,8 +242,22 @@ static inline int compute_score(struct sock *sk, struct net *net,
 
 		if (!inet_sk_bound_dev_eq(net, sk->sk_bound_dev_if, dif, sdif))
 			return -1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		score =  sk->sk_bound_dev_if ? 2 : 1;
+
+		if (sk->sk_family == PF_INET)
+			score++;
+=======
 
 		score = sk->sk_family == PF_INET ? 2 : 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		score =  sk->sk_bound_dev_if ? 2 : 1;
+
+		if (sk->sk_family == PF_INET)
+			score++;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (READ_ONCE(sk->sk_incoming_cpu) == raw_smp_processor_id())
 			score++;
 	}

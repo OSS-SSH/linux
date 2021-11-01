@@ -1001,7 +1001,15 @@ static unsigned long i915_audio_component_get_power(struct device *kdev)
 	/* Catch potential impedance mismatches before they occur! */
 	BUILD_BUG_ON(sizeof(intel_wakeref_t) > sizeof(unsigned long));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = intel_display_power_get(dev_priv, POWER_DOMAIN_AUDIO_PLAYBACK);
+=======
 	ret = intel_display_power_get(dev_priv, POWER_DOMAIN_AUDIO);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = intel_display_power_get(dev_priv, POWER_DOMAIN_AUDIO_PLAYBACK);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (dev_priv->audio_power_refcount++ == 0) {
 		if (DISPLAY_VER(dev_priv) >= 9) {
@@ -1034,7 +1042,15 @@ static void i915_audio_component_put_power(struct device *kdev,
 		if (IS_GEMINILAKE(dev_priv))
 			glk_force_audio_cdclk(dev_priv, false);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	intel_display_power_put(dev_priv, POWER_DOMAIN_AUDIO_PLAYBACK, cookie);
+=======
 	intel_display_power_put(dev_priv, POWER_DOMAIN_AUDIO, cookie);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	intel_display_power_put(dev_priv, POWER_DOMAIN_AUDIO_PLAYBACK, cookie);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void i915_audio_component_codec_wake_override(struct device *kdev,
@@ -1308,8 +1324,20 @@ static void i915_audio_component_init(struct drm_i915_private *dev_priv)
 		else
 			aud_freq = aud_freq_init;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		/* use BIOS provided value for TGL and RKL unless it is a known bad value */
+		if ((IS_TIGERLAKE(dev_priv) || IS_ROCKETLAKE(dev_priv)) &&
+		    aud_freq_init != AUD_FREQ_TGL_BROKEN)
+=======
 		/* use BIOS provided value for TGL unless it is a known bad value */
 		if (IS_TIGERLAKE(dev_priv) && aud_freq_init != AUD_FREQ_TGL_BROKEN)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* use BIOS provided value for TGL and RKL unless it is a known bad value */
+		if ((IS_TIGERLAKE(dev_priv) || IS_ROCKETLAKE(dev_priv)) &&
+		    aud_freq_init != AUD_FREQ_TGL_BROKEN)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			aud_freq = aud_freq_init;
 
 		drm_dbg_kms(&dev_priv->drm, "use AUD_FREQ_CNTRL of 0x%x (init value 0x%x)\n",

@@ -251,6 +251,9 @@ static u32 pci_hme_read_desc32(hme32 *p)
 	((__hp)->write_txd((__txd), (__flags), (__addr)))
 #define hme_read_desc32(__hp, __p) \
 	((__hp)->read_desc32(__p))
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define hme_dma_map(__hp, __ptr, __size, __dir) \
 	((__hp)->dma_map((__hp)->dma_dev, (__ptr), (__size), (__dir)))
 #define hme_dma_unmap(__hp, __addr, __size, __dir) \
@@ -259,6 +262,9 @@ static u32 pci_hme_read_desc32(hme32 *p)
 	((__hp)->dma_sync_for_cpu((__hp)->dma_dev, (__addr), (__size), (__dir)))
 #define hme_dma_sync_for_device(__hp, __addr, __size, __dir) \
 	((__hp)->dma_sync_for_device((__hp)->dma_dev, (__addr), (__size), (__dir)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 #ifdef CONFIG_SBUS
 /* SBUS only compilation */
@@ -277,6 +283,9 @@ do {	(__txd)->tx_addr = (__force hme32)(u32)(__addr); \
 	(__txd)->tx_flags = (__force hme32)(u32)(__flags); \
 } while(0)
 #define hme_read_desc32(__hp, __p)	((__force u32)(hme32)*(__p))
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define hme_dma_map(__hp, __ptr, __size, __dir) \
 	dma_map_single((__hp)->dma_dev, (__ptr), (__size), (__dir))
 #define hme_dma_unmap(__hp, __addr, __size, __dir) \
@@ -285,6 +294,9 @@ do {	(__txd)->tx_addr = (__force hme32)(u32)(__addr); \
 	dma_dma_sync_single_for_cpu((__hp)->dma_dev, (__addr), (__size), (__dir))
 #define hme_dma_sync_for_device(__hp, __addr, __size, __dir) \
 	dma_dma_sync_single_for_device((__hp)->dma_dev, (__addr), (__size), (__dir))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 /* PCI only compilation */
 #define hme_write32(__hp, __reg, __val) \
@@ -305,6 +317,9 @@ static inline u32 hme_read_desc32(struct happy_meal *hp, hme32 *p)
 {
 	return le32_to_cpup((__le32 *)p);
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define hme_dma_map(__hp, __ptr, __size, __dir) \
 	pci_map_single((__hp)->dma_dev, (__ptr), (__size), (__dir))
 #define hme_dma_unmap(__hp, __addr, __size, __dir) \
@@ -313,6 +328,9 @@ static inline u32 hme_read_desc32(struct happy_meal *hp, hme32 *p)
 	pci_dma_sync_single_for_cpu((__hp)->dma_dev, (__addr), (__size), (__dir))
 #define hme_dma_sync_for_device(__hp, __addr, __size, __dir) \
 	pci_dma_sync_single_for_device((__hp)->dma_dev, (__addr), (__size), (__dir))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 #endif
 

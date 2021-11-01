@@ -36,6 +36,14 @@
 #define MAX_PSTATE_SHIFT	32
 #define LPSTATE_SHIFT		48
 #define GPSTATE_SHIFT		56
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define MAX_NR_CHIPS		32
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MAX_NR_CHIPS		32
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define MAX_RAMP_DOWN_TIME				5120
 /*
@@ -918,7 +926,15 @@ static void powernv_cpufreq_work_fn(struct work_struct *work)
 	unsigned int cpu;
 	cpumask_t mask;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cpumask_and(&mask, &chip->mask, cpu_online_mask);
 	smp_call_function_any(&mask,
 			      powernv_cpufreq_throttle_check, NULL, 0);
@@ -939,7 +955,15 @@ static void powernv_cpufreq_work_fn(struct work_struct *work)
 		cpufreq_cpu_put(policy);
 	}
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int powernv_cpufreq_occ_msg(struct notifier_block *nb,
@@ -1046,12 +1070,36 @@ static int init_chip_info(void)
 	unsigned int *chip;
 	unsigned int cpu, i;
 	unsigned int prev_chip_id = UINT_MAX;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpumask_t *chip_cpu_mask;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpumask_t *chip_cpu_mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
 	chip = kcalloc(num_possible_cpus(), sizeof(*chip), GFP_KERNEL);
 	if (!chip)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* Allocate a chip cpu mask large enough to fit mask for all chips */
+	chip_cpu_mask = kcalloc(MAX_NR_CHIPS, sizeof(cpumask_t), GFP_KERNEL);
+	if (!chip_cpu_mask) {
+		ret = -ENOMEM;
+		goto free_and_return;
+	}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_possible_cpu(cpu) {
 		unsigned int id = cpu_to_chip_id(cpu);
 
@@ -1059,22 +1107,56 @@ static int init_chip_info(void)
 			prev_chip_id = id;
 			chip[nr_chips++] = id;
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cpumask_set_cpu(cpu, &chip_cpu_mask[nr_chips-1]);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpumask_set_cpu(cpu, &chip_cpu_mask[nr_chips-1]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	chips = kcalloc(nr_chips, sizeof(struct chip), GFP_KERNEL);
 	if (!chips) {
 		ret = -ENOMEM;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto out_free_chip_cpu_mask;
+=======
 		goto free_and_return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_free_chip_cpu_mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	for (i = 0; i < nr_chips; i++) {
 		chips[i].id = chip[i];
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cpumask_copy(&chips[i].mask, &chip_cpu_mask[i]);
+=======
 		cpumask_copy(&chips[i].mask, cpumask_of_node(chip[i]));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cpumask_copy(&chips[i].mask, &chip_cpu_mask[i]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		INIT_WORK(&chips[i].throttle, powernv_cpufreq_work_fn);
 		for_each_cpu(cpu, &chips[i].mask)
 			per_cpu(chip_info, cpu) =  &chips[i];
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+out_free_chip_cpu_mask:
+	kfree(chip_cpu_mask);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out_free_chip_cpu_mask:
+	kfree(chip_cpu_mask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 free_and_return:
 	kfree(chip);
 	return ret;

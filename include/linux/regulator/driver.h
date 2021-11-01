@@ -337,6 +337,21 @@ enum regulator_type {
  * @pull_down_val_on: Enabling value for control when using regmap
  *                     set_pull_down
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * @ramp_reg:		Register for controlling the regulator ramp-rate.
+ * @ramp_mask:		Bitmask for the ramp-rate control register.
+ * @ramp_delay_table:	Table for mapping the regulator ramp-rate values. Values
+ *			should be given in units of V/S (uV/uS). See the
+ *			regulator_set_ramp_delay_regmap().
+ *
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @enable_time: Time taken for initial enable of regulator (in uS).
  * @off_on_delay: guard time (in uS), before re-enabling a regulator
  *
@@ -462,7 +477,15 @@ struct regulator_err_state {
 };
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * struct regulator_irq_data - regulator error/notification status data
+=======
  * struct regulator_irq_data - regulator error/notification status date
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * struct regulator_irq_data - regulator error/notification status data
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @states:	Status structs for each of the associated regulators.
  * @num_states:	Amount of associated regulators.
@@ -521,8 +544,18 @@ struct regulator_irq_data {
  *		active events as core does not clean the map data.
  *		REGULATOR_FAILED_RETRY can be returned to indicate that the
  *		status reading from IC failed. If this is repeated for
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *		fatal_cnt times the core will call die() callback or power-off
+ *		the system as a last resort to protect the HW.
+=======
  *		fatal_cnt times the core will call die() callback or BUG()
  *		as a last resort to protect the HW.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *		fatal_cnt times the core will call die() callback or power-off
+ *		the system as a last resort to protect the HW.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @renable:	Optional callback to check status (if HW supports that) before
  *		re-enabling IRQ. If implemented this should clear the error
  *		flags so that errors fetched by regulator_get_error_flags()
@@ -531,7 +564,17 @@ struct regulator_irq_data {
  *		REGULATOR_FAILED_RETRY can be returned to
  *		indicate that the status reading from IC failed. If this is
  *		repeated for 'fatal_cnt' times the core will call die()
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *		callback or if die() is not populated then attempt to power-off
+ *		the system as a last resort to protect the HW.
+=======
  *		callback or BUG() as a last resort to protect the HW.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *		callback or if die() is not populated then attempt to power-off
+ *		the system as a last resort to protect the HW.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *		Returning zero indicates that the problem in HW has been solved
  *		and IRQ will be re-enabled. Returning REGULATOR_ERROR_ON
  *		indicates the error condition is still active and keeps IRQ
@@ -645,7 +688,13 @@ devm_regulator_register(struct device *dev,
 			const struct regulator_desc *regulator_desc,
 			const struct regulator_config *config);
 void regulator_unregister(struct regulator_dev *rdev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 void devm_regulator_unregister(struct device *dev, struct regulator_dev *rdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int regulator_notifier_call_chain(struct regulator_dev *rdev,
 				  unsigned long event, void *data);

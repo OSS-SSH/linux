@@ -1053,7 +1053,15 @@ static int __init moxa_init(void)
 
 	if (tty_register_driver(moxaDriver)) {
 		printk(KERN_ERR "can't register MOXA Smartio tty driver!\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		tty_driver_kref_put(moxaDriver);
+=======
 		put_tty_driver(moxaDriver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tty_driver_kref_put(moxaDriver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -1;
 	}
 
@@ -1119,7 +1127,15 @@ static void __exit moxa_exit(void)
 	del_timer_sync(&moxaTimer);
 
 	tty_unregister_driver(moxaDriver);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	tty_driver_kref_put(moxaDriver);
+=======
 	put_tty_driver(moxaDriver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(moxaDriver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 module_init(moxa_init);
@@ -2034,10 +2050,23 @@ static int moxa_get_serial_info(struct tty_struct *tty,
 	if (!info)
 		return -ENODEV;
 	mutex_lock(&info->port.mutex);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ss->type = info->type;
+	ss->line = info->port.tty->index;
+	ss->flags = info->port.flags;
+	ss->baud_base = 921600;
+<<<<<<< HEAD
+=======
 	ss->type = info->type,
 	ss->line = info->port.tty->index,
 	ss->flags = info->port.flags,
 	ss->baud_base = 921600,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ss->close_delay = jiffies_to_msecs(info->port.close_delay) / 10;
 	mutex_unlock(&info->port.mutex);
 	return 0;

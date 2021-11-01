@@ -736,8 +736,16 @@ static void target_complete_failure_work(struct work_struct *work)
 {
 	struct se_cmd *cmd = container_of(work, struct se_cmd, work);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	transport_generic_request_failure(cmd, cmd->sense_reason);
+=======
 	transport_generic_request_failure(cmd,
 			TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	transport_generic_request_failure(cmd, cmd->sense_reason);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -855,7 +863,17 @@ static bool target_cmd_interrupted(struct se_cmd *cmd)
 }
 
 /* May be called from interrupt context so must not sleep. */
+<<<<<<< HEAD
+<<<<<<< HEAD
+void target_complete_cmd_with_sense(struct se_cmd *cmd, u8 scsi_status,
+				    sense_reason_t sense_reason)
+=======
 void target_complete_cmd(struct se_cmd *cmd, u8 scsi_status)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void target_complete_cmd_with_sense(struct se_cmd *cmd, u8 scsi_status,
+				    sense_reason_t sense_reason)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct se_wwn *wwn = cmd->se_sess->se_tpg->se_tpg_wwn;
 	int success, cpu;
@@ -865,6 +883,14 @@ void target_complete_cmd(struct se_cmd *cmd, u8 scsi_status)
 		return;
 
 	cmd->scsi_status = scsi_status;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cmd->sense_reason = sense_reason;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cmd->sense_reason = sense_reason;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irqsave(&cmd->t_state_lock, flags);
 	switch (cmd->scsi_status) {
@@ -886,13 +912,38 @@ void target_complete_cmd(struct se_cmd *cmd, u8 scsi_status)
 	INIT_WORK(&cmd->work, success ? target_complete_ok_work :
 		  target_complete_failure_work);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!wwn || wwn->cmd_compl_affinity == SE_COMPL_AFFINITY_CPUID)
+=======
 	if (wwn->cmd_compl_affinity == SE_COMPL_AFFINITY_CPUID)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!wwn || wwn->cmd_compl_affinity == SE_COMPL_AFFINITY_CPUID)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cpu = cmd->cpuid;
 	else
 		cpu = wwn->cmd_compl_affinity;
 
 	queue_work_on(cpu, target_completion_wq, &cmd->work);
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+EXPORT_SYMBOL(target_complete_cmd_with_sense);
+
+void target_complete_cmd(struct se_cmd *cmd, u8 scsi_status)
+{
+	target_complete_cmd_with_sense(cmd, scsi_status, scsi_status ?
+			      TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE :
+			      TCM_NO_SENSE);
+}
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EXPORT_SYMBOL(target_complete_cmd);
 
 void target_set_cmd_data_length(struct se_cmd *cmd, int length)
@@ -2003,7 +2054,13 @@ void transport_generic_request_failure(struct se_cmd *cmd,
 	case TCM_ADDRESS_OUT_OF_RANGE:
 	case TCM_CHECK_CONDITION_ABORT_CMD:
 	case TCM_CHECK_CONDITION_UNIT_ATTENTION:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	case TCM_CHECK_CONDITION_NOT_READY:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case TCM_LOGICAL_BLOCK_GUARD_CHECK_FAILED:
 	case TCM_LOGICAL_BLOCK_APP_TAG_CHECK_FAILED:
 	case TCM_LOGICAL_BLOCK_REF_TAG_CHECK_FAILED:
@@ -2013,6 +2070,19 @@ void transport_generic_request_failure(struct se_cmd *cmd,
 	case TCM_TOO_MANY_SEGMENT_DESCS:
 	case TCM_UNSUPPORTED_SEGMENT_DESC_TYPE_CODE:
 	case TCM_INVALID_FIELD_IN_COMMAND_IU:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	case TCM_ALUA_TG_PT_STANDBY:
+	case TCM_ALUA_TG_PT_UNAVAILABLE:
+	case TCM_ALUA_STATE_TRANSITION:
+	case TCM_ALUA_OFFLINE:
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case TCM_OUT_OF_RESOURCES:
 		cmd->scsi_status = SAM_STAT_TASK_SET_FULL;
@@ -3277,9 +3347,15 @@ static const struct sense_detail sense_detail_table[] = {
 	[TCM_CHECK_CONDITION_UNIT_ATTENTION] = {
 		.key = UNIT_ATTENTION,
 	},
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	[TCM_CHECK_CONDITION_NOT_READY] = {
 		.key = NOT_READY,
 	},
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	[TCM_MISCOMPARE_VERIFY] = {
 		.key = MISCOMPARE,
 		.asc = 0x1d, /* MISCOMPARE DURING VERIFY OPERATION */
@@ -3340,6 +3416,35 @@ static const struct sense_detail sense_detail_table[] = {
 		.asc = 0x0e,
 		.ascq = 0x03, /* INVALID FIELD IN COMMAND INFORMATION UNIT */
 	},
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	[TCM_ALUA_TG_PT_STANDBY] = {
+		.key = NOT_READY,
+		.asc = 0x04,
+		.ascq = ASCQ_04H_ALUA_TG_PT_STANDBY,
+	},
+	[TCM_ALUA_TG_PT_UNAVAILABLE] = {
+		.key = NOT_READY,
+		.asc = 0x04,
+		.ascq = ASCQ_04H_ALUA_TG_PT_UNAVAILABLE,
+	},
+	[TCM_ALUA_STATE_TRANSITION] = {
+		.key = NOT_READY,
+		.asc = 0x04,
+		.ascq = ASCQ_04H_ALUA_STATE_TRANSITION,
+	},
+	[TCM_ALUA_OFFLINE] = {
+		.key = NOT_READY,
+		.asc = 0x04,
+		.ascq = ASCQ_04H_ALUA_OFFLINE,
+	},
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -3374,11 +3479,21 @@ static void translate_sense_reason(struct se_cmd *cmd, sense_reason_t reason)
 			cmd->scsi_status = SAM_STAT_BUSY;
 			return;
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	} else {
+		WARN_ON_ONCE(sd->asc == 0);
+=======
 	} else if (sd->asc == 0) {
 		WARN_ON_ONCE(cmd->scsi_asc == 0);
 		asc = cmd->scsi_asc;
 		ascq = cmd->scsi_ascq;
 	} else {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} else {
+		WARN_ON_ONCE(sd->asc == 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		asc = sd->asc;
 		ascq = sd->ascq;
 	}

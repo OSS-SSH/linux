@@ -4,6 +4,14 @@
 #include <linux/net_tstamp.h>
 #include <linux/phy.h>
 #include <linux/rtnetlink.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/ptp_clock_kernel.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/ptp_clock_kernel.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "common.h"
 
@@ -397,6 +405,14 @@ const char sof_timestamping_names[][ETH_GSTRING_LEN] = {
 	[const_ilog2(SOF_TIMESTAMPING_OPT_STATS)]    = "option-stats",
 	[const_ilog2(SOF_TIMESTAMPING_OPT_PKTINFO)]  = "option-pktinfo",
 	[const_ilog2(SOF_TIMESTAMPING_OPT_TX_SWHW)]  = "option-tx-swhw",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	[const_ilog2(SOF_TIMESTAMPING_BIND_PHC)]     = "bind-phc",
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	[const_ilog2(SOF_TIMESTAMPING_BIND_PHC)]     = "bind-phc",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 static_assert(ARRAY_SIZE(sof_timestamping_names) == __SOF_TIMESTAMPING_CNT);
 
@@ -554,6 +570,27 @@ int __ethtool_get_ts_info(struct net_device *dev, struct ethtool_ts_info *info)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int ethtool_get_phc_vclocks(struct net_device *dev, int **vclock_index)
+{
+	struct ethtool_ts_info info = { };
+	int num = 0;
+
+	if (!__ethtool_get_ts_info(dev, &info))
+		num = ptp_get_vclocks_index(info.phc_index, vclock_index);
+
+	return num;
+}
+EXPORT_SYMBOL(ethtool_get_phc_vclocks);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 const struct ethtool_phy_ops *ethtool_phy_ops;
 
 void ethtool_set_ethtool_phy_ops(const struct ethtool_phy_ops *ops)

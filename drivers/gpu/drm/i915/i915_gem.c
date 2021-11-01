@@ -469,12 +469,18 @@ i915_gem_pread_ioctl(struct drm_device *dev, void *data,
 	if (ret != -ENODEV)
 		goto out;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	ret = -ENODEV;
 	if (obj->ops->pread)
 		ret = obj->ops->pread(obj, args);
 	if (ret != -ENODEV)
 		goto out;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = i915_gem_object_wait(obj,
 				   I915_WAIT_INTERRUPTIBLE,
 				   MAX_SCHEDULE_TIMEOUT);
@@ -1005,8 +1011,24 @@ i915_gem_madvise_ioctl(struct drm_device *dev, void *data,
 		}
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (obj->mm.madv != __I915_MADV_PURGED) {
+		obj->mm.madv = args->madv;
+		if (obj->ops->adjust_lru)
+			obj->ops->adjust_lru(obj);
+	}
+=======
 	if (obj->mm.madv != __I915_MADV_PURGED)
 		obj->mm.madv = args->madv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (obj->mm.madv != __I915_MADV_PURGED) {
+		obj->mm.madv = args->madv;
+		if (obj->ops->adjust_lru)
+			obj->ops->adjust_lru(obj);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (i915_gem_object_has_pages(obj)) {
 		unsigned long flags;
@@ -1204,6 +1226,9 @@ int i915_gem_open(struct drm_i915_private *i915, struct drm_file *file)
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 void i915_gem_ww_ctx_init(struct i915_gem_ww_ctx *ww, bool intr)
 {
 	ww_acquire_init(&ww->ctx, &reservation_ww_class);
@@ -1256,6 +1281,9 @@ int __must_check i915_gem_ww_ctx_backoff(struct i915_gem_ww_ctx *ww)
 	return ret;
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if IS_ENABLED(CONFIG_DRM_I915_SELFTEST)
 #include "selftests/mock_gem_device.c"
 #include "selftests/i915_gem.c"

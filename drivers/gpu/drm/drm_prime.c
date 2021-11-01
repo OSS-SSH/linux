@@ -73,7 +73,15 @@
  * Thus the chain of references always flows in one direction, avoiding loops:
  * importing GEM object -> dma-buf -> exported GEM bo. A further complication
  * are the lookup caches for import and export. These are required to guarantee
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * that any given object will always have only one unique userspace handle. This
+=======
  * that any given object will always have only one uniqe userspace handle. This
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * that any given object will always have only one unique userspace handle. This
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * is required to allow userspace to detect duplicated imports, since some GEM
  * drivers do fail command submissions if a given buffer object is listed more
  * than once. These import and export caches in &drm_prime_file_private only
@@ -549,7 +557,15 @@ int drm_prime_handle_to_fd_ioctl(struct drm_device *dev, void *data,
  *
  * FIXME: The underlying helper functions are named rather inconsistently.
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Importing buffers
+=======
  * Exporting buffers
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Importing buffers
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ~~~~~~~~~~~~~~~~~
  *
  * Importing dma-bufs using drm_gem_prime_import() relies on
@@ -807,8 +823,18 @@ struct sg_table *drm_prime_pages_to_sg(struct drm_device *dev,
 				       struct page **pages, unsigned int nr_pages)
 {
 	struct sg_table *sg;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	size_t max_segment = 0;
+	int err;
+=======
 	struct scatterlist *sge;
 	size_t max_segment = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	size_t max_segment = 0;
+	int err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sg = kmalloc(sizeof(struct sg_table), GFP_KERNEL);
 	if (!sg)
@@ -818,6 +844,18 @@ struct sg_table *drm_prime_pages_to_sg(struct drm_device *dev,
 		max_segment = dma_max_mapping_size(dev->dev);
 	if (max_segment == 0)
 		max_segment = UINT_MAX;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	err = sg_alloc_table_from_pages_segment(sg, pages, nr_pages, 0,
+						nr_pages << PAGE_SHIFT,
+						max_segment, GFP_KERNEL);
+	if (err) {
+<<<<<<< HEAD
+		kfree(sg);
+		sg = ERR_PTR(err);
+=======
 	sge = __sg_alloc_table_from_pages(sg, pages, nr_pages, 0,
 					  nr_pages << PAGE_SHIFT,
 					  max_segment,
@@ -825,6 +863,11 @@ struct sg_table *drm_prime_pages_to_sg(struct drm_device *dev,
 	if (IS_ERR(sge)) {
 		kfree(sg);
 		sg = ERR_CAST(sge);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		kfree(sg);
+		sg = ERR_PTR(err);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return sg;
 }

@@ -39,7 +39,15 @@ void put_page_bootmem(struct page *page)
 }
 
 #ifndef CONFIG_SPARSEMEM_VMEMMAP
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void __init register_page_bootmem_info_section(unsigned long start_pfn)
+=======
 static void register_page_bootmem_info_section(unsigned long start_pfn)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __init register_page_bootmem_info_section(unsigned long start_pfn)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long mapsize, section_nr, i;
 	struct mem_section *ms;
@@ -74,7 +82,15 @@ static void register_page_bootmem_info_section(unsigned long start_pfn)
 
 }
 #else /* CONFIG_SPARSEMEM_VMEMMAP */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void __init register_page_bootmem_info_section(unsigned long start_pfn)
+=======
 static void register_page_bootmem_info_section(unsigned long start_pfn)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __init register_page_bootmem_info_section(unsigned long start_pfn)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long mapsize, section_nr, i;
 	struct mem_section *ms;

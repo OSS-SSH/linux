@@ -11,6 +11,9 @@
 #include <linux/bug.h>
 #include <linux/string.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define KERNEL_DS	((mm_segment_t){0})
 #define USER_DS 	((mm_segment_t){1})
 
@@ -19,6 +22,9 @@
 #define get_fs()	(current_thread_info()->addr_limit)
 #define set_fs(x)	(current_thread_info()->addr_limit = (x))
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Note that since kernel addresses are in a separate address space on
  * parisc, we don't need to do anything for access_ok().
@@ -33,11 +39,27 @@
 #define get_user __get_user
 
 #if !defined(CONFIG_64BIT)
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define LDD_USER(sr, val, ptr)	__get_user_asm64(sr, val, ptr)
+#define STD_USER(sr, x, ptr)	__put_user_asm64(sr, x, ptr)
+#else
+#define LDD_USER(sr, val, ptr)	__get_user_asm(sr, val, "ldd", ptr)
+#define STD_USER(sr, x, ptr)	__put_user_asm(sr, "std", x, ptr)
+=======
 #define LDD_USER(val, ptr)	__get_user_asm64(val, ptr)
 #define STD_USER(x, ptr)	__put_user_asm64(x, ptr)
 #else
 #define LDD_USER(val, ptr)	__get_user_asm(val, "ldd", ptr)
 #define STD_USER(x, ptr)	__put_user_asm("std", x, ptr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define LDD_USER(sr, val, ptr)	__get_user_asm64(sr, val, ptr)
+#define STD_USER(sr, x, ptr)	__put_user_asm64(sr, x, ptr)
+#else
+#define LDD_USER(sr, val, ptr)	__get_user_asm(sr, val, "ldd", ptr)
+#define STD_USER(sr, x, ptr)	__put_user_asm(sr, "std", x, ptr)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 /*
@@ -67,6 +89,10 @@ struct exception_table_entry {
 #define ASM_EXCEPTIONTABLE_ENTRY_EFAULT( fault_addr, except_addr )\
 	ASM_EXCEPTIONTABLE_ENTRY( fault_addr, except_addr + 1)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define __get_user_internal(sr, val, ptr)		\
+=======
 /*
  * load_sr2() preloads the space register %%sr2 - based on the value of
  * get_fs() - with either a value of 0 to access kernel space (KERNEL_DS which
@@ -81,14 +107,31 @@ struct exception_table_entry {
 		: : "r"(get_fs()) : )
 
 #define __get_user_internal(val, ptr)			\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __get_user_internal(sr, val, ptr)		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ({							\
 	register long __gu_err __asm__ ("r8") = 0;	\
 							\
 	switch (sizeof(*(ptr))) {			\
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	case 1: __get_user_asm(sr, val, "ldb", ptr); break; \
+	case 2: __get_user_asm(sr, val, "ldh", ptr); break; \
+	case 4: __get_user_asm(sr, val, "ldw", ptr); break; \
+	case 8: LDD_USER(sr, val, ptr); break;		\
+<<<<<<< HEAD
+=======
 	case 1: __get_user_asm(val, "ldb", ptr); break;	\
 	case 2: __get_user_asm(val, "ldh", ptr); break; \
 	case 4: __get_user_asm(val, "ldw", ptr); break; \
 	case 8: LDD_USER(val, ptr); break;		\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default: BUILD_BUG();				\
 	}						\
 							\
@@ -97,15 +140,34 @@ struct exception_table_entry {
 
 #define __get_user(val, ptr)				\
 ({							\
-	load_sr2();					\
-	__get_user_internal(val, ptr);			\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	__get_user_internal("%%sr3,", val, ptr);	\
 })
 
-#define __get_user_asm(val, ldx, ptr)			\
+#define __get_user_asm(sr, val, ldx, ptr)		\
 {							\
 	register long __gu_val;				\
 							\
+	__asm__("1: " ldx " 0(" sr "%2),%0\n"		\
+=======
+	load_sr2();					\
+	__get_user_internal(val, ptr);			\
+=======
+	__get_user_internal("%%sr3,", val, ptr);	\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+})
+
+#define __get_user_asm(sr, val, ldx, ptr)		\
+{							\
+	register long __gu_val;				\
+							\
+<<<<<<< HEAD
 	__asm__("1: " ldx " 0(%%sr2,%2),%0\n"		\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__asm__("1: " ldx " 0(" sr "%2),%0\n"		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"9:\n"					\
 		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b)	\
 		: "=r"(__gu_val), "=r"(__gu_err)        \
@@ -114,9 +176,37 @@ struct exception_table_entry {
 	(val) = (__force __typeof__(*(ptr))) __gu_val;	\
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define HAVE_GET_KERNEL_NOFAULT
+#define __get_kernel_nofault(dst, src, type, err_label)	\
+{							\
+	type __z;					\
+	long __err;					\
+	__err = __get_user_internal("%%sr0,", __z, (type *)(src)); \
+	if (unlikely(__err))				\
+		goto err_label;				\
+	else						\
+		*(type *)(dst) = __z;			\
+}
+
+
+<<<<<<< HEAD
+#if !defined(CONFIG_64BIT)
+
+#define __get_user_asm64(sr, val, ptr)			\
+=======
 #if !defined(CONFIG_64BIT)
 
 #define __get_user_asm64(val, ptr)			\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if !defined(CONFIG_64BIT)
+
+#define __get_user_asm64(sr, val, ptr)			\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {							\
 	union {						\
 		unsigned long long	l;		\
@@ -124,8 +214,18 @@ struct exception_table_entry {
 	} __gu_tmp;					\
 							\
 	__asm__("   copy %%r0,%R0\n"			\
+<<<<<<< HEAD
+<<<<<<< HEAD
+		"1: ldw 0(" sr "%2),%0\n"		\
+		"2: ldw 4(" sr "%2),%R0\n"		\
+=======
 		"1: ldw 0(%%sr2,%2),%0\n"		\
 		"2: ldw 4(%%sr2,%2),%R0\n"		\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"1: ldw 0(" sr "%2),%0\n"		\
+		"2: ldw 4(" sr "%2),%R0\n"		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"9:\n"					\
 		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b)	\
 		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 9b)	\
@@ -138,16 +238,37 @@ struct exception_table_entry {
 #endif /* !defined(CONFIG_64BIT) */
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define __put_user_internal(sr, x, ptr)				\
+=======
 #define __put_user_internal(x, ptr)				\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __put_user_internal(sr, x, ptr)				\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ({								\
 	register long __pu_err __asm__ ("r8") = 0;      	\
         __typeof__(*(ptr)) __x = (__typeof__(*(ptr)))(x);	\
 								\
 	switch (sizeof(*(ptr))) {				\
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	case 1: __put_user_asm(sr, "stb", __x, ptr); break;	\
+	case 2: __put_user_asm(sr, "sth", __x, ptr); break;	\
+	case 4: __put_user_asm(sr, "stw", __x, ptr); break;	\
+	case 8: STD_USER(sr, __x, ptr); break;			\
+<<<<<<< HEAD
+=======
 	case 1: __put_user_asm("stb", __x, ptr); break;		\
 	case 2: __put_user_asm("sth", __x, ptr); break;		\
 	case 4: __put_user_asm("stw", __x, ptr); break;		\
 	case 8: STD_USER(__x, ptr); break;			\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default: BUILD_BUG();					\
 	}							\
 								\
@@ -156,10 +277,44 @@ struct exception_table_entry {
 
 #define __put_user(x, ptr)					\
 ({								\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	__put_user_internal("%%sr3,", x, ptr);			\
+})
+
+#define __put_kernel_nofault(dst, src, type, err_label)		\
+{								\
+	type __z = *(type *)(src);				\
+	long __err;						\
+	__err = __put_user_internal("%%sr0,", __z, (type *)(dst)); \
+	if (unlikely(__err))					\
+		goto err_label;					\
+}
+
+
+
+=======
 	load_sr2();						\
 	__put_user_internal(x, ptr);				\
 })
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__put_user_internal("%%sr3,", x, ptr);			\
+})
+
+#define __put_kernel_nofault(dst, src, type, err_label)		\
+{								\
+	type __z = *(type *)(src);				\
+	long __err;						\
+	__err = __put_user_internal("%%sr0,", __z, (type *)(dst)); \
+	if (unlikely(__err))					\
+		goto err_label;					\
+}
+
+
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * The "__put_user/kernel_asm()" macros tell gcc they read from memory
@@ -170,17 +325,47 @@ struct exception_table_entry {
  * r8 is already listed as err.
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define __put_user_asm(sr, stx, x, ptr)				\
+	__asm__ __volatile__ (					\
+		"1: " stx " %2,0(" sr "%1)\n"			\
+		"9:\n"						\
+		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b)		\
+		: "=r"(__pu_err)				\
+<<<<<<< HEAD
+=======
 #define __put_user_asm(stx, x, ptr)                         \
 	__asm__ __volatile__ (                              \
 		"1: " stx " %2,0(%%sr2,%1)\n"		    \
 		"9:\n"					    \
 		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b)	    \
 		: "=r"(__pu_err)                            \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		: "r"(ptr), "r"(x), "0"(__pu_err))
 
 
 #if !defined(CONFIG_64BIT)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define __put_user_asm64(sr, __val, ptr) do {			\
+	__asm__ __volatile__ (					\
+		"1: stw %2,0(" sr "%1)\n"			\
+		"2: stw %R2,4(" sr "%1)\n"			\
+		"9:\n"						\
+		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 9b)		\
+		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 9b)		\
+		: "=r"(__pu_err)				\
+		: "r"(ptr), "r"(__val), "0"(__pu_err));		\
+<<<<<<< HEAD
+=======
 #define __put_user_asm64(__val, ptr) do {	    	    \
 	__asm__ __volatile__ (				    \
 		"1: stw %2,0(%%sr2,%1)\n"		    \
@@ -190,6 +375,9 @@ struct exception_table_entry {
 		ASM_EXCEPTIONTABLE_ENTRY_EFAULT(2b, 9b)	    \
 		: "=r"(__pu_err)                            \
 		: "r"(ptr), "r"(__val), "0"(__pu_err));	    \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } while (0)
 
 #endif /* !defined(CONFIG_64BIT) */
@@ -200,14 +388,30 @@ struct exception_table_entry {
  */
 
 extern long strncpy_from_user(char *, const char __user *, long);
-extern unsigned lclear_user(void __user *, unsigned long);
-extern long lstrnlen_user(const char __user *, long);
+<<<<<<< HEAD
+<<<<<<< HEAD
+extern __must_check unsigned lclear_user(void __user *, unsigned long);
+extern __must_check long strnlen_user(const char __user *src, long n);
 /*
  * Complex access routines -- macros
  */
-#define user_addr_max() (~0UL)
 
+=======
+extern unsigned lclear_user(void __user *, unsigned long);
+extern long lstrnlen_user(const char __user *, long);
+=======
+extern __must_check unsigned lclear_user(void __user *, unsigned long);
+extern __must_check long strnlen_user(const char __user *src, long n);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * Complex access routines -- macros
+ */
+
+<<<<<<< HEAD
 #define strnlen_user lstrnlen_user
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define clear_user lclear_user
 #define __clear_user lclear_user
 
@@ -215,8 +419,14 @@ unsigned long __must_check raw_copy_to_user(void __user *dst, const void *src,
 					    unsigned long len);
 unsigned long __must_check raw_copy_from_user(void *dst, const void __user *src,
 					    unsigned long len);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 unsigned long __must_check raw_copy_in_user(void __user *dst, const void __user *src,
 					    unsigned long len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define INLINE_COPY_TO_USER
 #define INLINE_COPY_FROM_USER
 

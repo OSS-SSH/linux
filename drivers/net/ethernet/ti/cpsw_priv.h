@@ -89,7 +89,17 @@ do {								\
 
 #define CPSW_POLL_WEIGHT	64
 #define CPSW_RX_VLAN_ENCAP_HDR_SIZE		4
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define CPSW_MIN_PACKET_SIZE_VLAN	(VLAN_ETH_ZLEN)
+#define CPSW_MIN_PACKET_SIZE	(ETH_ZLEN)
+=======
 #define CPSW_MIN_PACKET_SIZE	(VLAN_ETH_ZLEN)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CPSW_MIN_PACKET_SIZE_VLAN	(VLAN_ETH_ZLEN)
+#define CPSW_MIN_PACKET_SIZE	(ETH_ZLEN)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CPSW_MAX_PACKET_SIZE	(VLAN_ETH_FRAME_LEN +\
 				 ETH_FCS_LEN +\
 				 CPSW_RX_VLAN_ENCAP_HDR_SIZE)
@@ -380,6 +390,14 @@ struct cpsw_priv {
 	u32 emac_port;
 	struct cpsw_common *cpsw;
 	int offload_fwd_mark;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u32 tx_packet_min;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 tx_packet_min;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define ndev_to_cpsw(ndev) (((struct cpsw_priv *)netdev_priv(ndev))->cpsw)
@@ -462,8 +480,23 @@ void cpsw_mqprio_resume(struct cpsw_slave *slave, struct cpsw_priv *priv);
 /* ethtool */
 u32 cpsw_get_msglevel(struct net_device *ndev);
 void cpsw_set_msglevel(struct net_device *ndev, u32 value);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int cpsw_get_coalesce(struct net_device *ndev, struct ethtool_coalesce *coal,
+		      struct kernel_ethtool_coalesce *kernel_coal,
+		      struct netlink_ext_ack *extack);
+int cpsw_set_coalesce(struct net_device *ndev, struct ethtool_coalesce *coal,
+		      struct kernel_ethtool_coalesce *kernel_coal,
+		      struct netlink_ext_ack *extack);
+<<<<<<< HEAD
+=======
 int cpsw_get_coalesce(struct net_device *ndev, struct ethtool_coalesce *coal);
 int cpsw_set_coalesce(struct net_device *ndev, struct ethtool_coalesce *coal);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int cpsw_get_sset_count(struct net_device *ndev, int sset);
 void cpsw_get_strings(struct net_device *ndev, u32 stringset, u8 *data);
 void cpsw_get_ethtool_stats(struct net_device *ndev,

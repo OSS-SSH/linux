@@ -48,7 +48,15 @@ static inline int arch_atomic_##op##_return(int i, atomic_t *v)		\
 			"	casl %2,%1,%0\n"			\
 			"	jne 1b"					\
 			: "+m" (*v), "=&d" (t), "=&d" (tmp)		\
+<<<<<<< HEAD
+<<<<<<< HEAD
+			: "di" (i), "2" (arch_atomic_read(v)));		\
+=======
 			: "g" (i), "2" (arch_atomic_read(v)));		\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			: "di" (i), "2" (arch_atomic_read(v)));		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return t;							\
 }
 
@@ -63,7 +71,15 @@ static inline int arch_atomic_fetch_##op(int i, atomic_t *v)		\
 			"	casl %2,%1,%0\n"			\
 			"	jne 1b"					\
 			: "+m" (*v), "=&d" (t), "=&d" (tmp)		\
+<<<<<<< HEAD
+<<<<<<< HEAD
+			: "di" (i), "2" (arch_atomic_read(v)));		\
+=======
 			: "g" (i), "2" (arch_atomic_read(v)));		\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			: "di" (i), "2" (arch_atomic_read(v)));		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return tmp;							\
 }
 

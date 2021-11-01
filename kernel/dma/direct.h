@@ -56,7 +56,15 @@ static inline void dma_direct_sync_single_for_device(struct device *dev,
 {
 	phys_addr_t paddr = dma_to_phys(dev, addr);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (unlikely(is_swiotlb_buffer(dev, paddr)))
+=======
 	if (unlikely(is_swiotlb_buffer(paddr)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(is_swiotlb_buffer(dev, paddr)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		swiotlb_sync_single_for_device(dev, paddr, size, dir);
 
 	if (!dev_is_dma_coherent(dev))
@@ -73,7 +81,15 @@ static inline void dma_direct_sync_single_for_cpu(struct device *dev,
 		arch_sync_dma_for_cpu_all();
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (unlikely(is_swiotlb_buffer(dev, paddr)))
+=======
 	if (unlikely(is_swiotlb_buffer(paddr)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(is_swiotlb_buffer(dev, paddr)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		swiotlb_sync_single_for_cpu(dev, paddr, size, dir);
 
 	if (dir == DMA_FROM_DEVICE)
@@ -87,7 +103,15 @@ static inline dma_addr_t dma_direct_map_page(struct device *dev,
 	phys_addr_t phys = page_to_phys(page) + offset;
 	dma_addr_t dma_addr = phys_to_dma(dev, phys);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (is_swiotlb_force_bounce(dev))
+=======
 	if (unlikely(swiotlb_force == SWIOTLB_FORCE))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (is_swiotlb_force_bounce(dev))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return swiotlb_map(dev, phys, size, dir, attrs);
 
 	if (unlikely(!dma_capable(dev, dma_addr, size, true))) {
@@ -113,7 +137,15 @@ static inline void dma_direct_unmap_page(struct device *dev, dma_addr_t addr,
 	if (!(attrs & DMA_ATTR_SKIP_CPU_SYNC))
 		dma_direct_sync_single_for_cpu(dev, addr, size, dir);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (unlikely(is_swiotlb_buffer(dev, phys)))
+=======
 	if (unlikely(is_swiotlb_buffer(phys)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(is_swiotlb_buffer(dev, phys)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		swiotlb_tbl_unmap_single(dev, phys, size, dir, attrs);
 }
 #endif /* _KERNEL_DMA_DIRECT_H */

@@ -114,6 +114,14 @@ static void vmw_resource_release(struct kref *kref)
 	    container_of(kref, struct vmw_resource, kref);
 	struct vmw_private *dev_priv = res->dev_priv;
 	int id;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct idr *idr = &dev_priv->res_idr[res->func->res_type];
 
 	spin_lock(&dev_priv->resource_lock);
@@ -122,7 +130,17 @@ static void vmw_resource_release(struct kref *kref)
 	if (res->backup) {
 		struct ttm_buffer_object *bo = &res->backup->base;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = ttm_bo_reserve(bo, false, false, NULL);
+		BUG_ON(ret);
+=======
 		ttm_bo_reserve(bo, false, false, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = ttm_bo_reserve(bo, false, false, NULL);
+		BUG_ON(ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (vmw_resource_mob_attached(res) &&
 		    res->func->unbind != NULL) {
 			struct ttm_validate_buffer val_buf;
@@ -351,8 +369,16 @@ int vmw_user_lookup_handle(struct vmw_private *dev_priv,
 static int vmw_resource_buf_alloc(struct vmw_resource *res,
 				  bool interruptible)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long size = PFN_ALIGN(res->backup_size);
+=======
 	unsigned long size =
 		(res->backup_size + PAGE_SIZE - 1) & PAGE_MASK;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long size = PFN_ALIGN(res->backup_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct vmw_buffer_object *backup;
 	int ret;
 
@@ -1001,7 +1027,19 @@ int vmw_resource_pin(struct vmw_resource *res, bool interruptible)
 		if (res->backup) {
 			vbo = res->backup;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			ret = ttm_bo_reserve(&vbo->base, interruptible, false, NULL);
+			if (ret)
+				goto out_no_validate;
+=======
 			ttm_bo_reserve(&vbo->base, interruptible, false, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = ttm_bo_reserve(&vbo->base, interruptible, false, NULL);
+			if (ret)
+				goto out_no_validate;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!vbo->base.pin_count) {
 				ret = ttm_bo_validate
 					(&vbo->base,

@@ -18,6 +18,27 @@ static void a5xx_dump(struct msm_gpu *gpu);
 
 #define GPU_PAS_ID 13
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void update_shadow_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
+{
+	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+	struct a5xx_gpu *a5xx_gpu = to_a5xx_gpu(adreno_gpu);
+
+	if (a5xx_gpu->has_whereami) {
+		OUT_PKT7(ring, CP_WHERE_AM_I, 2);
+		OUT_RING(ring, lower_32_bits(shadowptr(a5xx_gpu, ring)));
+		OUT_RING(ring, upper_32_bits(shadowptr(a5xx_gpu, ring)));
+	}
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void a5xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
 		bool sync)
 {
@@ -30,11 +51,21 @@ void a5xx_flush(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
 	 * Most flush operations need to issue a WHERE_AM_I opcode to sync up
 	 * the rptr shadow
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (sync)
+		update_shadow_rptr(gpu, ring);
+=======
 	if (a5xx_gpu->has_whereami && sync) {
 		OUT_PKT7(ring, CP_WHERE_AM_I, 2);
 		OUT_RING(ring, lower_32_bits(shadowptr(a5xx_gpu, ring)));
 		OUT_RING(ring, upper_32_bits(shadowptr(a5xx_gpu, ring)));
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (sync)
+		update_shadow_rptr(gpu, ring);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irqsave(&ring->preempt_lock, flags);
 
@@ -168,6 +199,25 @@ static void a5xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
 			ibs++;
 			break;
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+		/*
+		 * Periodically update shadow-wptr if needed, so that we
+		 * can see partial progress of submits with large # of
+		 * cmds.. otherwise we could needlessly stall waiting for
+		 * ringbuffer state, simply due to looking at a shadow
+		 * rptr value that has not been updated
+		 */
+		if ((ibs % 32) == 0)
+			update_shadow_rptr(gpu, ring);
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/*
@@ -1415,7 +1465,15 @@ struct a5xx_gpu_state {
 static int a5xx_crashdumper_init(struct msm_gpu *gpu,
 		struct a5xx_crashdumper *dumper)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dumper->ptr = msm_gem_kernel_new(gpu->dev,
+=======
 	dumper->ptr = msm_gem_kernel_new_locked(gpu->dev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dumper->ptr = msm_gem_kernel_new(gpu->dev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		SZ_1M, MSM_BO_WC, gpu->aspace,
 		&dumper->bo, &dumper->iova);
 
@@ -1517,7 +1575,15 @@ static void a5xx_gpu_state_get_hlsq_regs(struct msm_gpu *gpu,
 
 	if (a5xx_crashdumper_run(gpu, &dumper)) {
 		kfree(a5xx_state->hlsqregs);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		msm_gem_kernel_put(dumper.bo, gpu->aspace);
+=======
 		msm_gem_kernel_put(dumper.bo, gpu->aspace, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		msm_gem_kernel_put(dumper.bo, gpu->aspace);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 
@@ -1525,7 +1591,15 @@ static void a5xx_gpu_state_get_hlsq_regs(struct msm_gpu *gpu,
 	memcpy(a5xx_state->hlsqregs, dumper.ptr + (256 * SZ_1K),
 		count * sizeof(u32));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msm_gem_kernel_put(dumper.bo, gpu->aspace);
+=======
 	msm_gem_kernel_put(dumper.bo, gpu->aspace, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msm_gem_kernel_put(dumper.bo, gpu->aspace);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct msm_gpu_state *a5xx_gpu_state_get(struct msm_gpu *gpu)

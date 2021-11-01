@@ -1648,7 +1648,15 @@ iwl_mvm_umac_scan_cfg_channels_v6(struct iwl_mvm *mvm,
 		struct iwl_scan_channel_cfg_umac *cfg = &cp->channel_config[i];
 		u32 n_aps_flag =
 			iwl_mvm_scan_ch_n_aps_flag(vif_type,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						   channels[i]->hw_value);
+=======
 						   cfg->v2.channel_num);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						   channels[i]->hw_value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		cfg->flags = cpu_to_le32(flags | n_aps_flag);
 		cfg->v2.channel_num = channels[i]->hw_value;
@@ -1661,22 +1669,73 @@ iwl_mvm_umac_scan_cfg_channels_v6(struct iwl_mvm *mvm,
 }
 
 static int
+<<<<<<< HEAD
+<<<<<<< HEAD
+iwl_mvm_umac_scan_fill_6g_chan_list(struct iwl_mvm *mvm,
+				    struct iwl_mvm_scan_params *params,
+				     struct iwl_scan_probe_params_v4 *pp)
+=======
 iwl_mvm_umac_scan_fill_6g_chan_list(struct iwl_mvm_scan_params *params,
 				    __le32 *cmd_short_ssid, u8 *cmd_bssid,
 				    u8 *scan_ssid_num, u8 *bssid_num)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+iwl_mvm_umac_scan_fill_6g_chan_list(struct iwl_mvm *mvm,
+				    struct iwl_mvm_scan_params *params,
+				     struct iwl_scan_probe_params_v4 *pp)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int j, idex_s = 0, idex_b = 0;
 	struct cfg80211_scan_6ghz_params *scan_6ghz_params =
 		params->scan_6ghz_params;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bool hidden_supported = fw_has_capa(&mvm->fw->ucode_capa,
+					    IWL_UCODE_TLV_CAPA_HIDDEN_6GHZ_SCAN);
 
-	if (!params->n_6ghz_params) {
-		for (j = 0; j < params->n_ssids; j++) {
-			cmd_short_ssid[idex_s++] =
-				cpu_to_le32(~crc32_le(~0, params->ssids[j].ssid,
-						      params->ssids[j].ssid_len));
-			(*scan_ssid_num)++;
+	for (j = 0; j < params->n_ssids && idex_s < SCAN_SHORT_SSID_MAX_SIZE;
+	     j++) {
+		if (!params->ssids[j].ssid_len)
+			continue;
+
+		pp->short_ssid[idex_s] =
+			cpu_to_le32(~crc32_le(~0, params->ssids[j].ssid,
+					      params->ssids[j].ssid_len));
+
+		if (hidden_supported) {
+			pp->direct_scan[idex_s].id = WLAN_EID_SSID;
+			pp->direct_scan[idex_s].len = params->ssids[j].ssid_len;
+			memcpy(pp->direct_scan[idex_s].ssid, params->ssids[j].ssid,
+			       params->ssids[j].ssid_len);
 		}
+		idex_s++;
+=======
+=======
+	bool hidden_supported = fw_has_capa(&mvm->fw->ucode_capa,
+					    IWL_UCODE_TLV_CAPA_HIDDEN_6GHZ_SCAN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	for (j = 0; j < params->n_ssids && idex_s < SCAN_SHORT_SSID_MAX_SIZE;
+	     j++) {
+		if (!params->ssids[j].ssid_len)
+			continue;
+
+		pp->short_ssid[idex_s] =
+			cpu_to_le32(~crc32_le(~0, params->ssids[j].ssid,
+					      params->ssids[j].ssid_len));
+
+		if (hidden_supported) {
+			pp->direct_scan[idex_s].id = WLAN_EID_SSID;
+			pp->direct_scan[idex_s].len = params->ssids[j].ssid_len;
+			memcpy(pp->direct_scan[idex_s].ssid, params->ssids[j].ssid,
+			       params->ssids[j].ssid_len);
+		}
+<<<<<<< HEAD
 		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		idex_s++;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/*
@@ -1693,40 +1752,95 @@ iwl_mvm_umac_scan_fill_6g_chan_list(struct iwl_mvm_scan_params *params,
 		/* First, try to place the short SSID */
 		if (scan_6ghz_params[j].short_ssid_valid) {
 			for (k = 0; k < idex_s; k++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+				if (pp->short_ssid[k] ==
+=======
 				if (cmd_short_ssid[k] ==
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				if (pp->short_ssid[k] ==
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    cpu_to_le32(scan_6ghz_params[j].short_ssid))
 					break;
 			}
 
 			if (k == idex_s && idex_s < SCAN_SHORT_SSID_MAX_SIZE) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+				pp->short_ssid[idex_s++] =
+					cpu_to_le32(scan_6ghz_params[j].short_ssid);
+=======
 				cmd_short_ssid[idex_s++] =
 					cpu_to_le32(scan_6ghz_params[j].short_ssid);
 				(*scan_ssid_num)++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				pp->short_ssid[idex_s++] =
+					cpu_to_le32(scan_6ghz_params[j].short_ssid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 
 		/* try to place BSSID for the same entry */
 		for (k = 0; k < idex_b; k++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (!memcmp(&pp->bssid_array[k],
+=======
 			if (!memcmp(&cmd_bssid[ETH_ALEN * k],
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (!memcmp(&pp->bssid_array[k],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    scan_6ghz_params[j].bssid, ETH_ALEN))
 				break;
 		}
 
 		if (k == idex_b && idex_b < SCAN_BSSID_MAX_SIZE) {
-			memcpy(&cmd_bssid[ETH_ALEN * idex_b++],
+<<<<<<< HEAD
+<<<<<<< HEAD
+			memcpy(&pp->bssid_array[idex_b++],
 			       scan_6ghz_params[j].bssid, ETH_ALEN);
-			(*bssid_num)++;
 		}
 	}
+
+	pp->short_ssid_num = idex_s;
+	pp->bssid_num = idex_b;
+=======
+			memcpy(&cmd_bssid[ETH_ALEN * idex_b++],
+=======
+			memcpy(&pp->bssid_array[idex_b++],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			       scan_6ghz_params[j].bssid, ETH_ALEN);
+		}
+	}
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	pp->short_ssid_num = idex_s;
+	pp->bssid_num = idex_b;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
 /* TODO: this function can be merged with iwl_mvm_scan_umac_fill_ch_p_v6 */
 static void
 iwl_mvm_umac_scan_cfg_channels_v6_6g(struct iwl_mvm_scan_params *params,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				     u32 n_channels,
+				     struct iwl_scan_probe_params_v4 *pp,
+=======
 				     u32 n_channels, __le32 *cmd_short_ssid,
 				     u8 *cmd_bssid, u8 scan_ssid_num,
 				     u8 bssid_num,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				     u32 n_channels,
+				     struct iwl_scan_probe_params_v4 *pp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				     struct iwl_scan_channel_params_v6 *cp,
 				     enum nl80211_iftype vif_type)
 {
@@ -1741,7 +1855,15 @@ iwl_mvm_umac_scan_cfg_channels_v6_6g(struct iwl_mvm_scan_params *params,
 
 		u32 s_ssid_bitmap = 0, bssid_bitmap = 0, flags = 0;
 		u8 j, k, s_max = 0, b_max = 0, n_used_bssid_entries;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		bool force_passive, found = false, allow_passive = true,
+=======
 		bool force_passive, found = false,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		bool force_passive, found = false, allow_passive = true,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     unsolicited_probe_on_chan = false, psc_no_listen = false;
 
 		cfg->v1.channel_num = params->channels[i]->hw_value;
@@ -1766,9 +1888,21 @@ iwl_mvm_umac_scan_cfg_channels_v6_6g(struct iwl_mvm_scan_params *params,
 				scan_6ghz_params[j].unsolicited_probe;
 			psc_no_listen |= scan_6ghz_params[j].psc_no_listen;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			for (k = 0; k < pp->short_ssid_num; k++) {
+				if (!scan_6ghz_params[j].unsolicited_probe &&
+				    le32_to_cpu(pp->short_ssid[k]) ==
+=======
 			for (k = 0; k < scan_ssid_num; k++) {
 				if (!scan_6ghz_params[j].unsolicited_probe &&
 				    le32_to_cpu(cmd_short_ssid[k]) ==
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			for (k = 0; k < pp->short_ssid_num; k++) {
+				if (!scan_6ghz_params[j].unsolicited_probe &&
+				    le32_to_cpu(pp->short_ssid[k]) ==
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    scan_6ghz_params[j].short_ssid) {
 					/* Relevant short SSID bit set */
 					if (s_ssid_bitmap & BIT(k)) {
@@ -1778,7 +1912,20 @@ iwl_mvm_umac_scan_cfg_channels_v6_6g(struct iwl_mvm_scan_params *params,
 
 					/*
 					 * Use short SSID only to create a new
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+					 * iteration during channel dwell or in
+					 * case that the short SSID has a
+					 * matching SSID, i.e., scan for hidden
+					 * APs.
+<<<<<<< HEAD
+=======
 					 * iteration during channel dwell.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 */
 					if (n_used_bssid_entries >= 3) {
 						s_ssid_bitmap |= BIT(k);
@@ -1786,6 +1933,21 @@ iwl_mvm_umac_scan_cfg_channels_v6_6g(struct iwl_mvm_scan_params *params,
 						n_used_bssid_entries -= 3;
 						found = true;
 						break;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+					} else if (pp->direct_scan[k].len) {
+						s_ssid_bitmap |= BIT(k);
+						s_max++;
+						found = true;
+						allow_passive = false;
+						break;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					}
 				}
 			}
@@ -1793,8 +1955,18 @@ iwl_mvm_umac_scan_cfg_channels_v6_6g(struct iwl_mvm_scan_params *params,
 			if (found)
 				continue;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			for (k = 0; k < pp->bssid_num; k++) {
+				if (!memcmp(&pp->bssid_array[k],
+=======
 			for (k = 0; k < bssid_num; k++) {
 				if (!memcmp(&cmd_bssid[ETH_ALEN * k],
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			for (k = 0; k < pp->bssid_num; k++) {
+				if (!memcmp(&pp->bssid_array[k],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    scan_6ghz_params[j].bssid,
 					    ETH_ALEN)) {
 					if (!(bssid_bitmap & BIT(k))) {
@@ -1849,7 +2021,15 @@ iwl_mvm_umac_scan_cfg_channels_v6_6g(struct iwl_mvm_scan_params *params,
 			force_passive |= (unsolicited_probe_on_chan &&
 					  (s_max > 1 || b_max > 3));
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if ((allow_passive && force_passive) ||
+=======
 		if (force_passive ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if ((allow_passive && force_passive) ||
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    (!flags && !cfg80211_channel_is_psc(params->channels[i])))
 			flags |= IWL_UHB_CHAN_CFG_FLAG_FORCE_PASSIVE;
 
@@ -2368,32 +2548,73 @@ static int iwl_mvm_scan_umac_v14(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
 	if (ret)
 		return ret;
 
-	iwl_mvm_scan_umac_fill_probe_p_v4(params, &scan_p->probe_params,
-					  &bitmap_ssid);
+<<<<<<< HEAD
+<<<<<<< HEAD
 	if (!params->scan_6ghz) {
+		iwl_mvm_scan_umac_fill_probe_p_v4(params, &scan_p->probe_params,
+					  &bitmap_ssid);
 		iwl_mvm_scan_umac_fill_ch_p_v6(mvm, params, vif,
-					       &scan_p->channel_params, bitmap_ssid);
+				       &scan_p->channel_params, bitmap_ssid);
 
 		return 0;
+	} else {
+		pb->preq = params->preq;
 	}
+
+=======
+	iwl_mvm_scan_umac_fill_probe_p_v4(params, &scan_p->probe_params,
+					  &bitmap_ssid);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!params->scan_6ghz) {
+		iwl_mvm_scan_umac_fill_probe_p_v4(params, &scan_p->probe_params,
+					  &bitmap_ssid);
+		iwl_mvm_scan_umac_fill_ch_p_v6(mvm, params, vif,
+				       &scan_p->channel_params, bitmap_ssid);
+
+		return 0;
+	} else {
+		pb->preq = params->preq;
+	}
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cp->flags = iwl_mvm_scan_umac_chan_flags_v2(mvm, params, vif);
 	cp->n_aps_override[0] = IWL_SCAN_ADWELL_N_APS_GO_FRIENDLY;
 	cp->n_aps_override[1] = IWL_SCAN_ADWELL_N_APS_SOCIAL_CHS;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = iwl_mvm_umac_scan_fill_6g_chan_list(mvm, params, pb);
+=======
 	ret = iwl_mvm_umac_scan_fill_6g_chan_list(params, pb->short_ssid,
 						  pb->bssid_array[0],
 						  &pb->short_ssid_num,
 						  &pb->bssid_num);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = iwl_mvm_umac_scan_fill_6g_chan_list(mvm, params, pb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
 	iwl_mvm_umac_scan_cfg_channels_v6_6g(params,
 					     params->n_channels,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					     pb, cp, vif->type);
+=======
 					     pb->short_ssid,
 					     pb->bssid_array[0],
 					     pb->short_ssid_num,
 					     pb->bssid_num, cp,
 					     vif->type);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					     pb, cp, vif->type);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cp->count = params->n_channels;
 	if (!params->n_ssids ||
 	    (params->n_ssids == 1 && !params->ssids[0].ssid_len))

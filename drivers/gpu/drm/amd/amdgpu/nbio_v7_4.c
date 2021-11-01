@@ -85,6 +85,23 @@
 #define mmRCC_DEV0_EPF0_STRAP0_ALDE			0x0015
 #define mmRCC_DEV0_EPF0_STRAP0_ALDE_BASE_IDX		2
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define mmBIF_DOORBELL_INT_CNTL_ALDE 			0x00fe
+#define mmBIF_DOORBELL_INT_CNTL_ALDE_BASE_IDX 		2
+#define BIF_DOORBELL_INT_CNTL_ALDE__DOORBELL_INTERRUPT_DISABLE__SHIFT	0x18
+#define BIF_DOORBELL_INT_CNTL_ALDE__DOORBELL_INTERRUPT_DISABLE_MASK	0x01000000L
+
+#define mmBIF_INTR_CNTL_ALDE 				0x0101
+#define mmBIF_INTR_CNTL_ALDE_BASE_IDX 			2
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void nbio_v7_4_query_ras_error_count(struct amdgpu_device *adev,
 					void *ras_error_status);
 
@@ -346,14 +363,41 @@ static void nbio_v7_4_handle_ras_controller_intr_no_bifring(struct amdgpu_device
 	struct ras_err_data err_data = {0, 0, 0, NULL};
 	struct amdgpu_ras *ras = amdgpu_ras_get_context(adev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (adev->asic_type == CHIP_ALDEBARAN)
+		bif_doorbell_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL_ALDE);
+	else
+		bif_doorbell_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL);
+
+<<<<<<< HEAD
+=======
 	bif_doorbell_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (REG_GET_FIELD(bif_doorbell_intr_cntl,
 		BIF_DOORBELL_INT_CNTL, RAS_CNTLR_INTERRUPT_STATUS)) {
 		/* driver has to clear the interrupt status when bif ring is disabled */
 		bif_doorbell_intr_cntl = REG_SET_FIELD(bif_doorbell_intr_cntl,
 						BIF_DOORBELL_INT_CNTL,
 						RAS_CNTLR_INTERRUPT_CLEAR, 1);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		if (adev->asic_type == CHIP_ALDEBARAN)
+			WREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL_ALDE, bif_doorbell_intr_cntl);
+		else
+			WREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL, bif_doorbell_intr_cntl);
+<<<<<<< HEAD
+=======
 		WREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL, bif_doorbell_intr_cntl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!ras->disable_ras_err_cnt_harvest) {
 			/*
@@ -372,13 +416,29 @@ static void nbio_v7_4_handle_ras_controller_intr_no_bifring(struct amdgpu_device
 						"errors detected in %s block, "
 						"no user action is needed.\n",
 						obj->err_data.ce_count,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						ras_block_str(adev->nbio.ras_if->block));
+=======
 						adev->nbio.ras_if->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						ras_block_str(adev->nbio.ras_if->block));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (err_data.ue_count)
 				dev_info(adev->dev, "%ld uncorrectable hardware "
 						"errors detected in %s block\n",
 						obj->err_data.ue_count,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						ras_block_str(adev->nbio.ras_if->block));
+=======
 						adev->nbio.ras_if->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						ras_block_str(adev->nbio.ras_if->block));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		dev_info(adev->dev, "RAS controller interrupt triggered "
@@ -395,14 +455,42 @@ static void nbio_v7_4_handle_ras_err_event_athub_intr_no_bifring(struct amdgpu_d
 {
 	uint32_t bif_doorbell_intr_cntl;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (adev->asic_type == CHIP_ALDEBARAN)
+		bif_doorbell_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL_ALDE);
+	else
+		bif_doorbell_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL);
+
+<<<<<<< HEAD
+=======
 	bif_doorbell_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (REG_GET_FIELD(bif_doorbell_intr_cntl,
 		BIF_DOORBELL_INT_CNTL, RAS_ATHUB_ERR_EVENT_INTERRUPT_STATUS)) {
 		/* driver has to clear the interrupt status when bif ring is disabled */
 		bif_doorbell_intr_cntl = REG_SET_FIELD(bif_doorbell_intr_cntl,
 						BIF_DOORBELL_INT_CNTL,
 						RAS_ATHUB_ERR_EVENT_INTERRUPT_CLEAR, 1);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+		if (adev->asic_type == CHIP_ALDEBARAN)
+			WREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL_ALDE, bif_doorbell_intr_cntl);
+		else
+			WREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL, bif_doorbell_intr_cntl);
+<<<<<<< HEAD
+=======
 		WREG32_SOC15(NBIO, 0, mmBIF_DOORBELL_INT_CNTL, bif_doorbell_intr_cntl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		amdgpu_ras_global_ras_isr(adev);
 	}
@@ -420,14 +508,43 @@ static int nbio_v7_4_set_ras_controller_irq_state(struct amdgpu_device *adev,
 	 */
 	uint32_t bif_intr_cntl;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (adev->asic_type == CHIP_ALDEBARAN)
+		bif_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL_ALDE);
+	else
+		bif_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL);
+
+<<<<<<< HEAD
+=======
 	bif_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (state == AMDGPU_IRQ_STATE_ENABLE) {
 		/* set interrupt vector select bit to 0 to select
 		 * vetcor 1 for bare metal case */
 		bif_intr_cntl = REG_SET_FIELD(bif_intr_cntl,
 					      BIF_INTR_CNTL,
 					      RAS_INTR_VEC_SEL, 0);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+		if (adev->asic_type == CHIP_ALDEBARAN)
+			WREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL_ALDE, bif_intr_cntl);
+		else
+			WREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL, bif_intr_cntl);
+
+<<<<<<< HEAD
+=======
 		WREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL, bif_intr_cntl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -456,14 +573,42 @@ static int nbio_v7_4_set_ras_err_event_athub_irq_state(struct amdgpu_device *ade
 	 */
 	uint32_t bif_intr_cntl;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (adev->asic_type == CHIP_ALDEBARAN)
+		bif_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL_ALDE);
+	else
+		bif_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL);
+
+<<<<<<< HEAD
+=======
 	bif_intr_cntl = RREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (state == AMDGPU_IRQ_STATE_ENABLE) {
 		/* set interrupt vector select bit to 0 to select
 		 * vetcor 1 for bare metal case */
 		bif_intr_cntl = REG_SET_FIELD(bif_intr_cntl,
 					      BIF_INTR_CNTL,
 					      RAS_INTR_VEC_SEL, 0);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+		if (adev->asic_type == CHIP_ALDEBARAN)
+			WREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL_ALDE, bif_intr_cntl);
+		else
+			WREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL, bif_intr_cntl);
+<<<<<<< HEAD
+=======
 		WREG32_SOC15(NBIO, 0, mmBIF_INTR_CNTL, bif_intr_cntl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -572,7 +717,21 @@ static void nbio_v7_4_query_ras_error_count(struct amdgpu_device *adev,
 static void nbio_v7_4_enable_doorbell_interrupt(struct amdgpu_device *adev,
 						bool enable)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (adev->asic_type == CHIP_ALDEBARAN)
+		WREG32_FIELD15(NBIO, 0, BIF_DOORBELL_INT_CNTL_ALDE,
+		       DOORBELL_INTERRUPT_DISABLE, enable ? 0 : 1);
+	else
+		WREG32_FIELD15(NBIO, 0, BIF_DOORBELL_INT_CNTL,
+<<<<<<< HEAD
+=======
 	WREG32_FIELD15(NBIO, 0, BIF_DOORBELL_INT_CNTL,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       DOORBELL_INTERRUPT_DISABLE, enable ? 0 : 1);
 }
 

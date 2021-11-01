@@ -60,6 +60,14 @@ enum aux_return_code_type;
 
 /* Forward declarations */
 struct amdgpu_device;
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct amdgpu_crtc;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct amdgpu_crtc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct drm_device;
 struct dc;
 struct amdgpu_bo;
@@ -86,16 +94,42 @@ struct dm_compressor_info {
 };
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * struct vblank_control_work - Work data for vblank control
+ * @work: Kernel work data for the work event
+ * @dm: amdgpu display manager device
+ * @acrtc: amdgpu CRTC instance for which the event has occurred
+ * @stream: DC stream for which the event has occurred
+ * @enable: true if enabling vblank
+ */
+struct vblank_control_work {
+	struct work_struct work;
+	struct amdgpu_display_manager *dm;
+	struct amdgpu_crtc *acrtc;
+	struct dc_stream_state *stream;
+=======
  * struct vblank_workqueue - Works to be executed in a separate thread during vblank
  * @mall_work: work for mall stutter
+=======
+ * struct vblank_control_work - Work data for vblank control
+ * @work: Kernel work data for the work event
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dm: amdgpu display manager device
- * @otg_inst: otg instance of which vblank is being set
- * @enable: true if enable vblank
+ * @acrtc: amdgpu CRTC instance for which the event has occurred
+ * @stream: DC stream for which the event has occurred
+ * @enable: true if enabling vblank
  */
-struct vblank_workqueue {
-	struct work_struct mall_work;
+struct vblank_control_work {
+	struct work_struct work;
 	struct amdgpu_display_manager *dm;
+<<<<<<< HEAD
 	int otg_inst;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct amdgpu_crtc *acrtc;
+	struct dc_stream_state *stream;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool enable;
 };
 
@@ -365,13 +399,29 @@ struct amdgpu_display_manager {
 
 	spinlock_t irq_handler_list_table_lock;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct backlight_device *backlight_dev[AMDGPU_DM_MAX_NUM_EDP];
+=======
 	struct backlight_device *backlight_dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct backlight_device *backlight_dev[AMDGPU_DM_MAX_NUM_EDP];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	const struct dc_link *backlight_link[AMDGPU_DM_MAX_NUM_EDP];
 
 	uint8_t num_of_edps;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct amdgpu_dm_backlight_caps backlight_caps[AMDGPU_DM_MAX_NUM_EDP];
+=======
 	struct amdgpu_dm_backlight_caps backlight_caps;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct amdgpu_dm_backlight_caps backlight_caps[AMDGPU_DM_MAX_NUM_EDP];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct mod_freesync *freesync_module;
 #ifdef CONFIG_DRM_AMD_DC_HDCP
@@ -380,11 +430,27 @@ struct amdgpu_display_manager {
 
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 	/**
-	 * @vblank_workqueue:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * @vblank_control_workqueue:
 	 *
-	 * amdgpu workqueue during vblank
+	 * Deferred work for vblank control events.
 	 */
+	struct workqueue_struct *vblank_control_workqueue;
+=======
+	 * @vblank_workqueue:
+=======
+	 * @vblank_control_workqueue:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	 *
+	 * Deferred work for vblank control events.
+	 */
+<<<<<<< HEAD
 	struct vblank_workqueue *vblank_workqueue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct workqueue_struct *vblank_control_workqueue;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	struct drm_atomic_state *cached_state;

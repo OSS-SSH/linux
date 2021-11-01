@@ -15,16 +15,40 @@
 	chosen { };
 
 	clocks {
-		xo_board: xo_board {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		xo_board: xo-board {
 			compatible = "fixed-clock";
 			#clock-cells = <0>;
 			clock-frequency = <19200000>;
+			clock-output-names = "xo_board";
 		};
 
-		sleep_clk: sleep_clk {
+		sleep_clk: sleep-clk {
 			compatible = "fixed-clock";
 			#clock-cells = <0>;
 			clock-frequency = <32768>;
+			clock-output-names = "sleep_clk";
+=======
+		xo_board: xo_board {
+=======
+		xo_board: xo-board {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <19200000>;
+			clock-output-names = "xo_board";
+		};
+
+		sleep_clk: sleep-clk {
+			compatible = "fixed-clock";
+			#clock-cells = <0>;
+			clock-frequency = <32768>;
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			clock-output-names = "sleep_clk";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 	};
 
@@ -430,7 +454,15 @@
 			power-domains = <&gcc USB30_GDSC>;
 			qcom,select-utmi-as-pipe-clk;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			usb@f9200000 {
+=======
 			dwc3@f9200000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			usb@f9200000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				compatible = "snps,dwc3";
 				reg = <0xf9200000 0xcc00>;
 				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;

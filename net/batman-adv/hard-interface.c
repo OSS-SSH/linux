@@ -236,8 +236,16 @@ static struct net_device *batadv_get_real_netdevice(struct net_device *netdev)
 	real_netdev = dev_get_by_index(real_net, ifindex);
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(hard_iface);
+=======
 	if (hard_iface)
 		batadv_hardif_put(hard_iface);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(hard_iface);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return real_netdev;
 }
 
@@ -457,8 +465,16 @@ static void batadv_primary_if_update_addr(struct batadv_priv *bat_priv,
 	batadv_dat_init_own_addr(bat_priv, primary_if);
 	batadv_bla_update_orig_address(bat_priv, primary_if, oldif);
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(primary_if);
+=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void batadv_primary_if_select(struct batadv_priv *bat_priv,
@@ -481,8 +497,16 @@ static void batadv_primary_if_select(struct batadv_priv *bat_priv,
 	batadv_primary_if_update_addr(bat_priv, curr_hard_iface);
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(curr_hard_iface);
+=======
 	if (curr_hard_iface)
 		batadv_hardif_put(curr_hard_iface);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(curr_hard_iface);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static bool
@@ -657,8 +681,16 @@ batadv_hardif_activate_interface(struct batadv_hard_iface *hard_iface)
 		bat_priv->algo_ops->iface.activate(hard_iface);
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(primary_if);
+=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
@@ -811,8 +843,16 @@ void batadv_hardif_disable_interface(struct batadv_hard_iface *hard_iface)
 		new_if = batadv_hardif_get_active(hard_iface->soft_iface);
 		batadv_primary_if_select(bat_priv, new_if);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		batadv_hardif_put(new_if);
+=======
 		if (new_if)
 			batadv_hardif_put(new_if);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		batadv_hardif_put(new_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	bat_priv->algo_ops->iface.disable(hard_iface);
@@ -834,8 +874,16 @@ void batadv_hardif_disable_interface(struct batadv_hard_iface *hard_iface)
 	batadv_hardif_put(hard_iface);
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(primary_if);
+=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct batadv_hard_iface *
@@ -990,8 +1038,16 @@ static int batadv_hard_if_event(struct notifier_block *this,
 hardif_put:
 	batadv_hardif_put(hard_iface);
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(primary_if);
+=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return NOTIFY_DONE;
 }
 

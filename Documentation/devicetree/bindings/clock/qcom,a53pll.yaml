@@ -18,6 +18,14 @@ properties:
     enum:
       - qcom,ipq6018-a53pll
       - qcom,msm8916-a53pll
+<<<<<<< HEAD
+<<<<<<< HEAD
+      - qcom,msm8939-a53pll
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      - qcom,msm8939-a53pll
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   reg:
     maxItems: 1
@@ -33,6 +41,16 @@ properties:
     items:
       - const: xo
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+  operating-points-v2: true
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  operating-points-v2: true
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 required:
   - compatible
   - reg

@@ -64,7 +64,17 @@ static int do_help(int argc, char **argv)
 		"       %s version\n"
 		"\n"
 		"       OBJECT := { prog | map | link | cgroup | perf | net | feature | btf | gen | struct_ops | iter }\n"
+<<<<<<< HEAD
+<<<<<<< HEAD
+		"       " HELP_SPEC_OPTIONS " |\n"
+		"                    {-V|--version} }\n"
+=======
 		"       " HELP_SPEC_OPTIONS "\n"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		"       " HELP_SPEC_OPTIONS " |\n"
+		"                    {-V|--version} }\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		"",
 		bin_name, bin_name, bin_name);
 

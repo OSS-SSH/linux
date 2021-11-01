@@ -547,7 +547,15 @@ config MMC_SDHCI_MSM
 	depends on MMC_SDHCI_PLTFM
 	select MMC_SDHCI_IO_ACCESSORS
 	select MMC_CQHCI
+<<<<<<< HEAD
+<<<<<<< HEAD
+	select QCOM_SCM if MMC_CRYPTO
+=======
 	select QCOM_SCM if MMC_CRYPTO && ARCH_QCOM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select QCOM_SCM if MMC_CRYPTO
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This selects the Secure Digital Host Controller Interface (SDHCI)
 	  support present in Qualcomm SOCs. The controller supports

@@ -34,7 +34,13 @@ static long __init parse_acpi_path(const struct efi_dev_path *node,
 			break;
 		if (!adev->pnp.unique_id && node->acpi.uid == 0)
 			break;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		acpi_dev_put(adev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (!adev)
 		return -ENODEV;

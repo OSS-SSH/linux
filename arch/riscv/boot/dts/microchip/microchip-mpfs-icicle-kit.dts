@@ -14,8 +14,29 @@
 	model = "Microchip PolarFire-SoC Icicle Kit";
 	compatible = "microchip,mpfs-icicle-kit";
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	aliases {
+		ethernet0 = &emac1;
+		serial0 = &serial0;
+		serial1 = &serial1;
+		serial2 = &serial2;
+		serial3 = &serial3;
+	};
+
+<<<<<<< HEAD
+	chosen {
+		stdout-path = "serial0:115200n8";
+=======
 	chosen {
 		stdout-path = &serial0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chosen {
+		stdout-path = "serial0:115200n8";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	cpus {

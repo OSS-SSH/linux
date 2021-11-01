@@ -2,7 +2,20 @@
 #ifndef _LINUX_TTY_FLIP_H
 #define _LINUX_TTY_FLIP_H
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#include <linux/tty_buffer.h>
+#include <linux/tty_port.h>
+
+struct tty_ldisc;
+<<<<<<< HEAD
+=======
 #include <linux/tty.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern int tty_buffer_set_limit(struct tty_port *port, int limit);
 extern unsigned int tty_buffer_space_avail(struct tty_port *port);
@@ -39,6 +52,18 @@ static inline int tty_insert_flip_string(struct tty_port *port,
 	return tty_insert_flip_string_fixed_flag(port, chars, TTY_NORMAL, size);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int tty_ldisc_receive_buf(struct tty_ldisc *ld, const unsigned char *p,
+		const char *f, int count);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int tty_ldisc_receive_buf(struct tty_ldisc *ld, const unsigned char *p,
+		const char *f, int count);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern void tty_buffer_lock_exclusive(struct tty_port *port);
 extern void tty_buffer_unlock_exclusive(struct tty_port *port);
 

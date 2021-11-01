@@ -365,6 +365,9 @@ config FAIL_IOMMU
 
 	  If you are unsure, say N.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config PPC_PTDUMP
 	bool "Export kernel pagetable layout to userspace via debugfs"
 	depends on DEBUG_KERNEL && DEBUG_FS
@@ -395,6 +398,9 @@ config PPC_DEBUG_WX
 
 	  If in doubt, say "Y".
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config PPC_FAST_ENDIAN_SWITCH
 	bool "Deprecated fast endian-switch syscall"
 	depends on DEBUG_KERNEL && PPC_BOOK3S_64

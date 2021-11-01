@@ -24,7 +24,17 @@
 #ifndef __AMDGPU_PLL_H__
 #define __AMDGPU_PLL_H__
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void amdgpu_pll_compute(struct amdgpu_device *adev,
+			 struct amdgpu_pll *pll,
+=======
 void amdgpu_pll_compute(struct amdgpu_pll *pll,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void amdgpu_pll_compute(struct amdgpu_device *adev,
+			 struct amdgpu_pll *pll,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 u32 freq,
 			 u32 *dot_clock_p,
 			 u32 *fb_div_p,

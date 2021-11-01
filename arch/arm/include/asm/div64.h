@@ -52,6 +52,9 @@ static inline uint32_t __div64_32(uint64_t *n, uint32_t base)
 
 #else
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /*
  * gcc versions earlier than 4.0 are simply too problematic for the
  * __div64_const32() code in asm-generic/div64.h. First there is
@@ -63,6 +66,9 @@ static inline uint32_t __div64_32(uint64_t *n, uint32_t base)
 
 #define __div64_const32_is_OK (__GNUC__ >= 4)
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline uint64_t __arch_xprod_64(uint64_t m, uint64_t n, bool bias)
 {
 	unsigned long long res;

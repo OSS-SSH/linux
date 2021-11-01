@@ -50,7 +50,13 @@ properties:
 
   reg:
     minItems: 1
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
     maxItems: 3
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     items:
       - description: base register
       - description: power register
@@ -62,7 +68,15 @@ properties:
     maxItems: 1
 
   '#clock-cells':
+<<<<<<< HEAD
+<<<<<<< HEAD
+    true
+=======
     const: 1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    true
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   clock-output-names:
     minItems: 1
@@ -75,6 +89,32 @@ allOf:
           contains:
             enum:
               - brcm,cygnus-armpll
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+              - brcm,nsp-armpll
+    then:
+      properties:
+        '#clock-cells':
+          const: 0
+    else:
+      properties:
+        '#clock-cells':
+          const: 1
+      required:
+        - clock-output-names
+  - if:
+      properties:
+        compatible:
+          contains:
+            enum:
+              - brcm,cygnus-armpll
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               - brcm,cygnus-genpll
               - brcm,cygnus-lcpll0
               - brcm,cygnus-mipipll
@@ -359,7 +399,13 @@ required:
   - reg
   - clocks
   - '#clock-cells'
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
   - clock-output-names
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 additionalProperties: false
 
@@ -393,3 +439,19 @@ examples:
         clocks = <&osc2>;
         clock-output-names = "keypad", "adc/touch", "pwm";
     };
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+  - |
+    arm_clk@0 {
+        #clock-cells = <0>;
+        compatible = "brcm,nsp-armpll";
+        clocks = <&osc>;
+        reg = <0x0 0x1000>;
+    };
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

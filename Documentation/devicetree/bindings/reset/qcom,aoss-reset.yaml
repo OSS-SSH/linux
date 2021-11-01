@@ -21,6 +21,20 @@ properties:
           - const: "qcom,sc7180-aoss-cc"
           - const: "qcom,sdm845-aoss-cc"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+      - description: on SC7280 SoCs the following compatibles must be specified
+        items:
+          - const: "qcom,sc7280-aoss-cc"
+          - const: "qcom,sdm845-aoss-cc"
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - description: on SDM845 SoCs the following compatibles must be specified
         items:
           - const: "qcom,sdm845-aoss-cc"

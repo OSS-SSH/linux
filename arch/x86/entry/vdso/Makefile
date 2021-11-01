@@ -131,7 +131,15 @@ $(obj)/%-x32.o: $(obj)/%.o FORCE
 targets += vdsox32.lds $(vobjx32s-y)
 
 $(obj)/%.so: OBJCOPYFLAGS := -S --remove-section __ex_table
+<<<<<<< HEAD
+<<<<<<< HEAD
+$(obj)/%.so: $(obj)/%.so.dbg FORCE
+=======
 $(obj)/%.so: $(obj)/%.so.dbg
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+$(obj)/%.so: $(obj)/%.so.dbg FORCE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	$(call if_changed,objcopy)
 
 $(obj)/vdsox32.so.dbg: $(obj)/vdsox32.lds $(vobjx32s) FORCE

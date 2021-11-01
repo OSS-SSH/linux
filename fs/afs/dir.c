@@ -656,7 +656,13 @@ static int afs_do_lookup_one(struct inode *dir, struct dentry *dentry,
 		return ret;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	ret = -ENOENT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!cookie.found) {
 		_leave(" = -ENOENT [not found]");
 		return -ENOENT;
@@ -1078,9 +1084,21 @@ static struct dentry *afs_lookup(struct inode *dir, struct dentry *dentry,
  */
 static int afs_d_revalidate_rcu(struct dentry *dentry)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct afs_vnode *dvnode;
+	struct dentry *parent;
+	struct inode *dir;
+=======
 	struct afs_vnode *dvnode, *vnode;
 	struct dentry *parent;
 	struct inode *dir, *inode;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct afs_vnode *dvnode;
+	struct dentry *parent;
+	struct inode *dir;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	long dir_version, de_version;
 
 	_enter("%p", dentry);
@@ -1110,6 +1128,9 @@ static int afs_d_revalidate_rcu(struct dentry *dentry)
 			return -ECHILD;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* Check to see if the vnode referred to by the dentry still
 	 * has a callback.
 	 */
@@ -1122,6 +1143,9 @@ static int afs_d_revalidate_rcu(struct dentry *dentry)
 		}
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 1; /* Still valid */
 }
 
@@ -1157,6 +1181,10 @@ static int afs_d_revalidate(struct dentry *dentry, unsigned int flags)
 	if (IS_ERR(key))
 		key = NULL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Hold the parent dentry so we can peer at it */
+=======
 	if (d_really_is_positive(dentry)) {
 		inode = d_inode(dentry);
 		if (inode) {
@@ -1168,6 +1196,10 @@ static int afs_d_revalidate(struct dentry *dentry, unsigned int flags)
 	}
 
 	/* lock down the parent dentry so we can peer at it */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Hold the parent dentry so we can peer at it */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	parent = dget_parent(dentry);
 	dir = AFS_FS_I(d_inode(parent));
 
@@ -1176,7 +1208,15 @@ static int afs_d_revalidate(struct dentry *dentry, unsigned int flags)
 
 	if (test_bit(AFS_VNODE_DELETED, &dir->flags)) {
 		_debug("%pd: parent dir deleted", dentry);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto not_found;
+=======
 		goto out_bad_parent;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto not_found;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* We only need to invalidate a dentry if the server's copy changed
@@ -1202,12 +1242,28 @@ static int afs_d_revalidate(struct dentry *dentry, unsigned int flags)
 	case 0:
 		/* the filename maps to something */
 		if (d_really_is_negative(dentry))
+<<<<<<< HEAD
+<<<<<<< HEAD
+			goto not_found;
+=======
 			goto out_bad_parent;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto not_found;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		inode = d_inode(dentry);
 		if (is_bad_inode(inode)) {
 			printk("kAFS: afs_d_revalidate: %pd2 has bad inode\n",
 			       dentry);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			goto not_found;
+=======
 			goto out_bad_parent;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			goto not_found;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		vnode = AFS_FS_I(inode);
@@ -1229,9 +1285,15 @@ static int afs_d_revalidate(struct dentry *dentry, unsigned int flags)
 			       dentry, fid.unique,
 			       vnode->fid.unique,
 			       vnode->vfs_inode.i_generation);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			write_seqlock(&vnode->cb_lock);
 			set_bit(AFS_VNODE_DELETED, &vnode->flags);
 			write_sequnlock(&vnode->cb_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto not_found;
 		}
 		goto out_valid;
@@ -1246,7 +1308,15 @@ static int afs_d_revalidate(struct dentry *dentry, unsigned int flags)
 	default:
 		_debug("failed to iterate dir %pd: %d",
 		       parent, ret);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto not_found;
+=======
 		goto out_bad_parent;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto not_found;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 out_valid:
@@ -1257,16 +1327,23 @@ out_valid_noupdate:
 	_leave(" = 1 [valid]");
 	return 1;
 
-	/* the dirent, if it exists, now points to a different vnode */
+<<<<<<< HEAD
+<<<<<<< HEAD
 not_found:
-	spin_lock(&dentry->d_lock);
-	dentry->d_flags |= DCACHE_NFSFS_RENAMED;
-	spin_unlock(&dentry->d_lock);
-
-out_bad_parent:
 	_debug("dropping dentry %pd2", dentry);
 	dput(parent);
+=======
+	/* the dirent, if it exists, now points to a different vnode */
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+not_found:
+	_debug("dropping dentry %pd2", dentry);
+	dput(parent);
+<<<<<<< HEAD
 out_bad:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	key_put(key);
 
 	_leave(" = 0 [bad]");
@@ -1793,6 +1870,19 @@ static int afs_link(struct dentry *from, struct inode *dir,
 		goto error;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = afs_validate(vnode, op->key);
+	if (ret < 0)
+		goto error_op;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	afs_op_set_vnode(op, 0, dvnode);
 	afs_op_set_vnode(op, 1, vnode);
 	op->file[0].dv_delta = 1;
@@ -1806,6 +1896,16 @@ static int afs_link(struct dentry *from, struct inode *dir,
 	op->create.reason	= afs_edit_dir_for_link;
 	return afs_do_sync_operation(op);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+error_op:
+	afs_put_operation(op);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+error_op:
+	afs_put_operation(op);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 error:
 	d_drop(dentry);
 	_leave(" = %d", ret);
@@ -1990,6 +2090,20 @@ static int afs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
 	if (IS_ERR(op))
 		return PTR_ERR(op);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = afs_validate(vnode, op->key);
+	op->error = ret;
+	if (ret < 0)
+		goto error;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	afs_op_set_vnode(op, 0, orig_dvnode);
 	afs_op_set_vnode(op, 1, new_dvnode); /* May be same as orig_dvnode */
 	op->file[0].dv_delta = 1;
@@ -2020,17 +2134,48 @@ static int afs_rename(struct user_namespace *mnt_userns, struct inode *old_dir,
 
 		if (d_count(new_dentry) > 2) {
 			/* copy the target dentry's name */
-			ret = -ENOMEM;
+<<<<<<< HEAD
+<<<<<<< HEAD
 			op->rename.tmp = d_alloc(new_dentry->d_parent,
 						 &new_dentry->d_name);
-			if (!op->rename.tmp)
+			if (!op->rename.tmp) {
+				op->error = -ENOMEM;
 				goto error;
+			}
+=======
+			ret = -ENOMEM;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			op->rename.tmp = d_alloc(new_dentry->d_parent,
+						 &new_dentry->d_name);
+			if (!op->rename.tmp) {
+				op->error = -ENOMEM;
+				goto error;
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			ret = afs_sillyrename(new_dvnode,
 					      AFS_FS_I(d_inode(new_dentry)),
 					      new_dentry, op->key);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (ret) {
+				op->error = ret;
+				goto error;
+			}
+=======
 			if (ret)
 				goto error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (ret) {
+				op->error = ret;
+				goto error;
+			}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			op->dentry_2 = op->rename.tmp;
 			op->rename.rehash = NULL;

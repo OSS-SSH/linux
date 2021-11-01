@@ -33,13 +33,27 @@ static int mcp_bus_probe(struct device *dev)
 	return drv->probe(mcp);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void mcp_bus_remove(struct device *dev)
+=======
 static int mcp_bus_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void mcp_bus_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mcp *mcp = to_mcp(dev);
 	struct mcp_driver *drv = to_mcp_driver(dev->driver);
 
 	drv->remove(mcp);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct bus_type mcp_bus_type = {

@@ -127,9 +127,21 @@ struct pca955x_led {
 	struct pca955x	*pca955x;
 	struct led_classdev	led_cdev;
 	int			led_num;	/* 0 .. 15 potentially */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u32			type;
+	int			default_state;
+	struct fwnode_handle	*fwnode;
+=======
 	char			name[32];
 	u32			type;
 	const char		*default_trigger;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32			type;
+	int			default_state;
+	struct fwnode_handle	*fwnode;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct pca955x_platform_data {
@@ -166,11 +178,25 @@ static inline u8 pca955x_ledsel(u8 oldval, int led_num, int state)
 static int pca955x_write_psc(struct i2c_client *client, int n, u8 val)
 {
 	struct pca955x *pca955x = i2c_get_clientdata(client);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u8 cmd = pca95xx_num_input_regs(pca955x->chipdef->bits) + (2 * n);
+	int ret;
+
+	ret = i2c_smbus_write_byte_data(client, cmd, val);
+=======
 	int ret;
 
 	ret = i2c_smbus_write_byte_data(client,
 		pca95xx_num_input_regs(pca955x->chipdef->bits) + 2*n,
 		val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 cmd = pca95xx_num_input_regs(pca955x->chipdef->bits) + (2 * n);
+	int ret;
+
+	ret = i2c_smbus_write_byte_data(client, cmd, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		dev_err(&client->dev, "%s: reg 0x%x, val 0x%x, err %d\n",
 			__func__, n, val, ret);
@@ -187,11 +213,25 @@ static int pca955x_write_psc(struct i2c_client *client, int n, u8 val)
 static int pca955x_write_pwm(struct i2c_client *client, int n, u8 val)
 {
 	struct pca955x *pca955x = i2c_get_clientdata(client);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u8 cmd = pca95xx_num_input_regs(pca955x->chipdef->bits) + 1 + (2 * n);
+	int ret;
+
+	ret = i2c_smbus_write_byte_data(client, cmd, val);
+=======
 	int ret;
 
 	ret = i2c_smbus_write_byte_data(client,
 		pca95xx_num_input_regs(pca955x->chipdef->bits) + 1 + 2*n,
 		val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 cmd = pca95xx_num_input_regs(pca955x->chipdef->bits) + 1 + (2 * n);
+	int ret;
+
+	ret = i2c_smbus_write_byte_data(client, cmd, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		dev_err(&client->dev, "%s: reg 0x%x, val 0x%x, err %d\n",
 			__func__, n, val, ret);
@@ -205,11 +245,25 @@ static int pca955x_write_pwm(struct i2c_client *client, int n, u8 val)
 static int pca955x_write_ls(struct i2c_client *client, int n, u8 val)
 {
 	struct pca955x *pca955x = i2c_get_clientdata(client);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u8 cmd = pca95xx_num_input_regs(pca955x->chipdef->bits) + 4 + n;
+	int ret;
+
+	ret = i2c_smbus_write_byte_data(client, cmd, val);
+=======
 	int ret;
 
 	ret = i2c_smbus_write_byte_data(client,
 		pca95xx_num_input_regs(pca955x->chipdef->bits) + 4 + n,
 		val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 cmd = pca95xx_num_input_regs(pca955x->chipdef->bits) + 4 + n;
+	int ret;
+
+	ret = i2c_smbus_write_byte_data(client, cmd, val);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		dev_err(&client->dev, "%s: reg 0x%x, val 0x%x, err %d\n",
 			__func__, n, val, ret);
@@ -223,10 +277,24 @@ static int pca955x_write_ls(struct i2c_client *client, int n, u8 val)
 static int pca955x_read_ls(struct i2c_client *client, int n, u8 *val)
 {
 	struct pca955x *pca955x = i2c_get_clientdata(client);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u8 cmd = pca95xx_num_input_regs(pca955x->chipdef->bits) + 4 + n;
+	int ret;
+
+	ret = i2c_smbus_read_byte_data(client, cmd);
+=======
 	int ret;
 
 	ret = i2c_smbus_read_byte_data(client,
 		pca95xx_num_input_regs(pca955x->chipdef->bits) + 4 + n);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 cmd = pca95xx_num_input_regs(pca955x->chipdef->bits) + 4 + n;
+	int ret;
+
+	ret = i2c_smbus_read_byte_data(client, cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0) {
 		dev_err(&client->dev, "%s: reg 0x%x, err %d\n",
 			__func__, n, ret);
@@ -236,6 +304,66 @@ static int pca955x_read_ls(struct i2c_client *client, int n, u8 *val)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int pca955x_read_pwm(struct i2c_client *client, int n, u8 *val)
+{
+	struct pca955x *pca955x = i2c_get_clientdata(client);
+	u8 cmd = pca95xx_num_input_regs(pca955x->chipdef->bits) + 1 + (2 * n);
+	int ret;
+
+	ret = i2c_smbus_read_byte_data(client, cmd);
+	if (ret < 0) {
+		dev_err(&client->dev, "%s: reg 0x%x, err %d\n",
+			__func__, n, ret);
+		return ret;
+	}
+	*val = (u8)ret;
+	return 0;
+}
+
+static enum led_brightness pca955x_led_get(struct led_classdev *led_cdev)
+{
+	struct pca955x_led *pca955x_led = container_of(led_cdev,
+						       struct pca955x_led,
+						       led_cdev);
+	struct pca955x *pca955x = pca955x_led->pca955x;
+	u8 ls, pwm;
+	int ret;
+
+	ret = pca955x_read_ls(pca955x->client, pca955x_led->led_num / 4, &ls);
+	if (ret)
+		return ret;
+
+	ls = (ls >> ((pca955x_led->led_num % 4) << 1)) & 0x3;
+	switch (ls) {
+	case PCA955X_LS_LED_ON:
+		ret = LED_FULL;
+		break;
+	case PCA955X_LS_LED_OFF:
+		ret = LED_OFF;
+		break;
+	case PCA955X_LS_BLINK0:
+		ret = LED_HALF;
+		break;
+	case PCA955X_LS_BLINK1:
+		ret = pca955x_read_pwm(pca955x->client, 1, &pwm);
+		if (ret)
+			return ret;
+		ret = 255 - pwm;
+		break;
+	}
+
+	return ret;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int pca955x_led_set(struct led_classdev *led_cdev,
 			    enum led_brightness value)
 {
@@ -371,6 +499,14 @@ static struct pca955x_platform_data *
 pca955x_get_pdata(struct i2c_client *client, struct pca955x_chipdef *chip)
 {
 	struct pca955x_platform_data *pdata;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct pca955x_led *led;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct pca955x_led *led;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fwnode_handle *child;
 	int count;
 
@@ -389,7 +525,15 @@ pca955x_get_pdata(struct i2c_client *client, struct pca955x_chipdef *chip)
 		return ERR_PTR(-ENOMEM);
 
 	device_for_each_child_node(&client->dev, child) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		const char *state;
+=======
 		const char *name;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		const char *state;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u32 reg;
 		int res;
 
@@ -397,6 +541,28 @@ pca955x_get_pdata(struct i2c_client *client, struct pca955x_chipdef *chip)
 		if ((res != 0) || (reg >= chip->bits))
 			continue;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		led = &pdata->leds[reg];
+		led->type = PCA955X_TYPE_LED;
+		led->fwnode = child;
+		fwnode_property_read_u32(child, "type", &led->type);
+
+		if (!fwnode_property_read_string(child, "default-state",
+						 &state)) {
+			if (!strcmp(state, "keep"))
+				led->default_state = LEDS_GPIO_DEFSTATE_KEEP;
+			else if (!strcmp(state, "on"))
+				led->default_state = LEDS_GPIO_DEFSTATE_ON;
+			else
+				led->default_state = LEDS_GPIO_DEFSTATE_OFF;
+		} else {
+			led->default_state = LEDS_GPIO_DEFSTATE_OFF;
+		}
+<<<<<<< HEAD
+=======
 		res = fwnode_property_read_string(child, "label", &name);
 		if ((res != 0) && is_of_node(child))
 			name = to_of_node(child)->name;
@@ -408,6 +574,9 @@ pca955x_get_pdata(struct i2c_client *client, struct pca955x_chipdef *chip)
 		fwnode_property_read_u32(child, "type", &pdata->leds[reg].type);
 		fwnode_property_read_string(child, "linux,default-trigger",
 					&pdata->leds[reg].default_trigger);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	pdata->num_leds = chip->bits;
@@ -425,18 +594,68 @@ static const struct of_device_id of_pca955x_match[] = {
 };
 MODULE_DEVICE_TABLE(of, of_pca955x_match);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int pca955x_probe(struct i2c_client *client)
+=======
 static int pca955x_probe(struct i2c_client *client,
 					const struct i2c_device_id *id)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int pca955x_probe(struct i2c_client *client)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct pca955x *pca955x;
 	struct pca955x_led *pca955x_led;
 	struct pca955x_chipdef *chip;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct led_classdev *led;
+	struct led_init_data init_data;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct led_classdev *led;
+	struct led_init_data init_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct i2c_adapter *adapter;
 	int i, err;
 	struct pca955x_platform_data *pdata;
 	int ngpios = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	bool set_default_label = false;
+	bool keep_pwm = false;
+	char default_label[8];
+	enum pca955x_type chip_type;
+	const void *md = device_get_match_data(&client->dev);
+
+	if (md) {
+		chip_type = (enum pca955x_type)md;
+	} else {
+		const struct i2c_device_id *id = i2c_match_id(pca955x_id,
+							      client);
+
+		if (id) {
+			chip_type = (enum pca955x_type)id->driver_data;
+		} else {
+			dev_err(&client->dev, "unknown chip\n");
+			return -ENODEV;
+		}
+	}
+<<<<<<< HEAD
+
+	chip = &pca955x_chipdefs[chip_type];
+=======
 
 	chip = &pca955x_chipdefs[id->driver_data];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	chip = &pca955x_chipdefs[chip_type];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	adapter = client->adapter;
 	pdata = dev_get_platdata(&client->dev);
 	if (!pdata) {
@@ -449,13 +668,31 @@ static int pca955x_probe(struct i2c_client *client,
 	if ((client->addr & ~((1 << chip->slv_addr_shift) - 1)) !=
 	    chip->slv_addr) {
 		dev_err(&client->dev, "invalid slave address %02x\n",
+<<<<<<< HEAD
+<<<<<<< HEAD
+			client->addr);
+=======
 				client->addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			client->addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 	}
 
 	dev_info(&client->dev, "leds-pca955x: Using %s %d-bit LED driver at "
+<<<<<<< HEAD
+<<<<<<< HEAD
+		 "slave address 0x%02x\n", client->name, chip->bits,
+		 client->addr);
+=======
 			"slave address 0x%02x\n",
 			client->name, chip->bits, client->addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 "slave address 0x%02x\n", client->name, chip->bits,
+		 client->addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!i2c_check_functionality(adapter, I2C_FUNC_SMBUS_BYTE_DATA))
 		return -EIO;
@@ -471,8 +708,18 @@ static int pca955x_probe(struct i2c_client *client,
 	if (!pca955x)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pca955x->leds = devm_kcalloc(&client->dev, chip->bits,
+				     sizeof(*pca955x_led), GFP_KERNEL);
+=======
 	pca955x->leds = devm_kcalloc(&client->dev,
 			chip->bits, sizeof(*pca955x_led), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pca955x->leds = devm_kcalloc(&client->dev, chip->bits,
+				     sizeof(*pca955x_led), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!pca955x->leds)
 		return -ENOMEM;
 
@@ -482,6 +729,18 @@ static int pca955x_probe(struct i2c_client *client,
 	pca955x->client = client;
 	pca955x->chipdef = chip;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	init_data.devname_mandatory = false;
+	init_data.devicename = "pca955x";
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	init_data.devname_mandatory = false;
+	init_data.devicename = "pca955x";
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < chip->bits; i++) {
 		pca955x_led = &pca955x->leds[i];
 		pca955x_led->led_num = i;
@@ -495,6 +754,66 @@ static int pca955x_probe(struct i2c_client *client,
 			ngpios++;
 			break;
 		case PCA955X_TYPE_LED:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			led = &pca955x_led->led_cdev;
+			led->brightness_set_blocking = pca955x_led_set;
+			led->brightness_get = pca955x_led_get;
+
+			if (pdata->leds[i].default_state ==
+			    LEDS_GPIO_DEFSTATE_OFF) {
+				err = pca955x_led_set(led, LED_OFF);
+				if (err)
+					return err;
+			} else if (pdata->leds[i].default_state ==
+				   LEDS_GPIO_DEFSTATE_ON) {
+				err = pca955x_led_set(led, LED_FULL);
+				if (err)
+					return err;
+			}
+
+			init_data.fwnode = pdata->leds[i].fwnode;
+
+			if (is_of_node(init_data.fwnode)) {
+				if (to_of_node(init_data.fwnode)->name[0] ==
+				    '\0')
+					set_default_label = true;
+				else
+					set_default_label = false;
+			} else {
+				set_default_label = true;
+			}
+
+			if (set_default_label) {
+				snprintf(default_label, sizeof(default_label),
+					 "%d", i);
+				init_data.default_label = default_label;
+			} else {
+				init_data.default_label = NULL;
+			}
+
+			err = devm_led_classdev_register_ext(&client->dev, led,
+							     &init_data);
+<<<<<<< HEAD
+			if (err)
+				return err;
+
+			/*
+			 * For default-state == "keep", let the core update the
+			 * brightness from the hardware, then check the
+			 * brightness to see if it's using PWM1. If so, PWM1
+			 * should not be written below.
+			 */
+			if (pdata->leds[i].default_state ==
+			    LEDS_GPIO_DEFSTATE_KEEP) {
+				if (led->brightness != LED_FULL &&
+				    led->brightness != LED_OFF &&
+				    led->brightness != LED_HALF)
+					keep_pwm = true;
+			}
+=======
 			/*
 			 * Platform data can specify LED names and
 			 * default triggers
@@ -524,6 +843,25 @@ static int pca955x_probe(struct i2c_client *client,
 			err = pca955x_led_set(&pca955x_led->led_cdev, LED_OFF);
 			if (err)
 				return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (err)
+				return err;
+
+			/*
+			 * For default-state == "keep", let the core update the
+			 * brightness from the hardware, then check the
+			 * brightness to see if it's using PWM1. If so, PWM1
+			 * should not be written below.
+			 */
+			if (pdata->leds[i].default_state ==
+			    LEDS_GPIO_DEFSTATE_KEEP) {
+				if (led->brightness != LED_FULL &&
+				    led->brightness != LED_OFF &&
+				    led->brightness != LED_HALF)
+					keep_pwm = true;
+			}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -532,10 +870,25 @@ static int pca955x_probe(struct i2c_client *client,
 	if (err)
 		return err;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!keep_pwm) {
+		/* PWM1 is used for variable brightness, default to OFF */
+		err = pca955x_write_pwm(client, 1, 0);
+		if (err)
+			return err;
+	}
+<<<<<<< HEAD
+=======
 	/* PWM1 is used for variable brightness, default to OFF */
 	err = pca955x_write_pwm(client, 1, 0);
 	if (err)
 		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Set to fast frequency so we do not see flashing */
 	err = pca955x_write_psc(client, 0, 0);
@@ -581,7 +934,15 @@ static struct i2c_driver pca955x_driver = {
 		.name	= "leds-pca955x",
 		.of_match_table = of_pca955x_match,
 	},
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.probe_new = pca955x_probe,
+=======
 	.probe	= pca955x_probe,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.probe_new = pca955x_probe,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table = pca955x_id,
 };
 

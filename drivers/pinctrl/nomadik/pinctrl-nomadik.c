@@ -815,7 +815,15 @@ static void nmk_gpio_irq_handler(struct irq_desc *desc)
 	while (status) {
 		int bit = __ffs(status);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		generic_handle_domain_irq(chip->irq.domain, bit);
+=======
 		generic_handle_irq(irq_find_mapping(chip->irq.domain, bit));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		generic_handle_domain_irq(chip->irq.domain, bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		status &= ~BIT(bit);
 	}
 

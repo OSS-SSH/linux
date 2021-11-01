@@ -163,12 +163,30 @@ static void intel_crtc_free(struct intel_crtc *crtc)
 	kfree(crtc);
 }
 
-static void intel_crtc_destroy(struct drm_crtc *crtc)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void intel_crtc_destroy(struct drm_crtc *_crtc)
 {
-	struct intel_crtc *intel_crtc = to_intel_crtc(crtc);
+	struct intel_crtc *crtc = to_intel_crtc(_crtc);
 
+	drm_crtc_cleanup(&crtc->base);
+	kfree(crtc);
+=======
+static void intel_crtc_destroy(struct drm_crtc *crtc)
+=======
+static void intel_crtc_destroy(struct drm_crtc *_crtc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct intel_crtc *crtc = to_intel_crtc(_crtc);
+
+<<<<<<< HEAD
 	drm_crtc_cleanup(crtc);
 	kfree(intel_crtc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_crtc_cleanup(&crtc->base);
+	kfree(crtc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int intel_crtc_late_register(struct drm_crtc *crtc)
@@ -335,7 +353,15 @@ int intel_crtc_init(struct drm_i915_private *dev_priv, enum pipe pipe)
 		dev_priv->plane_to_crtc_mapping[i9xx_plane] = crtc;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (DISPLAY_VER(dev_priv) >= 11)
+=======
 	if (DISPLAY_VER(dev_priv) >= 11 || IS_CANNONLAKE(dev_priv))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (DISPLAY_VER(dev_priv) >= 11)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		drm_crtc_create_scaling_filter_property(&crtc->base,
 						BIT(DRM_SCALING_FILTER_DEFAULT) |
 						BIT(DRM_SCALING_FILTER_NEAREST_NEIGHBOR));

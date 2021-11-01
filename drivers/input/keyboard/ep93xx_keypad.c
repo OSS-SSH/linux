@@ -157,7 +157,15 @@ static int ep93xx_keypad_open(struct input_dev *pdev)
 
 	if (!keypad->enabled) {
 		ep93xx_keypad_config(keypad);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		clk_prepare_enable(keypad->clk);
+=======
 		clk_enable(keypad->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		clk_prepare_enable(keypad->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		keypad->enabled = true;
 	}
 
@@ -169,7 +177,15 @@ static void ep93xx_keypad_close(struct input_dev *pdev)
 	struct ep93xx_keypad *keypad = input_get_drvdata(pdev);
 
 	if (keypad->enabled) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		clk_disable_unprepare(keypad->clk);
+=======
 		clk_disable(keypad->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		clk_disable_unprepare(keypad->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		keypad->enabled = false;
 	}
 }

@@ -48,7 +48,15 @@ xfs_dir2_sf_entsize(
 	count += sizeof(struct xfs_dir2_sf_entry);	/* namelen + offset */
 	count += hdr->i8count ? XFS_INO64_SIZE : XFS_INO32_SIZE; /* ino # */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_ftype(mp))
+=======
 	if (xfs_sb_version_hasftype(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_ftype(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		count += sizeof(uint8_t);
 	return count;
 }
@@ -76,7 +84,15 @@ xfs_dir2_sf_get_ino(
 {
 	uint8_t				*from = sfep->name + sfep->namelen;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_ftype(mp))
+=======
 	if (xfs_sb_version_hasftype(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_ftype(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		from++;
 
 	if (!hdr->i8count)
@@ -95,7 +111,15 @@ xfs_dir2_sf_put_ino(
 
 	ASSERT(ino <= XFS_MAXINUMBER);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_ftype(mp))
+=======
 	if (xfs_sb_version_hasftype(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_ftype(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		to++;
 
 	if (hdr->i8count)
@@ -135,7 +159,15 @@ xfs_dir2_sf_get_ftype(
 	struct xfs_mount		*mp,
 	struct xfs_dir2_sf_entry	*sfep)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_ftype(mp)) {
+=======
 	if (xfs_sb_version_hasftype(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_ftype(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uint8_t			ftype = sfep->name[sfep->namelen];
 
 		if (ftype < XFS_DIR3_FT_MAX)
@@ -153,7 +185,15 @@ xfs_dir2_sf_put_ftype(
 {
 	ASSERT(ftype < XFS_DIR3_FT_MAX);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_ftype(mp))
+=======
 	if (xfs_sb_version_hasftype(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_ftype(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sfep->name[sfep->namelen] = ftype;
 }
 
@@ -192,7 +232,15 @@ xfs_dir2_block_sfsize(
 	 * if there is a filetype field, add the extra byte to the namelen
 	 * for each entry that we see.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	has_ftype = xfs_has_ftype(mp) ? 1 : 0;
+=======
 	has_ftype = xfs_sb_version_hasftype(&mp->m_sb) ? 1 : 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	has_ftype = xfs_has_ftype(mp) ? 1 : 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	count = i8count = namelen = 0;
 	btp = xfs_dir2_block_tail_p(geo, hdr);

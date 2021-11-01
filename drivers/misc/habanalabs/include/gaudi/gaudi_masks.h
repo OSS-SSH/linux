@@ -449,4 +449,30 @@ enum axi_id {
 #define PCIE_AUX_FLR_CTRL_HW_CTRL_MASK                               0x1
 #define PCIE_AUX_FLR_CTRL_INT_MASK_MASK                              0x2
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_STATUS_0_VALID_SHIFT        0
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_STATUS_0_VALID_MASK         0x1
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_STATUS_0_PENDING_SHIFT      1
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_STATUS_0_PENDING_MASK       0x1FE
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_ARM_0_SID_SHIFT             0
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_ARM_0_SID_MASK              0xFF
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_ARM_0_MASK_SHIFT            8
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_ARM_0_MASK_MASK             0xFF00
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_ARM_0_SOP_SHIFT             16
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_ARM_0_SOP_MASK              0x10000
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_ARM_0_SOD_SHIFT             17
+#define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_ARM_0_SOD_MASK              0xFFFE0000
+#define TPC0_QM_CP_STS_0_FENCE_ID_SHIFT                              20
+#define TPC0_QM_CP_STS_0_FENCE_ID_MASK                               0x300000
+#define TPC0_QM_CP_STS_0_FENCE_IN_PROGRESS_SHIFT                     22
+#define TPC0_QM_CP_STS_0_FENCE_IN_PROGRESS_MASK                      0x400000
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* GAUDI_MASKS_H_ */

@@ -3,7 +3,13 @@
  * Copyright 2019 Hans de Goede <hdegoede@redhat.com>
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <linux/dma-buf.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/module.h>
 #include <linux/usb.h>
 
@@ -268,6 +274,16 @@ static void gm12u320_copy_fb_to_blocks(struct gm12u320_device *gm12u320)
 	y2 = gm12u320->fb_update.rect.y2;
 	vaddr = gm12u320->fb_update.src_map.vaddr; /* TODO: Use mapping abstraction properly */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = drm_gem_fb_begin_cpu_access(fb, DMA_FROM_DEVICE);
+	if (ret) {
+		GM12U320_ERR("drm_gem_fb_begin_cpu_access err: %d\n", ret);
+		goto put_fb;
+<<<<<<< HEAD
+=======
 	if (fb->obj[0]->import_attach) {
 		ret = dma_buf_begin_cpu_access(
 			fb->obj[0]->import_attach->dmabuf, DMA_FROM_DEVICE);
@@ -275,6 +291,9 @@ static void gm12u320_copy_fb_to_blocks(struct gm12u320_device *gm12u320)
 			GM12U320_ERR("dma_buf_begin_cpu_access err: %d\n", ret);
 			goto put_fb;
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	src = vaddr + y1 * fb->pitches[0] + x1 * 4;
@@ -311,12 +330,20 @@ static void gm12u320_copy_fb_to_blocks(struct gm12u320_device *gm12u320)
 		src += fb->pitches[0];
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
+=======
 	if (fb->obj[0]->import_attach) {
 		ret = dma_buf_end_cpu_access(fb->obj[0]->import_attach->dmabuf,
 					     DMA_FROM_DEVICE);
 		if (ret)
 			GM12U320_ERR("dma_buf_end_cpu_access err: %d\n", ret);
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 put_fb:
 	drm_framebuffer_put(fb);
 	gm12u320->fb_update.fb = NULL;
@@ -563,7 +590,15 @@ static void gm12u320_pipe_enable(struct drm_simple_display_pipe *pipe,
 	struct drm_shadow_plane_state *shadow_plane_state = to_drm_shadow_plane_state(plane_state);
 
 	gm12u320->fb_update.draw_status_timeout = FIRST_FRAME_TIMEOUT;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	gm12u320_fb_mark_dirty(plane_state->fb, &shadow_plane_state->data[0], &rect);
+=======
 	gm12u320_fb_mark_dirty(plane_state->fb, &shadow_plane_state->map[0], &rect);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gm12u320_fb_mark_dirty(plane_state->fb, &shadow_plane_state->data[0], &rect);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void gm12u320_pipe_disable(struct drm_simple_display_pipe *pipe)
@@ -581,7 +616,15 @@ static void gm12u320_pipe_update(struct drm_simple_display_pipe *pipe,
 	struct drm_rect rect;
 
 	if (drm_atomic_helper_damage_merged(old_state, state, &rect))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		gm12u320_fb_mark_dirty(state->fb, &shadow_plane_state->data[0], &rect);
+=======
 		gm12u320_fb_mark_dirty(state->fb, &shadow_plane_state->map[0], &rect);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		gm12u320_fb_mark_dirty(state->fb, &shadow_plane_state->data[0], &rect);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct drm_simple_display_pipe_funcs gm12u320_pipe_funcs = {

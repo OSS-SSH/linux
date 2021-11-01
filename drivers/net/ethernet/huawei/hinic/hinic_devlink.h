@@ -108,9 +108,21 @@ struct host_image_st {
 	u32 device_id;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct devlink *hinic_devlink_alloc(struct device *dev);
+void hinic_devlink_free(struct devlink *devlink);
+int hinic_devlink_register(struct hinic_devlink_priv *priv);
+=======
 struct devlink *hinic_devlink_alloc(void);
 void hinic_devlink_free(struct devlink *devlink);
 int hinic_devlink_register(struct hinic_devlink_priv *priv, struct device *dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct devlink *hinic_devlink_alloc(struct device *dev);
+void hinic_devlink_free(struct devlink *devlink);
+int hinic_devlink_register(struct hinic_devlink_priv *priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void hinic_devlink_unregister(struct hinic_devlink_priv *priv);
 
 int hinic_health_reporters_create(struct hinic_devlink_priv *priv);

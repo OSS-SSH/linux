@@ -37,7 +37,15 @@ Documentation/userspace-api/media/index.rst
     rc-core
     mc-core
     cec-core
+<<<<<<< HEAD
+<<<<<<< HEAD
+    tx-rx
+=======
     csi2
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    tx-rx
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     camera-sensor
 
     drivers/index

@@ -127,6 +127,18 @@ static void batadv_dat_entry_release(struct kref *ref)
  */
 static void batadv_dat_entry_put(struct batadv_dat_entry *dat_entry)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!dat_entry)
+		return;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!dat_entry)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kref_put(&dat_entry->refcount, batadv_dat_entry_release);
 }
 
@@ -405,8 +417,16 @@ static void batadv_dat_entry_add(struct batadv_priv *bat_priv, __be32 ip,
 		   &dat_entry->ip, dat_entry->mac_addr, batadv_print_vid(vid));
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_dat_entry_put(dat_entry);
+=======
 	if (dat_entry)
 		batadv_dat_entry_put(dat_entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_dat_entry_put(dat_entry);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_BATMAN_ADV_DEBUG
@@ -594,8 +614,16 @@ static void batadv_choose_next_candidate(struct batadv_priv *bat_priv,
 				continue;
 
 			max = tmp_max;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			batadv_orig_node_put(max_orig_node);
+=======
 			if (max_orig_node)
 				batadv_orig_node_put(max_orig_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			batadv_orig_node_put(max_orig_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			max_orig_node = orig_node;
 		}
 		rcu_read_unlock();
@@ -981,11 +1009,23 @@ int batadv_dat_cache_dump(struct sk_buff *msg, struct netlink_callback *cb)
 	ret = msg->len;
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(primary_if);
+
+	dev_put(soft_iface);
+=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 
 	if (soft_iface)
 		dev_put(soft_iface);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+
+	dev_put(soft_iface);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -1218,8 +1258,16 @@ bool batadv_dat_snoop_outgoing_arp_request(struct batadv_priv *bat_priv,
 					      BATADV_P_DAT_DHT_GET);
 	}
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_dat_entry_put(dat_entry);
+=======
 	if (dat_entry)
 		batadv_dat_entry_put(dat_entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_dat_entry_put(dat_entry);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -1286,8 +1334,16 @@ bool batadv_dat_snoop_incoming_arp_request(struct batadv_priv *bat_priv,
 		ret = true;
 	}
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_dat_entry_put(dat_entry);
+=======
 	if (dat_entry)
 		batadv_dat_entry_put(dat_entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_dat_entry_put(dat_entry);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		kfree_skb(skb);
 	return ret;
@@ -1420,8 +1476,16 @@ bool batadv_dat_snoop_incoming_arp_reply(struct batadv_priv *bat_priv,
 out:
 	if (dropped)
 		kfree_skb(skb);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_dat_entry_put(dat_entry);
+=======
 	if (dat_entry)
 		batadv_dat_entry_put(dat_entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_dat_entry_put(dat_entry);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* if dropped == false -> deliver to the interface */
 	return dropped;
 }
@@ -1830,7 +1894,15 @@ bool batadv_dat_drop_broadcast_packet(struct batadv_priv *bat_priv,
 	ret = true;
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_dat_entry_put(dat_entry);
+=======
 	if (dat_entry)
 		batadv_dat_entry_put(dat_entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_dat_entry_put(dat_entry);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }

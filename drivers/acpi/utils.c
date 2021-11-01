@@ -860,11 +860,23 @@ EXPORT_SYMBOL(acpi_dev_present);
  * Return the next match of ACPI device if another matching device was present
  * at the moment of invocation, or NULL otherwise.
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * The caller is responsible for invoking acpi_dev_put() on the returned device.
+ * On the other hand the function invokes  acpi_dev_put() on the given @adev
+ * assuming that its reference counter had been increased beforehand.
+=======
  * FIXME: The function does not tolerate the sudden disappearance of @adev, e.g.
  * in the case of a hotplug event. That said, the caller should ensure that
  * this will never happen.
  *
  * The caller is responsible for invoking acpi_dev_put() on the returned device.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * The caller is responsible for invoking acpi_dev_put() on the returned device.
+ * On the other hand the function invokes  acpi_dev_put() on the given @adev
+ * assuming that its reference counter had been increased beforehand.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * See additional information in acpi_dev_present() as well.
  */
@@ -880,6 +892,14 @@ acpi_dev_get_next_match_dev(struct acpi_device *adev, const char *hid, const cha
 	match.hrv = hrv;
 
 	dev = bus_find_device(&acpi_bus_type, start, &match, acpi_dev_match_cb);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	acpi_dev_put(adev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	acpi_dev_put(adev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return dev ? to_acpi_device(dev) : NULL;
 }
 EXPORT_SYMBOL(acpi_dev_get_next_match_dev);

@@ -103,7 +103,17 @@ int mlx5dr_fw_create_md_tbl(struct mlx5dr_domain *dmn,
 			    int num_dest,
 			    bool reformat_req,
 			    u32 *tbl_id,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			    u32 *group_id,
+			    bool ignore_flow_level)
+=======
 			    u32 *group_id)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    u32 *group_id,
+			    bool ignore_flow_level)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mlx5dr_cmd_create_flow_table_attr ft_attr = {};
 	struct mlx5dr_cmd_fte_info fte_info = {};
@@ -137,6 +147,14 @@ int mlx5dr_fw_create_md_tbl(struct mlx5dr_domain *dmn,
 	fte_info.dests_size = num_dest;
 	fte_info.val = val;
 	fte_info.dest_arr = dest;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	fte_info.ignore_flow_level = ignore_flow_level;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fte_info.ignore_flow_level = ignore_flow_level;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = mlx5dr_cmd_set_fte(dmn->mdev, 0, 0, &ft_info, *group_id, &fte_info);
 	if (ret) {

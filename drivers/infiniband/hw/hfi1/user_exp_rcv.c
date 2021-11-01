@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
+/*
+ * Copyright(c) 2020 Cornelis Networks, Inc.
+ * Copyright(c) 2015-2018 Intel Corporation.
+=======
 /*
  * Copyright(c) 2020 Cornelis Networks, Inc.
  * Copyright(c) 2015-2018 Intel Corporation.
@@ -44,6 +51,13 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
+/*
+ * Copyright(c) 2020 Cornelis Networks, Inc.
+ * Copyright(c) 2015-2018 Intel Corporation.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #include <asm/page.h>
 #include <linux/string.h>
@@ -177,8 +191,18 @@ static void unpin_rcv_pages(struct hfi1_filedata *fd,
 	struct mm_struct *mm;
 
 	if (mapped) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dma_unmap_single(&dd->pcidev->dev, node->dma_addr,
+				 node->npages * PAGE_SIZE, DMA_FROM_DEVICE);
+=======
 		pci_unmap_single(dd->pcidev, node->dma_addr,
 				 node->npages * PAGE_SIZE, PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_single(&dd->pcidev->dev, node->dma_addr,
+				 node->npages * PAGE_SIZE, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pages = &node->pages[idx];
 		mm = mm_from_tid_node(node);
 	} else {
@@ -739,9 +763,19 @@ static int set_rcvarray_entry(struct hfi1_filedata *fd,
 	if (!node)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	phys = dma_map_single(&dd->pcidev->dev, __va(page_to_phys(pages[0])),
+			      npages * PAGE_SIZE, DMA_FROM_DEVICE);
+=======
 	phys = pci_map_single(dd->pcidev,
 			      __va(page_to_phys(pages[0])),
 			      npages * PAGE_SIZE, PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phys = dma_map_single(&dd->pcidev->dev, __va(page_to_phys(pages[0])),
+			      npages * PAGE_SIZE, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dma_mapping_error(&dd->pcidev->dev, phys)) {
 		dd_dev_err(dd, "Failed to DMA map Exp Rcv pages 0x%llx\n",
 			   phys);
@@ -783,8 +817,18 @@ out_unmap:
 	hfi1_cdbg(TID, "Failed to insert RB node %u 0x%lx, 0x%lx %d",
 		  node->rcventry, node->notifier.interval_tree.start,
 		  node->phys, ret);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dma_unmap_single(&dd->pcidev->dev, phys, npages * PAGE_SIZE,
+			 DMA_FROM_DEVICE);
+=======
 	pci_unmap_single(dd->pcidev, phys, npages * PAGE_SIZE,
 			 PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_unmap_single(&dd->pcidev->dev, phys, npages * PAGE_SIZE,
+			 DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(node);
 	return -EFAULT;
 }

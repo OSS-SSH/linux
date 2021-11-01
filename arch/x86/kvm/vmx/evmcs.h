@@ -73,8 +73,14 @@ struct evmcs_field {
 extern const struct evmcs_field vmcs_field_to_evmcs_1[];
 extern const unsigned int nr_evmcs_1_fields;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define ROL16(val, n) ((u16)(((u16)(val) << (n)) | ((u16)(val) >> (16 - (n)))))
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static __always_inline int get_evmcs_offset(unsigned long field,
 					    u16 *clean_field)
 {
@@ -95,8 +101,14 @@ static __always_inline int get_evmcs_offset(unsigned long field,
 	return evmcs_field->offset;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #undef ROL16
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void evmcs_write64(unsigned long field, u64 value)
 {
 	u16 clean_field;

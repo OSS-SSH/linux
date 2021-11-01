@@ -38,7 +38,15 @@ DEFINE_PER_CPU(struct xics_cppr, xics_cppr);
 
 struct irq_domain *xics_host;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static struct ics *xics_ics;
+=======
 static LIST_HEAD(ics_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct ics *xics_ics;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void xics_update_irq_servers(void)
 {
@@ -111,12 +119,28 @@ void xics_setup_cpu(void)
 
 void xics_mask_unknown_vec(unsigned int vec)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pr_err("Interrupt 0x%x (real) is invalid, disabling it.\n", vec);
+
+	if (WARN_ON(!xics_ics))
+		return;
+	xics_ics->mask_unknown(xics_ics, vec);
+=======
 	struct ics *ics;
 
 	pr_err("Interrupt 0x%x (real) is invalid, disabling it.\n", vec);
 
 	list_for_each_entry(ics, &ics_list, link)
 		ics->mask_unknown(ics, vec);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_err("Interrupt 0x%x (real) is invalid, disabling it.\n", vec);
+
+	if (WARN_ON(!xics_ics))
+		return;
+	xics_ics->mask_unknown(xics_ics, vec);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 
@@ -133,7 +157,15 @@ static void xics_request_ipi(void)
 	 * IPIs are marked IRQF_PERCPU. The handler was set in map.
 	 */
 	BUG_ON(request_irq(ipi, icp_ops->ipi_action,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			   IRQF_NO_DEBUG | IRQF_PERCPU | IRQF_NO_THREAD, "IPI", NULL));
+=======
 			   IRQF_PERCPU | IRQF_NO_THREAD, "IPI", NULL));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   IRQF_NO_DEBUG | IRQF_PERCPU | IRQF_NO_THREAD, "IPI", NULL));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void __init xics_smp_probe(void)
@@ -184,6 +216,16 @@ void xics_migrate_irqs_away(void)
 	unsigned int irq, virq;
 	struct irq_desc *desc;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pr_debug("%s: CPU %u\n", __func__, cpu);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_debug("%s: CPU %u\n", __func__, cpu);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* If we used to be the default server, move to the new "boot_cpuid" */
 	if (hw_cpu == xics_default_server)
 		xics_update_irq_servers();
@@ -198,7 +240,15 @@ void xics_migrate_irqs_away(void)
 		struct irq_chip *chip;
 		long server;
 		unsigned long flags;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		struct irq_data *irqd;
+=======
 		struct ics *ics;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct irq_data *irqd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* We can't set affinity on ISA interrupts */
 		if (virq < NR_IRQS_LEGACY)
@@ -206,9 +256,25 @@ void xics_migrate_irqs_away(void)
 		/* We only need to migrate enabled IRQS */
 		if (!desc->action)
 			continue;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		/* We need a mapping in the XICS IRQ domain */
+		irqd = irq_domain_get_irq_data(xics_host, virq);
+		if (!irqd)
+			continue;
+		irq = irqd_to_hwirq(irqd);
+=======
 		if (desc->irq_data.domain != xics_host)
 			continue;
 		irq = desc->irq_data.hwirq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* We need a mapping in the XICS IRQ domain */
+		irqd = irq_domain_get_irq_data(xics_host, virq);
+		if (!irqd)
+			continue;
+		irq = irqd_to_hwirq(irqd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* We need to get IPIs still. */
 		if (irq == XICS_IPI || irq == XICS_IRQ_SPURIOUS)
 			continue;
@@ -219,6 +285,13 @@ void xics_migrate_irqs_away(void)
 		raw_spin_lock_irqsave(&desc->lock, flags);
 
 		/* Locate interrupt server */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		server = xics_ics->get_server(xics_ics, irq);
+		if (server < 0) {
+			pr_err("%s: Can't find server for irq %d/%x\n",
+			       __func__, virq, irq);
+=======
 		server = -1;
 		ics = irq_desc_get_chip_data(desc);
 		if (ics)
@@ -226,6 +299,13 @@ void xics_migrate_irqs_away(void)
 		if (server < 0) {
 			printk(KERN_ERR "%s: Can't find server for irq %d\n",
 			       __func__, irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		server = xics_ics->get_server(xics_ics, irq);
+		if (server < 0) {
+			pr_err("%s: Can't find server for irq %d/%x\n",
+			       __func__, virq, irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto unlock;
 		}
 
@@ -307,6 +387,12 @@ int xics_get_irq_server(unsigned int virq, const struct cpumask *cpumask,
 static int xics_host_match(struct irq_domain *h, struct device_node *node,
 			   enum irq_domain_bus_token bus_token)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (WARN_ON(!xics_ics))
+		return 0;
+	return xics_ics->host_match(xics_ics, node) ? 1 : 0;
+=======
 	struct ics *ics;
 
 	list_for_each_entry(ics, &ics_list, link)
@@ -314,6 +400,12 @@ static int xics_host_match(struct irq_domain *h, struct device_node *node,
 			return 1;
 
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (WARN_ON(!xics_ics))
+		return 0;
+	return xics_ics->host_match(xics_ics, node) ? 1 : 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Dummies */
@@ -327,12 +419,26 @@ static struct irq_chip xics_ipi_chip = {
 	.irq_unmask = xics_ipi_unmask,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int xics_host_map(struct irq_domain *domain, unsigned int virq,
+			 irq_hw_number_t hwirq)
+{
+	pr_devel("xics: map virq %d, hwirq 0x%lx\n", virq, hwirq);
+=======
 static int xics_host_map(struct irq_domain *h, unsigned int virq,
 			 irq_hw_number_t hw)
 {
 	struct ics *ics;
 
 	pr_devel("xics: map virq %d, hwirq 0x%lx\n", virq, hw);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int xics_host_map(struct irq_domain *domain, unsigned int virq,
+			 irq_hw_number_t hwirq)
+{
+	pr_devel("xics: map virq %d, hwirq 0x%lx\n", virq, hwirq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Mark interrupts as edge sensitive by default so that resend
@@ -342,18 +448,48 @@ static int xics_host_map(struct irq_domain *h, unsigned int virq,
 	irq_clear_status_flags(virq, IRQ_LEVEL);
 
 	/* Don't call into ICS for IPIs */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (hwirq == XICS_IPI) {
+=======
 	if (hw == XICS_IPI) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (hwirq == XICS_IPI) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		irq_set_chip_and_handler(virq, &xics_ipi_chip,
 					 handle_percpu_irq);
 		return 0;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (WARN_ON(!xics_ics))
+		return -EINVAL;
+
+	if (xics_ics->check(xics_ics, hwirq))
+		return -EINVAL;
+
+	/* Let the ICS be the chip data for the XICS domain. For ICS native */
+	irq_domain_set_info(domain, virq, hwirq, xics_ics->chip,
+			    xics_ics, handle_fasteoi_irq, NULL, NULL);
+<<<<<<< HEAD
+
+	return 0;
+=======
 	/* Let the ICS setup the chip data */
 	list_for_each_entry(ics, &ics_list, link)
 		if (ics->map(ics, virq) == 0)
 			return 0;
 
 	return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int xics_host_xlate(struct irq_domain *h, struct device_node *ct,
@@ -412,22 +548,128 @@ int xics_retrigger(struct irq_data *data)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#ifdef	CONFIG_IRQ_DOMAIN_HIERARCHY
+static int xics_host_domain_translate(struct irq_domain *d, struct irq_fwspec *fwspec,
+				      unsigned long *hwirq, unsigned int *type)
+{
+	return xics_host_xlate(d, to_of_node(fwspec->fwnode), fwspec->param,
+			       fwspec->param_count, hwirq, type);
+}
+
+static int xics_host_domain_alloc(struct irq_domain *domain, unsigned int virq,
+				  unsigned int nr_irqs, void *arg)
+{
+	struct irq_fwspec *fwspec = arg;
+	irq_hw_number_t hwirq;
+	unsigned int type = IRQ_TYPE_NONE;
+	int i, rc;
+
+	rc = xics_host_domain_translate(domain, fwspec, &hwirq, &type);
+	if (rc)
+		return rc;
+
+	pr_debug("%s %d/%lx #%d\n", __func__, virq, hwirq, nr_irqs);
+
+	for (i = 0; i < nr_irqs; i++)
+		irq_domain_set_info(domain, virq + i, hwirq + i, xics_ics->chip,
+				    xics_ics, handle_fasteoi_irq, NULL, NULL);
+
+	return 0;
+}
+
+static void xics_host_domain_free(struct irq_domain *domain,
+				  unsigned int virq, unsigned int nr_irqs)
+{
+	pr_debug("%s %d #%d\n", __func__, virq, nr_irqs);
+}
+#endif
+
+<<<<<<< HEAD
 static const struct irq_domain_ops xics_host_ops = {
+#ifdef	CONFIG_IRQ_DOMAIN_HIERARCHY
+	.alloc	= xics_host_domain_alloc,
+	.free	= xics_host_domain_free,
+	.translate = xics_host_domain_translate,
+#endif
+=======
+static const struct irq_domain_ops xics_host_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct irq_domain_ops xics_host_ops = {
+#ifdef	CONFIG_IRQ_DOMAIN_HIERARCHY
+	.alloc	= xics_host_domain_alloc,
+	.free	= xics_host_domain_free,
+	.translate = xics_host_domain_translate,
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.match = xics_host_match,
 	.map = xics_host_map,
 	.xlate = xics_host_xlate,
 };
 
-static void __init xics_init_host(void)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int __init xics_allocate_domain(void)
 {
-	xics_host = irq_domain_add_tree(NULL, &xics_host_ops, NULL);
-	BUG_ON(xics_host == NULL);
+	struct fwnode_handle *fn;
+
+	fn = irq_domain_alloc_named_fwnode("XICS");
+	if (!fn)
+		return -ENOMEM;
+
+	xics_host = irq_domain_create_tree(fn, &xics_host_ops, NULL);
+	if (!xics_host) {
+		irq_domain_free_fwnode(fn);
+		return -ENOMEM;
+	}
+
 	irq_set_default_host(xics_host);
+	return 0;
+=======
+static void __init xics_init_host(void)
+=======
+static int __init xics_allocate_domain(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct fwnode_handle *fn;
+
+	fn = irq_domain_alloc_named_fwnode("XICS");
+	if (!fn)
+		return -ENOMEM;
+
+	xics_host = irq_domain_create_tree(fn, &xics_host_ops, NULL);
+	if (!xics_host) {
+		irq_domain_free_fwnode(fn);
+		return -ENOMEM;
+	}
+
+	irq_set_default_host(xics_host);
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void __init xics_register_ics(struct ics *ics)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (WARN_ONCE(xics_ics, "XICS: Source Controller is already defined !"))
+		return;
+	xics_ics = ics;
+=======
 	list_add(&ics->link, &ics_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (WARN_ONCE(xics_ics, "XICS: Source Controller is already defined !"))
+		return;
+	xics_ics = ics;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __init xics_get_server_size(void)
@@ -484,6 +726,18 @@ void __init xics_init(void)
 	/* Initialize common bits */
 	xics_get_server_size();
 	xics_update_irq_servers();
+<<<<<<< HEAD
+<<<<<<< HEAD
+	rc = xics_allocate_domain();
+	if (rc < 0)
+		pr_err("XICS: Failed to create IRQ domain");
+=======
 	xics_init_host();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rc = xics_allocate_domain();
+	if (rc < 0)
+		pr_err("XICS: Failed to create IRQ domain");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xics_setup_cpu();
 }

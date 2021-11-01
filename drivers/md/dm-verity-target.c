@@ -475,6 +475,14 @@ static int verity_verify_io(struct dm_verity_io *io)
 	struct bvec_iter start;
 	unsigned b;
 	struct crypto_wait wait;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct bio *bio = dm_bio_from_per_bio_data(io, v->ti->per_io_data_size);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct bio *bio = dm_bio_from_per_bio_data(io, v->ti->per_io_data_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (b = 0; b < io->n_blocks; b++) {
 		int r;
@@ -529,9 +537,29 @@ static int verity_verify_io(struct dm_verity_io *io)
 		else if (verity_fec_decode(v, io, DM_VERITY_BLOCK_TYPE_DATA,
 					   cur_block, NULL, &start) == 0)
 			continue;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		else {
+			if (bio->bi_status) {
+				/*
+				 * Error correction failed; Just return error
+				 */
+				return -EIO;
+			}
+			if (verity_handle_err(v, DM_VERITY_BLOCK_TYPE_DATA,
+					      cur_block))
+				return -EIO;
+		}
+<<<<<<< HEAD
+=======
 		else if (verity_handle_err(v, DM_VERITY_BLOCK_TYPE_DATA,
 					   cur_block))
 			return -EIO;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -772,6 +800,58 @@ static void verity_status(struct dm_target *ti, status_type_t type,
 			DMEMIT(" " DM_VERITY_ROOT_HASH_VERIFICATION_OPT_SIG_KEY
 				" %s", v->signature_key_desc);
 		break;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	case STATUSTYPE_IMA:
+		DMEMIT_TARGET_NAME_VERSION(ti->type);
+		DMEMIT(",hash_failed=%c", v->hash_failed ? 'C' : 'V');
+		DMEMIT(",verity_version=%u", v->version);
+		DMEMIT(",data_device_name=%s", v->data_dev->name);
+		DMEMIT(",hash_device_name=%s", v->hash_dev->name);
+		DMEMIT(",verity_algorithm=%s", v->alg_name);
+
+		DMEMIT(",root_digest=");
+		for (x = 0; x < v->digest_size; x++)
+			DMEMIT("%02x", v->root_digest[x]);
+
+		DMEMIT(",salt=");
+		if (!v->salt_size)
+			DMEMIT("-");
+		else
+			for (x = 0; x < v->salt_size; x++)
+				DMEMIT("%02x", v->salt[x]);
+
+		DMEMIT(",ignore_zero_blocks=%c", v->zero_digest ? 'y' : 'n');
+		DMEMIT(",check_at_most_once=%c", v->validated_blocks ? 'y' : 'n');
+		if (v->signature_key_desc)
+			DMEMIT(",root_hash_sig_key_desc=%s", v->signature_key_desc);
+
+		if (v->mode != DM_VERITY_MODE_EIO) {
+			DMEMIT(",verity_mode=");
+			switch (v->mode) {
+			case DM_VERITY_MODE_LOGGING:
+				DMEMIT(DM_VERITY_OPT_LOGGING);
+				break;
+			case DM_VERITY_MODE_RESTART:
+				DMEMIT(DM_VERITY_OPT_RESTART);
+				break;
+			case DM_VERITY_MODE_PANIC:
+				DMEMIT(DM_VERITY_OPT_PANIC);
+				break;
+			default:
+				DMEMIT("invalid");
+			}
+		}
+		DMEMIT(";");
+		break;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

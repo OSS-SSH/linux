@@ -38,5 +38,13 @@ void vangogh_reg_base_init(struct amdgpu_device *adev);
 int dimgrey_cavefish_reg_base_init(struct amdgpu_device *adev);
 int beige_goby_reg_base_init(struct amdgpu_device *adev);
 int yellow_carp_reg_base_init(struct amdgpu_device *adev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+int cyan_skillfish_reg_base_init(struct amdgpu_device *adev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int cyan_skillfish_reg_base_init(struct amdgpu_device *adev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

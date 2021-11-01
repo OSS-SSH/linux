@@ -80,6 +80,20 @@ void touchscreen_parse_properties(struct input_dev *input, bool multitouch,
 
 	data_present = touchscreen_get_prop_u32(dev, "touchscreen-min-x",
 						input_abs_get_min(input, axis_x),
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+						&minimum);
+	data_present |= touchscreen_get_prop_u32(dev, "touchscreen-size-x",
+						 input_abs_get_max(input,
+								   axis_x) + 1,
+						 &maximum);
+	data_present |= touchscreen_get_prop_u32(dev, "touchscreen-fuzz-x",
+						 input_abs_get_fuzz(input, axis_x),
+						 &fuzz);
+<<<<<<< HEAD
+=======
 						&minimum) |
 		       touchscreen_get_prop_u32(dev, "touchscreen-size-x",
 						input_abs_get_max(input,
@@ -88,11 +102,28 @@ void touchscreen_parse_properties(struct input_dev *input, bool multitouch,
 		       touchscreen_get_prop_u32(dev, "touchscreen-fuzz-x",
 						input_abs_get_fuzz(input, axis_x),
 						&fuzz);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (data_present)
 		touchscreen_set_params(input, axis_x, minimum, maximum - 1, fuzz);
 
 	data_present = touchscreen_get_prop_u32(dev, "touchscreen-min-y",
 						input_abs_get_min(input, axis_y),
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+						&minimum);
+	data_present |= touchscreen_get_prop_u32(dev, "touchscreen-size-y",
+						 input_abs_get_max(input,
+								   axis_y) + 1,
+						 &maximum);
+	data_present |= touchscreen_get_prop_u32(dev, "touchscreen-fuzz-y",
+						 input_abs_get_fuzz(input, axis_y),
+						 &fuzz);
+<<<<<<< HEAD
+=======
 						&minimum) |
 		       touchscreen_get_prop_u32(dev, "touchscreen-size-y",
 						input_abs_get_max(input,
@@ -101,6 +132,9 @@ void touchscreen_parse_properties(struct input_dev *input, bool multitouch,
 		       touchscreen_get_prop_u32(dev, "touchscreen-fuzz-y",
 						input_abs_get_fuzz(input, axis_y),
 						&fuzz);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (data_present)
 		touchscreen_set_params(input, axis_y, minimum, maximum - 1, fuzz);
 
@@ -108,11 +142,25 @@ void touchscreen_parse_properties(struct input_dev *input, bool multitouch,
 	data_present = touchscreen_get_prop_u32(dev,
 						"touchscreen-max-pressure",
 						input_abs_get_max(input, axis),
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+						&maximum);
+	data_present |= touchscreen_get_prop_u32(dev,
+						 "touchscreen-fuzz-pressure",
+						 input_abs_get_fuzz(input, axis),
+						 &fuzz);
+<<<<<<< HEAD
+=======
 						&maximum) |
 		       touchscreen_get_prop_u32(dev,
 						"touchscreen-fuzz-pressure",
 						input_abs_get_fuzz(input, axis),
 						&fuzz);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (data_present)
 		touchscreen_set_params(input, axis, 0, maximum, fuzz);
 

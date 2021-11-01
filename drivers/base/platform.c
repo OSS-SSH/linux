@@ -642,6 +642,9 @@ int platform_device_add_data(struct platform_device *pdev, const void *data,
 EXPORT_SYMBOL_GPL(platform_device_add_data);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  * platform_device_add_properties - add built-in properties to a platform device
  * @pdev: platform device to add properties to
  * @properties: null terminated array of properties to add
@@ -658,6 +661,9 @@ int platform_device_add_properties(struct platform_device *pdev,
 EXPORT_SYMBOL_GPL(platform_device_add_properties);
 
 /**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * platform_device_add - add a platform device to device hierarchy
  * @pdev: platform device we're adding
  *
@@ -842,8 +848,18 @@ struct platform_device *platform_device_register_full(
 		goto err;
 
 	if (pdevinfo->properties) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = device_create_managed_software_node(&pdev->dev,
+							  pdevinfo->properties, NULL);
+=======
 		ret = platform_device_add_properties(pdev,
 						     pdevinfo->properties);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = device_create_managed_software_node(&pdev->dev,
+							  pdevinfo->properties, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			goto err;
 	}
@@ -1438,7 +1454,15 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void platform_remove(struct device *_dev)
+=======
 static int platform_remove(struct device *_dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void platform_remove(struct device *_dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct platform_driver *drv = to_platform_driver(_dev->driver);
 	struct platform_device *dev = to_platform_device(_dev);
@@ -1450,8 +1474,14 @@ static int platform_remove(struct device *_dev)
 			dev_warn(_dev, "remove callback returned a non-zero value. This will be ignored.\n");
 	}
 	dev_pm_domain_detach(_dev, true);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void platform_shutdown(struct device *_dev)

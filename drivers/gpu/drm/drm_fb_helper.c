@@ -565,7 +565,15 @@ struct fb_info *drm_fb_helper_alloc_fbi(struct drm_fb_helper *fb_helper)
 		goto err_release;
 
 	/*
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * TODO: We really should be smarter here and alloc an aperture
+=======
 	 * TODO: We really should be smarter here and alloc an apperture
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * TODO: We really should be smarter here and alloc an aperture
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * for each IORESOURCE_MEM resource helper->dev->dev has and also
 	 * init the ranges of the appertures based on the resources.
 	 * Note some drivers currently count on there being only 1 empty
@@ -1506,6 +1514,14 @@ static int drm_fb_helper_single_fb_probe(struct drm_fb_helper *fb_helper,
 {
 	struct drm_client_dev *client = &fb_helper->client;
 	struct drm_device *dev = fb_helper->dev;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct drm_mode_config *config = &dev->mode_config;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct drm_mode_config *config = &dev->mode_config;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 	int crtc_count = 0;
 	struct drm_connector_list_iter conn_iter;
@@ -1663,6 +1679,20 @@ static int drm_fb_helper_single_fb_probe(struct drm_fb_helper *fb_helper,
 	/* Handle our overallocation */
 	sizes.surface_height *= drm_fbdev_overalloc;
 	sizes.surface_height /= 100;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (sizes.surface_height > config->max_height) {
+		drm_dbg_kms(dev, "Fbdev over-allocation too large; clamping height to %d\n",
+			    config->max_height);
+		sizes.surface_height = config->max_height;
+	}
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* push down into drivers */
 	ret = (*fb_helper->funcs->fb_probe)(fb_helper, &sizes);

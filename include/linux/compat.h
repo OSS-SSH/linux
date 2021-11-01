@@ -20,11 +20,21 @@
 #include <linux/unistd.h>
 
 #include <asm/compat.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <asm/siginfo.h>
+#include <asm/signal.h>
+=======
 
 #ifdef CONFIG_COMPAT
 #include <asm/siginfo.h>
 #include <asm/signal.h>
 #endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/siginfo.h>
+#include <asm/signal.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_ARCH_HAS_SYSCALL_WRAPPER
 /*
@@ -95,8 +105,14 @@ struct compat_iovec {
 	compat_size_t	iov_len;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #ifdef CONFIG_COMPAT
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef compat_user_stack_pointer
 #define compat_user_stack_pointer() current_user_stack_pointer()
 #endif
@@ -131,9 +147,23 @@ struct compat_tms {
 
 #define _COMPAT_NSIG_WORDS	(_COMPAT_NSIG / _COMPAT_NSIG_BPW)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#ifndef compat_sigset_t
 typedef struct {
 	compat_sigset_word	sig[_COMPAT_NSIG_WORDS];
 } compat_sigset_t;
+#endif
+<<<<<<< HEAD
+=======
+typedef struct {
+	compat_sigset_word	sig[_COMPAT_NSIG_WORDS];
+} compat_sigset_t;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int set_compat_user_sigmask(const compat_sigset_t __user *umask,
 			    size_t sigsetsize);
@@ -384,6 +414,14 @@ struct compat_keyctl_kdf_params {
 	__u32 __spare[8];
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct compat_stat;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct compat_stat;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct compat_statfs;
 struct compat_statfs64;
 struct compat_old_linux_dirent;
@@ -397,6 +435,9 @@ struct compat_kexec_segment;
 struct compat_mq_attr;
 struct compat_msgbuf;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define BITS_PER_COMPAT_LONG    (8*sizeof(compat_long_t))
 
 #define BITS_TO_COMPAT_LONGS(bits) DIV_ROUND_UP(bits, BITS_PER_COMPAT_LONG)
@@ -405,6 +446,9 @@ long compat_get_bitmap(unsigned long *mask, const compat_ulong_t __user *umask,
 		       unsigned long bitmap_size);
 long compat_put_bitmap(compat_ulong_t __user *umask, unsigned long *mask,
 		       unsigned long bitmap_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void copy_siginfo_to_external32(struct compat_siginfo *to,
 		const struct kernel_siginfo *from);
 int copy_siginfo_from_user32(kernel_siginfo_t *to,
@@ -428,7 +472,15 @@ put_compat_sigset(compat_sigset_t __user *compat, const sigset_t *set,
 		  unsigned int size)
 {
 	/* size <= sizeof(compat_sigset_t) <= sizeof(sigset_t) */
+<<<<<<< HEAD
+<<<<<<< HEAD
+#if defined(__BIG_ENDIAN) && defined(CONFIG_64BIT)
+=======
 #ifdef __BIG_ENDIAN
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if defined(__BIG_ENDIAN) && defined(CONFIG_64BIT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	compat_sigset_t v;
 	switch (_NSIG_WORDS) {
 	case 4: v.sig[7] = (set->sig[3] >> 32); v.sig[6] = set->sig[3];
@@ -521,8 +573,14 @@ extern long compat_arch_ptrace(struct task_struct *child, compat_long_t request,
 
 struct epoll_event;	/* fortunately, this one is fixed-layout */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 extern void __user *compat_alloc_user_space(unsigned long len);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int compat_restore_altstack(const compat_stack_t __user *uss);
 int __compat_save_altstack(compat_stack_t __user *, unsigned long);
 #define unsafe_compat_save_altstack(uss, sp, label) do { \
@@ -809,6 +867,9 @@ asmlinkage long compat_sys_execve(const char __user *filename, const compat_uptr
 /* mm/fadvise.c: No generic prototype for fadvise64_64 */
 
 /* mm/, CONFIG_MMU only */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 asmlinkage long compat_sys_mbind(compat_ulong_t start, compat_ulong_t len,
 				 compat_ulong_t mode,
 				 compat_ulong_t __user *nmask,
@@ -829,6 +890,9 @@ asmlinkage long compat_sys_move_pages(pid_t pid, compat_ulong_t nr_pages,
 				      int __user *status,
 				      int flags);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 asmlinkage long compat_sys_rt_tgsigqueueinfo(compat_pid_t tgid,
 					compat_pid_t pid, int sig,
 					struct compat_siginfo __user *uinfo);
@@ -929,6 +993,9 @@ asmlinkage long compat_sys_socketcall(int call, u32 __user *args);
 
 #endif /* CONFIG_ARCH_HAS_SYSCALL_WRAPPER */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 /*
  * For most but not all architectures, "am I in a compat syscall?" and
@@ -940,6 +1007,9 @@ asmlinkage long compat_sys_socketcall(int call, u32 __user *args);
 static inline bool in_compat_syscall(void) { return is_compat_task(); }
 #endif
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * ns_to_old_timeval32 - Compat version of ns_to_timeval
  * @nsec:	the nanoseconds value to be converted
@@ -969,6 +1039,26 @@ int kcompat_sys_statfs64(const char __user * pathname, compat_size_t sz,
 int kcompat_sys_fstatfs64(unsigned int fd, compat_size_t sz,
 			  struct compat_statfs64 __user * buf);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#ifdef CONFIG_COMPAT
+
+/*
+ * For most but not all architectures, "am I in a compat syscall?" and
+ * "am I a compat task?" are the same question.  For architectures on which
+ * they aren't the same question, arch code can override in_compat_syscall.
+ */
+#ifndef in_compat_syscall
+static inline bool in_compat_syscall(void) { return is_compat_task(); }
+#endif
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else /* !CONFIG_COMPAT */
 
 #define is_compat_task() (0)
@@ -978,6 +1068,24 @@ static inline bool in_compat_syscall(void) { return false; }
 
 #endif /* CONFIG_COMPAT */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define BITS_PER_COMPAT_LONG    (8*sizeof(compat_long_t))
+
+#define BITS_TO_COMPAT_LONGS(bits) DIV_ROUND_UP(bits, BITS_PER_COMPAT_LONG)
+
+long compat_get_bitmap(unsigned long *mask, const compat_ulong_t __user *umask,
+		       unsigned long bitmap_size);
+long compat_put_bitmap(compat_ulong_t __user *umask, unsigned long *mask,
+		       unsigned long bitmap_size);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Some legacy ABIs like the i386 one use less than natural alignment for 64-bit
  * types, and will need special compat treatment for that.  Most architectures

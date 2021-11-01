@@ -21,6 +21,16 @@ config AF_RXRPC
 
 	  See Documentation/networking/rxrpc.rst.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+if AF_RXRPC
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+if AF_RXRPC
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config AF_RXRPC_IPV6
 	bool "IPv6 support for RxRPC"
 	depends on (IPV6 = m && AF_RXRPC = m) || (IPV6 = y && AF_RXRPC)
@@ -30,7 +40,13 @@ config AF_RXRPC_IPV6
 
 config AF_RXRPC_INJECT_LOSS
 	bool "Inject packet loss into RxRPC packet stream"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	depends on AF_RXRPC
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say Y here to inject packet loss by discarding some received and some
 	  transmitted packets.
@@ -38,7 +54,13 @@ config AF_RXRPC_INJECT_LOSS
 
 config AF_RXRPC_DEBUG
 	bool "RxRPC dynamic debugging"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	depends on AF_RXRPC
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say Y here to make runtime controllable debugging messages appear.
 
@@ -47,7 +69,13 @@ config AF_RXRPC_DEBUG
 
 config RXKAD
 	bool "RxRPC Kerberos security"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	depends on AF_RXRPC
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select CRYPTO
 	select CRYPTO_MANAGER
 	select CRYPTO_SKCIPHER
@@ -58,3 +86,13 @@ config RXKAD
 	  through the use of the key retention service.
 
 	  See Documentation/networking/rxrpc.rst.
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

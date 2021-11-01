@@ -86,18 +86,54 @@
 	};
 };
 
-&cpsw_emac1 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+&cpsw_port2 {
+	status = "okay";
 	phy-handle = <&phy1>;
 	phy-mode = "rgmii-id";
+	ti,dual-emac-pvid = <2>;
 };
 
+&davinci_mdio_sw {
+=======
+&cpsw_emac1 {
+=======
+&cpsw_port2 {
+	status = "okay";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	phy-handle = <&phy1>;
+	phy-mode = "rgmii-id";
+	ti,dual-emac-pvid = <2>;
+};
+
+<<<<<<< HEAD
 &davinci_mdio {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+&davinci_mdio_sw {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy1: ethernet-phy@6 {
 		reg = <6>;
 		eee-broken-1000t;
 	};
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+&mac_sw {
+	pinctrl-0 = <&eth_slave1_pins_default>, <&eth_slave2_pins_default>;
+	pinctrl-1 = <&eth_slave1_pins_sleep>, <&eth_slave2_pins_sleep>;
+	slaves = <2>;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &dcan0 {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&dcan0_pins_default>;
@@ -194,12 +230,18 @@
 	};
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 &mac {
 	pinctrl-0 = <&eth_slave1_pins_default>, <&eth_slave2_pins_default>;
 	pinctrl-1 = <&eth_slave1_pins_sleep>, <&eth_slave2_pins_sleep>;
 	slaves = <2>;
 };
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &mcasp0 {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&mcasp0_pins_default>;

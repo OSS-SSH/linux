@@ -2,12 +2,30 @@
 
 .. include:: ../disclaimer-zh_CN.rst
 
-:Original: :doc:`../../../cpu-freq/index`
-:Translator: Yanteng Si <siyanteng@loongson.cn>
+<<<<<<< HEAD
+<<<<<<< HEAD
+:Original: Documentation/cpu-freq/index.rst
+
+:翻译:
+
+ 司延腾 Yanteng Si <siyanteng@loongson.cn>
 
 .. _cn_index.rst:
 
+=======
+:Original: :doc:`../../../cpu-freq/index`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+=======
+:Original: Documentation/cpu-freq/index.rst
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+:翻译:
+
+ 司延腾 Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_index.rst:
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =======================================================
 Linux CPUFreq - Linux(TM)内核中的CPU频率和电压升降代码
 =======================================================

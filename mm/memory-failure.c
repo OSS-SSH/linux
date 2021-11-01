@@ -68,7 +68,15 @@ atomic_long_t num_poisoned_pages __read_mostly = ATOMIC_LONG_INIT(0);
 
 static bool __page_handle_poison(struct page *page)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret;
+=======
 	bool ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	zone_pcp_disable(page_zone(page));
 	ret = dissolve_free_huge_page(page);
@@ -76,7 +84,15 @@ static bool __page_handle_poison(struct page *page)
 		ret = take_page_off_buddy(page);
 	zone_pcp_enable(page_zone(page));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return ret > 0;
+=======
 	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret > 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static bool page_handle_poison(struct page *page, bool hugepage_or_freepage, bool release)
@@ -282,9 +298,21 @@ static int kill_proc(struct to_kill *tk, unsigned long pfn, int flags)
 
 /*
  * Unknown page type encountered. Try to check whether it can turn PageLRU by
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * lru_add_drain_all.
+ */
+void shake_page(struct page *p)
+=======
  * lru_add_drain_all, or a free page by reclaiming slabs when possible.
  */
 void shake_page(struct page *p, int access)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * lru_add_drain_all.
+ */
+void shake_page(struct page *p)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (PageHuge(p))
 		return;
@@ -296,11 +324,23 @@ void shake_page(struct page *p, int access)
 	}
 
 	/*
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * TODO: Could shrink slab caches here if a lightweight range-based
+	 * shrinker will be available.
+	 */
+=======
 	 * Only call shrink_node_slabs here (which would also shrink
 	 * other caches) if access is not potentially fatal.
 	 */
 	if (access)
 		drop_slab_node(page_to_nid(p));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * TODO: Could shrink slab caches here if a lightweight range-based
+	 * shrinker will be available.
+	 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(shake_page);
 
@@ -308,6 +348,14 @@ static unsigned long dev_pagemap_mapping_shift(struct page *page,
 		struct vm_area_struct *vma)
 {
 	unsigned long address = vma_address(page, vma);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long ret = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long ret = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pgd_t *pgd;
 	p4d_t *p4d;
 	pud_t *pud;
@@ -331,11 +379,24 @@ static unsigned long dev_pagemap_mapping_shift(struct page *page,
 	if (pmd_devmap(*pmd))
 		return PMD_SHIFT;
 	pte = pte_offset_map(pmd, address);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (pte_present(*pte) && pte_devmap(*pte))
+		ret = PAGE_SHIFT;
+	pte_unmap(pte);
+	return ret;
+<<<<<<< HEAD
+=======
 	if (!pte_present(*pte))
 		return 0;
 	if (pte_devmap(*pte))
 		return PAGE_SHIFT;
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -391,8 +452,18 @@ static void add_to_kill(struct task_struct *tsk, struct page *p,
 /*
  * Kill the processes that have been collected earlier.
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Only do anything when FORCEKILL is set, otherwise just free the
+ * list (this is used for clean pages which do not need killing)
+=======
  * Only do anything when DOIT is set, otherwise just free the list
  * (this is used for clean pages which do not need killing)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Only do anything when FORCEKILL is set, otherwise just free the
+ * list (this is used for clean pages which do not need killing)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Also when FAIL is set do a force kill because something went
  * wrong earlier.
  */
@@ -632,7 +703,15 @@ static int hwpoison_pte_range(pmd_t *pmdp, unsigned long addr,
 {
 	struct hwp_walk *hwp = (struct hwp_walk *)walk->private;
 	int ret = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pte_t *ptep, *mapped_pte;
+=======
 	pte_t *ptep;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pte_t *ptep, *mapped_pte;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spinlock_t *ptl;
 
 	ptl = pmd_trans_huge_lock(pmdp, walk->vma);
@@ -645,14 +724,32 @@ static int hwpoison_pte_range(pmd_t *pmdp, unsigned long addr,
 	if (pmd_trans_unstable(pmdp))
 		goto out;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mapped_pte = ptep = pte_offset_map_lock(walk->vma->vm_mm, pmdp,
+						addr, &ptl);
+=======
 	ptep = pte_offset_map_lock(walk->vma->vm_mm, pmdp, addr, &ptl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mapped_pte = ptep = pte_offset_map_lock(walk->vma->vm_mm, pmdp,
+						addr, &ptl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (; addr != end; ptep++, addr += PAGE_SIZE) {
 		ret = check_hwpoisoned_entry(*ptep, addr, PAGE_SHIFT,
 					     hwp->pfn, &hwp->tk);
 		if (ret == 1)
 			break;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pte_unmap_unlock(mapped_pte, ptl);
+=======
 	pte_unmap_unlock(ptep - 1, ptl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pte_unmap_unlock(mapped_pte, ptl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	cond_resched();
 	return ret;
@@ -866,7 +963,15 @@ static int me_pagecache_clean(struct page *p, unsigned long pfn)
 	/*
 	 * Truncation is a bit tricky. Enable it per file system for now.
 	 *
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * Open: to take i_rwsem or not for this? Right now we don't.
+=======
 	 * Open: to take i_mutex or not for this? Right now we don't.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * Open: to take i_rwsem or not for this? Right now we don't.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	ret = truncate_error_page(p, pfn, mapping);
 out:
@@ -1127,7 +1232,15 @@ static int page_action(struct page_state *ps, struct page *p,
  */
 static inline bool HWPoisonHandlable(struct page *page)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return PageLRU(page) || __PageMovable(page) || is_free_buddy_page(page);
+=======
 	return PageLRU(page) || __PageMovable(page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return PageLRU(page) || __PageMovable(page) || is_free_buddy_page(page);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __get_hwpoison_page(struct page *page)
@@ -1146,7 +1259,15 @@ static int __get_hwpoison_page(struct page *page)
 	 * unexpected races caused by taking a page refcount.
 	 */
 	if (!HWPoisonHandlable(head))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return -EBUSY;
+=======
 		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EBUSY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (PageTransHuge(head)) {
 		/*
@@ -1199,9 +1320,30 @@ try_again:
 			}
 			goto out;
 		} else if (ret == -EBUSY) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			/*
+			 * We raced with (possibly temporary) unhandlable
+			 * page, retry.
+			 */
+			if (pass++ < 3) {
+				shake_page(p);
+<<<<<<< HEAD
+				goto try_again;
+			}
+			ret = -EIO;
+=======
 			/* We raced with freeing huge page to buddy, retry. */
 			if (pass++ < 3)
 				goto try_again;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				goto try_again;
+			}
+			ret = -EIO;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto out;
 		}
 	}
@@ -1215,7 +1357,15 @@ try_again:
 		 */
 		if (pass++ < 3) {
 			put_page(p);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			shake_page(p);
+=======
 			shake_page(p, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			shake_page(p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			count_increased = false;
 			goto try_again;
 		}
@@ -1223,6 +1373,18 @@ try_again:
 		ret = -EIO;
 	}
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (ret == -EIO)
+		dump_page(p, "hwpoison: unhandlable page");
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret == -EIO)
+		dump_page(p, "hwpoison: unhandlable page");
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -1264,14 +1426,28 @@ static int get_hwpoison_page(struct page *p, unsigned long flags)
  * the pages and send SIGBUS to the processes if the data was dirty.
  */
 static bool hwpoison_user_mappings(struct page *p, unsigned long pfn,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				  int flags, struct page *hpage)
+=======
 				  int flags, struct page **hpagep)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  int flags, struct page *hpage)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	enum ttu_flags ttu = TTU_IGNORE_MLOCK | TTU_SYNC;
 	struct address_space *mapping;
 	LIST_HEAD(tokill);
 	bool unmap_success;
 	int kill = 1, forcekill;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct page *hpage = *hpagep;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool mlocked = PageMlocked(hpage);
 
 	/*
@@ -1363,7 +1539,15 @@ static bool hwpoison_user_mappings(struct page *p, unsigned long pfn,
 	 * shake_page() again to ensure that it's flushed.
 	 */
 	if (mlocked)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		shake_page(hpage);
+=======
 		shake_page(hpage, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		shake_page(hpage);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Now that the dirty bit has been propagated to the
@@ -1496,7 +1680,15 @@ static int memory_failure_hugetlb(unsigned long pfn, int flags)
 		goto out;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!hwpoison_user_mappings(p, pfn, flags, head)) {
+=======
 	if (!hwpoison_user_mappings(p, pfn, flags, &head)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!hwpoison_user_mappings(p, pfn, flags, head)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		action_result(pfn, MF_MSG_UNMAP_FAILED, MF_IGNORED);
 		res = -EBUSY;
 		goto out;
@@ -1512,7 +1704,13 @@ static int memory_failure_dev_pagemap(unsigned long pfn, int flags,
 		struct dev_pagemap *pgmap)
 {
 	struct page *page = pfn_to_page(pfn);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	const bool unmap_success = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long size = 0;
 	struct to_kill *tk;
 	LIST_HEAD(tokill);
@@ -1584,7 +1782,15 @@ static int memory_failure_dev_pagemap(unsigned long pfn, int flags,
 		start = (page->index << PAGE_SHIFT) & ~(size - 1);
 		unmap_mapping_range(page->mapping, start, size, 0);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	kill_procs(&tokill, flags & MF_MUST_KILL, false, pfn, flags);
+=======
 	kill_procs(&tokill, flags & MF_MUST_KILL, !unmap_success, pfn, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kill_procs(&tokill, flags & MF_MUST_KILL, false, pfn, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = 0;
 unlock:
 	dax_unlock_page(page, cookie);
@@ -1718,7 +1924,15 @@ try_again:
 	 * The check (unnecessarily) ignores LRU pages being isolated and
 	 * walked by the page reclaim code, however that's not a big loss.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	shake_page(p);
+=======
 	shake_page(p, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	shake_page(p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	lock_page(p);
 
@@ -1777,7 +1991,15 @@ try_again:
 	 * Now take care of user space mappings.
 	 * Abort on fail: __delete_from_page_cache() assumes unmapped page.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!hwpoison_user_mappings(p, pfn, flags, p)) {
+=======
 	if (!hwpoison_user_mappings(p, pfn, flags, &p)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!hwpoison_user_mappings(p, pfn, flags, p)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		action_result(pfn, MF_MSG_UNMAP_FAILED, MF_IGNORED);
 		res = -EBUSY;
 		goto unlock_page;
@@ -2093,7 +2315,15 @@ static int __soft_offline_page(struct page *page)
 
 	if (isolate_page(hpage, &pagelist)) {
 		ret = migrate_pages(&pagelist, alloc_migration_target, NULL,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			(unsigned long)&mtc, MIGRATE_SYNC, MR_MEMORY_FAILURE, NULL);
+=======
 			(unsigned long)&mtc, MIGRATE_SYNC, MR_MEMORY_FAILURE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			(unsigned long)&mtc, MIGRATE_SYNC, MR_MEMORY_FAILURE, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!ret) {
 			bool release = !huge;
 
@@ -2202,9 +2432,15 @@ retry:
 			try_again = false;
 			goto retry;
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	} else if (ret == -EIO) {
 		pr_info("%s: %#lx: unknown page type: %lx (%pGp)\n",
 			 __func__, pfn, page->flags, &page->flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return ret;

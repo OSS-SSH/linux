@@ -40,8 +40,16 @@ enum intel_region_id {
 #define REGION_STOLEN_SMEM   BIT(INTEL_REGION_STOLEN_SMEM)
 #define REGION_STOLEN_LMEM   BIT(INTEL_REGION_STOLEN_LMEM)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define I915_ALLOC_CONTIGUOUS     BIT(0)
+=======
 #define I915_ALLOC_MIN_PAGE_SIZE  BIT(0)
 #define I915_ALLOC_CONTIGUOUS     BIT(1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define I915_ALLOC_CONTIGUOUS     BIT(0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define for_each_memory_region(mr, i915, id) \
 	for (id = 0; id < ARRAY_SIZE((i915)->mm.regions); id++) \
@@ -56,6 +64,13 @@ struct intel_memory_region_ops {
 	int (*init_object)(struct intel_memory_region *mem,
 			   struct drm_i915_gem_object *obj,
 			   resource_size_t size,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			   resource_size_t page_size,
+			   unsigned int flags);
+};
+
+=======
 			   unsigned int flags);
 };
 
@@ -67,11 +82,24 @@ struct intel_memory_region_private_ops {
 		     struct ttm_resource *res);
 };
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   resource_size_t page_size,
+			   unsigned int flags);
+};
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct intel_memory_region {
 	struct drm_i915_private *i915;
 
 	const struct intel_memory_region_ops *ops;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	const struct intel_memory_region_private_ops *priv_ops;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct io_mapping iomap;
 	struct resource region;
@@ -79,8 +107,14 @@ struct intel_memory_region {
 	/* For fake LMEM */
 	struct drm_mm_node fake_mappable;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct mutex mm_lock;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct kref kref;
 
 	resource_size_t io_start;
@@ -94,18 +128,34 @@ struct intel_memory_region {
 	char name[16];
 	bool private; /* not for userspace */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct list_head reserved;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_addr_t remap_addr;
 
 	struct {
 		struct mutex lock; /* Protects access to objects */
 		struct list_head list;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	} objects;
+
+=======
 		struct list_head purgeable;
 	} objects;
 
 	size_t chunk_size;
 	unsigned int max_order;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	} objects;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool is_range_manager;
 
 	void *region_private;
@@ -139,9 +189,37 @@ __printf(2, 3) void
 intel_memory_region_set_name(struct intel_memory_region *mem,
 			     const char *fmt, ...);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int intel_memory_region_reserve(struct intel_memory_region *mem,
+				resource_size_t offset,
+				resource_size_t size);
+
+struct intel_memory_region *
+i915_gem_ttm_system_setup(struct drm_i915_private *i915,
+			  u16 type, u16 instance);
+struct intel_memory_region *
+i915_gem_shmem_setup(struct drm_i915_private *i915,
+		     u16 type, u16 instance);
+
+=======
 void intel_memory_region_unreserve(struct intel_memory_region *mem);
 
 int intel_memory_region_reserve(struct intel_memory_region *mem,
 				resource_size_t offset,
 				resource_size_t size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int intel_memory_region_reserve(struct intel_memory_region *mem,
+				resource_size_t offset,
+				resource_size_t size);
+
+struct intel_memory_region *
+i915_gem_ttm_system_setup(struct drm_i915_private *i915,
+			  u16 type, u16 instance);
+struct intel_memory_region *
+i915_gem_shmem_setup(struct drm_i915_private *i915,
+		     u16 type, u16 instance);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

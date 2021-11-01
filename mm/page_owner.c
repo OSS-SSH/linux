@@ -276,9 +276,15 @@ void pagetypeinfo_showmixedcount_print(struct seq_file *m,
 		pageblock_mt = get_pageblock_migratetype(page);
 
 		for (; pfn < block_end_pfn; pfn++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			if (!pfn_valid_within(pfn))
 				continue;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* The pageblock is online, no need to recheck. */
 			page = pfn_to_page(pfn);
 
@@ -479,10 +485,16 @@ read_page_owner(struct file *file, char __user *buf, size_t count, loff_t *ppos)
 			continue;
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		/* Check for holes within a MAX_ORDER area */
 		if (!pfn_valid_within(pfn))
 			continue;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		page = pfn_to_page(pfn);
 		if (PageBuddy(page)) {
 			unsigned long freepage_order = buddy_order_unsafe(page);
@@ -560,6 +572,12 @@ static void init_pages_in_zone(pg_data_t *pgdat, struct zone *zone)
 		block_end_pfn = min(block_end_pfn, end_pfn);
 
 		for (; pfn < block_end_pfn; pfn++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			struct page *page = pfn_to_page(pfn);
+			struct page_ext *page_ext;
+
+=======
 			struct page *page;
 			struct page_ext *page_ext;
 
@@ -568,6 +586,12 @@ static void init_pages_in_zone(pg_data_t *pgdat, struct zone *zone)
 
 			page = pfn_to_page(pfn);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			struct page *page = pfn_to_page(pfn);
+			struct page_ext *page_ext;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (page_zone(page) != zone)
 				continue;
 

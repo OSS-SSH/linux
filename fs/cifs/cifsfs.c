@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  *   fs/cifs/cifsfs.c
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   Copyright (C) International Business Machines  Corp., 2002,2008
  *   Author(s): Steve French (sfrench@us.ibm.com)
@@ -399,7 +405,13 @@ cifs_evict_inode(struct inode *inode)
 {
 	truncate_inode_pages_final(&inode->i_data);
 	clear_inode(inode);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	cifs_fscache_release_inode_cookie(inode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
@@ -438,6 +450,12 @@ cifs_show_security(struct seq_file *s, struct cifs_ses *ses)
 	seq_puts(s, ",sec=");
 
 	switch (ses->sectype) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case NTLMv2:
+		seq_puts(s, "ntlmv2");
+		break;
+=======
 	case LANMAN:
 		seq_puts(s, "lanman");
 		break;
@@ -447,6 +465,12 @@ cifs_show_security(struct seq_file *s, struct cifs_ses *ses)
 	case NTLM:
 		seq_puts(s, "ntlm");
 		break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case NTLMv2:
+		seq_puts(s, "ntlmv2");
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case Kerberos:
 		seq_puts(s, "krb5");
 		break;
@@ -1755,7 +1779,13 @@ MODULE_DESCRIPTION
 MODULE_VERSION(CIFS_VERSION);
 MODULE_SOFTDEP("ecb");
 MODULE_SOFTDEP("hmac");
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 MODULE_SOFTDEP("md4");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_SOFTDEP("md5");
 MODULE_SOFTDEP("nls");
 MODULE_SOFTDEP("aes");

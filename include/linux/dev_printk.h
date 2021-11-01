@@ -38,8 +38,18 @@ __printf(3, 4) __cold
 int dev_printk_emit(int level, const struct device *dev, const char *fmt, ...);
 
 __printf(3, 4) __cold
+<<<<<<< HEAD
+<<<<<<< HEAD
+void _dev_printk(const char *level, const struct device *dev,
+		 const char *fmt, ...);
+=======
 void dev_printk(const char *level, const struct device *dev,
 		const char *fmt, ...);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void _dev_printk(const char *level, const struct device *dev,
+		 const char *fmt, ...);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 __printf(2, 3) __cold
 void _dev_emerg(const struct device *dev, const char *fmt, ...);
 __printf(2, 3) __cold
@@ -69,7 +79,15 @@ static inline void __dev_printk(const char *level, const struct device *dev,
 				struct va_format *vaf)
 {}
 static inline __printf(3, 4)
+<<<<<<< HEAD
+<<<<<<< HEAD
+void _dev_printk(const char *level, const struct device *dev,
+=======
 void dev_printk(const char *level, const struct device *dev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void _dev_printk(const char *level, const struct device *dev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 const char *fmt, ...)
 {}
 
@@ -98,10 +116,71 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
 #endif
 
 /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * Need to take variadic arguments even though we don't use them, as dev_fmt()
+ * may only just have been expanded and may result in multiple arguments.
+ */
+#define dev_printk_index_emit(level, fmt, ...) \
+	printk_index_subsys_emit("%s %s: ", level, fmt)
+
+#define dev_printk_index_wrap(_p_func, level, dev, fmt, ...)		\
+	({								\
+		dev_printk_index_emit(level, fmt);			\
+		_p_func(dev, fmt, ##__VA_ARGS__);			\
+	})
+
+/*
+ * Some callsites directly call dev_printk rather than going through the
+ * dev_<level> infrastructure, so we need to emit here as well as inside those
+ * level-specific macros. Only one index entry will be produced, either way,
+ * since dev_printk's `fmt` isn't known at compile time if going through the
+ * dev_<level> macros.
+ *
+ * dev_fmt() isn't called for dev_printk when used directly, as it's used by
+ * the dev_<level> macros internally which already have dev_fmt() processed.
+ *
+ * We also can't use dev_printk_index_wrap directly, because we have a separate
+ * level to process.
+ */
+#define dev_printk(level, dev, fmt, ...)				\
+	({								\
+		dev_printk_index_emit(level, fmt);			\
+		_dev_printk(level, dev, fmt, ##__VA_ARGS__);		\
+	})
+
+/*
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * #defines for all the dev_<level> macros to prefix with whatever
  * possible use of #define dev_fmt(fmt) ...
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define dev_emerg(dev, fmt, ...) \
+	dev_printk_index_wrap(_dev_emerg, KERN_EMERG, dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_crit(dev, fmt, ...) \
+	dev_printk_index_wrap(_dev_crit, KERN_CRIT, dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_alert(dev, fmt, ...) \
+	dev_printk_index_wrap(_dev_alert, KERN_ALERT, dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_err(dev, fmt, ...) \
+	dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_warn(dev, fmt, ...) \
+	dev_printk_index_wrap(_dev_warn, KERN_WARNING, dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_notice(dev, fmt, ...) \
+	dev_printk_index_wrap(_dev_notice, KERN_NOTICE, dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_info(dev, fmt, ...) \
+	dev_printk_index_wrap(_dev_info, KERN_INFO, dev, dev_fmt(fmt), ##__VA_ARGS__)
+<<<<<<< HEAD
+=======
 #define dev_emerg(dev, fmt, ...)					\
 	_dev_emerg(dev, dev_fmt(fmt), ##__VA_ARGS__)
 #define dev_crit(dev, fmt, ...)						\
@@ -116,6 +195,9 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
 	_dev_notice(dev, dev_fmt(fmt), ##__VA_ARGS__)
 #define dev_info(dev, fmt, ...)						\
 	_dev_info(dev, dev_fmt(fmt), ##__VA_ARGS__)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #if defined(CONFIG_DYNAMIC_DEBUG) || \
 	(defined(CONFIG_DYNAMIC_DEBUG_CORE) && defined(DYNAMIC_DEBUG_MODULE))

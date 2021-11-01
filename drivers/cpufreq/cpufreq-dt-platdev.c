@@ -137,9 +137,27 @@ static const struct of_device_id blocklist[] __initconst = {
 	{ .compatible = "qcom,apq8096", },
 	{ .compatible = "qcom,msm8996", },
 	{ .compatible = "qcom,qcs404", },
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	{ .compatible = "qcom,sa8155p" },
+	{ .compatible = "qcom,sc7180", },
+	{ .compatible = "qcom,sc7280", },
+	{ .compatible = "qcom,sc8180x", },
+	{ .compatible = "qcom,sdm845", },
+	{ .compatible = "qcom,sm6350", },
+	{ .compatible = "qcom,sm8150", },
+	{ .compatible = "qcom,sm8250", },
+	{ .compatible = "qcom,sm8350", },
+<<<<<<< HEAD
+=======
 	{ .compatible = "qcom,sc7180", },
 	{ .compatible = "qcom,sc7280", },
 	{ .compatible = "qcom,sdm845", },
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	{ .compatible = "st,stih407", },
 	{ .compatible = "st,stih410", },

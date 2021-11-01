@@ -49,6 +49,37 @@ typedef struct {
 	uint8_t domain;
 } le_id_t;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * 24 bit port ID type definition.
+ */
+typedef union {
+	uint32_t b24 : 24;
+	struct {
+#ifdef __BIG_ENDIAN
+		uint8_t domain;
+		uint8_t area;
+		uint8_t al_pa;
+#elif defined(__LITTLE_ENDIAN)
+		uint8_t al_pa;
+		uint8_t area;
+		uint8_t domain;
+#else
+#error "__BIG_ENDIAN or __LITTLE_ENDIAN must be defined!"
+#endif
+		uint8_t rsvd_1;
+	} b;
+} port_id_t;
+#define INVALID_PORT_ID	0xFFFFFF
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "qla_bsg.h"
 #include "qla_dsd.h"
 #include "qla_nx.h"
@@ -319,6 +350,22 @@ struct name_list_extended {
 	u32			size;
 	u8			sent;
 };
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+struct els_reject {
+	struct fc_els_ls_rjt *c;
+	dma_addr_t  cdma;
+	u16 size;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Timeout timer counts in seconds
  */
@@ -345,6 +392,16 @@ struct name_list_extended {
 #define FW_MAX_EXCHANGES_CNT (32 * 1024)
 #define REDUCE_EXCHANGES_CNT  (8 * 1024)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define SET_DID_STATUS(stat_var, status) (stat_var = status << 16)
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SET_DID_STATUS(stat_var, status) (stat_var = status << 16)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct req_que;
 struct qla_tgt_sess;
 
@@ -370,6 +427,13 @@ struct srb_cmd {
 #define SRB_CRC_CTX_DSD_VALID		BIT_5	/* DIF: dsd_list valid */
 #define SRB_WAKEUP_ON_COMP		BIT_6
 #define SRB_DIF_BUNDL_DMA_VALID		BIT_7   /* DIF: DMA list valid */
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define SRB_EDIF_CLEANUP_DELETE		BIT_9
+
+/* To identify if a srb is of T10-CRC type. @sp => srb_t pointer */
+#define IS_PROT_IO(sp)	(sp->flags & SRB_CRC_CTX_DSD_VALID)
+=======
 
 /* To identify if a srb is of T10-CRC type. @sp => srb_t pointer */
 #define IS_PROT_IO(sp)	(sp->flags & SRB_CRC_CTX_DSD_VALID)
@@ -396,6 +460,13 @@ typedef union {
 	} b;
 } port_id_t;
 #define INVALID_PORT_ID	0xFFFFFF
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SRB_EDIF_CLEANUP_DELETE		BIT_9
+
+/* To identify if a srb is of T10-CRC type. @sp => srb_t pointer */
+#define IS_PROT_IO(sp)	(sp->flags & SRB_CRC_CTX_DSD_VALID)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ISP_REG16_DISCONNECT 0xFFFF
 
 static inline le_id_t be_id_to_le(be_id_t id)
@@ -483,6 +554,14 @@ struct srb_iocb {
 #define SRB_LOGIN_SKIP_PRLI	BIT_2
 #define SRB_LOGIN_NVME_PRLI	BIT_3
 #define SRB_LOGIN_PRLI_ONLY	BIT_4
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define SRB_LOGIN_FCSP		BIT_5
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SRB_LOGIN_FCSP		BIT_5
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			uint16_t data[2];
 			u32 iop[2];
 		} logio;
@@ -587,6 +666,19 @@ struct srb_iocb {
 			u16 cmd;
 			u16 vp_index;
 		} ctrlvp;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		struct {
+			struct edif_sa_ctl	*sa_ctl;
+			struct qla_sa_update_frame sa_frame;
+		} sa_update;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} u;
 
 	struct timer_list timer;
@@ -617,6 +709,30 @@ struct srb_iocb {
 #define SRB_PRLI_CMD	21
 #define SRB_CTRL_VP	22
 #define SRB_PRLO_CMD	23
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define SRB_SA_UPDATE	25
+#define SRB_ELS_CMD_HST_NOLOGIN 26
+#define SRB_SA_REPLACE	27
+
+struct qla_els_pt_arg {
+	u8 els_opcode;
+	u8 vp_idx;
+	__le16 nport_handle;
+	u16 control_flags;
+	__le32 rx_xchg_address;
+	port_id_t did;
+	u32 tx_len, tx_byte_count, rx_len, rx_byte_count;
+	dma_addr_t tx_addr, rx_addr;
+
+};
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enum {
 	TYPE_SRB,
@@ -630,6 +746,22 @@ struct iocb_resource {
 	u16 iocb_cnt;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct bsg_cmd {
+	struct bsg_job *bsg_job;
+	union {
+		struct qla_els_pt_arg els_arg;
+	} u;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 typedef struct srb {
 	/*
 	 * Do not move cmd_type field, it needs to
@@ -662,7 +794,43 @@ typedef struct srb {
 		struct srb_iocb iocb_cmd;
 		struct bsg_job *bsg_job;
 		struct srb_cmd scmd;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		struct bsg_cmd bsg_cmd;
 	} u;
+	struct {
+		bool remapped;
+		struct {
+			dma_addr_t dma;
+			void *buf;
+			uint len;
+		} req;
+		struct {
+			dma_addr_t dma;
+			void *buf;
+			uint len;
+		} rsp;
+	} remap;
+=======
+	} u;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct bsg_cmd bsg_cmd;
+	} u;
+	struct {
+		bool remapped;
+		struct {
+			dma_addr_t dma;
+			void *buf;
+			uint len;
+		} req;
+		struct {
+			dma_addr_t dma;
+			void *buf;
+			uint len;
+		} rsp;
+	} remap;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Report completion status @res and call sp_put(@sp). @res is
 	 * an NVMe status code, a SCSI result (e.g. DID_OK << 16) or a
@@ -2294,6 +2462,14 @@ struct imm_ntfy_from_isp {
 			__le16	nport_handle;
 			uint16_t reserved_2;
 			__le16	flags;
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define NOTIFY24XX_FLAGS_FCSP		BIT_5
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define NOTIFY24XX_FLAGS_FCSP		BIT_5
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define NOTIFY24XX_FLAGS_GLOBAL_TPRLO   BIT_1
 #define NOTIFY24XX_FLAGS_PUREX_IOCB     BIT_0
 			__le16	srr_rx_id;
@@ -2377,11 +2553,23 @@ struct mbx_24xx_entry {
  */
 typedef enum {
 	FCT_UNKNOWN,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	FCT_BROADCAST = 0x01,
+	FCT_INITIATOR = 0x02,
+	FCT_TARGET    = 0x04,
+=======
 	FCT_RSCN,
 	FCT_SWITCH,
 	FCT_BROADCAST,
 	FCT_INITIATOR,
 	FCT_TARGET,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	FCT_BROADCAST = 0x01,
+	FCT_INITIATOR = 0x02,
+	FCT_TARGET    = 0x04,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	FCT_NVME_INITIATOR = 0x10,
 	FCT_NVME_TARGET = 0x20,
 	FCT_NVME_DISCOVERY = 0x40,
@@ -2424,6 +2612,14 @@ enum discovery_state {
 	DSC_LOGIN_COMPLETE,
 	DSC_ADISC,
 	DSC_DELETE_PEND,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DSC_LOGIN_AUTH_PEND,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DSC_LOGIN_AUTH_PEND,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum login_state {	/* FW control Target side */
@@ -2467,6 +2663,16 @@ typedef struct fc_port {
 	unsigned int n2n_flag:1;
 	unsigned int explicit_logout:1;
 	unsigned int prli_pend_timer:1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int do_prli_nvme:1;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int do_prli_nvme:1;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint8_t nvme_flag;
 
 	uint8_t node_name[WWN_SIZE];
@@ -2563,6 +2769,42 @@ typedef struct fc_port {
 	u64 tgt_short_link_down_cnt;
 	u64 tgt_link_down_time;
 	u64 dev_loss_tmo;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * EDIF parameters for encryption.
+	 */
+	struct {
+		uint32_t	enable:1;	/* device is edif enabled/req'd */
+		uint32_t	app_stop:2;
+		uint32_t	app_started:1;
+		uint32_t	aes_gmac:1;
+		uint32_t	app_sess_online:1;
+		uint32_t	tx_sa_set:1;
+		uint32_t	rx_sa_set:1;
+		uint32_t	tx_sa_pending:1;
+		uint32_t	rx_sa_pending:1;
+		uint32_t	tx_rekey_cnt;
+		uint32_t	rx_rekey_cnt;
+		uint64_t	tx_bytes;
+		uint64_t	rx_bytes;
+		uint8_t		auth_state;
+		uint16_t	authok:1;
+		uint16_t	rekey_cnt;
+		struct list_head edif_indx_list;
+		spinlock_t  indx_list_lock;
+
+		struct list_head tx_sa_list;
+		struct list_head rx_sa_list;
+		spinlock_t	sa_list_lock;
+	} edif;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } fc_port_t;
 
 enum {
@@ -2604,7 +2846,17 @@ static const char * const port_dstate_str[] = {
 	"UPD_FCPORT",
 	"LOGIN_COMPLETE",
 	"ADISC",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	"DELETE_PEND",
+	"LOGIN_AUTH_PEND",
+=======
 	"DELETE_PEND"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	"DELETE_PEND",
+	"LOGIN_AUTH_PEND",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -2616,6 +2868,16 @@ static const char * const port_dstate_str[] = {
 #define FCF_ASYNC_SENT		BIT_3
 #define FCF_CONF_COMP_SUPPORTED BIT_4
 #define FCF_ASYNC_ACTIVE	BIT_5
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define FCF_FCSP_DEVICE		BIT_6
+#define FCF_EDIF_DELETE		BIT_7
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define FCF_FCSP_DEVICE		BIT_6
+#define FCF_EDIF_DELETE		BIT_7
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* No loop ID flag. */
 #define FC_NO_LOOP_ID		0x1000
@@ -2707,7 +2969,15 @@ static const char * const port_dstate_str[] = {
 /*
  * FDMI HBA attribute types.
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define FDMI1_HBA_ATTR_COUNT			10
+=======
 #define FDMI1_HBA_ATTR_COUNT			9
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define FDMI1_HBA_ATTR_COUNT			10
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define FDMI2_HBA_ATTR_COUNT			17
 
 #define FDMI_HBA_NODE_NAME			0x1
@@ -3386,6 +3656,14 @@ enum qla_work_type {
 	QLA_EVT_SP_RETRY,
 	QLA_EVT_IIDMA,
 	QLA_EVT_ELS_PLOGI,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	QLA_EVT_SA_REPLACE,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	QLA_EVT_SA_REPLACE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 
@@ -3444,6 +3722,20 @@ struct qla_work_evt {
 			u8 fc4_type;
 			srb_t *sp;
 		} gpnft;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		struct {
+			struct edif_sa_ctl	*sa_ctl;
+			fc_port_t *fcport;
+			uint16_t nport_handle;
+		} sa_update;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 } u;
 };
 
@@ -3845,7 +4137,13 @@ struct qlt_hw_data {
 	int num_act_qpairs;
 #define DEFAULT_NAQP 2
 	spinlock_t atio_lock ____cacheline_aligned;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct btree_head32 host_map;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define MAX_QFULL_CMDS_ALLOC	8192
@@ -3935,7 +4233,19 @@ struct qla_hw_data {
 		uint32_t	scm_supported_f:1;
 				/* Enabled in Driver */
 		uint32_t	scm_enabled:1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		uint32_t	edif_hw:1;
+		uint32_t	edif_enabled:1;
+		uint32_t	n2n_fw_acc_sec:1;
+=======
 		uint32_t	max_req_queue_warned:1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		uint32_t	edif_hw:1;
+		uint32_t	edif_enabled:1;
+		uint32_t	n2n_fw_acc_sec:1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uint32_t	plogi_template_valid:1;
 		uint32_t	port_isolated:1;
 	} flags;
@@ -4347,6 +4657,14 @@ struct qla_hw_data {
 	/* Cisco fabric attached */
 #define FW_ATTR_EXT0_SCM_CISCO		0x00002000
 #define FW_ATTR_EXT0_NVME2	BIT_13
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define FW_ATTR_EXT0_EDIF	BIT_5
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define FW_ATTR_EXT0_EDIF	BIT_5
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint16_t	fw_attributes_ext[2];
 	uint32_t	fw_memory_size;
 	uint32_t	fw_transfer_size;
@@ -4619,8 +4937,39 @@ struct qla_hw_data {
 	struct qla_hw_data_stat stat;
 	pci_error_state_t pci_error_state;
 	u64 prev_cmd_cnt;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct dma_pool *purex_dma_pool;
+	struct btree_head32 host_map;
+
+#define EDIF_NUM_SA_INDEX	512
+#define EDIF_TX_SA_INDEX_BASE	EDIF_NUM_SA_INDEX
+	void *edif_rx_sa_id_map;
+	void *edif_tx_sa_id_map;
+	spinlock_t sadb_fp_lock;
+
+	struct list_head sadb_tx_index_list;
+	struct list_head sadb_rx_index_list;
+	spinlock_t sadb_lock;	/* protects list */
+	struct els_reject elsrej;
+	u8 edif_post_stop_cnt_down;
+<<<<<<< HEAD
 };
 
+#define RX_ELS_SIZE (roundup(sizeof(struct enode) + ELS_MAX_PAYLOAD, SMP_CACHE_BYTES))
+
+=======
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+};
+
+#define RX_ELS_SIZE (roundup(sizeof(struct enode) + ELS_MAX_PAYLOAD, SMP_CACHE_BYTES))
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct active_regions {
 	uint8_t global;
 	struct {
@@ -4659,6 +5008,16 @@ struct purex_item {
 	} iocb;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "qla_edif.h"
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "qla_edif.h"
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define SCM_FLAG_RDF_REJECT		0x00
 #define SCM_FLAG_RDF_COMPLETED		0x01
 
@@ -4888,6 +5247,16 @@ typedef struct scsi_qla_host {
 	u64 reset_cmd_err_cnt;
 	u64 link_down_time;
 	u64 short_link_down_cnt;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct edif_dbell e_dbell;
+	struct pur_core pur_cinfo;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct edif_dbell e_dbell;
+	struct pur_core pur_cinfo;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } scsi_qla_host_t;
 
 struct qla27xx_image_status {
@@ -5058,6 +5427,18 @@ struct secure_flash_update_block_pk {
 #define QLA_BUSY			0x107
 #define QLA_ALREADY_REGISTERED		0x109
 #define QLA_OS_TIMER_EXPIRED		0x10a
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define QLA_ERR_NO_QPAIR		0x10b
+#define QLA_ERR_NOT_FOUND		0x10c
+#define QLA_ERR_FROM_FW			0x10d
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define QLA_ERR_NO_QPAIR		0x10b
+#define QLA_ERR_NOT_FOUND		0x10c
+#define QLA_ERR_FROM_FW			0x10d
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define NVRAM_DELAY()		udelay(10)
 
@@ -5088,6 +5469,52 @@ enum nexus_wait_type {
 	WAIT_LUN,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define INVALID_EDIF_SA_INDEX	0xffff
+#define RX_DELETE_NO_EDIF_SA_INDEX	0xfffe
+
+#define QLA_SKIP_HANDLE QLA_TGT_SKIP_HANDLE
+
+/* edif hash element */
+struct edif_list_entry {
+	uint16_t handle;			/* nport_handle */
+	uint32_t update_sa_index;
+	uint32_t delete_sa_index;
+	uint32_t count;				/* counter for filtering sa_index */
+#define EDIF_ENTRY_FLAGS_CLEANUP	0x01	/* this index is being cleaned up */
+	uint32_t flags;				/* used by sadb cleanup code */
+	fc_port_t *fcport;			/* needed by rx delay timer function */
+	struct timer_list timer;		/* rx delay timer */
+	struct list_head next;
+};
+
+#define EDIF_TX_INDX_BASE 512
+#define EDIF_RX_INDX_BASE 0
+#define EDIF_RX_DELETE_FILTER_COUNT 3	/* delay queuing rx delete until this many */
+
+/* entry in the sa_index free pool */
+
+struct sa_index_pair {
+	uint16_t sa_index;
+	uint32_t spi;
+};
+
+/* edif sa_index data structure */
+struct edif_sa_index_entry {
+	struct sa_index_pair sa_pair[2];
+	fc_port_t *fcport;
+	uint16_t handle;
+	struct list_head next;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Refer to SNIA SFF 8247 */
 struct sff_8247_a0 {
 	u8 txid;	/* transceiver id */
@@ -5203,9 +5630,26 @@ struct sff_8247_a0 {
 #define NVME_FCP_TARGET(fcport) \
 	(FCP_TYPE(fcport) && NVME_TYPE(fcport)) \
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define NVME_PRIORITY(ha, fcport) \
+	(NVME_FCP_TARGET(fcport) && \
+	 (ha->fc4_type_priority == FC4_PRIORITY_NVME))
+
+<<<<<<< HEAD
+#define NVME_TARGET(ha, fcport) \
+	(fcport->do_prli_nvme || \
+=======
 #define NVME_TARGET(ha, fcport) \
 	((NVME_FCP_TARGET(fcport) && \
 	(ha->fc4_type_priority == FC4_PRIORITY_NVME)) || \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define NVME_TARGET(ha, fcport) \
+	(fcport->do_prli_nvme || \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NVME_ONLY_TARGET(fcport)) \
 
 #define PRLI_PHASE(_cls) \

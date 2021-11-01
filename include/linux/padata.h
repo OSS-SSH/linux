@@ -12,6 +12,14 @@
 #ifndef PADATA_H
 #define PADATA_H
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/refcount.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/refcount.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/compiler_types.h>
 #include <linux/workqueue.h>
 #include <linux/spinlock.h>
@@ -96,7 +104,15 @@ struct parallel_data {
 	struct padata_shell		*ps;
 	struct padata_list		__percpu *reorder_list;
 	struct padata_serial_queue	__percpu *squeue;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	refcount_t			refcnt;
+=======
 	atomic_t			refcnt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	refcount_t			refcnt;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int			seq_nr;
 	unsigned int			processed;
 	int				cpu;

@@ -16,6 +16,14 @@
 #include <linux/platform_device.h>
 #include <linux/property.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "leds.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "leds.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct gpio_led_data {
 	struct led_classdev cdev;
@@ -144,7 +152,13 @@ static struct gpio_leds_priv *gpio_leds_create(struct platform_device *pdev)
 	device_for_each_child_node(dev, child) {
 		struct gpio_led_data *led_dat = &priv->leds[priv->num_leds];
 		struct gpio_led led = {};
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		const char *state = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Acquire gpiod from DT with uninitialized label, which
@@ -161,6 +175,10 @@ static struct gpio_leds_priv *gpio_leds_create(struct platform_device *pdev)
 
 		led_dat->gpiod = led.gpiod;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		led.default_state = led_init_default_state_get(child);
+=======
 		if (!fwnode_property_read_string(child, "default-state",
 						 &state)) {
 			if (!strcmp(state, "keep"))
@@ -170,6 +188,10 @@ static struct gpio_leds_priv *gpio_leds_create(struct platform_device *pdev)
 			else
 				led.default_state = LEDS_GPIO_DEFSTATE_OFF;
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		led.default_state = led_init_default_state_get(child);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (fwnode_property_present(child, "retain-state-suspended"))
 			led.retain_state_suspended = 1;

@@ -8,17 +8,31 @@
 /dts-v1/;
 
 #include <dt-bindings/iio/qcom,spmi-adc7-pmr735a.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "sc7280-idp.dtsi"
+#include "pmr735a.dtsi"
+
+/ {
+	model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
+=======
 #include <dt-bindings/iio/qcom,spmi-adc7-pmr735b.h>
 #include <dt-bindings/iio/qcom,spmi-adc7-pm8350.h>
 #include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
 #include "sc7280.dtsi"
 #include "pm7325.dtsi"
+=======
+#include "sc7280-idp.dtsi"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "pmr735a.dtsi"
-#include "pm8350c.dtsi"
-#include "pmk8350.dtsi"
 
 / {
+<<<<<<< HEAD
 	model = "Qualcomm Technologies, Inc. sc7280 IDP platform";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	model = "Qualcomm Technologies, Inc. sc7280 IDP SKU1 platform";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	compatible = "qcom,sc7280-idp", "google,senor", "qcom,sc7280";
 
 	aliases {
@@ -31,6 +45,9 @@
 };
 
 &apps_rsc {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	pm7325-regulators {
 		compatible = "qcom,pm7325-rpmh-regulators";
 		qcom,pmic-id = "b";
@@ -211,6 +228,9 @@
 		};
 	};
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pmr735a-regulators {
 		compatible = "qcom,pmr735a-rpmh-regulators";
 		qcom,pmic-id = "e";
@@ -242,6 +262,19 @@
 	};
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+&ipa {
+	status = "okay";
+	modem-init;
+};
+
+&pmk8350_vadc {
+	pmr735a_die_temp {
+		reg = <PMR735A_ADC7_DIE_TEMP>;
+		label = "pmr735a_die_temp";
+		qcom,pre-scaling = <1 1>;
+=======
 &pmk8350_vadc {
 		pm8350_die_temp {
 			reg = <PM8350_ADC7_DIE_TEMP>;
@@ -269,9 +302,14 @@
 };
 
 &qupv3_id_0 {
+=======
+&ipa {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = "okay";
+	modem-init;
 };
 
+<<<<<<< HEAD
 &uart5 {
 	status = "okay";
 };
@@ -289,5 +327,13 @@
 		pins = "gpio47";
 		drive-strength = <2>;
 		bias-pull-up;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+&pmk8350_vadc {
+	pmr735a_die_temp {
+		reg = <PMR735A_ADC7_DIE_TEMP>;
+		label = "pmr735a_die_temp";
+		qcom,pre-scaling = <1 1>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };

@@ -196,7 +196,15 @@ out_free_netdev:
 	return retval;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void __exit lan_remove_chip(struct parisc_device *pdev)
+=======
 static int __exit lan_remove_chip(struct parisc_device *pdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __exit lan_remove_chip(struct parisc_device *pdev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct net_device *dev = parisc_get_drvdata(pdev);
 	struct i596_private *lp = netdev_priv(dev);
@@ -205,7 +213,13 @@ static int __exit lan_remove_chip(struct parisc_device *pdev)
 	dma_free_noncoherent(&pdev->dev, sizeof(struct i596_private), lp->dma,
 		       lp->dma_addr, DMA_BIDIRECTIONAL);
 	free_netdev (dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct parisc_device_id lan_tbl[] __initconst = {

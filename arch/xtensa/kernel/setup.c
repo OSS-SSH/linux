@@ -63,7 +63,15 @@ extern unsigned long initrd_end;
 extern int initrd_below_start_ok;
 #endif
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifdef CONFIG_USE_OF
+=======
 #ifdef CONFIG_OF
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_USE_OF
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void *dtb_start = __dtb_start;
 #endif
 
@@ -125,7 +133,15 @@ __tagtable(BP_TAG_INITRD, parse_tag_initrd);
 
 #endif /* CONFIG_BLK_DEV_INITRD */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifdef CONFIG_USE_OF
+=======
 #ifdef CONFIG_OF
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_USE_OF
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int __init parse_tag_fdt(const bp_tag_t *tag)
 {
@@ -135,7 +151,15 @@ static int __init parse_tag_fdt(const bp_tag_t *tag)
 
 __tagtable(BP_TAG_FDT, parse_tag_fdt);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#endif /* CONFIG_USE_OF */
+=======
 #endif /* CONFIG_OF */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* CONFIG_USE_OF */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int __init parse_tag_cmdline(const bp_tag_t* tag)
 {
@@ -183,7 +207,15 @@ static int __init parse_bootparam(const bp_tag_t *tag)
 }
 #endif
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifdef CONFIG_USE_OF
+=======
 #ifdef CONFIG_OF
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_USE_OF
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #if !XCHAL_HAVE_PTP_MMU || XCHAL_HAVE_SPANNING_WAY
 unsigned long xtensa_kio_paddr = XCHAL_KIO_DEFAULT_PADDR;
@@ -232,7 +264,15 @@ void __init early_init_devtree(void *params)
 		strlcpy(command_line, boot_command_line, COMMAND_LINE_SIZE);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#endif /* CONFIG_USE_OF */
+=======
 #endif /* CONFIG_OF */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* CONFIG_USE_OF */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Initialize architecture. (Early stage)
@@ -253,7 +293,15 @@ void __init init_arch(bp_tag_t *bp_start)
 	if (bp_start)
 		parse_bootparam(bp_start);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifdef CONFIG_USE_OF
+=======
 #ifdef CONFIG_OF
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_USE_OF
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	early_init_devtree(dtb_start);
 #endif
 

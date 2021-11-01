@@ -859,10 +859,24 @@ int mips_set_process_fp_mode(struct task_struct *task, unsigned int value)
 	 * scheduled in then it will already have picked up the new FP mode
 	 * whilst doing so.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+	for_each_cpu_and(cpu, &process_cpus, cpu_online_mask)
+		work_on_cpu(cpu, prepare_for_fp_mode_switch, NULL);
+	cpus_read_unlock();
+=======
 	get_online_cpus();
 	for_each_cpu_and(cpu, &process_cpus, cpu_online_mask)
 		work_on_cpu(cpu, prepare_for_fp_mode_switch, NULL);
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+	for_each_cpu_and(cpu, &process_cpus, cpu_online_mask)
+		work_on_cpu(cpu, prepare_for_fp_mode_switch, NULL);
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

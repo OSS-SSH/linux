@@ -189,10 +189,43 @@ static void vp_vdpa_set_status(struct vdpa_device *vdpa, u8 status)
 	}
 
 	vp_modern_set_status(mdev, status);
+<<<<<<< HEAD
+<<<<<<< HEAD
+}
 
-	if (!(status & VIRTIO_CONFIG_S_DRIVER_OK) &&
-	    (s & VIRTIO_CONFIG_S_DRIVER_OK))
+static int vp_vdpa_reset(struct vdpa_device *vdpa)
+{
+	struct vp_vdpa *vp_vdpa = vdpa_to_vp(vdpa);
+	struct virtio_pci_modern_device *mdev = &vp_vdpa->mdev;
+	u8 s = vp_vdpa_get_status(vdpa);
+
+	vp_modern_set_status(mdev, 0);
+
+	if (s & VIRTIO_CONFIG_S_DRIVER_OK)
 		vp_vdpa_free_irq(vp_vdpa);
+
+	return 0;
+=======
+=======
+}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+static int vp_vdpa_reset(struct vdpa_device *vdpa)
+{
+	struct vp_vdpa *vp_vdpa = vdpa_to_vp(vdpa);
+	struct virtio_pci_modern_device *mdev = &vp_vdpa->mdev;
+	u8 s = vp_vdpa_get_status(vdpa);
+
+	vp_modern_set_status(mdev, 0);
+
+	if (s & VIRTIO_CONFIG_S_DRIVER_OK)
+		vp_vdpa_free_irq(vp_vdpa);
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static u16 vp_vdpa_get_vq_num_max(struct vdpa_device *vdpa)
@@ -398,6 +431,14 @@ static const struct vdpa_config_ops vp_vdpa_ops = {
 	.set_features	= vp_vdpa_set_features,
 	.get_status	= vp_vdpa_get_status,
 	.set_status	= vp_vdpa_set_status,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.reset		= vp_vdpa_reset,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.reset		= vp_vdpa_reset,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.get_vq_num_max	= vp_vdpa_get_vq_num_max,
 	.get_vq_state	= vp_vdpa_get_vq_state,
 	.get_vq_notification = vp_vdpa_get_vq_notification,
@@ -435,10 +476,24 @@ static int vp_vdpa_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		return ret;
 
 	vp_vdpa = vdpa_alloc_device(struct vp_vdpa, vdpa,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				    dev, &vp_vdpa_ops, NULL, false);
+	if (IS_ERR(vp_vdpa)) {
+		dev_err(dev, "vp_vdpa: Failed to allocate vDPA structure\n");
+		return PTR_ERR(vp_vdpa);
+=======
 				    dev, &vp_vdpa_ops, NULL);
 	if (vp_vdpa == NULL) {
 		dev_err(dev, "vp_vdpa: Failed to allocate vDPA structure\n");
 		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    dev, &vp_vdpa_ops, NULL, false);
+	if (IS_ERR(vp_vdpa)) {
+		dev_err(dev, "vp_vdpa: Failed to allocate vDPA structure\n");
+		return PTR_ERR(vp_vdpa);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mdev = &vp_vdpa->mdev;

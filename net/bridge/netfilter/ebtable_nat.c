@@ -85,7 +85,15 @@ static const struct nf_hook_ops ebt_ops_nat[] = {
 	},
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int frame_nat_table_init(struct net *net)
+=======
 static int __net_init frame_nat_net_init(struct net *net)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int frame_nat_table_init(struct net *net)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return ebt_register_table(net, &frame_nat, ebt_ops_nat);
 }
@@ -101,19 +109,54 @@ static void __net_exit frame_nat_net_exit(struct net *net)
 }
 
 static struct pernet_operations frame_nat_net_ops = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.init = frame_nat_net_init,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.exit = frame_nat_net_exit,
 	.pre_exit = frame_nat_net_pre_exit,
 };
 
 static int __init ebtable_nat_init(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	int ret = ebt_register_template(&frame_nat, frame_nat_table_init);
+
+	if (ret)
+		return ret;
+
+	ret = register_pernet_subsys(&frame_nat_net_ops);
+	if (ret) {
+		ebt_unregister_template(&frame_nat);
+		return ret;
+	}
+
+	return ret;
+<<<<<<< HEAD
+=======
 	return register_pernet_subsys(&frame_nat_net_ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __exit ebtable_nat_fini(void)
 {
 	unregister_pernet_subsys(&frame_nat_net_ops);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ebt_unregister_template(&frame_nat);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ebt_unregister_template(&frame_nat);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 module_init(ebtable_nat_init);

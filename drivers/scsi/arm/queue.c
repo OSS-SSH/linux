@@ -214,7 +214,15 @@ struct scsi_cmnd *queue_remove_tgtluntag(Queue_t *queue, int target, int lun,
 	list_for_each(l, &queue->head) {
 		QE_t *q = list_entry(l, QE_t, list);
 		if (q->SCpnt->device->id == target && q->SCpnt->device->lun == lun &&
+<<<<<<< HEAD
+<<<<<<< HEAD
+		    scsi_cmd_to_rq(q->SCpnt)->tag == tag) {
+=======
 		    q->SCpnt->tag == tag) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    scsi_cmd_to_rq(q->SCpnt)->tag == tag) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			SCpnt = __queue_remove(queue, l);
 			break;
 		}

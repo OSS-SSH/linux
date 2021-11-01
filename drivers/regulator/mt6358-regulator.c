@@ -28,18 +28,38 @@ struct mt6358_regulator_info {
 	u32 qi;
 	const u32 *index_table;
 	unsigned int n_table;
-	u32 vsel_shift;
+<<<<<<< HEAD
+<<<<<<< HEAD
 	u32 da_vsel_reg;
 	u32 da_vsel_mask;
-	u32 da_vsel_shift;
 	u32 modeset_reg;
 	u32 modeset_mask;
+=======
+	u32 vsel_shift;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	u32 da_vsel_reg;
+	u32 da_vsel_mask;
+	u32 modeset_reg;
+	u32 modeset_mask;
+<<<<<<< HEAD
 	u32 modeset_shift;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define MT6358_BUCK(match, vreg, min, max, step,		\
 	volt_ranges, vosel_mask, _da_vsel_reg, _da_vsel_mask,	\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	_modeset_reg, _modeset_shift)		\
+=======
 	_da_vsel_shift, _modeset_reg, _modeset_shift)		\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	_modeset_reg, _modeset_shift)		\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 [MT6358_ID_##vreg] = {	\
 	.desc = {	\
 		.name = #vreg,	\
@@ -61,15 +81,33 @@ struct mt6358_regulator_info {
 	.qi = BIT(0),	\
 	.da_vsel_reg = _da_vsel_reg,	\
 	.da_vsel_mask = _da_vsel_mask,	\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.modeset_reg = _modeset_reg,	\
+	.modeset_mask = BIT(_modeset_shift),	\
+=======
 	.da_vsel_shift = _da_vsel_shift,	\
 	.modeset_reg = _modeset_reg,	\
 	.modeset_mask = BIT(_modeset_shift),	\
 	.modeset_shift = _modeset_shift	\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.modeset_reg = _modeset_reg,	\
+	.modeset_mask = BIT(_modeset_shift),	\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #define MT6358_LDO(match, vreg, ldo_volt_table,	\
 	ldo_index_table, enreg, enbit, vosel,	\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	vosel_mask)	\
+=======
 	vosel_mask, vosel_shift)	\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vosel_mask)	\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 [MT6358_ID_##vreg] = {	\
 	.desc = {	\
 		.name = #vreg,	\
@@ -89,12 +127,26 @@ struct mt6358_regulator_info {
 	.qi = BIT(15),	\
 	.index_table = ldo_index_table,	\
 	.n_table = ARRAY_SIZE(ldo_index_table),	\
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.vsel_shift = vosel_shift,	\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #define MT6358_LDO1(match, vreg, min, max, step,	\
 	volt_ranges, _da_vsel_reg, _da_vsel_mask,	\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	vosel, vosel_mask)	\
+=======
 	_da_vsel_shift, vosel, vosel_mask)	\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vosel, vosel_mask)	\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 [MT6358_ID_##vreg] = {	\
 	.desc = {	\
 		.name = #vreg,	\
@@ -113,7 +165,13 @@ struct mt6358_regulator_info {
 	},	\
 	.da_vsel_reg = _da_vsel_reg,	\
 	.da_vsel_mask = _da_vsel_mask,	\
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.da_vsel_shift = _da_vsel_shift,	\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.status_reg = MT6358_LDO_##vreg##_DBG1,	\
 	.qi = BIT(0),	\
 }
@@ -260,9 +318,21 @@ static int mt6358_set_voltage_sel(struct regulator_dev *rdev,
 	pvol = info->index_table;
 
 	idx = pvol[selector];
+<<<<<<< HEAD
+<<<<<<< HEAD
+	idx <<= ffs(info->desc.vsel_mask) - 1;
+	ret = regmap_update_bits(rdev->regmap, info->desc.vsel_reg,
+				 info->desc.vsel_mask, idx);
+=======
 	ret = regmap_update_bits(rdev->regmap, info->desc.vsel_reg,
 				 info->desc.vsel_mask,
 				 idx << info->vsel_shift);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	idx <<= ffs(info->desc.vsel_mask) - 1;
+	ret = regmap_update_bits(rdev->regmap, info->desc.vsel_reg,
+				 info->desc.vsel_mask, idx);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -282,7 +352,17 @@ static int mt6358_get_voltage_sel(struct regulator_dev *rdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	selector = (selector & info->desc.vsel_mask) >>
+			(ffs(info->desc.vsel_mask) - 1);
+=======
 	selector = (selector & info->desc.vsel_mask) >> info->vsel_shift;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	selector = (selector & info->desc.vsel_mask) >>
+			(ffs(info->desc.vsel_mask) - 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pvol = info->index_table;
 	for (idx = 0; idx < info->desc.n_voltages; idx++) {
 		if (pvol[idx] == selector)
@@ -305,7 +385,15 @@ static int mt6358_get_buck_voltage_sel(struct regulator_dev *rdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = (regval & info->da_vsel_mask) >> (ffs(info->da_vsel_mask) - 1);
+=======
 	ret = (regval >> info->da_vsel_shift) & info->da_vsel_mask;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = (regval & info->da_vsel_mask) >> (ffs(info->da_vsel_mask) - 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -342,11 +430,25 @@ static int mt6358_regulator_set_mode(struct regulator_dev *rdev,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dev_dbg(&rdev->dev, "mt6358 buck set_mode %#x, %#x, %#x\n",
+		info->modeset_reg, info->modeset_mask, val);
+
+	val <<= ffs(info->modeset_mask) - 1;
+=======
 	dev_dbg(&rdev->dev, "mt6358 buck set_mode %#x, %#x, %#x, %#x\n",
 		info->modeset_reg, info->modeset_mask,
 		info->modeset_shift, val);
 
 	val <<= info->modeset_shift;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_dbg(&rdev->dev, "mt6358 buck set_mode %#x, %#x, %#x\n",
+		info->modeset_reg, info->modeset_mask, val);
+
+	val <<= ffs(info->modeset_mask) - 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return regmap_update_bits(rdev->regmap, info->modeset_reg,
 				  info->modeset_mask, val);
@@ -364,7 +466,15 @@ static unsigned int mt6358_regulator_get_mode(struct regulator_dev *rdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	switch ((regval & info->modeset_mask) >> (ffs(info->modeset_mask) - 1)) {
+=======
 	switch ((regval & info->modeset_mask) >> info->modeset_shift) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	switch ((regval & info->modeset_mask) >> (ffs(info->modeset_mask) - 1)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case MT6358_BUCK_MODE_AUTO:
 		return REGULATOR_MODE_NORMAL;
 	case MT6358_BUCK_MODE_FORCE_PWM:
@@ -412,30 +522,65 @@ static const struct regulator_ops mt6358_volt_fixed_ops = {
 static struct mt6358_regulator_info mt6358_regulators[] = {
 	MT6358_BUCK("buck_vdram1", VDRAM1, 500000, 2087500, 12500,
 		    buck_volt_range2, 0x7f, MT6358_BUCK_VDRAM1_DBG0, 0x7f,
-		    0, MT6358_VDRAM1_ANA_CON0, 8),
+<<<<<<< HEAD
+<<<<<<< HEAD
+		    MT6358_VDRAM1_ANA_CON0, 8),
 	MT6358_BUCK("buck_vcore", VCORE, 500000, 1293750, 6250,
 		    buck_volt_range1, 0x7f, MT6358_BUCK_VCORE_DBG0, 0x7f,
-		    0, MT6358_VCORE_VGPU_ANA_CON0, 1),
+		    MT6358_VCORE_VGPU_ANA_CON0, 1),
 	MT6358_BUCK("buck_vpa", VPA, 500000, 3650000, 50000,
-		    buck_volt_range3, 0x3f, MT6358_BUCK_VPA_DBG0, 0x3f, 0,
+		    buck_volt_range3, 0x3f, MT6358_BUCK_VPA_DBG0, 0x3f,
 		    MT6358_VPA_ANA_CON0, 3),
 	MT6358_BUCK("buck_vproc11", VPROC11, 500000, 1293750, 6250,
 		    buck_volt_range1, 0x7f, MT6358_BUCK_VPROC11_DBG0, 0x7f,
-		    0, MT6358_VPROC_ANA_CON0, 1),
+		    MT6358_VPROC_ANA_CON0, 1),
 	MT6358_BUCK("buck_vproc12", VPROC12, 500000, 1293750, 6250,
 		    buck_volt_range1, 0x7f, MT6358_BUCK_VPROC12_DBG0, 0x7f,
-		    0, MT6358_VPROC_ANA_CON0, 2),
+		    MT6358_VPROC_ANA_CON0, 2),
 	MT6358_BUCK("buck_vgpu", VGPU, 500000, 1293750, 6250,
-		    buck_volt_range1, 0x7f, MT6358_BUCK_VGPU_ELR0, 0x7f, 0,
+		    buck_volt_range1, 0x7f, MT6358_BUCK_VGPU_ELR0, 0x7f,
 		    MT6358_VCORE_VGPU_ANA_CON0, 2),
 	MT6358_BUCK("buck_vs2", VS2, 500000, 2087500, 12500,
-		    buck_volt_range2, 0x7f, MT6358_BUCK_VS2_DBG0, 0x7f, 0,
+		    buck_volt_range2, 0x7f, MT6358_BUCK_VS2_DBG0, 0x7f,
 		    MT6358_VS2_ANA_CON0, 8),
 	MT6358_BUCK("buck_vmodem", VMODEM, 500000, 1293750, 6250,
 		    buck_volt_range1, 0x7f, MT6358_BUCK_VMODEM_DBG0, 0x7f,
-		    0, MT6358_VMODEM_ANA_CON0, 8),
+		    MT6358_VMODEM_ANA_CON0, 8),
 	MT6358_BUCK("buck_vs1", VS1, 1000000, 2587500, 12500,
+		    buck_volt_range4, 0x7f, MT6358_BUCK_VS1_DBG0, 0x7f,
+=======
+		    0, MT6358_VDRAM1_ANA_CON0, 8),
+=======
+		    MT6358_VDRAM1_ANA_CON0, 8),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	MT6358_BUCK("buck_vcore", VCORE, 500000, 1293750, 6250,
+		    buck_volt_range1, 0x7f, MT6358_BUCK_VCORE_DBG0, 0x7f,
+		    MT6358_VCORE_VGPU_ANA_CON0, 1),
+	MT6358_BUCK("buck_vpa", VPA, 500000, 3650000, 50000,
+		    buck_volt_range3, 0x3f, MT6358_BUCK_VPA_DBG0, 0x3f,
+		    MT6358_VPA_ANA_CON0, 3),
+	MT6358_BUCK("buck_vproc11", VPROC11, 500000, 1293750, 6250,
+		    buck_volt_range1, 0x7f, MT6358_BUCK_VPROC11_DBG0, 0x7f,
+		    MT6358_VPROC_ANA_CON0, 1),
+	MT6358_BUCK("buck_vproc12", VPROC12, 500000, 1293750, 6250,
+		    buck_volt_range1, 0x7f, MT6358_BUCK_VPROC12_DBG0, 0x7f,
+		    MT6358_VPROC_ANA_CON0, 2),
+	MT6358_BUCK("buck_vgpu", VGPU, 500000, 1293750, 6250,
+		    buck_volt_range1, 0x7f, MT6358_BUCK_VGPU_ELR0, 0x7f,
+		    MT6358_VCORE_VGPU_ANA_CON0, 2),
+	MT6358_BUCK("buck_vs2", VS2, 500000, 2087500, 12500,
+		    buck_volt_range2, 0x7f, MT6358_BUCK_VS2_DBG0, 0x7f,
+		    MT6358_VS2_ANA_CON0, 8),
+	MT6358_BUCK("buck_vmodem", VMODEM, 500000, 1293750, 6250,
+		    buck_volt_range1, 0x7f, MT6358_BUCK_VMODEM_DBG0, 0x7f,
+		    MT6358_VMODEM_ANA_CON0, 8),
+	MT6358_BUCK("buck_vs1", VS1, 1000000, 2587500, 12500,
+<<<<<<< HEAD
 		    buck_volt_range4, 0x7f, MT6358_BUCK_VS1_DBG0, 0x7f, 0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    buck_volt_range4, 0x7f, MT6358_BUCK_VS1_DBG0, 0x7f,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    MT6358_VS1_ANA_CON0, 8),
 	MT6358_REG_FIXED("ldo_vrf12", VRF12,
 			 MT6358_LDO_VRF12_CON0, 0, 1200000),
@@ -457,49 +602,103 @@ static struct mt6358_regulator_info mt6358_regulators[] = {
 	MT6358_REG_FIXED("ldo_vaud28", VAUD28,
 			 MT6358_LDO_VAUD28_CON0, 0, 2800000),
 	MT6358_LDO("ldo_vdram2", VDRAM2, vdram2_voltages, vdram2_idx,
-		   MT6358_LDO_VDRAM2_CON0, 0, MT6358_LDO_VDRAM2_ELR0, 0xf, 0),
+<<<<<<< HEAD
+<<<<<<< HEAD
+		   MT6358_LDO_VDRAM2_CON0, 0, MT6358_LDO_VDRAM2_ELR0, 0xf),
 	MT6358_LDO("ldo_vsim1", VSIM1, vsim_voltages, vsim_idx,
-		   MT6358_LDO_VSIM1_CON0, 0, MT6358_VSIM1_ANA_CON0, 0xf00, 8),
+		   MT6358_LDO_VSIM1_CON0, 0, MT6358_VSIM1_ANA_CON0, 0xf00),
 	MT6358_LDO("ldo_vibr", VIBR, vibr_voltages, vibr_idx,
-		   MT6358_LDO_VIBR_CON0, 0, MT6358_VIBR_ANA_CON0, 0xf00, 8),
+		   MT6358_LDO_VIBR_CON0, 0, MT6358_VIBR_ANA_CON0, 0xf00),
 	MT6358_LDO("ldo_vusb", VUSB, vusb_voltages, vusb_idx,
-		   MT6358_LDO_VUSB_CON0_0, 0, MT6358_VUSB_ANA_CON0, 0x700, 8),
+		   MT6358_LDO_VUSB_CON0_0, 0, MT6358_VUSB_ANA_CON0, 0x700),
 	MT6358_LDO("ldo_vcamd", VCAMD, vcamd_voltages, vcamd_idx,
-		   MT6358_LDO_VCAMD_CON0, 0, MT6358_VCAMD_ANA_CON0, 0xf00, 8),
+		   MT6358_LDO_VCAMD_CON0, 0, MT6358_VCAMD_ANA_CON0, 0xf00),
 	MT6358_LDO("ldo_vefuse", VEFUSE, vefuse_voltages, vefuse_idx,
-		   MT6358_LDO_VEFUSE_CON0, 0, MT6358_VEFUSE_ANA_CON0, 0xf00, 8),
+		   MT6358_LDO_VEFUSE_CON0, 0, MT6358_VEFUSE_ANA_CON0, 0xf00),
 	MT6358_LDO("ldo_vmch", VMCH, vmch_vemc_voltages, vmch_vemc_idx,
-		   MT6358_LDO_VMCH_CON0, 0, MT6358_VMCH_ANA_CON0, 0x700, 8),
+		   MT6358_LDO_VMCH_CON0, 0, MT6358_VMCH_ANA_CON0, 0x700),
 	MT6358_LDO("ldo_vcama1", VCAMA1, vcama_voltages, vcama_idx,
-		   MT6358_LDO_VCAMA1_CON0, 0, MT6358_VCAMA1_ANA_CON0, 0xf00, 8),
+		   MT6358_LDO_VCAMA1_CON0, 0, MT6358_VCAMA1_ANA_CON0, 0xf00),
 	MT6358_LDO("ldo_vemc", VEMC, vmch_vemc_voltages, vmch_vemc_idx,
-		   MT6358_LDO_VEMC_CON0, 0, MT6358_VEMC_ANA_CON0, 0x700, 8),
+		   MT6358_LDO_VEMC_CON0, 0, MT6358_VEMC_ANA_CON0, 0x700),
 	MT6358_LDO("ldo_vcn33_bt", VCN33_BT, vcn33_bt_wifi_voltages,
 		   vcn33_bt_wifi_idx, MT6358_LDO_VCN33_CON0_0,
-		   0, MT6358_VCN33_ANA_CON0, 0x300, 8),
+		   0, MT6358_VCN33_ANA_CON0, 0x300),
 	MT6358_LDO("ldo_vcn33_wifi", VCN33_WIFI, vcn33_bt_wifi_voltages,
 		   vcn33_bt_wifi_idx, MT6358_LDO_VCN33_CON0_1,
-		   0, MT6358_VCN33_ANA_CON0, 0x300, 8),
+		   0, MT6358_VCN33_ANA_CON0, 0x300),
 	MT6358_LDO("ldo_vcama2", VCAMA2, vcama_voltages, vcama_idx,
-		   MT6358_LDO_VCAMA2_CON0, 0, MT6358_VCAMA2_ANA_CON0, 0xf00, 8),
+		   MT6358_LDO_VCAMA2_CON0, 0, MT6358_VCAMA2_ANA_CON0, 0xf00),
 	MT6358_LDO("ldo_vmc", VMC, vmc_voltages, vmc_idx,
-		   MT6358_LDO_VMC_CON0, 0, MT6358_VMC_ANA_CON0, 0xf00, 8),
+		   MT6358_LDO_VMC_CON0, 0, MT6358_VMC_ANA_CON0, 0xf00),
 	MT6358_LDO("ldo_vldo28", VLDO28, vldo28_voltages, vldo28_idx,
 		   MT6358_LDO_VLDO28_CON0_0, 0,
-		   MT6358_VLDO28_ANA_CON0, 0x300, 8),
+		   MT6358_VLDO28_ANA_CON0, 0x300),
 	MT6358_LDO("ldo_vsim2", VSIM2, vsim_voltages, vsim_idx,
-		   MT6358_LDO_VSIM2_CON0, 0, MT6358_VSIM2_ANA_CON0, 0xf00, 8),
+		   MT6358_LDO_VSIM2_CON0, 0, MT6358_VSIM2_ANA_CON0, 0xf00),
 	MT6358_LDO1("ldo_vsram_proc11", VSRAM_PROC11, 500000, 1293750, 6250,
-		    buck_volt_range1, MT6358_LDO_VSRAM_PROC11_DBG0, 0x7f, 8,
+		    buck_volt_range1, MT6358_LDO_VSRAM_PROC11_DBG0, 0x7f00,
 		    MT6358_LDO_VSRAM_CON0, 0x7f),
 	MT6358_LDO1("ldo_vsram_others", VSRAM_OTHERS, 500000, 1293750, 6250,
-		    buck_volt_range1, MT6358_LDO_VSRAM_OTHERS_DBG0, 0x7f, 8,
+		    buck_volt_range1, MT6358_LDO_VSRAM_OTHERS_DBG0, 0x7f00,
 		    MT6358_LDO_VSRAM_CON2, 0x7f),
 	MT6358_LDO1("ldo_vsram_gpu", VSRAM_GPU, 500000, 1293750, 6250,
-		    buck_volt_range1, MT6358_LDO_VSRAM_GPU_DBG0, 0x7f, 8,
+		    buck_volt_range1, MT6358_LDO_VSRAM_GPU_DBG0, 0x7f00,
 		    MT6358_LDO_VSRAM_CON3, 0x7f),
 	MT6358_LDO1("ldo_vsram_proc12", VSRAM_PROC12, 500000, 1293750, 6250,
+		    buck_volt_range1, MT6358_LDO_VSRAM_PROC12_DBG0, 0x7f00,
+=======
+		   MT6358_LDO_VDRAM2_CON0, 0, MT6358_LDO_VDRAM2_ELR0, 0xf, 0),
+=======
+		   MT6358_LDO_VDRAM2_CON0, 0, MT6358_LDO_VDRAM2_ELR0, 0xf),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	MT6358_LDO("ldo_vsim1", VSIM1, vsim_voltages, vsim_idx,
+		   MT6358_LDO_VSIM1_CON0, 0, MT6358_VSIM1_ANA_CON0, 0xf00),
+	MT6358_LDO("ldo_vibr", VIBR, vibr_voltages, vibr_idx,
+		   MT6358_LDO_VIBR_CON0, 0, MT6358_VIBR_ANA_CON0, 0xf00),
+	MT6358_LDO("ldo_vusb", VUSB, vusb_voltages, vusb_idx,
+		   MT6358_LDO_VUSB_CON0_0, 0, MT6358_VUSB_ANA_CON0, 0x700),
+	MT6358_LDO("ldo_vcamd", VCAMD, vcamd_voltages, vcamd_idx,
+		   MT6358_LDO_VCAMD_CON0, 0, MT6358_VCAMD_ANA_CON0, 0xf00),
+	MT6358_LDO("ldo_vefuse", VEFUSE, vefuse_voltages, vefuse_idx,
+		   MT6358_LDO_VEFUSE_CON0, 0, MT6358_VEFUSE_ANA_CON0, 0xf00),
+	MT6358_LDO("ldo_vmch", VMCH, vmch_vemc_voltages, vmch_vemc_idx,
+		   MT6358_LDO_VMCH_CON0, 0, MT6358_VMCH_ANA_CON0, 0x700),
+	MT6358_LDO("ldo_vcama1", VCAMA1, vcama_voltages, vcama_idx,
+		   MT6358_LDO_VCAMA1_CON0, 0, MT6358_VCAMA1_ANA_CON0, 0xf00),
+	MT6358_LDO("ldo_vemc", VEMC, vmch_vemc_voltages, vmch_vemc_idx,
+		   MT6358_LDO_VEMC_CON0, 0, MT6358_VEMC_ANA_CON0, 0x700),
+	MT6358_LDO("ldo_vcn33_bt", VCN33_BT, vcn33_bt_wifi_voltages,
+		   vcn33_bt_wifi_idx, MT6358_LDO_VCN33_CON0_0,
+		   0, MT6358_VCN33_ANA_CON0, 0x300),
+	MT6358_LDO("ldo_vcn33_wifi", VCN33_WIFI, vcn33_bt_wifi_voltages,
+		   vcn33_bt_wifi_idx, MT6358_LDO_VCN33_CON0_1,
+		   0, MT6358_VCN33_ANA_CON0, 0x300),
+	MT6358_LDO("ldo_vcama2", VCAMA2, vcama_voltages, vcama_idx,
+		   MT6358_LDO_VCAMA2_CON0, 0, MT6358_VCAMA2_ANA_CON0, 0xf00),
+	MT6358_LDO("ldo_vmc", VMC, vmc_voltages, vmc_idx,
+		   MT6358_LDO_VMC_CON0, 0, MT6358_VMC_ANA_CON0, 0xf00),
+	MT6358_LDO("ldo_vldo28", VLDO28, vldo28_voltages, vldo28_idx,
+		   MT6358_LDO_VLDO28_CON0_0, 0,
+		   MT6358_VLDO28_ANA_CON0, 0x300),
+	MT6358_LDO("ldo_vsim2", VSIM2, vsim_voltages, vsim_idx,
+		   MT6358_LDO_VSIM2_CON0, 0, MT6358_VSIM2_ANA_CON0, 0xf00),
+	MT6358_LDO1("ldo_vsram_proc11", VSRAM_PROC11, 500000, 1293750, 6250,
+		    buck_volt_range1, MT6358_LDO_VSRAM_PROC11_DBG0, 0x7f00,
+		    MT6358_LDO_VSRAM_CON0, 0x7f),
+	MT6358_LDO1("ldo_vsram_others", VSRAM_OTHERS, 500000, 1293750, 6250,
+		    buck_volt_range1, MT6358_LDO_VSRAM_OTHERS_DBG0, 0x7f00,
+		    MT6358_LDO_VSRAM_CON2, 0x7f),
+	MT6358_LDO1("ldo_vsram_gpu", VSRAM_GPU, 500000, 1293750, 6250,
+		    buck_volt_range1, MT6358_LDO_VSRAM_GPU_DBG0, 0x7f00,
+		    MT6358_LDO_VSRAM_CON3, 0x7f),
+	MT6358_LDO1("ldo_vsram_proc12", VSRAM_PROC12, 500000, 1293750, 6250,
+<<<<<<< HEAD
 		    buck_volt_range1, MT6358_LDO_VSRAM_PROC12_DBG0, 0x7f, 8,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    buck_volt_range1, MT6358_LDO_VSRAM_PROC12_DBG0, 0x7f00,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    MT6358_LDO_VSRAM_CON1, 0x7f),
 };
 

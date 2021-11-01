@@ -204,8 +204,14 @@ static int sprd_pcm_hw_params(struct snd_soc_component *component,
 	if (!dma_params) {
 		dev_warn(component->dev, "no dma parameters setting\n");
 		dma_private->params = NULL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
 		runtime->dma_bytes = totsize;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	}
 
@@ -217,9 +223,15 @@ static int sprd_pcm_hw_params(struct snd_soc_component *component,
 			return ret;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
 
 	runtime->dma_bytes = totsize;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sg_num = totsize / period;
 	dma_private->dma_addr_offset = totsize / channels;
 
@@ -310,7 +322,13 @@ sg_err:
 static int sprd_pcm_hw_free(struct snd_soc_component *component,
 			    struct snd_pcm_substream *substream)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	snd_pcm_set_runtime_buffer(substream, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sprd_pcm_release_dma_channel(substream);
 
 	return 0;
@@ -435,6 +453,9 @@ static snd_pcm_uframes_t sprd_pcm_pointer(struct snd_soc_component *component,
 	return x;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static int sprd_pcm_mmap(struct snd_soc_component *component,
 			 struct snd_pcm_substream *substream,
 			 struct vm_area_struct *vma)
@@ -448,18 +469,33 @@ static int sprd_pcm_mmap(struct snd_soc_component *component,
 			       vma->vm_page_prot);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int sprd_pcm_new(struct snd_soc_component *component,
 			struct snd_soc_pcm_runtime *rtd)
 {
 	struct snd_card *card = rtd->card->snd_card;
 	struct snd_pcm *pcm = rtd->pcm;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct snd_pcm_substream *substream;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	ret = dma_coerce_mask_and_coherent(card->dev, DMA_BIT_MASK(32));
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
+					    card->dev,
+					    sprd_pcm_hardware.buffer_bytes_max);
+=======
 	substream = pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream;
 	if (substream) {
 		ret = snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, card->dev,
@@ -502,6 +538,12 @@ static void sprd_pcm_free(struct snd_soc_component *component,
 			substream->dma_buffer.addr = 0;
 		}
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
+					    card->dev,
+					    sprd_pcm_hardware.buffer_bytes_max);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct snd_soc_component_driver sprd_soc_component = {
@@ -512,9 +554,17 @@ static const struct snd_soc_component_driver sprd_soc_component = {
 	.hw_free	= sprd_pcm_hw_free,
 	.trigger	= sprd_pcm_trigger,
 	.pointer	= sprd_pcm_pointer,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.pcm_construct	= sprd_pcm_new,
+=======
 	.mmap		= sprd_pcm_mmap,
 	.pcm_construct	= sprd_pcm_new,
 	.pcm_destruct	= sprd_pcm_free,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.pcm_construct	= sprd_pcm_new,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.compress_ops	= &sprd_platform_compress_ops,
 };
 

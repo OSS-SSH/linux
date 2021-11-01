@@ -14,6 +14,14 @@
 #include <linux/kernel.h>
 #include <linux/platform_device.h>
 #include <linux/module.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/of.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/of.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/slab.h>
 #include <linux/device.h>
 #include <linux/err.h>
@@ -27,6 +35,14 @@ struct mmc_pwrseq_sd8787 {
 	struct mmc_pwrseq pwrseq;
 	struct gpio_desc *reset_gpio;
 	struct gpio_desc *pwrdn_gpio;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u32 reset_pwrdwn_delay_ms;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 reset_pwrdwn_delay_ms;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define to_pwrseq_sd8787(p) container_of(p, struct mmc_pwrseq_sd8787, pwrseq)
@@ -37,7 +53,15 @@ static void mmc_pwrseq_sd8787_pre_power_on(struct mmc_host *host)
 
 	gpiod_set_value_cansleep(pwrseq->reset_gpio, 1);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msleep(pwrseq->reset_pwrdwn_delay_ms);
+=======
 	msleep(300);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msleep(pwrseq->reset_pwrdwn_delay_ms);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gpiod_set_value_cansleep(pwrseq->pwrdn_gpio, 1);
 }
 
@@ -54,8 +78,26 @@ static const struct mmc_pwrseq_ops mmc_pwrseq_sd8787_ops = {
 	.power_off = mmc_pwrseq_sd8787_power_off,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const u32 sd8787_delay_ms = 300;
+static const u32 wilc1000_delay_ms = 5;
+
+static const struct of_device_id mmc_pwrseq_sd8787_of_match[] = {
+	{ .compatible = "mmc-pwrseq-sd8787", .data = &sd8787_delay_ms },
+	{ .compatible = "mmc-pwrseq-wilc1000", .data = &wilc1000_delay_ms },
+=======
 static const struct of_device_id mmc_pwrseq_sd8787_of_match[] = {
 	{ .compatible = "mmc-pwrseq-sd8787",},
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const u32 sd8787_delay_ms = 300;
+static const u32 wilc1000_delay_ms = 5;
+
+static const struct of_device_id mmc_pwrseq_sd8787_of_match[] = {
+	{ .compatible = "mmc-pwrseq-sd8787", .data = &sd8787_delay_ms },
+	{ .compatible = "mmc-pwrseq-wilc1000", .data = &wilc1000_delay_ms },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{/* sentinel */},
 };
 MODULE_DEVICE_TABLE(of, mmc_pwrseq_sd8787_of_match);
@@ -64,11 +106,31 @@ static int mmc_pwrseq_sd8787_probe(struct platform_device *pdev)
 {
 	struct mmc_pwrseq_sd8787 *pwrseq;
 	struct device *dev = &pdev->dev;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct of_device_id *match;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct of_device_id *match;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pwrseq = devm_kzalloc(dev, sizeof(*pwrseq), GFP_KERNEL);
 	if (!pwrseq)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	match = of_match_node(mmc_pwrseq_sd8787_of_match, pdev->dev.of_node);
+	pwrseq->reset_pwrdwn_delay_ms = *(u32 *)match->data;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	match = of_match_node(mmc_pwrseq_sd8787_of_match, pdev->dev.of_node);
+	pwrseq->reset_pwrdwn_delay_ms = *(u32 *)match->data;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pwrseq->pwrdn_gpio = devm_gpiod_get(dev, "powerdown", GPIOD_OUT_LOW);
 	if (IS_ERR(pwrseq->pwrdn_gpio))
 		return PTR_ERR(pwrseq->pwrdn_gpio);

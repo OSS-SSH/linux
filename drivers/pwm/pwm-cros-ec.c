@@ -280,7 +280,19 @@ static int cros_ec_pwm_remove(struct platform_device *dev)
 	struct cros_ec_pwm_device *ec_pwm = platform_get_drvdata(dev);
 	struct pwm_chip *chip = &ec_pwm->chip;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pwmchip_remove(chip);
+
+	return 0;
+=======
 	return pwmchip_remove(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pwmchip_remove(chip);
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_OF

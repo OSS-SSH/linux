@@ -188,9 +188,25 @@ void blk_mq_freeze_queue(struct request_queue *q)
 }
 EXPORT_SYMBOL_GPL(blk_mq_freeze_queue);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void __blk_mq_unfreeze_queue(struct request_queue *q, bool force_atomic)
+{
+	mutex_lock(&q->mq_freeze_lock);
+	if (force_atomic)
+		q->q_usage_counter.data->force_atomic = true;
+=======
 void blk_mq_unfreeze_queue(struct request_queue *q)
 {
 	mutex_lock(&q->mq_freeze_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void __blk_mq_unfreeze_queue(struct request_queue *q, bool force_atomic)
+{
+	mutex_lock(&q->mq_freeze_lock);
+	if (force_atomic)
+		q->q_usage_counter.data->force_atomic = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	q->mq_freeze_depth--;
 	WARN_ON_ONCE(q->mq_freeze_depth < 0);
 	if (!q->mq_freeze_depth) {
@@ -199,6 +215,20 @@ void blk_mq_unfreeze_queue(struct request_queue *q)
 	}
 	mutex_unlock(&q->mq_freeze_lock);
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+void blk_mq_unfreeze_queue(struct request_queue *q)
+{
+	__blk_mq_unfreeze_queue(q, false);
+}
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EXPORT_SYMBOL_GPL(blk_mq_unfreeze_queue);
 
 /*
@@ -525,7 +555,15 @@ void blk_mq_free_request(struct request *rq)
 		__blk_mq_dec_active_requests(hctx);
 
 	if (unlikely(laptop_mode && !blk_rq_is_passthrough(rq)))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		laptop_io_completion(q->disk->bdi);
+=======
 		laptop_io_completion(q->backing_dev_info);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		laptop_io_completion(q->disk->bdi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rq_qos_done(q, rq);
 
@@ -606,7 +644,15 @@ static inline bool blk_mq_complete_need_ipi(struct request *rq)
 	 * This is probably worse than completing the request on a different
 	 * cache domain.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (force_irqthreads())
+=======
 	if (force_irqthreads)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (force_irqthreads())
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	/* same CPU or cache domain?  Complete locally */
@@ -911,7 +957,15 @@ static bool blk_mq_req_expired(struct request *rq, unsigned long *next)
 
 void blk_mq_put_rq_ref(struct request *rq)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (is_flush_rq(rq))
+=======
 	if (is_flush_rq(rq, rq->mq_hctx))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (is_flush_rq(rq))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rq->end_io(rq, 0);
 	else if (refcount_dec_and_test(&rq->ref))
 		__blk_mq_free_request(rq);
@@ -923,6 +977,20 @@ static bool blk_mq_check_expired(struct blk_mq_hw_ctx *hctx,
 	unsigned long *next = priv;
 
 	/*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	 * blk_mq_queue_tag_busy_iter() has locked the request, so it cannot
+	 * be reallocated underneath the timeout handler's processing, then
+	 * the expire check is reliable. If the request is not expired, then
+	 * it was completed and reallocated as a new request after returning
+	 * from blk_mq_check_expired().
+<<<<<<< HEAD
+	 */
+	if (blk_mq_req_expired(rq, next))
+		blk_mq_rq_timed_out(rq, reserved);
+=======
 	 * Just do a quick check if it is expired before locking the request in
 	 * so we're not unnecessarilly synchronizing across CPUs.
 	 */
@@ -951,6 +1019,12 @@ static bool blk_mq_check_expired(struct blk_mq_hw_ctx *hctx,
 		blk_mq_rq_timed_out(rq, reserved);
 
 	blk_mq_put_rq_ref(rq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 */
+	if (blk_mq_req_expired(rq, next))
+		blk_mq_rq_timed_out(rq, reserved);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return true;
 }
 
@@ -2155,6 +2229,27 @@ static void blk_add_rq_to_plug(struct blk_plug *plug, struct request *rq)
 	}
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * Allow 4x BLK_MAX_REQUEST_COUNT requests on plug queue for multiple
+ * queues. This is important for md arrays to benefit from merging
+ * requests.
+ */
+static inline unsigned short blk_plug_max_rq_count(struct blk_plug *plug)
+{
+	if (plug->multiple_queues)
+		return BLK_MAX_REQUEST_COUNT * 4;
+	return BLK_MAX_REQUEST_COUNT;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * blk_mq_submit_bio - Create and send a request to block device.
  * @bio: Bio pointer.
@@ -2251,7 +2346,15 @@ blk_qc_t blk_mq_submit_bio(struct bio *bio)
 		else
 			last = list_entry_rq(plug->mq_list.prev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (request_count >= blk_plug_max_rq_count(plug) || (last &&
+=======
 		if (request_count >= BLK_MAX_REQUEST_COUNT || (last &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (request_count >= blk_plug_max_rq_count(plug) || (last &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    blk_rq_bytes(last) >= BLK_PLUG_FLUSH_SIZE)) {
 			blk_flush_plug_list(plug, false);
 			trace_block_plug(q);
@@ -2994,10 +3097,28 @@ static void queue_set_hctx_shared(struct request_queue *q, bool shared)
 	int i;
 
 	queue_for_each_hw_ctx(q, hctx, i) {
-		if (shared)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (shared) {
 			hctx->flags |= BLK_MQ_F_TAG_QUEUE_SHARED;
-		else
+		} else {
+			blk_mq_tag_idle(hctx);
 			hctx->flags &= ~BLK_MQ_F_TAG_QUEUE_SHARED;
+		}
+=======
+		if (shared)
+=======
+		if (shared) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			hctx->flags |= BLK_MQ_F_TAG_QUEUE_SHARED;
+		} else {
+			blk_mq_tag_idle(hctx);
+			hctx->flags &= ~BLK_MQ_F_TAG_QUEUE_SHARED;
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -3133,7 +3254,17 @@ struct request_queue *blk_mq_init_queue(struct blk_mq_tag_set *set)
 }
 EXPORT_SYMBOL(blk_mq_init_queue);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct gendisk *__blk_mq_alloc_disk(struct blk_mq_tag_set *set, void *queuedata,
+		struct lock_class_key *lkclass)
+=======
 struct gendisk *__blk_mq_alloc_disk(struct blk_mq_tag_set *set, void *queuedata)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct gendisk *__blk_mq_alloc_disk(struct blk_mq_tag_set *set, void *queuedata,
+		struct lock_class_key *lkclass)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct request_queue *q;
 	struct gendisk *disk;
@@ -3142,12 +3273,26 @@ struct gendisk *__blk_mq_alloc_disk(struct blk_mq_tag_set *set, void *queuedata)
 	if (IS_ERR(q))
 		return ERR_CAST(q);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	disk = __alloc_disk_node(q, set->numa_node, lkclass);
+=======
 	disk = __alloc_disk_node(0, set->numa_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	disk = __alloc_disk_node(q, set->numa_node, lkclass);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!disk) {
 		blk_cleanup_queue(q);
 		return ERR_PTR(-ENOMEM);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	disk->queue = q;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return disk;
 }
 EXPORT_SYMBOL(__blk_mq_alloc_disk);
@@ -3298,8 +3443,14 @@ int blk_mq_init_allocated_queue(struct blk_mq_tag_set *set,
 	    set->map[HCTX_TYPE_POLL].nr_queues)
 		blk_queue_flag_set(QUEUE_FLAG_POLL, q);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	q->sg_reserved_size = INT_MAX;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_DELAYED_WORK(&q->requeue_work, blk_mq_requeue_work);
 	INIT_LIST_HEAD(&q->requeue_list);
 	spin_lock_init(&q->requeue_lock);

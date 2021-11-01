@@ -502,7 +502,17 @@ in_ea:
 	.section .fixup,#alloc,#execinstr
 	.even
 1:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	jbsr	fpsp040_die
+	jbra	.Lnotkern
+=======
 	jbra	fpsp040_die
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	jbsr	fpsp040_die
+	jbra	.Lnotkern
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	.section __ex_table,#alloc
 	.align	4

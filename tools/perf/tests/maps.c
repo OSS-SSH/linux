@@ -116,5 +116,15 @@ int test__maps__merge_in(struct test *t __maybe_unused, int subtest __maybe_unus
 
 	ret = check_maps(merged3, ARRAY_SIZE(merged3), &maps);
 	TEST_ASSERT_VAL("merge check failed", !ret);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	maps__exit(&maps);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	maps__exit(&maps);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return TEST_OK;
 }

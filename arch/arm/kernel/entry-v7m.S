@@ -23,7 +23,15 @@ __invalid_entry:
 	adr	r0, strerr
 	mrs	r1, ipsr
 	mov	r2, lr
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bl	_printk
+=======
 	bl	printk
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bl	_printk
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	mov	r0, sp
 	bl	show_regs

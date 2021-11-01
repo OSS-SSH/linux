@@ -1167,7 +1167,15 @@ static int __init topology_init(void)
 		 * CPU.  For instance, the boot cpu might never be valid
 		 * for hotplugging.
 		 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (smp_ops && smp_ops->cpu_offline_self)
+=======
 		if (smp_ops->cpu_offline_self)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (smp_ops && smp_ops->cpu_offline_self)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			c->hotpluggable = 1;
 #endif
 

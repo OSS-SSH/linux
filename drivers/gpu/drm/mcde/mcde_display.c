@@ -1479,7 +1479,13 @@ static struct drm_simple_display_pipe_funcs mcde_display_funcs = {
 	.update = mcde_display_update,
 	.enable_vblank = mcde_display_enable_vblank,
 	.disable_vblank = mcde_display_disable_vblank,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.prepare_fb = drm_gem_simple_display_pipe_prepare_fb,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 int mcde_display_init(struct drm_device *drm)

@@ -25,9 +25,23 @@
 
 /* Handle NCI Response packets */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void nci_core_reset_rsp_packet(struct nci_dev *ndev,
+				      const struct sk_buff *skb)
+{
+	const struct nci_core_reset_rsp *rsp = (void *)skb->data;
+=======
 static void nci_core_reset_rsp_packet(struct nci_dev *ndev, struct sk_buff *skb)
 {
 	struct nci_core_reset_rsp *rsp = (void *) skb->data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void nci_core_reset_rsp_packet(struct nci_dev *ndev,
+				      const struct sk_buff *skb)
+{
+	const struct nci_core_reset_rsp *rsp = (void *)skb->data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pr_debug("status 0x%x\n", rsp->status);
 
@@ -43,10 +57,26 @@ static void nci_core_reset_rsp_packet(struct nci_dev *ndev, struct sk_buff *skb)
 	}
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static u8 nci_core_init_rsp_packet_v1(struct nci_dev *ndev,
+				      const struct sk_buff *skb)
+{
+	const struct nci_core_init_rsp_1 *rsp_1 = (void *)skb->data;
+	const struct nci_core_init_rsp_2 *rsp_2;
+=======
 static u8 nci_core_init_rsp_packet_v1(struct nci_dev *ndev, struct sk_buff *skb)
 {
 	struct nci_core_init_rsp_1 *rsp_1 = (void *) skb->data;
 	struct nci_core_init_rsp_2 *rsp_2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u8 nci_core_init_rsp_packet_v1(struct nci_dev *ndev,
+				      const struct sk_buff *skb)
+{
+	const struct nci_core_init_rsp_1 *rsp_1 = (void *)skb->data;
+	const struct nci_core_init_rsp_2 *rsp_2;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pr_debug("status 0x%x\n", rsp_1->status);
 
@@ -81,10 +111,26 @@ static u8 nci_core_init_rsp_packet_v1(struct nci_dev *ndev, struct sk_buff *skb)
 	return NCI_STATUS_OK;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static u8 nci_core_init_rsp_packet_v2(struct nci_dev *ndev,
+				      const struct sk_buff *skb)
+{
+	const struct nci_core_init_rsp_nci_ver2 *rsp = (void *)skb->data;
+	const u8 *supported_rf_interface = rsp->supported_rf_interfaces;
+=======
 static u8 nci_core_init_rsp_packet_v2(struct nci_dev *ndev, struct sk_buff *skb)
 {
 	struct nci_core_init_rsp_nci_ver2 *rsp = (void *)skb->data;
 	u8 *supported_rf_interface = rsp->supported_rf_interfaces;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u8 nci_core_init_rsp_packet_v2(struct nci_dev *ndev,
+				      const struct sk_buff *skb)
+{
+	const struct nci_core_init_rsp_nci_ver2 *rsp = (void *)skb->data;
+	const u8 *supported_rf_interface = rsp->supported_rf_interfaces;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 rf_interface_idx = 0;
 	u8 rf_extension_cnt = 0;
 
@@ -118,7 +164,15 @@ static u8 nci_core_init_rsp_packet_v2(struct nci_dev *ndev, struct sk_buff *skb)
 	return NCI_STATUS_OK;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void nci_core_init_rsp_packet(struct nci_dev *ndev, const struct sk_buff *skb)
+=======
 static void nci_core_init_rsp_packet(struct nci_dev *ndev, struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void nci_core_init_rsp_packet(struct nci_dev *ndev, const struct sk_buff *skb)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u8 status = 0;
 
@@ -160,9 +214,21 @@ exit:
 }
 
 static void nci_core_set_config_rsp_packet(struct nci_dev *ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					   const struct sk_buff *skb)
+{
+	const struct nci_core_set_config_rsp *rsp = (void *)skb->data;
+=======
 					   struct sk_buff *skb)
 {
 	struct nci_core_set_config_rsp *rsp = (void *) skb->data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					   const struct sk_buff *skb)
+{
+	const struct nci_core_set_config_rsp *rsp = (void *)skb->data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pr_debug("status 0x%x\n", rsp->status);
 
@@ -170,7 +236,15 @@ static void nci_core_set_config_rsp_packet(struct nci_dev *ndev,
 }
 
 static void nci_rf_disc_map_rsp_packet(struct nci_dev *ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				       const struct sk_buff *skb)
+=======
 				       struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				       const struct sk_buff *skb)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	__u8 status = skb->data[0];
 
@@ -179,9 +253,23 @@ static void nci_rf_disc_map_rsp_packet(struct nci_dev *ndev,
 	nci_req_complete(ndev, status);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void nci_rf_disc_rsp_packet(struct nci_dev *ndev,
+				   const struct sk_buff *skb)
+{
+	struct nci_conn_info *conn_info;
+=======
 static void nci_rf_disc_rsp_packet(struct nci_dev *ndev, struct sk_buff *skb)
 {
 	struct nci_conn_info    *conn_info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void nci_rf_disc_rsp_packet(struct nci_dev *ndev,
+				   const struct sk_buff *skb)
+{
+	struct nci_conn_info *conn_info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__u8 status = skb->data[0];
 
 	pr_debug("status 0x%x\n", status);
@@ -210,7 +298,15 @@ exit:
 }
 
 static void nci_rf_disc_select_rsp_packet(struct nci_dev *ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					  const struct sk_buff *skb)
+=======
 					  struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  const struct sk_buff *skb)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	__u8 status = skb->data[0];
 
@@ -222,7 +318,15 @@ static void nci_rf_disc_select_rsp_packet(struct nci_dev *ndev,
 }
 
 static void nci_rf_deactivate_rsp_packet(struct nci_dev *ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					 const struct sk_buff *skb)
+=======
 					 struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					 const struct sk_buff *skb)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	__u8 status = skb->data[0];
 
@@ -238,9 +342,21 @@ static void nci_rf_deactivate_rsp_packet(struct nci_dev *ndev,
 }
 
 static void nci_nfcee_discover_rsp_packet(struct nci_dev *ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					  const struct sk_buff *skb)
+{
+	const struct nci_nfcee_discover_rsp *discover_rsp;
+=======
 					  struct sk_buff *skb)
 {
 	struct nci_nfcee_discover_rsp *discover_rsp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  const struct sk_buff *skb)
+{
+	const struct nci_nfcee_discover_rsp *discover_rsp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (skb->len != 2) {
 		nci_req_complete(ndev, NCI_STATUS_NFCEE_PROTOCOL_ERROR);
@@ -255,7 +371,15 @@ static void nci_nfcee_discover_rsp_packet(struct nci_dev *ndev,
 }
 
 static void nci_nfcee_mode_set_rsp_packet(struct nci_dev *ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					  const struct sk_buff *skb)
+=======
 					  struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  const struct sk_buff *skb)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	__u8 status = skb->data[0];
 
@@ -264,11 +388,27 @@ static void nci_nfcee_mode_set_rsp_packet(struct nci_dev *ndev,
 }
 
 static void nci_core_conn_create_rsp_packet(struct nci_dev *ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					    const struct sk_buff *skb)
+{
+	__u8 status = skb->data[0];
+	struct nci_conn_info *conn_info = NULL;
+	const struct nci_core_conn_create_rsp *rsp;
+=======
 					    struct sk_buff *skb)
 {
 	__u8 status = skb->data[0];
 	struct nci_conn_info *conn_info = NULL;
 	struct nci_core_conn_create_rsp *rsp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					    const struct sk_buff *skb)
+{
+	__u8 status = skb->data[0];
+	struct nci_conn_info *conn_info = NULL;
+	const struct nci_core_conn_create_rsp *rsp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pr_debug("status 0x%x\n", status);
 
@@ -319,7 +459,15 @@ exit:
 }
 
 static void nci_core_conn_close_rsp_packet(struct nci_dev *ndev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					   const struct sk_buff *skb)
+=======
 					   struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					   const struct sk_buff *skb)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nci_conn_info *conn_info;
 	__u8 status = skb->data[0];
@@ -330,6 +478,16 @@ static void nci_core_conn_close_rsp_packet(struct nci_dev *ndev,
 							 ndev->cur_conn_id);
 		if (conn_info) {
 			list_del(&conn_info->list);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (conn_info == ndev->rf_conn_info)
+				ndev->rf_conn_info = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (conn_info == ndev->rf_conn_info)
+				ndev->rf_conn_info = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			devm_kfree(&ndev->nfc_dev->dev, conn_info);
 		}
 	}

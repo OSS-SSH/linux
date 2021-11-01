@@ -25,13 +25,31 @@ static int mock_phys_object(void *arg)
 		goto out;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	i915_gem_object_lock(obj, NULL);
 	if (!i915_gem_object_has_struct_page(obj)) {
+		i915_gem_object_unlock(obj);
+=======
+	if (!i915_gem_object_has_struct_page(obj)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	i915_gem_object_lock(obj, NULL);
+	if (!i915_gem_object_has_struct_page(obj)) {
+		i915_gem_object_unlock(obj);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = -EINVAL;
 		pr_err("shmem has no struct page\n");
 		goto out_obj;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	i915_gem_object_lock(obj, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = i915_gem_object_attach_phys(obj, PAGE_SIZE);
 	i915_gem_object_unlock(obj);
 	if (err) {

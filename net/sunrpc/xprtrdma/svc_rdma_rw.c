@@ -35,6 +35,14 @@ static void svc_rdma_wc_read_done(struct ib_cq *cq, struct ib_wc *wc);
  * controlling svcxprt_rdma is destroyed.
  */
 struct svc_rdma_rw_ctxt {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct llist_node	rw_node;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct llist_node	rw_node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head	rw_list;
 	struct rdma_rw_ctx	rw_ctx;
 	unsigned int		rw_nents;
@@ -53,19 +61,44 @@ static struct svc_rdma_rw_ctxt *
 svc_rdma_get_rw_ctxt(struct svcxprt_rdma *rdma, unsigned int sges)
 {
 	struct svc_rdma_rw_ctxt *ctxt;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct llist_node *node;
 
 	spin_lock(&rdma->sc_rw_ctxt_lock);
-
-	ctxt = svc_rdma_next_ctxt(&rdma->sc_rw_ctxts);
-	if (ctxt) {
-		list_del(&ctxt->rw_list);
-		spin_unlock(&rdma->sc_rw_ctxt_lock);
+	node = llist_del_first(&rdma->sc_rw_ctxts);
+	spin_unlock(&rdma->sc_rw_ctxt_lock);
+	if (node) {
+		ctxt = llist_entry(node, struct svc_rdma_rw_ctxt, rw_node);
 	} else {
+=======
+=======
+	struct llist_node *node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	spin_lock(&rdma->sc_rw_ctxt_lock);
+	node = llist_del_first(&rdma->sc_rw_ctxts);
+	spin_unlock(&rdma->sc_rw_ctxt_lock);
+	if (node) {
+		ctxt = llist_entry(node, struct svc_rdma_rw_ctxt, rw_node);
+	} else {
+<<<<<<< HEAD
 		spin_unlock(&rdma->sc_rw_ctxt_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ctxt = kmalloc(struct_size(ctxt, rw_first_sgl, SG_CHUNK_SIZE),
 			       GFP_KERNEL);
 		if (!ctxt)
 			goto out_noctx;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		INIT_LIST_HEAD(&ctxt->rw_list);
 	}
 
@@ -83,14 +116,44 @@ out_noctx:
 	return NULL;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void __svc_rdma_put_rw_ctxt(struct svcxprt_rdma *rdma,
+				   struct svc_rdma_rw_ctxt *ctxt,
+				   struct llist_head *list)
+{
+	sg_free_table_chained(&ctxt->rw_sg_table, SG_CHUNK_SIZE);
+	llist_add(&ctxt->rw_node, list);
+}
+
 static void svc_rdma_put_rw_ctxt(struct svcxprt_rdma *rdma,
 				 struct svc_rdma_rw_ctxt *ctxt)
 {
+	__svc_rdma_put_rw_ctxt(rdma, ctxt, &rdma->sc_rw_ctxts);
+=======
+static void svc_rdma_put_rw_ctxt(struct svcxprt_rdma *rdma,
+				 struct svc_rdma_rw_ctxt *ctxt)
+=======
+static void __svc_rdma_put_rw_ctxt(struct svcxprt_rdma *rdma,
+				   struct svc_rdma_rw_ctxt *ctxt,
+				   struct llist_head *list)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
 	sg_free_table_chained(&ctxt->rw_sg_table, SG_CHUNK_SIZE);
+	llist_add(&ctxt->rw_node, list);
+}
 
+<<<<<<< HEAD
 	spin_lock(&rdma->sc_rw_ctxt_lock);
 	list_add(&ctxt->rw_list, &rdma->sc_rw_ctxts);
 	spin_unlock(&rdma->sc_rw_ctxt_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void svc_rdma_put_rw_ctxt(struct svcxprt_rdma *rdma,
+				 struct svc_rdma_rw_ctxt *ctxt)
+{
+	__svc_rdma_put_rw_ctxt(rdma, ctxt, &rdma->sc_rw_ctxts);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -101,9 +164,23 @@ static void svc_rdma_put_rw_ctxt(struct svcxprt_rdma *rdma,
 void svc_rdma_destroy_rw_ctxts(struct svcxprt_rdma *rdma)
 {
 	struct svc_rdma_rw_ctxt *ctxt;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct llist_node *node;
+
+	while ((node = llist_del_first(&rdma->sc_rw_ctxts)) != NULL) {
+		ctxt = llist_entry(node, struct svc_rdma_rw_ctxt, rw_node);
+=======
 
 	while ((ctxt = svc_rdma_next_ctxt(&rdma->sc_rw_ctxts)) != NULL) {
 		list_del(&ctxt->rw_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct llist_node *node;
+
+	while ((node = llist_del_first(&rdma->sc_rw_ctxts)) != NULL) {
+		ctxt = llist_entry(node, struct svc_rdma_rw_ctxt, rw_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(ctxt);
 	}
 }
@@ -171,20 +248,69 @@ static void svc_rdma_cc_init(struct svcxprt_rdma *rdma,
 	cc->cc_sqecount = 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * The consumed rw_ctx's are cleaned and placed on a local llist so
+ * that only one atomic llist operation is needed to put them all
+ * back on the free list.
+ */
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void svc_rdma_cc_release(struct svc_rdma_chunk_ctxt *cc,
 				enum dma_data_direction dir)
 {
 	struct svcxprt_rdma *rdma = cc->cc_rdma;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct llist_node *first, *last;
+	struct svc_rdma_rw_ctxt *ctxt;
+	LLIST_HEAD(free);
+
+	first = last = NULL;
+<<<<<<< HEAD
+=======
 	struct svc_rdma_rw_ctxt *ctxt;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while ((ctxt = svc_rdma_next_ctxt(&cc->cc_rwctxts)) != NULL) {
 		list_del(&ctxt->rw_list);
 
 		rdma_rw_ctx_destroy(&ctxt->rw_ctx, rdma->sc_qp,
 				    rdma->sc_port_num, ctxt->rw_sg_table.sgl,
 				    ctxt->rw_nents, dir);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		__svc_rdma_put_rw_ctxt(rdma, ctxt, &free);
+
+		ctxt->rw_node.next = first;
+		first = &ctxt->rw_node;
+		if (!last)
+			last = first;
+<<<<<<< HEAD
+	}
+	if (first)
+		llist_add_batch(first, last, &rdma->sc_rw_ctxts);
+=======
 		svc_rdma_put_rw_ctxt(rdma, ctxt);
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+	if (first)
+		llist_add_batch(first, last, &rdma->sc_rw_ctxts);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* State for sending a Write or Reply chunk.
@@ -248,8 +374,16 @@ static void svc_rdma_write_done(struct ib_cq *cq, struct ib_wc *wc)
 
 	trace_svcrdma_wc_write(wc, &cc->cc_cid);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	svc_rdma_wake_send_waiters(rdma, cc->cc_sqecount);
+=======
 	atomic_add(cc->cc_sqecount, &rdma->sc_sq_avail);
 	wake_up(&rdma->sc_send_wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	svc_rdma_wake_send_waiters(rdma, cc->cc_sqecount);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (unlikely(wc->status != IB_WC_SUCCESS))
 		svc_xprt_deferred_close(&rdma->sc_xprt);
@@ -304,9 +438,17 @@ static void svc_rdma_wc_read_done(struct ib_cq *cq, struct ib_wc *wc)
 
 	trace_svcrdma_wc_read(wc, &cc->cc_cid);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	svc_rdma_wake_send_waiters(rdma, cc->cc_sqecount);
+=======
 	atomic_add(cc->cc_sqecount, &rdma->sc_sq_avail);
 	wake_up(&rdma->sc_send_wait);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	svc_rdma_wake_send_waiters(rdma, cc->cc_sqecount);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cc->cc_status = wc->status;
 	complete(&cc->cc_done);
 	return;

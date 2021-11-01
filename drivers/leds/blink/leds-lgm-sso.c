@@ -611,9 +611,15 @@ static void sso_led_shutdown(struct sso_led *led)
 	if (led->desc.hw_trig)
 		regmap_update_bits(priv->mmap, SSO_CON3, BIT(led->desc.pin), 0);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (led->gpiod)
 		devm_gpiod_put(priv->dev, led->gpiod);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	led->priv = NULL;
 }
 
@@ -624,15 +630,34 @@ __sso_led_dt_parse(struct sso_led_priv *priv, struct fwnode_handle *fw_ssoled)
 	struct device *dev = priv->dev;
 	struct sso_led_desc *desc;
 	struct sso_led *led;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct list_head *p;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const char *tmp;
 	u32 prop;
 	int ret;
 
 	fwnode_for_each_child_node(fw_ssoled, fwnode_child) {
 		led = devm_kzalloc(dev, sizeof(*led), GFP_KERNEL);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		if (!led) {
+			ret = -ENOMEM;
+			goto __dt_err;
+		}
+<<<<<<< HEAD
+=======
 		if (!led)
 			return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		INIT_LIST_HEAD(&led->list);
 		led->priv = priv;
@@ -642,7 +667,15 @@ __sso_led_dt_parse(struct sso_led_priv *priv, struct fwnode_handle *fw_ssoled)
 							      fwnode_child,
 							      GPIOD_ASIS, NULL);
 		if (IS_ERR(led->gpiod)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			ret = dev_err_probe(dev, PTR_ERR(led->gpiod), "led: get gpio fail!\n");
+=======
 			dev_err(dev, "led: get gpio fail!\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = dev_err_probe(dev, PTR_ERR(led->gpiod), "led: get gpio fail!\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto __dt_err;
 		}
 
@@ -662,8 +695,24 @@ __sso_led_dt_parse(struct sso_led_priv *priv, struct fwnode_handle *fw_ssoled)
 			desc->panic_indicator = 1;
 
 		ret = fwnode_property_read_u32(fwnode_child, "reg", &prop);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (ret)
+			goto __dt_err;
+		if (prop >= SSO_LED_MAX_NUM) {
+			dev_err(dev, "invalid LED pin:%u\n", prop);
+			ret = -EINVAL;
+=======
 		if (ret != 0 || prop >= SSO_LED_MAX_NUM) {
 			dev_err(dev, "invalid LED pin:%u\n", prop);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret)
+			goto __dt_err;
+		if (prop >= SSO_LED_MAX_NUM) {
+			dev_err(dev, "invalid LED pin:%u\n", prop);
+			ret = -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto __dt_err;
 		}
 		desc->pin = prop;
@@ -699,21 +748,45 @@ __sso_led_dt_parse(struct sso_led_priv *priv, struct fwnode_handle *fw_ssoled)
 				desc->brightness = LED_FULL;
 		}
 
-		if (sso_create_led(priv, led, fwnode_child))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = sso_create_led(priv, led, fwnode_child);
+		if (ret)
 			goto __dt_err;
 	}
-	fwnode_handle_put(fw_ssoled);
 
 	return 0;
+
 __dt_err:
-	fwnode_handle_put(fw_ssoled);
+	fwnode_handle_put(fwnode_child);
 	/* unregister leds */
-	list_for_each(p, &priv->led_list) {
-		led = list_entry(p, struct sso_led, list);
+	list_for_each_entry(led, &priv->led_list, list)
 		sso_led_shutdown(led);
+
+	return ret;
+=======
+		if (sso_create_led(priv, led, fwnode_child))
+=======
+		ret = sso_create_led(priv, led, fwnode_child);
+		if (ret)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			goto __dt_err;
 	}
 
+	return 0;
+
+__dt_err:
+	fwnode_handle_put(fwnode_child);
+	/* unregister leds */
+	list_for_each_entry(led, &priv->led_list, list)
+		sso_led_shutdown(led);
+
+<<<<<<< HEAD
 	return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int sso_led_dt_parse(struct sso_led_priv *priv)
@@ -731,6 +804,14 @@ static int sso_led_dt_parse(struct sso_led_priv *priv)
 	fw_ssoled = fwnode_get_named_child_node(fwnode, "ssoled");
 	if (fw_ssoled) {
 		ret = __sso_led_dt_parse(priv, fw_ssoled);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		fwnode_handle_put(fw_ssoled);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fwnode_handle_put(fw_ssoled);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			return ret;
 	}
@@ -841,6 +922,15 @@ static int intel_sso_led_probe(struct platform_device *pdev)
 static int intel_sso_led_remove(struct platform_device *pdev)
 {
 	struct sso_led_priv *priv;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct sso_led *led, *n;
+
+	priv = platform_get_drvdata(pdev);
+
+	list_for_each_entry_safe(led, n, &priv->led_list, list) {
+		list_del(&led->list);
+=======
 	struct list_head *pos, *n;
 	struct sso_led *led;
 
@@ -849,6 +939,15 @@ static int intel_sso_led_remove(struct platform_device *pdev)
 	list_for_each_safe(pos, n, &priv->led_list) {
 		list_del(pos);
 		led = list_entry(pos, struct sso_led, list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct sso_led *led, *n;
+
+	priv = platform_get_drvdata(pdev);
+
+	list_for_each_entry_safe(led, n, &priv->led_list, list) {
+		list_del(&led->list);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sso_led_shutdown(led);
 	}
 

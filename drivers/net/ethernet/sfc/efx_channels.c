@@ -152,6 +152,14 @@ static int efx_allocate_msix_channels(struct efx_nic *efx,
 	 * maximum size.
 	 */
 	tx_per_ev = EFX_MAX_EVQ_SIZE / EFX_TXQ_MAX_ENT(efx);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	tx_per_ev = min(tx_per_ev, EFX_MAX_TXQ_PER_CHANNEL);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tx_per_ev = min(tx_per_ev, EFX_MAX_TXQ_PER_CHANNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	n_xdp_tx = num_possible_cpus();
 	n_xdp_ev = DIV_ROUND_UP(n_xdp_tx, tx_per_ev);
 
@@ -165,6 +173,43 @@ static int efx_allocate_msix_channels(struct efx_nic *efx,
 	 * We need a channel per event queue, plus a VI per tx queue.
 	 * This may be more pessimistic than it needs to be.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (n_channels >= max_channels) {
+		efx->xdp_txq_queues_mode = EFX_XDP_TX_QUEUES_BORROWED;
+		netif_warn(efx, drv, efx->net_dev,
+			   "Insufficient resources for %d XDP event queues (%d other channels, max %d)\n",
+			   n_xdp_ev, n_channels, max_channels);
+		netif_warn(efx, drv, efx->net_dev,
+			   "XDP_TX and XDP_REDIRECT might decrease device's performance\n");
+<<<<<<< HEAD
+	} else if (n_channels + n_xdp_tx > efx->max_vis) {
+		efx->xdp_txq_queues_mode = EFX_XDP_TX_QUEUES_BORROWED;
+		netif_warn(efx, drv, efx->net_dev,
+			   "Insufficient resources for %d XDP TX queues (%d other channels, max VIs %d)\n",
+			   n_xdp_tx, n_channels, efx->max_vis);
+		netif_warn(efx, drv, efx->net_dev,
+			   "XDP_TX and XDP_REDIRECT might decrease device's performance\n");
+	} else if (n_channels + n_xdp_ev > max_channels) {
+		efx->xdp_txq_queues_mode = EFX_XDP_TX_QUEUES_SHARED;
+		netif_warn(efx, drv, efx->net_dev,
+			   "Insufficient resources for %d XDP event queues (%d other channels, max %d)\n",
+			   n_xdp_ev, n_channels, max_channels);
+
+		n_xdp_ev = max_channels - n_channels;
+		netif_warn(efx, drv, efx->net_dev,
+			   "XDP_TX and XDP_REDIRECT will work with reduced performance (%d cpus/tx_queue)\n",
+			   DIV_ROUND_UP(n_xdp_tx, tx_per_ev * n_xdp_ev));
+	} else {
+		efx->xdp_txq_queues_mode = EFX_XDP_TX_QUEUES_DEDICATED;
+	}
+
+	if (efx->xdp_txq_queues_mode != EFX_XDP_TX_QUEUES_BORROWED) {
+		efx->n_xdp_channels = n_xdp_ev;
+		efx->xdp_tx_per_channel = tx_per_ev;
+=======
 	if (n_channels + n_xdp_ev > max_channels) {
 		netif_err(efx, drv, efx->net_dev,
 			  "Insufficient resources for %d XDP event queues (%d other channels, max %d)\n",
@@ -172,21 +217,56 @@ static int efx_allocate_msix_channels(struct efx_nic *efx,
 		efx->n_xdp_channels = 0;
 		efx->xdp_tx_per_channel = 0;
 		efx->xdp_tx_queue_count = 0;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (n_channels + n_xdp_tx > efx->max_vis) {
-		netif_err(efx, drv, efx->net_dev,
-			  "Insufficient resources for %d XDP TX queues (%d other channels, max VIs %d)\n",
-			  n_xdp_tx, n_channels, efx->max_vis);
-		efx->n_xdp_channels = 0;
-		efx->xdp_tx_per_channel = 0;
-		efx->xdp_tx_queue_count = 0;
+		efx->xdp_txq_queues_mode = EFX_XDP_TX_QUEUES_BORROWED;
+		netif_warn(efx, drv, efx->net_dev,
+			   "Insufficient resources for %d XDP TX queues (%d other channels, max VIs %d)\n",
+			   n_xdp_tx, n_channels, efx->max_vis);
+		netif_warn(efx, drv, efx->net_dev,
+			   "XDP_TX and XDP_REDIRECT might decrease device's performance\n");
+	} else if (n_channels + n_xdp_ev > max_channels) {
+		efx->xdp_txq_queues_mode = EFX_XDP_TX_QUEUES_SHARED;
+		netif_warn(efx, drv, efx->net_dev,
+			   "Insufficient resources for %d XDP event queues (%d other channels, max %d)\n",
+			   n_xdp_ev, n_channels, max_channels);
+
+		n_xdp_ev = max_channels - n_channels;
+		netif_warn(efx, drv, efx->net_dev,
+			   "XDP_TX and XDP_REDIRECT will work with reduced performance (%d cpus/tx_queue)\n",
+			   DIV_ROUND_UP(n_xdp_tx, tx_per_ev * n_xdp_ev));
 	} else {
+		efx->xdp_txq_queues_mode = EFX_XDP_TX_QUEUES_DEDICATED;
+	}
+
+	if (efx->xdp_txq_queues_mode != EFX_XDP_TX_QUEUES_BORROWED) {
 		efx->n_xdp_channels = n_xdp_ev;
+<<<<<<< HEAD
 		efx->xdp_tx_per_channel = EFX_MAX_TXQ_PER_CHANNEL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		efx->xdp_tx_per_channel = tx_per_ev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		efx->xdp_tx_queue_count = n_xdp_tx;
 		n_channels += n_xdp_ev;
 		netif_dbg(efx, drv, efx->net_dev,
 			  "Allocating %d TX and %d event queues for XDP\n",
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			  n_xdp_ev * tx_per_ev, n_xdp_ev);
+	} else {
+		efx->n_xdp_channels = 0;
+		efx->xdp_tx_per_channel = 0;
+		efx->xdp_tx_queue_count = n_xdp_tx;
+<<<<<<< HEAD
+=======
 			  n_xdp_tx, n_xdp_ev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (vec_count < n_channels) {
@@ -853,6 +933,29 @@ rollback:
 	goto out;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static inline int
+efx_set_xdp_tx_queue(struct efx_nic *efx, int xdp_queue_number,
+		     struct efx_tx_queue *tx_queue)
+{
+	if (xdp_queue_number >= efx->xdp_tx_queue_count)
+		return -EINVAL;
+
+	netif_dbg(efx, drv, efx->net_dev, "Channel %u TXQ %u is XDP %u, HW %u\n",
+		  tx_queue->channel->channel, tx_queue->label,
+		  xdp_queue_number, tx_queue->queue);
+	efx->xdp_tx_queues[xdp_queue_number] = tx_queue;
+	return 0;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int efx_set_channels(struct efx_nic *efx)
 {
 	struct efx_tx_queue *tx_queue;
@@ -891,6 +994,12 @@ int efx_set_channels(struct efx_nic *efx)
 			if (efx_channel_is_xdp_tx(channel)) {
 				efx_for_each_channel_tx_queue(tx_queue, channel) {
 					tx_queue->queue = next_queue++;
+<<<<<<< HEAD
+<<<<<<< HEAD
+					rc = efx_set_xdp_tx_queue(efx, xdp_queue_number, tx_queue);
+					if (rc == 0)
+						xdp_queue_number++;
+=======
 					netif_dbg(efx, drv, efx->net_dev, "Channel %u TXQ %u is XDP %u, HW %u\n",
 						  channel->channel, tx_queue->label,
 						  xdp_queue_number, tx_queue->queue);
@@ -903,6 +1012,12 @@ int efx_set_channels(struct efx_nic *efx)
 					if (xdp_queue_number < efx->xdp_tx_queue_count)
 						efx->xdp_tx_queues[xdp_queue_number] = tx_queue;
 					xdp_queue_number++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					rc = efx_set_xdp_tx_queue(efx, xdp_queue_number, tx_queue);
+					if (rc == 0)
+						xdp_queue_number++;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				}
 			} else {
 				efx_for_each_channel_tx_queue(tx_queue, channel) {
@@ -911,11 +1026,67 @@ int efx_set_channels(struct efx_nic *efx)
 						  channel->channel, tx_queue->label,
 						  tx_queue->queue);
 				}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+				/* If XDP is borrowing queues from net stack, it must use the queue
+				 * with no csum offload, which is the first one of the channel
+				 * (note: channel->tx_queue_by_type is not initialized yet)
+				 */
+				if (efx->xdp_txq_queues_mode == EFX_XDP_TX_QUEUES_BORROWED) {
+					tx_queue = &channel->tx_queue[0];
+					rc = efx_set_xdp_tx_queue(efx, xdp_queue_number, tx_queue);
+					if (rc == 0)
+						xdp_queue_number++;
+				}
+<<<<<<< HEAD
+			}
+		}
+	}
+	WARN_ON(efx->xdp_txq_queues_mode == EFX_XDP_TX_QUEUES_DEDICATED &&
+		xdp_queue_number != efx->xdp_tx_queue_count);
+	WARN_ON(efx->xdp_txq_queues_mode != EFX_XDP_TX_QUEUES_DEDICATED &&
+		xdp_queue_number > efx->xdp_tx_queue_count);
+
+	/* If we have more CPUs than assigned XDP TX queues, assign the already
+	 * existing queues to the exceeding CPUs
+	 */
+	next_queue = 0;
+	while (xdp_queue_number < efx->xdp_tx_queue_count) {
+		tx_queue = efx->xdp_tx_queues[next_queue++];
+		rc = efx_set_xdp_tx_queue(efx, xdp_queue_number, tx_queue);
+		if (rc == 0)
+			xdp_queue_number++;
+	}
+=======
 			}
 		}
 	}
 	if (xdp_queue_number)
 		efx->xdp_tx_queue_count = xdp_queue_number;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			}
+		}
+	}
+	WARN_ON(efx->xdp_txq_queues_mode == EFX_XDP_TX_QUEUES_DEDICATED &&
+		xdp_queue_number != efx->xdp_tx_queue_count);
+	WARN_ON(efx->xdp_txq_queues_mode != EFX_XDP_TX_QUEUES_DEDICATED &&
+		xdp_queue_number > efx->xdp_tx_queue_count);
+
+	/* If we have more CPUs than assigned XDP TX queues, assign the already
+	 * existing queues to the exceeding CPUs
+	 */
+	next_queue = 0;
+	while (xdp_queue_number < efx->xdp_tx_queue_count) {
+		tx_queue = efx->xdp_tx_queues[next_queue++];
+		rc = efx_set_xdp_tx_queue(efx, xdp_queue_number, tx_queue);
+		if (rc == 0)
+			xdp_queue_number++;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rc = netif_set_real_num_tx_queues(efx->net_dev, efx->n_tx_channels);
 	if (rc)

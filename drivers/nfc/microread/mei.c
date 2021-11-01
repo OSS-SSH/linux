@@ -10,7 +10,13 @@
 #include <linux/module.h>
 #include <linux/mod_devicetable.h>
 #include <linux/nfc.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <net/nfc/hci.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <net/nfc/llc.h>
 
 #include "../mei_phy.h"

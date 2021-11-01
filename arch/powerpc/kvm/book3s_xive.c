@@ -22,7 +22,13 @@
 #include <asm/xive.h>
 #include <asm/xive-regs.h>
 #include <asm/debug.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <asm/debugfs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/time.h>
 #include <asm/opal.h>
 
@@ -59,6 +65,34 @@
  */
 #define XIVE_Q_GAP	2
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static bool kvmppc_xive_vcpu_has_save_restore(struct kvm_vcpu *vcpu)
+{
+	struct kvmppc_xive_vcpu *xc = vcpu->arch.xive_vcpu;
+
+	/* Check enablement at VP level */
+	return xc->vp_cam & TM_QW1W2_HO;
+}
+
+bool kvmppc_xive_check_save_restore(struct kvm_vcpu *vcpu)
+{
+	struct kvmppc_xive_vcpu *xc = vcpu->arch.xive_vcpu;
+	struct kvmppc_xive *xive = xc->xive;
+
+	if (xive->flags & KVMPPC_XIVE_FLAG_SAVE_RESTORE)
+		return kvmppc_xive_vcpu_has_save_restore(vcpu);
+
+	return true;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Push a vcpu's context to the XIVE on guest entry.
  * This assumes we are in virtual mode (MMU on)
@@ -77,7 +111,17 @@ void kvmppc_xive_push_vcpu(struct kvm_vcpu *vcpu)
 		return;
 
 	eieio();
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!kvmppc_xive_vcpu_has_save_restore(vcpu))
+		__raw_writeq(vcpu->arch.xive_saved_state.w01, tima + TM_QW1_OS);
+=======
 	__raw_writeq(vcpu->arch.xive_saved_state.w01, tima + TM_QW1_OS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!kvmppc_xive_vcpu_has_save_restore(vcpu))
+		__raw_writeq(vcpu->arch.xive_saved_state.w01, tima + TM_QW1_OS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__raw_writel(vcpu->arch.xive_cam_word, tima + TM_QW1_OS + TM_WORD2);
 	vcpu->arch.xive_pushed = 1;
 	eieio();
@@ -149,7 +193,17 @@ void kvmppc_xive_pull_vcpu(struct kvm_vcpu *vcpu)
 	/* First load to pull the context, we ignore the value */
 	__raw_readl(tima + TM_SPC_PULL_OS_CTX);
 	/* Second load to recover the context state (Words 0 and 1) */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!kvmppc_xive_vcpu_has_save_restore(vcpu))
+		vcpu->arch.xive_saved_state.w01 = __raw_readq(tima + TM_QW1_OS);
+=======
 	vcpu->arch.xive_saved_state.w01 = __raw_readq(tima + TM_QW1_OS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!kvmppc_xive_vcpu_has_save_restore(vcpu))
+		vcpu->arch.xive_saved_state.w01 = __raw_readq(tima + TM_QW1_OS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Fixup some of the state for the next load */
 	vcpu->arch.xive_saved_state.lsmfb = 0;
@@ -363,9 +417,21 @@ static int xive_check_provisioning(struct kvm *kvm, u8 prio)
 		if (!vcpu->arch.xive_vcpu)
 			continue;
 		rc = xive_provision_queue(vcpu, prio);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (rc == 0 && !kvmppc_xive_has_single_escalation(xive))
+			kvmppc_xive_attach_escalation(vcpu, prio,
+						      kvmppc_xive_has_single_escalation(xive));
+=======
 		if (rc == 0 && !xive->single_escalation)
 			kvmppc_xive_attach_escalation(vcpu, prio,
 						      xive->single_escalation);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (rc == 0 && !kvmppc_xive_has_single_escalation(xive))
+			kvmppc_xive_attach_escalation(vcpu, prio,
+						      kvmppc_xive_has_single_escalation(xive));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (rc)
 			return rc;
 	}
@@ -922,13 +988,31 @@ int kvmppc_xive_set_icp(struct kvm_vcpu *vcpu, u64 icpval)
 }
 
 int kvmppc_xive_set_mapped(struct kvm *kvm, unsigned long guest_irq,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			   unsigned long host_irq)
+=======
 			   struct irq_desc *host_desc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   unsigned long host_irq)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct kvmppc_xive *xive = kvm->arch.xive;
 	struct kvmppc_xive_src_block *sb;
 	struct kvmppc_xive_irq_state *state;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct irq_data *host_data =
+		irq_domain_get_irq_data(irq_get_default_host(), host_irq);
+=======
 	struct irq_data *host_data = irq_desc_get_irq_data(host_desc);
 	unsigned int host_irq = irq_desc_get_irq(host_desc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct irq_data *host_data =
+		irq_domain_get_irq_data(irq_get_default_host(), host_irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int hw_irq = (unsigned int)irqd_to_hwirq(host_data);
 	u16 idx;
 	u8 prio;
@@ -937,7 +1021,17 @@ int kvmppc_xive_set_mapped(struct kvm *kvm, unsigned long guest_irq,
 	if (!xive)
 		return -ENODEV;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pr_debug("%s: GIRQ 0x%lx host IRQ %ld XIVE HW IRQ 0x%x\n",
+		 __func__, guest_irq, host_irq, hw_irq);
+=======
 	pr_devel("set_mapped girq 0x%lx host HW irq 0x%x...\n",guest_irq, hw_irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_debug("%s: GIRQ 0x%lx host IRQ %ld XIVE HW IRQ 0x%x\n",
+		 __func__, guest_irq, host_irq, hw_irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sb = kvmppc_xive_find_source(xive, guest_irq, &idx);
 	if (!sb)
@@ -959,7 +1053,15 @@ int kvmppc_xive_set_mapped(struct kvm *kvm, unsigned long guest_irq,
 	 */
 	rc = irq_set_vcpu_affinity(host_irq, state);
 	if (rc) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pr_err("Failed to set VCPU affinity for host IRQ %ld\n", host_irq);
+=======
 		pr_err("Failed to set VCPU affinity for irq %d\n", host_irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_err("Failed to set VCPU affinity for host IRQ %ld\n", host_irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return rc;
 	}
 
@@ -1019,12 +1121,26 @@ int kvmppc_xive_set_mapped(struct kvm *kvm, unsigned long guest_irq,
 EXPORT_SYMBOL_GPL(kvmppc_xive_set_mapped);
 
 int kvmppc_xive_clr_mapped(struct kvm *kvm, unsigned long guest_irq,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			   unsigned long host_irq)
+=======
 			   struct irq_desc *host_desc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   unsigned long host_irq)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct kvmppc_xive *xive = kvm->arch.xive;
 	struct kvmppc_xive_src_block *sb;
 	struct kvmppc_xive_irq_state *state;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	unsigned int host_irq = irq_desc_get_irq(host_desc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16 idx;
 	u8 prio;
 	int rc;
@@ -1032,7 +1148,15 @@ int kvmppc_xive_clr_mapped(struct kvm *kvm, unsigned long guest_irq,
 	if (!xive)
 		return -ENODEV;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pr_debug("%s: GIRQ 0x%lx host IRQ %ld\n", __func__, guest_irq, host_irq);
+=======
 	pr_devel("clr_mapped girq 0x%lx...\n", guest_irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_debug("%s: GIRQ 0x%lx host IRQ %ld\n", __func__, guest_irq, host_irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sb = kvmppc_xive_find_source(xive, guest_irq, &idx);
 	if (!sb)
@@ -1059,7 +1183,15 @@ int kvmppc_xive_clr_mapped(struct kvm *kvm, unsigned long guest_irq,
 	/* Release the passed-through interrupt to the host */
 	rc = irq_set_vcpu_affinity(host_irq, NULL);
 	if (rc) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pr_err("Failed to clr VCPU affinity for host IRQ %ld\n", host_irq);
+=======
 		pr_err("Failed to clr VCPU affinity for irq %d\n", host_irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_err("Failed to clr VCPU affinity for host IRQ %ld\n", host_irq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return rc;
 	}
 
@@ -1199,7 +1331,15 @@ void kvmppc_xive_cleanup_vcpu(struct kvm_vcpu *vcpu)
 	/* Free escalations */
 	for (i = 0; i < KVMPPC_XIVE_Q_COUNT; i++) {
 		if (xc->esc_virq[i]) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (kvmppc_xive_has_single_escalation(xc->xive))
+=======
 			if (xc->xive->single_escalation)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (kvmppc_xive_has_single_escalation(xc->xive))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				xive_cleanup_single_escalation(vcpu, xc,
 							xc->esc_virq[i]);
 			free_irq(xc->esc_virq[i], vcpu);
@@ -1319,6 +1459,21 @@ int kvmppc_xive_connect_vcpu(struct kvm_device *dev,
 	if (r)
 		goto bail;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!kvmppc_xive_check_save_restore(vcpu)) {
+		pr_err("inconsistent save-restore setup for VCPU %d\n", cpu);
+		r = -EIO;
+		goto bail;
+	}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Configure VCPU fields for use by assembly push/pull */
 	vcpu->arch.xive_saved_state.w01 = cpu_to_be64(0xff000000);
 	vcpu->arch.xive_cam_word = cpu_to_be32(xc->vp_cam | TM_QW1W2_VO);
@@ -1340,7 +1495,15 @@ int kvmppc_xive_connect_vcpu(struct kvm_device *dev,
 	 * Enable the VP first as the single escalation mode will
 	 * affect escalation interrupts numbering
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	r = xive_native_enable_vp(xc->vp_id, kvmppc_xive_has_single_escalation(xive));
+=======
 	r = xive_native_enable_vp(xc->vp_id, xive->single_escalation);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	r = xive_native_enable_vp(xc->vp_id, kvmppc_xive_has_single_escalation(xive));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (r) {
 		pr_err("Failed to enable VP in OPAL, err %d\n", r);
 		goto bail;
@@ -1357,15 +1520,35 @@ int kvmppc_xive_connect_vcpu(struct kvm_device *dev,
 		struct xive_q *q = &xc->queues[i];
 
 		/* Single escalation, no queue 7 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (i == 7 && kvmppc_xive_has_single_escalation(xive))
+=======
 		if (i == 7 && xive->single_escalation)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (i == 7 && kvmppc_xive_has_single_escalation(xive))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 
 		/* Is queue already enabled ? Provision it */
 		if (xive->qmap & (1 << i)) {
 			r = xive_provision_queue(vcpu, i);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (r == 0 && !kvmppc_xive_has_single_escalation(xive))
+				kvmppc_xive_attach_escalation(
+					vcpu, i, kvmppc_xive_has_single_escalation(xive));
+=======
 			if (r == 0 && !xive->single_escalation)
 				kvmppc_xive_attach_escalation(
 					vcpu, i, xive->single_escalation);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (r == 0 && !kvmppc_xive_has_single_escalation(xive))
+				kvmppc_xive_attach_escalation(
+					vcpu, i, kvmppc_xive_has_single_escalation(xive));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (r)
 				goto bail;
 		} else {
@@ -1380,7 +1563,15 @@ int kvmppc_xive_connect_vcpu(struct kvm_device *dev,
 	}
 
 	/* If not done above, attach priority 0 escalation */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	r = kvmppc_xive_attach_escalation(vcpu, 0, kvmppc_xive_has_single_escalation(xive));
+=======
 	r = kvmppc_xive_attach_escalation(vcpu, 0, xive->single_escalation);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	r = kvmppc_xive_attach_escalation(vcpu, 0, kvmppc_xive_has_single_escalation(xive));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (r)
 		goto bail;
 
@@ -2135,7 +2326,21 @@ static int kvmppc_xive_create(struct kvm_device *dev, u32 type)
 	 */
 	xive->nr_servers = KVM_MAX_VCPUS;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (xive_native_has_single_escalation())
+		xive->flags |= KVMPPC_XIVE_FLAG_SINGLE_ESCALATION;
+
+	if (xive_native_has_save_restore())
+		xive->flags |= KVMPPC_XIVE_FLAG_SAVE_RESTORE;
+<<<<<<< HEAD
+=======
 	xive->single_escalation = xive_native_has_single_escalation();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kvm->arch.xive = xive;
 	return 0;
@@ -2329,7 +2534,15 @@ static void xive_debugfs_init(struct kvmppc_xive *xive)
 		return;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	xive->dentry = debugfs_create_file(name, S_IRUGO, arch_debugfs_dir,
+=======
 	xive->dentry = debugfs_create_file(name, S_IRUGO, powerpc_debugfs_root,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xive->dentry = debugfs_create_file(name, S_IRUGO, arch_debugfs_dir,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					   xive, &xive_debug_fops);
 
 	pr_debug("%s: created %s\n", __func__, name);

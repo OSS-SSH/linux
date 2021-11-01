@@ -68,6 +68,14 @@ extern struct dentry *try_lookup_one_len(const char *, struct dentry *, int);
 extern struct dentry *lookup_one_len(const char *, struct dentry *, int);
 extern struct dentry *lookup_one_len_unlocked(const char *, struct dentry *, int);
 extern struct dentry *lookup_positive_unlocked(const char *, struct dentry *, int);
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct dentry *lookup_one(struct user_namespace *, const char *, struct dentry *, int);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct dentry *lookup_one(struct user_namespace *, const char *, struct dentry *, int);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern int follow_down_one(struct path *);
 extern int follow_down(struct path *);

@@ -103,6 +103,14 @@ need pass only as many optional fields as necessary:
   - subvendor and subdevice fields default to PCI_ANY_ID (FFFFFFFF)
   - class and classmask fields default to 0
   - driver_data defaults to 0UL.
+<<<<<<< HEAD
+<<<<<<< HEAD
+  - override_only field defaults to 0.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  - override_only field defaults to 0.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Note that driver_data must match the value used by any of the pci_device_id
 entries defined in the driver. This makes the driver_data field mandatory

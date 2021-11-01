@@ -382,11 +382,29 @@ static int pwm_imx_tpm_probe(struct platform_device *pdev)
 static int pwm_imx_tpm_remove(struct platform_device *pdev)
 {
 	struct imx_tpm_pwm_chip *tpm = platform_get_drvdata(pdev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	pwmchip_remove(&tpm->chip);
+
+	clk_disable_unprepare(tpm->clk);
+
+	return 0;
+=======
 	int ret = pwmchip_remove(&tpm->chip);
 
 	clk_disable_unprepare(tpm->clk);
 
 	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	pwmchip_remove(&tpm->chip);
+
+	clk_disable_unprepare(tpm->clk);
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __maybe_unused pwm_imx_tpm_suspend(struct device *dev)

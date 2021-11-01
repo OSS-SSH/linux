@@ -290,14 +290,30 @@ read_init_dma_fail:
 select_init_dma_fail:
 	dma_unmap_sg(i2c->dev, &i2c->sg_io[0], 1, DMA_TO_DEVICE);
 select_init_pio_fail:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dmaengine_terminate_sync(i2c->dmach);
+=======
 	dmaengine_terminate_all(i2c->dmach);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dmaengine_terminate_sync(i2c->dmach);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -EINVAL;
 
 /* Write failpath. */
 write_init_dma_fail:
 	dma_unmap_sg(i2c->dev, i2c->sg_io, 2, DMA_TO_DEVICE);
 write_init_pio_fail:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dmaengine_terminate_sync(i2c->dmach);
+=======
 	dmaengine_terminate_all(i2c->dmach);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dmaengine_terminate_sync(i2c->dmach);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -EINVAL;
 }
 

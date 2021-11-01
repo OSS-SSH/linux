@@ -227,13 +227,26 @@ static inline int __get_user_fn(void *x, const void __user *ptr, unsigned long s
 	__get_user(x, ptr);					\
 })
 
-unsigned long __must_check
-raw_copy_in_user(void __user *to, const void __user *from, unsigned long n);
-
+<<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * Copy a null terminated string from userspace.
  */
+long __must_check strncpy_from_user(char *dst, const char __user *src, long count);
 
+long __must_check strnlen_user(const char __user *src, long count);
+=======
+unsigned long __must_check
+raw_copy_in_user(void __user *to, const void __user *from, unsigned long n);
+
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * Copy a null terminated string from userspace.
+ */
+long __must_check strncpy_from_user(char *dst, const char __user *src, long count);
+
+<<<<<<< HEAD
 long __strncpy_from_user(char *dst, const char __user *src, long count);
 
 static inline long __must_check
@@ -250,6 +263,10 @@ static inline unsigned long strnlen_user(const char __user *src, unsigned long n
 	might_fault();
 	return __strnlen_user(src, n);
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+long __must_check strnlen_user(const char __user *src, long count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Zero Userspace

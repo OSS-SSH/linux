@@ -7,9 +7,30 @@
 #include <linux/kernel.h>
 #include <linux/string.h>
 #include <linux/errno.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#include <linux/module.h>
 #include <asm/unaligned.h>
 #include <scsi/scsi_common.h>
 
+MODULE_LICENSE("GPL v2");
+
+/* Command group 3 is reserved and should never be used.  */
+const unsigned char scsi_command_size_tbl[8] = {
+	6, 10, 10, 12, 16, 12, 10, 10
+};
+EXPORT_SYMBOL(scsi_command_size_tbl);
+
+<<<<<<< HEAD
+=======
+#include <asm/unaligned.h>
+#include <scsi/scsi_common.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* NB: These are exposed through /proc/scsi/scsi and form part of the ABI.
  * You may not alter any existing entry (although adding new ones is
  * encouraged once assigned by ANSI/INCITS T10).

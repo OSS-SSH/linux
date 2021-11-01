@@ -111,8 +111,14 @@
 #define	ODM_REG_TXAGC_A_1_MCS32_11N	0xE08
 #define	ODM_REG_TXAGC_A_MCS0_3_11N		0xE10
 #define	ODM_REG_TXAGC_A_MCS4_7_11N		0xE14
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define	ODM_REG_TXAGC_A_MCS8_11_11N	0xE18
 #define	ODM_REG_TXAGC_A_MCS12_15_11N	0xE1C
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define	ODM_REG_FPGA0_IQK_11N			0xE28
 #define	ODM_REG_TXIQK_TONE_A_11N		0xE30
 #define	ODM_REG_RXIQK_TONE_A_11N		0xE34

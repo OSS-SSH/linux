@@ -1177,7 +1177,13 @@ static void msm_gpio_irq_handler(struct irq_desc *desc)
 	const struct msm_pingroup *g;
 	struct msm_pinctrl *pctrl = gpiochip_get_data(gc);
 	struct irq_chip *chip = irq_desc_get_chip(desc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int irq_pin;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int handled = 0;
 	u32 val;
 	int i;
@@ -1192,8 +1198,16 @@ static void msm_gpio_irq_handler(struct irq_desc *desc)
 		g = &pctrl->soc->groups[i];
 		val = msm_readl_intr_status(pctrl, g);
 		if (val & BIT(g->intr_status_bit)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			generic_handle_domain_irq(gc->irq.domain, i);
+=======
 			irq_pin = irq_find_mapping(gc->irq.domain, i);
 			generic_handle_irq(irq_pin);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			generic_handle_domain_irq(gc->irq.domain, i);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			handled++;
 		}
 	}

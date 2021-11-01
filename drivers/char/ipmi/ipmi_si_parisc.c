@@ -29,9 +29,21 @@ static int __init ipmi_parisc_probe(struct parisc_device *dev)
 	return ipmi_si_add_smi(&io);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void __exit ipmi_parisc_remove(struct parisc_device *dev)
+{
+	ipmi_si_remove_by_dev(&dev->dev);
+=======
 static int __exit ipmi_parisc_remove(struct parisc_device *dev)
 {
 	return ipmi_si_remove_by_dev(&dev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __exit ipmi_parisc_remove(struct parisc_device *dev)
+{
+	ipmi_si_remove_by_dev(&dev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct parisc_device_id ipmi_parisc_tbl[] __initconst = {

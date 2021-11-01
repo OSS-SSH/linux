@@ -25,7 +25,15 @@
 
 /* THREAD_SIZE is the size of the task_struct/kernel_stack combo.
  * normally, the stack is found by doing something like p + THREAD_SIZE
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * in or1k, a page is 8192 bytes, which seems like a sane size
+=======
  * in or32, a page is 8192 bytes, which seems like a sane size
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * in or1k, a page is 8192 bytes, which seems like a sane size
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #define THREAD_SIZE_ORDER 0

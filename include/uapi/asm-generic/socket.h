@@ -124,6 +124,16 @@
 
 #define SO_NETNS_COOKIE		71
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define SO_BUF_LOCK		72
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SO_BUF_LOCK		72
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if !defined(__KERNEL__)
 
 #if __BITS_PER_LONG == 64 || (defined(__x86_64__) && defined(__ILP32__))

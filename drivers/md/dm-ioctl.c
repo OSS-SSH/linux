@@ -6,7 +6,15 @@
  */
 
 #include "dm-core.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "dm-ima.h"
+=======
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "dm-ima.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/module.h>
 #include <linux/vmalloc.h>
 #include <linux/miscdevice.h>
@@ -20,6 +28,14 @@
 #include <linux/compat.h>
 
 #include <linux/uaccess.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/ima.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/ima.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define DM_MSG_PREFIX "ioctl"
 #define DM_DRIVER_EMAIL "dm-devel@redhat.com"
@@ -347,6 +363,14 @@ retry:
 			dm_sync_table(md);
 			dm_table_destroy(t);
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dm_ima_measure_on_device_remove(md, true);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dm_ima_measure_on_device_remove(md, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dm_put(md);
 		if (likely(keep_open_devices))
 			dm_destroy(md);
@@ -483,6 +507,18 @@ static struct mapped_device *dm_hash_rename(struct dm_ioctl *param,
 		param->flags |= DM_UEVENT_GENERATED_FLAG;
 
 	md = hc->md;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	dm_ima_measure_on_device_rename(md);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	dm_ima_measure_on_device_rename(md);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	up_write(&_hash_lock);
 	kfree(old_name);
 
@@ -981,6 +1017,16 @@ static int dev_remove(struct file *filp, struct dm_ioctl *param, size_t param_si
 
 	param->flags &= ~DM_DEFERRED_REMOVE;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dm_ima_measure_on_device_remove(md, false);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dm_ima_measure_on_device_remove(md, false);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!dm_kobject_uevent(md, KOBJ_REMOVE, param->event_nr))
 		param->flags |= DM_UEVENT_GENERATED_FLAG;
 
@@ -1159,8 +1205,23 @@ static int do_resume(struct dm_ioctl *param)
 
 	if (dm_suspended_md(md)) {
 		r = dm_resume(md);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		if (!r) {
+			dm_ima_measure_on_device_resume(md, new_map ? true : false);
+
+			if (!dm_kobject_uevent(md, KOBJ_CHANGE, param->event_nr))
+				param->flags |= DM_UEVENT_GENERATED_FLAG;
+		}
+<<<<<<< HEAD
+=======
 		if (!r && !dm_kobject_uevent(md, KOBJ_CHANGE, param->event_nr))
 			param->flags |= DM_UEVENT_GENERATED_FLAG;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/*
@@ -1224,6 +1285,16 @@ static void retrieve_status(struct dm_table *table,
 
 	if (param->flags & DM_STATUS_TABLE_FLAG)
 		type = STATUSTYPE_TABLE;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	else if (param->flags & DM_IMA_MEASUREMENT_FLAG)
+		type = STATUSTYPE_IMA;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (param->flags & DM_IMA_MEASUREMENT_FLAG)
+		type = STATUSTYPE_IMA;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		type = STATUSTYPE_INFO;
 
@@ -1425,6 +1496,16 @@ static int table_load(struct file *filp, struct dm_ioctl *param, size_t param_si
 	if (r)
 		goto err_unlock_md_type;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dm_ima_measure_on_table_load(t, STATUSTYPE_IMA);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dm_ima_measure_on_table_load(t, STATUSTYPE_IMA);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	immutable_target_type = dm_get_immutable_target_type(md);
 	if (immutable_target_type &&
 	    (immutable_target_type != dm_table_get_immutable_target_type(t)) &&
@@ -1436,9 +1517,15 @@ static int table_load(struct file *filp, struct dm_ioctl *param, size_t param_si
 	}
 
 	if (dm_get_md_type(md) == DM_TYPE_NONE) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		/* Initial table load: acquire type of table. */
 		dm_set_md_type(md, dm_table_get_type(t));
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* setup md->queue to reflect md's type (may block) */
 		r = dm_setup_md_queue(md, t);
 		if (r) {
@@ -1496,6 +1583,14 @@ static int table_clear(struct file *filp, struct dm_ioctl *param, size_t param_s
 	struct hash_cell *hc;
 	struct mapped_device *md;
 	struct dm_table *old_map = NULL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bool has_new_map = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool has_new_map = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	down_write(&_hash_lock);
 
@@ -1509,6 +1604,14 @@ static int table_clear(struct file *filp, struct dm_ioctl *param, size_t param_s
 	if (hc->new_map) {
 		old_map = hc->new_map;
 		hc->new_map = NULL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		has_new_map = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		has_new_map = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	param->flags &= ~DM_INACTIVE_PRESENT_FLAG;
@@ -1520,6 +1623,14 @@ static int table_clear(struct file *filp, struct dm_ioctl *param, size_t param_s
 		dm_sync_table(md);
 		dm_table_destroy(old_map);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dm_ima_measure_on_table_clear(md, has_new_map);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dm_ima_measure_on_table_clear(md, has_new_map);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dm_put(md);
 
 	return 0;
@@ -2187,7 +2298,13 @@ int __init dm_early_create(struct dm_ioctl *dmi,
 	if (r)
 		goto err_destroy_table;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	md->type = dm_table_get_type(t);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* setup md->queue to reflect md's type (may block) */
 	r = dm_setup_md_queue(md, t);
 	if (r) {

@@ -772,10 +772,16 @@ int afs_lock(struct file *file, int cmd, struct file_lock *fl)
 	       fl->fl_type, fl->fl_flags,
 	       (long long) fl->fl_start, (long long) fl->fl_end);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* AFS doesn't support mandatory locks */
 	if (__mandatory_lock(&vnode->vfs_inode) && fl->fl_type != F_UNLCK)
 		return -ENOLCK;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_GETLK(cmd))
 		return afs_do_getlk(file, fl);
 

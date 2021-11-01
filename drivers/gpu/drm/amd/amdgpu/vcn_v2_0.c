@@ -122,7 +122,15 @@ static int vcn_v2_0_sw_init(void *handle)
 		adev->firmware.ucode[AMDGPU_UCODE_ID_VCN].fw = adev->vcn.fw;
 		adev->firmware.fw_size +=
 			ALIGN(le32_to_cpu(hdr->ucode_size_bytes), PAGE_SIZE);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dev_info(adev->dev, "Will use PSP to load VCN firmware\n");
+=======
 		DRM_INFO("PSP loading VCN firmware\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_info(adev->dev, "Will use PSP to load VCN firmware\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	r = amdgpu_vcn_resume(adev);

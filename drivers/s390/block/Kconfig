@@ -2,6 +2,9 @@
 comment "S/390 block device drivers"
 	depends on S390 && BLOCK
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config BLK_DEV_XPRAM
 	def_tristate m
 	prompt "XPRAM disk support"
@@ -13,6 +16,9 @@ config BLK_DEV_XPRAM
 	  This option is also available as a module which will be called
 	  xpram.  If unsure, say "N".
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config DCSSBLK
 	def_tristate m
 	select FS_DAX_LIMITED

@@ -192,6 +192,9 @@ struct drm_device {
 	struct list_head clientlist;
 
 	/**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	 * @irq_enabled:
 	 *
 	 * Indicates that interrupt handling is enabled, specifically vblank
@@ -206,6 +209,9 @@ struct drm_device {
 	int irq;
 
 	/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * @vblank_disable_immediate:
 	 *
 	 * If true, vblank interrupt will be disabled immediately when the
@@ -372,6 +378,19 @@ struct drm_device {
 
 	/* Scatter gather memory */
 	struct drm_sg_mem *sg;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	/* IRQs */
+	bool irq_enabled;
+	int irq;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 };
 

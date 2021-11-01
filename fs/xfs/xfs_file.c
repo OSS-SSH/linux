@@ -185,7 +185,15 @@ xfs_file_fsync(
 	if (error)
 		return error;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_is_shutdown(mp))
+=======
 	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	xfs_iflags_clear(ip, XFS_ITRUNCATED);
@@ -318,7 +326,15 @@ xfs_file_read_iter(
 
 	XFS_STATS_INC(mp, xs_read_calls);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_is_shutdown(mp))
+=======
 	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	if (IS_DAX(inode))
@@ -462,7 +478,15 @@ xfs_dio_write_end_io(
 
 	trace_xfs_end_io_direct_write(ip, offset, size);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_is_shutdown(ip->i_mount))
+=======
 	if (XFS_FORCED_SHUTDOWN(ip->i_mount))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(ip->i_mount))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	if (error)
@@ -814,7 +838,15 @@ xfs_file_write_iter(
 	if (ocount == 0)
 		return 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_is_shutdown(ip->i_mount))
+=======
 	if (XFS_FORCED_SHUTDOWN(ip->i_mount))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(ip->i_mount))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	if (IS_DAX(inode))
@@ -1122,7 +1154,15 @@ static inline bool xfs_file_sync_writes(struct file *filp)
 {
 	struct xfs_inode	*ip = XFS_I(file_inode(filp));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_wsync(ip->i_mount))
+=======
 	if (ip->i_mount->m_flags & XFS_MOUNT_WSYNC)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_wsync(ip->i_mount))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return true;
 	if (filp->f_flags & (__O_SYNC | O_DSYNC))
 		return true;
@@ -1153,10 +1193,24 @@ xfs_file_remap_range(
 	if (remap_flags & ~(REMAP_FILE_DEDUP | REMAP_FILE_ADVISORY))
 		return -EINVAL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!xfs_has_reflink(mp))
+		return -EOPNOTSUPP;
+
+	if (xfs_is_shutdown(mp))
+=======
 	if (!xfs_sb_version_hasreflink(&mp->m_sb))
 		return -EOPNOTSUPP;
 
 	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_reflink(mp))
+		return -EOPNOTSUPP;
+
+	if (xfs_is_shutdown(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	/* Prepare and then clone file data. */
@@ -1205,7 +1259,15 @@ xfs_file_open(
 {
 	if (!(file->f_flags & O_LARGEFILE) && i_size_read(inode) > MAX_NON_LFS)
 		return -EFBIG;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_is_shutdown(XFS_M(inode->i_sb)))
+=======
 	if (XFS_FORCED_SHUTDOWN(XFS_M(inode->i_sb)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(XFS_M(inode->i_sb)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 	file->f_mode |= FMODE_NOWAIT | FMODE_BUF_RASYNC;
 	return 0;
@@ -1277,7 +1339,15 @@ xfs_file_llseek(
 {
 	struct inode		*inode = file->f_mapping->host;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_is_shutdown(XFS_I(inode)->i_mount))
+=======
 	if (XFS_FORCED_SHUTDOWN(XFS_I(inode)->i_mount))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_is_shutdown(XFS_I(inode)->i_mount))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	switch (whence) {
@@ -1302,7 +1372,15 @@ xfs_file_llseek(
  *
  * mmap_lock (MM)
  *   sb_start_pagefault(vfs, freeze)
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *     invalidate_lock (vfs/XFS_MMAPLOCK - truncate serialisation)
+=======
  *     i_mmaplock (XFS - truncate serialisation)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *     invalidate_lock (vfs/XFS_MMAPLOCK - truncate serialisation)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *       page_lock (MM)
  *         i_lock (XFS - extent map serialisation)
  */
@@ -1323,24 +1401,62 @@ __xfs_filemap_fault(
 		file_update_time(vmf->vma->vm_file);
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_DAX(inode)) {
+		pfn_t pfn;
+
+		xfs_ilock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
+=======
 	xfs_ilock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
 	if (IS_DAX(inode)) {
 		pfn_t pfn;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_DAX(inode)) {
+		pfn_t pfn;
+
+		xfs_ilock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = dax_iomap_fault(vmf, pe_size, &pfn, NULL,
 				(write_fault && !vmf->cow_page) ?
 				 &xfs_direct_write_iomap_ops :
 				 &xfs_read_iomap_ops);
 		if (ret & VM_FAULT_NEEDDSYNC)
 			ret = dax_finish_sync_fault(vmf, pe_size, pfn);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		xfs_iunlock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
 	} else {
-		if (write_fault)
+		if (write_fault) {
+			xfs_ilock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
 			ret = iomap_page_mkwrite(vmf,
 					&xfs_buffered_write_iomap_ops);
-		else
+			xfs_iunlock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
+		} else {
 			ret = filemap_fault(vmf);
+		}
 	}
+=======
+=======
+		xfs_iunlock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	} else {
+		if (write_fault) {
+			xfs_ilock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
+			ret = iomap_page_mkwrite(vmf,
+					&xfs_buffered_write_iomap_ops);
+			xfs_iunlock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
+		} else {
+			ret = filemap_fault(vmf);
+		}
+	}
+<<<<<<< HEAD
 	xfs_iunlock(XFS_I(inode), XFS_MMAPLOCK_SHARED);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (write_fault)
 		sb_end_pagefault(inode->i_sb);

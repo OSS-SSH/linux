@@ -21,9 +21,21 @@
 
 #include <linux/types.h>
 #include <linux/interrupt.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/pm_runtime.h>
+
+#include "ipa.h"
+=======
 
 #include "ipa.h"
 #include "ipa_clock.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/pm_runtime.h>
+
+#include "ipa.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "ipa_reg.h"
 #include "ipa_endpoint.h"
 #include "ipa_interrupt.h"
@@ -74,21 +86,67 @@ static void ipa_interrupt_process(struct ipa_interrupt *interrupt, u32 irq_id)
 		iowrite32(mask, ipa->reg_virt + offset);
 }
 
-/* Process all IPA interrupt types that have been signaled */
-static void ipa_interrupt_process_all(struct ipa_interrupt *interrupt)
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* IPA IRQ handler is threaded */
+static irqreturn_t ipa_isr_thread(int irq, void *dev_id)
 {
+	struct ipa_interrupt *interrupt = dev_id;
 	struct ipa *ipa = interrupt->ipa;
 	u32 enabled = interrupt->enabled;
+	struct device *dev;
+	u32 pending;
 	u32 offset;
 	u32 mask;
+	int ret;
+
+	dev = &ipa->pdev->dev;
+	ret = pm_runtime_get_sync(dev);
+	if (WARN_ON(ret < 0))
+		goto out_power_put;
+=======
+/* Process all IPA interrupt types that have been signaled */
+static void ipa_interrupt_process_all(struct ipa_interrupt *interrupt)
+=======
+/* IPA IRQ handler is threaded */
+static irqreturn_t ipa_isr_thread(int irq, void *dev_id)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct ipa_interrupt *interrupt = dev_id;
+	struct ipa *ipa = interrupt->ipa;
+	u32 enabled = interrupt->enabled;
+	struct device *dev;
+	u32 pending;
+	u32 offset;
+	u32 mask;
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+	dev = &ipa->pdev->dev;
+	ret = pm_runtime_get_sync(dev);
+	if (WARN_ON(ret < 0))
+		goto out_power_put;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* The status register indicates which conditions are present,
 	 * including conditions whose interrupt is not enabled.  Handle
 	 * only the enabled ones.
 	 */
 	offset = ipa_reg_irq_stts_offset(ipa->version);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pending = ioread32(ipa->reg_virt + offset);
+	while ((mask = pending & enabled)) {
+=======
 	mask = ioread32(ipa->reg_virt + offset);
 	while ((mask &= enabled)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pending = ioread32(ipa->reg_virt + offset);
+	while ((mask = pending & enabled)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		do {
 			u32 irq_id = __ffs(mask);
 
@@ -96,32 +154,29 @@ static void ipa_interrupt_process_all(struct ipa_interrupt *interrupt)
 
 			ipa_interrupt_process(interrupt, irq_id);
 		} while (mask);
-		mask = ioread32(ipa->reg_virt + offset);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pending = ioread32(ipa->reg_virt + offset);
 	}
-}
 
-/* Threaded part of the IPA IRQ handler */
-static irqreturn_t ipa_isr_thread(int irq, void *dev_id)
-{
-	struct ipa_interrupt *interrupt = dev_id;
+	/* If any disabled interrupts are pending, clear them */
+	if (pending) {
+		dev_dbg(dev, "clearing disabled IPA interrupts 0x%08x\n",
+			pending);
+		offset = ipa_reg_irq_clr_offset(ipa->version);
+		iowrite32(pending, ipa->reg_virt + offset);
+	}
+out_power_put:
+	pm_runtime_mark_last_busy(dev);
+	(void)pm_runtime_put_autosuspend(dev);
+=======
+		mask = ioread32(ipa->reg_virt + offset);
+=======
+		pending = ioread32(ipa->reg_virt + offset);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	}
 
-	ipa_clock_get(interrupt->ipa);
-
-	ipa_interrupt_process_all(interrupt);
-
-	ipa_clock_put(interrupt->ipa);
-
-	return IRQ_HANDLED;
-}
-
-/* Hard part (i.e., "real" IRQ handler) of the IRQ handler */
-static irqreturn_t ipa_isr(int irq, void *dev_id)
-{
-	struct ipa_interrupt *interrupt = dev_id;
-	struct ipa *ipa = interrupt->ipa;
-	u32 offset;
-	u32 mask;
-
+<<<<<<< HEAD
 	offset = ipa_reg_irq_stts_offset(ipa->version);
 	mask = ioread32(ipa->reg_virt + offset);
 	if (mask & interrupt->enabled)
@@ -133,6 +188,19 @@ static irqreturn_t ipa_isr(int irq, void *dev_id)
 
 	dev_err(&ipa->pdev->dev, "%s: unexpected interrupt, mask 0x%08x\n",
 		__func__, mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* If any disabled interrupts are pending, clear them */
+	if (pending) {
+		dev_dbg(dev, "clearing disabled IPA interrupts 0x%08x\n",
+			pending);
+		offset = ipa_reg_irq_clr_offset(ipa->version);
+		iowrite32(pending, ipa->reg_virt + offset);
+	}
+out_power_put:
+	pm_runtime_mark_last_busy(dev);
+	(void)pm_runtime_put_autosuspend(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return IRQ_HANDLED;
 }
@@ -146,7 +214,15 @@ static void ipa_interrupt_suspend_control(struct ipa_interrupt *interrupt,
 	u32 offset;
 	u32 val;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(!(mask & ipa->available));
+=======
 	/* assert(mask & ipa->available); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(!(mask & ipa->available));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* IPA version 3.0 does not support TX_SUSPEND interrupt control */
 	if (ipa->version == IPA_VERSION_3_0)
@@ -206,7 +282,17 @@ void ipa_interrupt_add(struct ipa_interrupt *interrupt,
 	struct ipa *ipa = interrupt->ipa;
 	u32 offset;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(ipa_irq >= IPA_IRQ_COUNT);
+
+=======
 	/* assert(ipa_irq < IPA_IRQ_COUNT); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(ipa_irq >= IPA_IRQ_COUNT);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	interrupt->handler[ipa_irq] = handler;
 
 	/* Update the IPA interrupt mask to enable it */
@@ -222,7 +308,17 @@ ipa_interrupt_remove(struct ipa_interrupt *interrupt, enum ipa_irq_id ipa_irq)
 	struct ipa *ipa = interrupt->ipa;
 	u32 offset;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(ipa_irq >= IPA_IRQ_COUNT);
+
+=======
 	/* assert(ipa_irq < IPA_IRQ_COUNT); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(ipa_irq >= IPA_IRQ_COUNT);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Update the IPA interrupt mask to disable it */
 	interrupt->enabled &= ~BIT(ipa_irq);
 	offset = ipa_reg_irq_en_offset(ipa->version);
@@ -231,8 +327,18 @@ ipa_interrupt_remove(struct ipa_interrupt *interrupt, enum ipa_irq_id ipa_irq)
 	interrupt->handler[ipa_irq] = NULL;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Configure the IPA interrupt framework */
+struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa)
+=======
 /* Set up the IPA interrupt framework */
 struct ipa_interrupt *ipa_interrupt_setup(struct ipa *ipa)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Configure the IPA interrupt framework */
+struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct device *dev = &ipa->pdev->dev;
 	struct ipa_interrupt *interrupt;
@@ -258,7 +364,15 @@ struct ipa_interrupt *ipa_interrupt_setup(struct ipa *ipa)
 	offset = ipa_reg_irq_en_offset(ipa->version);
 	iowrite32(0, ipa->reg_virt + offset);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = request_threaded_irq(irq, NULL, ipa_isr_thread, IRQF_ONESHOT,
+=======
 	ret = request_threaded_irq(irq, ipa_isr, ipa_isr_thread, IRQF_ONESHOT,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = request_threaded_irq(irq, NULL, ipa_isr_thread, IRQF_ONESHOT,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   "ipa", interrupt);
 	if (ret) {
 		dev_err(dev, "error %d requesting \"ipa\" IRQ\n", ret);
@@ -281,8 +395,18 @@ err_kfree:
 	return ERR_PTR(ret);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Inverse of ipa_interrupt_config() */
+void ipa_interrupt_deconfig(struct ipa_interrupt *interrupt)
+=======
 /* Tear down the IPA interrupt framework */
 void ipa_interrupt_teardown(struct ipa_interrupt *interrupt)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Inverse of ipa_interrupt_config() */
+void ipa_interrupt_deconfig(struct ipa_interrupt *interrupt)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct device *dev = &interrupt->ipa->pdev->dev;
 	int ret;

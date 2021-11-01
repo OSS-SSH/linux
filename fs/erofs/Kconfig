@@ -3,6 +3,14 @@
 config EROFS_FS
 	tristate "EROFS filesystem support"
 	depends on BLOCK
+<<<<<<< HEAD
+<<<<<<< HEAD
+	select FS_IOMAP
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select FS_IOMAP
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select LIBCRC32C
 	help
 	  EROFS (Enhanced Read-Only File System) is a lightweight

@@ -149,6 +149,16 @@ nouveau_bo_del_ttm(struct ttm_buffer_object *bo)
 	 */
 	if (bo->base.dev)
 		drm_gem_object_release(&bo->base);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	else
+		dma_resv_fini(&bo->base._resv);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else
+		dma_resv_fini(&bo->base._resv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree(nvbo);
 }
@@ -330,6 +340,19 @@ nouveau_bo_new(struct nouveau_cli *cli, u64 size, int align,
 	if (IS_ERR(nvbo))
 		return PTR_ERR(nvbo);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	nvbo->bo.base.size = size;
+	dma_resv_init(&nvbo->bo.base._resv);
+	drm_vma_node_reset(&nvbo->bo.base.vma_node);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = nouveau_bo_init(nvbo, size, align, domain, sg, robj);
 	if (ret)
 		return ret;
@@ -838,6 +861,14 @@ nouveau_bo_move_init(struct nouveau_drm *drm)
 			    struct ttm_resource *, struct ttm_resource *);
 		int (*init)(struct nouveau_channel *, u32 handle);
 	} _methods[] = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		{  "COPY", 4, 0xc7b5, nve0_bo_move_copy, nve0_bo_move_init },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		{  "COPY", 4, 0xc7b5, nve0_bo_move_copy, nve0_bo_move_init },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		{  "COPY", 4, 0xc5b5, nve0_bo_move_copy, nve0_bo_move_init },
 		{  "GRCE", 0, 0xc5b5, nve0_bo_move_copy, nvc0_bo_move_init },
 		{  "COPY", 4, 0xc3b5, nve0_bo_move_copy, nve0_bo_move_init },

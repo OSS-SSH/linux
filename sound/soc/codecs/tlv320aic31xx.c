@@ -35,6 +35,18 @@
 
 #include "tlv320aic31xx.h"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int aic31xx_set_jack(struct snd_soc_component *component,
+                            struct snd_soc_jack *jack, void *data);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int aic31xx_set_jack(struct snd_soc_component *component,
+                            struct snd_soc_jack *jack, void *data);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct reg_default aic31xx_reg_defaults[] = {
 	{ AIC31XX_CLKMUX, 0x00 },
 	{ AIC31XX_PLLPR, 0x11 },
@@ -1256,6 +1268,22 @@ static int aic31xx_power_on(struct snd_soc_component *component)
 		return ret;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * The jack detection configuration is in the same register
+	 * that is used to report jack detect status so is volatile
+	 * and not covered by the cache sync, restore it separately.
+	 */
+	aic31xx_set_jack(component, aic31xx->jack, NULL);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1604,6 +1632,16 @@ static int aic31xx_i2c_probe(struct i2c_client *i2c,
 			ret);
 		return ret;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	regcache_cache_only(aic31xx->regmap, true);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	regcache_cache_only(aic31xx->regmap, true);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	aic31xx->dev = &i2c->dev;
 	aic31xx->irq = i2c->irq;
 

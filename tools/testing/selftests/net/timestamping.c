@@ -47,7 +47,15 @@ static void usage(const char *error)
 {
 	if (error)
 		printf("invalid option: %s\n", error);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	printf("timestamping <interface> [bind_phc_index] [option]*\n\n"
+=======
 	printf("timestamping interface option*\n\n"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	printf("timestamping <interface> [bind_phc_index] [option]*\n\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	       "Options:\n"
 	       "  IP_MULTICAST_LOOP - looping outgoing multicasts\n"
 	       "  SO_TIMESTAMP - normal software time stamping, ms resolution\n"
@@ -58,6 +66,14 @@ static void usage(const char *error)
 	       "  SOF_TIMESTAMPING_RX_SOFTWARE - software fallback for incoming packets\n"
 	       "  SOF_TIMESTAMPING_SOFTWARE - request reporting of software time stamps\n"
 	       "  SOF_TIMESTAMPING_RAW_HARDWARE - request reporting of raw HW time stamps\n"
+<<<<<<< HEAD
+<<<<<<< HEAD
+	       "  SOF_TIMESTAMPING_BIND_PHC - request to bind a PHC of PTP vclock\n"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	       "  SOF_TIMESTAMPING_BIND_PHC - request to bind a PHC of PTP vclock\n"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	       "  SIOCGSTAMP - check last socket time stamp\n"
 	       "  SIOCGSTAMPNS - more accurate socket time stamp\n"
 	       "  PTPV2 - use PTPv2 messages\n");
@@ -311,7 +327,13 @@ static void recvpacket(int sock, int recvmsg_flags,
 
 int main(int argc, char **argv)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int so_timestamping_flags = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int so_timestamp = 0;
 	int so_timestampns = 0;
 	int siocgstamp = 0;
@@ -325,6 +347,16 @@ int main(int argc, char **argv)
 	struct ifreq device;
 	struct ifreq hwtstamp;
 	struct hwtstamp_config hwconfig, hwconfig_requested;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct so_timestamping so_timestamping_get = { 0, -1 };
+	struct so_timestamping so_timestamping = { 0, -1 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct so_timestamping so_timestamping_get = { 0, -1 };
+	struct so_timestamping so_timestamping = { 0, -1 };
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct sockaddr_in addr;
 	struct ip_mreq imr;
 	struct in_addr iaddr;
@@ -342,7 +374,22 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (argc >= 3 && sscanf(argv[2], "%d", &so_timestamping.bind_phc) == 1)
+		val = 3;
+	else
+		val = 2;
+
+	for (i = val; i < argc; i++) {
+<<<<<<< HEAD
+=======
 	for (i = 2; i < argc; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!strcasecmp(argv[i], "SO_TIMESTAMP"))
 			so_timestamp = 1;
 		else if (!strcasecmp(argv[i], "SO_TIMESTAMPNS"))
@@ -356,17 +403,43 @@ int main(int argc, char **argv)
 		else if (!strcasecmp(argv[i], "PTPV2"))
 			ptpv2 = 1;
 		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_TX_HARDWARE"))
-			so_timestamping_flags |= SOF_TIMESTAMPING_TX_HARDWARE;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			so_timestamping.flags |= SOF_TIMESTAMPING_TX_HARDWARE;
 		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_TX_SOFTWARE"))
-			so_timestamping_flags |= SOF_TIMESTAMPING_TX_SOFTWARE;
+			so_timestamping.flags |= SOF_TIMESTAMPING_TX_SOFTWARE;
 		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_RX_HARDWARE"))
-			so_timestamping_flags |= SOF_TIMESTAMPING_RX_HARDWARE;
+			so_timestamping.flags |= SOF_TIMESTAMPING_RX_HARDWARE;
 		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_RX_SOFTWARE"))
-			so_timestamping_flags |= SOF_TIMESTAMPING_RX_SOFTWARE;
+			so_timestamping.flags |= SOF_TIMESTAMPING_RX_SOFTWARE;
 		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_SOFTWARE"))
-			so_timestamping_flags |= SOF_TIMESTAMPING_SOFTWARE;
+			so_timestamping.flags |= SOF_TIMESTAMPING_SOFTWARE;
 		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_RAW_HARDWARE"))
+			so_timestamping.flags |= SOF_TIMESTAMPING_RAW_HARDWARE;
+		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_BIND_PHC"))
+			so_timestamping.flags |= SOF_TIMESTAMPING_BIND_PHC;
+=======
+			so_timestamping_flags |= SOF_TIMESTAMPING_TX_HARDWARE;
+=======
+			so_timestamping.flags |= SOF_TIMESTAMPING_TX_HARDWARE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_TX_SOFTWARE"))
+			so_timestamping.flags |= SOF_TIMESTAMPING_TX_SOFTWARE;
+		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_RX_HARDWARE"))
+			so_timestamping.flags |= SOF_TIMESTAMPING_RX_HARDWARE;
+		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_RX_SOFTWARE"))
+			so_timestamping.flags |= SOF_TIMESTAMPING_RX_SOFTWARE;
+		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_SOFTWARE"))
+			so_timestamping.flags |= SOF_TIMESTAMPING_SOFTWARE;
+		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_RAW_HARDWARE"))
+<<<<<<< HEAD
 			so_timestamping_flags |= SOF_TIMESTAMPING_RAW_HARDWARE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			so_timestamping.flags |= SOF_TIMESTAMPING_RAW_HARDWARE;
+		else if (!strcasecmp(argv[i], "SOF_TIMESTAMPING_BIND_PHC"))
+			so_timestamping.flags |= SOF_TIMESTAMPING_BIND_PHC;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else
 			usage(argv[i]);
 	}
@@ -385,10 +458,24 @@ int main(int argc, char **argv)
 	hwtstamp.ifr_data = (void *)&hwconfig;
 	memset(&hwconfig, 0, sizeof(hwconfig));
 	hwconfig.tx_type =
+<<<<<<< HEAD
+<<<<<<< HEAD
+		(so_timestamping.flags & SOF_TIMESTAMPING_TX_HARDWARE) ?
+		HWTSTAMP_TX_ON : HWTSTAMP_TX_OFF;
+	hwconfig.rx_filter =
+		(so_timestamping.flags & SOF_TIMESTAMPING_RX_HARDWARE) ?
+=======
 		(so_timestamping_flags & SOF_TIMESTAMPING_TX_HARDWARE) ?
 		HWTSTAMP_TX_ON : HWTSTAMP_TX_OFF;
 	hwconfig.rx_filter =
 		(so_timestamping_flags & SOF_TIMESTAMPING_RX_HARDWARE) ?
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		(so_timestamping.flags & SOF_TIMESTAMPING_TX_HARDWARE) ?
+		HWTSTAMP_TX_ON : HWTSTAMP_TX_OFF;
+	hwconfig.rx_filter =
+		(so_timestamping.flags & SOF_TIMESTAMPING_RX_HARDWARE) ?
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ptpv2 ? HWTSTAMP_FILTER_PTP_V2_L4_SYNC :
 		HWTSTAMP_FILTER_PTP_V1_L4_SYNC : HWTSTAMP_FILTER_NONE;
 	hwconfig_requested = hwconfig;
@@ -413,6 +500,18 @@ int main(int argc, char **argv)
 		 sizeof(struct sockaddr_in)) < 0)
 		bail("bind");
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (setsockopt(sock, SOL_SOCKET, SO_BINDTODEVICE, interface, if_len))
+		bail("bind device");
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (setsockopt(sock, SOL_SOCKET, SO_BINDTODEVICE, interface, if_len))
+		bail("bind device");
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* set multicast group for outgoing packets */
 	inet_aton("224.0.1.130", &iaddr); /* alternate PTP domain 1 */
 	addr.sin_addr = iaddr;
@@ -444,10 +543,22 @@ int main(int argc, char **argv)
 			   &enabled, sizeof(enabled)) < 0)
 		bail("setsockopt SO_TIMESTAMPNS");
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (so_timestamping.flags &&
+	    setsockopt(sock, SOL_SOCKET, SO_TIMESTAMPING, &so_timestamping,
+		       sizeof(so_timestamping)) < 0)
+=======
 	if (so_timestamping_flags &&
 		setsockopt(sock, SOL_SOCKET, SO_TIMESTAMPING,
 			   &so_timestamping_flags,
 			   sizeof(so_timestamping_flags)) < 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (so_timestamping.flags &&
+	    setsockopt(sock, SOL_SOCKET, SO_TIMESTAMPING, &so_timestamping,
+		       sizeof(so_timestamping)) < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		bail("setsockopt SO_TIMESTAMPING");
 
 	/* request IP_PKTINFO for debugging purposes */
@@ -468,6 +579,21 @@ int main(int argc, char **argv)
 	else
 		printf("SO_TIMESTAMPNS %d\n", val);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	len = sizeof(so_timestamping_get);
+	if (getsockopt(sock, SOL_SOCKET, SO_TIMESTAMPING, &so_timestamping_get,
+		       &len) < 0) {
+		printf("%s: %s\n", "getsockopt SO_TIMESTAMPING",
+		       strerror(errno));
+	} else {
+		printf("SO_TIMESTAMPING flags %d, bind phc %d\n",
+		       so_timestamping_get.flags, so_timestamping_get.bind_phc);
+		if (so_timestamping_get.flags != so_timestamping.flags ||
+		    so_timestamping_get.bind_phc != so_timestamping.bind_phc)
+			printf("   not expected, flags %d, bind phc %d\n",
+			       so_timestamping.flags, so_timestamping.bind_phc);
+=======
 	if (getsockopt(sock, SOL_SOCKET, SO_TIMESTAMPING, &val, &len) < 0) {
 		printf("%s: %s\n", "getsockopt SO_TIMESTAMPING",
 		       strerror(errno));
@@ -476,6 +602,21 @@ int main(int argc, char **argv)
 		if (val != so_timestamping_flags)
 			printf("   not the expected value %d\n",
 			       so_timestamping_flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	len = sizeof(so_timestamping_get);
+	if (getsockopt(sock, SOL_SOCKET, SO_TIMESTAMPING, &so_timestamping_get,
+		       &len) < 0) {
+		printf("%s: %s\n", "getsockopt SO_TIMESTAMPING",
+		       strerror(errno));
+	} else {
+		printf("SO_TIMESTAMPING flags %d, bind phc %d\n",
+		       so_timestamping_get.flags, so_timestamping_get.bind_phc);
+		if (so_timestamping_get.flags != so_timestamping.flags ||
+		    so_timestamping_get.bind_phc != so_timestamping.bind_phc)
+			printf("   not expected, flags %d, bind phc %d\n",
+			       so_timestamping.flags, so_timestamping.bind_phc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* send packets forever every five seconds */

@@ -24,6 +24,19 @@ Available fault injection capabilities
 
   injects futex deadlock and uaddr fault errors.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+- fail_sunrpc
+
+  injects kernel RPC client and server failures.
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 - fail_make_request
 
   injects disk IO errors on devices permitted by setting
@@ -151,6 +164,29 @@ configuration of fault-injection capabilities.
 	default is 'N', setting it to 'Y' will disable failure injections
 	when dealing with private (address space) futexes.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+- /sys/kernel/debug/fail_sunrpc/ignore-client-disconnect:
+
+	Format: { 'Y' | 'N' }
+
+	default is 'N', setting it to 'Y' will disable disconnect
+	injection on the RPC client.
+
+- /sys/kernel/debug/fail_sunrpc/ignore-server-disconnect:
+
+	Format: { 'Y' | 'N' }
+
+	default is 'N', setting it to 'Y' will disable disconnect
+	injection on the RPC server.
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 - /sys/kernel/debug/fail_function/inject:
 
 	Format: { 'function-name' | '!function-name' | '' }

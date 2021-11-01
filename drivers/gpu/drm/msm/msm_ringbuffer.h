@@ -7,6 +7,14 @@
 #ifndef __MSM_RINGBUFFER_H__
 #define __MSM_RINGBUFFER_H__
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "drm/gpu_scheduler.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "drm/gpu_scheduler.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "msm_drv.h"
 
 #define rbmemptr(ring, member)  \
@@ -41,7 +49,35 @@ struct msm_ringbuffer {
 	uint32_t *start, *end, *cur, *next;
 
 	/*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	 * The job scheduler for this ring.
+	 */
+	struct drm_gpu_scheduler sched;
+
+	/*
+<<<<<<< HEAD
 	 * List of in-flight submits on this ring.  Protected by submit_lock.
+	 *
+	 * Currently just submits that are already written into the ring, not
+	 * submits that are still in drm_gpu_scheduler's queues.  At a later
+	 * step we could probably move to letting drm_gpu_scheduler manage
+	 * hangcheck detection and keep track of submit jobs that are in-
+	 * flight.
+=======
+	 * List of in-flight submits on this ring.  Protected by submit_lock.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * List of in-flight submits on this ring.  Protected by submit_lock.
+	 *
+	 * Currently just submits that are already written into the ring, not
+	 * submits that are still in drm_gpu_scheduler's queues.  At a later
+	 * step we could probably move to letting drm_gpu_scheduler manage
+	 * hangcheck detection and keep track of submit jobs that are in-
+	 * flight.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	struct list_head submits;
 	spinlock_t submit_lock;

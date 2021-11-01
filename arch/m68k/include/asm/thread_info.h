@@ -4,7 +4,13 @@
 
 #include <asm/types.h>
 #include <asm/page.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <asm/segment.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * On machines with 4k pages we default to an 8k thread size, though we
@@ -27,7 +33,13 @@
 struct thread_info {
 	struct task_struct	*task;		/* main task structure */
 	unsigned long		flags;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	mm_segment_t		addr_limit;	/* thread address space */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			preempt_count;	/* 0 => preemptable, <0 => BUG */
 	__u32			cpu;		/* should always be 0 on m68k */
 	unsigned long		tp_value;	/* thread pointer */
@@ -37,7 +49,13 @@ struct thread_info {
 #define INIT_THREAD_INFO(tsk)			\
 {						\
 	.task		= &tsk,			\
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.addr_limit	= KERNEL_DS,		\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.preempt_count	= INIT_PREEMPT_COUNT,	\
 }
 

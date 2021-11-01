@@ -16,6 +16,14 @@
 #include <linux/debugfs.h>
 #include <linux/seq_file.h>
 #include <linux/time.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/delay.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/delay.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/quotaops.h>
 #include <linux/sched/signal.h>
 
@@ -2721,7 +2729,15 @@ int ocfs2_inode_lock_tracker(struct inode *inode,
 			return status;
 		}
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return 1;
+=======
 	return tmp_oh ? 1 : 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void ocfs2_inode_unlock_tracker(struct inode *inode,
@@ -3912,6 +3928,26 @@ downconvert:
 	spin_unlock_irqrestore(&lockres->l_lock, flags);
 	ret = ocfs2_downconvert_lock(osb, lockres, new_level, set_lvb,
 				     gen);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* The dlm lock convert is being cancelled in background,
+	 * ocfs2_cancel_convert() is asynchronous in fs/dlm,
+	 * requeue it, try again later.
+	 */
+	if (ret == -EBUSY) {
+		ctl->requeue = 1;
+		mlog(ML_BASTS, "lockres %s, ReQ: Downconvert busy\n",
+		     lockres->l_name);
+		ret = 0;
+		msleep(20);
+	}
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 leave:
 	if (ret)
@@ -3939,7 +3975,15 @@ static int ocfs2_data_convert_worker(struct ocfs2_lock_res *lockres,
 		oi = OCFS2_I(inode);
 		oi->ip_dir_lock_gen++;
 		mlog(0, "generation: %u\n", oi->ip_dir_lock_gen);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto out_forget;
+=======
 		goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_forget;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!S_ISREG(inode->i_mode))
@@ -3970,6 +4014,14 @@ static int ocfs2_data_convert_worker(struct ocfs2_lock_res *lockres,
 		filemap_fdatawait(mapping);
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+out_forget:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out_forget:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	forget_all_cached_acls(inode);
 
 out:

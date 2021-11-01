@@ -29,7 +29,15 @@ config BPF_SYSCALL
 	select IRQ_WORK
 	select TASKS_TRACE_RCU
 	select BINARY_PRINTF
+<<<<<<< HEAD
+<<<<<<< HEAD
+	select NET_SOCK_MSG if NET
+=======
 	select NET_SOCK_MSG if INET
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select NET_SOCK_MSG if NET
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default n
 	help
 	  Enable the bpf() system call that allows to manipulate BPF programs

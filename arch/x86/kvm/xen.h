@@ -21,6 +21,14 @@ int kvm_xen_hvm_set_attr(struct kvm *kvm, struct kvm_xen_hvm_attr *data);
 int kvm_xen_hvm_get_attr(struct kvm *kvm, struct kvm_xen_hvm_attr *data);
 int kvm_xen_write_hypercall_page(struct kvm_vcpu *vcpu, u64 data);
 int kvm_xen_hvm_config(struct kvm *kvm, struct kvm_xen_hvm_config *xhc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+void kvm_xen_init_vm(struct kvm *kvm);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void kvm_xen_init_vm(struct kvm *kvm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void kvm_xen_destroy_vm(struct kvm *kvm);
 
 static inline bool kvm_xen_msr_enabled(struct kvm *kvm)
@@ -50,6 +58,19 @@ static inline int kvm_xen_write_hypercall_page(struct kvm_vcpu *vcpu, u64 data)
 	return 1;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static inline void kvm_xen_init_vm(struct kvm *kvm)
+{
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void kvm_xen_destroy_vm(struct kvm *kvm)
 {
 }

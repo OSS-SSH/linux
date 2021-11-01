@@ -19,6 +19,12 @@
 
 typedef u32		__compat_uid_t;
 typedef u32		__compat_gid_t;
+<<<<<<< HEAD
+<<<<<<< HEAD
+typedef u32		compat_dev_t;
+typedef s16		compat_nlink_t;
+typedef u16		compat_ipc_pid_t;
+=======
 typedef u32		__compat_uid32_t;
 typedef u32		__compat_gid32_t;
 typedef u32		compat_mode_t;
@@ -26,6 +32,12 @@ typedef u32		compat_dev_t;
 typedef s16		compat_nlink_t;
 typedef u16		compat_ipc_pid_t;
 typedef u32		compat_caddr_t;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+typedef u32		compat_dev_t;
+typedef s16		compat_nlink_t;
+typedef u16		compat_ipc_pid_t;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 typedef __kernel_fsid_t	compat_fsid_t;
 
 struct compat_stat {
@@ -85,6 +97,11 @@ struct compat_statfs {
 
 #define COMPAT_RLIM_INFINITY		0xffffffff
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define COMPAT_OFF_T_MAX	0x7fffffff
+
+=======
 typedef u32		compat_old_sigset_t;
 
 #define _COMPAT_NSIG		64
@@ -110,6 +127,11 @@ static inline void __user *arch_compat_alloc_user_space(long len)
 	return (void __user *) (usp - len);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define COMPAT_OFF_T_MAX	0x7fffffff
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * ipc64_perm is actually 32/64bit clean but since the compat layer refers to
  * it we may as well define it.

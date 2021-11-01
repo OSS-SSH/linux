@@ -561,6 +561,14 @@ struct event_constraint *
 uncore_get_constraint(struct intel_uncore_box *box, struct perf_event *event);
 void uncore_put_constraint(struct intel_uncore_box *box, struct perf_event *event);
 u64 uncore_shared_reg_config(struct intel_uncore_box *box, int idx);
+<<<<<<< HEAD
+<<<<<<< HEAD
+void uncore_get_alias_name(char *pmu_name, struct intel_uncore_pmu *pmu);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void uncore_get_alias_name(char *pmu_name, struct intel_uncore_pmu *pmu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern struct intel_uncore_type *empty_uncore[];
 extern struct intel_uncore_type **uncore_msr_uncores;
@@ -608,6 +616,18 @@ void snr_uncore_mmio_init(void);
 int icx_uncore_pci_init(void);
 void icx_uncore_cpu_init(void);
 void icx_uncore_mmio_init(void);
+<<<<<<< HEAD
+<<<<<<< HEAD
+int spr_uncore_pci_init(void);
+void spr_uncore_cpu_init(void);
+void spr_uncore_mmio_init(void);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int spr_uncore_pci_init(void);
+void spr_uncore_cpu_init(void);
+void spr_uncore_mmio_init(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* uncore_nhmex.c */
 void nhmex_uncore_cpu_init(void);

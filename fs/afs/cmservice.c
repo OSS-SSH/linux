@@ -29,16 +29,30 @@ static void SRXAFSCB_TellMeAboutYourself(struct work_struct *);
 
 static int afs_deliver_yfs_cb_callback(struct afs_call *);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*
+ * CB.CallBack operation type
+ */
+static const struct afs_call_type afs_SRXCBCallBack = {
+	.name		= "CB.CallBack",
+=======
 #define CM_NAME(name) \
 	char afs_SRXCB##name##_name[] __tracepoint_string =	\
 		"CB." #name
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * CB.CallBack operation type
  */
-static CM_NAME(CallBack);
 static const struct afs_call_type afs_SRXCBCallBack = {
+<<<<<<< HEAD
 	.name		= afs_SRXCBCallBack_name,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.name		= "CB.CallBack",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.deliver	= afs_deliver_cb_callback,
 	.destructor	= afs_cm_destructor,
 	.work		= SRXAFSCB_CallBack,
@@ -47,9 +61,19 @@ static const struct afs_call_type afs_SRXCBCallBack = {
 /*
  * CB.InitCallBackState operation type
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct afs_call_type afs_SRXCBInitCallBackState = {
+	.name		= "CB.InitCallBackState",
+=======
 static CM_NAME(InitCallBackState);
 static const struct afs_call_type afs_SRXCBInitCallBackState = {
 	.name		= afs_SRXCBInitCallBackState_name,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct afs_call_type afs_SRXCBInitCallBackState = {
+	.name		= "CB.InitCallBackState",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.deliver	= afs_deliver_cb_init_call_back_state,
 	.destructor	= afs_cm_destructor,
 	.work		= SRXAFSCB_InitCallBackState,
@@ -58,9 +82,19 @@ static const struct afs_call_type afs_SRXCBInitCallBackState = {
 /*
  * CB.InitCallBackState3 operation type
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct afs_call_type afs_SRXCBInitCallBackState3 = {
+	.name		= "CB.InitCallBackState3",
+=======
 static CM_NAME(InitCallBackState3);
 static const struct afs_call_type afs_SRXCBInitCallBackState3 = {
 	.name		= afs_SRXCBInitCallBackState3_name,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct afs_call_type afs_SRXCBInitCallBackState3 = {
+	.name		= "CB.InitCallBackState3",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.deliver	= afs_deliver_cb_init_call_back_state3,
 	.destructor	= afs_cm_destructor,
 	.work		= SRXAFSCB_InitCallBackState,
@@ -69,9 +103,19 @@ static const struct afs_call_type afs_SRXCBInitCallBackState3 = {
 /*
  * CB.Probe operation type
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct afs_call_type afs_SRXCBProbe = {
+	.name		= "CB.Probe",
+=======
 static CM_NAME(Probe);
 static const struct afs_call_type afs_SRXCBProbe = {
 	.name		= afs_SRXCBProbe_name,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct afs_call_type afs_SRXCBProbe = {
+	.name		= "CB.Probe",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.deliver	= afs_deliver_cb_probe,
 	.destructor	= afs_cm_destructor,
 	.work		= SRXAFSCB_Probe,
@@ -80,9 +124,19 @@ static const struct afs_call_type afs_SRXCBProbe = {
 /*
  * CB.ProbeUuid operation type
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct afs_call_type afs_SRXCBProbeUuid = {
+	.name		= "CB.ProbeUuid",
+=======
 static CM_NAME(ProbeUuid);
 static const struct afs_call_type afs_SRXCBProbeUuid = {
 	.name		= afs_SRXCBProbeUuid_name,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct afs_call_type afs_SRXCBProbeUuid = {
+	.name		= "CB.ProbeUuid",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.deliver	= afs_deliver_cb_probe_uuid,
 	.destructor	= afs_cm_destructor,
 	.work		= SRXAFSCB_ProbeUuid,
@@ -91,9 +145,19 @@ static const struct afs_call_type afs_SRXCBProbeUuid = {
 /*
  * CB.TellMeAboutYourself operation type
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct afs_call_type afs_SRXCBTellMeAboutYourself = {
+	.name		= "CB.TellMeAboutYourself",
+=======
 static CM_NAME(TellMeAboutYourself);
 static const struct afs_call_type afs_SRXCBTellMeAboutYourself = {
 	.name		= afs_SRXCBTellMeAboutYourself_name,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct afs_call_type afs_SRXCBTellMeAboutYourself = {
+	.name		= "CB.TellMeAboutYourself",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.deliver	= afs_deliver_cb_tell_me_about_yourself,
 	.destructor	= afs_cm_destructor,
 	.work		= SRXAFSCB_TellMeAboutYourself,
@@ -102,9 +166,19 @@ static const struct afs_call_type afs_SRXCBTellMeAboutYourself = {
 /*
  * YFS CB.CallBack operation type
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct afs_call_type afs_SRXYFSCB_CallBack = {
+	.name		= "YFSCB.CallBack",
+=======
 static CM_NAME(YFS_CallBack);
 static const struct afs_call_type afs_SRXYFSCB_CallBack = {
 	.name		= afs_SRXCBYFS_CallBack_name,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct afs_call_type afs_SRXYFSCB_CallBack = {
+	.name		= "YFSCB.CallBack",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.deliver	= afs_deliver_yfs_cb_callback,
 	.destructor	= afs_cm_destructor,
 	.work		= SRXAFSCB_CallBack,

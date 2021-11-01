@@ -36,9 +36,33 @@ CXL Core
 .. kernel-doc:: drivers/cxl/cxl.h
    :internal:
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+.. kernel-doc:: drivers/cxl/core/bus.c
+   :doc: cxl core
+
+.. kernel-doc:: drivers/cxl/core/pmem.c
+   :doc: cxl pmem
+
+.. kernel-doc:: drivers/cxl/core/regs.c
+   :doc: cxl registers
+
+=======
 .. kernel-doc:: drivers/cxl/core.c
    :doc: cxl core
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+.. kernel-doc:: drivers/cxl/core/bus.c
+   :doc: cxl core
+
+.. kernel-doc:: drivers/cxl/core/pmem.c
+   :doc: cxl pmem
+
+.. kernel-doc:: drivers/cxl/core/regs.c
+   :doc: cxl registers
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 External Interfaces
 ===================
 

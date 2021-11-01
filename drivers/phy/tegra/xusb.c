@@ -1273,7 +1273,15 @@ static int tegra_xusb_padctl_remove(struct platform_device *pdev)
 	return err;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static __maybe_unused int tegra_xusb_padctl_suspend_noirq(struct device *dev)
+=======
 static int tegra_xusb_padctl_suspend_noirq(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static __maybe_unused int tegra_xusb_padctl_suspend_noirq(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tegra_xusb_padctl *padctl = dev_get_drvdata(dev);
 
@@ -1283,7 +1291,15 @@ static int tegra_xusb_padctl_suspend_noirq(struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static __maybe_unused int tegra_xusb_padctl_resume_noirq(struct device *dev)
+=======
 static int tegra_xusb_padctl_resume_noirq(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static __maybe_unused int tegra_xusb_padctl_resume_noirq(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tegra_xusb_padctl *padctl = dev_get_drvdata(dev);
 

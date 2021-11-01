@@ -19,6 +19,16 @@ extern unsigned int cached_irq_mask;
 #define PIC_MASTER_OCW3		PIC_MASTER_ISR
 #define PIC_SLAVE_CMD		0xa0
 #define PIC_SLAVE_IMR		0xa1
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define PIC_ELCR1		0x4d0
+#define PIC_ELCR2		0x4d1
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PIC_ELCR1		0x4d0
+#define PIC_ELCR2		0x4d1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* i8259A PIC related value */
 #define PIC_CASCADE_IR		2

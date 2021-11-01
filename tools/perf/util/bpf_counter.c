@@ -64,8 +64,18 @@ static char *bpf_target_prog_name(int tgt_fd)
 	struct bpf_prog_info_linear *info_linear;
 	struct bpf_func_info *func_info;
 	const struct btf_type *t;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct btf *btf = NULL;
+	char *name = NULL;
+=======
 	char *name = NULL;
 	struct btf *btf;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct btf *btf = NULL;
+	char *name = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	info_linear = bpf_program__get_prog_info_linear(
 		tgt_fd, 1UL << BPF_PROG_INFO_FUNC_INFO);
@@ -74,12 +84,35 @@ static char *bpf_target_prog_name(int tgt_fd)
 		return NULL;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (info_linear->info.btf_id == 0) {
+=======
 	if (info_linear->info.btf_id == 0 ||
 	    btf__get_from_id(info_linear->info.btf_id, &btf)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (info_linear->info.btf_id == 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_debug("prog FD %d doesn't have valid btf\n", tgt_fd);
 		goto out;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	btf = btf__load_from_kernel_by_id(info_linear->info.btf_id);
+	if (libbpf_get_error(btf)) {
+		pr_debug("failed to load btf for prog FD %d\n", tgt_fd);
+		goto out;
+	}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	func_info = u64_to_ptr(info_linear->info.func_info);
 	t = btf__type_by_id(btf, func_info[0].type_id);
 	if (!t) {
@@ -89,6 +122,14 @@ static char *bpf_target_prog_name(int tgt_fd)
 	}
 	name = strdup(btf__name_by_offset(btf, t->name_off));
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	btf__free(btf);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	btf__free(btf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free(info_linear);
 	return name;
 }

@@ -1219,8 +1219,36 @@ static int vc_do_resize(struct tty_struct *tty, struct vc_data *vc,
 	new_row_size = new_cols << 1;
 	new_screen_size = new_row_size * new_rows;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (new_cols == vc->vc_cols && new_rows == vc->vc_rows) {
+		/*
+		 * This function is being called here to cover the case
+		 * where the userspace calls the FBIOPUT_VSCREENINFO twice,
+		 * passing the same fb_var_screeninfo containing the fields
+		 * yres/xres equal to a number non-multiple of vc_font.height
+		 * and yres_virtual/xres_virtual equal to number lesser than the
+		 * vc_font.height and yres/xres.
+		 * In the second call, the struct fb_var_screeninfo isn't
+		 * being modified by the underlying driver because of the
+		 * if above, and this causes the fbcon_display->vrows to become
+		 * negative and it eventually leads to out-of-bound
+		 * access by the imageblit function.
+		 * To give the correct values to the struct and to not have
+		 * to deal with possible errors from the code below, we call
+		 * the resize_screen here as well.
+		 */
+		return resize_screen(vc, new_cols, new_rows, user);
+	}
+<<<<<<< HEAD
+=======
 	if (new_cols == vc->vc_cols && new_rows == vc->vc_rows)
 		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (new_screen_size > KMALLOC_MAX_SIZE || !new_screen_size)
 		return -EINVAL;
@@ -2059,7 +2087,15 @@ static void restore_cur(struct vc_data *vc)
 
 enum { ESnormal, ESesc, ESsquare, ESgetpars, ESfunckey,
 	EShash, ESsetG0, ESsetG1, ESpercent, EScsiignore, ESnonstd,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ESpalette, ESosc, ESapc, ESpm, ESdcs };
+=======
 	ESpalette, ESosc };
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ESpalette, ESosc, ESapc, ESpm, ESdcs };
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* console_lock is held (except via vc_init()) */
 static void reset_terminal(struct vc_data *vc, int do_clear)
@@ -2133,20 +2169,57 @@ static void vc_setGx(struct vc_data *vc, unsigned int which, int c)
 		vc->vc_translate = set_translate(*charset, vc);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* is this state an ANSI control string? */
+static bool ansi_control_string(unsigned int state)
+{
+	if (state == ESosc || state == ESapc || state == ESpm || state == ESdcs)
+		return true;
+	return false;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* console_lock is held */
 static void do_con_trol(struct tty_struct *tty, struct vc_data *vc, int c)
 {
 	/*
 	 *  Control characters can be used in the _middle_
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 *  of an escape sequence, aside from ANSI control strings.
+	 */
+	if (ansi_control_string(vc->vc_state) && c >= 8 && c <= 13)
+=======
 	 *  of an escape sequence.
 	 */
 	if (vc->vc_state == ESosc && c>=8 && c<=13) /* ... except for OSC */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 *  of an escape sequence, aside from ANSI control strings.
+	 */
+	if (ansi_control_string(vc->vc_state) && c >= 8 && c <= 13)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	switch (c) {
 	case 0:
 		return;
 	case 7:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (ansi_control_string(vc->vc_state))
+=======
 		if (vc->vc_state == ESosc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ansi_control_string(vc->vc_state))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			vc->vc_state = ESnormal;
 		else if (vc->vc_bell_duration)
 			kd_mksound(vc->vc_bell_pitch, vc->vc_bell_duration);
@@ -2207,6 +2280,21 @@ static void do_con_trol(struct tty_struct *tty, struct vc_data *vc, int c)
 		case ']':
 			vc->vc_state = ESnonstd;
 			return;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		case '_':
+			vc->vc_state = ESapc;
+			return;
+		case '^':
+			vc->vc_state = ESpm;
+			return;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case '%':
 			vc->vc_state = ESpercent;
 			return;
@@ -2224,6 +2312,18 @@ static void do_con_trol(struct tty_struct *tty, struct vc_data *vc, int c)
 			if (vc->state.x < VC_TABSTOPS_COUNT)
 				set_bit(vc->state.x, vc->vc_tab_stop);
 			return;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		case 'P':
+			vc->vc_state = ESdcs;
+			return;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case 'P':
+			vc->vc_state = ESdcs;
+			return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case 'Z':
 			respond_ID(tty);
 			return;
@@ -2520,8 +2620,30 @@ static void do_con_trol(struct tty_struct *tty, struct vc_data *vc, int c)
 		vc_setGx(vc, 1, c);
 		vc->vc_state = ESnormal;
 		return;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case ESapc:
+		return;
 	case ESosc:
 		return;
+	case ESpm:
+		return;
+	case ESdcs:
+		return;
+=======
+	case ESosc:
+		return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case ESapc:
+		return;
+	case ESosc:
+		return;
+	case ESpm:
+		return;
+	case ESdcs:
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		vc->vc_state = ESnormal;
 	}
@@ -3559,8 +3681,20 @@ int __init vty_init(const struct file_operations *console_fops)
 
 	vcs_init();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	console_driver = tty_alloc_driver(MAX_NR_CONSOLES, TTY_DRIVER_REAL_RAW |
+			TTY_DRIVER_RESET_TERMIOS);
+	if (IS_ERR(console_driver))
+=======
 	console_driver = alloc_tty_driver(MAX_NR_CONSOLES);
 	if (!console_driver)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	console_driver = tty_alloc_driver(MAX_NR_CONSOLES, TTY_DRIVER_REAL_RAW |
+			TTY_DRIVER_RESET_TERMIOS);
+	if (IS_ERR(console_driver))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		panic("Couldn't allocate console driver\n");
 
 	console_driver->name = "tty";
@@ -3571,7 +3705,13 @@ int __init vty_init(const struct file_operations *console_fops)
 	console_driver->init_termios = tty_std_termios;
 	if (default_utf8)
 		console_driver->init_termios.c_iflag |= IUTF8;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	console_driver->flags = TTY_DRIVER_REAL_RAW | TTY_DRIVER_RESET_TERMIOS;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tty_set_operations(console_driver, &con_ops);
 	if (tty_register_driver(console_driver))
 		panic("Couldn't register console driver\n");

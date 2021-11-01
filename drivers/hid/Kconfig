@@ -259,10 +259,26 @@ config HID_PRODIKEYS
 	  and some additional multimedia keys.
 
 config HID_CMEDIA
+<<<<<<< HEAD
+<<<<<<< HEAD
+	tristate "CMedia audio chips"
+	depends on HID
+	help
+	Support for CMedia CM6533 HID audio jack controls
+        and HS100B mute buttons.
+=======
 	tristate "CMedia CM6533 HID audio jack controls"
 	depends on HID
 	help
 	Support for CMedia CM6533 HID audio jack controls.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tristate "CMedia audio chips"
+	depends on HID
+	help
+	Support for CMedia CM6533 HID audio jack controls
+        and HS100B mute buttons.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config HID_CP2112
 	tristate "Silicon Labs CP2112 HID USB-to-SMBus Bridge support"
@@ -576,7 +592,15 @@ config HID_LOGITECH_HIDPP
 	depends on HID_LOGITECH
 	select POWER_SUPPLY
 	help
+<<<<<<< HEAD
+<<<<<<< HEAD
+	Support for Logitech devices relying on the HID++ Logitech specification
+=======
 	Support for Logitech devices relyingon the HID++ Logitech specification
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	Support for Logitech devices relying on the HID++ Logitech specification
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	Say Y if you want support for Logitech devices relying on the HID++
 	specification. Such devices are the various Logitech Touchpads (T650,
@@ -952,7 +976,15 @@ config HID_SONY
 	  * Buzz controllers
 	  * Sony PS3 Blue-ray Disk Remote Control (Bluetooth)
 	  * Logitech Harmony adapter for Sony Playstation 3 (Bluetooth)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	  * Guitar Hero Live PS3, Wii U and PS4 guitar dongles
+=======
 	  * Guitar Hero Live PS3 and Wii U guitar dongles
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  * Guitar Hero Live PS3, Wii U and PS4 guitar dongles
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  * Guitar Hero PS3 and PC guitar dongles
 
 config SONY_FF

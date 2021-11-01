@@ -36,6 +36,14 @@ btrfs-$(CONFIG_BTRFS_FS_POSIX_ACL) += acl.o
 btrfs-$(CONFIG_BTRFS_FS_CHECK_INTEGRITY) += check-integrity.o
 btrfs-$(CONFIG_BTRFS_FS_REF_VERIFY) += ref-verify.o
 btrfs-$(CONFIG_BLK_DEV_ZONED) += zoned.o
+<<<<<<< HEAD
+<<<<<<< HEAD
+btrfs-$(CONFIG_FS_VERITY) += verity.o
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+btrfs-$(CONFIG_FS_VERITY) += verity.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 btrfs-$(CONFIG_BTRFS_FS_RUN_SANITY_TESTS) += tests/free-space-tests.o \
 	tests/extent-buffer-tests.o tests/btrfs-tests.o \

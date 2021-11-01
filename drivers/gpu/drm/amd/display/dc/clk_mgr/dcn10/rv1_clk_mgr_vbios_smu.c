@@ -130,7 +130,15 @@ int rv1_vbios_smu_set_dispclk(struct clk_mgr_internal *clk_mgr, int requested_di
 	actual_dispclk_set_mhz = rv1_vbios_smu_send_msg_with_param(
 			clk_mgr,
 			VBIOSSMC_MSG_SetDispclkFreq,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			khz_to_mhz_ceil(requested_dispclk_khz));
+=======
 			requested_dispclk_khz / 1000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			khz_to_mhz_ceil(requested_dispclk_khz));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!IS_FPGA_MAXIMUS_DC(dc->ctx->dce_environment)) {
 		if (dmcu && dmcu->funcs->is_dmcu_initialized(dmcu)) {
@@ -150,7 +158,15 @@ int rv1_vbios_smu_set_dprefclk(struct clk_mgr_internal *clk_mgr)
 	actual_dprefclk_set_mhz = rv1_vbios_smu_send_msg_with_param(
 			clk_mgr,
 			VBIOSSMC_MSG_SetDprefclkFreq,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			khz_to_mhz_ceil(clk_mgr->base.dprefclk_khz));
+=======
 			clk_mgr->base.dprefclk_khz / 1000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			khz_to_mhz_ceil(clk_mgr->base.dprefclk_khz));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* TODO: add code for programing DP DTO, currently this is down by command table */
 

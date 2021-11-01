@@ -532,13 +532,25 @@ void mtk_drm_crtc_async_update(struct drm_crtc *crtc, struct drm_plane *plane,
 			       struct drm_atomic_state *state)
 {
 	struct mtk_drm_crtc *mtk_crtc = to_mtk_crtc(crtc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	const struct drm_plane_helper_funcs *plane_helper_funcs =
 			plane->helper_private;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!mtk_crtc->enabled)
 		return;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	plane_helper_funcs->atomic_update(plane, state);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mtk_drm_crtc_update_config(mtk_crtc, false);
 }
 
@@ -755,14 +767,44 @@ int mtk_drm_crtc_create(struct drm_device *drm_dev,
 	for (i = 0; i < path_len; i++) {
 		enum mtk_ddp_comp_id comp_id = path[i];
 		struct device_node *node;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		struct mtk_ddp_comp *comp;
 
 		node = priv->comp_node[comp_id];
+		comp = &priv->ddp_comp[comp_id];
+
+=======
+
+		node = priv->comp_node[comp_id];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct mtk_ddp_comp *comp;
+
+		node = priv->comp_node[comp_id];
+		comp = &priv->ddp_comp[comp_id];
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!node) {
 			dev_info(dev,
 				 "Not creating crtc %d because component %d is disabled or missing\n",
 				 pipe, comp_id);
 			return 0;
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+		if (!comp->dev) {
+			dev_err(dev, "Component %pOF not initialized\n", node);
+			return -ENODEV;
+		}
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	mtk_crtc = devm_kzalloc(dev, sizeof(*mtk_crtc), GFP_KERNEL);
@@ -787,16 +829,26 @@ int mtk_drm_crtc_create(struct drm_device *drm_dev,
 	for (i = 0; i < mtk_crtc->ddp_comp_nr; i++) {
 		enum mtk_ddp_comp_id comp_id = path[i];
 		struct mtk_ddp_comp *comp;
-		struct device_node *node;
+<<<<<<< HEAD
+<<<<<<< HEAD
 
-		node = priv->comp_node[comp_id];
 		comp = &priv->ddp_comp[comp_id];
+=======
+		struct device_node *node;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+		comp = &priv->ddp_comp[comp_id];
+<<<<<<< HEAD
 		if (!comp) {
 			dev_err(dev, "Component %pOF not initialized\n", node);
 			ret = -ENODEV;
 			return ret;
 		}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mtk_crtc->ddp_comp[i] = comp;
 
 		if (comp->funcs) {

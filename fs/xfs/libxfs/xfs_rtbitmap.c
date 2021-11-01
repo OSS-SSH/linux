@@ -1009,8 +1009,18 @@ xfs_rtfree_extent(
 int
 xfs_rtalloc_query_range(
 	struct xfs_trans		*tp,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct xfs_rtalloc_rec	*low_rec,
+	const struct xfs_rtalloc_rec	*high_rec,
+=======
 	struct xfs_rtalloc_rec		*low_rec,
 	struct xfs_rtalloc_rec		*high_rec,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct xfs_rtalloc_rec	*low_rec,
+	const struct xfs_rtalloc_rec	*high_rec,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_rtalloc_query_range_fn	fn,
 	void				*priv)
 {
@@ -1018,6 +1028,14 @@ xfs_rtalloc_query_range(
 	struct xfs_mount		*mp = tp->t_mountp;
 	xfs_rtblock_t			rtstart;
 	xfs_rtblock_t			rtend;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	xfs_rtblock_t			high_key;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xfs_rtblock_t			high_key;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int				is_free;
 	int				error = 0;
 
@@ -1026,12 +1044,30 @@ xfs_rtalloc_query_range(
 	if (low_rec->ar_startext >= mp->m_sb.sb_rextents ||
 	    low_rec->ar_startext == high_rec->ar_startext)
 		return 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	high_key = min(high_rec->ar_startext, mp->m_sb.sb_rextents - 1);
+
+	/* Iterate the bitmap, looking for discrepancies. */
+	rtstart = low_rec->ar_startext;
+	while (rtstart <= high_key) {
+=======
 	high_rec->ar_startext = min(high_rec->ar_startext,
 			mp->m_sb.sb_rextents - 1);
 
 	/* Iterate the bitmap, looking for discrepancies. */
 	rtstart = low_rec->ar_startext;
 	while (rtstart <= high_rec->ar_startext) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	high_key = min(high_rec->ar_startext, mp->m_sb.sb_rextents - 1);
+
+	/* Iterate the bitmap, looking for discrepancies. */
+	rtstart = low_rec->ar_startext;
+	while (rtstart <= high_key) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Is the first block free? */
 		error = xfs_rtcheck_range(mp, tp, rtstart, 1, 1, &rtend,
 				&is_free);
@@ -1039,8 +1075,16 @@ xfs_rtalloc_query_range(
 			break;
 
 		/* How long does the extent go for? */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		error = xfs_rtfind_forw(mp, tp, rtstart, high_key, &rtend);
+=======
 		error = xfs_rtfind_forw(mp, tp, rtstart,
 				high_rec->ar_startext, &rtend);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		error = xfs_rtfind_forw(mp, tp, rtstart, high_key, &rtend);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (error)
 			break;
 

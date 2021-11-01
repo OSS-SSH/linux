@@ -84,10 +84,23 @@ will generate that list.  Here's some sample code of what to do next::
 API for programming an FPGA
 ---------------------------
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+* fpga_region_program_fpga() -  Program an FPGA
+* fpga_image_info() -  Specifies what FPGA image to program
+* fpga_image_info_alloc() -  Allocate an FPGA image info struct
+* fpga_image_info_free() -  Free an FPGA image info struct
+<<<<<<< HEAD
+=======
 * fpga_region_program_fpga() —  Program an FPGA
 * fpga_image_info() —  Specifies what FPGA image to program
 * fpga_image_info_alloc() —  Allocate an FPGA image info struct
 * fpga_image_info_free() —  Free an FPGA image info struct
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 .. kernel-doc:: drivers/fpga/fpga-region.c
    :functions: fpga_region_program_fpga

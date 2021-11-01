@@ -189,6 +189,16 @@ ad	stosm	SI_URD
 ae	sigp	RS_RRRD
 af	mc	SI_URD
 b1	lra	RX_RRRD
+<<<<<<< HEAD
+<<<<<<< HEAD
+b200	lbear	S_RD
+b201	stbear	S_RD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+b200	lbear	S_RD
+b201	stbear	S_RD
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 b202	stidp	S_RD
 b204	sck	S_RD
 b205	stck	S_RD
@@ -523,6 +533,14 @@ b931	clgfr	RRE_RR
 b938	sortl	RRE_RR
 b939	dfltcc	RRF_R0RR2
 b93a	kdsa	RRE_RR
+<<<<<<< HEAD
+<<<<<<< HEAD
+b93b	nnpa	RRE_00
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+b93b	nnpa	RRE_00
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 b93c	ppno	RRE_RR
 b93e	kimd	RRE_RR
 b93f	klmd	RRE_RR
@@ -562,6 +580,14 @@ b987	dlgr	RRE_RR
 b988	alcgr	RRE_RR
 b989	slbgr	RRE_RR
 b98a	cspg	RRE_RR
+<<<<<<< HEAD
+<<<<<<< HEAD
+b98b	rdp	RRF_RURR2
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+b98b	rdp	RRF_RURR2
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 b98d	epsw	RRE_RR
 b98e	idte	RRF_RURR2
 b98f	crdte	RRF_RURR2
@@ -876,19 +902,69 @@ e63d	vstrl	VSI_URDV
 e63f	vstrlr	VRS_RRDV
 e649	vlip	VRI_V0UU2
 e650	vcvb	VRR_RV0UU
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+e651	vclzdp	VRR_VV0U2
 e652	vcvbg	VRR_RV0UU
+e654	vupkzh	VRR_VV0U2
+e655	vcnf	VRR_VV0UU2
+e656	vclfnh	VRR_VV0UU2
+<<<<<<< HEAD
+=======
+e652	vcvbg	VRR_RV0UU
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 e658	vcvd	VRI_VR0UU
 e659	vsrp	VRI_VVUUU2
 e65a	vcvdg	VRI_VR0UU
 e65b	vpsop	VRI_VVUUU2
+<<<<<<< HEAD
+<<<<<<< HEAD
+e65c	vupkzl	VRR_VV0U2
+e65d	vcfn	VRR_VV0UU2
+e65e	vclfnl	VRR_VV0UU2
 e65f	vtp	VRR_0V
+e670	vpkzr	VRI_VVV0UU2
 e671	vap	VRI_VVV0UU2
+e672	vsrpr	VRI_VVV0UU2
 e673	vsp	VRI_VVV0UU2
+e674	vschp	VRR_VVV0U0U
+e675	vcrnf	VRR_VVV0UU
+=======
+=======
+e65c	vupkzl	VRR_VV0U2
+e65d	vcfn	VRR_VV0UU2
+e65e	vclfnl	VRR_VV0UU2
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+e65f	vtp	VRR_0V
+e670	vpkzr	VRI_VVV0UU2
+e671	vap	VRI_VVV0UU2
+e672	vsrpr	VRI_VVV0UU2
+e673	vsp	VRI_VVV0UU2
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+e674	vschp	VRR_VVV0U0U
+e675	vcrnf	VRR_VVV0UU
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 e677	vcp	VRR_0VV0U
 e678	vmp	VRI_VVV0UU2
 e679	vmsp	VRI_VVV0UU2
 e67a	vdp	VRI_VVV0UU2
 e67b	vrp	VRI_VVV0UU2
+<<<<<<< HEAD
+<<<<<<< HEAD
+e67c	vscshp	VRR_VVV
+e67d	vcsph	VRR_VVV0U0
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+e67c	vscshp	VRR_VVV
+e67d	vcsph	VRR_VVV0U0
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 e67e	vsdp	VRI_VVV0UU2
 e700	vleb	VRX_VRRDU
 e701	vleh	VRX_VRRDU
@@ -1081,6 +1157,14 @@ eb61	stric	RSY_RDRU
 eb62	mric	RSY_RDRU
 eb6a	asi	SIY_IRD
 eb6e	alsi	SIY_IRD
+<<<<<<< HEAD
+<<<<<<< HEAD
+eb71	lpswey	SIY_URD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+eb71	lpswey	SIY_URD
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 eb7a	agsi	SIY_IRD
 eb7e	algsi	SIY_IRD
 eb80	icmh	RSY_RURD

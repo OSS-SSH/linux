@@ -101,7 +101,15 @@
 
 	nand@1,0 {
 		compatible = "ti,omap2-nand";
+<<<<<<< HEAD
+<<<<<<< HEAD
+		reg = <1 0 4>; /* CS1, offset 0, IO size 4 */
+=======
 		reg = <0 0 4>; /* CS0, offset 0, IO size 4 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		reg = <1 0 4>; /* CS1, offset 0, IO size 4 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		interrupt-parent = <&gpmc>;
 		interrupts = <0 IRQ_TYPE_NONE>, /* fifoevent */
 			     <1 IRQ_TYPE_NONE>;	/* termcount */

@@ -1249,6 +1249,14 @@ const struct stmmac_ops dwmac410_ops = {
 	.config_l3_filter = dwmac4_config_l3_filter,
 	.config_l4_filter = dwmac4_config_l4_filter,
 	.est_configure = dwmac5_est_configure,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.est_irq_status = dwmac5_est_irq_status,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.est_irq_status = dwmac5_est_irq_status,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.fpe_configure = dwmac5_fpe_configure,
 	.fpe_send_mpacket = dwmac5_fpe_send_mpacket,
 	.fpe_irq_status = dwmac5_fpe_irq_status,
@@ -1300,6 +1308,14 @@ const struct stmmac_ops dwmac510_ops = {
 	.config_l3_filter = dwmac4_config_l3_filter,
 	.config_l4_filter = dwmac4_config_l4_filter,
 	.est_configure = dwmac5_est_configure,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.est_irq_status = dwmac5_est_irq_status,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.est_irq_status = dwmac5_est_irq_status,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.fpe_configure = dwmac5_fpe_configure,
 	.fpe_send_mpacket = dwmac5_fpe_send_mpacket,
 	.fpe_irq_status = dwmac5_fpe_irq_status,

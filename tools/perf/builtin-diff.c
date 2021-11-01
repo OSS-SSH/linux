@@ -1156,7 +1156,15 @@ static int check_file_brstack(void)
 	int i;
 
 	data__for_each_file(i, d) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		d->session = perf_session__new(&d->data, &pdiff.tool);
+=======
 		d->session = perf_session__new(&d->data, false, &pdiff.tool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		d->session = perf_session__new(&d->data, &pdiff.tool);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_ERR(d->session)) {
 			pr_err("Failed to open %s\n", d->data.path);
 			return PTR_ERR(d->session);
@@ -1188,7 +1196,15 @@ static int __cmd_diff(void)
 	ret = -EINVAL;
 
 	data__for_each_file(i, d) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		d->session = perf_session__new(&d->data, &pdiff.tool);
+=======
 		d->session = perf_session__new(&d->data, false, &pdiff.tool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		d->session = perf_session__new(&d->data, &pdiff.tool);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_ERR(d->session)) {
 			ret = PTR_ERR(d->session);
 			pr_err("Failed to open %s\n", d->data.path);

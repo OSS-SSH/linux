@@ -72,10 +72,18 @@ struct vga_device {
 	unsigned int io_norm_cnt;	/* normal IO count */
 	unsigned int mem_norm_cnt;	/* normal MEM count */
 	bool bridge_has_one_vga;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int (*set_decode)(struct pci_dev *pdev, bool decode);
+=======
 	/* allow IRQ enable/disable hook */
 	void *cookie;
 	void (*irq_set_state)(void *cookie, bool enable);
 	unsigned int (*set_vga_decode)(void *cookie, bool decode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int (*set_decode)(struct pci_dev *pdev, bool decode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static LIST_HEAD(vga_list);
@@ -218,6 +226,9 @@ int vga_remove_vgacon(struct pci_dev *pdev)
 #endif
 EXPORT_SYMBOL(vga_remove_vgacon);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static inline void vga_irq_set_state(struct vga_device *vgadev, bool state)
 {
 	if (vgadev->irq_set_state)
@@ -225,6 +236,9 @@ static inline void vga_irq_set_state(struct vga_device *vgadev, bool state)
 }
 
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* If we don't ever use VGA arb we should avoid
    turning off anything anywhere due to old X servers getting
    confused about the boot device not being VGA */
@@ -284,12 +298,18 @@ static struct vga_device *__vga_tryget(struct vga_device *vgadev,
 		if (vgadev == conflict)
 			continue;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		/* Check if the architecture allows a conflict between those
 		 * 2 devices or if they are on separate domains
 		 */
 		if (!vga_conflicts(vgadev->pdev, conflict->pdev))
 			continue;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* We have a possible conflict. before we go further, we must
 		 * check if we sit on the same bus as the conflicting device.
 		 * if we don't, then we must tie both IO and MEM resources
@@ -331,10 +351,20 @@ static struct vga_device *__vga_tryget(struct vga_device *vgadev,
 			if ((match & conflict->decodes) & VGA_RSRC_LEGACY_IO)
 				pci_bits |= PCI_COMMAND_IO;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (pci_bits)
+				flags |= PCI_VGA_STATE_CHANGE_DECODES;
+=======
 			if (pci_bits) {
 				vga_irq_set_state(conflict, false);
 				flags |= PCI_VGA_STATE_CHANGE_DECODES;
 			}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (pci_bits)
+				flags |= PCI_VGA_STATE_CHANGE_DECODES;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		if (change_bridge)
@@ -371,9 +401,15 @@ enable_them:
 
 	pci_set_vga_state(vgadev->pdev, true, pci_bits, flags);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (!vgadev->bridge_has_one_vga)
 		vga_irq_set_state(vgadev, true);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vgadev->owns |= wants;
 lock_them:
 	vgadev->locks |= (rsrc & VGA_RSRC_LEGACY_MASK);
@@ -826,7 +862,15 @@ static void __vga_set_legacy_decoding(struct pci_dev *pdev,
 		goto bail;
 
 	/* don't let userspace futz with kernel driver decodes */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (userspace && vgadev->set_decode)
+=======
 	if (userspace && vgadev->set_vga_decode)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (userspace && vgadev->set_decode)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto bail;
 
 	/* update the device decodes + counter */
@@ -840,6 +884,26 @@ bail:
 	spin_unlock_irqrestore(&vga_lock, flags);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/**
+ * vga_set_legacy_decoding
+ * @pdev: pci device of the VGA card
+ * @decodes: bit mask of what legacy regions the card decodes
+ *
+ * Indicates to the arbiter if the card decodes legacy VGA IOs, legacy VGA
+ * Memory, both, or none. All cards default to both, the card driver (fbdev for
+ * example) should tell the arbiter if it has disabled legacy decoding, so the
+ * card can be left out of the arbitration process (and can be safe to take
+ * interrupts at any time.
+ */
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void vga_set_legacy_decoding(struct pci_dev *pdev, unsigned int decodes)
 {
 	__vga_set_legacy_decoding(pdev, decodes, false);
@@ -849,6 +913,14 @@ EXPORT_SYMBOL(vga_set_legacy_decoding);
 /**
  * vga_client_register - register or unregister a VGA arbitration client
  * @pdev: pci device of the VGA client
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @set_decode: vga decode change callback
+ *
+ * Clients have two callback mechanisms they can use.
+ *
+ * @set_decode callback: If a client can disable its GPU VGA resource, it
+=======
  * @cookie: client cookie to be used in callbacks
  * @irq_set_state: irq state change callback
  * @set_vga_decode: vga decode change callback
@@ -860,6 +932,14 @@ EXPORT_SYMBOL(vga_set_legacy_decoding);
  * turn off its mem and io decoding.
  *
  * @set_vga_decode callback: If a client can disable its GPU VGA resource, it
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @set_decode: vga decode change callback
+ *
+ * Clients have two callback mechanisms they can use.
+ *
+ * @set_decode callback: If a client can disable its GPU VGA resource, it
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * will get a callback from this to set the encode/decode state.
  *
  * Rationale: we cannot disable VGA decode resources unconditionally some single
@@ -872,6 +952,15 @@ EXPORT_SYMBOL(vga_set_legacy_decoding);
  * This function does not check whether a client for @pdev has been registered
  * already.
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * To unregister just call vga_client_unregister().
+ *
+ * Returns: 0 on success, -1 on failure
+ */
+int vga_client_register(struct pci_dev *pdev,
+		unsigned int (*set_decode)(struct pci_dev *pdev, bool decode))
+=======
  * To unregister just call this function with @irq_set_state and @set_vga_decode
  * both set to NULL for the same @pdev as originally used to register them.
  *
@@ -881,6 +970,15 @@ int vga_client_register(struct pci_dev *pdev, void *cookie,
 			void (*irq_set_state)(void *cookie, bool state),
 			unsigned int (*set_vga_decode)(void *cookie,
 						       bool decode))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * To unregister just call vga_client_unregister().
+ *
+ * Returns: 0 on success, -1 on failure
+ */
+int vga_client_register(struct pci_dev *pdev,
+		unsigned int (*set_decode)(struct pci_dev *pdev, bool decode))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret = -ENODEV;
 	struct vga_device *vgadev;
@@ -891,9 +989,17 @@ int vga_client_register(struct pci_dev *pdev, void *cookie,
 	if (!vgadev)
 		goto bail;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	vgadev->set_decode = set_decode;
+=======
 	vgadev->irq_set_state = irq_set_state;
 	vgadev->set_vga_decode = set_vga_decode;
 	vgadev->cookie = cookie;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vgadev->set_decode = set_decode;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = 0;
 
 bail:
@@ -1403,9 +1509,21 @@ static void vga_arbiter_notify_clients(void)
 			new_state = false;
 		else
 			new_state = true;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (vgadev->set_decode) {
+			new_decodes = vgadev->set_decode(vgadev->pdev,
+							 new_state);
+=======
 		if (vgadev->set_vga_decode) {
 			new_decodes = vgadev->set_vga_decode(vgadev->cookie,
 							     new_state);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (vgadev->set_decode) {
+			new_decodes = vgadev->set_decode(vgadev->pdev,
+							 new_state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			vga_update_device_decodes(vgadev, new_decodes);
 		}
 	}

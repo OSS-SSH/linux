@@ -1375,6 +1375,18 @@ new_segment:
 			}
 			pfrag->offset += copy;
 		} else {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (!sk_wmem_schedule(sk, copy))
+				goto wait_for_space;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (!sk_wmem_schedule(sk, copy))
+				goto wait_for_space;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			err = skb_zerocopy_iter_stream(sk, skb, msg, copy, uarg);
 			if (err == -EMSGSIZE || err == -EEXIST) {
 				tcp_mark_push(tp, skb);
@@ -3335,6 +3347,14 @@ int tcp_set_window_clamp(struct sock *sk, int val)
 	} else {
 		tp->window_clamp = val < SOCK_MIN_RCVBUF / 2 ?
 			SOCK_MIN_RCVBUF / 2 : val;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		tp->rcv_ssthresh = min(tp->rcv_wnd, tp->window_clamp);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tp->rcv_ssthresh = min(tp->rcv_wnd, tp->window_clamp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return 0;
 }
@@ -4509,7 +4529,19 @@ void __init tcp_init(void)
 	tcp_hashinfo.bind_bucket_cachep =
 		kmem_cache_create("tcp_bind_bucket",
 				  sizeof(struct inet_bind_bucket), 0,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				  SLAB_HWCACHE_ALIGN | SLAB_PANIC |
+				  SLAB_ACCOUNT,
+				  NULL);
+=======
 				  SLAB_HWCACHE_ALIGN|SLAB_PANIC, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  SLAB_HWCACHE_ALIGN | SLAB_PANIC |
+				  SLAB_ACCOUNT,
+				  NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Size and allocate the main established and bind bucket
 	 * hash tables.

@@ -197,10 +197,20 @@ static bool guc_check_log_buf_overflow(struct intel_guc_log *log,
 static unsigned int guc_get_log_buffer_size(enum guc_log_buffer_type type)
 {
 	switch (type) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case GUC_DEBUG_LOG_BUFFER:
+		return DEBUG_BUFFER_SIZE;
+=======
 	case GUC_ISR_LOG_BUFFER:
 		return ISR_BUFFER_SIZE;
 	case GUC_DPC_LOG_BUFFER:
 		return DPC_BUFFER_SIZE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case GUC_DEBUG_LOG_BUFFER:
+		return DEBUG_BUFFER_SIZE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case GUC_CRASH_DUMP_LOG_BUFFER:
 		return CRASH_BUFFER_SIZE;
 	default:
@@ -245,7 +255,15 @@ static void guc_read_update_log_buffer(struct intel_guc_log *log)
 	src_data += PAGE_SIZE;
 	dst_data += PAGE_SIZE;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	for (type = GUC_DEBUG_LOG_BUFFER; type < GUC_MAX_LOG_BUFFER; type++) {
+=======
 	for (type = GUC_ISR_LOG_BUFFER; type < GUC_MAX_LOG_BUFFER; type++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (type = GUC_DEBUG_LOG_BUFFER; type < GUC_MAX_LOG_BUFFER; type++) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Make a copy of the state structure, inside GuC log buffer
 		 * (which is uncached mapped), on the stack to avoid reading
@@ -463,14 +481,31 @@ int intel_guc_log_create(struct intel_guc_log *log)
 	 *  +===============================+ 00B
 	 *  |    Crash dump state header    |
 	 *  +-------------------------------+ 32B
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 *  |      Debug state header       |
+	 *  +-------------------------------+ 64B
+=======
 	 *  |       DPC state header        |
 	 *  +-------------------------------+ 64B
 	 *  |       ISR state header        |
 	 *  +-------------------------------+ 96B
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 *  |      Debug state header       |
+	 *  +-------------------------------+ 64B
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *  |                               |
 	 *  +===============================+ PAGE_SIZE (4KB)
 	 *  |        Crash Dump logs        |
 	 *  +===============================+ + CRASH_SIZE
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 *  |          Debug logs           |
+	 *  +===============================+ + DEBUG_SIZE
+	 */
+	guc_log_size = PAGE_SIZE + CRASH_BUFFER_SIZE + DEBUG_BUFFER_SIZE;
+=======
 	 *  |           DPC logs            |
 	 *  +===============================+ + DPC_SIZE
 	 *  |           ISR logs            |
@@ -478,6 +513,13 @@ int intel_guc_log_create(struct intel_guc_log *log)
 	 */
 	guc_log_size = PAGE_SIZE + CRASH_BUFFER_SIZE + DPC_BUFFER_SIZE +
 			ISR_BUFFER_SIZE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 *  |          Debug logs           |
+	 *  +===============================+ + DEBUG_SIZE
+	 */
+	guc_log_size = PAGE_SIZE + CRASH_BUFFER_SIZE + DEBUG_BUFFER_SIZE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	vma = intel_guc_allocate_vma(guc, guc_log_size);
 	if (IS_ERR(vma)) {
@@ -675,10 +717,20 @@ static const char *
 stringify_guc_log_type(enum guc_log_buffer_type type)
 {
 	switch (type) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case GUC_DEBUG_LOG_BUFFER:
+		return "DEBUG";
+=======
 	case GUC_ISR_LOG_BUFFER:
 		return "ISR";
 	case GUC_DPC_LOG_BUFFER:
 		return "DPC";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case GUC_DEBUG_LOG_BUFFER:
+		return "DEBUG";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case GUC_CRASH_DUMP_LOG_BUFFER:
 		return "CRASH";
 	default:
@@ -708,7 +760,15 @@ void intel_guc_log_info(struct intel_guc_log *log, struct drm_printer *p)
 
 	drm_printf(p, "\tRelay full count: %u\n", log->relay.full_count);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	for (type = GUC_DEBUG_LOG_BUFFER; type < GUC_MAX_LOG_BUFFER; type++) {
+=======
 	for (type = GUC_ISR_LOG_BUFFER; type < GUC_MAX_LOG_BUFFER; type++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (type = GUC_DEBUG_LOG_BUFFER; type < GUC_MAX_LOG_BUFFER; type++) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		drm_printf(p, "\t%s:\tflush count %10u, overflow count %10u\n",
 			   stringify_guc_log_type(type),
 			   log->stats[type].flush,

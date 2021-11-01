@@ -426,7 +426,15 @@ int phy_mii_ioctl(struct phy_device *phydev, struct ifreq *ifr, int cmd)
 EXPORT_SYMBOL(phy_mii_ioctl);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * phy_do_ioctl - generic ndo_eth_ioctl implementation
+=======
  * phy_do_ioctl - generic ndo_do_ioctl implementation
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * phy_do_ioctl - generic ndo_eth_ioctl implementation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dev: the net_device struct
  * @ifr: &struct ifreq for socket ioctl's
  * @cmd: ioctl cmd to execute
@@ -441,7 +449,15 @@ int phy_do_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 EXPORT_SYMBOL(phy_do_ioctl);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * phy_do_ioctl_running - generic ndo_eth_ioctl implementation but test first
+=======
  * phy_do_ioctl_running - generic ndo_do_ioctl implementation but test first
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * phy_do_ioctl_running - generic ndo_eth_ioctl implementation but test first
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @dev: the net_device struct
  * @ifr: &struct ifreq for socket ioctl's

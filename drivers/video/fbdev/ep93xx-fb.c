@@ -548,7 +548,15 @@ static int ep93xxfb_probe(struct platform_device *pdev)
 	}
 
 	ep93xxfb_set_par(info);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	clk_prepare_enable(fbi->clk);
+=======
 	clk_enable(fbi->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clk_prepare_enable(fbi->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = register_framebuffer(info);
 	if (err)
@@ -577,7 +585,15 @@ static int ep93xxfb_remove(struct platform_device *pdev)
 	struct ep93xx_fbi *fbi = info->par;
 
 	unregister_framebuffer(info);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	clk_disable_unprepare(fbi->clk);
+=======
 	clk_disable(fbi->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clk_disable_unprepare(fbi->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ep93xxfb_dealloc_videomem(info);
 	fb_dealloc_cmap(&info->cmap);
 

@@ -696,6 +696,20 @@ static void mana_destroy_wq_obj(struct mana_port_context *apc, u32 wq_type,
 			   resp.hdr.status);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void mana_destroy_eq(struct mana_context *ac)
+{
+	struct gdma_context *gc = ac->gdma_dev->gdma_context;
+	struct gdma_queue *eq;
+	int i;
+
+	if (!ac->eqs)
+		return;
+
+	for (i = 0; i < gc->max_num_queues; i++) {
+		eq = ac->eqs[i].eq;
+=======
 static void mana_init_cqe_poll_buf(struct gdma_comp *cqe_poll_buf)
 {
 	int i;
@@ -706,56 +720,120 @@ static void mana_init_cqe_poll_buf(struct gdma_comp *cqe_poll_buf)
 
 static void mana_destroy_eq(struct gdma_context *gc,
 			    struct mana_port_context *apc)
+=======
+static void mana_destroy_eq(struct mana_context *ac)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+	struct gdma_context *gc = ac->gdma_dev->gdma_context;
 	struct gdma_queue *eq;
 	int i;
 
-	if (!apc->eqs)
+	if (!ac->eqs)
 		return;
 
+<<<<<<< HEAD
 	for (i = 0; i < apc->num_queues; i++) {
 		eq = apc->eqs[i].eq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0; i < gc->max_num_queues; i++) {
+		eq = ac->eqs[i].eq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!eq)
 			continue;
 
 		mana_gd_destroy_queue(gc, eq);
 	}
 
-	kfree(apc->eqs);
-	apc->eqs = NULL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	kfree(ac->eqs);
+	ac->eqs = NULL;
 }
 
-static int mana_create_eq(struct mana_port_context *apc)
+static int mana_create_eq(struct mana_context *ac)
 {
+	struct gdma_dev *gd = ac->gdma_dev;
+	struct gdma_context *gc = gd->gdma_context;
+=======
+	kfree(apc->eqs);
+	apc->eqs = NULL;
+=======
+	kfree(ac->eqs);
+	ac->eqs = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
+
+static int mana_create_eq(struct mana_context *ac)
+{
+<<<<<<< HEAD
 	struct gdma_dev *gd = apc->ac->gdma_dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct gdma_dev *gd = ac->gdma_dev;
+	struct gdma_context *gc = gd->gdma_context;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct gdma_queue_spec spec = {};
 	int err;
 	int i;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ac->eqs = kcalloc(gc->max_num_queues, sizeof(struct mana_eq),
+			  GFP_KERNEL);
+	if (!ac->eqs)
+=======
 	apc->eqs = kcalloc(apc->num_queues, sizeof(struct mana_eq),
 			   GFP_KERNEL);
 	if (!apc->eqs)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ac->eqs = kcalloc(gc->max_num_queues, sizeof(struct mana_eq),
+			  GFP_KERNEL);
+	if (!ac->eqs)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
 
 	spec.type = GDMA_EQ;
 	spec.monitor_avl_buf = false;
 	spec.queue_size = EQ_SIZE;
 	spec.eq.callback = NULL;
-	spec.eq.context = apc->eqs;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	spec.eq.context = ac->eqs;
 	spec.eq.log2_throttle_limit = LOG2_EQ_THROTTLE;
-	spec.eq.ndev = apc->ndev;
 
-	for (i = 0; i < apc->num_queues; i++) {
-		mana_init_cqe_poll_buf(apc->eqs[i].cqe_poll);
+	for (i = 0; i < gc->max_num_queues; i++) {
+		err = mana_gd_create_mana_eq(gd, &spec, &ac->eqs[i].eq);
+=======
+	spec.eq.context = apc->eqs;
+=======
+	spec.eq.context = ac->eqs;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	spec.eq.log2_throttle_limit = LOG2_EQ_THROTTLE;
 
+<<<<<<< HEAD
 		err = mana_gd_create_mana_eq(gd, &spec, &apc->eqs[i].eq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0; i < gc->max_num_queues; i++) {
+		err = mana_gd_create_mana_eq(gd, &spec, &ac->eqs[i].eq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err)
 			goto out;
 	}
 
 	return 0;
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mana_destroy_eq(ac);
+=======
 	mana_destroy_eq(gd->gdma_context, apc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mana_destroy_eq(ac);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -790,7 +868,13 @@ static void mana_unmap_skb(struct sk_buff *skb, struct mana_port_context *apc)
 
 static void mana_poll_tx_cq(struct mana_cq *cq)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct gdma_queue *gdma_eq = cq->gdma_cq->cq.parent;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct gdma_comp *completions = cq->gdma_comp_buf;
 	struct gdma_posted_wqe_info *wqe_info;
 	unsigned int pkt_transmitted = 0;
@@ -812,6 +896,18 @@ static void mana_poll_tx_cq(struct mana_cq *cq)
 	comp_read = mana_gd_poll_cq(cq->gdma_cq, completions,
 				    CQE_POLLING_BUFFER);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (comp_read < 1)
+		return;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (comp_read < 1)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < comp_read; i++) {
 		struct mana_tx_comp_oob *cqe_oob;
 
@@ -861,7 +957,15 @@ static void mana_poll_tx_cq(struct mana_cq *cq)
 
 		mana_unmap_skb(skb, apc);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		napi_consume_skb(skb, cq->budget);
+=======
 		napi_consume_skb(skb, gdma_eq->eq.budget);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		napi_consume_skb(skb, cq->budget);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		pkt_transmitted++;
 	}
@@ -890,6 +994,16 @@ static void mana_poll_tx_cq(struct mana_cq *cq)
 
 	if (atomic_sub_return(pkt_transmitted, &txq->pending_sends) < 0)
 		WARN_ON_ONCE(1);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	cq->work_done = pkt_transmitted;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	cq->work_done = pkt_transmitted;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void mana_post_pkt_rxq(struct mana_rxq *rxq)
@@ -918,17 +1032,34 @@ static void mana_rx_skb(void *buf_va, struct mana_rxcomp_oob *cqe,
 	struct mana_stats *rx_stats = &rxq->stats;
 	struct net_device *ndev = rxq->ndev;
 	uint pkt_len = cqe->ppi[0].pkt_len;
-	struct mana_port_context *apc;
+<<<<<<< HEAD
+<<<<<<< HEAD
 	u16 rxq_idx = rxq->rxq_idx;
 	struct napi_struct *napi;
-	struct gdma_queue *eq;
 	struct sk_buff *skb;
 	u32 hash_value;
 
+	rxq->rx_cq.work_done++;
+	napi = &rxq->rx_cq.napi;
+=======
+	struct mana_port_context *apc;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	u16 rxq_idx = rxq->rxq_idx;
+	struct napi_struct *napi;
+	struct sk_buff *skb;
+	u32 hash_value;
+
+<<<<<<< HEAD
 	apc = netdev_priv(ndev);
 	eq = apc->eqs[rxq_idx].eq;
 	eq->eq.work_done++;
 	napi = &eq->eq.napi;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rxq->rx_cq.work_done++;
+	napi = &rxq->rx_cq.napi;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!buf_va) {
 		++ndev->stats.rx_dropped;
@@ -1081,6 +1212,14 @@ static void mana_poll_rx_cq(struct mana_cq *cq)
 static void mana_cq_handler(void *context, struct gdma_queue *gdma_queue)
 {
 	struct mana_cq *cq = context;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u8 arm_bit;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 arm_bit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	WARN_ON_ONCE(cq->gdma_cq != gdma_queue);
 
@@ -1089,7 +1228,43 @@ static void mana_cq_handler(void *context, struct gdma_queue *gdma_queue)
 	else
 		mana_poll_tx_cq(cq);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (cq->work_done < cq->budget &&
+	    napi_complete_done(&cq->napi, cq->work_done)) {
+		arm_bit = SET_ARM_BIT;
+	} else {
+		arm_bit = 0;
+	}
+
+	mana_gd_ring_cq(gdma_queue, arm_bit);
+}
+
+static int mana_poll(struct napi_struct *napi, int budget)
+{
+	struct mana_cq *cq = container_of(napi, struct mana_cq, napi);
+
+	cq->work_done = 0;
+	cq->budget = budget;
+
+	mana_cq_handler(cq, cq->gdma_cq);
+
+	return min(cq->work_done, budget);
+}
+
+static void mana_schedule_napi(void *context, struct gdma_queue *gdma_queue)
+{
+	struct mana_cq *cq = context;
+
+	napi_schedule_irqoff(&cq->napi);
+<<<<<<< HEAD
+=======
 	mana_gd_arm_cq(gdma_queue);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void mana_deinit_cq(struct mana_port_context *apc, struct mana_cq *cq)
@@ -1114,12 +1289,34 @@ static void mana_deinit_txq(struct mana_port_context *apc, struct mana_txq *txq)
 
 static void mana_destroy_txq(struct mana_port_context *apc)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct napi_struct *napi;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct napi_struct *napi;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	if (!apc->tx_qp)
 		return;
 
 	for (i = 0; i < apc->num_queues; i++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		napi = &apc->tx_qp[i].tx_cq.napi;
+		napi_synchronize(napi);
+		napi_disable(napi);
+		netif_napi_del(napi);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mana_destroy_wq_obj(apc, GDMA_SQ, apc->tx_qp[i].tx_object);
 
 		mana_deinit_cq(apc, &apc->tx_qp[i].tx_cq);
@@ -1134,7 +1331,17 @@ static void mana_destroy_txq(struct mana_port_context *apc)
 static int mana_create_txq(struct mana_port_context *apc,
 			   struct net_device *net)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct mana_context *ac = apc->ac;
+	struct gdma_dev *gd = ac->gdma_dev;
+=======
 	struct gdma_dev *gd = apc->ac->gdma_dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mana_context *ac = apc->ac;
+	struct gdma_dev *gd = ac->gdma_dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mana_obj_spec wq_spec;
 	struct mana_obj_spec cq_spec;
 	struct gdma_queue_spec spec;
@@ -1186,7 +1393,13 @@ static int mana_create_txq(struct mana_port_context *apc,
 
 		/* Create SQ's CQ */
 		cq = &apc->tx_qp[i].tx_cq;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		cq->gdma_comp_buf = apc->eqs[i].cqe_poll;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cq->type = MANA_CQ_TYPE_TX;
 
 		cq->txq = txq;
@@ -1195,8 +1408,18 @@ static int mana_create_txq(struct mana_port_context *apc,
 		spec.type = GDMA_CQ;
 		spec.monitor_avl_buf = false;
 		spec.queue_size = cq_size;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		spec.cq.callback = mana_schedule_napi;
+		spec.cq.parent_eq = ac->eqs[i].eq;
+=======
 		spec.cq.callback = mana_cq_handler;
 		spec.cq.parent_eq = apc->eqs[i].eq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		spec.cq.callback = mana_schedule_napi;
+		spec.cq.parent_eq = ac->eqs[i].eq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spec.cq.context = cq;
 		err = mana_gd_create_mana_wq_cq(gd, &spec, &cq->gdma_cq);
 		if (err)
@@ -1237,7 +1460,20 @@ static int mana_create_txq(struct mana_port_context *apc,
 
 		gc->cq_table[cq->gdma_id] = cq->gdma_cq;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		netif_tx_napi_add(net, &cq->napi, mana_poll, NAPI_POLL_WEIGHT);
+		napi_enable(&cq->napi);
+
+		mana_gd_ring_cq(cq->gdma_cq, SET_ARM_BIT);
+<<<<<<< HEAD
+=======
 		mana_gd_arm_cq(cq->gdma_cq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -1246,6 +1482,9 @@ out:
 	return err;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static void mana_napi_sync_for_rx(struct mana_rxq *rxq)
 {
 	struct net_device *ndev = rxq->ndev;
@@ -1261,6 +1500,9 @@ static void mana_napi_sync_for_rx(struct mana_rxq *rxq)
 	napi_synchronize(napi);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void mana_destroy_rxq(struct mana_port_context *apc,
 			     struct mana_rxq *rxq, bool validate_state)
 
@@ -1268,13 +1510,41 @@ static void mana_destroy_rxq(struct mana_port_context *apc,
 	struct gdma_context *gc = apc->ac->gdma_dev->gdma_context;
 	struct mana_recv_buf_oob *rx_oob;
 	struct device *dev = gc->dev;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct napi_struct *napi;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct napi_struct *napi;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	if (!rxq)
 		return;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	napi = &rxq->rx_cq.napi;
+
+	if (validate_state)
+		napi_synchronize(napi);
+
+	napi_disable(napi);
+	netif_napi_del(napi);
+=======
 	if (validate_state)
 		mana_napi_sync_for_rx(rxq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	napi = &rxq->rx_cq.napi;
+
+	if (validate_state)
+		napi_synchronize(napi);
+
+	napi_disable(napi);
+	netif_napi_del(napi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mana_destroy_wq_obj(apc, GDMA_RQ, rxq->rxobj);
 
@@ -1418,7 +1688,13 @@ static struct mana_rxq *mana_create_rxq(struct mana_port_context *apc,
 
 	/* Create RQ's CQ */
 	cq = &rxq->rx_cq;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	cq->gdma_comp_buf = eq->cqe_poll;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cq->type = MANA_CQ_TYPE_RX;
 	cq->rxq = rxq;
 
@@ -1426,7 +1702,15 @@ static struct mana_rxq *mana_create_rxq(struct mana_port_context *apc,
 	spec.type = GDMA_CQ;
 	spec.monitor_avl_buf = false;
 	spec.queue_size = cq_size;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	spec.cq.callback = mana_schedule_napi;
+=======
 	spec.cq.callback = mana_cq_handler;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spec.cq.callback = mana_schedule_napi;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spec.cq.parent_eq = eq->eq;
 	spec.cq.context = cq;
 	err = mana_gd_create_mana_wq_cq(gd, &spec, &cq->gdma_cq);
@@ -1461,12 +1745,39 @@ static struct mana_rxq *mana_create_rxq(struct mana_port_context *apc,
 	if (err)
 		goto out;
 
-	if (cq->gdma_id >= gc->max_num_cqs)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (WARN_ON(cq->gdma_id >= gc->max_num_cqs)) {
+		err = -EINVAL;
 		goto out;
+	}
 
 	gc->cq_table[cq->gdma_id] = cq->gdma_cq;
 
+	netif_napi_add(ndev, &cq->napi, mana_poll, 1);
+	napi_enable(&cq->napi);
+
+	mana_gd_ring_cq(cq->gdma_cq, SET_ARM_BIT);
+=======
+	if (cq->gdma_id >= gc->max_num_cqs)
+=======
+	if (WARN_ON(cq->gdma_id >= gc->max_num_cqs)) {
+		err = -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		goto out;
+	}
+
+	gc->cq_table[cq->gdma_id] = cq->gdma_cq;
+
+<<<<<<< HEAD
 	mana_gd_arm_cq(cq->gdma_cq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	netif_napi_add(ndev, &cq->napi, mana_poll, 1);
+	napi_enable(&cq->napi);
+
+	mana_gd_ring_cq(cq->gdma_cq, SET_ARM_BIT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	if (!err)
 		return rxq;
@@ -1484,12 +1795,28 @@ out:
 static int mana_add_rx_queues(struct mana_port_context *apc,
 			      struct net_device *ndev)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct mana_context *ac = apc->ac;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mana_context *ac = apc->ac;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mana_rxq *rxq;
 	int err = 0;
 	int i;
 
 	for (i = 0; i < apc->num_queues; i++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		rxq = mana_create_rxq(apc, i, &ac->eqs[i], ndev);
+=======
 		rxq = mana_create_rxq(apc, i, &apc->eqs[i], ndev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rxq = mana_create_rxq(apc, i, &ac->eqs[i], ndev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!rxq) {
 			err = -ENOMEM;
 			goto out;
@@ -1601,17 +1928,25 @@ reset_apc:
 int mana_alloc_queues(struct net_device *ndev)
 {
 	struct mana_port_context *apc = netdev_priv(ndev);
-	struct gdma_dev *gd = apc->ac->gdma_dev;
+<<<<<<< HEAD
+<<<<<<< HEAD
 	int err;
-
-	err = mana_create_eq(apc);
-	if (err)
-		return err;
 
 	err = mana_create_vport(apc, ndev);
 	if (err)
-		goto destroy_eq;
+		return err;
 
+=======
+	struct gdma_dev *gd = apc->ac->gdma_dev;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	int err;
+
+	err = mana_create_vport(apc, ndev);
+	if (err)
+		return err;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = netif_set_real_num_tx_queues(ndev, apc->num_queues);
 	if (err)
 		goto destroy_vport;
@@ -1636,8 +1971,14 @@ int mana_alloc_queues(struct net_device *ndev)
 
 destroy_vport:
 	mana_destroy_vport(apc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 destroy_eq:
 	mana_destroy_eq(gd->gdma_context, apc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -1714,8 +2055,14 @@ static int mana_dealloc_queues(struct net_device *ndev)
 
 	mana_destroy_vport(apc);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	mana_destroy_eq(apc->ac->gdma_dev->gdma_context, apc);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1768,7 +2115,15 @@ static int mana_probe_port(struct mana_context *ac, int port_idx,
 	apc->ac = ac;
 	apc->ndev = ndev;
 	apc->max_queues = gc->max_num_queues;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	apc->num_queues = gc->max_num_queues;
+=======
 	apc->num_queues = min_t(uint, gc->max_num_queues, MANA_MAX_NUM_QUEUES);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	apc->num_queues = gc->max_num_queues;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	apc->port_handle = INVALID_MANA_HANDLE;
 	apc->port_idx = port_idx;
 
@@ -1839,6 +2194,19 @@ int mana_probe(struct gdma_dev *gd)
 	ac->num_ports = 1;
 	gd->driver_data = ac;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	err = mana_create_eq(ac);
+	if (err)
+		goto out;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = mana_query_device_cfg(ac, MANA_MAJOR_VERSION, MANA_MINOR_VERSION,
 				    MANA_MICRO_VERSION, &ac->num_ports);
 	if (err)
@@ -1888,6 +2256,18 @@ void mana_remove(struct gdma_dev *gd)
 
 		free_netdev(ndev);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	mana_destroy_eq(ac);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	mana_destroy_eq(ac);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	mana_gd_deregister_device(gd);
 	gd->driver_data = NULL;

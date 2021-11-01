@@ -1431,6 +1431,14 @@ static inline int phy_device_register(struct phy_device *phy)
 static inline void phy_device_free(struct phy_device *phydev) { }
 #endif /* CONFIG_PHYLIB */
 void phy_device_remove(struct phy_device *phydev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+int phy_get_c45_ids(struct phy_device *phydev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int phy_get_c45_ids(struct phy_device *phydev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int phy_init_hw(struct phy_device *phydev);
 int phy_suspend(struct phy_device *phydev);
 int phy_resume(struct phy_device *phydev);

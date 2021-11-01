@@ -371,7 +371,15 @@ static int st_nci_manufacturer_specific(struct nfc_dev *dev, void *data,
 	return nfc_vendor_cmd_reply(msg);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct nfc_vendor_cmd st_nci_vendor_cmds[] = {
+=======
 static struct nfc_vendor_cmd st_nci_vendor_cmds[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct nfc_vendor_cmd st_nci_vendor_cmds[] = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{
 		.vendor_id = ST_NCI_VENDOR_OUI,
 		.subcmd = FACTORY_MODE,

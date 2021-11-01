@@ -6,7 +6,13 @@
  */
 
 #include <linux/delay.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <linux/dma-buf.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/gpio/consumer.h>
 #include <linux/module.h>
 #include <linux/property.h>
@@ -21,6 +27,14 @@
 #include <drm/drm_format_helper.h>
 #include <drm/drm_gem_atomic_helper.h>
 #include <drm/drm_gem_cma_helper.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <drm/drm_gem_framebuffer_helper.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <drm/drm_gem_framebuffer_helper.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_managed.h>
 #include <drm/drm_mipi_dbi.h>
 #include <drm/drm_rect.h>
@@ -92,24 +106,41 @@ static int st7586_buf_copy(void *dst, struct drm_framebuffer *fb,
 			   struct drm_rect *clip)
 {
 	struct drm_gem_cma_object *cma_obj = drm_fb_cma_get_gem_obj(fb, 0);
-	struct dma_buf_attachment *import_attach = cma_obj->base.import_attach;
+<<<<<<< HEAD
+<<<<<<< HEAD
 	void *src = cma_obj->vaddr;
 	int ret = 0;
 
-	if (import_attach) {
-		ret = dma_buf_begin_cpu_access(import_attach->dmabuf,
-					       DMA_FROM_DEVICE);
-		if (ret)
-			return ret;
-	}
+	ret = drm_gem_fb_begin_cpu_access(fb, DMA_FROM_DEVICE);
+	if (ret)
+		return ret;
 
 	st7586_xrgb8888_to_gray332(dst, src, fb, clip);
 
-	if (import_attach)
-		ret = dma_buf_end_cpu_access(import_attach->dmabuf,
-					     DMA_FROM_DEVICE);
+	drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
 
+	return 0;
+=======
+	struct dma_buf_attachment *import_attach = cma_obj->base.import_attach;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	void *src = cma_obj->vaddr;
+	int ret = 0;
+
+	ret = drm_gem_fb_begin_cpu_access(fb, DMA_FROM_DEVICE);
+	if (ret)
+		return ret;
+
+	st7586_xrgb8888_to_gray332(dst, src, fb, clip);
+
+	drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
+
+<<<<<<< HEAD
 	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void st7586_fb_dirty(struct drm_framebuffer *fb, struct drm_rect *rect)
@@ -268,7 +299,13 @@ static const struct drm_simple_display_pipe_funcs st7586_pipe_funcs = {
 	.enable		= st7586_pipe_enable,
 	.disable	= st7586_pipe_disable,
 	.update		= st7586_pipe_update,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.prepare_fb	= drm_gem_simple_display_pipe_prepare_fb,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct drm_display_mode st7586_mode = {

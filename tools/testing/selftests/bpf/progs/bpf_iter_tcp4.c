@@ -121,7 +121,15 @@ static int dump_tcp_sock(struct seq_file *seq, struct tcp_sock *tp,
 	}
 
 	BPF_SEQ_PRINTF(seq, "%4d: %08X:%04X %08X:%04X ",
+<<<<<<< HEAD
+<<<<<<< HEAD
+		       seq_num, src, srcp, dest, destp);
+=======
 		       seq_num, src, srcp, destp, destp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       seq_num, src, srcp, dest, destp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	BPF_SEQ_PRINTF(seq, "%02X %08X:%08X %02X:%08lX %08X %5u %8d %lu %d ",
 		       state,
 		       tp->write_seq - tp->snd_una, rx_queue,

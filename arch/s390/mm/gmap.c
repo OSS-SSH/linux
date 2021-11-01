@@ -27,7 +27,13 @@
 
 /**
  * gmap_alloc - allocate and initialize a guest address space
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  * @mm: pointer to the parent mm_struct
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @limit: maximum address of the gmap address space
  *
  * Returns a guest address space structure.
@@ -504,7 +510,15 @@ EXPORT_SYMBOL_GPL(gmap_translate);
 
 /**
  * gmap_unlink - disconnect a page table from the gmap shadow tables
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @mm: pointer to the parent mm_struct
+=======
  * @gmap: pointer to guest mapping meta data structure
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @mm: pointer to the parent mm_struct
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @table: pointer to the host page table
  * @vmaddr: vm address associated with the host page table
  */
@@ -527,7 +541,15 @@ static void gmap_pmdp_xchg(struct gmap *gmap, pmd_t *old, pmd_t new,
 			   unsigned long gaddr);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * __gmap_link - set up shadow page tables to connect a host to a guest address
+=======
  * gmap_link - set up shadow page tables to connect a host to a guest address
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * __gmap_link - set up shadow page tables to connect a host to a guest address
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @gmap: pointer to guest mapping meta data structure
  * @gaddr: guest address
  * @vmaddr: vm address
@@ -1971,7 +1993,15 @@ out_free:
 EXPORT_SYMBOL_GPL(gmap_shadow_sgt);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * gmap_shadow_pgt_lookup - find a shadow page table
+=======
  * gmap_shadow_lookup_pgtable - find a shadow page table
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * gmap_shadow_pgt_lookup - find a shadow page table
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @sg: pointer to the shadow guest address space structure
  * @saddr: the address in the shadow aguest address space
  * @pgt: parent gmap address of the page table to get shadowed
@@ -2165,7 +2195,15 @@ int gmap_shadow_page(struct gmap *sg, unsigned long saddr, pte_t pte)
 }
 EXPORT_SYMBOL_GPL(gmap_shadow_page);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*
+=======
 /**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * gmap_shadow_notify - handle notifications for shadow gmap
  *
  * Called with sg->parent->shadow_lock.
@@ -2225,7 +2263,15 @@ static void gmap_shadow_notify(struct gmap *sg, unsigned long vmaddr,
 /**
  * ptep_notify - call all invalidation callbacks for a specific pte.
  * @mm: pointer to the process mm_struct
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @vmaddr: virtual address in the process address space
+=======
  * @addr: virtual address in the process address space
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @vmaddr: virtual address in the process address space
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @pte: pointer to the page table entry
  * @bits: bits from the pgste that caused the notify call
  *

@@ -173,10 +173,20 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
 	int ret;
 
 	for_each_acpi_dev_match(adev, cfg->hid, NULL, -1) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (!adev->status.enabled)
+			continue;
+=======
 		if (!adev->status.enabled) {
 			acpi_dev_put(adev);
 			continue;
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!adev->status.enabled)
+			continue;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (bridge->n_sensors >= CIO2_NUM_PORTS) {
 			acpi_dev_put(adev);
@@ -185,7 +195,13 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
 		}
 
 		sensor = &bridge->sensors[bridge->n_sensors];
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		sensor->adev = adev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		strscpy(sensor->name, cfg->hid, sizeof(sensor->name));
 
 		ret = cio2_bridge_read_acpi_buffer(adev, "SSDB",
@@ -215,6 +231,14 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
 			goto err_free_swnodes;
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		sensor->adev = acpi_dev_get(adev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		sensor->adev = acpi_dev_get(adev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adev->fwnode.secondary = fwnode;
 
 		dev_info(&cio2->dev, "Found supported sensor %s\n",
@@ -228,7 +252,15 @@ static int cio2_bridge_connect_sensor(const struct cio2_sensor_config *cfg,
 err_free_swnodes:
 	software_node_unregister_nodes(sensor->swnodes);
 err_put_adev:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	acpi_dev_put(adev);
+=======
 	acpi_dev_put(sensor->adev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	acpi_dev_put(adev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

@@ -86,7 +86,15 @@ static int smdk_hw_params(struct snd_pcm_substream *substream,
 /*
  * SMDK WM8580 DAI operations.
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct snd_soc_ops smdk_ops = {
+=======
 static struct snd_soc_ops smdk_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct snd_soc_ops smdk_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.hw_params = smdk_hw_params,
 };
 

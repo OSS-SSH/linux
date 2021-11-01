@@ -54,6 +54,14 @@ struct acpi_memory_info {
 struct acpi_memory_device {
 	struct acpi_device *device;
 	struct list_head res_list;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int mgid;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int mgid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static acpi_status
@@ -169,12 +177,69 @@ static void acpi_unbind_memory_blocks(struct acpi_memory_info *info)
 static int acpi_memory_enable_device(struct acpi_memory_device *mem_device)
 {
 	acpi_handle handle = mem_device->device->handle;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mhp_t mhp_flags = MHP_NID_IS_MGID;
 	int result, num_enabled = 0;
 	struct acpi_memory_info *info;
-	mhp_t mhp_flags = MHP_NONE;
-	int node;
+	u64 total_length = 0;
+	int node, mgid;
 
 	node = acpi_get_node(handle);
+
+	list_for_each_entry(info, &mem_device->res_list, list) {
+		if (!info->length)
+			continue;
+		/* We want a single node for the whole memory group */
+		if (node < 0)
+			node = memory_add_physaddr_to_nid(info->start_addr);
+		total_length += info->length;
+	}
+
+	if (!total_length) {
+		dev_err(&mem_device->device->dev, "device is empty\n");
+		return -EINVAL;
+	}
+
+	mgid = memory_group_register_static(node, PFN_UP(total_length));
+	if (mgid < 0)
+		return mgid;
+	mem_device->mgid = mgid;
+
+=======
+=======
+	mhp_t mhp_flags = MHP_NID_IS_MGID;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	int result, num_enabled = 0;
+	struct acpi_memory_info *info;
+	u64 total_length = 0;
+	int node, mgid;
+
+	node = acpi_get_node(handle);
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	list_for_each_entry(info, &mem_device->res_list, list) {
+		if (!info->length)
+			continue;
+		/* We want a single node for the whole memory group */
+		if (node < 0)
+			node = memory_add_physaddr_to_nid(info->start_addr);
+		total_length += info->length;
+	}
+
+	if (!total_length) {
+		dev_err(&mem_device->device->dev, "device is empty\n");
+		return -EINVAL;
+	}
+
+	mgid = memory_group_register_static(node, PFN_UP(total_length));
+	if (mgid < 0)
+		return mgid;
+	mem_device->mgid = mgid;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Tell the VM there is more memory here...
 	 * Note: Assume that this function returns zero on success
@@ -182,22 +247,42 @@ static int acpi_memory_enable_device(struct acpi_memory_device *mem_device)
 	 * (i.e. memory-hot-remove function)
 	 */
 	list_for_each_entry(info, &mem_device->res_list, list) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		if (info->enabled) { /* just sanity check...*/
 			num_enabled++;
 			continue;
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * If the memory block size is zero, please ignore it.
 		 * Don't try to do the following memory hotplug flowchart.
 		 */
 		if (!info->length)
 			continue;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+		if (mhp_supports_memmap_on_memory(info->length))
+			mhp_flags |= MHP_MEMMAP_ON_MEMORY;
+		result = __add_memory(mgid, info->start_addr, info->length,
+=======
 		if (node < 0)
 			node = memory_add_physaddr_to_nid(info->start_addr);
 
 		if (mhp_supports_memmap_on_memory(info->length))
 			mhp_flags |= MHP_MEMMAP_ON_MEMORY;
 		result = __add_memory(node, info->start_addr, info->length,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		if (mhp_supports_memmap_on_memory(info->length))
+			mhp_flags |= MHP_MEMMAP_ON_MEMORY;
+		result = __add_memory(mgid, info->start_addr, info->length,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      mhp_flags);
 
 		/*
@@ -239,19 +324,37 @@ static int acpi_memory_enable_device(struct acpi_memory_device *mem_device)
 
 static void acpi_memory_remove_memory(struct acpi_memory_device *mem_device)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct acpi_memory_info *info, *n;
+=======
 	acpi_handle handle = mem_device->device->handle;
 	struct acpi_memory_info *info, *n;
 	int nid = acpi_get_node(handle);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct acpi_memory_info *info, *n;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	list_for_each_entry_safe(info, n, &mem_device->res_list, list) {
 		if (!info->enabled)
 			continue;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		acpi_unbind_memory_blocks(info);
+		__remove_memory(info->start_addr, info->length);
+=======
 		if (nid == NUMA_NO_NODE)
 			nid = memory_add_physaddr_to_nid(info->start_addr);
 
 		acpi_unbind_memory_blocks(info);
 		__remove_memory(nid, info->start_addr, info->length);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		acpi_unbind_memory_blocks(info);
+		__remove_memory(info->start_addr, info->length);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		list_del(&info->list);
 		kfree(info);
 	}
@@ -262,6 +365,19 @@ static void acpi_memory_device_free(struct acpi_memory_device *mem_device)
 	if (!mem_device)
 		return;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* In case we succeeded adding *some* memory, unregistering fails. */
+	if (mem_device->mgid >= 0)
+		memory_group_unregister(mem_device->mgid);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	acpi_memory_free_device_resources(mem_device);
 	mem_device->device->driver_data = NULL;
 	kfree(mem_device);
@@ -282,6 +398,14 @@ static int acpi_memory_device_add(struct acpi_device *device,
 
 	INIT_LIST_HEAD(&mem_device->res_list);
 	mem_device->device = device;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mem_device->mgid = -1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mem_device->mgid = -1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sprintf(acpi_device_name(device), "%s", ACPI_MEMORY_DEVICE_NAME);
 	sprintf(acpi_device_class(device), "%s", ACPI_MEMORY_DEVICE_CLASS);
 	device->driver_data = mem_device;

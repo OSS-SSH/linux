@@ -267,6 +267,27 @@ static const struct iio_buffer_setup_ops tcs3414_buffer_setup_ops = {
 	.predisable = tcs3414_buffer_predisable,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int tcs3414_powerdown(struct tcs3414_data *data)
+{
+	return i2c_smbus_write_byte_data(data->client, TCS3414_CONTROL,
+		data->control & ~(TCS3414_CONTROL_POWER |
+		TCS3414_CONTROL_ADC_EN));
+}
+
+static void tcs3414_powerdown_cleanup(void *data)
+{
+	tcs3414_powerdown(data);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int tcs3414_probe(struct i2c_client *client,
 			   const struct i2c_device_id *id)
 {
@@ -309,6 +330,20 @@ static int tcs3414_probe(struct i2c_client *client,
 	if (ret < 0)
 		return ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = devm_add_action_or_reset(&client->dev, tcs3414_powerdown_cleanup,
+				       data);
+	if (ret < 0)
+		return ret;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	data->timing = TCS3414_INTEG_12MS; /* free running */
 	ret = i2c_smbus_write_byte_data(data->client, TCS3414_TIMING,
 		data->timing);
@@ -320,11 +355,23 @@ static int tcs3414_probe(struct i2c_client *client,
 		return ret;
 	data->gain = ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = devm_iio_triggered_buffer_setup(&client->dev, indio_dev, NULL,
+=======
 	ret = iio_triggered_buffer_setup(indio_dev, NULL,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = devm_iio_triggered_buffer_setup(&client->dev, indio_dev, NULL,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tcs3414_trigger_handler, &tcs3414_buffer_setup_ops);
 	if (ret < 0)
 		return ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return devm_iio_device_register(&client->dev, indio_dev);
+=======
 	ret = iio_device_register(indio_dev);
 	if (ret < 0)
 		goto buffer_cleanup;
@@ -352,6 +399,10 @@ static int tcs3414_remove(struct i2c_client *client)
 	tcs3414_powerdown(iio_priv(indio_dev));
 
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return devm_iio_device_register(&client->dev, indio_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP
@@ -385,7 +436,13 @@ static struct i2c_driver tcs3414_driver = {
 		.pm	= &tcs3414_pm_ops,
 	},
 	.probe		= tcs3414_probe,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.remove		= tcs3414_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table	= tcs3414_id,
 };
 module_i2c_driver(tcs3414_driver);

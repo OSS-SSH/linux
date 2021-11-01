@@ -60,9 +60,21 @@
  * SYST_CON_EN: Clock enable. Shall be set to
  *   - Start timer countdown.
  *   - Allow timeout ticks being updated.
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *   - Allow changing interrupt status,like clear irq pending.
+ *
+ * SYST_CON_IRQ_EN: Set to enable interrupt.
+=======
  *   - Allow changing interrupt functions.
  *
  * SYST_CON_IRQ_EN: Set to allow interrupt.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *   - Allow changing interrupt status,like clear irq pending.
+ *
+ * SYST_CON_IRQ_EN: Set to enable interrupt.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * SYST_CON_IRQ_CLR: Set to clear interrupt.
  */
@@ -75,6 +87,14 @@ static void __iomem *gpt_sched_reg __read_mostly;
 static void mtk_syst_ack_irq(struct timer_of *to)
 {
 	/* Clear and disable interrupt */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	writel(SYST_CON_EN, SYST_CON_REG(to));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	writel(SYST_CON_EN, SYST_CON_REG(to));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	writel(SYST_CON_IRQ_CLR | SYST_CON_EN, SYST_CON_REG(to));
 }
 
@@ -111,6 +131,18 @@ static int mtk_syst_clkevt_next_event(unsigned long ticks,
 
 static int mtk_syst_clkevt_shutdown(struct clock_event_device *clkevt)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Clear any irq */
+	mtk_syst_ack_irq(to_timer_of(clkevt));
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Clear any irq */
+	mtk_syst_ack_irq(to_timer_of(clkevt));
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Disable timer */
 	writel(0, SYST_CON_REG(to_timer_of(clkevt)));
 

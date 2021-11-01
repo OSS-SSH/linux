@@ -94,6 +94,14 @@ struct snd_usb_endpoint {
 	struct list_head ready_playback_urbs; /* playback URB FIFO for implicit fb */
 
 	unsigned int nurbs;		/* # urbs */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int nominal_queue_size; /* total buffer sizes in URBs */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int nominal_queue_size; /* total buffer sizes in URBs */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long active_mask;	/* bitmask of active urbs */
 	unsigned long unlink_mask;	/* bitmask of unlinked urbs */
 	char *syncbuf;			/* sync buffer for all sync URBs */
@@ -187,6 +195,14 @@ struct snd_usb_substream {
 	} dsd_dop;
 
 	bool trigger_tstamp_pending_update; /* trigger timestamp being updated from initial estimate */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bool early_playback_start;	/* early start needed for playback? */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool early_playback_start;	/* early start needed for playback? */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct media_ctl *media_ctl;
 };
 

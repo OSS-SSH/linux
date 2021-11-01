@@ -611,8 +611,16 @@ static irqreturn_t omap_gpio_irq_handler(int irq, void *gpiobank)
 
 			raw_spin_lock_irqsave(&bank->wa_lock, wa_lock_flags);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			generic_handle_domain_irq(bank->chip.irq.domain, bit);
+=======
 			generic_handle_irq(irq_find_mapping(bank->chip.irq.domain,
 							    bit));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			generic_handle_domain_irq(bank->chip.irq.domain, bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			raw_spin_unlock_irqrestore(&bank->wa_lock,
 						   wa_lock_flags);

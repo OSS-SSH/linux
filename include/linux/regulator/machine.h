@@ -112,7 +112,15 @@ struct notification_limit {
  * @over_voltage_limits:	Limits for acting on over voltage.
  * @under_voltage_limits:	Limits for acting on under voltage.
  * @temp_limits:		Limits for acting on over temperature.
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *
+=======
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @max_spread: Max possible spread between coupled regulators
  * @max_uV_step: Max possible step change in voltage
  * @valid_modes_mask: Mask of modes which may be configured by consumers.

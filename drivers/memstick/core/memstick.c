@@ -91,7 +91,15 @@ static int memstick_device_probe(struct device *dev)
 	return rc;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void memstick_device_remove(struct device *dev)
+=======
 static int memstick_device_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void memstick_device_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct memstick_dev *card = container_of(dev, struct memstick_dev,
 						  dev);
@@ -105,7 +113,13 @@ static int memstick_device_remove(struct device *dev)
 	}
 
 	put_device(dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM

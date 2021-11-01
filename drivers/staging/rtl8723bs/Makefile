@@ -35,7 +35,13 @@ r8723bs-y = \
 		hal/odm_HWConfig.o \
 		hal/odm_NoiseMonitor.o \
 		hal/odm_RegConfig8723B.o \
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		hal/odm_RTL8723B.o \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		hal/rtl8723b_cmd.o \
 		hal/rtl8723b_dm.o \
 		hal/rtl8723b_hal_init.o \

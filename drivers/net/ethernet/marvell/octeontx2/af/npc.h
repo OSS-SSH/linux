@@ -1,11 +1,25 @@
 /* SPDX-License-Identifier: GPL-2.0 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Marvell RVU Admin Function driver
+ *
+ * Copyright (C) 2018 Marvell.
+ *
+=======
 /*  Marvell OcteonTx2 RVU Admin Function driver
+=======
+/* Marvell RVU Admin Function driver
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * Copyright (C) 2018 Marvell International Ltd.
+ * Copyright (C) 2018 Marvell.
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #ifndef NPC_H
@@ -151,7 +165,21 @@ enum npc_kpu_lh_ltype {
  * Software assigns pkind for each incoming port such as CGX
  * Ethernet interfaces, LBK interfaces, etc.
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define NPC_UNRESERVED_PKIND_COUNT NPC_RX_VLAN_EXDSA_PKIND
+
 enum npc_pkind_type {
+	NPC_RX_LBK_PKIND = 0ULL,
+=======
+enum npc_pkind_type {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define NPC_UNRESERVED_PKIND_COUNT NPC_RX_VLAN_EXDSA_PKIND
+
+enum npc_pkind_type {
+	NPC_RX_LBK_PKIND = 0ULL,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NPC_RX_VLAN_EXDSA_PKIND = 56ULL,
 	NPC_RX_CHLEN24B_PKIND = 57ULL,
 	NPC_RX_CPT_HDR_PKIND,
@@ -169,6 +197,16 @@ enum key_fields {
 	NPC_DMAC,
 	NPC_SMAC,
 	NPC_ETYPE,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	NPC_VLAN_ETYPE_CTAG, /* 0x8100 */
+	NPC_VLAN_ETYPE_STAG, /* 0x88A8 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	NPC_VLAN_ETYPE_CTAG, /* 0x8100 */
+	NPC_VLAN_ETYPE_STAG, /* 0x88A8 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NPC_OUTER_VID,
 	NPC_TOS,
 	NPC_SIP_IPV4,

@@ -13,6 +13,14 @@ hantro-vpu-y += \
 		hantro_g2_hevc_dec.o \
 		hantro_g1_vp8_dec.o \
 		rockchip_vpu2_hw_jpeg_enc.o \
+<<<<<<< HEAD
+<<<<<<< HEAD
+		rockchip_vpu2_hw_h264_dec.o \
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rockchip_vpu2_hw_h264_dec.o \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rockchip_vpu2_hw_mpeg2_dec.o \
 		rockchip_vpu2_hw_vp8_dec.o \
 		hantro_jpeg.o \

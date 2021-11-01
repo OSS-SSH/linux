@@ -394,6 +394,14 @@ struct xilinx_dma_tx_descriptor {
  * @genlock: Support genlock mode
  * @err: Channel has errors
  * @idle: Check for channel idle
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @terminating: Check for channel being synchronized by user
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @terminating: Check for channel being synchronized by user
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @tasklet: Cleanup work after irq
  * @config: Device configuration info
  * @flush_on_fsync: Flush on Frame sync
@@ -431,6 +439,14 @@ struct xilinx_dma_chan {
 	bool genlock;
 	bool err;
 	bool idle;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bool terminating;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool terminating;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct tasklet_struct tasklet;
 	struct xilinx_vdma_config config;
 	bool flush_on_fsync;
@@ -1049,6 +1065,22 @@ static void xilinx_dma_chan_desc_cleanup(struct xilinx_dma_chan *chan)
 		/* Run any dependencies, then free the descriptor */
 		dma_run_dependencies(&desc->async_tx);
 		xilinx_dma_free_tx_descriptor(chan, desc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+		/*
+		 * While we ran a callback the user called a terminate function,
+		 * which takes care of cleaning up any remaining descriptors
+		 */
+		if (chan->terminating)
+			break;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	spin_unlock_irqrestore(&chan->lock, flags);
@@ -1411,8 +1443,16 @@ static void xilinx_vdma_start_transfer(struct xilinx_dma_chan *chan)
 
 	chan->desc_submitcount++;
 	chan->desc_pendingcount--;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	list_move_tail(&desc->node, &chan->active_list);
+=======
 	list_del(&desc->node);
 	list_add_tail(&desc->node, &chan->active_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	list_move_tail(&desc->node, &chan->active_list);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (chan->desc_submitcount == chan->num_frms)
 		chan->desc_submitcount = 0;
 
@@ -1650,6 +1690,26 @@ static void xilinx_dma_issue_pending(struct dma_chan *dchan)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * xilinx_dma_device_config - Configure the DMA channel
+ * @dchan: DMA channel
+ * @config: channel configuration
+ */
+static int xilinx_dma_device_config(struct dma_chan *dchan,
+				    struct dma_slave_config *config)
+{
+	return 0;
+}
+
+/**
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * xilinx_dma_complete_descriptor - Mark the active descriptor as complete
  * @chan : xilinx DMA channel
  *
@@ -1965,6 +2025,16 @@ static dma_cookie_t xilinx_dma_tx_submit(struct dma_async_tx_descriptor *tx)
 	if (desc->cyclic)
 		chan->cyclic = true;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	chan->terminating = false;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chan->terminating = false;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(&chan->lock, flags);
 
 	return cookie;
@@ -2436,6 +2506,14 @@ static int xilinx_dma_terminate_all(struct dma_chan *dchan)
 
 	xilinx_dma_chan_reset(chan);
 	/* Remove and free all of the descriptors in the lists */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	chan->terminating = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chan->terminating = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xilinx_dma_free_descriptors(chan);
 	chan->idle = true;
 
@@ -3065,7 +3143,15 @@ static int xilinx_dma_probe(struct platform_device *pdev)
 		xdev->ext_addr = false;
 
 	/* Set the dma mask bits */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dma_set_mask_and_coherent(xdev->dev, DMA_BIT_MASK(addr_width));
+=======
 	dma_set_mask(xdev->dev, DMA_BIT_MASK(addr_width));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_set_mask_and_coherent(xdev->dev, DMA_BIT_MASK(addr_width));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Initialize the DMA engine */
 	xdev->common.dev = &pdev->dev;
@@ -3084,6 +3170,14 @@ static int xilinx_dma_probe(struct platform_device *pdev)
 	xdev->common.device_synchronize = xilinx_dma_synchronize;
 	xdev->common.device_tx_status = xilinx_dma_tx_status;
 	xdev->common.device_issue_pending = xilinx_dma_issue_pending;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	xdev->common.device_config = xilinx_dma_device_config;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	xdev->common.device_config = xilinx_dma_device_config;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (xdev->dma_config->dmatype == XDMA_TYPE_AXIDMA) {
 		dma_cap_set(DMA_CYCLIC, xdev->common.cap_mask);
 		xdev->common.device_prep_slave_sg = xilinx_dma_prep_slave_sg;

@@ -544,7 +544,15 @@
 			assigned-clock-rates = <19200000>, <200000000>;
 			status = "disabled";
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dwc3@7580000 {
+=======
 			usb@7580000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dwc3@7580000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				compatible = "snps,dwc3";
 				reg = <0x07580000 0xcd00>;
 				interrupts = <GIC_SPI 26 IRQ_TYPE_LEVEL_HIGH>;
@@ -573,7 +581,15 @@
 			assigned-clock-rates = <19200000>, <133333333>;
 			status = "disabled";
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dwc3@78c0000 {
+=======
 			usb@78c0000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dwc3@78c0000 {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				compatible = "snps,dwc3";
 				reg = <0x078c0000 0xcc00>;
 				interrupts = <GIC_SPI 44 IRQ_TYPE_LEVEL_HIGH>;

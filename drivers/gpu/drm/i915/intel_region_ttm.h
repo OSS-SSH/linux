@@ -12,6 +12,14 @@
 struct drm_i915_private;
 struct intel_memory_region;
 struct ttm_resource;
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct ttm_device_funcs;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct ttm_device_funcs;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int intel_region_ttm_device_init(struct drm_i915_private *dev_priv);
 
@@ -21,14 +29,49 @@ int intel_region_ttm_init(struct intel_memory_region *mem);
 
 void intel_region_ttm_fini(struct intel_memory_region *mem);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct sg_table *intel_region_ttm_resource_to_st(struct intel_memory_region *mem,
+						 struct ttm_resource *res);
+
+void intel_region_ttm_resource_free(struct intel_memory_region *mem,
+				    struct ttm_resource *res);
+
+int intel_region_to_ttm_type(const struct intel_memory_region *mem);
+
+struct ttm_device_funcs *i915_ttm_driver(void);
+
+#ifdef CONFIG_DRM_I915_SELFTEST
+struct ttm_resource *
+intel_region_ttm_resource_alloc(struct intel_memory_region *mem,
+				resource_size_t size,
+				unsigned int flags);
+#endif
+=======
 struct sg_table *intel_region_ttm_node_to_st(struct intel_memory_region *mem,
 					     struct ttm_resource *res);
+=======
+struct sg_table *intel_region_ttm_resource_to_st(struct intel_memory_region *mem,
+						 struct ttm_resource *res);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-struct ttm_resource *
-intel_region_ttm_node_alloc(struct intel_memory_region *mem,
-			    resource_size_t size,
-			    unsigned int flags);
+void intel_region_ttm_resource_free(struct intel_memory_region *mem,
+				    struct ttm_resource *res);
 
+int intel_region_to_ttm_type(const struct intel_memory_region *mem);
+
+<<<<<<< HEAD
 void intel_region_ttm_node_free(struct intel_memory_region *mem,
 				struct ttm_resource *node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct ttm_device_funcs *i915_ttm_driver(void);
+
+#ifdef CONFIG_DRM_I915_SELFTEST
+struct ttm_resource *
+intel_region_ttm_resource_alloc(struct intel_memory_region *mem,
+				resource_size_t size,
+				unsigned int flags);
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _INTEL_REGION_TTM_H_ */

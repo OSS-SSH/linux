@@ -27,13 +27,25 @@ properties:
 
   xlnx,num-ss-bits:
     description: Number of chip selects used.
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
     $ref: /schemas/types.yaml#/definitions/uint32
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     minimum: 1
     maximum: 32
 
   xlnx,num-transfer-bits:
     description: Number of bits per transfer. This will be 8 if not specified.
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
     $ref: /schemas/types.yaml#/definitions/uint32
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     enum: [8, 16, 32]
     default: 8
 

@@ -1237,8 +1237,16 @@ out_poweroff:
  * sysfs attributes
  */
 static ssize_t
+<<<<<<< HEAD
+<<<<<<< HEAD
+priv_mem_show(struct device *dev, struct device_attribute *attr, char *buf)
+=======
 et8ek8_priv_mem_read(struct device *dev, struct device_attribute *attr,
 		     char *buf)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+priv_mem_show(struct device *dev, struct device_attribute *attr, char *buf)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct v4l2_subdev *subdev = dev_get_drvdata(dev);
 	struct et8ek8_sensor *sensor = to_et8ek8_sensor(subdev);
@@ -1251,7 +1259,15 @@ et8ek8_priv_mem_read(struct device *dev, struct device_attribute *attr,
 
 	return ET8EK8_PRIV_MEM_SIZE;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+static DEVICE_ATTR_RO(priv_mem);
+=======
 static DEVICE_ATTR(priv_mem, 0444, et8ek8_priv_mem_read, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEVICE_ATTR_RO(priv_mem);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* --------------------------------------------------------------------------
  * V4L2 subdev core operations

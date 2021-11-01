@@ -1377,7 +1377,15 @@ static void dfll_debug_init(struct tegra_dfll *td)
 }
 
 #else
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline void dfll_debug_init(struct tegra_dfll *td) { }
+=======
 static void inline dfll_debug_init(struct tegra_dfll *td) { }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void dfll_debug_init(struct tegra_dfll *td) { }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CONFIG_DEBUG_FS */
 
 /*

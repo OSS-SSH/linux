@@ -48,6 +48,23 @@
 	pinctrl-0 = <&pinctrl_gpio0_default>;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+&nfc0 {
+	status = "okay";
+
+	nand@0 {
+		reg = <0>;
+	};
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &pinctrl0 {
 	pinctrl_gpio0_default: gpio0-default {
 		mux {
@@ -118,6 +135,19 @@
 	};
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+&smcc {
+	status = "okay";
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &sdhci0 {
 	status = "okay";
 	disable-wp;

@@ -388,7 +388,15 @@ int register_cpu(struct cpu *cpu, int num)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct device *get_cpu_device(unsigned int cpu)
+=======
 struct device *get_cpu_device(unsigned cpu)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct device *get_cpu_device(unsigned int cpu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (cpu < nr_cpu_ids && cpu_possible(cpu))
 		return per_cpu(cpu_sys_devices, cpu);
@@ -484,7 +492,15 @@ static const struct attribute_group *cpu_root_attr_groups[] = {
 	NULL,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+bool cpu_is_hotpluggable(unsigned int cpu)
+=======
 bool cpu_is_hotpluggable(unsigned cpu)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool cpu_is_hotpluggable(unsigned int cpu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct device *dev = get_cpu_device(cpu);
 	return dev && container_of(dev, struct cpu, dev)->hotpluggable;

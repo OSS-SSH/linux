@@ -37,7 +37,15 @@ static void se7722_irq_demux(struct irq_desc *desc)
 	mask = ioread16(se7722_irq_regs + IRQ01_STS_REG);
 
 	for_each_set_bit(bit, &mask, SE7722_FPGA_IRQ_NR)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		generic_handle_domain_irq(se7722_irq_domain, bit);
+=======
 		generic_handle_irq(irq_linear_revmap(se7722_irq_domain, bit));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		generic_handle_domain_irq(se7722_irq_domain, bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chip->irq_unmask(data);
 }

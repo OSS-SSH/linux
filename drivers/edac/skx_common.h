@@ -80,6 +80,16 @@ struct skx_dev {
 		struct skx_channel {
 			struct pci_dev	*cdev;
 			struct pci_dev	*edev;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			u32 retry_rd_err_log_s;
+			u32 retry_rd_err_log_d;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			u32 retry_rd_err_log_s;
+			u32 retry_rd_err_log_d;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			struct skx_dimm {
 				u8 close_pg;
 				u8 bank_xor_enable;
@@ -150,12 +160,32 @@ struct res_config {
 	/* SAD device number and function number */
 	unsigned int sad_all_devfn;
 	int sad_all_offset;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Offsets of retry_rd_err_log registers */
+	u32 *offsets_scrub;
+	u32 *offsets_demand;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Offsets of retry_rd_err_log registers */
+	u32 *offsets_scrub;
+	u32 *offsets_demand;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 typedef int (*get_dimm_config_f)(struct mem_ctl_info *mci,
 				 struct res_config *cfg);
 typedef bool (*skx_decode_f)(struct decoded_addr *res);
+<<<<<<< HEAD
+<<<<<<< HEAD
+typedef void (*skx_show_retry_log_f)(struct decoded_addr *res, char *msg, int len, bool scrub_err);
+=======
 typedef void (*skx_show_retry_log_f)(struct decoded_addr *res, char *msg, int len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+typedef void (*skx_show_retry_log_f)(struct decoded_addr *res, char *msg, int len, bool scrub_err);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int __init skx_adxl_get(void);
 void __exit skx_adxl_put(void);

@@ -6,8 +6,18 @@
 config MLX4_EN
 	tristate "Mellanox Technologies 1/10/40Gbit Ethernet support"
 	depends on PCI && NETDEVICES && ETHERNET && INET
+<<<<<<< HEAD
+<<<<<<< HEAD
+	depends on PTP_1588_CLOCK_OPTIONAL
+	select MLX4_CORE
+=======
 	select MLX4_CORE
 	imply PTP_1588_CLOCK
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+	select MLX4_CORE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports Mellanox Technologies ConnectX Ethernet
 	  devices.

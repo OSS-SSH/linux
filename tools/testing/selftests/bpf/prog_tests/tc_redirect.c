@@ -13,15 +13,35 @@
 #define _GNU_SOURCE
 
 #include <arpa/inet.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/if.h>
+#include <linux/if_tun.h>
 #include <linux/limits.h>
 #include <linux/sysctl.h>
-#include <linux/if_tun.h>
-#include <linux/if.h>
 #include <sched.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <sys/stat.h>
 #include <sys/mount.h>
+#include <sys/stat.h>
+#include <unistd.h>
+=======
+=======
+#include <linux/if.h>
+#include <linux/if_tun.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#include <linux/limits.h>
+#include <linux/sysctl.h>
+#include <sched.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <sys/mount.h>
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <sys/stat.h>
+#include <unistd.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "test_progs.h"
 #include "network_helpers.h"
@@ -391,9 +411,17 @@ done:
 
 static int test_ping(int family, const char *addr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	SYS("ip netns exec " NS_SRC " %s " PING_ARGS " %s > /dev/null", ping_command(family), addr);
+=======
 	const char *ping = family == AF_INET6 ? "ping6" : "ping";
 
 	SYS("ip netns exec " NS_SRC " %s " PING_ARGS " %s > /dev/null", ping, addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SYS("ip netns exec " NS_SRC " %s " PING_ARGS " %s > /dev/null", ping_command(family), addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 fail:
 	return -1;

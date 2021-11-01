@@ -17,6 +17,14 @@
 #define SKBMOD_F_SMAC	0x2
 #define SKBMOD_F_ETYPE	0x4
 #define SKBMOD_F_SWAPMAC 0x8
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define SKBMOD_F_ECN	0x10
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SKBMOD_F_ECN	0x10
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct tc_skbmod {
 	tc_gen;

@@ -220,8 +220,18 @@
 &i2c4 {
 	hdmi-transmitter@3d {
 		compatible = "adi,adv7513";
+<<<<<<< HEAD
+<<<<<<< HEAD
+		reg = <0x3d>, <0x4d>, <0x2d>, <0x5d>;
+		reg-names = "main", "edid", "cec", "packet";
+=======
 		reg = <0x3d>, <0x2d>, <0x4d>, <0x5d>;
 		reg-names = "main", "cec", "edid", "packet";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		reg = <0x3d>, <0x4d>, <0x2d>, <0x5d>;
+		reg-names = "main", "edid", "cec", "packet";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		clocks = <&cec_clock>;
 		clock-names = "cec";
 
@@ -239,8 +249,14 @@
 		adi,input-depth = <8>;
 		adi,input-colorspace = "rgb";
 		adi,input-clock = "1x";
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		adi,input-style = <1>;
 		adi,input-justification = "evenly";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		ports {
 			#address-cells = <1>;

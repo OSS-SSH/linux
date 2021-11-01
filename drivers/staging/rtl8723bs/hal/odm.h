@@ -282,11 +282,23 @@ enum odm_cmninfo_e {
 	ODM_CMNINFO_PLATFORM = 0,
 	ODM_CMNINFO_ABILITY,					/*  ODM_ABILITY_E */
 	ODM_CMNINFO_INTERFACE,				/*  ODM_INTERFACE_E */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ODM_CMNINFO_IC_TYPE,					/*  ODM_IC_TYPE_E */
+	ODM_CMNINFO_CUT_VER,					/*  ODM_CUT_VERSION_E */
+	ODM_CMNINFO_FAB_VER,					/*  ODM_FAB_E */
+=======
 	ODM_CMNINFO_MP_TEST_CHIP,
 	ODM_CMNINFO_IC_TYPE,					/*  ODM_IC_TYPE_E */
 	ODM_CMNINFO_CUT_VER,					/*  ODM_CUT_VERSION_E */
 	ODM_CMNINFO_FAB_VER,					/*  ODM_FAB_E */
 	ODM_CMNINFO_RF_TYPE,					/*  ODM_RF_PATH_E or ODM_RF_TYPE_E? */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ODM_CMNINFO_IC_TYPE,					/*  ODM_IC_TYPE_E */
+	ODM_CMNINFO_CUT_VER,					/*  ODM_CUT_VERSION_E */
+	ODM_CMNINFO_FAB_VER,					/*  ODM_FAB_E */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ODM_CMNINFO_RFE_TYPE,
 	ODM_CMNINFO_PACKAGE_TYPE,
 	ODM_CMNINFO_EXT_LNA,					/*  true */
@@ -423,7 +435,13 @@ enum { /* tag_ODM_Fab_Version_Definition */
 	ODM_UMC		=	1,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /*  ODM_CMNINFO_RF_TYPE */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*  */
 /*  For example 1T2R (A+AB = BIT0|BIT4|BIT5) */
 /*  */
@@ -720,7 +738,13 @@ struct dm_odm_t { /* DM_Out_Source_Dynamic_Mechanism_Structure */
 	/*  Fab Version TSMC/UMC = 0/1 */
 	u8 FabVersion;
 	/*  RF Type 4T4R/3T3R/2T2R/1T2R/1T1R/... */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	u8 RFType;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 RFEType;
 	/*  Board Type Normal/HighPower/MiniCard/SLIM/Combo/... = 0/1/2/3/4/... */
 	u8 BoardType;
@@ -802,7 +826,13 @@ struct dm_odm_t { /* DM_Out_Source_Dynamic_Mechanism_Structure */
 	bool bsta_state;
 	u8 RSSI_Min;
 	u8 InterfaceIndex; /*  Add for 92D  dual MAC: 0--Mac0 1--Mac1 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	bool bIsMPChip;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool bOneEntryOnly;
 	/*  Common info for BTDM */
 	bool bBtEnabled;			/*  BT is disabled */
@@ -998,6 +1028,9 @@ struct dm_odm_t { /* DM_Out_Source_Dynamic_Mechanism_Structure */
 	#endif
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define ODM_RF_PATH_MAX 2
 
 enum odm_rf_radio_path_e {
@@ -1018,6 +1051,9 @@ enum odm_rf_radio_path_e {
 	/*   ODM_RF_PATH_MAX,    Max RF number 90 support */
 };
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  enum odm_rf_content {
 	odm_radioa_txt = 0x1000,
 	odm_radiob_txt = 0x1001,

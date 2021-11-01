@@ -199,7 +199,15 @@ static int kabylake_ssp0_hw_params(struct snd_pcm_substream *substream,
 		}
 		if (!strcmp(codec_dai->component->name, MAX98373_DEV0_NAME)) {
 			ret = snd_soc_dai_set_tdm_slot(codec_dai,
+<<<<<<< HEAD
+<<<<<<< HEAD
+							0x30, 3, 8, 16);
+=======
 							0x03, 3, 8, 24);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+							0x30, 3, 8, 16);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (ret < 0) {
 				dev_err(runtime->dev,
 						"DEV0 TDM slot err:%d\n", ret);
@@ -208,10 +216,24 @@ static int kabylake_ssp0_hw_params(struct snd_pcm_substream *substream,
 		}
 		if (!strcmp(codec_dai->component->name, MAX98373_DEV1_NAME)) {
 			ret = snd_soc_dai_set_tdm_slot(codec_dai,
+<<<<<<< HEAD
+<<<<<<< HEAD
+							0xC0, 3, 8, 16);
+			if (ret < 0) {
+				dev_err(runtime->dev,
+						"DEV1 TDM slot err:%d\n", ret);
+=======
 							0x0C, 3, 8, 24);
 			if (ret < 0) {
 				dev_err(runtime->dev,
 						"DEV0 TDM slot err:%d\n", ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+							0xC0, 3, 8, 16);
+			if (ret < 0) {
+				dev_err(runtime->dev,
+						"DEV1 TDM slot err:%d\n", ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return ret;
 			}
 		}
@@ -311,6 +333,9 @@ static int kabylake_ssp_fixup(struct snd_soc_pcm_runtime *rtd,
 	 * The above 2 loops are mutually exclusive based on the stream direction,
 	 * thus rtd_dpcm variable will never be overwritten
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/*
 	 * Topology for kblda7219m98373 & kblmax98373 supports only S24_LE,
 	 * where as kblda7219m98927 & kblmax98927 supports S16_LE by default.
@@ -329,6 +354,9 @@ static int kabylake_ssp_fixup(struct snd_soc_pcm_runtime *rtd,
 		snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S24_LE);
 		return 0;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * The ADSP will convert the FE rate to 48k, stereo, 24 bit
@@ -479,17 +507,37 @@ static struct snd_pcm_hw_constraint_list constraints_channels_quad = {
 static int kbl_fe_startup(struct snd_pcm_substream *substream)
 {
 	struct snd_pcm_runtime *runtime = substream->runtime;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct snd_soc_pcm_runtime *soc_rt = asoc_substream_to_rtd(substream);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * On this platform for PCM device we support,
 	 * 48Khz
 	 * stereo
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * 16 bit audio
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * 16 bit audio
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 
 	runtime->hw.channels_max = DUAL_CHANNEL;
 	snd_pcm_hw_constraint_list(runtime, 0, SNDRV_PCM_HW_PARAM_CHANNELS,
 					   &constraints_channels);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	runtime->hw.formats = SNDRV_PCM_FMTBIT_S16_LE;
+	snd_pcm_hw_constraint_msbits(runtime, 0, 16, 16);
+=======
 	/*
 	 * Setup S24_LE (32 bit container and 24 bit valid data) for
 	 * kblda7219m98373 & kblmax98373. For kblda7219m98927 &
@@ -504,6 +552,12 @@ static int kbl_fe_startup(struct snd_pcm_substream *substream)
 		runtime->hw.formats = SNDRV_PCM_FMTBIT_S16_LE;
 		snd_pcm_hw_constraint_msbits(runtime, 0, 16, 16);
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	runtime->hw.formats = SNDRV_PCM_FMTBIT_S16_LE;
+	snd_pcm_hw_constraint_msbits(runtime, 0, 16, 16);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snd_pcm_hw_constraint_list(runtime, 0,
 				SNDRV_PCM_HW_PARAM_RATE, &constraints_rates);
@@ -536,12 +590,21 @@ static int kabylake_dmic_fixup(struct snd_soc_pcm_runtime *rtd,
 static int kabylake_dmic_startup(struct snd_pcm_substream *substream)
 {
 	struct snd_pcm_runtime *runtime = substream->runtime;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct snd_soc_pcm_runtime *soc_rt = asoc_substream_to_rtd(substream);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	runtime->hw.channels_min = runtime->hw.channels_max = QUAD_CHANNEL;
 	snd_pcm_hw_constraint_list(runtime, 0, SNDRV_PCM_HW_PARAM_CHANNELS,
 			&constraints_channels_quad);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/*
 	 * Topology for kblda7219m98373 & kblmax98373 supports only S24_LE.
 	 * The DMIC also configured for S24_LE. Forcing the DMIC format to
@@ -553,6 +616,9 @@ static int kabylake_dmic_startup(struct snd_pcm_substream *substream)
 		snd_pcm_hw_constraint_msbits(runtime, 0, 32, 24);
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return snd_pcm_hw_constraint_list(substream->runtime, 0,
 			SNDRV_PCM_HW_PARAM_RATE, &constraints_rates);
 }

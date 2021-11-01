@@ -10,6 +10,9 @@ config SCSI_ACORNSCSI_3
 	  This enables support for the Acorn SCSI card (aka30). If you have an
 	  Acorn system with one of these, say Y. If unsure, say N.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config SCSI_ACORNSCSI_TAGGED_QUEUE
 	bool "Support SCSI 2 Tagged queueing"
 	depends on SCSI_ACORNSCSI_3
@@ -21,6 +24,9 @@ config SCSI_ACORNSCSI_TAGGED_QUEUE
 	  previous commands haven't finished yet. Some SCSI devices don't
 	  implement this properly, so the safe answer is N.
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config SCSI_ACORNSCSI_SYNC
 	bool "Support SCSI 2 Synchronous Transfers"
 	depends on SCSI_ACORNSCSI_3

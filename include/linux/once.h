@@ -7,7 +7,15 @@
 
 bool __do_once_start(bool *done, unsigned long *flags);
 void __do_once_done(bool *done, struct static_key_true *once_key,
+<<<<<<< HEAD
+<<<<<<< HEAD
+		    unsigned long *flags, struct module *mod);
+=======
 		    unsigned long *flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    unsigned long *flags, struct module *mod);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Call a function exactly once. The idea of DO_ONCE() is to perform
  * a function call such as initialization of random seeds, etc, only
@@ -16,7 +24,15 @@ void __do_once_done(bool *done, struct static_key_true *once_key,
  * out the condition into a nop. DO_ONCE() guarantees type safety of
  * arguments!
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Note that the following is not equivalent ...
+=======
  * Not that the following is not equivalent ...
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Note that the following is not equivalent ...
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   DO_ONCE(func, arg);
  *   DO_ONCE(func, arg);
@@ -46,7 +62,15 @@ void __do_once_done(bool *done, struct static_key_true *once_key,
 			if (unlikely(___ret)) {				     \
 				func(__VA_ARGS__);			     \
 				__do_once_done(&___done, &___once_key,	     \
+<<<<<<< HEAD
+<<<<<<< HEAD
+					       &___flags, THIS_MODULE);	     \
+=======
 					       &___flags);		     \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					       &___flags, THIS_MODULE);	     \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}						     \
 		}							     \
 		___ret;							     \

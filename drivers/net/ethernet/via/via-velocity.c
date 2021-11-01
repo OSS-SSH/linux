@@ -2637,7 +2637,15 @@ static const struct net_device_ops velocity_netdev_ops = {
 	.ndo_set_mac_address	= eth_mac_addr,
 	.ndo_set_rx_mode	= velocity_set_multi,
 	.ndo_change_mtu		= velocity_change_mtu,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl		= velocity_ioctl,
+=======
 	.ndo_do_ioctl		= velocity_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= velocity_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_vlan_rx_add_vid	= velocity_vlan_rx_add_vid,
 	.ndo_vlan_rx_kill_vid	= velocity_vlan_rx_kill_vid,
 #ifdef CONFIG_NET_POLL_CONTROLLER
@@ -2943,14 +2951,29 @@ static void velocity_pci_remove(struct pci_dev *pdev)
 
 static int velocity_platform_probe(struct platform_device *pdev)
 {
-	const struct of_device_id *of_id;
+<<<<<<< HEAD
+<<<<<<< HEAD
 	const struct velocity_info_tbl *info;
 	int irq;
 
-	of_id = of_match_device(velocity_of_ids, &pdev->dev);
-	if (!of_id)
+	info = of_device_get_match_data(&pdev->dev);
+	if (!info)
 		return -EINVAL;
+=======
+	const struct of_device_id *of_id;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	const struct velocity_info_tbl *info;
+	int irq;
+
+	info = of_device_get_match_data(&pdev->dev);
+	if (!info)
+		return -EINVAL;
+<<<<<<< HEAD
 	info = of_id->data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
 	if (!irq)
@@ -3520,7 +3543,19 @@ static void set_pending_timer_val(int *val, u32 us)
 
 
 static int velocity_get_coalesce(struct net_device *dev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 struct ethtool_coalesce *ecmd,
+				 struct kernel_ethtool_coalesce *kernel_coal,
+				 struct netlink_ext_ack *extack)
+=======
 		struct ethtool_coalesce *ecmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 struct ethtool_coalesce *ecmd,
+				 struct kernel_ethtool_coalesce *kernel_coal,
+				 struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct velocity_info *vptr = netdev_priv(dev);
 
@@ -3534,7 +3569,19 @@ static int velocity_get_coalesce(struct net_device *dev,
 }
 
 static int velocity_set_coalesce(struct net_device *dev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 struct ethtool_coalesce *ecmd,
+				 struct kernel_ethtool_coalesce *kernel_coal,
+				 struct netlink_ext_ack *extack)
+=======
 		struct ethtool_coalesce *ecmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 struct ethtool_coalesce *ecmd,
+				 struct kernel_ethtool_coalesce *kernel_coal,
+				 struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct velocity_info *vptr = netdev_priv(dev);
 	int max_us = 0x3f * 64;

@@ -200,6 +200,9 @@ receive all frames regardless of the value of the MAC DA. This can be done by
 setting the ``promisc_on_master`` property of the ``struct dsa_device_ops``.
 Note that this assumes a DSA-unaware master driver, which is the norm.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 Hardware manufacturers are strongly discouraged to do this, but some tagging
 protocols might not provide source port information on RX for all packets, but
 e.g. only for control traffic (link-local PDUs). In this case, by implementing
@@ -213,6 +216,9 @@ information into a header portion and a tail portion, therefore not falling
 cleanly into any of the above 3 categories. DSA does not support this
 configuration.
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Master network devices
 ----------------------
 
@@ -663,6 +669,31 @@ Bridge layer
   CPU port, and flooding towards the CPU port should also be enabled, due to a
   lack of an explicit address filtering mechanism in the DSA core.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+- ``port_bridge_tx_fwd_offload``: bridge layer function invoked after
+  ``port_bridge_join`` when a driver sets ``ds->num_fwd_offloading_bridges`` to
+  a non-zero value. Returning success in this function activates the TX
+  forwarding offload bridge feature for this port, which enables the tagging
+  protocol driver to inject data plane packets towards the bridging domain that
+  the port is a part of. Data plane packets are subject to FDB lookup, hardware
+  learning on the CPU port, and do not override the port STP state.
+  Additionally, replication of data plane packets (multicast, flooding) is
+  handled in hardware and the bridge driver will transmit a single skb for each
+  packet that needs replication. The method is provided as a configuration
+  point for drivers that need to configure the hardware for enabling this
+  feature.
+
+- ``port_bridge_tx_fwd_unoffload``: bridge layer function invoken when a driver
+  leaves a bridge port which had the TX forwarding offload feature enabled.
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Bridge VLAN filtering
 ---------------------
 

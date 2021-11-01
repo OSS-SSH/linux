@@ -327,7 +327,15 @@ MODULE_PARM_DESC(dma, "LANCE/PCnet ISA DMA channel (ignored for some devices)");
 MODULE_PARM_DESC(irq, "LANCE/PCnet IRQ number (ignored for some devices)");
 MODULE_PARM_DESC(lance_debug, "LANCE/PCnet debug level (0-7)");
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int __init lance_init_module(void)
+=======
 int __init init_module(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init lance_init_module(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct net_device *dev;
 	int this_dev, found = 0;
@@ -356,6 +364,14 @@ int __init init_module(void)
 		return 0;
 	return -ENXIO;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+module_init(lance_init_module);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_init(lance_init_module);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void cleanup_card(struct net_device *dev)
 {
@@ -368,7 +384,15 @@ static void cleanup_card(struct net_device *dev)
 	kfree(lp);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void __exit lance_cleanup_module(void)
+=======
 void __exit cleanup_module(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __exit lance_cleanup_module(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int this_dev;
 
@@ -381,6 +405,14 @@ void __exit cleanup_module(void)
 		}
 	}
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+module_exit(lance_cleanup_module);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_exit(lance_cleanup_module);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* MODULE */
 MODULE_LICENSE("GPL");
 

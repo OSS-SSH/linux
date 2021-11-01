@@ -38,6 +38,14 @@
 #define FIELD_STRING_IP		"__probe_ip"
 #define FIELD_STRING_RETIP	"__probe_ret_ip"
 #define FIELD_STRING_FUNC	"__probe_func"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define FIELD_STRING_TYPE	"__probe_type"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define FIELD_STRING_TYPE	"__probe_type"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #undef DEFINE_FIELD
 #define DEFINE_FIELD(type, item, name, is_signed)			\
@@ -102,6 +110,14 @@ enum fetch_op {
 	FETCH_OP_MOD_BF,	/* Bitfield: .basesize, .lshift, .rshift */
 	// Stage 5 (loop) op
 	FETCH_OP_LP_ARRAY,	/* Array: .param = loop count */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	FETCH_OP_TP_ARG,	/* Trace Point argument */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	FETCH_OP_TP_ARG,	/* Trace Point argument */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	FETCH_OP_END,
 	FETCH_NOP_SYMBOL,	/* Unresolved Symbol holder */
 };
@@ -351,10 +367,26 @@ int trace_probe_create(const char *raw_command, int (*createfn)(int, const char 
 #define TPARG_FL_RETURN BIT(0)
 #define TPARG_FL_KERNEL BIT(1)
 #define TPARG_FL_FENTRY BIT(2)
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define TPARG_FL_TPOINT BIT(3)
+#define TPARG_FL_MASK	GENMASK(3, 0)
+
+extern int traceprobe_parse_probe_arg(struct trace_probe *tp, int i,
+				const char *argv, unsigned int flags);
+=======
 #define TPARG_FL_MASK	GENMASK(2, 0)
 
 extern int traceprobe_parse_probe_arg(struct trace_probe *tp, int i,
 				char *arg, unsigned int flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define TPARG_FL_TPOINT BIT(3)
+#define TPARG_FL_MASK	GENMASK(3, 0)
+
+extern int traceprobe_parse_probe_arg(struct trace_probe *tp, int i,
+				const char *argv, unsigned int flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern int traceprobe_update_arg(struct probe_arg *arg);
 extern void traceprobe_free_probe_arg(struct probe_arg *arg);
@@ -363,7 +395,23 @@ extern int traceprobe_split_symbol_offset(char *symbol, long *offset);
 int traceprobe_parse_event_name(const char **pevent, const char **pgroup,
 				char *buf, int offset);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+enum probe_print_type {
+	PROBE_PRINT_NORMAL,
+	PROBE_PRINT_RETURN,
+	PROBE_PRINT_EVENT,
+};
+
+extern int traceprobe_set_print_fmt(struct trace_probe *tp, enum probe_print_type ptype);
+<<<<<<< HEAD
+=======
 extern int traceprobe_set_print_fmt(struct trace_probe *tp, bool is_return);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_PERF_EVENTS
 extern struct trace_event_call *
@@ -399,6 +447,14 @@ extern int traceprobe_define_arg_fields(struct trace_event_call *event_call,
 	C(NO_EVENT_NAME,	"Event name is not specified"),		\
 	C(EVENT_TOO_LONG,	"Event name is too long"),		\
 	C(BAD_EVENT_NAME,	"Event name must follow the same rules as C identifiers"), \
+<<<<<<< HEAD
+<<<<<<< HEAD
+	C(EVENT_EXIST,		"Given group/event name is already used by another event"), \
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	C(EVENT_EXIST,		"Given group/event name is already used by another event"), \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	C(RETVAL_ON_PROBE,	"$retval is not available on probe"),	\
 	C(BAD_STACK_NUM,	"Invalid stack number"),		\
 	C(BAD_ARG_NUM,		"Invalid argument number"),		\

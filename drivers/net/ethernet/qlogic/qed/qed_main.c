@@ -49,11 +49,25 @@
 #define QED_NVM_CFG_MAX_ATTRS		50
 
 static char version[] =
+<<<<<<< HEAD
+<<<<<<< HEAD
+	"QLogic FastLinQ 4xxxx Core Module qed\n";
+
+MODULE_DESCRIPTION("QLogic FastLinQ 4xxxx Core Module");
+MODULE_LICENSE("GPL");
+=======
 	"QLogic FastLinQ 4xxxx Core Module qed " DRV_MODULE_VERSION "\n";
 
 MODULE_DESCRIPTION("QLogic FastLinQ 4xxxx Core Module");
 MODULE_LICENSE("GPL");
 MODULE_VERSION(DRV_MODULE_VERSION);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	"QLogic FastLinQ 4xxxx Core Module qed\n";
+
+MODULE_DESCRIPTION("QLogic FastLinQ 4xxxx Core Module");
+MODULE_LICENSE("GPL");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define FW_FILE_VERSION				\
 	__stringify(FW_MAJOR_VERSION) "."	\
@@ -616,7 +630,22 @@ static int qed_enable_msix(struct qed_dev *cdev,
 			rc = cnt;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* For VFs, we should return with an error in case we didn't get the
+	 * exact number of msix vectors as we requested.
+	 * Not doing that will lead to a crash when starting queues for
+	 * this VF.
+	 */
+	if ((IS_PF(cdev) && rc > 0) || (IS_VF(cdev) && rc == cnt)) {
+<<<<<<< HEAD
+=======
 	if (rc > 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* MSI-x configuration was achieved */
 		int_params->out.int_mode = QED_INT_MODE_MSIX;
 		int_params->out.num_vectors = rc;
@@ -1216,6 +1245,19 @@ static void qed_slowpath_task(struct work_struct *work)
 
 	if (test_and_clear_bit(QED_SLOWPATH_PERIODIC_DB_REC,
 			       &hwfn->slowpath_task_flags)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		/* skip qed_db_rec_handler during recovery/unload */
+		if (hwfn->cdev->recov_in_prog || !hwfn->slowpath_wq_active)
+			goto out;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		qed_db_rec_handler(hwfn, ptt);
 		if (hwfn->periodic_db_rec_count--)
 			qed_slowpath_delayed_work(hwfn,
@@ -1223,6 +1265,14 @@ static void qed_slowpath_task(struct work_struct *work)
 						  QED_PERIODIC_DB_REC_INTERVAL);
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+out:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qed_ptt_release(hwfn, ptt);
 }
 
@@ -1290,6 +1340,14 @@ static int qed_slowpath_start(struct qed_dev *cdev,
 			} else {
 				DP_NOTICE(cdev,
 					  "Failed to acquire PTT for aRFS\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+				rc = -EINVAL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				rc = -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				goto err;
 			}
 		}

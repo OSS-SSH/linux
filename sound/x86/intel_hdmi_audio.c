@@ -1024,19 +1024,51 @@ static void wait_clear_underrun_bit(struct snd_intelhad *intelhaddata)
 	dev_err(intelhaddata->dev, "Unable to clear UNDERRUN bits\n");
 }
 
-/* Perform some reset procedure but only when need_reset is set;
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Perform some reset procedure after stopping the stream;
  * this is called from prepare or hw_free callbacks once after trigger STOP
  * or underrun has been processed in order to settle down the h/w state.
  */
-static void had_do_reset(struct snd_intelhad *intelhaddata)
+static int had_pcm_sync_stop(struct snd_pcm_substream *substream)
 {
+	struct snd_intelhad *intelhaddata = snd_pcm_substream_chip(substream);
+
+	if (!intelhaddata->connected)
+		return 0;
+=======
+/* Perform some reset procedure but only when need_reset is set;
+=======
+/* Perform some reset procedure after stopping the stream;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * this is called from prepare or hw_free callbacks once after trigger STOP
+ * or underrun has been processed in order to settle down the h/w state.
+ */
+static int had_pcm_sync_stop(struct snd_pcm_substream *substream)
+{
+<<<<<<< HEAD
 	if (!intelhaddata->need_reset || !intelhaddata->connected)
 		return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct snd_intelhad *intelhaddata = snd_pcm_substream_chip(substream);
+
+	if (!intelhaddata->connected)
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Reset buffer pointers */
 	had_reset_audio(intelhaddata);
 	wait_clear_underrun_bit(intelhaddata);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return 0;
+=======
 	intelhaddata->need_reset = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* called from irq handler */
@@ -1050,7 +1082,13 @@ static void had_process_buffer_underrun(struct snd_intelhad *intelhaddata)
 		snd_pcm_stop_xrun(substream);
 		had_substream_put(intelhaddata);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	intelhaddata->need_reset = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1142,6 +1180,9 @@ static int had_pcm_hw_params(struct snd_pcm_substream *substream,
 }
 
 /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  * ALSA PCM hw_free callback
  */
 static int had_pcm_hw_free(struct snd_pcm_substream *substream)
@@ -1155,6 +1196,9 @@ static int had_pcm_hw_free(struct snd_pcm_substream *substream)
 }
 
 /*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ALSA PCM trigger callback
  */
 static int had_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
@@ -1178,7 +1222,13 @@ static int had_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
 		/* Disable Audio */
 		had_enable_audio(intelhaddata, false);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		intelhaddata->need_reset = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	default:
@@ -1210,8 +1260,14 @@ static int had_pcm_prepare(struct snd_pcm_substream *substream)
 	dev_dbg(intelhaddata->dev, "rate=%d\n", runtime->rate);
 	dev_dbg(intelhaddata->dev, "channels=%d\n", runtime->channels);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	had_do_reset(intelhaddata);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Get N value in KHz */
 	disp_samp_freq = intelhaddata->tmds_clock_speed;
 
@@ -1287,9 +1343,21 @@ static const struct snd_pcm_ops had_pcm_ops = {
 	.open =		had_pcm_open,
 	.close =	had_pcm_close,
 	.hw_params =	had_pcm_hw_params,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.prepare =	had_pcm_prepare,
+	.trigger =	had_pcm_trigger,
+	.sync_stop =	had_pcm_sync_stop,
+=======
 	.hw_free =	had_pcm_hw_free,
 	.prepare =	had_pcm_prepare,
 	.trigger =	had_pcm_trigger,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.prepare =	had_pcm_prepare,
+	.trigger =	had_pcm_trigger,
+	.sync_stop =	had_pcm_sync_stop,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.pointer =	had_pcm_pointer,
 	.mmap =		had_pcm_mmap,
 };
@@ -1672,11 +1740,17 @@ static void hdmi_lpe_audio_free(struct snd_card *card)
 
 		cancel_work_sync(&ctx->hdmi_audio_wq);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 	if (card_ctx->mmio_start)
 		iounmap(card_ctx->mmio_start);
 	if (card_ctx->irq >= 0)
 		free_irq(card_ctx->irq, card_ctx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1714,8 +1788,18 @@ static int hdmi_lpe_audio_probe(struct platform_device *pdev)
 	}
 
 	/* create a card instance with ALSA framework */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = snd_devm_card_new(&pdev->dev, hdmi_card_index, hdmi_card_id,
+				THIS_MODULE, sizeof(*card_ctx), &card);
+=======
 	ret = snd_card_new(&pdev->dev, hdmi_card_index, hdmi_card_id,
 			   THIS_MODULE, sizeof(*card_ctx), &card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = snd_devm_card_new(&pdev->dev, hdmi_card_index, hdmi_card_id,
+				THIS_MODULE, sizeof(*card_ctx), &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -1751,20 +1835,46 @@ static int hdmi_lpe_audio_probe(struct platform_device *pdev)
 		__func__, (unsigned int)res_mmio->start,
 		(unsigned int)res_mmio->end);
 
-	card_ctx->mmio_start = ioremap(res_mmio->start,
-					       (size_t)(resource_size(res_mmio)));
+<<<<<<< HEAD
+<<<<<<< HEAD
+	card_ctx->mmio_start =
+		devm_ioremap(&pdev->dev, res_mmio->start,
+			     (size_t)(resource_size(res_mmio)));
 	if (!card_ctx->mmio_start) {
 		dev_err(&pdev->dev, "Could not get ioremap\n");
-		ret = -EACCES;
-		goto err;
+		return -EACCES;
 	}
 
 	/* setup interrupt handler */
-	ret = request_irq(irq, display_pipe_interrupt_handler, 0,
-			  pdev->name, card_ctx);
+	ret = devm_request_irq(&pdev->dev, irq, display_pipe_interrupt_handler,
+			       0, pdev->name, card_ctx);
 	if (ret < 0) {
 		dev_err(&pdev->dev, "request_irq failed\n");
+		return ret;
+=======
+	card_ctx->mmio_start = ioremap(res_mmio->start,
+					       (size_t)(resource_size(res_mmio)));
+=======
+	card_ctx->mmio_start =
+		devm_ioremap(&pdev->dev, res_mmio->start,
+			     (size_t)(resource_size(res_mmio)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!card_ctx->mmio_start) {
+		dev_err(&pdev->dev, "Could not get ioremap\n");
+		return -EACCES;
+	}
+
+	/* setup interrupt handler */
+	ret = devm_request_irq(&pdev->dev, irq, display_pipe_interrupt_handler,
+			       0, pdev->name, card_ctx);
+	if (ret < 0) {
+		dev_err(&pdev->dev, "request_irq failed\n");
+<<<<<<< HEAD
 		goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	card_ctx->irq = irq;
@@ -1784,7 +1894,15 @@ static int hdmi_lpe_audio_probe(struct platform_device *pdev)
 		ret = snd_pcm_new(card, INTEL_HAD, port, MAX_PB_STREAMS,
 				  MAX_CAP_STREAMS, &pcm);
 		if (ret)
+<<<<<<< HEAD
+<<<<<<< HEAD
+			return ret;
+=======
 			goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* setup private data which can be retrieved when required */
 		pcm->private_data = ctx;
@@ -1796,7 +1914,15 @@ static int hdmi_lpe_audio_probe(struct platform_device *pdev)
 		/* allocate dma pages;
 		 * try to allocate 600k buffer as default which is large enough
 		 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		snd_pcm_set_managed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV_WC,
+=======
 		snd_pcm_set_managed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV_UC,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		snd_pcm_set_managed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV_WC,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					       card->dev, HAD_DEFAULT_BUFFER,
 					       HAD_MAX_BUFFER);
 
@@ -1805,31 +1931,73 @@ static int hdmi_lpe_audio_probe(struct platform_device *pdev)
 			struct snd_kcontrol *kctl;
 
 			kctl = snd_ctl_new1(&had_controls[i], ctx);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (!kctl)
+				return -ENOMEM;
+=======
 			if (!kctl) {
 				ret = -ENOMEM;
 				goto err;
 			}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (!kctl)
+				return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			kctl->id.device = pcm->device;
 
 			ret = snd_ctl_add(card, kctl);
 			if (ret < 0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+				return ret;
+=======
 				goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		/* Register channel map controls */
 		ret = had_register_chmap_ctls(ctx, pcm);
 		if (ret < 0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+			return ret;
+
+		ret = had_create_jack(ctx, pcm);
+		if (ret < 0)
+			return ret;
+=======
 			goto err;
 
 		ret = had_create_jack(ctx, pcm);
 		if (ret < 0)
 			goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return ret;
+
+		ret = had_create_jack(ctx, pcm);
+		if (ret < 0)
+			return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = snd_card_register(card);
 	if (ret)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return ret;
+=======
 		goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irq(&pdata->lpe_audio_slock);
 	pdata->notify_audio_lpe = notify_audio_lpe;
@@ -1846,6 +2014,9 @@ static int hdmi_lpe_audio_probe(struct platform_device *pdev)
 	}
 
 	return 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 err:
 	snd_card_free(card);
@@ -1863,6 +2034,9 @@ static int hdmi_lpe_audio_remove(struct platform_device *pdev)
 
 	snd_card_free(card_ctx->card);
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct dev_pm_ops hdmi_lpe_audio_pm = {
@@ -1875,7 +2049,13 @@ static struct platform_driver hdmi_lpe_audio_driver = {
 		.pm = &hdmi_lpe_audio_pm,
 	},
 	.probe          = hdmi_lpe_audio_probe,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.remove		= hdmi_lpe_audio_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 module_platform_driver(hdmi_lpe_audio_driver);

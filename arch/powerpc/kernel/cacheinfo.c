@@ -120,6 +120,14 @@ struct cache {
 	struct cpumask shared_cpu_map; /* online CPUs using this cache */
 	int type;                      /* split cache disambiguation */
 	int level;                     /* level not explicit in device tree */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int group_id;                  /* id of the group of threads that share this cache */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int group_id;                  /* id of the group of threads that share this cache */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head list;         /* global list of cache objects */
 	struct cache *next_local;      /* next cache of >= level */
 };
@@ -142,22 +150,56 @@ static const char *cache_type_string(const struct cache *cache)
 }
 
 static void cache_init(struct cache *cache, int type, int level,
+<<<<<<< HEAD
+<<<<<<< HEAD
+		       struct device_node *ofnode, int group_id)
+=======
 		       struct device_node *ofnode)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       struct device_node *ofnode, int group_id)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	cache->type = type;
 	cache->level = level;
 	cache->ofnode = of_node_get(ofnode);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cache->group_id = group_id;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cache->group_id = group_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_LIST_HEAD(&cache->list);
 	list_add(&cache->list, &cache_list);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static struct cache *new_cache(int type, int level,
+			       struct device_node *ofnode, int group_id)
+=======
 static struct cache *new_cache(int type, int level, struct device_node *ofnode)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct cache *new_cache(int type, int level,
+			       struct device_node *ofnode, int group_id)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cache *cache;
 
 	cache = kzalloc(sizeof(*cache), GFP_KERNEL);
 	if (cache)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cache_init(cache, type, level, ofnode, group_id);
+=======
 		cache_init(cache, type, level, ofnode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cache_init(cache, type, level, ofnode, group_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return cache;
 }
@@ -309,20 +351,54 @@ static struct cache *cache_find_first_sibling(struct cache *cache)
 		return cache;
 
 	list_for_each_entry(iter, &cache_list, list)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (iter->ofnode == cache->ofnode &&
+		    iter->group_id == cache->group_id &&
+		    iter->next_local == cache)
+=======
 		if (iter->ofnode == cache->ofnode && iter->next_local == cache)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (iter->ofnode == cache->ofnode &&
+		    iter->group_id == cache->group_id &&
+		    iter->next_local == cache)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return iter;
 
 	return cache;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* return the first cache on a local list matching node and thread-group id */
+static struct cache *cache_lookup_by_node_group(const struct device_node *node,
+						int group_id)
+=======
 /* return the first cache on a local list matching node */
 static struct cache *cache_lookup_by_node(const struct device_node *node)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* return the first cache on a local list matching node and thread-group id */
+static struct cache *cache_lookup_by_node_group(const struct device_node *node,
+						int group_id)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cache *cache = NULL;
 	struct cache *iter;
 
 	list_for_each_entry(iter, &cache_list, list) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (iter->ofnode != node ||
+		    iter->group_id != group_id)
+=======
 		if (iter->ofnode != node)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (iter->ofnode != node ||
+		    iter->group_id != group_id)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		cache = cache_find_first_sibling(iter);
 		break;
@@ -352,14 +428,35 @@ static int cache_is_unified_d(const struct device_node *np)
 		CACHE_TYPE_UNIFIED_D : CACHE_TYPE_UNIFIED;
 }
 
-static struct cache *cache_do_one_devnode_unified(struct device_node *node, int level)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static struct cache *cache_do_one_devnode_unified(struct device_node *node, int group_id,
+						  int level)
 {
 	pr_debug("creating L%d ucache for %pOFP\n", level, node);
 
-	return new_cache(cache_is_unified_d(node), level, node);
+	return new_cache(cache_is_unified_d(node), level, node, group_id);
 }
 
+static struct cache *cache_do_one_devnode_split(struct device_node *node, int group_id,
+=======
+static struct cache *cache_do_one_devnode_unified(struct device_node *node, int level)
+=======
+static struct cache *cache_do_one_devnode_unified(struct device_node *node, int group_id,
+						  int level)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	pr_debug("creating L%d ucache for %pOFP\n", level, node);
+
+	return new_cache(cache_is_unified_d(node), level, node, group_id);
+}
+
+<<<<<<< HEAD
 static struct cache *cache_do_one_devnode_split(struct device_node *node,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct cache *cache_do_one_devnode_split(struct device_node *node, int group_id,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						int level)
 {
 	struct cache *dcache, *icache;
@@ -367,8 +464,18 @@ static struct cache *cache_do_one_devnode_split(struct device_node *node,
 	pr_debug("creating L%d dcache and icache for %pOFP\n", level,
 		 node);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dcache = new_cache(CACHE_TYPE_DATA, level, node, group_id);
+	icache = new_cache(CACHE_TYPE_INSTRUCTION, level, node, group_id);
+=======
 	dcache = new_cache(CACHE_TYPE_DATA, level, node);
 	icache = new_cache(CACHE_TYPE_INSTRUCTION, level, node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dcache = new_cache(CACHE_TYPE_DATA, level, node, group_id);
+	icache = new_cache(CACHE_TYPE_INSTRUCTION, level, node, group_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!dcache || !icache)
 		goto err;
@@ -382,31 +489,75 @@ err:
 	return NULL;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static struct cache *cache_do_one_devnode(struct device_node *node, int group_id, int level)
+=======
 static struct cache *cache_do_one_devnode(struct device_node *node, int level)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct cache *cache_do_one_devnode(struct device_node *node, int group_id, int level)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cache *cache;
 
 	if (cache_node_is_unified(node))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cache = cache_do_one_devnode_unified(node, group_id, level);
+	else
+		cache = cache_do_one_devnode_split(node, group_id, level);
+=======
 		cache = cache_do_one_devnode_unified(node, level);
 	else
 		cache = cache_do_one_devnode_split(node, level);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cache = cache_do_one_devnode_unified(node, group_id, level);
+	else
+		cache = cache_do_one_devnode_split(node, group_id, level);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return cache;
 }
 
 static struct cache *cache_lookup_or_instantiate(struct device_node *node,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						 int group_id,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						 int group_id,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						 int level)
 {
 	struct cache *cache;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cache = cache_lookup_by_node_group(node, group_id);
+=======
 	cache = cache_lookup_by_node(node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cache = cache_lookup_by_node_group(node, group_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	WARN_ONCE(cache && cache->level != level,
 		  "cache level mismatch on lookup (got %d, expected %d)\n",
 		  cache->level, level);
 
 	if (!cache)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cache = cache_do_one_devnode(node, group_id, level);
+=======
 		cache = cache_do_one_devnode(node, level);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cache = cache_do_one_devnode(node, group_id, level);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return cache;
 }
@@ -443,7 +594,40 @@ static void do_subsidiary_caches_debugcheck(struct cache *cache)
 		  of_node_get_device_type(cache->ofnode));
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * If sub-groups of threads in a core containing @cpu_id share the
+ * L@level-cache (information obtained via "ibm,thread-groups"
+ * device-tree property), then we identify the group by the first
+ * thread-sibling in the group. We define this to be the group-id.
+ *
+ * In the absence of any thread-group information for L@level-cache,
+ * this function returns -1.
+ */
+static int get_group_id(unsigned int cpu_id, int level)
+{
+	if (has_big_cores && level == 1)
+		return cpumask_first(per_cpu(thread_group_l1_cache_map,
+					     cpu_id));
+	else if (thread_group_shares_l2 && level == 2)
+		return cpumask_first(per_cpu(thread_group_l2_cache_map,
+					     cpu_id));
+	else if (thread_group_shares_l3 && level == 3)
+		return cpumask_first(per_cpu(thread_group_l3_cache_map,
+					     cpu_id));
+	return -1;
+}
+
+static void do_subsidiary_caches(struct cache *cache, unsigned int cpu_id)
+<<<<<<< HEAD
+=======
 static void do_subsidiary_caches(struct cache *cache)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct device_node *subcache_node;
 	int level = cache->level;
@@ -452,9 +636,25 @@ static void do_subsidiary_caches(struct cache *cache)
 
 	while ((subcache_node = of_find_next_cache_node(cache->ofnode))) {
 		struct cache *subcache;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		int group_id;
+
+		level++;
+		group_id = get_group_id(cpu_id, level);
+		subcache = cache_lookup_or_instantiate(subcache_node, group_id, level);
+=======
 
 		level++;
 		subcache = cache_lookup_or_instantiate(subcache_node, level);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int group_id;
+
+		level++;
+		group_id = get_group_id(cpu_id, level);
+		subcache = cache_lookup_or_instantiate(subcache_node, group_id, level);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		of_node_put(subcache_node);
 		if (!subcache)
 			break;
@@ -468,6 +668,14 @@ static struct cache *cache_chain_instantiate(unsigned int cpu_id)
 {
 	struct device_node *cpu_node;
 	struct cache *cpu_cache = NULL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int group_id;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int group_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pr_debug("creating cache object(s) for CPU %i\n", cpu_id);
 
@@ -476,11 +684,31 @@ static struct cache *cache_chain_instantiate(unsigned int cpu_id)
 	if (!cpu_node)
 		goto out;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	group_id = get_group_id(cpu_id, 1);
+
+	cpu_cache = cache_lookup_or_instantiate(cpu_node, group_id, 1);
+	if (!cpu_cache)
+		goto out;
+
+	do_subsidiary_caches(cpu_cache, cpu_id);
+=======
 	cpu_cache = cache_lookup_or_instantiate(cpu_node, 1);
 	if (!cpu_cache)
 		goto out;
 
 	do_subsidiary_caches(cpu_cache);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	group_id = get_group_id(cpu_id, 1);
+
+	cpu_cache = cache_lookup_or_instantiate(cpu_node, group_id, 1);
+	if (!cpu_cache)
+		goto out;
+
+	do_subsidiary_caches(cpu_cache, cpu_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cache_cpu_set(cpu_cache, cpu_id);
 out:
@@ -641,6 +869,9 @@ static ssize_t level_show(struct kobject *k, struct kobj_attribute *attr, char *
 static struct kobj_attribute cache_level_attr =
 	__ATTR(level, 0444, level_show, NULL);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static unsigned int index_dir_to_cpu(struct cache_index_dir *index)
 {
 	struct kobject *index_dir_kobj = &index->kobj;
@@ -680,6 +911,9 @@ static const struct cpumask *get_shared_cpu_map(struct cache_index_dir *index, s
 	return &cache->shared_cpu_map;
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ssize_t
 show_shared_cpumap(struct kobject *k, struct kobj_attribute *attr, char *buf, bool list)
 {
@@ -690,7 +924,15 @@ show_shared_cpumap(struct kobject *k, struct kobj_attribute *attr, char *buf, bo
 	index = kobj_to_cache_index_dir(k);
 	cache = index->cache;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mask = &cache->shared_cpu_map;
+=======
 	mask = get_shared_cpu_map(index, cache);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mask = &cache->shared_cpu_map;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return cpumap_print_to_pagebuf(list, buf, mask);
 }
@@ -848,13 +1090,31 @@ static struct cache *cache_lookup_by_cpu(unsigned int cpu_id)
 {
 	struct device_node *cpu_node;
 	struct cache *cache;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int group_id;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int group_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cpu_node = of_get_cpu_node(cpu_id, NULL);
 	WARN_ONCE(!cpu_node, "no OF node found for CPU %i\n", cpu_id);
 	if (!cpu_node)
 		return NULL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	group_id = get_group_id(cpu_id, 1);
+	cache = cache_lookup_by_node_group(cpu_node, group_id);
+=======
 	cache = cache_lookup_by_node(cpu_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	group_id = get_group_id(cpu_id, 1);
+	cache = cache_lookup_by_node_group(cpu_node, group_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	of_node_put(cpu_node);
 
 	return cache;

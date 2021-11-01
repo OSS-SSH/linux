@@ -9,6 +9,14 @@
 struct perf_cpu_map;
 
 LIBPERF_API struct perf_cpu_map *perf_cpu_map__dummy_new(void);
+<<<<<<< HEAD
+<<<<<<< HEAD
+LIBPERF_API struct perf_cpu_map *perf_cpu_map__default_new(void);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+LIBPERF_API struct perf_cpu_map *perf_cpu_map__default_new(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 LIBPERF_API struct perf_cpu_map *perf_cpu_map__new(const char *cpu_list);
 LIBPERF_API struct perf_cpu_map *perf_cpu_map__read(FILE *file);
 LIBPERF_API struct perf_cpu_map *perf_cpu_map__get(struct perf_cpu_map *map);

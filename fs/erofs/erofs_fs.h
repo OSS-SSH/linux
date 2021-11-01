@@ -4,6 +4,14 @@
  *
  * Copyright (C) 2017-2018 HUAWEI, Inc.
  *             https://www.huawei.com/
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Copyright (C) 2021, Alibaba Cloud
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2021, Alibaba Cloud
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #ifndef __EROFS_FS_H
 #define __EROFS_FS_H
@@ -19,10 +27,28 @@
 #define EROFS_FEATURE_INCOMPAT_LZ4_0PADDING	0x00000001
 #define EROFS_FEATURE_INCOMPAT_COMPR_CFGS	0x00000002
 #define EROFS_FEATURE_INCOMPAT_BIG_PCLUSTER	0x00000002
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define EROFS_FEATURE_INCOMPAT_CHUNKED_FILE	0x00000004
+#define EROFS_ALL_FEATURE_INCOMPAT		\
+	(EROFS_FEATURE_INCOMPAT_LZ4_0PADDING | \
+	 EROFS_FEATURE_INCOMPAT_COMPR_CFGS | \
+	 EROFS_FEATURE_INCOMPAT_BIG_PCLUSTER | \
+	 EROFS_FEATURE_INCOMPAT_CHUNKED_FILE)
+=======
 #define EROFS_ALL_FEATURE_INCOMPAT		\
 	(EROFS_FEATURE_INCOMPAT_LZ4_0PADDING | \
 	 EROFS_FEATURE_INCOMPAT_COMPR_CFGS | \
 	 EROFS_FEATURE_INCOMPAT_BIG_PCLUSTER)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define EROFS_FEATURE_INCOMPAT_CHUNKED_FILE	0x00000004
+#define EROFS_ALL_FEATURE_INCOMPAT		\
+	(EROFS_FEATURE_INCOMPAT_LZ4_0PADDING | \
+	 EROFS_FEATURE_INCOMPAT_COMPR_CFGS | \
+	 EROFS_FEATURE_INCOMPAT_BIG_PCLUSTER | \
+	 EROFS_FEATURE_INCOMPAT_CHUNKED_FILE)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define EROFS_SB_EXTSLOT_SIZE	16
 
@@ -64,13 +90,33 @@ struct erofs_super_block {
  * inode, [xattrs], last_inline_data, ... | ... | no-holed data
  * 3 - inode compression D:
  * inode, [xattrs], map_header, extents ... | ...
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * 4 - inode chunk-based E:
+ * inode, [xattrs], chunk indexes ... | ...
+ * 5~7 - reserved
+=======
  * 4~7 - reserved
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * 4 - inode chunk-based E:
+ * inode, [xattrs], chunk indexes ... | ...
+ * 5~7 - reserved
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 enum {
 	EROFS_INODE_FLAT_PLAIN			= 0,
 	EROFS_INODE_FLAT_COMPRESSION_LEGACY	= 1,
 	EROFS_INODE_FLAT_INLINE			= 2,
 	EROFS_INODE_FLAT_COMPRESSION		= 3,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	EROFS_INODE_CHUNK_BASED			= 4,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	EROFS_INODE_CHUNK_BASED			= 4,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	EROFS_INODE_DATALAYOUT_MAX
 };
 
@@ -90,6 +136,28 @@ static inline bool erofs_inode_is_data_compressed(unsigned int datamode)
 #define EROFS_I_ALL	\
 	((1 << (EROFS_I_DATALAYOUT_BIT + EROFS_I_DATALAYOUT_BITS)) - 1)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* indicate chunk blkbits, thus 'chunksize = blocksize << chunk blkbits' */
+#define EROFS_CHUNK_FORMAT_BLKBITS_MASK		0x001F
+/* with chunk indexes or just a 4-byte blkaddr array */
+#define EROFS_CHUNK_FORMAT_INDEXES		0x0020
+
+#define EROFS_CHUNK_FORMAT_ALL	\
+	(EROFS_CHUNK_FORMAT_BLKBITS_MASK | EROFS_CHUNK_FORMAT_INDEXES)
+
+struct erofs_inode_chunk_info {
+	__le16 format;		/* chunk blkbits, etc. */
+	__le16 reserved;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* 32-byte reduced form of an ondisk inode */
 struct erofs_inode_compact {
 	__le16 i_format;	/* inode format hints */
@@ -107,6 +175,18 @@ struct erofs_inode_compact {
 
 		/* for device files, used to indicate old/new device # */
 		__le32 rdev;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+		/* for chunk-based files, it contains the summary info */
+		struct erofs_inode_chunk_info c;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		/* for chunk-based files, it contains the summary info */
+		struct erofs_inode_chunk_info c;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} i_u;
 	__le32 i_ino;           /* only used for 32-bit stat compatibility */
 	__le16 i_uid;
@@ -135,6 +215,18 @@ struct erofs_inode_extended {
 
 		/* for device files, used to indicate old/new device # */
 		__le32 rdev;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+		/* for chunk-based files, it contains the summary info */
+		struct erofs_inode_chunk_info c;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+		/* for chunk-based files, it contains the summary info */
+		struct erofs_inode_chunk_info c;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} i_u;
 
 	/* only used for 32-bit stat compatibility */
@@ -204,6 +296,28 @@ static inline unsigned int erofs_xattr_entry_size(struct erofs_xattr_entry *e)
 				 e->e_name_len + le16_to_cpu(e->e_value_size));
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* represent a zeroed chunk (hole) */
+#define EROFS_NULL_ADDR			-1
+
+/* 4-byte block address array */
+#define EROFS_BLOCK_MAP_ENTRY_SIZE	sizeof(__le32)
+
+/* 8-byte inode chunk indexes */
+struct erofs_inode_chunk_index {
+	__le16 advise;		/* always 0, don't care for now */
+	__le16 device_id;	/* back-end storage id, always 0 for now */
+	__le32 blkaddr;		/* start block address of this inode chunk */
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* maximum supported size of a physical compression cluster */
 #define Z_EROFS_PCLUSTER_MAX_SIZE	(1024 * 1024)
 
@@ -338,9 +452,31 @@ static inline void erofs_check_ondisk_layout_definitions(void)
 	BUILD_BUG_ON(sizeof(struct erofs_inode_extended) != 64);
 	BUILD_BUG_ON(sizeof(struct erofs_xattr_ibody_header) != 12);
 	BUILD_BUG_ON(sizeof(struct erofs_xattr_entry) != 4);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	BUILD_BUG_ON(sizeof(struct erofs_inode_chunk_info) != 4);
+	BUILD_BUG_ON(sizeof(struct erofs_inode_chunk_index) != 8);
 	BUILD_BUG_ON(sizeof(struct z_erofs_map_header) != 8);
 	BUILD_BUG_ON(sizeof(struct z_erofs_vle_decompressed_index) != 8);
 	BUILD_BUG_ON(sizeof(struct erofs_dirent) != 12);
+	/* keep in sync between 2 index structures for better extendibility */
+	BUILD_BUG_ON(sizeof(struct erofs_inode_chunk_index) !=
+		     sizeof(struct z_erofs_vle_decompressed_index));
+=======
+	BUILD_BUG_ON(sizeof(struct z_erofs_map_header) != 8);
+	BUILD_BUG_ON(sizeof(struct z_erofs_vle_decompressed_index) != 8);
+	BUILD_BUG_ON(sizeof(struct erofs_dirent) != 12);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BUILD_BUG_ON(sizeof(struct erofs_inode_chunk_info) != 4);
+	BUILD_BUG_ON(sizeof(struct erofs_inode_chunk_index) != 8);
+	BUILD_BUG_ON(sizeof(struct z_erofs_map_header) != 8);
+	BUILD_BUG_ON(sizeof(struct z_erofs_vle_decompressed_index) != 8);
+	BUILD_BUG_ON(sizeof(struct erofs_dirent) != 12);
+	/* keep in sync between 2 index structures for better extendibility */
+	BUILD_BUG_ON(sizeof(struct erofs_inode_chunk_index) !=
+		     sizeof(struct z_erofs_vle_decompressed_index));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	BUILD_BUG_ON(BIT(Z_EROFS_VLE_DI_CLUSTER_TYPE_BITS) <
 		     Z_EROFS_VLE_CLUSTER_TYPE_MAX - 1);

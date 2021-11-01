@@ -196,7 +196,15 @@ static int kvmppc_mmu_book3s_64_xlate(struct kvm_vcpu *vcpu, gva_t eaddr,
 	hva_t ptegp;
 	u64 pteg[16];
 	u64 avpn = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u64 r;
+=======
 	u64 v, r;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 r;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 v_val, v_mask;
 	u64 eaddr_mask;
 	int i;
@@ -285,7 +293,13 @@ do_second:
 		goto do_second;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	v = be64_to_cpu(pteg[i]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	r = be64_to_cpu(pteg[i+1]);
 	pp = (r & HPTE_R_PP) | key;
 	if (r & HPTE_R_PP0)

@@ -4,6 +4,14 @@
 #include "aspeed-g5.dtsi"
 #include <dt-bindings/gpio/aspeed-gpio.h>
 #include <dt-bindings/i2c/i2c.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <dt-bindings/interrupt-controller/irq.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <dt-bindings/interrupt-controller/irq.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /{
 	model = "ASRock E3C246D4I BMC";
@@ -73,7 +81,17 @@
 
 &vuart {
 	status = "okay";
+<<<<<<< HEAD
+<<<<<<< HEAD
+	aspeed,lpc-io-reg = <0x2f8>;
+	aspeed,lpc-interrupts = <3 IRQ_TYPE_LEVEL_HIGH>;
+=======
 	aspeed,sirq-active-high;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	aspeed,lpc-io-reg = <0x2f8>;
+	aspeed,lpc-interrupts = <3 IRQ_TYPE_LEVEL_HIGH>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 &mac0 {

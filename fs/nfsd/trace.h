@@ -400,18 +400,42 @@ TRACE_EVENT(nfsd_dirent,
 	TP_STRUCT__entry(
 		__field(u32, fh_hash)
 		__field(u64, ino)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__string_len(name, name, namlen)
+=======
 		__field(int, len)
 		__dynamic_array(unsigned char, name, namlen)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__string_len(name, name, namlen)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	),
 	TP_fast_assign(
 		__entry->fh_hash = fhp ? knfsd_fh_hash(&fhp->fh_handle) : 0;
 		__entry->ino = ino;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__assign_str_len(name, name, namlen)
+	),
+	TP_printk("fh_hash=0x%08x ino=%llu name=%s",
+		__entry->fh_hash, __entry->ino, __get_str(name)
+	)
+=======
 		__entry->len = namlen;
 		memcpy(__get_str(name), name, namlen);
 	),
 	TP_printk("fh_hash=0x%08x ino=%llu name=%.*s",
 		__entry->fh_hash, __entry->ino,
 		__entry->len, __get_str(name))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__assign_str_len(name, name, namlen)
+	),
+	TP_printk("fh_hash=0x%08x ino=%llu name=%s",
+		__entry->fh_hash, __entry->ino, __get_str(name)
+	)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 )
 
 #include "state.h"
@@ -608,7 +632,15 @@ DECLARE_EVENT_CLASS(nfsd_clid_class,
 		__array(unsigned char, addr, sizeof(struct sockaddr_in6))
 		__field(unsigned long, flavor)
 		__array(unsigned char, verifier, NFS4_VERIFIER_SIZE)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__string_len(name, name, clp->cl_name.len)
+=======
 		__dynamic_array(char, name, clp->cl_name.len + 1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__string_len(name, name, clp->cl_name.len)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	),
 	TP_fast_assign(
 		__entry->cl_boot = clp->cl_clientid.cl_boot;
@@ -618,8 +650,16 @@ DECLARE_EVENT_CLASS(nfsd_clid_class,
 		__entry->flavor = clp->cl_cred.cr_flavor;
 		memcpy(__entry->verifier, (void *)&clp->cl_verifier,
 		       NFS4_VERIFIER_SIZE);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__assign_str_len(name, clp->cl_name.data, clp->cl_name.len);
+=======
 		memcpy(__get_str(name), clp->cl_name.data, clp->cl_name.len);
 		__get_str(name)[clp->cl_name.len] = '\0';
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__assign_str_len(name, clp->cl_name.data, clp->cl_name.len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	),
 	TP_printk("addr=%pISpc name='%s' verifier=0x%s flavor=%s client=%08x:%08x",
 		__entry->addr, __get_str(name),

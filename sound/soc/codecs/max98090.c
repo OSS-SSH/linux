@@ -2158,13 +2158,27 @@ static void max98090_jack_work(struct work_struct *work)
 
 		msleep(50);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		snd_soc_component_read(component, M98090_REG_JACK_STATUS);
+=======
 		reg = snd_soc_component_read(component, M98090_REG_JACK_STATUS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		snd_soc_component_read(component, M98090_REG_JACK_STATUS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Weak pull up allows only insertion detection */
 		snd_soc_component_update_bits(component, M98090_REG_JACK_DETECT,
 			M98090_JDWK_MASK, M98090_JDWK_MASK);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	} else {
 		reg = snd_soc_component_read(component, M98090_REG_JACK_STATUS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	reg = snd_soc_component_read(component, M98090_REG_JACK_STATUS);

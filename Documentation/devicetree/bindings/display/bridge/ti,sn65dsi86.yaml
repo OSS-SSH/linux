@@ -18,7 +18,15 @@ properties:
     const: ti,sn65dsi86
 
   reg:
+<<<<<<< HEAD
+<<<<<<< HEAD
+    enum: [ 0x2c, 0x2d ]
+=======
     const: 0x2d
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    enum: [ 0x2c, 0x2d ]
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   enable-gpios:
     maxItems: 1
@@ -70,6 +78,18 @@ properties:
     const: 1
     description: See ../../pwm/pwm.yaml for description of the cell formats.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+  aux-bus:
+    $ref: /schemas/display/dp-aux-bus.yaml#
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+  aux-bus:
+    $ref: /schemas/display/dp-aux-bus.yaml#
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   ports:
     $ref: /schemas/graph.yaml#/properties/ports
 
@@ -150,7 +170,13 @@ properties:
 required:
   - compatible
   - reg
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
   - enable-gpios
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   - vccio-supply
   - vpll-supply
   - vcca-supply
@@ -201,11 +227,43 @@ examples:
 
           port@1 {
             reg = <1>;
+<<<<<<< HEAD
+<<<<<<< HEAD
+            sn65dsi86_out: endpoint {
+=======
             endpoint {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+            sn65dsi86_out: endpoint {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
               remote-endpoint = <&panel_in_edp>;
             };
           };
         };
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+        aux-bus {
+          panel {
+            compatible = "boe,nv133fhm-n62";
+            power-supply = <&pp3300_dx_edp>;
+            backlight = <&backlight>;
+            hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
+
+            port {
+              panel_in_edp: endpoint {
+                remote-endpoint = <&sn65dsi86_out>;
+              };
+            };
+          };
+        };
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       };
     };
   - |

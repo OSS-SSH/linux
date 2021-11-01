@@ -582,7 +582,15 @@ void
 smp_send_stop(void)
 {
 	cpumask_t to_whom;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpumask_copy(&to_whom, cpu_online_mask);
+=======
 	cpumask_copy(&to_whom, cpu_possible_mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpumask_copy(&to_whom, cpu_online_mask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cpumask_clear_cpu(smp_processor_id(), &to_whom);
 #ifdef DEBUG_IPI_MSG
 	if (hard_smp_processor_id() != boot_cpu_id)

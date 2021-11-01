@@ -345,7 +345,20 @@ int skx_get_dimm_info(u32 mtr, u32 mcmtr, u32 amap, struct dimm_info *dimm,
 	rows = numrow(mtr);
 	cols = imc->hbm_mc ? 6 : numcol(mtr);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (imc->hbm_mc) {
+		banks = 32;
+		mtype = MEM_HBM2;
+	} else if (cfg->support_ddr5 && (amap & 0x8)) {
+<<<<<<< HEAD
+=======
 	if (cfg->support_ddr5 && ((amap & 0x8) || imc->hbm_mc)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		banks = 32;
 		mtype = MEM_DDR5;
 	} else {
@@ -529,6 +542,14 @@ static void skx_mce_output_error(struct mem_ctl_info *mci,
 	bool ripv = GET_BITFIELD(m->mcgstatus, 0, 0);
 	bool overflow = GET_BITFIELD(m->status, 62, 62);
 	bool uncorrected_error = GET_BITFIELD(m->status, 61, 61);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bool scrub_err = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool scrub_err = false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool recoverable;
 	int len;
 	u32 core_err_cnt = GET_BITFIELD(m->status, 38, 52);
@@ -580,6 +601,14 @@ static void skx_mce_output_error(struct mem_ctl_info *mci,
 			break;
 		case 4:
 			optype = "memory scrubbing error";
+<<<<<<< HEAD
+<<<<<<< HEAD
+			scrub_err = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			scrub_err = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		default:
 			optype = "reserved";
@@ -602,7 +631,15 @@ static void skx_mce_output_error(struct mem_ctl_info *mci,
 	}
 
 	if (skx_show_retry_rd_err_log)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		skx_show_retry_rd_err_log(res, skx_msg + len, MSG_SIZE - len, scrub_err);
+=======
 		skx_show_retry_rd_err_log(res, skx_msg + len, MSG_SIZE - len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		skx_show_retry_rd_err_log(res, skx_msg + len, MSG_SIZE - len, scrub_err);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	edac_dbg(0, "%s\n", skx_msg);
 

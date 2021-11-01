@@ -13,6 +13,31 @@ struct i2c_client;
 struct bmc150_accel_chip_info;
 struct bmc150_accel_interrupt_info;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * We can often guess better than "UNKNOWN" based on the device IDs
+ * but unfortunately this information is not always accurate. There are some
+ * devices where ACPI firmware specifies an ID like "BMA250E" when the device
+ * actually has a BMA222E. The driver attempts to detect those by reading the
+ * chip ID from the registers but this information is not always enough either.
+ *
+ * Therefore, this enum should be only used when the chip ID detection is not
+ * enough and we can be reasonably sure that the device IDs are reliable
+ * in practice (e.g. for device tree platforms).
+ */
+enum bmc150_type {
+	BOSCH_UNKNOWN,
+	BOSCH_BMC156,
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct bmc150_accel_interrupt {
 	const struct bmc150_accel_interrupt_info *info;
 	atomic_t users;
@@ -62,6 +87,14 @@ struct bmc150_accel_data {
 	int ev_enable_state;
 	int64_t timestamp, old_timestamp; /* Only used in hw fifo mode. */
 	const struct bmc150_accel_chip_info *chip_info;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enum bmc150_type type;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum bmc150_type type;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct i2c_client *second_device;
 	void (*resume_callback)(struct device *dev);
 	struct delayed_work resume_work;
@@ -69,7 +102,17 @@ struct bmc150_accel_data {
 };
 
 int bmc150_accel_core_probe(struct device *dev, struct regmap *regmap, int irq,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			    enum bmc150_type type, const char *name,
+			    bool block_supported);
+=======
 			    const char *name, bool block_supported);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    enum bmc150_type type, const char *name,
+			    bool block_supported);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int bmc150_accel_core_remove(struct device *dev);
 extern const struct dev_pm_ops bmc150_accel_pm_ops;
 extern const struct regmap_config bmc150_regmap_conf;

@@ -7,7 +7,15 @@
  * Copyright 2011 Intel Corporation; author Matt Fleming
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/stdarg.h>
+=======
 #include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/stdarg.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/ctype.h>
 #include <linux/efi.h>
@@ -630,8 +638,18 @@ efi_status_t efi_load_initrd_cmdline(efi_loaded_image_t *image,
  * @image:	EFI loaded image protocol
  * @load_addr:	pointer to loaded initrd
  * @load_size:	size of loaded initrd
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @soft_limit:	preferred address for loading the initrd
+ * @hard_limit:	upper limit address for loading the initrd
+=======
  * @soft_limit:	preferred size of allocated memory for loading the initrd
  * @hard_limit:	minimum size of allocated memory
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @soft_limit:	preferred address for loading the initrd
+ * @hard_limit:	upper limit address for loading the initrd
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Return:	status code
  */

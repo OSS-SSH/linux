@@ -137,10 +137,16 @@ enum drm_driver_feature {
 	 * @DRIVER_HAVE_IRQ:
 	 *
 	 * Legacy irq support. Only for legacy drivers. Do not use.
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	 *
 	 * New drivers can either use the drm_irq_install() and
 	 * drm_irq_uninstall() helper functions, or roll their own irq support
 	 * code by calling request_irq() directly.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	DRIVER_HAVE_IRQ			= BIT(30),
 	/**
@@ -272,6 +278,9 @@ struct drm_driver {
 	void (*release) (struct drm_device *);
 
 	/**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	 * @irq_handler:
 	 *
 	 * Interrupt handler called when using drm_irq_install(). Not used by
@@ -308,6 +317,9 @@ struct drm_driver {
 	void (*irq_uninstall) (struct drm_device *dev);
 
 	/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * @master_set:
 	 *
 	 * Called whenever the minor master is set. Only used by vmwgfx.
@@ -504,6 +516,19 @@ struct drm_driver {
 	int (*dma_ioctl) (struct drm_device *dev, void *data, struct drm_file *file_priv);
 	int (*dma_quiescent) (struct drm_device *);
 	int (*context_dtor) (struct drm_device *dev, int context);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	irqreturn_t (*irq_handler)(int irq, void *arg);
+	void (*irq_preinstall)(struct drm_device *dev);
+	int (*irq_postinstall)(struct drm_device *dev);
+	void (*irq_uninstall)(struct drm_device *dev);
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 (*get_vblank_counter)(struct drm_device *dev, unsigned int pipe);
 	int (*enable_vblank)(struct drm_device *dev, unsigned int pipe);
 	void (*disable_vblank)(struct drm_device *dev, unsigned int pipe);

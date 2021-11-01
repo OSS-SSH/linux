@@ -228,7 +228,15 @@ int show_interrupts(struct seq_file *p, void *v)
 	int index = *(loff_t *) v;
 	int cpu, irq;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (index == 0) {
 		seq_puts(p, "           ");
 		for_each_online_cpu(cpu)
@@ -258,7 +266,15 @@ int show_interrupts(struct seq_file *p, void *v)
 		seq_putc(p, '\n');
 	}
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

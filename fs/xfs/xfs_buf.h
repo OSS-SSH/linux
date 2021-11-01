@@ -133,7 +133,17 @@ struct xfs_buf {
 	 * fast-path on locking.
 	 */
 	struct rhash_head	b_rhash_head;	/* pag buffer hash node */
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	xfs_daddr_t		b_rhash_key;	/* buffer cache index */
+=======
 	xfs_daddr_t		b_bn;		/* block number of buffer */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	xfs_daddr_t		b_rhash_key;	/* buffer cache index */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			b_length;	/* size of buffer in BBs */
 	atomic_t		b_hold;		/* reference count */
 	atomic_t		b_lru_ref;	/* lru reclaim ref count */
@@ -296,6 +306,16 @@ extern int xfs_buf_delwri_pushbuf(struct xfs_buf *, struct list_head *);
 extern int xfs_buf_init(void);
 extern void xfs_buf_terminate(void);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static inline xfs_daddr_t xfs_buf_daddr(struct xfs_buf *bp)
+{
+	return bp->b_maps[0].bm_bn;
+}
+<<<<<<< HEAD
+=======
 /*
  * These macros use the IO block map rather than b_bn. b_bn is now really
  * just for the buffer cache index for cached buffers. As IO does not use b_bn
@@ -308,6 +328,9 @@ extern void xfs_buf_terminate(void);
  */
 #define XFS_BUF_ADDR(bp)		((bp)->b_maps[0].bm_bn)
 #define XFS_BUF_SET_ADDR(bp, bno)	((bp)->b_maps[0].bm_bn = (xfs_daddr_t)(bno))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void xfs_buf_set_ref(struct xfs_buf *bp, int lru_ref);
 
@@ -355,12 +378,18 @@ extern int xfs_setsize_buftarg(struct xfs_buftarg *, unsigned int);
 #define xfs_getsize_buftarg(buftarg)	block_size((buftarg)->bt_bdev)
 #define xfs_readonly_buftarg(buftarg)	bdev_read_only((buftarg)->bt_bdev)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static inline int
 xfs_buftarg_dma_alignment(struct xfs_buftarg *bt)
 {
 	return queue_dma_alignment(bt->bt_bdev->bd_disk->queue);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int xfs_buf_reverify(struct xfs_buf *bp, const struct xfs_buf_ops *ops);
 bool xfs_verify_magic(struct xfs_buf *bp, __be32 dmagic);
 bool xfs_verify_magic16(struct xfs_buf *bp, __be16 dmagic);

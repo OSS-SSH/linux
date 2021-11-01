@@ -290,6 +290,12 @@ static int fsl_dma_new(struct snd_soc_component *component,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
+					    card->dev,
+					    fsl_dma_hardware.buffer_bytes_max);
+=======
 	/* Some codecs have separate DAIs for playback and capture, so we
 	 * should allocate a DMA buffer only for the streams that are valid.
 	 */
@@ -316,6 +322,12 @@ static int fsl_dma_new(struct snd_soc_component *component,
 	}
 
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
+					    card->dev,
+					    fsl_dma_hardware.buffer_bytes_max);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -442,7 +454,13 @@ static int fsl_dma_open(struct snd_soc_component *component,
 
 	dma->assigned = true;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_soc_set_runtime_hwparams(substream, &fsl_dma_hardware);
 	runtime->private_data = dma_private;
 
@@ -815,6 +833,9 @@ static int fsl_dma_close(struct snd_soc_component *component,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /*
  * Remove this PCM driver.
  */
@@ -834,6 +855,9 @@ static void fsl_dma_free_dma_buffers(struct snd_soc_component *component,
 	}
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * find_ssi_node -- returns the SSI node that points to its DMA channel node
  *
@@ -904,7 +928,13 @@ static int fsl_soc_dma_probe(struct platform_device *pdev)
 	dma->dai.hw_free = fsl_dma_hw_free;
 	dma->dai.pointer = fsl_dma_pointer;
 	dma->dai.pcm_construct = fsl_dma_new;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	dma->dai.pcm_destruct = fsl_dma_free_dma_buffers;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Store the SSI-specific information that we need */
 	dma->ssi_stx_phys = res.start + REG_SSI_STX0;

@@ -136,6 +136,38 @@ static struct ieee80211_supported_band band_5ghz = {
 /* Assigned at module init. Guaranteed locally-administered and unicast. */
 static u8 fake_router_bssid[ETH_ALEN] __ro_after_init = {};
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void virt_wifi_inform_bss(struct wiphy *wiphy)
+{
+	u64 tsf = div_u64(ktime_get_boottime_ns(), 1000);
+	struct cfg80211_bss *informed_bss;
+	static const struct {
+		u8 tag;
+		u8 len;
+		u8 ssid[8];
+	} __packed ssid = {
+		.tag = WLAN_EID_SSID,
+		.len = 8,
+		.ssid = "VirtWifi",
+	};
+
+	informed_bss = cfg80211_inform_bss(wiphy, &channel_5ghz,
+					   CFG80211_BSS_FTYPE_PRESP,
+					   fake_router_bssid, tsf,
+					   WLAN_CAPABILITY_ESS, 0,
+					   (void *)&ssid, sizeof(ssid),
+					   DBM_TO_MBM(-50), GFP_KERNEL);
+	cfg80211_put_bss(wiphy, informed_bss);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Called with the rtnl lock held. */
 static int virt_wifi_scan(struct wiphy *wiphy,
 			  struct cfg80211_scan_request *request)
@@ -156,6 +188,9 @@ static int virt_wifi_scan(struct wiphy *wiphy,
 /* Acquires and releases the rdev BSS lock. */
 static void virt_wifi_scan_result(struct work_struct *work)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct {
 		u8 tag;
 		u8 len;
@@ -164,11 +199,19 @@ static void virt_wifi_scan_result(struct work_struct *work)
 		.tag = WLAN_EID_SSID, .len = 8, .ssid = "VirtWifi",
 	};
 	struct cfg80211_bss *informed_bss;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct virt_wifi_wiphy_priv *priv =
 		container_of(work, struct virt_wifi_wiphy_priv,
 			     scan_result.work);
 	struct wiphy *wiphy = priv_to_wiphy(priv);
 	struct cfg80211_scan_info scan_info = { .aborted = false };
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	virt_wifi_inform_bss(wiphy);
+=======
 	u64 tsf = div_u64(ktime_get_boottime_ns(), 1000);
 
 	informed_bss = cfg80211_inform_bss(wiphy, &channel_5ghz,
@@ -178,6 +221,11 @@ static void virt_wifi_scan_result(struct work_struct *work)
 					   (void *)&ssid, sizeof(ssid),
 					   DBM_TO_MBM(-50), GFP_KERNEL);
 	cfg80211_put_bss(wiphy, informed_bss);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	virt_wifi_inform_bss(wiphy);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Schedules work which acquires and releases the rtnl lock. */
 	cfg80211_scan_done(priv->scan_request, &scan_info);
@@ -225,10 +273,28 @@ static int virt_wifi_connect(struct wiphy *wiphy, struct net_device *netdev,
 	if (!could_schedule)
 		return -EBUSY;
 
-	if (sme->bssid)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (sme->bssid) {
 		ether_addr_copy(priv->connect_requested_bss, sme->bssid);
-	else
+	} else {
+		virt_wifi_inform_bss(wiphy);
 		eth_zero_addr(priv->connect_requested_bss);
+	}
+=======
+	if (sme->bssid)
+=======
+	if (sme->bssid) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		ether_addr_copy(priv->connect_requested_bss, sme->bssid);
+	} else {
+		virt_wifi_inform_bss(wiphy);
+		eth_zero_addr(priv->connect_requested_bss);
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	wiphy_debug(wiphy, "connect\n");
 
@@ -241,11 +307,31 @@ static void virt_wifi_connect_complete(struct work_struct *work)
 	struct virt_wifi_netdev_priv *priv =
 		container_of(work, struct virt_wifi_netdev_priv, connect.work);
 	u8 *requested_bss = priv->connect_requested_bss;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
+	u16 status = WLAN_STATUS_SUCCESS;
+
+	if (is_zero_ether_addr(requested_bss))
+		requested_bss = NULL;
+
+	if (!priv->is_up || (requested_bss && !right_addr))
+=======
 	bool has_addr = !is_zero_ether_addr(requested_bss);
 	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
 	u16 status = WLAN_STATUS_SUCCESS;
 
 	if (!priv->is_up || (has_addr && !right_addr))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
+	u16 status = WLAN_STATUS_SUCCESS;
+
+	if (is_zero_ether_addr(requested_bss))
+		requested_bss = NULL;
+
+	if (!priv->is_up || (requested_bss && !right_addr))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		status = WLAN_STATUS_UNSPECIFIED_FAILURE;
 	else
 		priv->is_connected = true;

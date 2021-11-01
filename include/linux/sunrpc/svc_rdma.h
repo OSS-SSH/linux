@@ -90,9 +90,21 @@ struct svcxprt_rdma {
 	struct ib_pd         *sc_pd;
 
 	spinlock_t	     sc_send_lock;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct llist_head    sc_send_ctxts;
+	spinlock_t	     sc_rw_ctxt_lock;
+	struct llist_head    sc_rw_ctxts;
+=======
 	struct list_head     sc_send_ctxts;
 	spinlock_t	     sc_rw_ctxt_lock;
 	struct list_head     sc_rw_ctxts;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct llist_head    sc_send_ctxts;
+	spinlock_t	     sc_rw_ctxt_lock;
+	struct llist_head    sc_rw_ctxts;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	u32		     sc_pending_recvs;
 	u32		     sc_recv_batch;
@@ -150,7 +162,15 @@ struct svc_rdma_recv_ctxt {
 };
 
 struct svc_rdma_send_ctxt {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct llist_node	sc_node;
+=======
 	struct list_head	sc_list;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct llist_node	sc_node;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct rpc_rdma_cid	sc_cid;
 
 	struct ib_send_wr	sc_send_wr;
@@ -207,6 +227,14 @@ extern void svc_rdma_send_error_msg(struct svcxprt_rdma *rdma,
 				    struct svc_rdma_send_ctxt *sctxt,
 				    struct svc_rdma_recv_ctxt *rctxt,
 				    int status);
+<<<<<<< HEAD
+<<<<<<< HEAD
+extern void svc_rdma_wake_send_waiters(struct svcxprt_rdma *rdma, int avail);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern void svc_rdma_wake_send_waiters(struct svcxprt_rdma *rdma, int avail);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern int svc_rdma_sendto(struct svc_rqst *);
 extern int svc_rdma_result_payload(struct svc_rqst *rqstp, unsigned int offset,
 				   unsigned int length);

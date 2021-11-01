@@ -39,6 +39,18 @@ static struct kernfs_root *rdt_root;
 struct rdtgroup rdtgroup_default;
 LIST_HEAD(rdt_all_groups);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* list of entries for the schemata file */
+LIST_HEAD(resctrl_schema_all);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* list of entries for the schemata file */
+LIST_HEAD(resctrl_schema_all);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Kernel fs node for "info" directory under root */
 static struct kernfs_node *kn_info;
 
@@ -100,12 +112,30 @@ int closids_supported(void)
 
 static void closid_init(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s;
+	u32 rdt_min_closid = 32;
+
+	/* Compute rdt_min_closid across all resources */
+	list_for_each_entry(s, &resctrl_schema_all, list)
+		rdt_min_closid = min(rdt_min_closid, s->num_closid);
+=======
 	struct rdt_resource *r;
 	int rdt_min_closid = 32;
 
 	/* Compute rdt_min_closid across all resources */
 	for_each_alloc_enabled_rdt_resource(r)
 		rdt_min_closid = min(rdt_min_closid, r->num_closid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *s;
+	u32 rdt_min_closid = 32;
+
+	/* Compute rdt_min_closid across all resources */
+	list_for_each_entry(s, &resctrl_schema_all, list)
+		rdt_min_closid = min(rdt_min_closid, s->num_closid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	closid_free_map = BIT_MASK(rdt_min_closid) - 1;
 
@@ -842,16 +872,38 @@ static int rdt_last_cmd_status_show(struct kernfs_open_file *of,
 static int rdt_num_closids_show(struct kernfs_open_file *of,
 				struct seq_file *seq, void *v)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s = of->kn->parent->priv;
+
+	seq_printf(seq, "%u\n", s->num_closid);
+=======
 	struct rdt_resource *r = of->kn->parent->priv;
 
 	seq_printf(seq, "%d\n", r->num_closid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *s = of->kn->parent->priv;
+
+	seq_printf(seq, "%u\n", s->num_closid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
 static int rdt_default_ctrl_show(struct kernfs_open_file *of,
 			     struct seq_file *seq, void *v)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+=======
 	struct rdt_resource *r = of->kn->parent->priv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	seq_printf(seq, "%x\n", r->default_ctrl);
 	return 0;
@@ -860,7 +912,17 @@ static int rdt_default_ctrl_show(struct kernfs_open_file *of,
 static int rdt_min_cbm_bits_show(struct kernfs_open_file *of,
 			     struct seq_file *seq, void *v)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+=======
 	struct rdt_resource *r = of->kn->parent->priv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	seq_printf(seq, "%u\n", r->cache.min_cbm_bits);
 	return 0;
@@ -869,7 +931,17 @@ static int rdt_min_cbm_bits_show(struct kernfs_open_file *of,
 static int rdt_shareable_bits_show(struct kernfs_open_file *of,
 				   struct seq_file *seq, void *v)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+=======
 	struct rdt_resource *r = of->kn->parent->priv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	seq_printf(seq, "%x\n", r->cache.shareable_bits);
 	return 0;
@@ -892,38 +964,89 @@ static int rdt_shareable_bits_show(struct kernfs_open_file *of,
 static int rdt_bit_usage_show(struct kernfs_open_file *of,
 			      struct seq_file *seq, void *v)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s = of->kn->parent->priv;
+=======
 	struct rdt_resource *r = of->kn->parent->priv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *s = of->kn->parent->priv;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Use unsigned long even though only 32 bits are used to ensure
 	 * test_bit() is used safely.
 	 */
 	unsigned long sw_shareable = 0, hw_shareable = 0;
 	unsigned long exclusive = 0, pseudo_locked = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct rdt_resource *r = s->res;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct rdt_resource *r = s->res;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct rdt_domain *dom;
 	int i, hwb, swb, excl, psl;
 	enum rdtgrp_mode mode;
 	bool sep = false;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u32 ctrl_val;
+=======
 	u32 *ctrl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 ctrl_val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&rdtgroup_mutex);
 	hw_shareable = r->cache.shareable_bits;
 	list_for_each_entry(dom, &r->domains, list) {
 		if (sep)
 			seq_putc(seq, ';');
-		ctrl = dom->ctrl_val;
+<<<<<<< HEAD
+<<<<<<< HEAD
 		sw_shareable = 0;
 		exclusive = 0;
 		seq_printf(seq, "%d=", dom->id);
-		for (i = 0; i < closids_supported(); i++, ctrl++) {
+		for (i = 0; i < closids_supported(); i++) {
 			if (!closid_allocated(i))
 				continue;
+			ctrl_val = resctrl_arch_get_config(r, dom, i,
+							   s->conf_type);
 			mode = rdtgroup_mode_by_closid(i);
 			switch (mode) {
 			case RDT_MODE_SHAREABLE:
-				sw_shareable |= *ctrl;
+				sw_shareable |= ctrl_val;
 				break;
 			case RDT_MODE_EXCLUSIVE:
+				exclusive |= ctrl_val;
+=======
+		ctrl = dom->ctrl_val;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		sw_shareable = 0;
+		exclusive = 0;
+		seq_printf(seq, "%d=", dom->id);
+		for (i = 0; i < closids_supported(); i++) {
+			if (!closid_allocated(i))
+				continue;
+			ctrl_val = resctrl_arch_get_config(r, dom, i,
+							   s->conf_type);
+			mode = rdtgroup_mode_by_closid(i);
+			switch (mode) {
+			case RDT_MODE_SHAREABLE:
+				sw_shareable |= ctrl_val;
+				break;
+			case RDT_MODE_EXCLUSIVE:
+<<<<<<< HEAD
 				exclusive |= *ctrl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				exclusive |= ctrl_val;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				break;
 			case RDT_MODE_PSEUDO_LOCKSETUP:
 			/*
@@ -970,7 +1093,17 @@ static int rdt_bit_usage_show(struct kernfs_open_file *of,
 static int rdt_min_bw_show(struct kernfs_open_file *of,
 			     struct seq_file *seq, void *v)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+=======
 	struct rdt_resource *r = of->kn->parent->priv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	seq_printf(seq, "%u\n", r->membw.min_bw);
 	return 0;
@@ -1001,7 +1134,17 @@ static int rdt_mon_features_show(struct kernfs_open_file *of,
 static int rdt_bw_gran_show(struct kernfs_open_file *of,
 			     struct seq_file *seq, void *v)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+=======
 	struct rdt_resource *r = of->kn->parent->priv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	seq_printf(seq, "%u\n", r->membw.bw_gran);
 	return 0;
@@ -1010,7 +1153,17 @@ static int rdt_bw_gran_show(struct kernfs_open_file *of,
 static int rdt_delay_linear_show(struct kernfs_open_file *of,
 			     struct seq_file *seq, void *v)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+=======
 	struct rdt_resource *r = of->kn->parent->priv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	seq_printf(seq, "%u\n", r->membw.delay_linear);
 	return 0;
@@ -1020,8 +1173,20 @@ static int max_threshold_occ_show(struct kernfs_open_file *of,
 				  struct seq_file *seq, void *v)
 {
 	struct rdt_resource *r = of->kn->parent->priv;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+
+	seq_printf(seq, "%u\n", resctrl_cqm_threshold * hw_res->mon_scale);
+=======
 
 	seq_printf(seq, "%u\n", resctrl_cqm_threshold * r->mon_scale);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+
+	seq_printf(seq, "%u\n", resctrl_cqm_threshold * hw_res->mon_scale);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -1029,7 +1194,17 @@ static int max_threshold_occ_show(struct kernfs_open_file *of,
 static int rdt_thread_throttle_mode_show(struct kernfs_open_file *of,
 					 struct seq_file *seq, void *v)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+=======
 	struct rdt_resource *r = of->kn->parent->priv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *s = of->kn->parent->priv;
+	struct rdt_resource *r = s->res;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (r->membw.throttle_mode == THREAD_THROTTLE_PER_THREAD)
 		seq_puts(seq, "per-thread\n");
@@ -1042,7 +1217,15 @@ static int rdt_thread_throttle_mode_show(struct kernfs_open_file *of,
 static ssize_t max_threshold_occ_write(struct kernfs_open_file *of,
 				       char *buf, size_t nbytes, loff_t off)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct rdt_hw_resource *hw_res;
+=======
 	struct rdt_resource *r = of->kn->parent->priv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct rdt_hw_resource *hw_res;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int bytes;
 	int ret;
 
@@ -1053,7 +1236,17 @@ static ssize_t max_threshold_occ_write(struct kernfs_open_file *of,
 	if (bytes > (boot_cpu_data.x86_cache_size * 1024))
 		return -EINVAL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	hw_res = resctrl_to_arch_res(of->kn->parent->priv);
+	resctrl_cqm_threshold = bytes / hw_res->mon_scale;
+=======
 	resctrl_cqm_threshold = bytes / r->mon_scale;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hw_res = resctrl_to_arch_res(of->kn->parent->priv);
+	resctrl_cqm_threshold = bytes / hw_res->mon_scale;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return nbytes;
 }
@@ -1078,6 +1271,20 @@ static int rdtgroup_mode_show(struct kernfs_open_file *of,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static enum resctrl_conf_type resctrl_peer_type(enum resctrl_conf_type my_type)
+{
+	switch (my_type) {
+	case CDP_CODE:
+		return CDP_DATA;
+	case CDP_DATA:
+		return CDP_CODE;
+	default:
+	case CDP_NONE:
+		return CDP_NONE;
+	}
+=======
 /**
  * rdt_cdp_peer_get - Retrieve CDP peer if it exists
  * @r: RDT resource to which RDT domain @d belongs
@@ -1104,50 +1311,29 @@ static int rdtgroup_mode_show(struct kernfs_open_file *of,
 static int rdt_cdp_peer_get(struct rdt_resource *r, struct rdt_domain *d,
 			    struct rdt_resource **r_cdp,
 			    struct rdt_domain **d_cdp)
+=======
+static enum resctrl_conf_type resctrl_peer_type(enum resctrl_conf_type my_type)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct rdt_resource *_r_cdp = NULL;
-	struct rdt_domain *_d_cdp = NULL;
-	int ret = 0;
-
-	switch (r->rid) {
-	case RDT_RESOURCE_L3DATA:
-		_r_cdp = &rdt_resources_all[RDT_RESOURCE_L3CODE];
-		break;
-	case RDT_RESOURCE_L3CODE:
-		_r_cdp =  &rdt_resources_all[RDT_RESOURCE_L3DATA];
-		break;
-	case RDT_RESOURCE_L2DATA:
-		_r_cdp =  &rdt_resources_all[RDT_RESOURCE_L2CODE];
-		break;
-	case RDT_RESOURCE_L2CODE:
-		_r_cdp =  &rdt_resources_all[RDT_RESOURCE_L2DATA];
-		break;
+	switch (my_type) {
+	case CDP_CODE:
+		return CDP_DATA;
+	case CDP_DATA:
+		return CDP_CODE;
 	default:
-		ret = -ENOENT;
-		goto out;
+	case CDP_NONE:
+		return CDP_NONE;
 	}
-
-	/*
-	 * When a new CPU comes online and CDP is enabled then the new
-	 * RDT domains (if any) associated with both CDP RDT resources
-	 * are added in the same CPU online routine while the
-	 * rdtgroup_mutex is held. It should thus not happen for one
-	 * RDT domain to exist and be associated with its RDT CDP
-	 * resource but there is no RDT domain associated with the
-	 * peer RDT CDP resource. Hence the WARN.
-	 */
-	_d_cdp = rdt_find_domain(_r_cdp, d->id, NULL);
-	if (WARN_ON(IS_ERR_OR_NULL(_d_cdp))) {
-		_r_cdp = NULL;
-		_d_cdp = NULL;
-		ret = -EINVAL;
-	}
+<<<<<<< HEAD
 
 out:
 	*r_cdp = _r_cdp;
 	*d_cdp = _d_cdp;
 
 	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1171,11 +1357,27 @@ out:
  * Return: false if CBM does not overlap, true if it does.
  */
 static bool __rdtgroup_cbm_overlaps(struct rdt_resource *r, struct rdt_domain *d,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				    unsigned long cbm, int closid,
+				    enum resctrl_conf_type type, bool exclusive)
+{
+	enum rdtgrp_mode mode;
+	unsigned long ctrl_b;
+=======
 				    unsigned long cbm, int closid, bool exclusive)
 {
 	enum rdtgrp_mode mode;
 	unsigned long ctrl_b;
 	u32 *ctrl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    unsigned long cbm, int closid,
+				    enum resctrl_conf_type type, bool exclusive)
+{
+	enum rdtgrp_mode mode;
+	unsigned long ctrl_b;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	/* Check for any overlap with regions used by hardware directly */
@@ -1186,9 +1388,19 @@ static bool __rdtgroup_cbm_overlaps(struct rdt_resource *r, struct rdt_domain *d
 	}
 
 	/* Check for overlap with other resource groups */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	for (i = 0; i < closids_supported(); i++) {
+		ctrl_b = resctrl_arch_get_config(r, d, i, type);
+=======
 	ctrl = d->ctrl_val;
 	for (i = 0; i < closids_supported(); i++, ctrl++) {
 		ctrl_b = *ctrl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0; i < closids_supported(); i++) {
+		ctrl_b = resctrl_arch_get_config(r, d, i, type);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		mode = rdtgroup_mode_by_closid(i);
 		if (closid_allocated(i) && i != closid &&
 		    mode != RDT_MODE_PSEUDO_LOCKSETUP) {
@@ -1208,7 +1420,15 @@ static bool __rdtgroup_cbm_overlaps(struct rdt_resource *r, struct rdt_domain *d
 
 /**
  * rdtgroup_cbm_overlaps - Does CBM overlap with other use of hardware
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @s: Schema for the resource to which domain instance @d belongs.
+=======
  * @r: Resource to which domain instance @d belongs.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @s: Schema for the resource to which domain instance @d belongs.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @d: The domain instance for which @closid is being tested.
  * @cbm: Capacity bitmask being tested.
  * @closid: Intended closid for @cbm.
@@ -1226,19 +1446,44 @@ static bool __rdtgroup_cbm_overlaps(struct rdt_resource *r, struct rdt_domain *d
  *
  * Return: true if CBM overlap detected, false if there is no overlap
  */
-bool rdtgroup_cbm_overlaps(struct rdt_resource *r, struct rdt_domain *d,
+<<<<<<< HEAD
+<<<<<<< HEAD
+bool rdtgroup_cbm_overlaps(struct resctrl_schema *s, struct rdt_domain *d,
 			   unsigned long cbm, int closid, bool exclusive)
 {
-	struct rdt_resource *r_cdp;
-	struct rdt_domain *d_cdp;
+	enum resctrl_conf_type peer_type = resctrl_peer_type(s->conf_type);
+	struct rdt_resource *r = s->res;
 
-	if (__rdtgroup_cbm_overlaps(r, d, cbm, closid, exclusive))
+	if (__rdtgroup_cbm_overlaps(r, d, cbm, closid, s->conf_type,
+				    exclusive))
 		return true;
 
-	if (rdt_cdp_peer_get(r, d, &r_cdp, &d_cdp) < 0)
+	if (!resctrl_arch_get_cdp_enabled(r->rid))
 		return false;
+	return  __rdtgroup_cbm_overlaps(r, d, cbm, closid, peer_type, exclusive);
+=======
+bool rdtgroup_cbm_overlaps(struct rdt_resource *r, struct rdt_domain *d,
+=======
+bool rdtgroup_cbm_overlaps(struct resctrl_schema *s, struct rdt_domain *d,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			   unsigned long cbm, int closid, bool exclusive)
+{
+	enum resctrl_conf_type peer_type = resctrl_peer_type(s->conf_type);
+	struct rdt_resource *r = s->res;
+
+	if (__rdtgroup_cbm_overlaps(r, d, cbm, closid, s->conf_type,
+				    exclusive))
+		return true;
+
+	if (!resctrl_arch_get_cdp_enabled(r->rid))
+		return false;
+<<<<<<< HEAD
 
 	return  __rdtgroup_cbm_overlaps(r_cdp, d_cdp, cbm, closid, exclusive);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return  __rdtgroup_cbm_overlaps(r, d, cbm, closid, peer_type, exclusive);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1256,17 +1501,50 @@ bool rdtgroup_cbm_overlaps(struct rdt_resource *r, struct rdt_domain *d,
 static bool rdtgroup_mode_test_exclusive(struct rdtgroup *rdtgrp)
 {
 	int closid = rdtgrp->closid;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s;
 	struct rdt_resource *r;
 	bool has_cache = false;
 	struct rdt_domain *d;
+	u32 ctrl;
 
+	list_for_each_entry(s, &resctrl_schema_all, list) {
+		r = s->res;
+=======
+=======
+	struct resctrl_schema *s;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct rdt_resource *r;
+	bool has_cache = false;
+	struct rdt_domain *d;
+	u32 ctrl;
+
+<<<<<<< HEAD
 	for_each_alloc_enabled_rdt_resource(r) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	list_for_each_entry(s, &resctrl_schema_all, list) {
+		r = s->res;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (r->rid == RDT_RESOURCE_MBA)
 			continue;
 		has_cache = true;
 		list_for_each_entry(d, &r->domains, list) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			ctrl = resctrl_arch_get_config(r, d, closid,
+						       s->conf_type);
+			if (rdtgroup_cbm_overlaps(s, d, ctrl, closid, false)) {
+=======
 			if (rdtgroup_cbm_overlaps(r, d, d->ctrl_val[closid],
 						  rdtgrp->closid, false)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ctrl = resctrl_arch_get_config(r, d, closid,
+						       s->conf_type);
+			if (rdtgroup_cbm_overlaps(s, d, ctrl, closid, false)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				rdt_last_cmd_puts("Schemata overlaps\n");
 				return false;
 			}
@@ -1397,6 +1675,14 @@ unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
 static int rdtgroup_size_show(struct kernfs_open_file *of,
 			      struct seq_file *s, void *v)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *schema;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *schema;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct rdtgroup *rdtgrp;
 	struct rdt_resource *r;
 	struct rdt_domain *d;
@@ -1418,8 +1704,18 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
 			ret = -ENODEV;
 		} else {
 			seq_printf(s, "%*s:", max_name_width,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				   rdtgrp->plr->s->name);
+			size = rdtgroup_cbm_to_size(rdtgrp->plr->s->res,
+=======
 				   rdtgrp->plr->r->name);
 			size = rdtgroup_cbm_to_size(rdtgrp->plr->r,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   rdtgrp->plr->s->name);
+			size = rdtgroup_cbm_to_size(rdtgrp->plr->s->res,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						    rdtgrp->plr->d,
 						    rdtgrp->plr->cbm);
 			seq_printf(s, "%d=%u\n", rdtgrp->plr->d->id, size);
@@ -1427,18 +1723,44 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
 		goto out;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	list_for_each_entry(schema, &resctrl_schema_all, list) {
+		r = schema->res;
+		sep = false;
+		seq_printf(s, "%*s:", max_name_width, schema->name);
+=======
 	for_each_alloc_enabled_rdt_resource(r) {
 		sep = false;
 		seq_printf(s, "%*s:", max_name_width, r->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	list_for_each_entry(schema, &resctrl_schema_all, list) {
+		r = schema->res;
+		sep = false;
+		seq_printf(s, "%*s:", max_name_width, schema->name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		list_for_each_entry(d, &r->domains, list) {
 			if (sep)
 				seq_putc(s, ';');
 			if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
 				size = 0;
 			} else {
+<<<<<<< HEAD
+<<<<<<< HEAD
+				ctrl = resctrl_arch_get_config(r, d,
+							       rdtgrp->closid,
+							       schema->conf_type);
+=======
 				ctrl = (!is_mba_sc(r) ?
 						d->ctrl_val[rdtgrp->closid] :
 						d->mbps_val[rdtgrp->closid]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				ctrl = resctrl_arch_get_config(r, d,
+							       rdtgrp->closid,
+							       schema->conf_type);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (r->rid == RDT_RESOURCE_MBA)
 					size = ctrl;
 				else
@@ -1757,14 +2079,30 @@ int rdtgroup_kn_mode_restore(struct rdtgroup *r, const char *name,
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int rdtgroup_mkdir_info_resdir(void *priv, char *name,
+=======
 static int rdtgroup_mkdir_info_resdir(struct rdt_resource *r, char *name,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int rdtgroup_mkdir_info_resdir(void *priv, char *name,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      unsigned long fflags)
 {
 	struct kernfs_node *kn_subdir;
 	int ret;
 
 	kn_subdir = kernfs_create_dir(kn_info, name,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				      kn_info->mode, priv);
+=======
 				      kn_info->mode, r);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				      kn_info->mode, priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(kn_subdir))
 		return PTR_ERR(kn_subdir);
 
@@ -1781,6 +2119,14 @@ static int rdtgroup_mkdir_info_resdir(struct rdt_resource *r, char *name,
 
 static int rdtgroup_create_info_dir(struct kernfs_node *parent_kn)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_schema *s;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct rdt_resource *r;
 	unsigned long fflags;
 	char name[32];
@@ -1795,9 +2141,25 @@ static int rdtgroup_create_info_dir(struct kernfs_node *parent_kn)
 	if (ret)
 		goto out_destroy;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* loop over enabled controls, these are all alloc_enabled */
+	list_for_each_entry(s, &resctrl_schema_all, list) {
+		r = s->res;
+		fflags =  r->fflags | RF_CTRL_INFO;
+		ret = rdtgroup_mkdir_info_resdir(s, s->name, fflags);
+=======
 	for_each_alloc_enabled_rdt_resource(r) {
 		fflags =  r->fflags | RF_CTRL_INFO;
 		ret = rdtgroup_mkdir_info_resdir(r, r->name, fflags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* loop over enabled controls, these are all alloc_enabled */
+	list_for_each_entry(s, &resctrl_schema_all, list) {
+		r = s->res;
+		fflags =  r->fflags | RF_CTRL_INFO;
+		ret = rdtgroup_mkdir_info_resdir(s, s->name, fflags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			goto out_destroy;
 	}
@@ -1867,7 +2229,15 @@ static void l2_qos_cfg_update(void *arg)
 
 static inline bool is_mba_linear(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl.membw.delay_linear;
+=======
 	return rdt_resources_all[RDT_RESOURCE_MBA].membw.delay_linear;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl.membw.delay_linear;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int set_cache_qos_cfg(int level, bool enable)
@@ -1888,7 +2258,15 @@ static int set_cache_qos_cfg(int level, bool enable)
 	if (!zalloc_cpumask_var(&cpu_mask, GFP_KERNEL))
 		return -ENOMEM;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	r_l = &rdt_resources_all[level].r_resctrl;
+=======
 	r_l = &rdt_resources_all[level];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	r_l = &rdt_resources_all[level].r_resctrl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry(d, &r_l->domains, list) {
 		if (r_l->cache.arch_has_per_cpu_cfg)
 			/* Pick all the CPUs in the domain instance */
@@ -1914,14 +2292,38 @@ static int set_cache_qos_cfg(int level, bool enable)
 /* Restore the qos cfg state when a domain comes online */
 void rdt_domain_reconfigure_cdp(struct rdt_resource *r)
 {
-	if (!r->alloc_capable)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+
+	if (!r->cdp_capable)
 		return;
 
-	if (r == &rdt_resources_all[RDT_RESOURCE_L2DATA])
-		l2_qos_cfg_update(&r->alloc_enabled);
+	if (r->rid == RDT_RESOURCE_L2)
+		l2_qos_cfg_update(&hw_res->cdp_enabled);
 
+	if (r->rid == RDT_RESOURCE_L3)
+		l3_qos_cfg_update(&hw_res->cdp_enabled);
+=======
+	if (!r->alloc_capable)
+=======
+	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+
+	if (!r->cdp_capable)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		return;
+
+	if (r->rid == RDT_RESOURCE_L2)
+		l2_qos_cfg_update(&hw_res->cdp_enabled);
+
+<<<<<<< HEAD
 	if (r == &rdt_resources_all[RDT_RESOURCE_L3DATA])
 		l3_qos_cfg_update(&r->alloc_enabled);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (r->rid == RDT_RESOURCE_L3)
+		l3_qos_cfg_update(&hw_res->cdp_enabled);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1932,7 +2334,17 @@ void rdt_domain_reconfigure_cdp(struct rdt_resource *r)
  */
 static int set_mba_sc(bool mba_sc)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
+	struct rdt_hw_domain *hw_dom;
+=======
 	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct rdt_resource *r = &rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl;
+	struct rdt_hw_domain *hw_dom;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct rdt_domain *d;
 
 	if (!is_mbm_enabled() || !is_mba_linear() ||
@@ -1940,73 +2352,135 @@ static int set_mba_sc(bool mba_sc)
 		return -EINVAL;
 
 	r->membw.mba_sc = mba_sc;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	list_for_each_entry(d, &r->domains, list) {
+		hw_dom = resctrl_to_arch_dom(d);
+		setup_default_ctrlval(r, hw_dom->ctrl_val, hw_dom->mbps_val);
+	}
+<<<<<<< HEAD
+=======
 	list_for_each_entry(d, &r->domains, list)
 		setup_default_ctrlval(r, d->ctrl_val, d->mbps_val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
 
-static int cdp_enable(int level, int data_type, int code_type)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int cdp_enable(int level)
 {
-	struct rdt_resource *r_ldata = &rdt_resources_all[data_type];
-	struct rdt_resource *r_lcode = &rdt_resources_all[code_type];
-	struct rdt_resource *r_l = &rdt_resources_all[level];
+	struct rdt_resource *r_l = &rdt_resources_all[level].r_resctrl;
 	int ret;
 
-	if (!r_l->alloc_capable || !r_ldata->alloc_capable ||
-	    !r_lcode->alloc_capable)
+	if (!r_l->alloc_capable)
 		return -EINVAL;
 
 	ret = set_cache_qos_cfg(level, true);
-	if (!ret) {
-		r_l->alloc_enabled = false;
-		r_ldata->alloc_enabled = true;
-		r_lcode->alloc_enabled = true;
-	}
+	if (!ret)
+		rdt_resources_all[level].cdp_enabled = true;
+
 	return ret;
 }
 
-static int cdpl3_enable(void)
+static void cdp_disable(int level)
 {
-	return cdp_enable(RDT_RESOURCE_L3, RDT_RESOURCE_L3DATA,
-			  RDT_RESOURCE_L3CODE);
-}
+	struct rdt_hw_resource *r_hw = &rdt_resources_all[level];
 
-static int cdpl2_enable(void)
-{
-	return cdp_enable(RDT_RESOURCE_L2, RDT_RESOURCE_L2DATA,
-			  RDT_RESOURCE_L2CODE);
-}
-
-static void cdp_disable(int level, int data_type, int code_type)
-{
-	struct rdt_resource *r = &rdt_resources_all[level];
-
-	r->alloc_enabled = r->alloc_capable;
-
-	if (rdt_resources_all[data_type].alloc_enabled) {
-		rdt_resources_all[data_type].alloc_enabled = false;
-		rdt_resources_all[code_type].alloc_enabled = false;
+	if (r_hw->cdp_enabled) {
 		set_cache_qos_cfg(level, false);
+		r_hw->cdp_enabled = false;
 	}
 }
 
-static void cdpl3_disable(void)
+int resctrl_arch_set_cdp_enabled(enum resctrl_res_level l, bool enable)
 {
-	cdp_disable(RDT_RESOURCE_L3, RDT_RESOURCE_L3DATA, RDT_RESOURCE_L3CODE);
+	struct rdt_hw_resource *hw_res = &rdt_resources_all[l];
+
+	if (!hw_res->r_resctrl.cdp_capable)
+		return -EINVAL;
+
+	if (enable)
+		return cdp_enable(l);
+
+	cdp_disable(l);
+
+	return 0;
+=======
+static int cdp_enable(int level, int data_type, int code_type)
+=======
+static int cdp_enable(int level)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct rdt_resource *r_l = &rdt_resources_all[level].r_resctrl;
+	int ret;
+
+	if (!r_l->alloc_capable)
+		return -EINVAL;
+
+	ret = set_cache_qos_cfg(level, true);
+	if (!ret)
+		rdt_resources_all[level].cdp_enabled = true;
+
+	return ret;
 }
 
+static void cdp_disable(int level)
+{
+	struct rdt_hw_resource *r_hw = &rdt_resources_all[level];
+
+	if (r_hw->cdp_enabled) {
+		set_cache_qos_cfg(level, false);
+		r_hw->cdp_enabled = false;
+	}
+}
+
+int resctrl_arch_set_cdp_enabled(enum resctrl_res_level l, bool enable)
+{
+	struct rdt_hw_resource *hw_res = &rdt_resources_all[l];
+
+	if (!hw_res->r_resctrl.cdp_capable)
+		return -EINVAL;
+
+	if (enable)
+		return cdp_enable(l);
+
+	cdp_disable(l);
+
+<<<<<<< HEAD
 static void cdpl2_disable(void)
 {
 	cdp_disable(RDT_RESOURCE_L2, RDT_RESOURCE_L2DATA, RDT_RESOURCE_L2CODE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void cdp_disable_all(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L3))
+		resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L3, false);
+	if (resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L2))
+		resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L2, false);
+<<<<<<< HEAD
+=======
 	if (rdt_resources_all[RDT_RESOURCE_L3DATA].alloc_enabled)
 		cdpl3_disable();
 	if (rdt_resources_all[RDT_RESOURCE_L2DATA].alloc_enabled)
 		cdpl2_disable();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -2084,10 +2558,24 @@ static int rdt_enable_ctx(struct rdt_fs_context *ctx)
 	int ret = 0;
 
 	if (ctx->enable_cdpl2)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L2, true);
+
+	if (!ret && ctx->enable_cdpl3)
+		ret = resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L3, true);
+=======
 		ret = cdpl2_enable();
 
 	if (!ret && ctx->enable_cdpl3)
 		ret = cdpl3_enable();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L2, true);
+
+	if (!ret && ctx->enable_cdpl3)
+		ret = resctrl_arch_set_cdp_enabled(RDT_RESOURCE_L3, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!ret && ctx->enable_mba_mbps)
 		ret = set_mba_sc(true);
@@ -2095,6 +2583,101 @@ static int rdt_enable_ctx(struct rdt_fs_context *ctx)
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int schemata_list_add(struct rdt_resource *r, enum resctrl_conf_type type)
+{
+	struct resctrl_schema *s;
+	const char *suffix = "";
+	int ret, cl;
+
+	s = kzalloc(sizeof(*s), GFP_KERNEL);
+	if (!s)
+		return -ENOMEM;
+
+	s->res = r;
+	s->num_closid = resctrl_arch_get_num_closid(r);
+	if (resctrl_arch_get_cdp_enabled(r->rid))
+		s->num_closid /= 2;
+
+	s->conf_type = type;
+	switch (type) {
+	case CDP_CODE:
+		suffix = "CODE";
+		break;
+	case CDP_DATA:
+		suffix = "DATA";
+		break;
+	case CDP_NONE:
+		suffix = "";
+		break;
+	}
+
+	ret = snprintf(s->name, sizeof(s->name), "%s%s", r->name, suffix);
+	if (ret >= sizeof(s->name)) {
+		kfree(s);
+		return -EINVAL;
+	}
+
+	cl = strlen(s->name);
+
+	/*
+	 * If CDP is supported by this resource, but not enabled,
+	 * include the suffix. This ensures the tabular format of the
+	 * schemata file does not change between mounts of the filesystem.
+	 */
+	if (r->cdp_capable && !resctrl_arch_get_cdp_enabled(r->rid))
+		cl += 4;
+
+	if (cl > max_name_width)
+		max_name_width = cl;
+
+	INIT_LIST_HEAD(&s->list);
+	list_add(&s->list, &resctrl_schema_all);
+
+	return 0;
+}
+
+static int schemata_list_create(void)
+{
+	struct rdt_resource *r;
+	int ret = 0;
+
+	for_each_alloc_enabled_rdt_resource(r) {
+		if (resctrl_arch_get_cdp_enabled(r->rid)) {
+			ret = schemata_list_add(r, CDP_CODE);
+			if (ret)
+				break;
+
+			ret = schemata_list_add(r, CDP_DATA);
+		} else {
+			ret = schemata_list_add(r, CDP_NONE);
+		}
+
+		if (ret)
+			break;
+	}
+
+	return ret;
+}
+
+static void schemata_list_destroy(void)
+{
+	struct resctrl_schema *s, *tmp;
+
+	list_for_each_entry_safe(s, tmp, &resctrl_schema_all, list) {
+		list_del(&s->list);
+		kfree(s);
+	}
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int rdt_get_tree(struct fs_context *fc)
 {
 	struct rdt_fs_context *ctx = rdt_fc2context(fc);
@@ -2116,11 +2699,34 @@ static int rdt_get_tree(struct fs_context *fc)
 	if (ret < 0)
 		goto out_cdp;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = schemata_list_create();
+	if (ret) {
+		schemata_list_destroy();
+		goto out_mba;
+	}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	closid_init();
 
 	ret = rdtgroup_create_info_dir(rdtgroup_default.kn);
 	if (ret < 0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto out_schemata_free;
+=======
 		goto out_mba;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto out_schemata_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (rdt_mon_capable) {
 		ret = mongroup_create_dir(rdtgroup_default.kn,
@@ -2153,7 +2759,15 @@ static int rdt_get_tree(struct fs_context *fc)
 		static_branch_enable_cpuslocked(&rdt_enable_key);
 
 	if (is_mbm_enabled()) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+=======
 		r = &rdt_resources_all[RDT_RESOURCE_L3];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		r = &rdt_resources_all[RDT_RESOURCE_L3].r_resctrl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		list_for_each_entry(dom, &r->domains, list)
 			mbm_setup_overflow_handler(dom, MBM_OVERFLOW_INTERVAL);
 	}
@@ -2170,6 +2784,16 @@ out_mongrp:
 		kernfs_remove(kn_mongrp);
 out_info:
 	kernfs_remove(kn_info);
+<<<<<<< HEAD
+<<<<<<< HEAD
+out_schemata_free:
+	schemata_list_destroy();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+out_schemata_free:
+	schemata_list_destroy();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_mba:
 	if (ctx->enable_mba_mbps)
 		set_mba_sc(false);
@@ -2257,6 +2881,16 @@ static int rdt_init_fs_context(struct fs_context *fc)
 
 static int reset_all_ctrls(struct rdt_resource *r)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+	struct rdt_hw_domain *hw_dom;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(r);
+	struct rdt_hw_domain *hw_dom;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct msr_param msr_param;
 	cpumask_var_t cpu_mask;
 	struct rdt_domain *d;
@@ -2267,7 +2901,15 @@ static int reset_all_ctrls(struct rdt_resource *r)
 
 	msr_param.res = r;
 	msr_param.low = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msr_param.high = hw_res->num_closid;
+=======
 	msr_param.high = r->num_closid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msr_param.high = hw_res->num_closid;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Disable resource control for this resource by setting all
@@ -2275,10 +2917,26 @@ static int reset_all_ctrls(struct rdt_resource *r)
 	 * from each domain to update the MSRs below.
 	 */
 	list_for_each_entry(d, &r->domains, list) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		hw_dom = resctrl_to_arch_dom(d);
+		cpumask_set_cpu(cpumask_any(&d->cpu_mask), cpu_mask);
+
+		for (i = 0; i < hw_res->num_closid; i++)
+			hw_dom->ctrl_val[i] = r->default_ctrl;
+=======
 		cpumask_set_cpu(cpumask_any(&d->cpu_mask), cpu_mask);
 
 		for (i = 0; i < r->num_closid; i++)
 			d->ctrl_val[i] = r->default_ctrl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		hw_dom = resctrl_to_arch_dom(d);
+		cpumask_set_cpu(cpumask_any(&d->cpu_mask), cpu_mask);
+
+		for (i = 0; i < hw_res->num_closid; i++)
+			hw_dom->ctrl_val[i] = r->default_ctrl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	cpu = get_cpu();
 	/* Update CBM on this cpu if it's in cpu_mask. */
@@ -2408,6 +3066,14 @@ static void rdt_kill_sb(struct super_block *sb)
 	rmdir_all_sub();
 	rdt_pseudo_lock_release();
 	rdtgroup_default.mode = RDT_MODE_SHAREABLE;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	schemata_list_destroy();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	schemata_list_destroy();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	static_branch_disable_cpuslocked(&rdt_alloc_enable_key);
 	static_branch_disable_cpuslocked(&rdt_mon_enable_key);
 	static_branch_disable_cpuslocked(&rdt_enable_key);
@@ -2642,23 +3308,54 @@ static u32 cbm_ensure_valid(u32 _val, struct rdt_resource *r)
  * Set the RDT domain up to start off with all usable allocations. That is,
  * all shareable and unused bits. All-zero CBM is invalid.
  */
-static int __init_one_rdt_domain(struct rdt_domain *d, struct rdt_resource *r,
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int __init_one_rdt_domain(struct rdt_domain *d, struct resctrl_schema *s,
 				 u32 closid)
 {
-	struct rdt_resource *r_cdp = NULL;
-	struct rdt_domain *d_cdp = NULL;
+	enum resctrl_conf_type peer_type = resctrl_peer_type(s->conf_type);
+	enum resctrl_conf_type t = s->conf_type;
+	struct resctrl_staged_config *cfg;
+	struct rdt_resource *r = s->res;
 	u32 used_b = 0, unused_b = 0;
 	unsigned long tmp_cbm;
 	enum rdtgrp_mode mode;
-	u32 peer_ctl, *ctrl;
+	u32 peer_ctl, ctrl_val;
 	int i;
 
-	rdt_cdp_peer_get(r, d, &r_cdp, &d_cdp);
-	d->have_new_ctrl = false;
-	d->new_ctrl = r->cache.shareable_bits;
+	cfg = &d->staged_config[t];
+	cfg->have_new_ctrl = false;
+	cfg->new_ctrl = r->cache.shareable_bits;
 	used_b = r->cache.shareable_bits;
+	for (i = 0; i < closids_supported(); i++) {
+=======
+static int __init_one_rdt_domain(struct rdt_domain *d, struct rdt_resource *r,
+=======
+static int __init_one_rdt_domain(struct rdt_domain *d, struct resctrl_schema *s,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+				 u32 closid)
+{
+	enum resctrl_conf_type peer_type = resctrl_peer_type(s->conf_type);
+	enum resctrl_conf_type t = s->conf_type;
+	struct resctrl_staged_config *cfg;
+	struct rdt_resource *r = s->res;
+	u32 used_b = 0, unused_b = 0;
+	unsigned long tmp_cbm;
+	enum rdtgrp_mode mode;
+	u32 peer_ctl, ctrl_val;
+	int i;
+
+	cfg = &d->staged_config[t];
+	cfg->have_new_ctrl = false;
+	cfg->new_ctrl = r->cache.shareable_bits;
+	used_b = r->cache.shareable_bits;
+<<<<<<< HEAD
 	ctrl = d->ctrl_val;
 	for (i = 0; i < closids_supported(); i++, ctrl++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0; i < closids_supported(); i++) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (closid_allocated(i) && i != closid) {
 			mode = rdtgroup_mode_by_closid(i);
 			if (mode == RDT_MODE_PSEUDO_LOCKSETUP)
@@ -2673,35 +3370,93 @@ static int __init_one_rdt_domain(struct rdt_domain *d, struct rdt_resource *r,
 			 * usage to ensure there is no overlap
 			 * with an exclusive group.
 			 */
-			if (d_cdp)
-				peer_ctl = d_cdp->ctrl_val[i];
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (resctrl_arch_get_cdp_enabled(r->rid))
+				peer_ctl = resctrl_arch_get_config(r, d, i,
+								   peer_type);
 			else
 				peer_ctl = 0;
-			used_b |= *ctrl | peer_ctl;
+			ctrl_val = resctrl_arch_get_config(r, d, i,
+							   s->conf_type);
+			used_b |= ctrl_val | peer_ctl;
 			if (mode == RDT_MODE_SHAREABLE)
+				cfg->new_ctrl |= ctrl_val | peer_ctl;
+=======
+			if (d_cdp)
+				peer_ctl = d_cdp->ctrl_val[i];
+=======
+			if (resctrl_arch_get_cdp_enabled(r->rid))
+				peer_ctl = resctrl_arch_get_config(r, d, i,
+								   peer_type);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			else
+				peer_ctl = 0;
+			ctrl_val = resctrl_arch_get_config(r, d, i,
+							   s->conf_type);
+			used_b |= ctrl_val | peer_ctl;
+			if (mode == RDT_MODE_SHAREABLE)
+<<<<<<< HEAD
 				d->new_ctrl |= *ctrl | peer_ctl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				cfg->new_ctrl |= ctrl_val | peer_ctl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 	if (d->plr && d->plr->cbm > 0)
 		used_b |= d->plr->cbm;
 	unused_b = used_b ^ (BIT_MASK(r->cache.cbm_len) - 1);
 	unused_b &= BIT_MASK(r->cache.cbm_len) - 1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cfg->new_ctrl |= unused_b;
+=======
 	d->new_ctrl |= unused_b;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cfg->new_ctrl |= unused_b;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Force the initial CBM to be valid, user can
 	 * modify the CBM based on system availability.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cfg->new_ctrl = cbm_ensure_valid(cfg->new_ctrl, r);
+=======
 	d->new_ctrl = cbm_ensure_valid(d->new_ctrl, r);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cfg->new_ctrl = cbm_ensure_valid(cfg->new_ctrl, r);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Assign the u32 CBM to an unsigned long to ensure that
 	 * bitmap_weight() does not access out-of-bound memory.
 	 */
-	tmp_cbm = d->new_ctrl;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	tmp_cbm = cfg->new_ctrl;
 	if (bitmap_weight(&tmp_cbm, r->cache.cbm_len) < r->cache.min_cbm_bits) {
-		rdt_last_cmd_printf("No space on %s:%d\n", r->name, d->id);
+		rdt_last_cmd_printf("No space on %s:%d\n", s->name, d->id);
 		return -ENOSPC;
 	}
+	cfg->have_new_ctrl = true;
+=======
+	tmp_cbm = d->new_ctrl;
+=======
+	tmp_cbm = cfg->new_ctrl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (bitmap_weight(&tmp_cbm, r->cache.cbm_len) < r->cache.min_cbm_bits) {
+		rdt_last_cmd_printf("No space on %s:%d\n", s->name, d->id);
+		return -ENOSPC;
+	}
+<<<<<<< HEAD
 	d->have_new_ctrl = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cfg->have_new_ctrl = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -2716,13 +3471,31 @@ static int __init_one_rdt_domain(struct rdt_domain *d, struct rdt_resource *r,
  * If there are no more shareable bits available on any domain then
  * the entire allocation will fail.
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int rdtgroup_init_cat(struct resctrl_schema *s, u32 closid)
+=======
 static int rdtgroup_init_cat(struct rdt_resource *r, u32 closid)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int rdtgroup_init_cat(struct resctrl_schema *s, u32 closid)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rdt_domain *d;
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	list_for_each_entry(d, &s->res->domains, list) {
+		ret = __init_one_rdt_domain(d, s, closid);
+=======
 	list_for_each_entry(d, &r->domains, list) {
 		ret = __init_one_rdt_domain(d, r, closid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	list_for_each_entry(d, &s->res->domains, list) {
+		ret = __init_one_rdt_domain(d, s, closid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret < 0)
 			return ret;
 	}
@@ -2733,30 +3506,80 @@ static int rdtgroup_init_cat(struct rdt_resource *r, u32 closid)
 /* Initialize MBA resource with default values. */
 static void rdtgroup_init_mba(struct rdt_resource *r)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_staged_config *cfg;
+	struct rdt_domain *d;
+
+	list_for_each_entry(d, &r->domains, list) {
+		cfg = &d->staged_config[CDP_NONE];
+		cfg->new_ctrl = is_mba_sc(r) ? MBA_MAX_MBPS : r->default_ctrl;
+		cfg->have_new_ctrl = true;
+=======
 	struct rdt_domain *d;
 
 	list_for_each_entry(d, &r->domains, list) {
 		d->new_ctrl = is_mba_sc(r) ? MBA_MAX_MBPS : r->default_ctrl;
 		d->have_new_ctrl = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct resctrl_staged_config *cfg;
+	struct rdt_domain *d;
+
+	list_for_each_entry(d, &r->domains, list) {
+		cfg = &d->staged_config[CDP_NONE];
+		cfg->new_ctrl = is_mba_sc(r) ? MBA_MAX_MBPS : r->default_ctrl;
+		cfg->have_new_ctrl = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
 /* Initialize the RDT group's allocations. */
 static int rdtgroup_init_alloc(struct rdtgroup *rdtgrp)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct resctrl_schema *s;
 	struct rdt_resource *r;
 	int ret;
 
-	for_each_alloc_enabled_rdt_resource(r) {
+	list_for_each_entry(s, &resctrl_schema_all, list) {
+		r = s->res;
 		if (r->rid == RDT_RESOURCE_MBA) {
 			rdtgroup_init_mba(r);
 		} else {
+			ret = rdtgroup_init_cat(s, rdtgrp->closid);
+=======
+=======
+	struct resctrl_schema *s;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct rdt_resource *r;
+	int ret;
+
+	list_for_each_entry(s, &resctrl_schema_all, list) {
+		r = s->res;
+		if (r->rid == RDT_RESOURCE_MBA) {
+			rdtgroup_init_mba(r);
+		} else {
+<<<<<<< HEAD
 			ret = rdtgroup_init_cat(r, rdtgrp->closid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = rdtgroup_init_cat(s, rdtgrp->closid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (ret < 0)
 				return ret;
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = resctrl_arch_update_domains(r, rdtgrp->closid);
+=======
 		ret = update_domains(r, rdtgrp->closid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = resctrl_arch_update_domains(r, rdtgrp->closid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret < 0) {
 			rdt_last_cmd_puts("Failed to initialize allocations\n");
 			return ret;
@@ -3124,13 +3947,31 @@ out:
 
 static int rdtgroup_show_options(struct seq_file *seq, struct kernfs_root *kf)
 {
-	if (rdt_resources_all[RDT_RESOURCE_L3DATA].alloc_enabled)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L3))
 		seq_puts(seq, ",cdp");
 
-	if (rdt_resources_all[RDT_RESOURCE_L2DATA].alloc_enabled)
+	if (resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L2))
 		seq_puts(seq, ",cdpl2");
 
+	if (is_mba_sc(&rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl))
+=======
+	if (rdt_resources_all[RDT_RESOURCE_L3DATA].alloc_enabled)
+=======
+	if (resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L3))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		seq_puts(seq, ",cdp");
+
+	if (resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L2))
+		seq_puts(seq, ",cdpl2");
+
+<<<<<<< HEAD
 	if (is_mba_sc(&rdt_resources_all[RDT_RESOURCE_MBA]))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (is_mba_sc(&rdt_resources_all[RDT_RESOURCE_MBA].r_resctrl))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		seq_puts(seq, ",mba_MBps");
 
 	return 0;

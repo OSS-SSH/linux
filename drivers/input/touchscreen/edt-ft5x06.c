@@ -899,6 +899,14 @@ static int edt_ft5x06_ts_identify(struct i2c_client *client,
 		 * the identification registers.
 		 */
 		switch (rdbuf[0]) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		case 0x11:   /* EDT EP0110M09 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case 0x11:   /* EDT EP0110M09 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case 0x35:   /* EDT EP0350M09 */
 		case 0x43:   /* EDT EP0430M09 */
 		case 0x50:   /* EDT EP0500M09 */

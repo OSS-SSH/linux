@@ -701,7 +701,15 @@ int nfp_net_pci_probe(struct nfp_pf *pf)
 	if (err)
 		goto err_unmap;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = devlink_register(devlink);
+=======
 	err = devlink_register(devlink, &pf->pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = devlink_register(devlink);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto err_app_clean;
 

@@ -361,6 +361,18 @@ static bool escape_special(unsigned char c, char **dst, char *end)
 	case '\e':
 		to = 'e';
 		break;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case '"':
+		to = '"';
+		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case '"':
+		to = '"';
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		return false;
 	}
@@ -474,6 +486,14 @@ static bool escape_hex(unsigned char c, char **dst, char *end)
  *		'\t' - horizontal tab
  *		'\v' - vertical tab
  *	%ESCAPE_SPECIAL:
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *		'\"' - double quote
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *		'\"' - double quote
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *		'\\' - backslash
  *		'\a' - alert (BEL)
  *		'\e' - escape

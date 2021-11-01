@@ -18,6 +18,14 @@ extern struct mutex smp_cpu_state_mutex;
 extern unsigned int smp_cpu_mt_shift;
 extern unsigned int smp_cpu_mtid;
 extern __vector128 __initdata boot_cpu_vector_save_area[__NUM_VXRS];
+<<<<<<< HEAD
+<<<<<<< HEAD
+extern cpumask_t cpu_setup_mask;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern cpumask_t cpu_setup_mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern int __cpu_up(unsigned int cpu, struct task_struct *tidle);
 

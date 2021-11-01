@@ -75,6 +75,14 @@ enum ingenic_machine_type {
 	MACH_INGENIC_JZ4750,
 	MACH_INGENIC_JZ4755,
 	MACH_INGENIC_JZ4760,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	MACH_INGENIC_JZ4760B,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MACH_INGENIC_JZ4760B,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	MACH_INGENIC_JZ4770,
 	MACH_INGENIC_JZ4775,
 	MACH_INGENIC_JZ4780,
@@ -83,6 +91,16 @@ enum ingenic_machine_type {
 	MACH_INGENIC_X1830,
 	MACH_INGENIC_X2000,
 	MACH_INGENIC_X2000E,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	MACH_INGENIC_X2000H,
+	MACH_INGENIC_X2100,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MACH_INGENIC_X2000H,
+	MACH_INGENIC_X2100,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 extern char *system_type;

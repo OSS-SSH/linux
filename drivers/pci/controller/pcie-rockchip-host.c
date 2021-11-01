@@ -517,7 +517,15 @@ static void rockchip_pcie_legacy_int_handler(struct irq_desc *desc)
 	struct device *dev = rockchip->dev;
 	u32 reg;
 	u32 hwirq;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret;
+=======
 	u32 virq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_enter(chip, desc);
 
@@ -528,10 +536,20 @@ static void rockchip_pcie_legacy_int_handler(struct irq_desc *desc)
 		hwirq = ffs(reg) - 1;
 		reg &= ~BIT(hwirq);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = generic_handle_domain_irq(rockchip->irq_domain, hwirq);
+		if (ret)
+=======
 		virq = irq_find_mapping(rockchip->irq_domain, hwirq);
 		if (virq)
 			generic_handle_irq(virq);
 		else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = generic_handle_domain_irq(rockchip->irq_domain, hwirq);
+		if (ret)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_err(dev, "unexpected IRQ, INT%d\n", hwirq);
 	}
 

@@ -98,7 +98,15 @@ static const struct nf_hook_ops ebt_ops_broute = {
 	.priority	= NF_BR_PRI_FIRST,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int broute_table_init(struct net *net)
+=======
 static int __net_init broute_net_init(struct net *net)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int broute_table_init(struct net *net)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return ebt_register_table(net, &broute_table, &ebt_ops_broute);
 }
@@ -114,19 +122,54 @@ static void __net_exit broute_net_exit(struct net *net)
 }
 
 static struct pernet_operations broute_net_ops = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.init = broute_net_init,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.exit = broute_net_exit,
 	.pre_exit = broute_net_pre_exit,
 };
 
 static int __init ebtable_broute_init(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	int ret = ebt_register_template(&broute_table, broute_table_init);
+
+	if (ret)
+		return ret;
+
+	ret = register_pernet_subsys(&broute_net_ops);
+	if (ret) {
+		ebt_unregister_template(&broute_table);
+		return ret;
+	}
+
+	return 0;
+<<<<<<< HEAD
+=======
 	return register_pernet_subsys(&broute_net_ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __exit ebtable_broute_fini(void)
 {
 	unregister_pernet_subsys(&broute_net_ops);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ebt_unregister_template(&broute_table);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ebt_unregister_template(&broute_table);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 module_init(ebtable_broute_init);

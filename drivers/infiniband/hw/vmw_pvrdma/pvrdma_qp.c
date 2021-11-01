@@ -182,18 +182,40 @@ static int pvrdma_set_sq_size(struct pvrdma_dev *dev, struct ib_qp_cap *req_cap,
 
 /**
  * pvrdma_create_qp - create queue pair
- * @pd: protection domain
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @ibqp: queue pair
  * @init_attr: queue pair attributes
  * @udata: user data
  *
- * @return: the ib_qp pointer on success, otherwise returns an errno.
+ * @return: the 0 on success, otherwise returns an errno.
  */
-struct ib_qp *pvrdma_create_qp(struct ib_pd *pd,
-			       struct ib_qp_init_attr *init_attr,
-			       struct ib_udata *udata)
+int pvrdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
+		     struct ib_udata *udata)
 {
+	struct pvrdma_qp *qp = to_vqp(ibqp);
+	struct pvrdma_dev *dev = to_vdev(ibqp->device);
+=======
+ * @pd: protection domain
+=======
+ * @ibqp: queue pair
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * @init_attr: queue pair attributes
+ * @udata: user data
+ *
+ * @return: the 0 on success, otherwise returns an errno.
+ */
+int pvrdma_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
+		     struct ib_udata *udata)
+{
+<<<<<<< HEAD
 	struct pvrdma_qp *qp = NULL;
 	struct pvrdma_dev *dev = to_vdev(pd->device);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct pvrdma_qp *qp = to_vqp(ibqp);
+	struct pvrdma_dev *dev = to_vdev(ibqp->device);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	union pvrdma_cmd_req req;
 	union pvrdma_cmd_resp rsp;
 	struct pvrdma_cmd_create_qp *cmd = &req.create_qp;
@@ -209,7 +231,15 @@ struct ib_qp *pvrdma_create_qp(struct ib_pd *pd,
 		dev_warn(&dev->pdev->dev,
 			 "invalid create queuepair flags %#x\n",
 			 init_attr->create_flags);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return -EOPNOTSUPP;
+=======
 		return ERR_PTR(-EOPNOTSUPP);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EOPNOTSUPP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (init_attr->qp_type != IB_QPT_RC &&
@@ -217,22 +247,54 @@ struct ib_qp *pvrdma_create_qp(struct ib_pd *pd,
 	    init_attr->qp_type != IB_QPT_GSI) {
 		dev_warn(&dev->pdev->dev, "queuepair type %d not supported\n",
 			 init_attr->qp_type);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return -EOPNOTSUPP;
+=======
 		return ERR_PTR(-EOPNOTSUPP);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EOPNOTSUPP;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (is_srq && !dev->dsr->caps.max_srq) {
 		dev_warn(&dev->pdev->dev,
 			 "SRQs not supported by device\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return -EINVAL;
+	}
+
+	if (!atomic_add_unless(&dev->num_qps, 1, dev->dsr->caps.max_qp))
+		return -ENOMEM;
+=======
 		return ERR_PTR(-EINVAL);
 	}
 
 	if (!atomic_add_unless(&dev->num_qps, 1, dev->dsr->caps.max_qp))
 		return ERR_PTR(-ENOMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EINVAL;
+	}
+
+	if (!atomic_add_unless(&dev->num_qps, 1, dev->dsr->caps.max_qp))
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (init_attr->qp_type) {
 	case IB_QPT_GSI:
 		if (init_attr->port_num == 0 ||
+<<<<<<< HEAD
+<<<<<<< HEAD
+		    init_attr->port_num > ibqp->device->phys_port_cnt) {
+=======
 		    init_attr->port_num > pd->device->phys_port_cnt) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		    init_attr->port_num > ibqp->device->phys_port_cnt) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_warn(&dev->pdev->dev, "invalid queuepair attrs\n");
 			ret = -EINVAL;
 			goto err_qp;
@@ -240,12 +302,18 @@ struct ib_qp *pvrdma_create_qp(struct ib_pd *pd,
 		fallthrough;
 	case IB_QPT_RC:
 	case IB_QPT_UD:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		qp = kzalloc(sizeof(*qp), GFP_KERNEL);
 		if (!qp) {
 			ret = -ENOMEM;
 			goto err_qp;
 		}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_lock_init(&qp->sq.lock);
 		spin_lock_init(&qp->rq.lock);
 		mutex_init(&qp->mutex);
@@ -275,9 +343,21 @@ struct ib_qp *pvrdma_create_qp(struct ib_pd *pd,
 
 			if (!is_srq) {
 				/* set qp->sq.wqe_cnt, shift, buf_size.. */
+<<<<<<< HEAD
+<<<<<<< HEAD
+				qp->rumem = ib_umem_get(ibqp->device,
+							ucmd.rbuf_addr,
+							ucmd.rbuf_size, 0);
+=======
 				qp->rumem =
 					ib_umem_get(pd->device, ucmd.rbuf_addr,
 						    ucmd.rbuf_size, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				qp->rumem = ib_umem_get(ibqp->device,
+							ucmd.rbuf_addr,
+							ucmd.rbuf_size, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (IS_ERR(qp->rumem)) {
 					ret = PTR_ERR(qp->rumem);
 					goto err_qp;
@@ -288,7 +368,15 @@ struct ib_qp *pvrdma_create_qp(struct ib_pd *pd,
 				qp->srq = to_vsrq(init_attr->srq);
 			}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			qp->sumem = ib_umem_get(ibqp->device, ucmd.sbuf_addr,
+=======
 			qp->sumem = ib_umem_get(pd->device, ucmd.sbuf_addr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			qp->sumem = ib_umem_get(ibqp->device, ucmd.sbuf_addr,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						ucmd.sbuf_size, 0);
 			if (IS_ERR(qp->sumem)) {
 				if (!is_srq)
@@ -306,12 +394,28 @@ struct ib_qp *pvrdma_create_qp(struct ib_pd *pd,
 				qp->npages_recv = 0;
 			qp->npages = qp->npages_send + qp->npages_recv;
 		} else {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			ret = pvrdma_set_sq_size(to_vdev(ibqp->device),
+=======
 			ret = pvrdma_set_sq_size(to_vdev(pd->device),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = pvrdma_set_sq_size(to_vdev(ibqp->device),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						 &init_attr->cap, qp);
 			if (ret)
 				goto err_qp;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			ret = pvrdma_set_rq_size(to_vdev(ibqp->device),
+=======
 			ret = pvrdma_set_rq_size(to_vdev(pd->device),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = pvrdma_set_rq_size(to_vdev(ibqp->device),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						 &init_attr->cap, qp);
 			if (ret)
 				goto err_qp;
@@ -362,7 +466,15 @@ struct ib_qp *pvrdma_create_qp(struct ib_pd *pd,
 
 	memset(cmd, 0, sizeof(*cmd));
 	cmd->hdr.cmd = PVRDMA_CMD_CREATE_QP;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cmd->pd_handle = to_vpd(ibqp->pd)->pd_handle;
+=======
 	cmd->pd_handle = to_vpd(pd)->pd_handle;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cmd->pd_handle = to_vpd(ibqp->pd)->pd_handle;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cmd->send_cq_handle = to_vcq(init_attr->send_cq)->cq_handle;
 	cmd->recv_cq_handle = to_vcq(init_attr->recv_cq)->cq_handle;
 	if (is_srq)
@@ -418,11 +530,27 @@ struct ib_qp *pvrdma_create_qp(struct ib_pd *pd,
 			dev_warn(&dev->pdev->dev,
 				 "failed to copy back udata\n");
 			__pvrdma_destroy_qp(dev, qp);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			return -EINVAL;
+		}
+	}
+
+	return 0;
+=======
 			return ERR_PTR(-EINVAL);
 		}
 	}
 
 	return &qp->ibqp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return -EINVAL;
+		}
+	}
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 err_pdir:
 	pvrdma_page_dir_cleanup(dev, &qp->pdir);
@@ -430,10 +558,20 @@ err_umem:
 	ib_umem_release(qp->rumem);
 	ib_umem_release(qp->sumem);
 err_qp:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	atomic_dec(&dev->num_qps);
+	return ret;
+=======
 	kfree(qp);
 	atomic_dec(&dev->num_qps);
 
 	return ERR_PTR(ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	atomic_dec(&dev->num_qps);
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void _pvrdma_free_qp(struct pvrdma_qp *qp)
@@ -454,8 +592,14 @@ static void _pvrdma_free_qp(struct pvrdma_qp *qp)
 
 	pvrdma_page_dir_cleanup(dev, &qp->pdir);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	kfree(qp);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic_dec(&dev->num_qps);
 }
 

@@ -275,6 +275,9 @@ void __init efi_init(void)
 	}
 #endif
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 static bool efifb_overlaps_pci_range(const struct of_pci_range *range)
 {
@@ -365,3 +368,6 @@ static int __init register_gop_device(void)
 	return platform_device_add(pd);
 }
 subsys_initcall(register_gop_device);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

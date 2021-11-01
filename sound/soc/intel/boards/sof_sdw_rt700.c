@@ -110,7 +110,17 @@ static int rt700_rtd_init(struct snd_soc_pcm_runtime *rtd)
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int sof_sdw_rt700_init(struct snd_soc_card *card,
+		       const struct snd_soc_acpi_link_adr *link,
+=======
 int sof_sdw_rt700_init(const struct snd_soc_acpi_link_adr *link,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int sof_sdw_rt700_init(struct snd_soc_card *card,
+		       const struct snd_soc_acpi_link_adr *link,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       struct snd_soc_dai_link *dai_links,
 		       struct sof_sdw_codec_info *info,
 		       bool playback)

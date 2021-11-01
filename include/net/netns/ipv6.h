@@ -51,6 +51,16 @@ struct netns_sysctl_ipv6 {
 	int max_dst_opts_len;
 	int max_hbh_opts_len;
 	int seg6_flowlabel;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u32 ioam6_id;
+	u64 ioam6_id_wide;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 ioam6_id;
+	u64 ioam6_id_wide;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool skip_notify_on_dev_down;
 	u8 fib_notify_on_flag_change;
 };
@@ -110,6 +120,14 @@ struct netns_ipv6 {
 		spinlock_t	lock;
 		u32		seq;
 	} ip6addrlbl_table;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct ioam6_pernet_data *ioam6_data;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ioam6_pernet_data *ioam6_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #if IS_ENABLED(CONFIG_NF_DEFRAG_IPV6)

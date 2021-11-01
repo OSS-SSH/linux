@@ -493,7 +493,15 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
 		goto err;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!size || len != ALIGN(size, 4) + hdrlen)
+=======
 	if (len != ALIGN(size, 4) + hdrlen)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!size || len != ALIGN(size, 4) + hdrlen)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto err;
 
 	if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&
@@ -506,8 +514,26 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
 
 	if (cb->type == QRTR_TYPE_NEW_SERVER) {
 		/* Remote node endpoint can bridge other distant nodes */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		const struct qrtr_ctrl_pkt *pkt;
+
+		if (size < sizeof(*pkt))
+			goto err;
+
+		pkt = data + hdrlen;
+=======
 		const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		const struct qrtr_ctrl_pkt *pkt;
+
+		if (size < sizeof(*pkt))
+			goto err;
+
+		pkt = data + hdrlen;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
 	}
 
@@ -518,8 +544,22 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
 		if (!ipc)
 			goto err;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (sock_queue_rcv_skb(&ipc->sk, skb)) {
+			qrtr_port_put(ipc);
+			goto err;
+		}
+=======
 		if (sock_queue_rcv_skb(&ipc->sk, skb))
 			goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (sock_queue_rcv_skb(&ipc->sk, skb)) {
+			qrtr_port_put(ipc);
+			goto err;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		qrtr_port_put(ipc);
 	}
@@ -839,6 +879,16 @@ static int qrtr_local_enqueue(struct qrtr_node *node, struct sk_buff *skb,
 
 	ipc = qrtr_port_lookup(to->sq_port);
 	if (!ipc || &ipc->sk == skb->sk) { /* do not send to self */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (ipc)
+			qrtr_port_put(ipc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ipc)
+			qrtr_port_put(ipc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree_skb(skb);
 		return -ENODEV;
 	}
@@ -1153,14 +1203,30 @@ static int qrtr_ioctl(struct socket *sock, unsigned int cmd, unsigned long arg)
 		rc = put_user(len, (int __user *)argp);
 		break;
 	case SIOCGIFADDR:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (get_user_ifreq(&ifr, NULL, argp)) {
+=======
 		if (copy_from_user(&ifr, argp, sizeof(ifr))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (get_user_ifreq(&ifr, NULL, argp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rc = -EFAULT;
 			break;
 		}
 
 		sq = (struct sockaddr_qrtr *)&ifr.ifr_addr;
 		*sq = ipc->us;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (put_user_ifreq(&ifr, argp)) {
+=======
 		if (copy_to_user(argp, &ifr, sizeof(ifr))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (put_user_ifreq(&ifr, argp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			rc = -EFAULT;
 			break;
 		}

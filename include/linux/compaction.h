@@ -84,6 +84,16 @@ static inline unsigned long compact_gap(unsigned int order)
 extern unsigned int sysctl_compaction_proactiveness;
 extern int sysctl_compaction_handler(struct ctl_table *table, int write,
 			void *buffer, size_t *length, loff_t *ppos);
+<<<<<<< HEAD
+<<<<<<< HEAD
+extern int compaction_proactiveness_sysctl_handler(struct ctl_table *table,
+		int write, void *buffer, size_t *length, loff_t *ppos);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern int compaction_proactiveness_sysctl_handler(struct ctl_table *table,
+		int write, void *buffer, size_t *length, loff_t *ppos);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern int sysctl_extfrag_threshold;
 extern int sysctl_compact_unevictable_allowed;
 

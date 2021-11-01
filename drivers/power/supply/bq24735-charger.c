@@ -31,9 +31,19 @@
 
 #include <linux/power/bq24735-charger.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* BQ24735 available commands and their respective masks */
+#define BQ24735_CHARGE_OPT		0x12
+=======
 #define BQ24735_CHG_OPT			0x12
 #define BQ24735_CHG_OPT_CHARGE_DISABLE	(1 << 0)
 #define BQ24735_CHG_OPT_AC_PRESENT	(1 << 4)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* BQ24735 available commands and their respective masks */
+#define BQ24735_CHARGE_OPT		0x12
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define BQ24735_CHARGE_CURRENT		0x14
 #define BQ24735_CHARGE_CURRENT_MASK	0x1fc0
 #define BQ24735_CHARGE_VOLTAGE		0x15
@@ -43,6 +53,19 @@
 #define BQ24735_MANUFACTURER_ID		0xfe
 #define BQ24735_DEVICE_ID		0xff
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* ChargeOptions bits of interest */
+#define BQ24735_CHARGE_OPT_CHG_DISABLE	(1 << 0)
+#define BQ24735_CHARGE_OPT_AC_PRESENT	(1 << 4)
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct bq24735 {
 	struct power_supply		*charger;
 	struct power_supply_desc	charger_desc;
@@ -167,8 +190,18 @@ static inline int bq24735_enable_charging(struct bq24735 *charger)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return bq24735_update_word(charger->client, BQ24735_CHARGE_OPT,
+				   BQ24735_CHARGE_OPT_CHG_DISABLE, 0);
+=======
 	return bq24735_update_word(charger->client, BQ24735_CHG_OPT,
 				   BQ24735_CHG_OPT_CHARGE_DISABLE, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return bq24735_update_word(charger->client, BQ24735_CHARGE_OPT,
+				   BQ24735_CHARGE_OPT_CHG_DISABLE, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline int bq24735_disable_charging(struct bq24735 *charger)
@@ -176,9 +209,21 @@ static inline int bq24735_disable_charging(struct bq24735 *charger)
 	if (charger->pdata->ext_control)
 		return 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return bq24735_update_word(charger->client, BQ24735_CHARGE_OPT,
+				   BQ24735_CHARGE_OPT_CHG_DISABLE,
+				   BQ24735_CHARGE_OPT_CHG_DISABLE);
+=======
 	return bq24735_update_word(charger->client, BQ24735_CHG_OPT,
 				   BQ24735_CHG_OPT_CHARGE_DISABLE,
 				   BQ24735_CHG_OPT_CHARGE_DISABLE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return bq24735_update_word(charger->client, BQ24735_CHARGE_OPT,
+				   BQ24735_CHARGE_OPT_CHG_DISABLE,
+				   BQ24735_CHARGE_OPT_CHG_DISABLE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static bool bq24735_charger_is_present(struct bq24735 *charger)
@@ -188,14 +233,30 @@ static bool bq24735_charger_is_present(struct bq24735 *charger)
 	} else {
 		int ac = 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ac = bq24735_read_word(charger->client, BQ24735_CHARGE_OPT);
+=======
 		ac = bq24735_read_word(charger->client, BQ24735_CHG_OPT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ac = bq24735_read_word(charger->client, BQ24735_CHARGE_OPT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ac < 0) {
 			dev_dbg(&charger->client->dev,
 				"Failed to read charger options : %d\n",
 				ac);
 			return false;
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return (ac & BQ24735_CHARGE_OPT_AC_PRESENT) ? true : false;
+=======
 		return (ac & BQ24735_CHG_OPT_AC_PRESENT) ? true : false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return (ac & BQ24735_CHARGE_OPT_AC_PRESENT) ? true : false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return false;
@@ -208,11 +269,27 @@ static int bq24735_charger_is_charging(struct bq24735 *charger)
 	if (!bq24735_charger_is_present(charger))
 		return 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret  = bq24735_read_word(charger->client, BQ24735_CHARGE_OPT);
+	if (ret < 0)
+		return ret;
+
+	return !(ret & BQ24735_CHARGE_OPT_CHG_DISABLE);
+=======
 	ret  = bq24735_read_word(charger->client, BQ24735_CHG_OPT);
 	if (ret < 0)
 		return ret;
 
 	return !(ret & BQ24735_CHG_OPT_CHARGE_DISABLE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret  = bq24735_read_word(charger->client, BQ24735_CHARGE_OPT);
+	if (ret < 0)
+		return ret;
+
+	return !(ret & BQ24735_CHARGE_OPT_CHG_DISABLE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void bq24735_update(struct bq24735 *charger)

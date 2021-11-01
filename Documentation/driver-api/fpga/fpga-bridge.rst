@@ -4,11 +4,25 @@ FPGA Bridge
 API to implement a new FPGA bridge
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+* struct fpga_bridge - The FPGA Bridge structure
+* struct fpga_bridge_ops - Low level Bridge driver ops
+* devm_fpga_bridge_create() - Allocate and init a bridge struct
+* fpga_bridge_register() - Register a bridge
+* fpga_bridge_unregister() - Unregister a bridge
+<<<<<<< HEAD
+=======
 * struct fpga_bridge — The FPGA Bridge structure
 * struct fpga_bridge_ops — Low level Bridge driver ops
 * devm_fpga_bridge_create() — Allocate and init a bridge struct
 * fpga_bridge_register() — Register a bridge
 * fpga_bridge_unregister() — Unregister a bridge
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 .. kernel-doc:: include/linux/fpga/fpga-bridge.h
    :functions: fpga_bridge

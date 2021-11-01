@@ -82,6 +82,18 @@ __BTF_ID_LIST(name, globl)
 #define BTF_ID_LIST_SINGLE(name, prefix, typename)	\
 	BTF_ID_LIST(name) \
 	BTF_ID(prefix, typename)
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define BTF_ID_LIST_GLOBAL_SINGLE(name, prefix, typename) \
+	BTF_ID_LIST_GLOBAL(name) \
+	BTF_ID(prefix, typename)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define BTF_ID_LIST_GLOBAL_SINGLE(name, prefix, typename) \
+	BTF_ID_LIST_GLOBAL(name) \
+	BTF_ID(prefix, typename)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * The BTF_ID_UNUSED macro defines 4 zero bytes.
@@ -148,6 +160,14 @@ extern struct btf_id_set name;
 #define BTF_ID_UNUSED
 #define BTF_ID_LIST_GLOBAL(name) u32 name[1];
 #define BTF_ID_LIST_SINGLE(name, prefix, typename) static u32 name[1];
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define BTF_ID_LIST_GLOBAL_SINGLE(name, prefix, typename) u32 name[1];
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define BTF_ID_LIST_GLOBAL_SINGLE(name, prefix, typename) u32 name[1];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define BTF_SET_START(name) static struct btf_id_set name = { 0 };
 #define BTF_SET_START_GLOBAL(name) static struct btf_id_set name = { 0 };
 #define BTF_SET_END(name)
@@ -172,7 +192,17 @@ extern struct btf_id_set name;
 	BTF_SOCK_TYPE(BTF_SOCK_TYPE_TCP_TW, tcp_timewait_sock)		\
 	BTF_SOCK_TYPE(BTF_SOCK_TYPE_TCP6, tcp6_sock)			\
 	BTF_SOCK_TYPE(BTF_SOCK_TYPE_UDP, udp_sock)			\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	BTF_SOCK_TYPE(BTF_SOCK_TYPE_UDP6, udp6_sock)			\
+	BTF_SOCK_TYPE(BTF_SOCK_TYPE_UNIX, unix_sock)
+=======
 	BTF_SOCK_TYPE(BTF_SOCK_TYPE_UDP6, udp6_sock)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BTF_SOCK_TYPE(BTF_SOCK_TYPE_UDP6, udp6_sock)			\
+	BTF_SOCK_TYPE(BTF_SOCK_TYPE_UNIX, unix_sock)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enum {
 #define BTF_SOCK_TYPE(name, str) name,
@@ -184,4 +214,14 @@ MAX_BTF_SOCK_TYPE,
 extern u32 btf_sock_ids[];
 #endif
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+extern u32 btf_task_struct_ids[];
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern u32 btf_task_struct_ids[];
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

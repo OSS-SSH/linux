@@ -1670,13 +1670,31 @@ rocker_world_port_fdb_del(struct rocker_port *rocker_port,
 }
 
 static int rocker_world_port_master_linked(struct rocker_port *rocker_port,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					   struct net_device *master,
+					   struct netlink_ext_ack *extack)
+=======
 					   struct net_device *master)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					   struct net_device *master,
+					   struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct rocker_world_ops *wops = rocker_port->rocker->wops;
 
 	if (!wops->port_master_linked)
 		return -EOPNOTSUPP;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return wops->port_master_linked(rocker_port, master, extack);
+=======
 	return wops->port_master_linked(rocker_port, master);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return wops->port_master_linked(rocker_port, master, extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int rocker_world_port_master_unlinked(struct rocker_port *rocker_port,
@@ -2715,7 +2733,15 @@ static void
 rocker_fdb_offload_notify(struct rocker_port *rocker_port,
 			  struct switchdev_notifier_fdb_info *recv_info)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct switchdev_notifier_fdb_info info = {};
+=======
 	struct switchdev_notifier_fdb_info info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct switchdev_notifier_fdb_info info = {};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	info.addr = recv_info->addr;
 	info.vid = recv_info->vid;
@@ -3107,6 +3133,14 @@ struct rocker_port *rocker_port_dev_lower_find(struct net_device *dev,
 static int rocker_netdevice_event(struct notifier_block *unused,
 				  unsigned long event, void *ptr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct netlink_ext_ack *extack = netdev_notifier_info_to_extack(ptr);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct netlink_ext_ack *extack = netdev_notifier_info_to_extack(ptr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_device *dev = netdev_notifier_info_to_dev(ptr);
 	struct netdev_notifier_changeupper_info *info;
 	struct rocker_port *rocker_port;
@@ -3123,7 +3157,17 @@ static int rocker_netdevice_event(struct notifier_block *unused,
 		rocker_port = netdev_priv(dev);
 		if (info->linking) {
 			err = rocker_world_port_master_linked(rocker_port,
+<<<<<<< HEAD
+<<<<<<< HEAD
+							      info->upper_dev,
+							      extack);
+=======
 							      info->upper_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+							      info->upper_dev,
+							      extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (err)
 				netdev_warn(dev, "failed to reflect master linked (err %d)\n",
 					    err);

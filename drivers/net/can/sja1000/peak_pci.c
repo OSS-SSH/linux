@@ -28,6 +28,19 @@ MODULE_LICENSE("GPL v2");
 
 #define DRV_NAME  "peak_pci"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* FPGA cards FW version registers */
+#define PEAK_VER_REG1		0x40
+#define PEAK_VER_REG2		0x44
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct peak_pciec_card;
 struct peak_pci_chan {
 	void __iomem *cfg_base;		/* Common for all channels */
@@ -41,9 +54,17 @@ struct peak_pci_chan {
 #define PEAK_PCI_CDR		(CDR_CBP | CDR_CLKOUT_MASK)
 #define PEAK_PCI_OCR		OCR_TX0_PUSHPULL
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Important PITA registers */
+=======
 /*
  * Important PITA registers
  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Important PITA registers */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PITA_ICR		0x00	/* Interrupt control register */
 #define PITA_GPIOICR		0x18	/* GPIO interface control register */
 #define PITA_MISC		0x1C	/* Miscellaneous register */
@@ -70,6 +91,47 @@ static const u16 peak_pci_icr_masks[PEAK_PCI_CHAN_MAX] = {
 };
 
 static const struct pci_device_id peak_pci_tbl[] = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	{
+		PEAK_PCI_VENDOR_ID, PEAK_PCI_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-PCI",
+	}, {
+		PEAK_PCI_VENDOR_ID, PEAK_PCIE_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-PCI Express",
+	}, {
+		PEAK_PCI_VENDOR_ID, PEAK_MPCI_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-miniPCI",
+	}, {
+		PEAK_PCI_VENDOR_ID, PEAK_MPCIE_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-miniPCIe",
+	}, {
+		PEAK_PCI_VENDOR_ID, PEAK_PC_104P_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-PC/104-Plus Quad",
+	}, {
+		PEAK_PCI_VENDOR_ID, PEAK_PCI_104E_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-PCI/104-Express",
+	}, {
+		PEAK_PCI_VENDOR_ID, PEAK_CPCI_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-cPCI",
+	}, {
+		PEAK_PCI_VENDOR_ID, PEAK_PCIE_OEM_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-Chip PCIe",
+	},
+<<<<<<< HEAD
+#ifdef CONFIG_CAN_PEAK_PCIEC
+	{
+		PEAK_PCI_VENDOR_ID, PEAK_PCIEC_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-ExpressCard",
+	}, {
+		PEAK_PCI_VENDOR_ID, PEAK_PCIEC34_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-ExpressCard 34",
+	},
+#endif
+	{ /* sentinel */ }
+=======
 	{PEAK_PCI_VENDOR_ID, PEAK_PCI_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,},
 	{PEAK_PCI_VENDOR_ID, PEAK_PCIE_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,},
 	{PEAK_PCI_VENDOR_ID, PEAK_MPCI_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,},
@@ -78,19 +140,39 @@ static const struct pci_device_id peak_pci_tbl[] = {
 	{PEAK_PCI_VENDOR_ID, PEAK_PCI_104E_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,},
 	{PEAK_PCI_VENDOR_ID, PEAK_CPCI_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,},
 	{PEAK_PCI_VENDOR_ID, PEAK_PCIE_OEM_ID, PCI_ANY_ID, PCI_ANY_ID,},
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_CAN_PEAK_PCIEC
-	{PEAK_PCI_VENDOR_ID, PEAK_PCIEC_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,},
-	{PEAK_PCI_VENDOR_ID, PEAK_PCIEC34_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,},
+	{
+		PEAK_PCI_VENDOR_ID, PEAK_PCIEC_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-ExpressCard",
+	}, {
+		PEAK_PCI_VENDOR_ID, PEAK_PCIEC34_DEVICE_ID, PCI_ANY_ID, PCI_ANY_ID,
+		.driver_data = (kernel_ulong_t)"PCAN-ExpressCard 34",
+	},
 #endif
+<<<<<<< HEAD
 	{0,}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ /* sentinel */ }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 MODULE_DEVICE_TABLE(pci, peak_pci_tbl);
 
 #ifdef CONFIG_CAN_PEAK_PCIEC
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* PCAN-ExpressCard needs I2C bit-banging configuration option. */
+=======
 /*
  * PCAN-ExpressCard needs I2C bit-banging configuration option.
  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* PCAN-ExpressCard needs I2C bit-banging configuration option. */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* GPIOICR byte access offsets */
 #define PITA_GPOUT		0x18	/* GPx output value */
@@ -156,12 +238,28 @@ static void peak_pci_write_reg(const struct sja1000_priv *priv,
 static inline void pita_set_scl_highz(struct peak_pciec_card *card)
 {
 	u8 gp_outen = readb(card->cfg_base + PITA_GPOEN) & ~PITA_GPIN_SCL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	writeb(gp_outen, card->cfg_base + PITA_GPOEN);
 }
 
 static inline void pita_set_sda_highz(struct peak_pciec_card *card)
 {
 	u8 gp_outen = readb(card->cfg_base + PITA_GPOEN) & ~PITA_GPIN_SDA;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	writeb(gp_outen, card->cfg_base + PITA_GPOEN);
 }
 
@@ -230,9 +328,17 @@ static int pita_getscl(void *data)
 	return (readb(card->cfg_base + PITA_GPIN) & PITA_GPIN_SCL) ? 1 : 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* write commands to the LED chip though the I2C-bus of the PCAN-PCIeC */
+=======
 /*
  * write commands to the LED chip though the I2C-bus of the PCAN-PCIeC
  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* write commands to the LED chip though the I2C-bus of the PCAN-PCIeC */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int peak_pciec_write_pca9553(struct peak_pciec_card *card,
 				    u8 offset, u8 data)
 {
@@ -248,7 +354,15 @@ static int peak_pciec_write_pca9553(struct peak_pciec_card *card,
 	int ret;
 
 	/* cache led mask */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (offset == 5 && data == card->led_cache)
+=======
 	if ((offset == 5) && (data == card->led_cache))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (offset == 5 && data == card->led_cache)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	ret = i2c_transfer(&card->led_chip, &msg, 1);
@@ -261,9 +375,17 @@ static int peak_pciec_write_pca9553(struct peak_pciec_card *card,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* delayed work callback used to control the LEDs */
+=======
 /*
  * delayed work callback used to control the LEDs
  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* delayed work callback used to control the LEDs */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void peak_pciec_led_work(struct work_struct *work)
 {
 	struct peak_pciec_card *card =
@@ -309,9 +431,17 @@ static void peak_pciec_led_work(struct work_struct *work)
 		schedule_delayed_work(&card->led_work, HZ);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* set LEDs blinking state */
+=======
 /*
  * set LEDs blinking state
  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* set LEDs blinking state */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void peak_pciec_set_leds(struct peak_pciec_card *card, u8 led_mask, u8 s)
 {
 	u8 new_led = card->led_cache;
@@ -328,25 +458,49 @@ static void peak_pciec_set_leds(struct peak_pciec_card *card, u8 led_mask, u8 s)
 	peak_pciec_write_pca9553(card, 5, new_led);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* start one second delayed work to control LEDs */
+=======
 /*
  * start one second delayed work to control LEDs
  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* start one second delayed work to control LEDs */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void peak_pciec_start_led_work(struct peak_pciec_card *card)
 {
 	schedule_delayed_work(&card->led_work, HZ);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* stop LEDs delayed work */
+=======
 /*
  * stop LEDs delayed work
  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* stop LEDs delayed work */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void peak_pciec_stop_led_work(struct peak_pciec_card *card)
 {
 	cancel_delayed_work_sync(&card->led_work);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* initialize the PCA9553 4-bit I2C-bus LED chip */
+=======
 /*
  * initialize the PCA9553 4-bit I2C-bus LED chip
  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* initialize the PCA9553 4-bit I2C-bus LED chip */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int peak_pciec_init_leds(struct peak_pciec_card *card)
 {
 	int err;
@@ -375,17 +529,33 @@ static int peak_pciec_init_leds(struct peak_pciec_card *card)
 	return peak_pciec_write_pca9553(card, 5, PCA9553_LS0_INIT);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* restore LEDs state to off peak_pciec_leds_exit */
+=======
 /*
  * restore LEDs state to off peak_pciec_leds_exit
  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* restore LEDs state to off peak_pciec_leds_exit */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void peak_pciec_leds_exit(struct peak_pciec_card *card)
 {
 	/* switch LEDs to off */
 	peak_pciec_write_pca9553(card, 5, PCA9553_LED_OFF_ALL);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* normal write sja1000 register method overloaded to catch when controller
+=======
 /*
  * normal write sja1000 register method overloaded to catch when controller
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* normal write sja1000 register method overloaded to catch when controller
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * is started or stopped, to control leds
  */
 static void peak_pciec_write_reg(const struct sja1000_priv *priv,
@@ -443,7 +613,15 @@ static int peak_pciec_probe(struct pci_dev *pdev, struct net_device *dev)
 	/* channel is the first one: do the init part */
 	} else {
 		/* create the bit banging I2C adapter structure */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		card = kzalloc(sizeof(*card), GFP_KERNEL);
+=======
 		card = kzalloc(sizeof(struct peak_pciec_card), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		card = kzalloc(sizeof(*card), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!card)
 			return -ENOMEM;
 
@@ -506,9 +684,17 @@ static void peak_pciec_remove(struct peak_pciec_card *card)
 
 #else /* CONFIG_CAN_PEAK_PCIEC */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Placebo functions when PCAN-ExpressCard support is not selected */
+=======
 /*
  * Placebo functions when PCAN-ExpressCard support is not selected
  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Placebo functions when PCAN-ExpressCard support is not selected */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int peak_pciec_probe(struct pci_dev *pdev, struct net_device *dev)
 {
 	return -ENODEV;
@@ -549,6 +735,14 @@ static int peak_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	void __iomem *cfg_base, *reg_base;
 	u16 sub_sys_id, icr;
 	int i, err, channels;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	char fw_str[14] = "";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	char fw_str[14] = "";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = pci_enable_device(pdev);
 	if (err)
@@ -602,6 +796,30 @@ static int peak_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	/* Leave parport mux mode */
 	writeb(0x04, cfg_base + PITA_MISC + 3);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* FPGA equipped card if not 0 */
+	if (readl(cfg_base + PEAK_VER_REG1)) {
+		/* FPGA card: display version of the running firmware */
+		u32 fw_ver = readl(cfg_base + PEAK_VER_REG2);
+
+		snprintf(fw_str, sizeof(fw_str), " FW v%u.%u.%u",
+			 (fw_ver >> 12) & 0xf,
+			 (fw_ver >> 8) & 0xf,
+			 (fw_ver >> 4) & 0xf);
+	}
+
+	/* Display commercial name (and, eventually, FW version) of the card */
+	dev_info(&pdev->dev, "%ux CAN %s%s\n",
+		 channels, (const char *)ent->driver_data, fw_str);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	icr = readw(cfg_base + PITA_ICR + 2);
 
 	for (i = 0; i < channels; i++) {
@@ -642,8 +860,16 @@ static int peak_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		chan->prev_dev = pci_get_drvdata(pdev);
 		pci_set_drvdata(pdev, dev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		/* PCAN-ExpressCard needs some additional i2c init.
+=======
 		/*
 		 * PCAN-ExpressCard needs some additional i2c init.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* PCAN-ExpressCard needs some additional i2c init.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * This must be done *before* register_sja1000dev() but
 		 * *after* devices linkage
 		 */
@@ -709,7 +935,17 @@ failure_disable_pci:
 
 	/* pci_xxx_config_word() return positive PCIBIOS_xxx error codes while
 	 * the probe() function must return a negative errno in case of failure
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * (err is unchanged if negative)
+	 */
+=======
 	 * (err is unchanged if negative) */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * (err is unchanged if negative)
+	 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return pcibios_err_to_errno(err);
 }
 

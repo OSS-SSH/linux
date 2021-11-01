@@ -65,6 +65,14 @@ static struct irq_chip mtk_sysirq_chip = {
 	.irq_set_type		= mtk_sysirq_set_type,
 	.irq_retrigger		= irq_chip_retrigger_hierarchy,
 	.irq_set_affinity	= irq_chip_set_affinity_parent,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.flags			= IRQCHIP_SKIP_SET_WAKE,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.flags			= IRQCHIP_SKIP_SET_WAKE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int mtk_sysirq_domain_translate(struct irq_domain *d,

@@ -76,13 +76,31 @@ int dyn_event_init(struct dyn_event *ev, struct dyn_event_operations *ops)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline int dyn_event_add(struct dyn_event *ev,
+				struct trace_event_call *call)
+=======
 static inline int dyn_event_add(struct dyn_event *ev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int dyn_event_add(struct dyn_event *ev,
+				struct trace_event_call *call)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	lockdep_assert_held(&event_mutex);
 
 	if (!ev || !ev->ops)
 		return -EINVAL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	call->flags |= TRACE_EVENT_FL_DYNAMIC;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	call->flags |= TRACE_EVENT_FL_DYNAMIC;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_add_tail(&ev->list, &dyn_event_list);
 	return 0;
 }

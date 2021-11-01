@@ -126,19 +126,29 @@
  * to be saved again on kernel mode stack, as part of pt_regs.
  *-------------------------------------------------------------*/
 .macro PROLOG_FREEUP_REG	reg, mem
-#ifndef ARC_USE_SCRATCH_REG
-	sr  \reg, [ARC_REG_SCRATCH_DATA0]
-#else
+<<<<<<< HEAD
+<<<<<<< HEAD
 	st  \reg, [\mem]
-#endif
 .endm
 
 .macro PROLOG_RESTORE_REG	reg, mem
-#ifndef ARC_USE_SCRATCH_REG
-	lr  \reg, [ARC_REG_SCRATCH_DATA0]
-#else
 	ld  \reg, [\mem]
+=======
+#ifndef ARC_USE_SCRATCH_REG
+	sr  \reg, [ARC_REG_SCRATCH_DATA0]
+#else
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	st  \reg, [\mem]
+.endm
+
+.macro PROLOG_RESTORE_REG	reg, mem
+	ld  \reg, [\mem]
+<<<<<<< HEAD
 #endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 .endm
 
 /*--------------------------------------------------------------

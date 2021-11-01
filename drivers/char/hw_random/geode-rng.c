@@ -83,7 +83,15 @@ static struct hwrng geode_rng = {
 };
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int __init geode_rng_init(void)
+=======
 static int __init mod_init(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init geode_rng_init(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int err = -ENODEV;
 	struct pci_dev *pdev = NULL;
@@ -124,7 +132,15 @@ err_unmap:
 	goto out;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void __exit geode_rng_exit(void)
+=======
 static void __exit mod_exit(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __exit geode_rng_exit(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	void __iomem *mem = (void __iomem *)geode_rng.priv;
 
@@ -132,8 +148,18 @@ static void __exit mod_exit(void)
 	iounmap(mem);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+module_init(geode_rng_init);
+module_exit(geode_rng_exit);
+=======
 module_init(mod_init);
 module_exit(mod_exit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_init(geode_rng_init);
+module_exit(geode_rng_exit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 MODULE_DESCRIPTION("H/W RNG driver for AMD Geode LX CPUs");
 MODULE_LICENSE("GPL");

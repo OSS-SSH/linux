@@ -429,7 +429,15 @@ static void rtas_event_scan(struct work_struct *w)
 
 	do_event_scan();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* raw_ OK because just using CPU as starting point. */
 	cpu = cpumask_next(raw_smp_processor_id(), cpu_online_mask);
@@ -451,7 +459,15 @@ static void rtas_event_scan(struct work_struct *w)
 	schedule_delayed_work_on(cpu, &event_scan_work,
 		__round_jiffies_relative(event_scan_delay, cpu));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PPC64

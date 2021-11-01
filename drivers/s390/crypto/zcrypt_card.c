@@ -39,7 +39,15 @@
 static ssize_t type_show(struct device *dev,
 			 struct device_attribute *attr, char *buf)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct zcrypt_card *zc = dev_get_drvdata(dev);
+=======
 	struct zcrypt_card *zc = to_ap_card(dev)->private;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct zcrypt_card *zc = dev_get_drvdata(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return scnprintf(buf, PAGE_SIZE, "%s\n", zc->type_string);
 }
@@ -50,8 +58,18 @@ static ssize_t online_show(struct device *dev,
 			   struct device_attribute *attr,
 			   char *buf)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct zcrypt_card *zc = dev_get_drvdata(dev);
+	struct ap_card *ac = to_ap_card(dev);
+=======
 	struct ap_card *ac = to_ap_card(dev);
 	struct zcrypt_card *zc = ac->private;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct zcrypt_card *zc = dev_get_drvdata(dev);
+	struct ap_card *ac = to_ap_card(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int online = ac->config && zc->online ? 1 : 0;
 
 	return scnprintf(buf, PAGE_SIZE, "%d\n", online);
@@ -61,8 +79,18 @@ static ssize_t online_store(struct device *dev,
 			    struct device_attribute *attr,
 			    const char *buf, size_t count)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct zcrypt_card *zc = dev_get_drvdata(dev);
+	struct ap_card *ac = to_ap_card(dev);
+=======
 	struct ap_card *ac = to_ap_card(dev);
 	struct zcrypt_card *zc = ac->private;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct zcrypt_card *zc = dev_get_drvdata(dev);
+	struct ap_card *ac = to_ap_card(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct zcrypt_queue *zq;
 	int online, id, i = 0, maxzqs = 0;
 	struct zcrypt_queue **zq_uelist = NULL;
@@ -116,7 +144,15 @@ static ssize_t load_show(struct device *dev,
 			 struct device_attribute *attr,
 			 char *buf)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct zcrypt_card *zc = dev_get_drvdata(dev);
+=======
 	struct zcrypt_card *zc = to_ap_card(dev)->private;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct zcrypt_card *zc = dev_get_drvdata(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return scnprintf(buf, PAGE_SIZE, "%d\n", atomic_read(&zc->load));
 }

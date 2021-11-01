@@ -58,7 +58,15 @@ compare_file_partial "events/synthetic/initcall_latency/enable" "0"
 compare_file_partial "events/initcall/initcall_start/trigger" "hist:keys=func:vals=hitcount:ts0=common_timestamp.usecs"
 compare_file_partial "events/initcall/initcall_start/enable" "1"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+compare_file_partial "events/initcall/initcall_finish/trigger" 'hist:keys=func:vals=hitcount:lat=common_timestamp.usecs-\$ts0:sort=hitcount:size=2048:clock=global:onmatch(initcall.initcall_start).trace(initcall_latency,func,\$lat)'
+=======
 compare_file_partial "events/initcall/initcall_finish/trigger" 'hist:keys=func:vals=hitcount:lat=common_timestamp.usecs-\$ts0:sort=hitcount:size=2048:clock=global:onmatch(initcall.initcall_start).initcall_latency(func,\$lat)'
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+compare_file_partial "events/initcall/initcall_finish/trigger" 'hist:keys=func:vals=hitcount:lat=common_timestamp.usecs-\$ts0:sort=hitcount:size=2048:clock=global:onmatch(initcall.initcall_start).trace(initcall_latency,func,\$lat)'
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 compare_file_partial "events/initcall/initcall_finish/enable" "1"
 
 compare_file "instances/foo/current_tracer" "function"

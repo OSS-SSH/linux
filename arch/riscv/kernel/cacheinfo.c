@@ -113,7 +113,15 @@ static void fill_cacheinfo(struct cacheinfo **this_leaf,
 	}
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int init_cache_level(unsigned int cpu)
+=======
 static int __init_cache_level(unsigned int cpu)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int init_cache_level(unsigned int cpu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
 	struct device_node *np = of_cpu_device_node_get(cpu);
@@ -155,7 +163,15 @@ static int __init_cache_level(unsigned int cpu)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int populate_cache_leaves(unsigned int cpu)
+=======
 static int __populate_cache_leaves(unsigned int cpu)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int populate_cache_leaves(unsigned int cpu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpu_cacheinfo *this_cpu_ci = get_cpu_cacheinfo(cpu);
 	struct cacheinfo *this_leaf = this_cpu_ci->info_list;
@@ -187,6 +203,12 @@ static int __populate_cache_leaves(unsigned int cpu)
 
 	return 0;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 DEFINE_SMP_CALL_CACHE_FUNCTION(init_cache_level)
 DEFINE_SMP_CALL_CACHE_FUNCTION(populate_cache_leaves)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -1572,9 +1572,21 @@ static size_t append_ctl_name(struct snd_kcontrol *kctl, const char *str)
 static void check_no_speaker_on_headset(struct snd_kcontrol *kctl,
 					struct snd_card *card)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	static const char * const names_to_check[] = {
+		"Headset", "headset", "Headphone", "headphone", NULL};
+	const char * const *s;
+=======
 	const char *names_to_check[] = {
 		"Headset", "headset", "Headphone", "headphone", NULL};
 	const char **s;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	static const char * const names_to_check[] = {
+		"Headset", "headset", "Headphone", "headphone", NULL};
+	const char * const *s;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool found = false;
 
 	if (strcmp("Speaker", kctl->id.name))
@@ -1816,6 +1828,24 @@ static void get_connector_control_name(struct usb_mixer_interface *mixer,
 		strlcat(name, " - Output Jack", name_size);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* get connector value to "wake up" the USB audio */
+static int connector_mixer_resume(struct usb_mixer_elem_list *list)
+{
+	struct usb_mixer_elem_info *cval = mixer_elem_list_to_info(list);
+
+	get_connector_value(cval, NULL, NULL);
+	return 0;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Build a mixer control for a UAC connector control (jack-detect) */
 static void build_connector_control(struct usb_mixer_interface *mixer,
 				    const struct usbmix_name_map *imap,
@@ -1833,6 +1863,19 @@ static void build_connector_control(struct usb_mixer_interface *mixer,
 	if (!cval)
 		return;
 	snd_usb_mixer_elem_init_std(&cval->head, mixer, term->id);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	/* set up a specific resume callback */
+	cval->head.resume = connector_mixer_resume;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * UAC2: The first byte from reading the UAC2_TE_CONNECTOR control returns the
 	 * number of channels connected.
@@ -3170,7 +3213,13 @@ static int snd_usb_mixer_controls(struct usb_mixer_interface *mixer)
 			state.map = map->map;
 			state.selector_map = map->selector_map;
 			mixer->connector_map = map->connector_map;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			mixer->ignore_ctl_error |= map->ignore_ctl_error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 	}
@@ -3295,7 +3344,25 @@ static void snd_usb_mixer_dump_cval(struct snd_info_buffer *buffer,
 {
 	struct usb_mixer_elem_info *cval = mixer_elem_list_to_info(list);
 	static const char * const val_types[] = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		[USB_MIXER_BOOLEAN] = "BOOLEAN",
+		[USB_MIXER_INV_BOOLEAN] = "INV_BOOLEAN",
+		[USB_MIXER_S8] = "S8",
+		[USB_MIXER_U8] = "U8",
+		[USB_MIXER_S16] = "S16",
+		[USB_MIXER_U16] = "U16",
+		[USB_MIXER_S32] = "S32",
+		[USB_MIXER_U32] = "U32",
+		[USB_MIXER_BESPOKEN] = "BESPOKEN",
+<<<<<<< HEAD
+=======
 		"BOOLEAN", "INV_BOOLEAN", "S8", "U8", "S16", "U16", "S32", "U32",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 	snd_iprintf(buffer, "    Info: id=%i, control=%i, cmask=0x%x, "
 			    "channels=%i, type=\"%s\"\n", cval->head.id,
@@ -3487,8 +3554,16 @@ static int snd_usb_mixer_status_create(struct usb_mixer_interface *mixer)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int snd_usb_create_mixer(struct snd_usb_audio *chip, int ctrlif)
+=======
 int snd_usb_create_mixer(struct snd_usb_audio *chip, int ctrlif,
 			 int ignore_error)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int snd_usb_create_mixer(struct snd_usb_audio *chip, int ctrlif)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	static const struct snd_device_ops dev_ops = {
 		.dev_free = snd_usb_mixer_dev_free
@@ -3502,7 +3577,15 @@ int snd_usb_create_mixer(struct snd_usb_audio *chip, int ctrlif,
 	if (!mixer)
 		return -ENOMEM;
 	mixer->chip = chip;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mixer->ignore_ctl_error = !!(chip->quirk_flags & QUIRK_FLAG_IGNORE_CTL_ERROR);
+=======
 	mixer->ignore_ctl_error = ignore_error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mixer->ignore_ctl_error = !!(chip->quirk_flags & QUIRK_FLAG_IGNORE_CTL_ERROR);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mixer->id_elems = kcalloc(MAX_ID_ELEMS, sizeof(*mixer->id_elems),
 				  GFP_KERNEL);
 	if (!mixer->id_elems) {
@@ -3634,6 +3717,12 @@ static int restore_mixer_value(struct usb_mixer_elem_list *list)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int snd_usb_mixer_resume(struct usb_mixer_interface *mixer)
+{
+	struct usb_mixer_elem_list *list;
+=======
 static int default_mixer_resume(struct usb_mixer_elem_list *list)
 {
 	struct usb_mixer_elem_info *cval = mixer_elem_list_to_info(list);
@@ -3658,17 +3747,33 @@ int snd_usb_mixer_resume(struct usb_mixer_interface *mixer, bool reset_resume)
 {
 	struct usb_mixer_elem_list *list;
 	usb_mixer_elem_resume_func_t f;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int snd_usb_mixer_resume(struct usb_mixer_interface *mixer)
+{
+	struct usb_mixer_elem_list *list;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int id, err;
 
 	/* restore cached mixer values */
 	for (id = 0; id < MAX_ID_ELEMS; id++) {
 		for_each_mixer_elem(list, mixer, id) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (list->resume) {
+				err = list->resume(list);
+=======
 			if (reset_resume)
 				f = list->reset_resume;
 			else
 				f = list->resume;
 			if (f) {
 				err = f(list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (list->resume) {
+				err = list->resume(list);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				if (err < 0)
 					return err;
 			}
@@ -3689,7 +3794,15 @@ void snd_usb_mixer_elem_init_std(struct usb_mixer_elem_list *list,
 	list->id = unitid;
 	list->dump = snd_usb_mixer_dump_cval;
 #ifdef CONFIG_PM
+<<<<<<< HEAD
+<<<<<<< HEAD
+	list->resume = restore_mixer_value;
+=======
 	list->resume = default_mixer_resume;
 	list->reset_resume = default_mixer_reset_resume;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	list->resume = restore_mixer_value;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 }

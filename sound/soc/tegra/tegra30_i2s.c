@@ -406,7 +406,15 @@ static const struct of_device_id tegra30_i2s_of_match[] = {
 static int tegra30_i2s_platform_probe(struct platform_device *pdev)
 {
 	struct tegra30_i2s *i2s;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct tegra30_i2s_soc_data *soc_data;
+=======
 	const struct of_device_id *match;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct tegra30_i2s_soc_data *soc_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 cif_ids[2];
 	void __iomem *regs;
 	int ret;
@@ -418,13 +426,31 @@ static int tegra30_i2s_platform_probe(struct platform_device *pdev)
 	}
 	dev_set_drvdata(&pdev->dev, i2s);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	soc_data = of_device_get_match_data(&pdev->dev);
+	if (!soc_data) {
+=======
 	match = of_match_device(tegra30_i2s_of_match, &pdev->dev);
 	if (!match) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	soc_data = of_device_get_match_data(&pdev->dev);
+	if (!soc_data) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_err(&pdev->dev, "Error: No device match found\n");
 		ret = -ENODEV;
 		goto err;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	i2s->soc_data = soc_data;
+=======
 	i2s->soc_data = (struct tegra30_i2s_soc_data *)match->data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	i2s->soc_data = soc_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	i2s->dai = tegra30_i2s_dai_template;
 	i2s->dai.name = dev_name(&pdev->dev);

@@ -55,7 +55,13 @@ enum {
 	EV_HPD_INIT_SETUP,
 	EV_HPD_PLUG_INT,
 	EV_IRQ_HPD_INT,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	EV_HPD_REPLUG_INT,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	EV_HPD_UNPLUG_INT,
 	EV_USER_NOTIFICATION,
 	EV_CONNECT_PENDING_TIMEOUT,
@@ -102,8 +108,14 @@ struct dp_display_private {
 	struct dp_display_mode dp_mode;
 	struct msm_dp dp_display;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	bool encoder_mode_set;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* wait for audio signaling */
 	struct completion audio_comp;
 
@@ -219,6 +231,14 @@ static int dp_display_bind(struct device *dev, struct device *master,
 		goto end;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dp->aux->drm_dev = drm;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dp->aux->drm_dev = drm;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = dp_aux_register(dp->aux);
 	if (rc) {
 		DRM_ERROR("DRM DP AUX register failed\n");
@@ -267,6 +287,16 @@ static bool dp_display_is_ds_bridge(struct dp_panel *panel)
 
 static bool dp_display_is_sink_count_zero(struct dp_display_private *dp)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("present=%#x sink_count=%d\n", dp->panel->dpcd[DP_DOWNSTREAMPORT_PRESENT],
+		dp->link->sink_count);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("present=%#x sink_count=%d\n", dp->panel->dpcd[DP_DOWNSTREAMPORT_PRESENT],
+		dp->link->sink_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return dp_display_is_ds_bridge(dp->panel) &&
 		(dp->link->sink_count == 0);
 }
@@ -283,6 +313,9 @@ static void dp_display_send_hpd_event(struct msm_dp *dp_display)
 }
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static void dp_display_set_encoder_mode(struct dp_display_private *dp)
 {
 	struct msm_drm_private *priv = dp->dp_display.drm_dev->dev_private;
@@ -297,6 +330,9 @@ static void dp_display_set_encoder_mode(struct dp_display_private *dp)
 	}
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dp_display_send_hpd_notification(struct dp_display_private *dp,
 					    bool hpd)
 {
@@ -312,6 +348,14 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
 
 	dp->dp_display.is_connected = hpd;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("hpd=%d\n", hpd);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("hpd=%d\n", hpd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dp_display_send_hpd_event(&dp->dp_display);
 
 	return 0;
@@ -361,6 +405,14 @@ static void dp_display_host_init(struct dp_display_private *dp, int reset)
 {
 	bool flip = false;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("core_initialized=%d\n", dp->core_initialized);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("core_initialized=%d\n", dp->core_initialized);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dp->core_initialized) {
 		DRM_DEBUG_DP("DP core already initialized\n");
 		return;
@@ -369,8 +421,14 @@ static void dp_display_host_init(struct dp_display_private *dp, int reset)
 	if (dp->usbpd->orientation == ORIENTATION_CC2)
 		flip = true;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	dp_display_set_encoder_mode(dp);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dp_power_init(dp->power, flip);
 	dp_ctrl_host_init(dp->ctrl, flip, reset);
 	dp_aux_init(dp->aux);
@@ -465,8 +523,21 @@ static int dp_display_handle_irq_hpd(struct dp_display_private *dp)
 {
 	u32 sink_request = dp->link->sink_request;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	DRM_DEBUG_DP("%d\n", sink_request);
 	if (dp->hpd_state == ST_DISCONNECTED) {
 		if (sink_request & DP_LINK_STATUS_UPDATED) {
+			DRM_DEBUG_DP("Disconnected sink_request: %d\n", sink_request);
+<<<<<<< HEAD
+=======
+	if (dp->hpd_state == ST_DISCONNECTED) {
+		if (sink_request & DP_LINK_STATUS_UPDATED) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			DRM_ERROR("Disconnected, no DP_LINK_STATUS_UPDATED\n");
 			return -EINVAL;
 		}
@@ -498,6 +569,14 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
 	rc = dp_link_process_request(dp->link);
 	if (!rc) {
 		sink_request = dp->link->sink_request;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		DRM_DEBUG_DP("hpd_state=%d sink_request=%d\n", dp->hpd_state, sink_request);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		DRM_DEBUG_DP("hpd_state=%d sink_request=%d\n", dp->hpd_state, sink_request);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (sink_request & DS_PORT_STATUS_CHANGED)
 			rc = dp_display_handle_port_ststus_changed(dp);
 		else
@@ -520,6 +599,14 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
 	mutex_lock(&dp->event_mutex);
 
 	state =  dp->hpd_state;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("hpd_state=%d\n", state);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("hpd_state=%d\n", state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
 		mutex_unlock(&dp->event_mutex);
 		return 0;
@@ -655,6 +742,14 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
 	/* start sentinel checking in case of missing uevent */
 	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("hpd_state=%d\n", state);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("hpd_state=%d\n", state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* signal the disconnect event early to ensure proper teardown */
 	dp_display_handle_plugged_change(g_dp_display, false);
 
@@ -713,6 +808,14 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
 	if (ret == -ECONNRESET) { /* cable unplugged */
 		dp->core_initialized = false;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("hpd_state=%d\n", state);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("hpd_state=%d\n", state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_unlock(&dp->event_mutex);
 
@@ -854,6 +957,14 @@ static int dp_display_enable(struct dp_display_private *dp, u32 data)
 
 	dp_display = g_dp_display;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("sink_count=%d\n", dp->link->sink_count);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("sink_count=%d\n", dp->link->sink_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dp_display->power_on) {
 		DRM_DEBUG_DP("Link already setup, return\n");
 		return 0;
@@ -915,6 +1026,14 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
 
 	dp_display->power_on = false;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("sink count: %d\n", dp->link->sink_count);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("sink count: %d\n", dp->link->sink_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1014,10 +1133,20 @@ int dp_display_get_test_bpp(struct msm_dp *dp)
 void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp)
 {
 	struct dp_display_private *dp_display;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	dp_display = container_of(dp, struct dp_display_private, dp_display);
+=======
 	struct drm_device *drm;
 
 	dp_display = container_of(dp, struct dp_display_private, dp_display);
 	drm = dp->drm_dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	dp_display = container_of(dp, struct dp_display_private, dp_display);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * if we are reading registers we need the link clocks to be on
@@ -1118,9 +1247,15 @@ static int hpd_event_thread(void *data)
 		case EV_IRQ_HPD_INT:
 			dp_irq_hpd_handle(dp_priv, todo->data);
 			break;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		case EV_HPD_REPLUG_INT:
 			/* do nothing */
 			break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case EV_USER_NOTIFICATION:
 			dp_display_send_hpd_notification(dp_priv,
 						todo->data);
@@ -1162,12 +1297,26 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
 
 	hpd_isr_status = dp_catalog_hpd_get_intr_status(dp->catalog);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("hpd isr status=%#x\n", hpd_isr_status);
 	if (hpd_isr_status & 0x0F) {
 		/* hpd related interrupts */
-		if (hpd_isr_status & DP_DP_HPD_PLUG_INT_MASK ||
-			hpd_isr_status & DP_DP_HPD_REPLUG_INT_MASK) {
+		if (hpd_isr_status & DP_DP_HPD_PLUG_INT_MASK)
 			dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
+=======
+=======
+	DRM_DEBUG_DP("hpd isr status=%#x\n", hpd_isr_status);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (hpd_isr_status & 0x0F) {
+		/* hpd related interrupts */
+		if (hpd_isr_status & DP_DP_HPD_PLUG_INT_MASK)
+			dp_add_event(dp, EV_HPD_PLUG_INT, 0, 0);
+<<<<<<< HEAD
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (hpd_isr_status & DP_DP_IRQ_HPD_INT_MASK) {
 			/* stop sentinel connect pending checking */
@@ -1175,8 +1324,21 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
 			dp_add_event(dp, EV_IRQ_HPD_INT, 0, 0);
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		if (hpd_isr_status & DP_DP_HPD_REPLUG_INT_MASK) {
+			dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
+			dp_add_event(dp, EV_HPD_PLUG_INT, 0, 3);
+		}
+<<<<<<< HEAD
+=======
 		if (hpd_isr_status & DP_DP_HPD_REPLUG_INT_MASK)
 			dp_add_event(dp, EV_HPD_REPLUG_INT, 0, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (hpd_isr_status & DP_DP_HPD_UNPLUG_INT_MASK)
 			dp_add_event(dp, EV_HPD_UNPLUG_INT, 0, 0);
@@ -1285,12 +1447,32 @@ static int dp_pm_resume(struct device *dev)
 	struct platform_device *pdev = to_platform_device(dev);
 	struct msm_dp *dp_display = platform_get_drvdata(pdev);
 	struct dp_display_private *dp;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int sink_count = 0;
+=======
 	u32 status;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int sink_count = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dp = container_of(dp_display, struct dp_display_private, dp_display);
 
 	mutex_lock(&dp->event_mutex);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("Before, core_inited=%d power_on=%d\n",
+			dp->core_initialized, dp_display->power_on);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("Before, core_inited=%d power_on=%d\n",
+			dp->core_initialized, dp_display->power_on);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* start from disconnected state */
 	dp->hpd_state = ST_DISCONNECTED;
 
@@ -1299,17 +1481,75 @@ static int dp_pm_resume(struct device *dev)
 
 	dp_catalog_ctrl_hpd_config(dp->catalog);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * set sink to normal operation mode -- D0
+	 * before dpcd read
+	 */
+	dp_link_psm_config(dp->link, &dp->panel->link_info, false);
+<<<<<<< HEAD
+
+	if (dp_catalog_link_is_connected(dp->catalog)) {
+		sink_count = drm_dp_read_sink_count(dp->aux);
+		if (sink_count < 0)
+			sink_count = 0;
+	}
+
+	dp->link->sink_count = sink_count;
+=======
 	status = dp_catalog_link_is_connected(dp->catalog);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (dp_catalog_link_is_connected(dp->catalog)) {
+		sink_count = drm_dp_read_sink_count(dp->aux);
+		if (sink_count < 0)
+			sink_count = 0;
+	}
+
+	dp->link->sink_count = sink_count;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * can not declared display is connected unless
 	 * HDMI cable is plugged in and sink_count of
 	 * dongle become 1
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * also only signal audio when disconnected
 	 */
-	if (status && dp->link->sink_count)
+	if (dp->link->sink_count) {
 		dp->dp_display.is_connected = true;
-	else
+	} else {
 		dp->dp_display.is_connected = false;
+		dp_display_handle_plugged_change(g_dp_display, false);
+	}
+
+	DRM_DEBUG_DP("After, sink_count=%d is_connected=%d core_inited=%d power_on=%d\n",
+			dp->link->sink_count, dp->dp_display.is_connected,
+			dp->core_initialized, dp_display->power_on);
+=======
+=======
+	 * also only signal audio when disconnected
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	 */
+	if (dp->link->sink_count) {
+		dp->dp_display.is_connected = true;
+	} else {
+		dp->dp_display.is_connected = false;
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dp_display_handle_plugged_change(g_dp_display, false);
+	}
+
+	DRM_DEBUG_DP("After, sink_count=%d is_connected=%d core_inited=%d power_on=%d\n",
+			dp->link->sink_count, dp->dp_display.is_connected,
+			dp->core_initialized, dp_display->power_on);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_unlock(&dp->event_mutex);
 
@@ -1326,6 +1566,18 @@ static int dp_pm_suspend(struct device *dev)
 
 	mutex_lock(&dp->event_mutex);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("Before, core_inited=%d power_on=%d\n",
+			dp->core_initialized, dp_display->power_on);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("Before, core_inited=%d power_on=%d\n",
+			dp->core_initialized, dp_display->power_on);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dp->core_initialized == true) {
 		/* mainlink enabled */
 		if (dp_power_clk_status(dp->power, DP_CTRL_PM))
@@ -1339,6 +1591,18 @@ static int dp_pm_suspend(struct device *dev)
 	/* host_init will be called at pm_resume */
 	dp->core_initialized = false;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("After, core_inited=%d power_on=%d\n",
+			dp->core_initialized, dp_display->power_on);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("After, core_inited=%d power_on=%d\n",
+			dp->core_initialized, dp_display->power_on);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&dp->event_mutex);
 
 	return 0;

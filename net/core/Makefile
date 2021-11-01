@@ -33,8 +33,18 @@ obj-$(CONFIG_HWBM) += hwbm.o
 obj-$(CONFIG_NET_DEVLINK) += devlink.o
 obj-$(CONFIG_GRO_CELLS) += gro_cells.o
 obj-$(CONFIG_FAILOVER) += failover.o
+<<<<<<< HEAD
+<<<<<<< HEAD
+obj-$(CONFIG_NET_SOCK_MSG) += skmsg.o
+obj-$(CONFIG_BPF_SYSCALL) += sock_map.o
+=======
 ifeq ($(CONFIG_INET),y)
 obj-$(CONFIG_NET_SOCK_MSG) += skmsg.o
 obj-$(CONFIG_BPF_SYSCALL) += sock_map.o
 endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_NET_SOCK_MSG) += skmsg.o
+obj-$(CONFIG_BPF_SYSCALL) += sock_map.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_BPF_SYSCALL) += bpf_sk_storage.o

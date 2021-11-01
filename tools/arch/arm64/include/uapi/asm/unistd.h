@@ -20,5 +20,13 @@
 #define __ARCH_WANT_SET_GET_RLIMIT
 #define __ARCH_WANT_TIME32_SYSCALLS
 #define __ARCH_WANT_SYS_CLONE3
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define __ARCH_WANT_MEMFD_SECRET
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __ARCH_WANT_MEMFD_SECRET
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <asm-generic/unistd.h>

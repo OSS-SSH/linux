@@ -503,6 +503,16 @@ sclp_tty_init(void)
 		return 0;
 	if (!sclp.has_linemode)
 		return 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	driver = tty_alloc_driver(1, TTY_DRIVER_REAL_RAW);
+	if (IS_ERR(driver))
+		return PTR_ERR(driver);
+
+	rc = sclp_rw_init();
+	if (rc) {
+		tty_driver_kref_put(driver);
+=======
 	driver = alloc_tty_driver(1);
 	if (!driver)
 		return -ENOMEM;
@@ -510,13 +520,31 @@ sclp_tty_init(void)
 	rc = sclp_rw_init();
 	if (rc) {
 		put_tty_driver(driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	driver = tty_alloc_driver(1, TTY_DRIVER_REAL_RAW);
+	if (IS_ERR(driver))
+		return PTR_ERR(driver);
+
+	rc = sclp_rw_init();
+	if (rc) {
+		tty_driver_kref_put(driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return rc;
 	}
 	/* Allocate pages for output buffering */
 	for (i = 0; i < MAX_KMEM_PAGES; i++) {
 		page = (void *) get_zeroed_page(GFP_KERNEL | GFP_DMA);
 		if (page == NULL) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			tty_driver_kref_put(driver);
+=======
 			put_tty_driver(driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			tty_driver_kref_put(driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENOMEM;
 		}
 		list_add_tail((struct list_head *) page, &sclp_tty_pages);
@@ -532,7 +560,15 @@ sclp_tty_init(void)
 
 	rc = sclp_register(&sclp_input_event);
 	if (rc) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		tty_driver_kref_put(driver);
+=======
 		put_tty_driver(driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tty_driver_kref_put(driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return rc;
 	}
 
@@ -548,12 +584,26 @@ sclp_tty_init(void)
 	driver->init_termios.c_iflag = IGNBRK | IGNPAR;
 	driver->init_termios.c_oflag = ONLCR;
 	driver->init_termios.c_lflag = ISIG | ECHO;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	driver->flags = TTY_DRIVER_REAL_RAW;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tty_set_operations(driver, &sclp_ops);
 	tty_port_link_device(&sclp_port, driver, 0);
 	rc = tty_register_driver(driver);
 	if (rc) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		tty_driver_kref_put(driver);
+=======
 		put_tty_driver(driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tty_driver_kref_put(driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tty_port_destroy(&sclp_port);
 		return rc;
 	}

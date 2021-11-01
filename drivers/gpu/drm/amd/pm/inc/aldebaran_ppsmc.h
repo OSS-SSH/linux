@@ -101,7 +101,17 @@
 #define PPSMC_MSG_SetSystemVirtualSTBtoDramAddrLow  0x41
 
 #define PPSMC_MSG_GfxDriverResetRecovery	0x42
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define PPSMC_MSG_BoardPowerCalibration 	0x43
+#define PPSMC_Message_Count			0x44
+=======
 #define PPSMC_Message_Count			0x43
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PPSMC_MSG_BoardPowerCalibration 	0x43
+#define PPSMC_Message_Count			0x44
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 //PPSMC Reset Types
 #define PPSMC_RESET_TYPE_WARM_RESET              0x00

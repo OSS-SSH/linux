@@ -72,12 +72,28 @@ static void dpaa2_eth_get_drvinfo(struct net_device *net_dev,
 {
 	struct dpaa2_eth_priv *priv = netdev_priv(net_dev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	strscpy(drvinfo->driver, KBUILD_MODNAME, sizeof(drvinfo->driver));
+=======
 	strlcpy(drvinfo->driver, KBUILD_MODNAME, sizeof(drvinfo->driver));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	strscpy(drvinfo->driver, KBUILD_MODNAME, sizeof(drvinfo->driver));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snprintf(drvinfo->fw_version, sizeof(drvinfo->fw_version),
 		 "%u.%u", priv->dpni_ver_major, priv->dpni_ver_minor);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	strscpy(drvinfo->bus_info, dev_name(net_dev->dev.parent->parent),
+=======
 	strlcpy(drvinfo->bus_info, dev_name(net_dev->dev.parent->parent),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	strscpy(drvinfo->bus_info, dev_name(net_dev->dev.parent->parent),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sizeof(drvinfo->bus_info));
 }
 
@@ -191,11 +207,27 @@ static void dpaa2_eth_get_strings(struct net_device *netdev, u32 stringset,
 	switch (stringset) {
 	case ETH_SS_STATS:
 		for (i = 0; i < DPAA2_ETH_NUM_STATS; i++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			strscpy(p, dpaa2_ethtool_stats[i], ETH_GSTRING_LEN);
+			p += ETH_GSTRING_LEN;
+		}
+		for (i = 0; i < DPAA2_ETH_NUM_EXTRA_STATS; i++) {
+			strscpy(p, dpaa2_ethtool_extras[i], ETH_GSTRING_LEN);
+=======
 			strlcpy(p, dpaa2_ethtool_stats[i], ETH_GSTRING_LEN);
 			p += ETH_GSTRING_LEN;
 		}
 		for (i = 0; i < DPAA2_ETH_NUM_EXTRA_STATS; i++) {
 			strlcpy(p, dpaa2_ethtool_extras[i], ETH_GSTRING_LEN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			strscpy(p, dpaa2_ethtool_stats[i], ETH_GSTRING_LEN);
+			p += ETH_GSTRING_LEN;
+		}
+		for (i = 0; i < DPAA2_ETH_NUM_EXTRA_STATS; i++) {
+			strscpy(p, dpaa2_ethtool_extras[i], ETH_GSTRING_LEN);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			p += ETH_GSTRING_LEN;
 		}
 		if (dpaa2_eth_has_mac(priv))

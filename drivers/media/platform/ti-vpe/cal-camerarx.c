@@ -45,22 +45,65 @@ static inline void camerarx_write(struct cal_camerarx *phy, u32 offset, u32 val)
  * ------------------------------------------------------------------
  */
 
-static s64 cal_camerarx_get_external_rate(struct cal_camerarx *phy)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static s64 cal_camerarx_get_ext_link_freq(struct cal_camerarx *phy)
 {
-	struct v4l2_ctrl *ctrl;
-	s64 rate;
+	struct v4l2_fwnode_bus_mipi_csi2 *mipi_csi2 = &phy->endpoint.bus.mipi_csi2;
+	u32 num_lanes = mipi_csi2->num_data_lanes;
+	const struct cal_format_info *fmtinfo;
+	u32 bpp;
+	s64 freq;
 
-	ctrl = v4l2_ctrl_find(phy->sensor->ctrl_handler, V4L2_CID_PIXEL_RATE);
-	if (!ctrl) {
-		phy_err(phy, "no pixel rate control in subdev: %s\n",
-			phy->sensor->name);
-		return -EPIPE;
+	fmtinfo = cal_format_by_code(phy->formats[CAL_CAMERARX_PAD_SINK].code);
+	if (!fmtinfo)
+		return -EINVAL;
+
+	bpp = fmtinfo->bpp;
+
+	freq = v4l2_get_link_freq(phy->source->ctrl_handler, bpp, 2 * num_lanes);
+	if (freq < 0) {
+		phy_err(phy, "failed to get link freq for subdev '%s'\n",
+			phy->source->name);
+		return freq;
 	}
 
-	rate = v4l2_ctrl_g_ctrl_int64(ctrl);
-	phy_dbg(3, phy, "sensor Pixel Rate: %llu\n", rate);
+	phy_dbg(3, phy, "Source Link Freq: %llu\n", freq);
 
+	return freq;
+=======
+static s64 cal_camerarx_get_external_rate(struct cal_camerarx *phy)
+=======
+static s64 cal_camerarx_get_ext_link_freq(struct cal_camerarx *phy)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct v4l2_fwnode_bus_mipi_csi2 *mipi_csi2 = &phy->endpoint.bus.mipi_csi2;
+	u32 num_lanes = mipi_csi2->num_data_lanes;
+	const struct cal_format_info *fmtinfo;
+	u32 bpp;
+	s64 freq;
+
+	fmtinfo = cal_format_by_code(phy->formats[CAL_CAMERARX_PAD_SINK].code);
+	if (!fmtinfo)
+		return -EINVAL;
+
+	bpp = fmtinfo->bpp;
+
+	freq = v4l2_get_link_freq(phy->source->ctrl_handler, bpp, 2 * num_lanes);
+	if (freq < 0) {
+		phy_err(phy, "failed to get link freq for subdev '%s'\n",
+			phy->source->name);
+		return freq;
+	}
+
+	phy_dbg(3, phy, "Source Link Freq: %llu\n", freq);
+
+<<<<<<< HEAD
 	return rate;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return freq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void cal_camerarx_lane_config(struct cal_camerarx *phy)
@@ -116,34 +159,43 @@ void cal_camerarx_disable(struct cal_camerarx *phy)
 #define TCLK_MISS	1
 #define TCLK_SETTLE	14
 
-static void cal_camerarx_config(struct cal_camerarx *phy, s64 external_rate)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void cal_camerarx_config(struct cal_camerarx *phy, s64 link_freq)
 {
 	unsigned int reg0, reg1;
 	unsigned int ths_term, ths_settle;
-	unsigned int csi2_ddrclk_khz;
-	struct v4l2_fwnode_bus_mipi_csi2 *mipi_csi2 =
-			&phy->endpoint.bus.mipi_csi2;
-	u32 num_lanes = mipi_csi2->num_data_lanes;
 
 	/* DPHY timing configuration */
 
-	/*
-	 * CSI-2 is DDR and we only count used lanes.
-	 *
-	 * csi2_ddrclk_khz = external_rate / 1000
-	 *		   / (2 * num_lanes) * phy->fmtinfo->bpp;
-	 */
-	csi2_ddrclk_khz = div_s64(external_rate * phy->fmtinfo->bpp,
-				  2 * num_lanes * 1000);
-
-	phy_dbg(1, phy, "csi2_ddrclk_khz: %d\n", csi2_ddrclk_khz);
-
 	/* THS_TERM: Programmed value = floor(20 ns/DDRClk period) */
-	ths_term = 20 * csi2_ddrclk_khz / 1000000;
+	ths_term = div_s64(20 * link_freq, 1000 * 1000 * 1000);
 	phy_dbg(1, phy, "ths_term: %d (0x%02x)\n", ths_term, ths_term);
 
 	/* THS_SETTLE: Programmed value = floor(105 ns/DDRClk period) + 4 */
+	ths_settle = div_s64(105 * link_freq, 1000 * 1000 * 1000) + 4;
+=======
+static void cal_camerarx_config(struct cal_camerarx *phy, s64 external_rate)
+=======
+static void cal_camerarx_config(struct cal_camerarx *phy, s64 link_freq)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	unsigned int reg0, reg1;
+	unsigned int ths_term, ths_settle;
+
+	/* DPHY timing configuration */
+
+	/* THS_TERM: Programmed value = floor(20 ns/DDRClk period) */
+	ths_term = div_s64(20 * link_freq, 1000 * 1000 * 1000);
+	phy_dbg(1, phy, "ths_term: %d (0x%02x)\n", ths_term, ths_term);
+
+	/* THS_SETTLE: Programmed value = floor(105 ns/DDRClk period) + 4 */
+<<<<<<< HEAD
 	ths_settle = (105 * csi2_ddrclk_khz / 1000000) + 4;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ths_settle = div_s64(105 * link_freq, 1000 * 1000 * 1000) + 4;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy_dbg(1, phy, "ths_settle: %d (0x%02x)\n", ths_settle, ths_settle);
 
 	reg0 = camerarx_read(phy, CAL_CSI2_PHY_REG0);
@@ -240,25 +292,84 @@ static void cal_camerarx_enable_irqs(struct cal_camerarx *phy)
 		CAL_CSI2_COMPLEXIO_IRQ_FIFO_OVR_MASK |
 		CAL_CSI2_COMPLEXIO_IRQ_SHORT_PACKET_MASK |
 		CAL_CSI2_COMPLEXIO_IRQ_ECC_NO_CORRECTION_MASK;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	const u32 vc_err_mask =
+		CAL_CSI2_VC_IRQ_CS_IRQ_MASK(0) |
+		CAL_CSI2_VC_IRQ_CS_IRQ_MASK(1) |
+		CAL_CSI2_VC_IRQ_CS_IRQ_MASK(2) |
+		CAL_CSI2_VC_IRQ_CS_IRQ_MASK(3) |
+		CAL_CSI2_VC_IRQ_ECC_CORRECTION_IRQ_MASK(0) |
+		CAL_CSI2_VC_IRQ_ECC_CORRECTION_IRQ_MASK(1) |
+		CAL_CSI2_VC_IRQ_ECC_CORRECTION_IRQ_MASK(2) |
+		CAL_CSI2_VC_IRQ_ECC_CORRECTION_IRQ_MASK(3);
 
-	/* Enable CIO error IRQs. */
+	/* Enable CIO & VC error IRQs. */
+<<<<<<< HEAD
 	cal_write(phy->cal, CAL_HL_IRQENABLE_SET(0),
-		  CAL_HL_IRQ_CIO_MASK(phy->instance));
+		  CAL_HL_IRQ_CIO_MASK(phy->instance) |
+		  CAL_HL_IRQ_VC_MASK(phy->instance));
 	cal_write(phy->cal, CAL_CSI2_COMPLEXIO_IRQENABLE(phy->instance),
 		  cio_err_mask);
+	cal_write(phy->cal, CAL_CSI2_VC_IRQENABLE(phy->instance),
+		  vc_err_mask);
+=======
+
+	/* Enable CIO error IRQs. */
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	cal_write(phy->cal, CAL_HL_IRQENABLE_SET(0),
+		  CAL_HL_IRQ_CIO_MASK(phy->instance) |
+		  CAL_HL_IRQ_VC_MASK(phy->instance));
+	cal_write(phy->cal, CAL_CSI2_COMPLEXIO_IRQENABLE(phy->instance),
+		  cio_err_mask);
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cal_write(phy->cal, CAL_CSI2_VC_IRQENABLE(phy->instance),
+		  vc_err_mask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void cal_camerarx_disable_irqs(struct cal_camerarx *phy)
 {
 	/* Disable CIO error irqs */
 	cal_write(phy->cal, CAL_HL_IRQENABLE_CLR(0),
+<<<<<<< HEAD
+<<<<<<< HEAD
+		  CAL_HL_IRQ_CIO_MASK(phy->instance) |
+		  CAL_HL_IRQ_VC_MASK(phy->instance));
+	cal_write(phy->cal, CAL_CSI2_COMPLEXIO_IRQENABLE(phy->instance), 0);
+	cal_write(phy->cal, CAL_CSI2_VC_IRQENABLE(phy->instance), 0);
+=======
 		  CAL_HL_IRQ_CIO_MASK(phy->instance));
 	cal_write(phy->cal, CAL_CSI2_COMPLEXIO_IRQENABLE(phy->instance), 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		  CAL_HL_IRQ_CIO_MASK(phy->instance) |
+		  CAL_HL_IRQ_VC_MASK(phy->instance));
+	cal_write(phy->cal, CAL_CSI2_COMPLEXIO_IRQENABLE(phy->instance), 0);
+	cal_write(phy->cal, CAL_CSI2_VC_IRQENABLE(phy->instance), 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void cal_camerarx_ppi_enable(struct cal_camerarx *phy)
 {
 	cal_write_field(phy->cal, CAL_CSI2_PPI_CTRL(phy->instance),
+<<<<<<< HEAD
+<<<<<<< HEAD
+			1, CAL_CSI2_PPI_CTRL_ECC_EN_MASK);
+
+	cal_write_field(phy->cal, CAL_CSI2_PPI_CTRL(phy->instance),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			1, CAL_CSI2_PPI_CTRL_ECC_EN_MASK);
+
+	cal_write_field(phy->cal, CAL_CSI2_PPI_CTRL(phy->instance),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			1, CAL_CSI2_PPI_CTRL_IF_EN_MASK);
 }
 
@@ -270,16 +381,45 @@ static void cal_camerarx_ppi_disable(struct cal_camerarx *phy)
 
 static int cal_camerarx_start(struct cal_camerarx *phy)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	s64 link_freq;
+=======
 	s64 external_rate;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	s64 link_freq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 sscounter;
 	u32 val;
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (phy->enable_count > 0) {
+		phy->enable_count++;
+		return 0;
+	}
+
+	link_freq = cal_camerarx_get_ext_link_freq(phy);
+	if (link_freq < 0)
+		return link_freq;
+<<<<<<< HEAD
+
+	ret = v4l2_subdev_call(phy->source, core, s_power, 1);
+=======
 	external_rate = cal_camerarx_get_external_rate(phy);
 	if (external_rate < 0)
 		return external_rate;
 
 	ret = v4l2_subdev_call(phy->sensor, core, s_power, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	ret = v4l2_subdev_call(phy->source, core, s_power, 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0 && ret != -ENOIOCTLCMD && ret != -ENODEV) {
 		phy_err(phy, "power on failed in subdev\n");
 		return ret;
@@ -311,7 +451,15 @@ static int cal_camerarx_start(struct cal_camerarx *phy)
 	 * 2. CSI PHY and link initialization sequence.
 	 *
 	 *    a. Deassert the CSI-2 PHY reset. Do not wait for reset completion
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 *       at this point, as it requires the external source to send the
+=======
 	 *       at this point, as it requires the external sensor to send the
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 *       at this point, as it requires the external source to send the
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 *       CSI-2 HS clock.
 	 */
 	cal_write_field(phy->cal, CAL_CSI2_COMPLEXIO_CFG(phy->instance),
@@ -325,7 +473,15 @@ static int cal_camerarx_start(struct cal_camerarx *phy)
 	camerarx_read(phy, CAL_CSI2_PHY_REG0);
 
 	/* Program the PHY timing parameters. */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cal_camerarx_config(phy, link_freq);
+=======
 	cal_camerarx_config(phy, external_rate);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cal_camerarx_config(phy, link_freq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 *    b. Assert the FORCERXMODE signal.
@@ -370,12 +526,29 @@ static int cal_camerarx_start(struct cal_camerarx *phy)
 	cal_camerarx_power(phy, true);
 
 	/*
-	 * Start the sensor to enable the CSI-2 HS clock. We can now wait for
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * Start the source to enable the CSI-2 HS clock. We can now wait for
 	 * CSI-2 PHY reset to complete.
 	 */
-	ret = v4l2_subdev_call(phy->sensor, video, s_stream, 1);
+	ret = v4l2_subdev_call(phy->source, video, s_stream, 1);
 	if (ret) {
+		v4l2_subdev_call(phy->source, core, s_power, 0);
+=======
+	 * Start the sensor to enable the CSI-2 HS clock. We can now wait for
+=======
+	 * Start the source to enable the CSI-2 HS clock. We can now wait for
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	 * CSI-2 PHY reset to complete.
+	 */
+	ret = v4l2_subdev_call(phy->source, video, s_stream, 1);
+	if (ret) {
+<<<<<<< HEAD
 		v4l2_subdev_call(phy->sensor, core, s_power, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		v4l2_subdev_call(phy->source, core, s_power, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cal_camerarx_disable_irqs(phy);
 		phy_err(phy, "stream on failed in subdev\n");
 		return ret;
@@ -399,14 +572,40 @@ static int cal_camerarx_start(struct cal_camerarx *phy)
 	/* Finally, enable the PHY Protocol Interface (PPI). */
 	cal_camerarx_ppi_enable(phy);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	phy->enable_count++;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phy->enable_count++;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
 static void cal_camerarx_stop(struct cal_camerarx *phy)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret;
+
+	if (--phy->enable_count > 0)
+		return;
+
+=======
 	unsigned int i;
 	int ret;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+	if (--phy->enable_count > 0)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cal_camerarx_ppi_disable(phy);
 
 	cal_camerarx_disable_irqs(phy);
@@ -418,6 +617,12 @@ static void cal_camerarx_stop(struct cal_camerarx *phy)
 			CAL_CSI2_COMPLEXIO_CFG_RESET_CTRL,
 			CAL_CSI2_COMPLEXIO_CFG_RESET_CTRL_MASK);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	phy_dbg(3, phy, "CAL_CSI2_COMPLEXIO_CFG(%d) = 0x%08x Complex IO in Reset\n",
+		phy->instance,
+		cal_read(phy->cal, CAL_CSI2_COMPLEXIO_CFG(phy->instance)));
+=======
 	/* Wait for power down completion */
 	for (i = 0; i < 10; i++) {
 		if (cal_read_field(phy->cal,
@@ -431,14 +636,34 @@ static void cal_camerarx_stop(struct cal_camerarx *phy)
 		phy->instance,
 		cal_read(phy->cal, CAL_CSI2_COMPLEXIO_CFG(phy->instance)), i,
 		(i >= 10) ? "(timeout)" : "");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phy_dbg(3, phy, "CAL_CSI2_COMPLEXIO_CFG(%d) = 0x%08x Complex IO in Reset\n",
+		phy->instance,
+		cal_read(phy->cal, CAL_CSI2_COMPLEXIO_CFG(phy->instance)));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Disable the phy */
 	cal_camerarx_disable(phy);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (v4l2_subdev_call(phy->source, video, s_stream, 0))
+		phy_err(phy, "stream off failed in subdev\n");
+
+	ret = v4l2_subdev_call(phy->source, core, s_power, 0);
+=======
 	if (v4l2_subdev_call(phy->sensor, video, s_stream, 0))
 		phy_err(phy, "stream off failed in subdev\n");
 
 	ret = v4l2_subdev_call(phy->sensor, core, s_power, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (v4l2_subdev_call(phy->source, video, s_stream, 0))
+		phy_err(phy, "stream off failed in subdev\n");
+
+	ret = v4l2_subdev_call(phy->source, core, s_power, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0 && ret != -ENOIOCTLCMD && ret != -ENODEV)
 		phy_err(phy, "power off failed in subdev\n");
 }
@@ -558,16 +783,40 @@ static int cal_camerarx_parse_dt(struct cal_camerarx *phy)
 		endpoint->bus.mipi_csi2.flags);
 
 	/* Retrieve the connected device and store it for later use. */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	phy->source_ep_node = of_graph_get_remote_endpoint(ep_node);
+	phy->source_node = of_graph_get_port_parent(phy->source_ep_node);
+	if (!phy->source_node) {
+		phy_dbg(3, phy, "Can't get remote parent\n");
+		of_node_put(phy->source_ep_node);
+=======
 	phy->sensor_ep_node = of_graph_get_remote_endpoint(ep_node);
 	phy->sensor_node = of_graph_get_port_parent(phy->sensor_ep_node);
 	if (!phy->sensor_node) {
 		phy_dbg(3, phy, "Can't get remote parent\n");
 		of_node_put(phy->sensor_ep_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phy->source_ep_node = of_graph_get_remote_endpoint(ep_node);
+	phy->source_node = of_graph_get_port_parent(phy->source_ep_node);
+	if (!phy->source_node) {
+		phy_dbg(3, phy, "Can't get remote parent\n");
+		of_node_put(phy->source_ep_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EINVAL;
 		goto done;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	phy_dbg(1, phy, "Found connected device %pOFn\n", phy->source_node);
+=======
 	phy_dbg(1, phy, "Found connected device %pOFn\n", phy->sensor_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phy_dbg(1, phy, "Found connected device %pOFn\n", phy->source_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 done:
 	of_node_put(ep_node);
@@ -602,12 +851,41 @@ cal_camerarx_get_pad_format(struct cal_camerarx *phy,
 static int cal_camerarx_sd_s_stream(struct v4l2_subdev *sd, int enable)
 {
 	struct cal_camerarx *phy = to_cal_camerarx(sd);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret = 0;
+
+	mutex_lock(&phy->mutex);
 
 	if (enable)
-		return cal_camerarx_start(phy);
+		ret = cal_camerarx_start(phy);
+	else
+		cal_camerarx_stop(phy);
 
+	mutex_unlock(&phy->mutex);
+
+	return ret;
+=======
+=======
+	int ret = 0;
+
+	mutex_lock(&phy->mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	if (enable)
+		ret = cal_camerarx_start(phy);
+	else
+		cal_camerarx_stop(phy);
+
+<<<<<<< HEAD
 	cal_camerarx_stop(phy);
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&phy->mutex);
+
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int cal_camerarx_sd_enum_mbus_code(struct v4l2_subdev *sd,
@@ -615,27 +893,82 @@ static int cal_camerarx_sd_enum_mbus_code(struct v4l2_subdev *sd,
 					  struct v4l2_subdev_mbus_code_enum *code)
 {
 	struct cal_camerarx *phy = to_cal_camerarx(sd);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret = 0;
+
+	mutex_lock(&phy->mutex);
 
 	/* No transcoding, source and sink codes must match. */
-	if (code->pad == CAL_CAMERARX_PAD_SOURCE) {
+	if (cal_rx_pad_is_source(code->pad)) {
 		struct v4l2_mbus_framefmt *fmt;
 
+		if (code->index > 0) {
+			ret = -EINVAL;
+			goto out;
+		}
+=======
+=======
+	int ret = 0;
+
+	mutex_lock(&phy->mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	/* No transcoding, source and sink codes must match. */
+	if (cal_rx_pad_is_source(code->pad)) {
+		struct v4l2_mbus_framefmt *fmt;
+
+<<<<<<< HEAD
 		if (code->index > 0)
 			return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (code->index > 0) {
+			ret = -EINVAL;
+			goto out;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		fmt = cal_camerarx_get_pad_format(phy, sd_state,
 						  CAL_CAMERARX_PAD_SINK,
 						  code->which);
 		code->code = fmt->code;
-		return 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	} else {
+		if (code->index >= cal_num_formats) {
+			ret = -EINVAL;
+			goto out;
+		}
+<<<<<<< HEAD
+
+		code->code = cal_formats[code->index].code;
 	}
 
-	if (code->index >= cal_num_formats)
-		return -EINVAL;
+out:
+	mutex_unlock(&phy->mutex);
 
-	code->code = cal_formats[code->index].code;
+	return ret;
+=======
+		return 0;
+	}
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+		code->code = cal_formats[code->index].code;
+	}
+
+out:
+	mutex_unlock(&phy->mutex);
+
+<<<<<<< HEAD
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int cal_camerarx_sd_enum_frame_size(struct v4l2_subdev *sd,
@@ -644,38 +977,100 @@ static int cal_camerarx_sd_enum_frame_size(struct v4l2_subdev *sd,
 {
 	struct cal_camerarx *phy = to_cal_camerarx(sd);
 	const struct cal_format_info *fmtinfo;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (fse->index > 0)
 		return -EINVAL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mutex_lock(&phy->mutex);
+
+	/* No transcoding, source and sink formats must match. */
+	if (cal_rx_pad_is_source(fse->pad)) {
+=======
 	/* No transcoding, source and sink formats must match. */
 	if (fse->pad == CAL_CAMERARX_PAD_SOURCE) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_lock(&phy->mutex);
+
+	/* No transcoding, source and sink formats must match. */
+	if (cal_rx_pad_is_source(fse->pad)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct v4l2_mbus_framefmt *fmt;
 
 		fmt = cal_camerarx_get_pad_format(phy, sd_state,
 						  CAL_CAMERARX_PAD_SINK,
 						  fse->which);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		if (fse->code != fmt->code) {
+			ret = -EINVAL;
+			goto out;
+		}
+<<<<<<< HEAD
+=======
 		if (fse->code != fmt->code)
 			return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		fse->min_width = fmt->width;
 		fse->max_width = fmt->width;
 		fse->min_height = fmt->height;
 		fse->max_height = fmt->height;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	} else {
+		fmtinfo = cal_format_by_code(fse->code);
+		if (!fmtinfo) {
+			ret = -EINVAL;
+			goto out;
+		}
+<<<<<<< HEAD
 
-		return 0;
+		fse->min_width = CAL_MIN_WIDTH_BYTES * 8 / ALIGN(fmtinfo->bpp, 8);
+		fse->max_width = CAL_MAX_WIDTH_BYTES * 8 / ALIGN(fmtinfo->bpp, 8);
+		fse->min_height = CAL_MIN_HEIGHT_LINES;
+		fse->max_height = CAL_MAX_HEIGHT_LINES;
 	}
 
-	fmtinfo = cal_format_by_code(fse->code);
-	if (!fmtinfo)
-		return -EINVAL;
+out:
+	mutex_unlock(&phy->mutex);
 
-	fse->min_width = CAL_MIN_WIDTH_BYTES * 8 / ALIGN(fmtinfo->bpp, 8);
-	fse->max_width = CAL_MAX_WIDTH_BYTES * 8 / ALIGN(fmtinfo->bpp, 8);
-	fse->min_height = CAL_MIN_HEIGHT_LINES;
-	fse->max_height = CAL_MAX_HEIGHT_LINES;
+	return ret;
+=======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+		fse->min_width = CAL_MIN_WIDTH_BYTES * 8 / ALIGN(fmtinfo->bpp, 8);
+		fse->max_width = CAL_MAX_WIDTH_BYTES * 8 / ALIGN(fmtinfo->bpp, 8);
+		fse->min_height = CAL_MIN_HEIGHT_LINES;
+		fse->max_height = CAL_MAX_HEIGHT_LINES;
+	}
+
+out:
+	mutex_unlock(&phy->mutex);
+
+<<<<<<< HEAD
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int cal_camerarx_sd_get_fmt(struct v4l2_subdev *sd,
@@ -685,10 +1080,30 @@ static int cal_camerarx_sd_get_fmt(struct v4l2_subdev *sd,
 	struct cal_camerarx *phy = to_cal_camerarx(sd);
 	struct v4l2_mbus_framefmt *fmt;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mutex_lock(&phy->mutex);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_lock(&phy->mutex);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fmt = cal_camerarx_get_pad_format(phy, sd_state, format->pad,
 					  format->which);
 	format->format = *fmt;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mutex_unlock(&phy->mutex);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&phy->mutex);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -702,21 +1117,45 @@ static int cal_camerarx_sd_set_fmt(struct v4l2_subdev *sd,
 	unsigned int bpp;
 
 	/* No transcoding, source and sink formats must match. */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (cal_rx_pad_is_source(format->pad))
+		return cal_camerarx_sd_get_fmt(sd, sd_state, format);
+
+	/*
+	 * Default to the first format if the requested media bus code isn't
+=======
 	if (format->pad == CAL_CAMERARX_PAD_SOURCE)
 		return cal_camerarx_sd_get_fmt(sd, sd_state, format);
 
 	/*
 	 * Default to the first format is the requested media bus code isn't
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (cal_rx_pad_is_source(format->pad))
+		return cal_camerarx_sd_get_fmt(sd, sd_state, format);
+
+	/*
+	 * Default to the first format if the requested media bus code isn't
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * supported.
 	 */
 	fmtinfo = cal_format_by_code(format->format.code);
 	if (!fmtinfo)
 		fmtinfo = &cal_formats[0];
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Clamp the size, update the code. The colorspace is accepted as-is. */
+=======
 	/*
 	 * Clamp the size, update the code. The field and colorspace are
 	 * accepted as-is.
 	 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Clamp the size, update the code. The colorspace is accepted as-is. */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bpp = ALIGN(fmtinfo->bpp, 8);
 
 	format->format.width = clamp_t(unsigned int, format->format.width,
@@ -726,20 +1165,51 @@ static int cal_camerarx_sd_set_fmt(struct v4l2_subdev *sd,
 					CAL_MIN_HEIGHT_LINES,
 					CAL_MAX_HEIGHT_LINES);
 	format->format.code = fmtinfo->code;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	format->format.field = V4L2_FIELD_NONE;
 
 	/* Store the format and propagate it to the source pad. */
+
+	mutex_lock(&phy->mutex);
+
+<<<<<<< HEAD
+=======
+
+	/* Store the format and propagate it to the source pad. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fmt = cal_camerarx_get_pad_format(phy, sd_state,
 					  CAL_CAMERARX_PAD_SINK,
 					  format->which);
 	*fmt = format->format;
 
 	fmt = cal_camerarx_get_pad_format(phy, sd_state,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					  CAL_CAMERARX_PAD_FIRST_SOURCE,
+					  format->which);
+	*fmt = format->format;
+
+	mutex_unlock(&phy->mutex);
+=======
 					  CAL_CAMERARX_PAD_SOURCE,
 					  format->which);
 	*fmt = format->format;
 
 	if (format->which == V4L2_SUBDEV_FORMAT_ACTIVE)
 		phy->fmtinfo = fmtinfo;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					  CAL_CAMERARX_PAD_FIRST_SOURCE,
+					  format->which);
+	*fmt = format->format;
+
+	mutex_unlock(&phy->mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -798,6 +1268,14 @@ struct cal_camerarx *cal_camerarx_create(struct cal_dev *cal,
 	struct platform_device *pdev = to_platform_device(cal->dev);
 	struct cal_camerarx *phy;
 	struct v4l2_subdev *sd;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int i;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	phy = kzalloc(sizeof(*phy), GFP_KERNEL);
@@ -807,6 +1285,16 @@ struct cal_camerarx *cal_camerarx_create(struct cal_dev *cal,
 	phy->cal = cal;
 	phy->instance = instance;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mutex_init(&phy->mutex);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_init(&phy->mutex);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy->res = platform_get_resource_byname(pdev, IORESOURCE_MEM,
 						(instance == 0) ?
 						"cal_rx_core0" :
@@ -838,14 +1326,36 @@ struct cal_camerarx *cal_camerarx_create(struct cal_dev *cal,
 	sd->dev = cal->dev;
 
 	phy->pads[CAL_CAMERARX_PAD_SINK].flags = MEDIA_PAD_FL_SINK;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	for (i = CAL_CAMERARX_PAD_FIRST_SOURCE; i < CAL_CAMERARX_NUM_PADS; ++i)
+		phy->pads[i].flags = MEDIA_PAD_FL_SOURCE;
+=======
 	phy->pads[CAL_CAMERARX_PAD_SOURCE].flags = MEDIA_PAD_FL_SOURCE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = CAL_CAMERARX_PAD_FIRST_SOURCE; i < CAL_CAMERARX_NUM_PADS; ++i)
+		phy->pads[i].flags = MEDIA_PAD_FL_SOURCE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sd->entity.ops = &cal_camerarx_media_ops;
 	ret = media_entity_pads_init(&sd->entity, ARRAY_SIZE(phy->pads),
 				     phy->pads);
 	if (ret)
 		goto error;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = cal_camerarx_sd_init_cfg(sd, NULL);
+	if (ret)
+		goto error;
+=======
 	cal_camerarx_sd_init_cfg(sd, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = cal_camerarx_sd_init_cfg(sd, NULL);
+	if (ret)
+		goto error;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = v4l2_device_register_subdev(&cal->v4l2_dev, sd);
 	if (ret)
@@ -866,7 +1376,19 @@ void cal_camerarx_destroy(struct cal_camerarx *phy)
 
 	v4l2_device_unregister_subdev(&phy->subdev);
 	media_entity_cleanup(&phy->subdev.entity);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	of_node_put(phy->source_ep_node);
+	of_node_put(phy->source_node);
+	mutex_destroy(&phy->mutex);
+=======
 	of_node_put(phy->sensor_ep_node);
 	of_node_put(phy->sensor_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	of_node_put(phy->source_ep_node);
+	of_node_put(phy->source_node);
+	mutex_destroy(&phy->mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(phy);
 }

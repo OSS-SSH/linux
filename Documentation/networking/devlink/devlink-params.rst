@@ -97,6 +97,27 @@ own name.
    * - ``enable_roce``
      - Boolean
      - Enable handling of RoCE traffic in the device.
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+   * - ``enable_eth``
+     - Boolean
+     - When enabled, the device driver will instantiate Ethernet specific
+       auxiliary device of the devlink device.
+   * - ``enable_rdma``
+     - Boolean
+     - When enabled, the device driver will instantiate RDMA specific
+       auxiliary device of the devlink device.
+   * - ``enable_vnet``
+     - Boolean
+     - When enabled, the device driver will instantiate VDPA networking
+       specific auxiliary device of the devlink device.
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    * - ``internal_err_reset``
      - Boolean
      - When enabled, the device driver will reset the device on internal

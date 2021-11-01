@@ -179,8 +179,14 @@ static inline int __diag308(unsigned long subcode, void *addr)
 
 int diag308(unsigned long subcode, void *addr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (IS_ENABLED(CONFIG_KASAN))
 		__arch_local_irq_stosm(0x04); /* enable DAT */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	diag_stat_inc(DIAG_STAT_X308);
 	return __diag308(subcode, addr);
 }
@@ -1843,7 +1849,13 @@ static struct kobj_attribute on_restart_attr = __ATTR_RW(on_restart);
 
 static void __do_restart(void *ignore)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	__arch_local_irq_stosm(0x04); /* enable DAT */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	smp_send_stop();
 #ifdef CONFIG_CRASH_DUMP
 	crash_kexec(NULL);
@@ -2082,7 +2094,15 @@ void s390_reset_system(void)
 
 	/* Disable lowcore protection */
 	__ctl_clear_bit(0, 28);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	diag_amode31_ops.diag308_reset();
+=======
 	diag_dma_ops.diag308_reset();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	diag_amode31_ops.diag308_reset();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_KEXEC_FILE

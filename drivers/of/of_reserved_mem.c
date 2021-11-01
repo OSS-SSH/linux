@@ -33,18 +33,52 @@ static int __init early_init_dt_alloc_reserved_memory_arch(phys_addr_t size,
 	phys_addr_t *res_base)
 {
 	phys_addr_t base;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int err = 0;
+
+	end = !end ? MEMBLOCK_ALLOC_ANYWHERE : end;
+	align = !align ? SMP_CACHE_BYTES : align;
+	base = memblock_phys_alloc_range(size, align, start, end);
+=======
 
 	end = !end ? MEMBLOCK_ALLOC_ANYWHERE : end;
 	align = !align ? SMP_CACHE_BYTES : align;
 	base = memblock_find_in_range(start, end, size, align);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int err = 0;
+
+	end = !end ? MEMBLOCK_ALLOC_ANYWHERE : end;
+	align = !align ? SMP_CACHE_BYTES : align;
+	base = memblock_phys_alloc_range(size, align, start, end);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!base)
 		return -ENOMEM;
 
 	*res_base = base;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (nomap) {
+		err = memblock_mark_nomap(base, size);
+		if (err)
+			memblock_free(base, size);
+	}
+<<<<<<< HEAD
+
+	return err;
+=======
 	if (nomap)
 		return memblock_mark_nomap(base, size);
 
 	return memblock_reserve(base, size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

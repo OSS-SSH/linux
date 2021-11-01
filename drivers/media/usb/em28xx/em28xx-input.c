@@ -842,7 +842,13 @@ error:
 	kfree(ir);
 ref_put:
 	em28xx_shutdown_buttons(dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	kref_put(&dev->ref, em28xx_free_device);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 

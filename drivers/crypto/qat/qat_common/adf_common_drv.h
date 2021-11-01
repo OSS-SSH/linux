@@ -193,22 +193,58 @@ int adf_sriov_configure(struct pci_dev *pdev, int numvfs);
 void adf_disable_sriov(struct adf_accel_dev *accel_dev);
 void adf_disable_vf2pf_interrupts(struct adf_accel_dev *accel_dev,
 				  u32 vf_mask);
+<<<<<<< HEAD
+<<<<<<< HEAD
+void adf_disable_vf2pf_interrupts_irq(struct adf_accel_dev *accel_dev,
+				      u32 vf_mask);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void adf_disable_vf2pf_interrupts_irq(struct adf_accel_dev *accel_dev,
+				      u32 vf_mask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void adf_enable_vf2pf_interrupts(struct adf_accel_dev *accel_dev,
 				 u32 vf_mask);
 void adf_enable_pf2vf_interrupts(struct adf_accel_dev *accel_dev);
 void adf_disable_pf2vf_interrupts(struct adf_accel_dev *accel_dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+void adf_schedule_vf2pf_handler(struct adf_accel_vf_info *vf_info);
+
+int adf_vf2pf_notify_init(struct adf_accel_dev *accel_dev);
+void adf_vf2pf_notify_shutdown(struct adf_accel_dev *accel_dev);
+=======
 
 int adf_vf2pf_init(struct adf_accel_dev *accel_dev);
 void adf_vf2pf_shutdown(struct adf_accel_dev *accel_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void adf_schedule_vf2pf_handler(struct adf_accel_vf_info *vf_info);
+
+int adf_vf2pf_notify_init(struct adf_accel_dev *accel_dev);
+void adf_vf2pf_notify_shutdown(struct adf_accel_dev *accel_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int adf_init_pf_wq(void);
 void adf_exit_pf_wq(void);
 int adf_init_vf_wq(void);
 void adf_exit_vf_wq(void);
+<<<<<<< HEAD
+<<<<<<< HEAD
+void adf_flush_vf_wq(struct adf_accel_dev *accel_dev);
+#else
+#define adf_sriov_configure NULL
+=======
 #else
 static inline int adf_sriov_configure(struct pci_dev *pdev, int numvfs)
 {
 	return 0;
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void adf_flush_vf_wq(struct adf_accel_dev *accel_dev);
+#else
+#define adf_sriov_configure NULL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline void adf_disable_sriov(struct adf_accel_dev *accel_dev)
 {
@@ -222,12 +258,28 @@ static inline void adf_disable_pf2vf_interrupts(struct adf_accel_dev *accel_dev)
 {
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline int adf_vf2pf_notify_init(struct adf_accel_dev *accel_dev)
+=======
 static inline int adf_vf2pf_init(struct adf_accel_dev *accel_dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int adf_vf2pf_notify_init(struct adf_accel_dev *accel_dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline void adf_vf2pf_notify_shutdown(struct adf_accel_dev *accel_dev)
+=======
 static inline void adf_vf2pf_shutdown(struct adf_accel_dev *accel_dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline void adf_vf2pf_notify_shutdown(struct adf_accel_dev *accel_dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 }
 
@@ -249,5 +301,18 @@ static inline void adf_exit_vf_wq(void)
 {
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static inline void adf_flush_vf_wq(struct adf_accel_dev *accel_dev)
+{
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 #endif

@@ -278,5 +278,13 @@ asmlinkage void user_unaligned_trap(struct pt_regs *regs, unsigned int insn)
 {
 	send_sig_fault(SIGBUS, BUS_ADRALN,
 		       (void __user *)safe_compute_effective_address(regs, insn),
+<<<<<<< HEAD
+<<<<<<< HEAD
+		       current);
+=======
 		       0, current);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       current);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

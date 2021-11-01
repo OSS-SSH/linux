@@ -190,6 +190,14 @@ static void spider_irq_cascade(struct irq_desc *desc)
 {
 	struct irq_chip *chip = irq_desc_get_chip(desc);
 	struct spider_pic *pic = irq_desc_get_handler_data(desc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int cs;
+
+	cs = in_be32(pic->regs + TIR_CS) >> 24;
+	if (cs != SPIDER_IRQ_INVALID)
+		generic_handle_domain_irq(pic->host, cs);
+=======
 	unsigned int cs, virq;
 
 	cs = in_be32(pic->regs + TIR_CS) >> 24;
@@ -200,6 +208,14 @@ static void spider_irq_cascade(struct irq_desc *desc)
 
 	if (virq)
 		generic_handle_irq(virq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int cs;
+
+	cs = in_be32(pic->regs + TIR_CS) >> 24;
+	if (cs != SPIDER_IRQ_INVALID)
+		generic_handle_domain_irq(pic->host, cs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chip->irq_eoi(&desc->irq_data);
 }

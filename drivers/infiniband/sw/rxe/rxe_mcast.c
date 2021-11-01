@@ -85,7 +85,15 @@ int rxe_mcast_add_grp_elem(struct rxe_dev *rxe, struct rxe_qp *qp,
 		goto out;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	elem = rxe_alloc_locked(&rxe->mc_elem_pool);
+=======
 	elem = rxe_alloc(&rxe->mc_elem_pool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	elem = rxe_alloc_locked(&rxe->mc_elem_pool);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!elem) {
 		err = -ENOMEM;
 		goto out;

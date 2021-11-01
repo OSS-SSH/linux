@@ -1,7 +1,15 @@
 /*******************************************************************
  * This file is part of the Emulex Linux Device Driver for         *
  * Fibre Channel Host Bus Adapters.                                *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Copyright (C) 2017-2021 Broadcom. All Rights Reserved. The term *
+=======
  * Copyright (C) 2017-2020 Broadcom. All Rights Reserved. The term *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2017-2021 Broadcom. All Rights Reserved. The term *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * “Broadcom” refers to Broadcom Inc. and/or its subsidiaries.     *
  * Copyright (C) 2004-2016 Emulex.  All rights reserved.           *
  * EMULEX and SLI are trademarks of Emulex.                        *
@@ -608,6 +616,14 @@ struct fc_vft_header {
 #define ELS_CMD_LIRR      0x7A000000
 #define ELS_CMD_LCB	  0x81000000
 #define ELS_CMD_FPIN	  0x16000000
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define ELS_CMD_EDC	  0x17000000
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ELS_CMD_EDC	  0x17000000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ELS_CMD_QFPA      0xB0000000
 #define ELS_CMD_UVEM      0xB1000000
 #else	/*  __LITTLE_ENDIAN_BITFIELD */
@@ -652,6 +668,14 @@ struct fc_vft_header {
 #define ELS_CMD_LIRR      0x7A
 #define ELS_CMD_LCB	  0x81
 #define ELS_CMD_FPIN	  ELS_FPIN
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define ELS_CMD_EDC	  ELS_EDC
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ELS_CMD_EDC	  ELS_EDC
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ELS_CMD_QFPA      0xB0
 #define ELS_CMD_UVEM      0xB1
 #endif
@@ -1694,6 +1718,14 @@ struct lpfc_fdmi_reg_portattr {
 #define PCI_DEVICE_ID_LANCER_FCOE_VF 0xe268
 #define PCI_DEVICE_ID_LANCER_G6_FC  0xe300
 #define PCI_DEVICE_ID_LANCER_G7_FC  0xf400
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define PCI_DEVICE_ID_LANCER_G7P_FC 0xf500
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PCI_DEVICE_ID_LANCER_G7P_FC 0xf500
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PCI_DEVICE_ID_SAT_SMB       0xf011
 #define PCI_DEVICE_ID_SAT_MID       0xf015
 #define PCI_DEVICE_ID_RFLY          0xf095

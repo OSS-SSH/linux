@@ -271,10 +271,28 @@ maps this page at its virtual address.
 
   ``void flush_dcache_page(struct page *page)``
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+        This routines must be called when:
+
+	  a) the kernel did write to a page that is in the page cache page
+	     and / or in high memory
+	  b) the kernel is about to read from a page cache page and user space
+	     shared/writable mappings of this page potentially exist.  Note
+	     that {get,pin}_user_pages{_fast} already call flush_dcache_page
+	     on any page found in the user address space and thus driver
+	     code rarely needs to take this into account.
+<<<<<<< HEAD
+=======
 	Any time the kernel writes to a page cache page, _OR_
 	the kernel is about to read from a page cache page and
 	user space shared/writable mappings of this page potentially
 	exist, this routine is called.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	.. note::
 
@@ -284,6 +302,40 @@ maps this page at its virtual address.
 	      handling vfs symlinks in the page cache need not call
 	      this interface at all.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	The phrase "kernel writes to a page cache page" means, specifically,
+	that the kernel executes store instructions that dirty data in that
+	page at the page->virtual mapping of that page.  It is important to
+	flush here to handle D-cache aliasing, to make sure these kernel stores
+	are visible to user space mappings of that page.
+
+	The corollary case is just as important, if there are users which have
+	shared+writable mappings of this file, we must make sure that kernel
+	reads of these pages will see the most recent stores done by the user.
+
+	If D-cache aliasing is not an issue, this routine may simply be defined
+	as a nop on that architecture.
+
+        There is a bit set aside in page->flags (PG_arch_1) as "architecture
+	private".  The kernel guarantees that, for pagecache pages, it will
+	clear this bit when such a page first enters the pagecache.
+
+	This allows these interfaces to be implemented much more efficiently.
+	It allows one to "defer" (perhaps indefinitely) the actual flush if
+	there are currently no user processes mapping this page.  See sparc64's
+	flush_dcache_page and update_mmu_cache implementations for an example
+	of how to go about doing this.
+
+	The idea is, first at flush_dcache_page() time, if page_file_mapping()
+	returns a mapping, and mapping_mapped on that mapping returns %false,
+	just mark the architecture private page flag bit.  Later, in
+	update_mmu_cache(), a check is made of this flag bit, and if set the
+	flush is done and the flag bit is cleared.
+<<<<<<< HEAD
+=======
 	The phrase "kernel writes to a page cache page" means,
 	specifically, that the kernel executes store instructions
 	that dirty data in that page at the page->virtual mapping
@@ -316,6 +368,9 @@ maps this page at its virtual address.
 	private page flag bit.  Later, in update_mmu_cache(), a check is
 	made of this flag bit, and if set the flush is done and the flag
 	bit is cleared.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	.. important::
 
@@ -351,6 +406,9 @@ maps this page at its virtual address.
 	architectures).  For incoherent architectures, it should flush
 	the cache of the page at vmaddr.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
   ``void flush_kernel_dcache_page(struct page *page)``
 
 	When the kernel needs to modify a user page is has obtained
@@ -364,6 +422,9 @@ maps this page at its virtual address.
 	the kernel cache for page (using page_address(page)).
 
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   ``void flush_icache_range(unsigned long start, unsigned long end)``
 
   	When the kernel stores into addresses that it will execute

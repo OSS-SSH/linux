@@ -127,6 +127,9 @@ config MTD_PHYSMAP_GPIO_ADDR
 	  Extend the physmap driver to allow flashes to be partially
 	  physically addressed and assisted by GPIOs.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config MTD_PMC_MSP_EVM
 	tristate "CFI Flash device mapped on PMC-Sierra MSP"
 	depends on PMC_MSP && MTD_CFI
@@ -150,6 +153,9 @@ config MSP_FLASH_MAP_LIMIT
 	default "0x02000000"
 	depends on MSP_FLASH_MAP_LIMIT_32M
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config MTD_SUN_UFLASH
 	tristate "Sun Microsystems userflash support"
 	depends on SPARC && MTD_CFI && PCI

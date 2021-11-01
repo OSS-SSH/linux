@@ -99,7 +99,15 @@ struct ipa;
 static inline u32 arbitration_lock_disable_encoded(enum ipa_version version,
 						   u32 mask)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(version < IPA_VERSION_4_0);
+=======
 	/* assert(version >= IPA_VERSION_4_0); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(version < IPA_VERSION_4_0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (version < IPA_VERSION_4_9)
 		return u32_encode_bits(mask, GENMASK(20, 17));
@@ -116,7 +124,15 @@ static inline u32 full_flush_rsc_closure_en_encoded(enum ipa_version version,
 {
 	u32 val = enable ? 1 : 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(version < IPA_VERSION_4_5);
+=======
 	/* assert(version >= IPA_VERSION_4_5); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(version < IPA_VERSION_4_5);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (version == IPA_VERSION_4_5 || version == IPA_VERSION_4_7)
 		return u32_encode_bits(val, GENMASK(21, 21));
@@ -409,7 +425,15 @@ static inline u32 ipa_header_size_encoded(enum ipa_version version,
 
 	val = u32_encode_bits(size, HDR_LEN_FMASK);
 	if (version < IPA_VERSION_4_5) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		WARN_ON(header_size != size);
+=======
 		/* ipa_assert(header_size == size); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		WARN_ON(header_size != size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return val;
 	}
 
@@ -429,7 +453,15 @@ static inline u32 ipa_metadata_offset_encoded(enum ipa_version version,
 
 	val = u32_encode_bits(off, HDR_OFST_METADATA_FMASK);
 	if (version < IPA_VERSION_4_5) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		WARN_ON(offset != off);
+=======
 		/* ipa_assert(offset == off); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		WARN_ON(offset != off);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return val;
 	}
 
@@ -812,7 +844,15 @@ ipa_reg_irq_suspend_info_offset(enum ipa_version version)
 static inline u32
 ipa_reg_irq_suspend_en_ee_n_offset(enum ipa_version version, u32 ee)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(version == IPA_VERSION_3_0);
+=======
 	/* assert(version != IPA_VERSION_3_0); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(version == IPA_VERSION_3_0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (version < IPA_VERSION_4_9)
 		return 0x00003034 + 0x1000 * ee;
@@ -830,7 +870,15 @@ ipa_reg_irq_suspend_en_offset(enum ipa_version version)
 static inline u32
 ipa_reg_irq_suspend_clr_ee_n_offset(enum ipa_version version, u32 ee)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(version == IPA_VERSION_3_0);
+=======
 	/* assert(version != IPA_VERSION_3_0); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(version == IPA_VERSION_3_0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (version < IPA_VERSION_4_9)
 		return 0x00003038 + 0x1000 * ee;

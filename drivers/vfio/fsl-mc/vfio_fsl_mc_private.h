@@ -22,11 +22,17 @@ struct vfio_fsl_mc_irq {
 	char            *name;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 struct vfio_fsl_mc_reflck {
 	struct kref		kref;
 	struct mutex		lock;
 };
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct vfio_fsl_mc_region {
 	u32			flags;
 	u32			type;
@@ -39,9 +45,17 @@ struct vfio_fsl_mc_device {
 	struct vfio_device		vdev;
 	struct fsl_mc_device		*mc_dev;
 	struct notifier_block        nb;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct vfio_fsl_mc_region	*regions;
+=======
 	int				refcnt;
 	struct vfio_fsl_mc_region	*regions;
 	struct vfio_fsl_mc_reflck   *reflck;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct vfio_fsl_mc_region	*regions;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mutex         igate;
 	struct vfio_fsl_mc_irq      *mc_irqs;
 };

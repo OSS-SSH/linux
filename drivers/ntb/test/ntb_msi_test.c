@@ -369,8 +369,22 @@ static int ntb_msit_probe(struct ntb_client *client, struct ntb_dev *ntb)
 	if (ret)
 		goto remove_dbgfs;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!nm->isr_ctx) {
+		ret = -ENOMEM;
+		goto remove_dbgfs;
+	}
+=======
 	if (!nm->isr_ctx)
 		goto remove_dbgfs;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!nm->isr_ctx) {
+		ret = -ENOMEM;
+		goto remove_dbgfs;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ntb_link_enable(ntb, NTB_SPEED_AUTO, NTB_WIDTH_AUTO);
 

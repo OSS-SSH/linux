@@ -44,7 +44,28 @@ struct ebt_pernet {
 	struct list_head tables;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct ebt_template {
+	struct list_head list;
+	char name[EBT_TABLE_MAXNAMELEN];
+	struct module *owner;
+	/* called when table is needed in the given netns */
+	int (*table_init)(struct net *net);
+};
+
+<<<<<<< HEAD
 static unsigned int ebt_pernet_id __read_mostly;
+static LIST_HEAD(template_tables);
+=======
+static unsigned int ebt_pernet_id __read_mostly;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static unsigned int ebt_pernet_id __read_mostly;
+static LIST_HEAD(template_tables);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static DEFINE_MUTEX(ebt_mutex);
 
 #ifdef CONFIG_NETFILTER_XTABLES_COMPAT
@@ -309,30 +330,123 @@ letscontinue:
 
 /* If it succeeds, returns element and locks mutex */
 static inline void *
-find_inlist_lock_noload(struct list_head *head, const char *name, int *error,
+<<<<<<< HEAD
+<<<<<<< HEAD
+find_inlist_lock_noload(struct net *net, const char *name, int *error,
 			struct mutex *mutex)
 {
-	struct {
-		struct list_head list;
-		char name[EBT_FUNCTION_MAXNAMELEN];
-	} *e;
+	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);
+	struct ebt_template *tmpl;
+	struct ebt_table *table;
 
 	mutex_lock(mutex);
-	list_for_each_entry(e, head, list) {
-		if (strcmp(e->name, name) == 0)
-			return e;
+	list_for_each_entry(table, &ebt_net->tables, list) {
+		if (strcmp(table->name, name) == 0)
+			return table;
 	}
+
+	list_for_each_entry(tmpl, &template_tables, list) {
+		if (strcmp(name, tmpl->name) == 0) {
+			struct module *owner = tmpl->owner;
+
+			if (!try_module_get(owner))
+				goto out;
+
+			mutex_unlock(mutex);
+
+			*error = tmpl->table_init(net);
+			if (*error) {
+				module_put(owner);
+				return NULL;
+			}
+
+			mutex_lock(mutex);
+			module_put(owner);
+			break;
+		}
+	}
+
+	list_for_each_entry(table, &ebt_net->tables, list) {
+		if (strcmp(table->name, name) == 0)
+			return table;
+	}
+
+out:
+=======
+find_inlist_lock_noload(struct list_head *head, const char *name, int *error,
+=======
+find_inlist_lock_noload(struct net *net, const char *name, int *error,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			struct mutex *mutex)
+{
+	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);
+	struct ebt_template *tmpl;
+	struct ebt_table *table;
+
+	mutex_lock(mutex);
+	list_for_each_entry(table, &ebt_net->tables, list) {
+		if (strcmp(table->name, name) == 0)
+			return table;
+	}
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	list_for_each_entry(tmpl, &template_tables, list) {
+		if (strcmp(name, tmpl->name) == 0) {
+			struct module *owner = tmpl->owner;
+
+			if (!try_module_get(owner))
+				goto out;
+
+			mutex_unlock(mutex);
+
+			*error = tmpl->table_init(net);
+			if (*error) {
+				module_put(owner);
+				return NULL;
+			}
+
+			mutex_lock(mutex);
+			module_put(owner);
+			break;
+		}
+	}
+
+	list_for_each_entry(table, &ebt_net->tables, list) {
+		if (strcmp(table->name, name) == 0)
+			return table;
+	}
+
+out:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	*error = -ENOENT;
 	mutex_unlock(mutex);
 	return NULL;
 }
 
 static void *
+<<<<<<< HEAD
+<<<<<<< HEAD
+find_inlist_lock(struct net *net, const char *name, const char *prefix,
+		 int *error, struct mutex *mutex)
+{
+	return try_then_request_module(
+			find_inlist_lock_noload(net, name, error, mutex),
+=======
 find_inlist_lock(struct list_head *head, const char *name, const char *prefix,
 		 int *error, struct mutex *mutex)
 {
 	return try_then_request_module(
 			find_inlist_lock_noload(head, name, error, mutex),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+find_inlist_lock(struct net *net, const char *name, const char *prefix,
+		 int *error, struct mutex *mutex)
+{
+	return try_then_request_module(
+			find_inlist_lock_noload(net, name, error, mutex),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			"%s%s", prefix, name);
 }
 
@@ -340,10 +454,18 @@ static inline struct ebt_table *
 find_table_lock(struct net *net, const char *name, int *error,
 		struct mutex *mutex)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return find_inlist_lock(net, name, "ebtable_", error, mutex);
+=======
 	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);
 
 	return find_inlist_lock(&ebt_net->tables, name,
 				"ebtable_", error, mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return find_inlist_lock(net, name, "ebtable_", error, mutex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void ebt_free_table_info(struct ebt_table_info *info)
@@ -1258,6 +1380,63 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int ebt_register_template(const struct ebt_table *t, int (*table_init)(struct net *net))
+{
+	struct ebt_template *tmpl;
+
+	mutex_lock(&ebt_mutex);
+	list_for_each_entry(tmpl, &template_tables, list) {
+		if (WARN_ON_ONCE(strcmp(t->name, tmpl->name) == 0)) {
+			mutex_unlock(&ebt_mutex);
+			return -EEXIST;
+		}
+	}
+
+	tmpl = kzalloc(sizeof(*tmpl), GFP_KERNEL);
+	if (!tmpl) {
+		mutex_unlock(&ebt_mutex);
+		return -ENOMEM;
+	}
+
+	tmpl->table_init = table_init;
+	strscpy(tmpl->name, t->name, sizeof(tmpl->name));
+	tmpl->owner = t->me;
+	list_add(&tmpl->list, &template_tables);
+
+	mutex_unlock(&ebt_mutex);
+	return 0;
+}
+EXPORT_SYMBOL(ebt_register_template);
+
+void ebt_unregister_template(const struct ebt_table *t)
+{
+	struct ebt_template *tmpl;
+
+	mutex_lock(&ebt_mutex);
+	list_for_each_entry(tmpl, &template_tables, list) {
+		if (strcmp(t->name, tmpl->name))
+			continue;
+
+		list_del(&tmpl->list);
+		mutex_unlock(&ebt_mutex);
+		kfree(tmpl);
+		return;
+	}
+
+	mutex_unlock(&ebt_mutex);
+	WARN_ON_ONCE(1);
+}
+EXPORT_SYMBOL(ebt_unregister_template);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct ebt_table *__ebt_find_table(struct net *net, const char *name)
 {
 	struct ebt_pernet *ebt_net = net_generic(net, ebt_pernet_id);

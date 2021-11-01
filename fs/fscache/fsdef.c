@@ -45,7 +45,17 @@ static struct fscache_cookie_def fscache_fsdef_index_def = {
 };
 
 struct fscache_cookie fscache_fsdef_index = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.debug_id	= 1,
+	.ref		= REFCOUNT_INIT(1),
+=======
 	.usage		= ATOMIC_INIT(1),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.debug_id	= 1,
+	.ref		= REFCOUNT_INIT(1),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.n_active	= ATOMIC_INIT(1),
 	.lock		= __SPIN_LOCK_UNLOCKED(fscache_fsdef_index.lock),
 	.backing_objects = HLIST_HEAD_INIT,

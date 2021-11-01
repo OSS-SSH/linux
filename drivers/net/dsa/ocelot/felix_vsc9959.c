@@ -1,6 +1,14 @@
 // SPDX-License-Identifier: (GPL-2.0 OR MIT)
 /* Copyright 2017 Microsemi Corporation
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Copyright 2018-2019 NXP
+=======
  * Copyright 2018-2019 NXP Semiconductors
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright 2018-2019 NXP
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #include <linux/fsl/enetc_mdio.h>
 #include <soc/mscc/ocelot_qsys.h>
@@ -1472,9 +1480,23 @@ err_pci_enable:
 
 static void felix_pci_remove(struct pci_dev *pdev)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct felix *felix = pci_get_drvdata(pdev);
+
+	if (!felix)
+		return;
+=======
 	struct felix *felix;
 
 	felix = pci_get_drvdata(pdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct felix *felix = pci_get_drvdata(pdev);
+
+	if (!felix)
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dsa_unregister_switch(felix->ds);
 
@@ -1482,6 +1504,29 @@ static void felix_pci_remove(struct pci_dev *pdev)
 	kfree(felix);
 
 	pci_disable_device(pdev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	pci_set_drvdata(pdev, NULL);
+}
+
+static void felix_pci_shutdown(struct pci_dev *pdev)
+{
+	struct felix *felix = pci_get_drvdata(pdev);
+
+	if (!felix)
+		return;
+
+	dsa_switch_shutdown(felix->ds);
+
+	pci_set_drvdata(pdev, NULL);
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct pci_device_id felix_ids[] = {
@@ -1498,6 +1543,14 @@ static struct pci_driver felix_vsc9959_pci_driver = {
 	.id_table	= felix_ids,
 	.probe		= felix_pci_probe,
 	.remove		= felix_pci_remove,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.shutdown	= felix_pci_shutdown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.shutdown	= felix_pci_shutdown,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 module_pci_driver(felix_vsc9959_pci_driver);
 

@@ -197,7 +197,15 @@ static const struct net_device_ops ax88172_netdev_ops = {
 	.ndo_get_stats64	= dev_get_tstats64,
 	.ndo_set_mac_address 	= eth_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl		= asix_ioctl,
+=======
 	.ndo_do_ioctl		= asix_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= asix_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_rx_mode	= ax88172_set_multicast,
 };
 
@@ -354,24 +362,52 @@ out:
 static int ax88772_hw_reset(struct usbnet *dev, int in_pm)
 {
 	struct asix_data *data = (struct asix_data *)&dev->data;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct asix_common_private *priv = dev->driver_priv;
+	u16 rx_ctl;
+	int ret;
+=======
 	int ret, embd_phy;
 	u16 rx_ctl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct asix_common_private *priv = dev->driver_priv;
+	u16 rx_ctl;
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = asix_write_gpio(dev, AX_GPIO_RSE | AX_GPIO_GPO_2 |
 			      AX_GPIO_GPO2EN, 5, in_pm);
 	if (ret < 0)
 		goto out;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = asix_write_cmd(dev, AX_CMD_SW_PHY_SELECT, priv->embd_phy,
+=======
 	embd_phy = ((dev->mii.phy_id & 0x1f) == 0x10 ? 1 : 0);
 
 	ret = asix_write_cmd(dev, AX_CMD_SW_PHY_SELECT, embd_phy,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = asix_write_cmd(dev, AX_CMD_SW_PHY_SELECT, priv->embd_phy,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     0, 0, NULL, in_pm);
 	if (ret < 0) {
 		netdev_dbg(dev->net, "Select PHY #1 failed: %d\n", ret);
 		goto out;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (priv->embd_phy) {
+=======
 	if (embd_phy) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (priv->embd_phy) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = asix_sw_reset(dev, AX_SWRESET_IPPD, in_pm);
 		if (ret < 0)
 			goto out;
@@ -449,17 +485,39 @@ out:
 static int ax88772a_hw_reset(struct usbnet *dev, int in_pm)
 {
 	struct asix_data *data = (struct asix_data *)&dev->data;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct asix_common_private *priv = dev->driver_priv;
+	u16 rx_ctl, phy14h, phy15h, phy16h;
+	u8 chipcode = 0;
+	int ret;
+=======
 	int ret, embd_phy;
 	u16 rx_ctl, phy14h, phy15h, phy16h;
 	u8 chipcode = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct asix_common_private *priv = dev->driver_priv;
+	u16 rx_ctl, phy14h, phy15h, phy16h;
+	u8 chipcode = 0;
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = asix_write_gpio(dev, AX_GPIO_RSE, 5, in_pm);
 	if (ret < 0)
 		goto out;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = asix_write_cmd(dev, AX_CMD_SW_PHY_SELECT, priv->embd_phy |
+=======
 	embd_phy = ((dev->mii.phy_id & 0x1f) == 0x10 ? 1 : 0);
 
 	ret = asix_write_cmd(dev, AX_CMD_SW_PHY_SELECT, embd_phy |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = asix_write_cmd(dev, AX_CMD_SW_PHY_SELECT, priv->embd_phy |
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     AX_PHYSEL_SSEN, 0, 0, NULL, in_pm);
 	if (ret < 0) {
 		netdev_dbg(dev->net, "Select PHY #1 failed: %d\n", ret);
@@ -589,7 +647,15 @@ static const struct net_device_ops ax88772_netdev_ops = {
 	.ndo_get_stats64	= dev_get_tstats64,
 	.ndo_set_mac_address 	= asix_set_mac_address,
 	.ndo_validate_addr	= eth_validate_addr,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl		= phy_do_ioctl_running,
+=======
 	.ndo_do_ioctl		= phy_do_ioctl_running,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= phy_do_ioctl_running,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_rx_mode        = asix_set_multicast,
 };
 
@@ -683,12 +749,18 @@ static int ax88772_init_phy(struct usbnet *dev)
 	struct asix_common_private *priv = dev->driver_priv;
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	ret = asix_read_phy_addr(dev, true);
 	if (ret < 0)
 		return ret;
 
 	priv->phy_addr = ret;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snprintf(priv->phy_name, sizeof(priv->phy_name), PHY_ID_FMT,
 		 priv->mdio->id, priv->phy_addr);
 
@@ -701,6 +773,14 @@ static int ax88772_init_phy(struct usbnet *dev)
 		return ret;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	phy_suspend(priv->phydev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	phy_suspend(priv->phydev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->phydev->mac_managed_pm = 1;
 
 	phy_attached_info(priv->phydev);
@@ -713,7 +793,22 @@ static int ax88772_bind(struct usbnet *dev, struct usb_interface *intf)
 	u8 buf[ETH_ALEN] = {0}, chipcode = 0;
 	struct asix_common_private *priv;
 	int ret, i;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	priv = devm_kzalloc(&dev->udev->dev, sizeof(*priv), GFP_KERNEL);
+	if (!priv)
+		return -ENOMEM;
+
+	dev->driver_priv = priv;
+<<<<<<< HEAD
+=======
 	u32 phyid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	usbnet_get_endpoints(dev, intf);
 
@@ -750,6 +845,22 @@ static int ax88772_bind(struct usbnet *dev, struct usb_interface *intf)
 	dev->net->needed_headroom = 4; /* cf asix_tx_fixup() */
 	dev->net->needed_tailroom = 4; /* cf asix_tx_fixup() */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = asix_read_phy_addr(dev, true);
+	if (ret < 0)
+		return ret;
+
+	priv->phy_addr = ret;
+	priv->embd_phy = ((priv->phy_addr & 0x1f) == 0x10);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	asix_read_cmd(dev, AX_CMD_STATMNGSTS_REG, 0, 0, 1, &chipcode, 0);
 	chipcode &= AX_CHIPCODE_MASK;
 
@@ -761,10 +872,16 @@ static int ax88772_bind(struct usbnet *dev, struct usb_interface *intf)
 		return ret;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* Read PHYID register *AFTER* the PHY was reset properly */
 	phyid = asix_get_phyid(dev);
 	netdev_dbg(dev->net, "PHYID=0x%08x\n", phyid);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Asix framing packs multiple eth frames into a 2K usb bulk transfer */
 	if (dev->driver_info->flags & FLAG_FRAMING_AX) {
 		/* hard_mtu  is still the default - the device does not support
@@ -772,12 +889,18 @@ static int ax88772_bind(struct usbnet *dev, struct usb_interface *intf)
 		dev->rx_urb_size = 2048;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	priv = devm_kzalloc(&dev->udev->dev, sizeof(*priv), GFP_KERNEL);
 	if (!priv)
 		return -ENOMEM;
 
 	dev->driver_priv = priv;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->presvd_phy_bmcr = 0;
 	priv->presvd_phy_advertise = 0;
 	if (chipcode == AX_AX88772_CHIPCODE) {
@@ -816,6 +939,21 @@ static void ax88772_unbind(struct usbnet *dev, struct usb_interface *intf)
 	asix_rx_fixup_common_free(dev->driver_priv);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void ax88178_unbind(struct usbnet *dev, struct usb_interface *intf)
+{
+	asix_rx_fixup_common_free(dev->driver_priv);
+	kfree(dev->driver_priv);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct ethtool_ops ax88178_ethtool_ops = {
 	.get_drvinfo		= asix_get_drvinfo,
 	.get_link		= asix_get_link,
@@ -1099,7 +1237,15 @@ static const struct net_device_ops ax88178_netdev_ops = {
 	.ndo_set_mac_address 	= asix_set_mac_address,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_rx_mode	= asix_set_multicast,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl		= asix_ioctl,
+=======
 	.ndo_do_ioctl 		= asix_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= asix_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu 	= ax88178_change_mtu,
 };
 
@@ -1214,6 +1360,14 @@ static const struct driver_info ax88772b_info = {
 	.unbind = ax88772_unbind,
 	.status = asix_status,
 	.reset = ax88772_reset,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.stop = ax88772_stop,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.stop = ax88772_stop,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.flags = FLAG_ETHER | FLAG_FRAMING_AX | FLAG_LINK_INTR |
 	         FLAG_MULTI_PACKET,
 	.rx_fixup = asix_rx_fixup_common,
@@ -1224,7 +1378,15 @@ static const struct driver_info ax88772b_info = {
 static const struct driver_info ax88178_info = {
 	.description = "ASIX AX88178 USB 2.0 Ethernet",
 	.bind = ax88178_bind,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.unbind = ax88178_unbind,
+=======
 	.unbind = ax88772_unbind,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.unbind = ax88178_unbind,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.status = asix_status,
 	.link_reset = ax88178_link_reset,
 	.reset = ax88178_reset,

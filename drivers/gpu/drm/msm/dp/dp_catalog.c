@@ -372,6 +372,14 @@ void dp_catalog_ctrl_mainlink_ctrl(struct dp_catalog *dp_catalog,
 	struct dp_catalog_private *catalog = container_of(dp_catalog,
 				struct dp_catalog_private, dp_catalog);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("enable=%d\n", enable);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("enable=%d\n", enable);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (enable) {
 		/*
 		 * To make sure link reg writes happens before other operation,
@@ -580,6 +588,14 @@ void dp_catalog_hpd_config_intr(struct dp_catalog *dp_catalog,
 
 	config = (en ? config | intr_mask : config & ~intr_mask);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("intr_mask=%#x config=%#x\n", intr_mask, config);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("intr_mask=%#x config=%#x\n", intr_mask, config);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dp_write_aux(catalog, REG_DP_DP_HPD_INT_MASK,
 				config & DP_DP_HPD_INT_MASK);
 }
@@ -610,6 +626,14 @@ u32 dp_catalog_link_is_connected(struct dp_catalog *dp_catalog)
 	u32 status;
 
 	status = dp_read_aux(catalog, REG_DP_DP_HPD_INT_STATUS);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("aux status: %#x\n", status);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("aux status: %#x\n", status);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status >>= DP_DP_HPD_STATE_STATUS_BITS_SHIFT;
 	status &= DP_DP_HPD_STATE_STATUS_BITS_MASK;
 
@@ -685,6 +709,14 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
 	/* Make sure to clear the current pattern before starting a new one */
 	dp_write_link(catalog, REG_DP_STATE_CTRL, 0x0);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("pattern: %#x\n", pattern);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("pattern: %#x\n", pattern);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (pattern) {
 	case DP_PHY_TEST_PATTERN_D10_2:
 		dp_write_link(catalog, REG_DP_STATE_CTRL,
@@ -745,7 +777,15 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
 				DP_STATE_CTRL_LINK_TRAINING_PATTERN4);
 		break;
 	default:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		DRM_DEBUG_DP("No valid test pattern requested: %#x\n", pattern);
+=======
 		DRM_DEBUG_DP("No valid test pattern requested:0x%x\n", pattern);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		DRM_DEBUG_DP("No valid test pattern requested: %#x\n", pattern);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 }
@@ -771,6 +811,14 @@ int dp_catalog_panel_timing_cfg(struct dp_catalog *dp_catalog)
 	dp_write_link(catalog, REG_DP_HSYNC_VSYNC_WIDTH_POLARITY,
 				dp_catalog->width_blanking);
 	dp_write_link(catalog, REG_DP_ACTIVE_HOR_VER, dp_catalog->dp_active);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, 0);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dp_write_p0(catalog, MMSS_DP_INTF_CONFIG, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -928,7 +976,15 @@ void dp_catalog_audio_config_acr(struct dp_catalog *dp_catalog)
 	select = dp_catalog->audio_data;
 	acr_ctrl = select << 4 | BIT(31) | BIT(8) | BIT(14);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_DP("select: %#x, acr_ctrl: %#x\n", select, acr_ctrl);
+=======
 	DRM_DEBUG_DP("select = 0x%x, acr_ctrl = 0x%x\n", select, acr_ctrl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_DP("select: %#x, acr_ctrl: %#x\n", select, acr_ctrl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dp_write_link(catalog, MMSS_DP_AUDIO_ACR_CTRL, acr_ctrl);
 }

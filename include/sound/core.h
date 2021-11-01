@@ -117,6 +117,16 @@ struct snd_card {
 	struct device card_dev;		/* cardX object for sysfs */
 	const struct attribute_group *dev_groups[4]; /* assigned sysfs attr */
 	bool registered;		/* card_dev is registered? */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bool managed;			/* managed via devres */
+	bool releasing;			/* during card free process */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool managed;			/* managed via devres */
+	bool releasing;			/* during card free process */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int sync_irq;			/* assigned irq, used for PCM sync */
 	wait_queue_head_t remove_sleep;
 
@@ -274,6 +284,18 @@ extern int (*snd_mixer_oss_notify_callback)(struct snd_card *card, int cmd);
 int snd_card_new(struct device *parent, int idx, const char *xid,
 		 struct module *module, int extra_size,
 		 struct snd_card **card_ret);
+<<<<<<< HEAD
+<<<<<<< HEAD
+int snd_devm_card_new(struct device *parent, int idx, const char *xid,
+		      struct module *module, size_t extra_size,
+		      struct snd_card **card_ret);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int snd_devm_card_new(struct device *parent, int idx, const char *xid,
+		      struct module *module, size_t extra_size,
+		      struct snd_card **card_ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int snd_card_disconnect(struct snd_card *card);
 void snd_card_disconnect_sync(struct snd_card *card);
@@ -324,6 +346,14 @@ int snd_device_get_state(struct snd_card *card, void *device_data);
 void snd_dma_program(unsigned long dma, unsigned long addr, unsigned int size, unsigned short mode);
 void snd_dma_disable(unsigned long dma);
 unsigned int snd_dma_pointer(unsigned long dma, unsigned int size);
+<<<<<<< HEAD
+<<<<<<< HEAD
+int snd_devm_request_dma(struct device *dev, int dma, const char *name);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int snd_devm_request_dma(struct device *dev, int dma, const char *name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 /* misc.c */

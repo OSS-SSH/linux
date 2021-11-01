@@ -151,6 +151,18 @@
 #define ETH_P_MAP	0x00F9		/* Qualcomm multiplexing and
 					 * aggregation protocol
 					 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define ETH_P_MCTP	0x00FA		/* Management component transport
+					 * protocol packets
+					 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define ETH_P_MCTP	0x00FA		/* Management component transport
+					 * protocol packets
+					 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  *	This is an Ethernet frame header.

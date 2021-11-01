@@ -702,7 +702,15 @@ static int mvumi_host_reset(struct scsi_cmnd *scmd)
 	mhba = (struct mvumi_hba *) scmd->device->host->hostdata;
 
 	scmd_printk(KERN_NOTICE, scmd, "RESET -%u cmd=%x retries=%x\n",
+<<<<<<< HEAD
+<<<<<<< HEAD
+			scsi_cmd_to_rq(scmd)->tag, scmd->cmnd[0], scmd->retries);
+=======
 			scmd->request->tag, scmd->cmnd[0], scmd->retries);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			scsi_cmd_to_rq(scmd)->tag, scmd->cmnd[0], scmd->retries);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return mhba->instancet->reset_host(mhba);
 }

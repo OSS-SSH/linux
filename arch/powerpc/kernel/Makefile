@@ -46,7 +46,17 @@ obj-y				:= cputable.o syscalls.o \
 				   prom.o traps.o setup-common.o \
 				   udbg.o misc.o io.o misc_$(BITS).o \
 				   of_platform.o prom_parse.o firmware.o \
+<<<<<<< HEAD
+<<<<<<< HEAD
+				   hw_breakpoint_constraints.o interrupt.o \
+				   kdebugfs.o
+=======
 				   hw_breakpoint_constraints.o interrupt.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   hw_breakpoint_constraints.o interrupt.o \
+				   kdebugfs.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-y				+= ptrace/
 obj-$(CONFIG_PPC64)		+= setup_64.o \
 				   paca.o nvram_64.o note.o

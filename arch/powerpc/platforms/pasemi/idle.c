@@ -42,6 +42,14 @@ static int pasemi_system_reset_exception(struct pt_regs *regs)
 	switch (regs->msr & SRR1_WAKEMASK) {
 	case SRR1_WAKEDEC:
 		set_dec(1);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SRR1_WAKEEE:
 		/*
 		 * Handle these when interrupts get re-enabled and we take
@@ -58,7 +66,15 @@ static int pasemi_system_reset_exception(struct pt_regs *regs)
 	restore_astate(hard_smp_processor_id());
 
 	/* everything handled */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	regs_set_recoverable(regs);
+=======
 	regs_set_return_msr(regs, regs->msr | MSR_RI);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	regs_set_recoverable(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 1;
 }
 

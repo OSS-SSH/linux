@@ -1355,6 +1355,18 @@ jeq_common:
 		}
 		break;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case BPF_ST | BPF_NOSPEC: /* speculation barrier */
+		break;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case BPF_ST | BPF_NOSPEC: /* speculation barrier */
+		break;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case BPF_ST | BPF_B | BPF_MEM:
 	case BPF_ST | BPF_H | BPF_MEM:
 	case BPF_ST | BPF_W | BPF_MEM:

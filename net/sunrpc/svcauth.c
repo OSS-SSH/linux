@@ -59,12 +59,28 @@ svc_put_auth_ops(struct auth_ops *aops)
 }
 
 int
+<<<<<<< HEAD
+<<<<<<< HEAD
+svc_authenticate(struct svc_rqst *rqstp)
+=======
 svc_authenticate(struct svc_rqst *rqstp, __be32 *authp)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+svc_authenticate(struct svc_rqst *rqstp)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	rpc_authflavor_t	flavor;
 	struct auth_ops		*aops;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	rqstp->rq_auth_stat = rpc_auth_ok;
+=======
 	*authp = rpc_auth_ok;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	rqstp->rq_auth_stat = rpc_auth_ok;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	flavor = svc_getnl(&rqstp->rq_arg.head[0]);
 
@@ -72,7 +88,15 @@ svc_authenticate(struct svc_rqst *rqstp, __be32 *authp)
 
 	aops = svc_get_auth_ops(flavor);
 	if (aops == NULL) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		rqstp->rq_auth_stat = rpc_autherr_badcred;
+=======
 		*authp = rpc_autherr_badcred;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rqstp->rq_auth_stat = rpc_autherr_badcred;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return SVC_DENIED;
 	}
 
@@ -80,7 +104,15 @@ svc_authenticate(struct svc_rqst *rqstp, __be32 *authp)
 	init_svc_cred(&rqstp->rq_cred);
 
 	rqstp->rq_authop = aops;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return aops->accept(rqstp);
+=======
 	return aops->accept(rqstp, authp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return aops->accept(rqstp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(svc_authenticate);
 

@@ -1,11 +1,25 @@
 /* SPDX-License-Identifier: GPL-2.0 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Marvell OcteonTx2 CGX driver
+ *
+ * Copyright (C) 2018 Marvell.
+ *
+=======
 /*  Marvell OcteonTx2 CGX driver
+=======
+/* Marvell OcteonTx2 CGX driver
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * Copyright (C) 2018 Marvell International Ltd.
+ * Copyright (C) 2018 Marvell.
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #ifndef CGX_H
@@ -23,6 +37,14 @@
 
 #define CGX_ID_MASK			0x7
 #define MAX_LMAC_PER_CGX		4
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define MAX_DMAC_ENTRIES_PER_CGX	32
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define MAX_DMAC_ENTRIES_PER_CGX	32
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CGX_FIFO_LEN			65536 /* 64K for both Rx & Tx */
 #define CGX_OFFSET(x)			((x) * MAX_LMAC_PER_CGX)
 
@@ -46,10 +68,26 @@
 #define CGXX_CMRX_RX_DMAC_CTL0		(0x1F8 + mac_ops->csr_offset)
 #define CGX_DMAC_CTL0_CAM_ENABLE	BIT_ULL(3)
 #define CGX_DMAC_CAM_ACCEPT		BIT_ULL(3)
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define CGX_DMAC_MCAST_MODE_CAM		BIT_ULL(2)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CGX_DMAC_MCAST_MODE_CAM		BIT_ULL(2)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CGX_DMAC_MCAST_MODE		BIT_ULL(1)
 #define CGX_DMAC_BCAST_MODE		BIT_ULL(0)
 #define CGXX_CMRX_RX_DMAC_CAM0		(0x200 + mac_ops->csr_offset)
 #define CGX_DMAC_CAM_ADDR_ENABLE	BIT_ULL(48)
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define CGX_DMAC_CAM_ENTRY_LMACID	GENMASK_ULL(50, 49)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define CGX_DMAC_CAM_ENTRY_LMACID	GENMASK_ULL(50, 49)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CGXX_CMRX_RX_DMAC_CAM1		0x400
 #define CGX_RX_DMAC_ADR_MASK		GENMASK_ULL(47, 0)
 #define CGXX_CMRX_TX_STAT0		0x700
@@ -139,7 +177,23 @@ int cgx_get_rx_stats(void *cgxd, int lmac_id, int idx, u64 *rx_stat);
 int cgx_lmac_rx_tx_enable(void *cgxd, int lmac_id, bool enable);
 int cgx_lmac_tx_enable(void *cgxd, int lmac_id, bool enable);
 int cgx_lmac_addr_set(u8 cgx_id, u8 lmac_id, u8 *mac_addr);
+<<<<<<< HEAD
+<<<<<<< HEAD
+int cgx_lmac_addr_reset(u8 cgx_id, u8 lmac_id);
 u64 cgx_lmac_addr_get(u8 cgx_id, u8 lmac_id);
+int cgx_lmac_addr_add(u8 cgx_id, u8 lmac_id, u8 *mac_addr);
+int cgx_lmac_addr_del(u8 cgx_id, u8 lmac_id, u8 index);
+int cgx_lmac_addr_max_entries_get(u8 cgx_id, u8 lmac_id);
+=======
+u64 cgx_lmac_addr_get(u8 cgx_id, u8 lmac_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int cgx_lmac_addr_reset(u8 cgx_id, u8 lmac_id);
+u64 cgx_lmac_addr_get(u8 cgx_id, u8 lmac_id);
+int cgx_lmac_addr_add(u8 cgx_id, u8 lmac_id, u8 *mac_addr);
+int cgx_lmac_addr_del(u8 cgx_id, u8 lmac_id, u8 index);
+int cgx_lmac_addr_max_entries_get(u8 cgx_id, u8 lmac_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void cgx_lmac_promisc_config(int cgx_id, int lmac_id, bool enable);
 void cgx_lmac_enadis_rx_pause_fwding(void *cgxd, int lmac_id, bool enable);
 int cgx_lmac_internal_loopback(void *cgxd, int lmac_id, bool enable);
@@ -165,4 +219,16 @@ u8 cgx_get_lmacid(void *cgxd, u8 lmac_index);
 unsigned long cgx_get_lmac_bmap(void *cgxd);
 void cgx_lmac_write(int cgx_id, int lmac_id, u64 offset, u64 val);
 u64 cgx_lmac_read(int cgx_id, int lmac_id, u64 offset);
+<<<<<<< HEAD
+<<<<<<< HEAD
+int cgx_lmac_addr_update(u8 cgx_id, u8 lmac_id, u8 *mac_addr, u8 index);
+u64 cgx_read_dmac_ctrl(void *cgxd, int lmac_id);
+u64 cgx_read_dmac_entry(void *cgxd, int index);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int cgx_lmac_addr_update(u8 cgx_id, u8 lmac_id, u8 *mac_addr, u8 index);
+u64 cgx_read_dmac_ctrl(void *cgxd, int lmac_id);
+u64 cgx_read_dmac_entry(void *cgxd, int index);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CGX_H */

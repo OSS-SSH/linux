@@ -1242,8 +1242,22 @@ static int alloc_pm_buffer(struct snd_emu10k1 *emu);
 static void free_pm_buffer(struct snd_emu10k1 *emu);
 #endif
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void snd_emu10k1_free(struct snd_card *card)
+{
+	struct snd_emu10k1 *emu = card->private_data;
+
+=======
 static int snd_emu10k1_free(struct snd_emu10k1 *emu)
 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void snd_emu10k1_free(struct snd_card *card)
+{
+	struct snd_emu10k1 *emu = card->private_data;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (emu->port) {	/* avoid access to already used hardware */
 		snd_emu10k1_fx8010_tram_setup(emu, 0);
 		snd_emu10k1_done(emu);
@@ -1256,8 +1270,14 @@ static int snd_emu10k1_free(struct snd_emu10k1 *emu)
 	cancel_delayed_work_sync(&emu->emu1010.firmware_work);
 	release_firmware(emu->firmware);
 	release_firmware(emu->dock_fw);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (emu->irq >= 0)
 		free_irq(emu->irq, emu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_util_memhdr_free(emu->memhdr);
 	if (emu->silent_page.area)
 		snd_dma_free_pages(&emu->silent_page);
@@ -1268,6 +1288,9 @@ static int snd_emu10k1_free(struct snd_emu10k1 *emu)
 #ifdef CONFIG_PM_SLEEP
 	free_pm_buffer(emu);
 #endif
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (emu->port)
 		pci_release_regions(emu->pci);
 	if (emu->card_capabilities->ca0151_chip) /* P16V */
@@ -1281,6 +1304,9 @@ static int snd_emu10k1_dev_free(struct snd_device *device)
 {
 	struct snd_emu10k1 *emu = device->device_data;
 	return snd_emu10k1_free(emu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct snd_emu_chip_details emu_chip_details[] = {
@@ -1782,32 +1808,61 @@ int snd_emu10k1_create(struct snd_card *card,
 		       unsigned short extout_mask,
 		       long max_cache_bytes,
 		       int enable_ir,
+<<<<<<< HEAD
+<<<<<<< HEAD
+		       uint subsystem)
+{
+	struct snd_emu10k1 *emu = card->private_data;
+=======
 		       uint subsystem,
 		       struct snd_emu10k1 **remu)
 {
 	struct snd_emu10k1 *emu;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		       uint subsystem)
+{
+	struct snd_emu10k1 *emu = card->private_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int idx, err;
 	int is_audigy;
 	size_t page_table_size;
 	__le32 *pgtbl;
 	unsigned int silent_page;
 	const struct snd_emu_chip_details *c;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	/* enable PCI device */
+	err = pcim_enable_device(pci);
+	if (err < 0)
+		return err;
+
+	card->private_free = snd_emu10k1_free;
+=======
 	static const struct snd_device_ops ops = {
 		.dev_free =	snd_emu10k1_dev_free,
 	};
 
 	*remu = NULL;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* enable PCI device */
-	err = pci_enable_device(pci);
+	err = pcim_enable_device(pci);
 	if (err < 0)
 		return err;
 
+<<<<<<< HEAD
 	emu = kzalloc(sizeof(*emu), GFP_KERNEL);
 	if (emu == NULL) {
 		pci_disable_device(pci);
 		return -ENOMEM;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	card->private_free = snd_emu10k1_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	emu->card = card;
 	spin_lock_init(&emu->reg_lock);
 	spin_lock_init(&emu->emu_lock);
@@ -1850,8 +1905,14 @@ int snd_emu10k1_create(struct snd_card *card,
 	}
 	if (c->vendor == 0) {
 		dev_err(card->dev, "emu10k1: Card not recognised\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		kfree(emu);
 		pci_disable_device(pci);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOENT;
 	}
 	emu->card_capabilities = c;
@@ -1883,8 +1944,14 @@ int snd_emu10k1_create(struct snd_card *card,
 		dev_err(card->dev,
 			"architecture does not support PCI busmaster DMA with mask 0x%lx\n",
 			emu->dma_mask);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		kfree(emu);
 		pci_disable_device(pci);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENXIO;
 	}
 	if (is_audigy)
@@ -1893,11 +1960,21 @@ int snd_emu10k1_create(struct snd_card *card,
 		emu->gpr_base = FXGPREGBASE;
 
 	err = pci_request_regions(pci, "EMU10K1");
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (err < 0)
+		return err;
+=======
 	if (err < 0) {
 		kfree(emu);
 		pci_disable_device(pci);
 		return err;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	emu->port = pci_resource_start(pci, 0);
 
 	emu->max_cache_pages = max_cache_bytes >> PAGE_SHIFT;
@@ -1905,10 +1982,20 @@ int snd_emu10k1_create(struct snd_card *card,
 	page_table_size = sizeof(u32) * (emu->address_mode ? MAXPAGES1 :
 					 MAXPAGES0);
 	if (snd_emu10k1_alloc_pages_maybe_wider(emu, page_table_size,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						&emu->ptb_pages) < 0)
+		return -ENOMEM;
+=======
 						&emu->ptb_pages) < 0) {
 		err = -ENOMEM;
 		goto error;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						&emu->ptb_pages) < 0)
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_dbg(card->dev, "page table address range is %.8lx:%.8lx\n",
 		(unsigned long)emu->ptb_pages.addr,
 		(unsigned long)(emu->ptb_pages.addr + emu->ptb_pages.bytes));
@@ -1917,6 +2004,15 @@ int snd_emu10k1_create(struct snd_card *card,
 						 emu->max_cache_pages));
 	emu->page_addr_table = vmalloc(array_size(sizeof(unsigned long),
 						  emu->max_cache_pages));
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!emu->page_ptr_table || !emu->page_addr_table)
+		return -ENOMEM;
+
+	if (snd_emu10k1_alloc_pages_maybe_wider(emu, EMUPAGESIZE,
+						&emu->silent_page) < 0)
+		return -ENOMEM;
+=======
 	if (emu->page_ptr_table == NULL || emu->page_addr_table == NULL) {
 		err = -ENOMEM;
 		goto error;
@@ -1927,16 +2023,35 @@ int snd_emu10k1_create(struct snd_card *card,
 		err = -ENOMEM;
 		goto error;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!emu->page_ptr_table || !emu->page_addr_table)
+		return -ENOMEM;
+
+	if (snd_emu10k1_alloc_pages_maybe_wider(emu, EMUPAGESIZE,
+						&emu->silent_page) < 0)
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_dbg(card->dev, "silent page range is %.8lx:%.8lx\n",
 		(unsigned long)emu->silent_page.addr,
 		(unsigned long)(emu->silent_page.addr +
 				emu->silent_page.bytes));
 
 	emu->memhdr = snd_util_memhdr_new(emu->max_cache_pages * PAGE_SIZE);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!emu->memhdr)
+		return -ENOMEM;
+=======
 	if (emu->memhdr == NULL) {
 		err = -ENOMEM;
 		goto error;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!emu->memhdr)
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	emu->memhdr->block_extra_size = sizeof(struct snd_emu10k1_memblk) -
 		sizeof(struct snd_util_memblk);
 
@@ -1954,18 +2069,40 @@ int snd_emu10k1_create(struct snd_card *card,
 	if (emu->card_capabilities->ca_cardbus_chip) {
 		err = snd_emu10k1_cardbus_init(emu);
 		if (err < 0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+			return err;
+=======
 			goto error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (emu->card_capabilities->ecard) {
 		err = snd_emu10k1_ecard_init(emu);
 		if (err < 0)
-			goto error;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			return err;
 	} else if (emu->card_capabilities->emu_model) {
 		err = snd_emu10k1_emu1010_init(emu);
-		if (err < 0) {
-			snd_emu10k1_free(emu);
+		if (err < 0)
 			return err;
+=======
+			goto error;
+=======
+			return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	} else if (emu->card_capabilities->emu_model) {
+		err = snd_emu10k1_emu1010_init(emu);
+		if (err < 0)
+			return err;
+<<<<<<< HEAD
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		/* 5.1: Enable the additional AC97 Slots. If the emu10k1 version
 			does not support this, it shouldn't do any harm */
@@ -1979,11 +2116,23 @@ int snd_emu10k1_create(struct snd_card *card,
 	emu->fx8010.etram_pages.bytes = 0;
 
 	/* irq handler must be registered after I/O ports are activated */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (devm_request_irq(&pci->dev, pci->irq, snd_emu10k1_interrupt,
+			     IRQF_SHARED, KBUILD_MODNAME, emu))
+		return -EBUSY;
+=======
 	if (request_irq(pci->irq, snd_emu10k1_interrupt, IRQF_SHARED,
 			KBUILD_MODNAME, emu)) {
 		err = -EBUSY;
 		goto error;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (devm_request_irq(&pci->dev, pci->irq, snd_emu10k1_interrupt,
+			     IRQF_SHARED, KBUILD_MODNAME, emu))
+		return -EBUSY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	emu->irq = pci->irq;
 	card->sync_irq = emu->irq;
 
@@ -2022,33 +2171,60 @@ int snd_emu10k1_create(struct snd_card *card,
 
 	err = snd_emu10k1_init(emu, enable_ir, 0);
 	if (err < 0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return err;
+#ifdef CONFIG_PM_SLEEP
+	err = alloc_pm_buffer(emu);
+	if (err < 0)
+		return err;
+=======
 		goto error;
 #ifdef CONFIG_PM_SLEEP
 	err = alloc_pm_buffer(emu);
 	if (err < 0)
 		goto error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+#ifdef CONFIG_PM_SLEEP
+	err = alloc_pm_buffer(emu);
+	if (err < 0)
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	/*  Initialize the effect engine */
 	err = snd_emu10k1_init_efx(emu);
 	if (err < 0)
-		goto error;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return err;
 	snd_emu10k1_audio_enable(emu);
-
-	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, emu, &ops);
-	if (err < 0)
-		goto error;
 
 #ifdef CONFIG_SND_PROC_FS
 	snd_emu10k1_proc_init(emu);
 #endif
-
-	*remu = emu;
 	return 0;
+=======
+		goto error;
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	snd_emu10k1_audio_enable(emu);
+
+#ifdef CONFIG_SND_PROC_FS
+	snd_emu10k1_proc_init(emu);
+#endif
+	return 0;
+<<<<<<< HEAD
 
  error:
 	snd_emu10k1_free(emu);
 	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP

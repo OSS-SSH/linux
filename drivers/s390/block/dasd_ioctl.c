@@ -575,10 +575,20 @@ int dasd_ioctl(struct block_device *bdev, fmode_t mode,
 	else
 		argp = (void __user *)arg;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if ((_IOC_DIR(cmd) != _IOC_NONE) && !arg)
+		return -EINVAL;
+=======
 	if ((_IOC_DIR(cmd) != _IOC_NONE) && !arg) {
 		PRINT_DEBUG("empty data ptr");
 		return -EINVAL;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if ((_IOC_DIR(cmd) != _IOC_NONE) && !arg)
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	base = dasd_device_from_gendisk(bdev->bd_disk);
 	if (!base)

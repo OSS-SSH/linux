@@ -780,10 +780,22 @@ static void intel_dsi_pre_enable(struct intel_atomic_state *state,
 				 const struct drm_connector_state *conn_state)
 {
 	struct intel_dsi *intel_dsi = enc_to_intel_dsi(encoder);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct intel_crtc *crtc = to_intel_crtc(pipe_config->uapi.crtc);
+	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
+	enum pipe pipe = crtc->pipe;
+=======
 	struct drm_crtc *crtc = pipe_config->uapi.crtc;
 	struct drm_i915_private *dev_priv = to_i915(crtc->dev);
 	struct intel_crtc *intel_crtc = to_intel_crtc(crtc);
 	enum pipe pipe = intel_crtc->pipe;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct intel_crtc *crtc = to_intel_crtc(pipe_config->uapi.crtc);
+	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
+	enum pipe pipe = crtc->pipe;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum port port;
 	u32 val;
 	bool glk_cold_boot = false;
@@ -1389,7 +1401,15 @@ static void intel_dsi_prepare(struct intel_encoder *intel_encoder,
 	struct drm_encoder *encoder = &intel_encoder->base;
 	struct drm_device *dev = encoder->dev;
 	struct drm_i915_private *dev_priv = to_i915(dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct intel_crtc *crtc = to_intel_crtc(pipe_config->uapi.crtc);
+=======
 	struct intel_crtc *intel_crtc = to_intel_crtc(pipe_config->uapi.crtc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct intel_crtc *crtc = to_intel_crtc(pipe_config->uapi.crtc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct intel_dsi *intel_dsi = enc_to_intel_dsi(to_intel_encoder(encoder));
 	const struct drm_display_mode *adjusted_mode = &pipe_config->hw.adjusted_mode;
 	enum port port;
@@ -1397,7 +1417,15 @@ static void intel_dsi_prepare(struct intel_encoder *intel_encoder,
 	u32 val, tmp;
 	u16 mode_hdisplay;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	drm_dbg_kms(&dev_priv->drm, "pipe %c\n", pipe_name(crtc->pipe));
+=======
 	drm_dbg_kms(&dev_priv->drm, "pipe %c\n", pipe_name(intel_crtc->pipe));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_dbg_kms(&dev_priv->drm, "pipe %c\n", pipe_name(crtc->pipe));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mode_hdisplay = adjusted_mode->crtc_hdisplay;
 
@@ -1424,7 +1452,15 @@ static void intel_dsi_prepare(struct intel_encoder *intel_encoder,
 			intel_de_write(dev_priv, MIPI_CTRL(port),
 				       tmp | READ_REQUEST_PRIORITY_HIGH);
 		} else if (IS_GEMINILAKE(dev_priv) || IS_BROXTON(dev_priv)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			enum pipe pipe = crtc->pipe;
+=======
 			enum pipe pipe = intel_crtc->pipe;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			enum pipe pipe = crtc->pipe;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			tmp = intel_de_read(dev_priv, MIPI_CTRL(port));
 			tmp &= ~BXT_PIPE_SELECT_MASK;

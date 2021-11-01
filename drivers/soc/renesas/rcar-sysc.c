@@ -396,19 +396,45 @@ static int __init rcar_sysc_pd_init(void)
 	for (i = 0; i < info->num_areas; i++) {
 		const struct rcar_sysc_area *area = &info->areas[i];
 		struct rcar_sysc_pd *pd;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		size_t n;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		size_t n;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (!area->name) {
 			/* Skip NULLified area */
 			continue;
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		n = strlen(area->name) + 1;
+		pd = kzalloc(sizeof(*pd) + n, GFP_KERNEL);
+=======
 		pd = kzalloc(sizeof(*pd) + strlen(area->name) + 1, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		n = strlen(area->name) + 1;
+		pd = kzalloc(sizeof(*pd) + n, GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!pd) {
 			error = -ENOMEM;
 			goto out_put;
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		memcpy(pd->name, area->name, n);
+=======
 		strcpy(pd->name, area->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memcpy(pd->name, area->name, n);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pd->genpd.name = pd->name;
 		pd->ch.chan_offs = area->chan_offs;
 		pd->ch.chan_bit = area->chan_bit;

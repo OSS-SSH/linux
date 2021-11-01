@@ -295,14 +295,30 @@ TRACE_EVENT(io_uring_fail_link,
  */
 TRACE_EVENT(io_uring_complete,
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	TP_PROTO(void *ctx, u64 user_data, int res, unsigned cflags),
+=======
 	TP_PROTO(void *ctx, u64 user_data, long res, unsigned cflags),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	TP_PROTO(void *ctx, u64 user_data, int res, unsigned cflags),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	TP_ARGS(ctx, user_data, res, cflags),
 
 	TP_STRUCT__entry (
 		__field(  void *,	ctx		)
 		__field(  u64,		user_data	)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__field(  int,		res		)
+=======
 		__field(  long,		res		)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__field(  int,		res		)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__field(  unsigned,	cflags		)
 	),
 
@@ -313,7 +329,15 @@ TRACE_EVENT(io_uring_complete,
 		__entry->cflags		= cflags;
 	),
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	TP_printk("ring %p, user_data 0x%llx, result %d, cflags %x",
+=======
 	TP_printk("ring %p, user_data 0x%llx, result %ld, cflags %x",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	TP_printk("ring %p, user_data 0x%llx, result %d, cflags %x",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  __entry->ctx, (unsigned long long)__entry->user_data,
 			  __entry->res, __entry->cflags)
 );

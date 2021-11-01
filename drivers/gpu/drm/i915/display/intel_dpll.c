@@ -11,6 +11,14 @@
 #include "intel_lvds.h"
 #include "intel_panel.h"
 #include "intel_sideband.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "display/intel_snps_phy.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "display/intel_snps_phy.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct intel_limit {
 	struct {
@@ -923,12 +931,32 @@ static int hsw_crtc_compute_clock(struct intel_crtc *crtc,
 	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
 	struct intel_atomic_state *state =
 		to_intel_atomic_state(crtc_state->uapi.state);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct intel_encoder *encoder =
+		intel_get_crtc_new_encoder(state, crtc_state);
+
+	if (IS_DG2(dev_priv)) {
+		return intel_mpllb_calc_state(crtc_state, encoder);
+	} else if (!intel_crtc_has_type(crtc_state, INTEL_OUTPUT_DSI) ||
+		   DISPLAY_VER(dev_priv) >= 11) {
+=======
 
 	if (!intel_crtc_has_type(crtc_state, INTEL_OUTPUT_DSI) ||
 	    DISPLAY_VER(dev_priv) >= 11) {
 		struct intel_encoder *encoder =
 			intel_get_crtc_new_encoder(state, crtc_state);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct intel_encoder *encoder =
+		intel_get_crtc_new_encoder(state, crtc_state);
+
+	if (IS_DG2(dev_priv)) {
+		return intel_mpllb_calc_state(crtc_state, encoder);
+	} else if (!intel_crtc_has_type(crtc_state, INTEL_OUTPUT_DSI) ||
+		   DISPLAY_VER(dev_priv) >= 11) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!intel_reserve_shared_dplls(state, crtc, encoder)) {
 			drm_dbg_kms(&dev_priv->drm,
 				    "failed to find PLL for pipe %c\n",

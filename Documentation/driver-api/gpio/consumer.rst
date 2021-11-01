@@ -72,6 +72,19 @@ for the GPIO. Values can be:
 * GPIOD_OUT_HIGH_OPEN_DRAIN same as GPIOD_OUT_HIGH but also enforce the line
   to be electrically used with open drain.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+Note that the initial value is *logical* and the physical line level depends on
+whether the line is configured active high or active low (see
+:ref:`active_low_semantics`).
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 The two last flags are used for use cases where open drain is mandatory, such
 as I2C: if the line is not already configured as open drain in the mappings
 (see board.txt), then open drain will be enforced anyway and a warning will be
@@ -252,6 +265,16 @@ that can't be accessed from hardIRQ handlers, these calls act the same as the
 spinlock-safe calls.
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+.. _active_low_semantics:
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+.. _active_low_semantics:
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 The active low and open drain semantics
 ---------------------------------------
 As a consumer should not have to care about the physical line level, all of the
@@ -309,9 +332,25 @@ work on the raw line value::
 	void gpiod_set_raw_value_cansleep(struct gpio_desc *desc, int value)
 	int gpiod_direction_output_raw(struct gpio_desc *desc, int value)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+The active low state of a GPIO can also be queried and toggled using the
+following calls::
+
+	int gpiod_is_active_low(const struct gpio_desc *desc)
+	void gpiod_toggle_active_low(struct gpio_desc *desc)
+=======
 The active low state of a GPIO can also be queried using the following call::
 
 	int gpiod_is_active_low(const struct gpio_desc *desc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+The active low state of a GPIO can also be queried and toggled using the
+following calls::
+
+	int gpiod_is_active_low(const struct gpio_desc *desc)
+	void gpiod_toggle_active_low(struct gpio_desc *desc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Note that these functions should only be used with great moderation; a driver
 should not have to care about the physical line level or open drain semantics.

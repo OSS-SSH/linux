@@ -274,20 +274,44 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
 
 	/* return EWOULDBLOCK since we know the wait isn't necessary */
 	if (phys_enc->enable_state == DPU_ENC_DISABLED) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		DRM_ERROR("encoder is disabled id=%u, intr=%d, irq=%d\n",
+=======
 		DRM_ERROR("encoder is disabled id=%u, intr=%d, irq=%d",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		DRM_ERROR("encoder is disabled id=%u, intr=%d, irq=%d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  DRMID(phys_enc->parent), intr_idx,
 			  irq->irq_idx);
 		return -EWOULDBLOCK;
 	}
 
 	if (irq->irq_idx < 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		DRM_DEBUG_KMS("skip irq wait id=%u, intr=%d, irq=%s\n",
+=======
 		DRM_DEBUG_KMS("skip irq wait id=%u, intr=%d, irq=%s",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		DRM_DEBUG_KMS("skip irq wait id=%u, intr=%d, irq=%s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			      DRMID(phys_enc->parent), intr_idx,
 			      irq->name);
 		return 0;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_DEBUG_KMS("id=%u, intr=%d, irq=%d, pp=%d, pending_cnt=%d\n",
+=======
 	DRM_DEBUG_KMS("id=%u, intr=%d, irq=%d, pp=%d, pending_cnt=%d",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_DEBUG_KMS("id=%u, intr=%d, irq=%d, pp=%d, pending_cnt=%d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		      DRMID(phys_enc->parent), intr_idx,
 		      irq->irq_idx, phys_enc->hw_pp->idx - PINGPONG_0,
 		      atomic_read(wait_info->atomic_cnt));
@@ -303,8 +327,16 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
 		if (irq_status) {
 			unsigned long flags;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			DRM_DEBUG_KMS("irq not triggered id=%u, intr=%d, irq=%d, pp=%d, atomic_cnt=%d\n",
+=======
 			DRM_DEBUG_KMS("irq not triggered id=%u, intr=%d, "
 				      "irq=%d, pp=%d, atomic_cnt=%d",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			DRM_DEBUG_KMS("irq not triggered id=%u, intr=%d, irq=%d, pp=%d, atomic_cnt=%d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      DRMID(phys_enc->parent), intr_idx,
 				      irq->irq_idx,
 				      phys_enc->hw_pp->idx - PINGPONG_0,
@@ -315,8 +347,16 @@ int dpu_encoder_helper_wait_for_irq(struct dpu_encoder_phys *phys_enc,
 			ret = 0;
 		} else {
 			ret = -ETIMEDOUT;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			DRM_DEBUG_KMS("irq timeout id=%u, intr=%d, irq=%d, pp=%d, atomic_cnt=%d\n",
+=======
 			DRM_DEBUG_KMS("irq timeout id=%u, intr=%d, "
 				      "irq=%d, pp=%d, atomic_cnt=%d",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			DRM_DEBUG_KMS("irq timeout id=%u, intr=%d, irq=%d, pp=%d, atomic_cnt=%d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      DRMID(phys_enc->parent), intr_idx,
 				      irq->irq_idx,
 				      phys_enc->hw_pp->idx - PINGPONG_0,

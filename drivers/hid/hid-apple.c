@@ -187,6 +187,24 @@ static const struct apple_key_translation *apple_find_translation(
 	return NULL;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void input_event_with_scancode(struct input_dev *input,
+		__u8 type, __u16 code, unsigned int hid, __s32 value)
+{
+	if (type == EV_KEY &&
+	    (!test_bit(code, input->key)) == value)
+		input_event(input, EV_MSC, MSC_SCAN, hid);
+	input_event(input, type, code, value);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
 		struct hid_usage *usage, __s32 value)
 {
@@ -199,7 +217,17 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
 
 	if (usage->code == fn_keycode) {
 		asc->fn_on = !!value;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		input_event_with_scancode(input, usage->type, KEY_FN,
+				usage->hid, value);
+=======
 		input_event(input, usage->type, KEY_FN, value);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		input_event_with_scancode(input, usage->type, KEY_FN,
+				usage->hid, value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 1;
 	}
 
@@ -240,7 +268,17 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
 				code = do_translate ? trans->to : trans->from;
 			}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			input_event_with_scancode(input, usage->type, code,
+					usage->hid, value);
+=======
 			input_event(input, usage->type, code, value);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			input_event_with_scancode(input, usage->type, code,
+					usage->hid, value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return 1;
 		}
 
@@ -258,8 +296,18 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
 					clear_bit(usage->code,
 							asc->pressed_numlock);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+				input_event_with_scancode(input, usage->type,
+						trans->to, usage->hid, value);
+=======
 				input_event(input, usage->type, trans->to,
 						value);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				input_event_with_scancode(input, usage->type,
+						trans->to, usage->hid, value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 
 			return 1;
@@ -270,7 +318,17 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
 		if (hid->country == HID_COUNTRY_INTERNATIONAL_ISO) {
 			trans = apple_find_translation(apple_iso_keyboard, usage->code);
 			if (trans) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+				input_event_with_scancode(input, usage->type,
+						trans->to, usage->hid, value);
+=======
 				input_event(input, usage->type, trans->to, value);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				input_event_with_scancode(input, usage->type,
+						trans->to, usage->hid, value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return 1;
 			}
 		}
@@ -279,7 +337,17 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
 	if (swap_opt_cmd) {
 		trans = apple_find_translation(swapped_option_cmd_keys, usage->code);
 		if (trans) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			input_event_with_scancode(input, usage->type,
+					trans->to, usage->hid, value);
+=======
 			input_event(input, usage->type, trans->to, value);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			input_event_with_scancode(input, usage->type,
+					trans->to, usage->hid, value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return 1;
 		}
 	}
@@ -287,7 +355,17 @@ static int hidinput_apple_event(struct hid_device *hid, struct input_dev *input,
 	if (swap_fn_leftctrl) {
 		trans = apple_find_translation(swapped_fn_leftctrl_keys, usage->code);
 		if (trans) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			input_event_with_scancode(input, usage->type,
+					trans->to, usage->hid, value);
+=======
 			input_event(input, usage->type, trans->to, value);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			input_event_with_scancode(input, usage->type,
+					trans->to, usage->hid, value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return 1;
 		}
 	}
@@ -306,8 +384,18 @@ static int apple_event(struct hid_device *hdev, struct hid_field *field,
 
 	if ((asc->quirks & APPLE_INVERT_HWHEEL) &&
 			usage->code == REL_HWHEEL) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		input_event_with_scancode(field->hidinput->input, usage->type,
+				usage->code, usage->hid, -value);
+=======
 		input_event(field->hidinput->input, usage->type, usage->code,
 				-value);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		input_event_with_scancode(field->hidinput->input, usage->type,
+				usage->code, usage->hid, -value);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 1;
 	}
 
@@ -322,12 +410,35 @@ static int apple_event(struct hid_device *hdev, struct hid_field *field,
 
 /*
  * MacBook JIS keyboard has wrong logical maximum
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Magic Keyboard JIS has wrong logical maximum
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Magic Keyboard JIS has wrong logical maximum
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static __u8 *apple_report_fixup(struct hid_device *hdev, __u8 *rdesc,
 		unsigned int *rsize)
 {
 	struct apple_sc *asc = hid_get_drvdata(hdev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if(*rsize >=71 && rdesc[70] == 0x65 && rdesc[64] == 0x65) {
+		hid_info(hdev,
+			 "fixing up Magic Keyboard JIS report descriptor\n");
+		rdesc[64] = rdesc[70] = 0xe7;
+	}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if ((asc->quirks & APPLE_RDESC_JIS) && *rsize >= 60 &&
 			rdesc[53] == 0x65 && rdesc[59] == 0x65) {
 		hid_info(hdev,
@@ -501,6 +612,16 @@ static const struct hid_device_id apple_devices[] = {
 			APPLE_RDESC_JIS },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_REVB_ANSI),
 		.driver_data = APPLE_HAS_FN },
+<<<<<<< HEAD
+<<<<<<< HEAD
+	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_REVB_ANSI),
+		.driver_data = APPLE_HAS_FN },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_REVB_ANSI),
+		.driver_data = APPLE_HAS_FN },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ HID_USB_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_REVB_ISO),
 		.driver_data = APPLE_HAS_FN },
 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE, USB_DEVICE_ID_APPLE_ALU_REVB_ISO),

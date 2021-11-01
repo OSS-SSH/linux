@@ -152,7 +152,15 @@ static void write_policies(void)
 
 	fd = open(add_whitelist_policy_file, O_WRONLY);
 	if (fd < 0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		die("can't open add_whitelist_policy file\n");
+=======
 		die("cant open add_whitelist_policy file\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		die("can't open add_whitelist_policy file\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	written = write(fd, policy_str, strlen(policy_str));
 	if (written != strlen(policy_str)) {
 		if (written >= 0) {

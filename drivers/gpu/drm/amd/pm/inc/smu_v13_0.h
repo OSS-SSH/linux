@@ -26,6 +26,14 @@
 #include "amdgpu_smu.h"
 
 #define SMU13_DRIVER_IF_VERSION_INV 0xFFFFFFFF
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define SMU13_DRIVER_IF_VERSION_YELLOW_CARP 0x04
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SMU13_DRIVER_IF_VERSION_YELLOW_CARP 0x04
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define SMU13_DRIVER_IF_VERSION_ALDE 0x07
 
 /* MP Apertures */

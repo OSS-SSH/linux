@@ -2270,7 +2270,15 @@ static int dspio_send_scp_message(struct hda_codec *codec,
 				  unsigned int *bytes_returned)
 {
 	struct ca0132_spec *spec = codec->spec;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int status;
+=======
 	int status = -1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int status;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int scp_send_size = 0;
 	unsigned int total_size;
 	bool waiting_for_resp = false;
@@ -9682,11 +9690,17 @@ static void dbpro_free(struct hda_codec *codec)
 	kfree(codec->spec);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static void ca0132_reboot_notify(struct hda_codec *codec)
 {
 	codec->patch_ops.free(codec);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PM
 static int ca0132_suspend(struct hda_codec *codec)
 {
@@ -9706,7 +9720,13 @@ static const struct hda_codec_ops ca0132_patch_ops = {
 #ifdef CONFIG_PM
 	.suspend = ca0132_suspend,
 #endif
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.reboot_notify = ca0132_reboot_notify,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct hda_codec_ops dbpro_patch_ops = {

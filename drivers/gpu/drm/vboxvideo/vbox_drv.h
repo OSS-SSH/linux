@@ -145,7 +145,13 @@ void vbox_mm_fini(struct vbox_private *vbox);
 int vbox_irq_init(struct vbox_private *vbox);
 void vbox_irq_fini(struct vbox_private *vbox);
 void vbox_report_hotplug(struct vbox_private *vbox);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 irqreturn_t vbox_irq_handler(int irq, void *arg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* vbox_hgsmi.c */
 void *hgsmi_buffer_alloc(struct gen_pool *guest_pool, size_t size,

@@ -10,7 +10,17 @@
  */
 
 #include <linux/pci.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+#include <drm/drm_drv.h>
+=======
 #include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+#include <drm/drm_drv.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_probe_helper.h>
 
 #include "vbox_drv.h"
@@ -31,7 +41,15 @@ void vbox_report_hotplug(struct vbox_private *vbox)
 	schedule_work(&vbox->hotplug_work);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static irqreturn_t vbox_irq_handler(int irq, void *arg)
+=======
 irqreturn_t vbox_irq_handler(int irq, void *arg)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static irqreturn_t vbox_irq_handler(int irq, void *arg)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct drm_device *dev = (struct drm_device *)arg;
 	struct vbox_private *vbox = to_vbox_dev(dev);
@@ -170,16 +188,49 @@ static void vbox_hotplug_worker(struct work_struct *work)
 
 int vbox_irq_init(struct vbox_private *vbox)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct drm_device *dev = &vbox->ddev;
+	struct pci_dev *pdev = to_pci_dev(dev->dev);
+=======
 	struct pci_dev *pdev = to_pci_dev(vbox->ddev.dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct drm_device *dev = &vbox->ddev;
+	struct pci_dev *pdev = to_pci_dev(dev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	INIT_WORK(&vbox->hotplug_work, vbox_hotplug_worker);
 	vbox_update_mode_hints(vbox);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* PCI devices require shared interrupts. */
+	return request_irq(pdev->irq, vbox_irq_handler, IRQF_SHARED, dev->driver->name, dev);
+=======
 	return drm_irq_install(&vbox->ddev, pdev->irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* PCI devices require shared interrupts. */
+	return request_irq(pdev->irq, vbox_irq_handler, IRQF_SHARED, dev->driver->name, dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void vbox_irq_fini(struct vbox_private *vbox)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct drm_device *dev = &vbox->ddev;
+	struct pci_dev *pdev = to_pci_dev(dev->dev);
+
+	free_irq(pdev->irq, dev);
+<<<<<<< HEAD
+=======
 	drm_irq_uninstall(&vbox->ddev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	flush_work(&vbox->hotplug_work);
 }

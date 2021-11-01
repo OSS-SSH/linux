@@ -663,12 +663,26 @@ static int set_mcast_msfilter(struct sock *sk, int ifindex,
 			      struct sockaddr_storage *group,
 			      struct sockaddr_storage *list)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int msize = IP_MSFILTER_SIZE(numsrc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ip_msfilter *msf;
 	struct sockaddr_in *psin;
 	int err, i;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msf = kmalloc(IP_MSFILTER_SIZE(numsrc), GFP_KERNEL);
+=======
 	msf = kmalloc(msize, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msf = kmalloc(IP_MSFILTER_SIZE(numsrc), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!msf)
 		return -ENOBUFS;
 
@@ -684,7 +698,15 @@ static int set_mcast_msfilter(struct sock *sk, int ifindex,
 
 		if (psin->sin_family != AF_INET)
 			goto Eaddrnotavail;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		msf->imsf_slist_flex[i] = psin->sin_addr.s_addr;
+=======
 		msf->imsf_slist[i] = psin->sin_addr.s_addr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		msf->imsf_slist_flex[i] = psin->sin_addr.s_addr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	err = ip_mc_msfilter(sk, msf, ifindex);
 	kfree(msf);
@@ -791,7 +813,17 @@ static int ip_set_mcast_msfilter(struct sock *sk, sockptr_t optval, int optlen)
 		goto out_free_gsf;
 
 	err = set_mcast_msfilter(sk, gsf->gf_interface, gsf->gf_numsrc,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 gsf->gf_fmode, &gsf->gf_group,
+				 gsf->gf_slist_flex);
+=======
 				 gsf->gf_fmode, &gsf->gf_group, gsf->gf_slist);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 gsf->gf_fmode, &gsf->gf_group,
+				 gsf->gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_free_gsf:
 	kfree(gsf);
 	return err;
@@ -800,7 +832,15 @@ out_free_gsf:
 static int compat_ip_set_mcast_msfilter(struct sock *sk, sockptr_t optval,
 		int optlen)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const int size0 = offsetof(struct compat_group_filter, gf_slist_flex);
+=======
 	const int size0 = offsetof(struct compat_group_filter, gf_slist);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const int size0 = offsetof(struct compat_group_filter, gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct compat_group_filter *gf32;
 	unsigned int n;
 	void *p;
@@ -814,7 +854,15 @@ static int compat_ip_set_mcast_msfilter(struct sock *sk, sockptr_t optval,
 	p = kmalloc(optlen + 4, GFP_KERNEL);
 	if (!p)
 		return -ENOMEM;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	gf32 = p + 4; /* we want ->gf_group and ->gf_slist_flex aligned */
+=======
 	gf32 = p + 4; /* we want ->gf_group and ->gf_slist aligned */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gf32 = p + 4; /* we want ->gf_group and ->gf_slist_flex aligned */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = -EFAULT;
 	if (copy_from_sockptr(gf32, optval, optlen))
@@ -827,7 +875,15 @@ static int compat_ip_set_mcast_msfilter(struct sock *sk, sockptr_t optval,
 		goto out_free_gsf;
 
 	err = -EINVAL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (offsetof(struct compat_group_filter, gf_slist_flex[n]) > optlen)
+=======
 	if (offsetof(struct compat_group_filter, gf_slist[n]) > optlen)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (offsetof(struct compat_group_filter, gf_slist_flex[n]) > optlen)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_free_gsf;
 
 	/* numsrc >= (4G-140)/128 overflow in 32 bits */
@@ -835,7 +891,15 @@ static int compat_ip_set_mcast_msfilter(struct sock *sk, sockptr_t optval,
 	if (n > sock_net(sk)->ipv4.sysctl_igmp_max_msf)
 		goto out_free_gsf;
 	err = set_mcast_msfilter(sk, gf32->gf_interface, n, gf32->gf_fmode,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 &gf32->gf_group, gf32->gf_slist_flex);
+=======
 				 &gf32->gf_group, gf32->gf_slist);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 &gf32->gf_group, gf32->gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_free_gsf:
 	kfree(p);
 	return err;
@@ -1456,7 +1520,15 @@ static bool getsockopt_needs_rtnl(int optname)
 static int ip_get_mcast_msfilter(struct sock *sk, void __user *optval,
 		int __user *optlen, int len)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const int size0 = offsetof(struct group_filter, gf_slist_flex);
+=======
 	const int size0 = offsetof(struct group_filter, gf_slist);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const int size0 = offsetof(struct group_filter, gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct group_filter __user *p = optval;
 	struct group_filter gsf;
 	int num;
@@ -1468,7 +1540,15 @@ static int ip_get_mcast_msfilter(struct sock *sk, void __user *optval,
 		return -EFAULT;
 
 	num = gsf.gf_numsrc;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = ip_mc_gsfget(sk, &gsf, p->gf_slist_flex);
+=======
 	err = ip_mc_gsfget(sk, &gsf, p->gf_slist);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ip_mc_gsfget(sk, &gsf, p->gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 	if (gsf.gf_numsrc < num)
@@ -1482,7 +1562,15 @@ static int ip_get_mcast_msfilter(struct sock *sk, void __user *optval,
 static int compat_ip_get_mcast_msfilter(struct sock *sk, void __user *optval,
 		int __user *optlen, int len)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const int size0 = offsetof(struct compat_group_filter, gf_slist_flex);
+=======
 	const int size0 = offsetof(struct compat_group_filter, gf_slist);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const int size0 = offsetof(struct compat_group_filter, gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct compat_group_filter __user *p = optval;
 	struct compat_group_filter gf32;
 	struct group_filter gf;
@@ -1499,7 +1587,15 @@ static int compat_ip_get_mcast_msfilter(struct sock *sk, void __user *optval,
 	num = gf.gf_numsrc = gf32.gf_numsrc;
 	gf.gf_group = gf32.gf_group;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = ip_mc_gsfget(sk, &gf, p->gf_slist_flex);
+=======
 	err = ip_mc_gsfget(sk, &gf, p->gf_slist);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ip_mc_gsfget(sk, &gf, p->gf_slist_flex);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 	if (gf.gf_numsrc < num)

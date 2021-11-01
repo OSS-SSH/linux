@@ -967,6 +967,21 @@ int c4iw_poll_cq(struct ib_cq *ibcq, int num_entries, struct ib_wc *wc)
 	return !err || err == -ENODATA ? npolled : err;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+void c4iw_cq_rem_ref(struct c4iw_cq *chp)
+{
+	if (refcount_dec_and_test(&chp->refcnt))
+		complete(&chp->cq_rel_comp);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int c4iw_destroy_cq(struct ib_cq *ib_cq, struct ib_udata *udata)
 {
 	struct c4iw_cq *chp;
@@ -976,8 +991,18 @@ int c4iw_destroy_cq(struct ib_cq *ib_cq, struct ib_udata *udata)
 	chp = to_c4iw_cq(ib_cq);
 
 	xa_erase_irq(&chp->rhp->cqs, chp->cq.cqid);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	c4iw_cq_rem_ref(chp);
+	wait_for_completion(&chp->cq_rel_comp);
+=======
 	refcount_dec(&chp->refcnt);
 	wait_event(chp->wait, !refcount_read(&chp->refcnt));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	c4iw_cq_rem_ref(chp);
+	wait_for_completion(&chp->cq_rel_comp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ucontext = rdma_udata_to_drv_context(udata, struct c4iw_ucontext,
 					     ibucontext);
@@ -1081,7 +1106,15 @@ int c4iw_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
 	spin_lock_init(&chp->lock);
 	spin_lock_init(&chp->comp_handler_lock);
 	refcount_set(&chp->refcnt, 1);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	init_completion(&chp->cq_rel_comp);
+=======
 	init_waitqueue_head(&chp->wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	init_completion(&chp->cq_rel_comp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = xa_insert_irq(&rhp->cqs, chp->cq.cqid, chp, GFP_KERNEL);
 	if (ret)
 		goto err_destroy_cq;

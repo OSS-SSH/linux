@@ -7,7 +7,15 @@
 SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 				  -e s/sun4u/sparc64/ \
 				  -e s/arm.*/arm/ -e s/sa110/arm/ \
+<<<<<<< HEAD
+<<<<<<< HEAD
+				  -e s/s390x/s390/ \
+=======
 				  -e s/s390x/s390/ -e s/parisc64/parisc/ \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  -e s/s390x/s390/ \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  -e s/ppc.*/powerpc/ -e s/mips.*/mips/ \
 				  -e s/sh[234].*/sh/ -e s/aarch64.*/arm64/ \
 				  -e s/riscv.*/riscv/)

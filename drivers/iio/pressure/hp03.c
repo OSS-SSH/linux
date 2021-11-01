@@ -242,26 +242,56 @@ static int hp03_probe(struct i2c_client *client,
 	 * which has it's dedicated I2C address and contains
 	 * the calibration constants for the sensor.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	priv->eeprom_client = devm_i2c_new_dummy_device(dev, client->adapter,
+							HP03_EEPROM_ADDR);
+=======
 	priv->eeprom_client = i2c_new_dummy_device(client->adapter, HP03_EEPROM_ADDR);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	priv->eeprom_client = devm_i2c_new_dummy_device(dev, client->adapter,
+							HP03_EEPROM_ADDR);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(priv->eeprom_client)) {
 		dev_err(dev, "New EEPROM I2C device failed\n");
 		return PTR_ERR(priv->eeprom_client);
 	}
 
-	priv->eeprom_regmap = regmap_init_i2c(priv->eeprom_client,
-					      &hp03_regmap_config);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	priv->eeprom_regmap = devm_regmap_init_i2c(priv->eeprom_client,
+						   &hp03_regmap_config);
 	if (IS_ERR(priv->eeprom_regmap)) {
 		dev_err(dev, "Failed to allocate EEPROM regmap\n");
-		ret = PTR_ERR(priv->eeprom_regmap);
-		goto err_cleanup_eeprom_client;
+		return PTR_ERR(priv->eeprom_regmap);
 	}
 
-	ret = iio_device_register(indio_dev);
+	ret = devm_iio_device_register(dev, indio_dev);
 	if (ret) {
 		dev_err(dev, "Failed to register IIO device\n");
-		goto err_cleanup_eeprom_regmap;
+		return ret;
 	}
 
+=======
+	priv->eeprom_regmap = regmap_init_i2c(priv->eeprom_client,
+					      &hp03_regmap_config);
+=======
+	priv->eeprom_regmap = devm_regmap_init_i2c(priv->eeprom_client,
+						   &hp03_regmap_config);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (IS_ERR(priv->eeprom_regmap)) {
+		dev_err(dev, "Failed to allocate EEPROM regmap\n");
+		return PTR_ERR(priv->eeprom_regmap);
+	}
+
+	ret = devm_iio_device_register(dev, indio_dev);
+	if (ret) {
+		dev_err(dev, "Failed to register IIO device\n");
+		return ret;
+	}
+
+<<<<<<< HEAD
 	i2c_set_clientdata(client, indio_dev);
 
 	return 0;
@@ -283,6 +313,9 @@ static int hp03_remove(struct i2c_client *client)
 	regmap_exit(priv->eeprom_regmap);
 	i2c_unregister_device(priv->eeprom_client);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -304,7 +337,13 @@ static struct i2c_driver hp03_driver = {
 		.of_match_table = hp03_of_match,
 	},
 	.probe		= hp03_probe,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.remove		= hp03_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table	= hp03_id,
 };
 module_i2c_driver(hp03_driver);

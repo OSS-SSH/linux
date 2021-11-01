@@ -299,6 +299,18 @@ int amdgpu_discovery_reg_base_init(struct amdgpu_device *adev)
 				  ip->major, ip->minor,
 				  ip->revision);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (le16_to_cpu(ip->hw_id) == VCN_HWID)
+				adev->vcn.num_vcn_inst++;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (le16_to_cpu(ip->hw_id) == VCN_HWID)
+				adev->vcn.num_vcn_inst++;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			for (k = 0; k < num_base_address; k++) {
 				/*
 				 * convert the endianness of base addresses in place,
@@ -385,7 +397,15 @@ void amdgpu_discovery_harvest_ip(struct amdgpu_device *adev)
 {
 	struct binary_header *bhdr;
 	struct harvest_table *harvest_info;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int i, vcn_harvest_count = 0;
+=======
 	int i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, vcn_harvest_count = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	bhdr = (struct binary_header *)adev->mman.discovery_bin;
 	harvest_info = (struct harvest_table *)(adev->mman.discovery_bin +
@@ -397,8 +417,16 @@ void amdgpu_discovery_harvest_ip(struct amdgpu_device *adev)
 
 		switch (le32_to_cpu(harvest_info->list[i].hw_id)) {
 		case VCN_HWID:
+<<<<<<< HEAD
+<<<<<<< HEAD
+			vcn_harvest_count++;
+=======
 			adev->harvest_ip_mask |= AMD_HARVEST_IP_VCN_MASK;
 			adev->harvest_ip_mask |= AMD_HARVEST_IP_JPEG_MASK;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			vcn_harvest_count++;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		case DMU_HWID:
 			adev->harvest_ip_mask |= AMD_HARVEST_IP_DMU_MASK;
@@ -407,6 +435,19 @@ void amdgpu_discovery_harvest_ip(struct amdgpu_device *adev)
 			break;
 		}
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (vcn_harvest_count == adev->vcn.num_vcn_inst) {
+		adev->harvest_ip_mask |= AMD_HARVEST_IP_VCN_MASK;
+		adev->harvest_ip_mask |= AMD_HARVEST_IP_JPEG_MASK;
+	}
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int amdgpu_discovery_get_gfx_info(struct amdgpu_device *adev)

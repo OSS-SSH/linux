@@ -24,8 +24,16 @@ static struct sk_buff *trailer_xmit(struct sk_buff *skb, struct net_device *dev)
 	return skb;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static struct sk_buff *trailer_rcv(struct sk_buff *skb, struct net_device *dev)
+=======
 static struct sk_buff *trailer_rcv(struct sk_buff *skb, struct net_device *dev,
 				   struct packet_type *pt)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static struct sk_buff *trailer_rcv(struct sk_buff *skb, struct net_device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u8 *trailer;
 	int source_port;

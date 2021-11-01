@@ -284,11 +284,17 @@ void octeon_crash_smp_send_stop(void)
 
 #endif /* CONFIG_KEXEC */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #ifdef CONFIG_CAVIUM_RESERVE32
 uint64_t octeon_reserve32_memory;
 EXPORT_SYMBOL(octeon_reserve32_memory);
 #endif
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_KEXEC
 /* crashkernel cmdline parameter is parsed _after_ memory setup
  * we also parse it here (workaround for EHB5200) */
@@ -300,9 +306,23 @@ static int octeon_uart;
 extern asmlinkage void handle_int(void);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * octeon_is_simulation - Return non-zero if we are currently running
+ * in the Octeon simulator
+ *
+ * Return: non-0 if running in the Octeon simulator, 0 otherwise
+=======
  * Return non zero if we are currently running in the Octeon simulator
  *
  * Returns
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * octeon_is_simulation - Return non-zero if we are currently running
+ * in the Octeon simulator
+ *
+ * Return: non-0 if running in the Octeon simulator, 0 otherwise
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int octeon_is_simulation(void)
 {
@@ -311,10 +331,24 @@ int octeon_is_simulation(void)
 EXPORT_SYMBOL(octeon_is_simulation);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * octeon_is_pci_host - Return true if Octeon is in PCI Host mode. This means
+ * Linux can control the PCI bus.
+ *
+ * Return: Non-zero if Octeon is in host mode.
+=======
  * Return true if Octeon is in PCI Host mode. This means
  * Linux can control the PCI bus.
  *
  * Returns Non zero if Octeon in host mode.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * octeon_is_pci_host - Return true if Octeon is in PCI Host mode. This means
+ * Linux can control the PCI bus.
+ *
+ * Return: Non-zero if Octeon is in host mode.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int octeon_is_pci_host(void)
 {
@@ -326,9 +360,21 @@ int octeon_is_pci_host(void)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * octeon_get_clock_rate - Get the clock rate of Octeon
+ *
+ * Return: Clock rate in HZ
+=======
  * Get the clock rate of Octeon
  *
  * Returns Clock rate in HZ
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * octeon_get_clock_rate - Get the clock rate of Octeon
+ *
+ * Return: Clock rate in HZ
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 uint64_t octeon_get_clock_rate(void)
 {
@@ -348,11 +394,27 @@ EXPORT_SYMBOL(octeon_get_io_clock_rate);
 
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * octeon_write_lcd - Write to the LCD display connected to the bootbus.
+ * @s:	    String to write
+ *
+ * This display exists on most Cavium evaluation boards. If it doesn't exist,
+ * then this function doesn't do anything.
+=======
  * Write to the LCD display connected to the bootbus. This display
  * exists on most Cavium evaluation boards. If it doesn't exist, then
  * this function doesn't do anything.
  *
  * @s:	    String to write
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * octeon_write_lcd - Write to the LCD display connected to the bootbus.
+ * @s:	    String to write
+ *
+ * This display exists on most Cavium evaluation boards. If it doesn't exist,
+ * then this function doesn't do anything.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static void octeon_write_lcd(const char *s)
 {
@@ -372,9 +434,21 @@ static void octeon_write_lcd(const char *s)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * octeon_get_boot_uart - Return the console uart passed by the bootloader
+ *
+ * Return: uart number (0 or 1)
+=======
  * Return the console uart passed by the bootloader
  *
  * Returns uart	  (0 or 1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * octeon_get_boot_uart - Return the console uart passed by the bootloader
+ *
+ * Return: uart number (0 or 1)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static int octeon_get_boot_uart(void)
 {
@@ -383,9 +457,21 @@ static int octeon_get_boot_uart(void)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * octeon_get_boot_coremask - Get the coremask Linux was booted on.
+ *
+ * Return: Core mask
+=======
  * Get the coremask Linux was booted on.
  *
  * Returns Core mask
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * octeon_get_boot_coremask - Get the coremask Linux was booted on.
+ *
+ * Return: Core mask
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int octeon_get_boot_coremask(void)
 {
@@ -393,7 +479,15 @@ int octeon_get_boot_coremask(void)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * octeon_check_cpu_bist - Check the hardware BIST results for a CPU
+=======
  * Check the hardware BIST results for a CPU
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * octeon_check_cpu_bist - Check the hardware BIST results for a CPU
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void octeon_check_cpu_bist(void)
 {
@@ -424,7 +518,15 @@ void octeon_check_cpu_bist(void)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * octeon_restart - Reboot Octeon
+=======
  * Reboot Octeon
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * octeon_restart - Reboot Octeon
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @command: Command to pass to the bootloader. Currently ignored.
  */
@@ -449,7 +551,15 @@ static void octeon_restart(char *command)
 
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * octeon_kill_core - Permanently stop a core.
+=======
  * Permanently stop a core.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * octeon_kill_core - Permanently stop a core.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * @arg: Ignored.
  */
@@ -469,7 +579,15 @@ static void octeon_kill_core(void *arg)
 
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * octeon_halt - Halt the system
+=======
  * Halt the system
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * octeon_halt - Halt the system
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static void octeon_halt(void)
 {
@@ -512,9 +630,21 @@ static void __init init_octeon_system_type(void)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * octeon_board_type_string - Return a string representing the system type
+ *
+ * Return: system type string
+=======
  * Return a string representing the system type
  *
  * Returns
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * octeon_board_type_string - Return a string representing the system type
+ *
+ * Return: system type string
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 const char *octeon_board_type_string(void)
 {
@@ -655,7 +785,15 @@ void octeon_user_io_init(void)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * prom_init - Early entry point for arch setup
+=======
  * Early entry point for arch setup
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * prom_init - Early entry point for arch setup
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 void __init prom_init(void)
 {
@@ -665,9 +803,17 @@ void __init prom_init(void)
 	int i;
 	u64 t;
 	int argc;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
 #ifdef CONFIG_CAVIUM_RESERVE32
 	int64_t addr = -1;
 #endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * The bootloader passes a pointer to the boot descriptor in
 	 * $a3, this is available as fw_arg3.
@@ -782,6 +928,9 @@ void __init prom_init(void)
 		cvmx_write_csr(CVMX_LED_UDD_DATX(1), 0);
 		cvmx_write_csr(CVMX_LED_EN, 1);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #ifdef CONFIG_CAVIUM_RESERVE32
 	/*
 	 * We need to temporarily allocate all memory in the reserve32
@@ -801,6 +950,9 @@ void __init prom_init(void)
 	else
 		octeon_reserve32_memory = addr;
 #endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_CAVIUM_OCTEON_LOCK_L2
 	if (cvmx_read_csr(CVMX_L2D_FUS3) & (3ull << 34)) {
@@ -1078,6 +1230,9 @@ void __init plat_mem_setup(void)
 	cvmx_bootmem_unlock();
 #endif /* CONFIG_CRASH_DUMP */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #ifdef CONFIG_CAVIUM_RESERVE32
 	/*
 	 * Now that we've allocated the kernel memory it is safe to
@@ -1088,6 +1243,9 @@ void __init plat_mem_setup(void)
 		cvmx_bootmem_free_named("CAVIUM_RESERVE32");
 #endif /* CONFIG_CAVIUM_RESERVE32 */
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (total == 0)
 		panic("Unable to allocate memory from "
 		      "cvmx_bootmem_phy_alloc");

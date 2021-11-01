@@ -117,7 +117,15 @@ static int run_single_threaded(void)
 	int err;
 
 	perf_set_singlethreaded();
+<<<<<<< HEAD
+<<<<<<< HEAD
+	session = perf_session__new(NULL, NULL);
+=======
 	session = perf_session__new(NULL, false, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	session = perf_session__new(NULL, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(session)) {
 		pr_err("Session creation failed.\n");
 		return PTR_ERR(session);
@@ -161,7 +169,15 @@ static int do_run_multi_threaded(struct target *target,
 	init_stats(&time_stats);
 	init_stats(&event_stats);
 	for (i = 0; i < multi_iterations; i++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		session = perf_session__new(NULL, NULL);
+=======
 		session = perf_session__new(NULL, false, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		session = perf_session__new(NULL, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_ERR(session))
 			return PTR_ERR(session);
 

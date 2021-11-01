@@ -36,7 +36,15 @@
 	print_hex_dump(KERN_DEBUG, prefix": ", DUMP_PREFIX_OFFSET,	\
 		       16, 1, (skb)->data, (skb)->len, 0)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void fdp_nci_i2c_reset(const struct fdp_i2c_phy *phy)
+=======
 static void fdp_nci_i2c_reset(struct fdp_i2c_phy *phy)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void fdp_nci_i2c_reset(const struct fdp_i2c_phy *phy)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/* Reset RST/WakeUP for at least 100 micro-second */
 	gpiod_set_value_cansleep(phy->power_gpio, FDP_POWER_OFF);
@@ -47,7 +55,15 @@ static void fdp_nci_i2c_reset(struct fdp_i2c_phy *phy)
 
 static int fdp_nci_i2c_enable(void *phy_id)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct fdp_i2c_phy *phy = phy_id;
+=======
 	struct fdp_i2c_phy *phy = phy_id;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct fdp_i2c_phy *phy = phy_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	fdp_nci_i2c_reset(phy);
 
@@ -56,7 +72,15 @@ static int fdp_nci_i2c_enable(void *phy_id)
 
 static void fdp_nci_i2c_disable(void *phy_id)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct fdp_i2c_phy *phy = phy_id;
+=======
 	struct fdp_i2c_phy *phy = phy_id;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct fdp_i2c_phy *phy = phy_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	fdp_nci_i2c_reset(phy);
 }
@@ -120,7 +144,15 @@ static int fdp_nci_i2c_write(void *phy_id, struct sk_buff *skb)
 	return r;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct nfc_phy_ops i2c_phy_ops = {
+=======
 static struct nfc_phy_ops i2c_phy_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct nfc_phy_ops i2c_phy_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.write = fdp_nci_i2c_write,
 	.enable = fdp_nci_i2c_enable,
 	.disable = fdp_nci_i2c_disable,

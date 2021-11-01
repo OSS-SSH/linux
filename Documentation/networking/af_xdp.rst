@@ -243,8 +243,18 @@ Configuration Flags and Socket Options
 These are the various configuration flags that can be used to control
 and monitor the behavior of AF_XDP sockets.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+XDP_COPY and XDP_ZEROCOPY bind flags
+------------------------------------
+=======
 XDP_COPY and XDP_ZERO_COPY bind flags
 -------------------------------------
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+XDP_COPY and XDP_ZEROCOPY bind flags
+------------------------------------
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 When you bind to a socket, the kernel will first try to use zero-copy
 copy. If zero-copy is not supported, it will fall back on using copy
@@ -252,7 +262,15 @@ mode, i.e. copying all packets out to user space. But if you would
 like to force a certain mode, you can use the following flags. If you
 pass the XDP_COPY flag to the bind call, the kernel will force the
 socket into copy mode. If it cannot use copy mode, the bind call will
+<<<<<<< HEAD
+<<<<<<< HEAD
+fail with an error. Conversely, the XDP_ZEROCOPY flag will force the
+=======
 fail with an error. Conversely, the XDP_ZERO_COPY flag will force the
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+fail with an error. Conversely, the XDP_ZEROCOPY flag will force the
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 socket into zero-copy mode or fail.
 
 XDP_SHARED_UMEM bind flag

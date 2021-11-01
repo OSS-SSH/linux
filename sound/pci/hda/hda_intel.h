@@ -14,7 +14,15 @@ struct hda_intel {
 
 	/* sync probing */
 	struct completion probe_wait;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct delayed_work probe_work;
+=======
 	struct work_struct probe_work;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct delayed_work probe_work;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* card list (for power_save trigger) */
 	struct list_head list;
@@ -30,6 +38,16 @@ struct hda_intel {
 	unsigned int freed:1; /* resources already released */
 
 	bool need_i915_power:1; /* the hda controller needs i915 power */
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	int probe_retry;	/* being probe-retry */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	int probe_retry;	/* being probe-retry */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #endif

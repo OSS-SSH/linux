@@ -1054,14 +1054,44 @@ bool icmp_build_probe(struct sk_buff *skb, struct icmphdr *icmphdr)
 	iio = skb_header_pointer(skb, sizeof(_ext_hdr), sizeof(iio->extobj_hdr), &_iio);
 	if (!ext_hdr || !iio)
 		goto send_mal_query;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (ntohs(iio->extobj_hdr.length) <= sizeof(iio->extobj_hdr) ||
+	    ntohs(iio->extobj_hdr.length) > sizeof(_iio))
+		goto send_mal_query;
+	ident_len = ntohs(iio->extobj_hdr.length) - sizeof(iio->extobj_hdr);
+	iio = skb_header_pointer(skb, sizeof(_ext_hdr),
+				 sizeof(iio->extobj_hdr) + ident_len, &_iio);
+	if (!iio)
+		goto send_mal_query;
+
+=======
 	if (ntohs(iio->extobj_hdr.length) <= sizeof(iio->extobj_hdr))
 		goto send_mal_query;
 	ident_len = ntohs(iio->extobj_hdr.length) - sizeof(iio->extobj_hdr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ntohs(iio->extobj_hdr.length) <= sizeof(iio->extobj_hdr) ||
+	    ntohs(iio->extobj_hdr.length) > sizeof(_iio))
+		goto send_mal_query;
+	ident_len = ntohs(iio->extobj_hdr.length) - sizeof(iio->extobj_hdr);
+	iio = skb_header_pointer(skb, sizeof(_ext_hdr),
+				 sizeof(iio->extobj_hdr) + ident_len, &_iio);
+	if (!iio)
+		goto send_mal_query;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = 0;
 	dev = NULL;
 	switch (iio->extobj_hdr.class_type) {
 	case ICMP_EXT_ECHO_CTYPE_NAME:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		iio = skb_header_pointer(skb, sizeof(_ext_hdr), sizeof(_iio), &_iio);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ident_len >= IFNAMSIZ)
 			goto send_mal_query;
 		memset(buff, 0, sizeof(buff));
@@ -1069,27 +1099,58 @@ bool icmp_build_probe(struct sk_buff *skb, struct icmphdr *icmphdr)
 		dev = dev_get_by_name(net, buff);
 		break;
 	case ICMP_EXT_ECHO_CTYPE_INDEX:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		iio = skb_header_pointer(skb, sizeof(_ext_hdr), sizeof(iio->extobj_hdr) +
 					 sizeof(iio->ident.ifindex), &_iio);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ident_len != sizeof(iio->ident.ifindex))
 			goto send_mal_query;
 		dev = dev_get_by_index(net, ntohl(iio->ident.ifindex));
 		break;
 	case ICMP_EXT_ECHO_CTYPE_ADDR:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (ident_len < sizeof(iio->ident.addr.ctype3_hdr) ||
+		    ident_len != sizeof(iio->ident.addr.ctype3_hdr) +
+=======
 		if (ident_len != sizeof(iio->ident.addr.ctype3_hdr) +
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ident_len < sizeof(iio->ident.addr.ctype3_hdr) ||
+		    ident_len != sizeof(iio->ident.addr.ctype3_hdr) +
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 iio->ident.addr.ctype3_hdr.addrlen)
 			goto send_mal_query;
 		switch (ntohs(iio->ident.addr.ctype3_hdr.afi)) {
 		case ICMP_AFI_IP:
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (iio->ident.addr.ctype3_hdr.addrlen != sizeof(struct in_addr))
+=======
 			iio = skb_header_pointer(skb, sizeof(_ext_hdr), sizeof(iio->extobj_hdr) +
 						 sizeof(struct in_addr), &_iio);
 			if (ident_len != sizeof(iio->ident.addr.ctype3_hdr) +
 					 sizeof(struct in_addr))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (iio->ident.addr.ctype3_hdr.addrlen != sizeof(struct in_addr))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				goto send_mal_query;
 			dev = ip_dev_find(net, iio->ident.addr.ip_addr.ipv4_addr);
 			break;
 #if IS_ENABLED(CONFIG_IPV6)
 		case ICMP_AFI_IP6:
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (iio->ident.addr.ctype3_hdr.addrlen != sizeof(struct in6_addr))
+				goto send_mal_query;
+			dev = ipv6_stub->ipv6_dev_find(net, &iio->ident.addr.ip_addr.ipv6_addr, dev);
+			dev_hold(dev);
+=======
 			iio = skb_header_pointer(skb, sizeof(_ext_hdr), sizeof(_iio), &_iio);
 			if (ident_len != sizeof(iio->ident.addr.ctype3_hdr) +
 					 sizeof(struct in6_addr))
@@ -1097,6 +1158,13 @@ bool icmp_build_probe(struct sk_buff *skb, struct icmphdr *icmphdr)
 			dev = ipv6_stub->ipv6_dev_find(net, &iio->ident.addr.ip_addr.ipv6_addr, dev);
 			if (dev)
 				dev_hold(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (iio->ident.addr.ctype3_hdr.addrlen != sizeof(struct in6_addr))
+				goto send_mal_query;
+			dev = ipv6_stub->ipv6_dev_find(net, &iio->ident.addr.ip_addr.ipv6_addr, dev);
+			dev_hold(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 #endif
 		default:

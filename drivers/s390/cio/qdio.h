@@ -126,6 +126,12 @@ static inline int do_eqbs(u64 token, unsigned char *state, int queue,
 
 struct qdio_irq;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct qdio_dev_perf_stat {
+	unsigned int adapter_int;
+	unsigned int qdio_int;
+=======
 struct siga_flag {
 	u8 input:1;
 	u8 output:1;
@@ -141,6 +147,12 @@ struct qdio_dev_perf_stat {
 	unsigned int pci_request_int;
 
 	unsigned int tasklet_outbound;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct qdio_dev_perf_stat {
+	unsigned int adapter_int;
+	unsigned int qdio_int;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	unsigned int siga_read;
 	unsigned int siga_write;
@@ -150,7 +162,13 @@ struct qdio_dev_perf_stat {
 	unsigned int stop_polling;
 	unsigned int inbound_queue_full;
 	unsigned int outbound_call;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	unsigned int outbound_handler;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int outbound_queue_full;
 	unsigned int fast_requeue;
 	unsigned int target_full;
@@ -180,12 +198,18 @@ struct qdio_input_q {
 };
 
 struct qdio_output_q {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* PCIs are enabled for the queue */
 	int pci_out_enabled;
 	/* timer to check for more outbound work */
 	struct timer_list timer;
 	/* tasklet to check for completions */
 	struct tasklet_struct tasklet;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -250,8 +274,16 @@ struct qdio_irq {
 	unsigned long sch_token;	/* QEBSM facility */
 
 	enum qdio_irq_states state;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u8 qdioac1;
+=======
 
 	struct siga_flag siga_flag;	/* siga sync information from qdioac */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8 qdioac1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	int nr_input_qs;
 	int nr_output_qs;
@@ -263,7 +295,13 @@ struct qdio_irq {
 	struct qdio_ssqd_desc ssqd_desc;
 	void (*orig_handler) (struct ccw_device *, unsigned long, struct irb *);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	unsigned int scan_threshold;	/* used SBALs before tasklet schedule */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int perf_stat_enabled;
 
 	struct qdr *qdr;
@@ -325,6 +363,12 @@ static inline void qdio_deliver_irq(struct qdio_irq *irq)
 #define pci_out_supported(irq) ((irq)->qib.ac & QIB_AC_OUTBOUND_PCI_SUPPORTED)
 #define is_qebsm(q)			(q->irq_ptr->sch_token != 0)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define qdio_need_siga_in(irq)		((irq)->qdioac1 & AC1_SIGA_INPUT_NEEDED)
+#define qdio_need_siga_out(irq)		((irq)->qdioac1 & AC1_SIGA_OUTPUT_NEEDED)
+#define qdio_need_siga_sync(irq)	(unlikely((irq)->qdioac1 & AC1_SIGA_SYNC_NEEDED))
+=======
 #define need_siga_in(q)			(q->irq_ptr->siga_flag.input)
 #define need_siga_out(q)		(q->irq_ptr->siga_flag.output)
 #define need_siga_sync(q)		(unlikely(q->irq_ptr->siga_flag.sync))
@@ -332,6 +376,12 @@ static inline void qdio_deliver_irq(struct qdio_irq *irq)
 	(unlikely(q->irq_ptr->siga_flag.sync_after_ai))
 #define need_siga_sync_out_after_pci(q)	\
 	(unlikely(q->irq_ptr->siga_flag.sync_out_after_pci))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define qdio_need_siga_in(irq)		((irq)->qdioac1 & AC1_SIGA_INPUT_NEEDED)
+#define qdio_need_siga_out(irq)		((irq)->qdioac1 & AC1_SIGA_OUTPUT_NEEDED)
+#define qdio_need_siga_sync(irq)	(unlikely((irq)->qdioac1 & AC1_SIGA_SYNC_NEEDED))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define for_each_input_queue(irq_ptr, q, i)		\
 	for (i = 0; i < irq_ptr->nr_input_qs &&		\
@@ -345,11 +395,17 @@ static inline void qdio_deliver_irq(struct qdio_irq *irq)
 #define sub_buf(bufnr, dec)	QDIO_BUFNR((bufnr) - (dec))
 #define prev_buf(bufnr)		sub_buf(bufnr, 1)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define queue_irqs_enabled(q)			\
 	(test_bit(QDIO_QUEUE_IRQS_DISABLED, &q->u.in.queue_irq_state) == 0)
 #define queue_irqs_disabled(q)			\
 	(test_bit(QDIO_QUEUE_IRQS_DISABLED, &q->u.in.queue_irq_state) != 0)
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern u64 last_ai_time;
 
 /* prototypes for thin interrupt */
@@ -360,8 +416,14 @@ void qdio_thinint_exit(void);
 int test_nonshared_ind(struct qdio_irq *);
 
 /* prototypes for setup */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 void qdio_outbound_tasklet(struct tasklet_struct *t);
 void qdio_outbound_timer(struct timer_list *t);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void qdio_int_handler(struct ccw_device *cdev, unsigned long intparm,
 		      struct irb *irb);
 int qdio_allocate_qs(struct qdio_irq *irq_ptr, int nr_input_qs,

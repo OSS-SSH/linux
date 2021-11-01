@@ -19,6 +19,14 @@
 #include "xfs_error.h"
 #include "xfs_icache.h"
 #include "xfs_health.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "xfs_trans.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "xfs_trans.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Bulk Stat
@@ -107,7 +115,15 @@ xfs_bulkstat_one_int(
 	buf->bs_forkoff = XFS_IFORK_BOFF(ip);
 	buf->bs_version = XFS_BULKSTAT_VERSION_V5;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (xfs_has_v3inodes(mp)) {
+=======
 	if (xfs_sb_version_has_v3inode(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (xfs_has_v3inodes(mp)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		buf->bs_btime = ip->i_crtime.tv_sec;
 		buf->bs_btime_nsec = ip->i_crtime.tv_nsec;
 		if (ip->i_diflags2 & XFS_DIFLAG2_COWEXTSIZE)
@@ -163,6 +179,14 @@ xfs_bulkstat_one(
 		.formatter	= formatter,
 		.breq		= breq,
 	};
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct xfs_trans	*tp;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_trans	*tp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			error;
 
 	if (breq->mnt_userns != &init_user_ns) {
@@ -178,9 +202,35 @@ xfs_bulkstat_one(
 	if (!bc.buf)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * Grab an empty transaction so that we can use its recursive buffer
+	 * locking abilities to detect cycles in the inobt without deadlocking.
+	 */
+	error = xfs_trans_alloc_empty(breq->mp, &tp);
+	if (error)
+		goto out;
+<<<<<<< HEAD
+
+	error = xfs_bulkstat_one_int(breq->mp, breq->mnt_userns, tp,
+			breq->startino, &bc);
+	xfs_trans_cancel(tp);
+out:
+=======
 	error = xfs_bulkstat_one_int(breq->mp, breq->mnt_userns, NULL,
 				     breq->startino, &bc);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	error = xfs_bulkstat_one_int(breq->mp, breq->mnt_userns, tp,
+			breq->startino, &bc);
+	xfs_trans_cancel(tp);
+out:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kmem_free(bc.buf);
 
 	/*
@@ -244,6 +294,14 @@ xfs_bulkstat(
 		.formatter	= formatter,
 		.breq		= breq,
 	};
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct xfs_trans	*tp;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_trans	*tp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			error;
 
 	if (breq->mnt_userns != &init_user_ns) {
@@ -259,9 +317,35 @@ xfs_bulkstat(
 	if (!bc.buf)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * Grab an empty transaction so that we can use its recursive buffer
+	 * locking abilities to detect cycles in the inobt without deadlocking.
+	 */
+	error = xfs_trans_alloc_empty(breq->mp, &tp);
+	if (error)
+		goto out;
+<<<<<<< HEAD
+
+	error = xfs_iwalk(breq->mp, tp, breq->startino, breq->flags,
+			xfs_bulkstat_iwalk, breq->icount, &bc);
+	xfs_trans_cancel(tp);
+out:
+=======
 	error = xfs_iwalk(breq->mp, NULL, breq->startino, breq->flags,
 			xfs_bulkstat_iwalk, breq->icount, &bc);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	error = xfs_iwalk(breq->mp, tp, breq->startino, breq->flags,
+			xfs_bulkstat_iwalk, breq->icount, &bc);
+	xfs_trans_cancel(tp);
+out:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kmem_free(bc.buf);
 
 	/*
@@ -374,13 +458,45 @@ xfs_inumbers(
 		.formatter	= formatter,
 		.breq		= breq,
 	};
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct xfs_trans	*tp;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_trans	*tp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			error = 0;
 
 	if (xfs_bulkstat_already_done(breq->mp, breq->startino))
 		return 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * Grab an empty transaction so that we can use its recursive buffer
+	 * locking abilities to detect cycles in the inobt without deadlocking.
+	 */
+	error = xfs_trans_alloc_empty(breq->mp, &tp);
+	if (error)
+		goto out;
+
+	error = xfs_inobt_walk(breq->mp, tp, breq->startino, breq->flags,
+<<<<<<< HEAD
+			xfs_inumbers_walk, breq->icount, &ic);
+	xfs_trans_cancel(tp);
+out:
+=======
 	error = xfs_inobt_walk(breq->mp, NULL, breq->startino, breq->flags,
 			xfs_inumbers_walk, breq->icount, &ic);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			xfs_inumbers_walk, breq->icount, &ic);
+	xfs_trans_cancel(tp);
+out:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * We found some inode groups, so clear the error status and return

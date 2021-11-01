@@ -78,6 +78,14 @@ struct task_struct *secondary_current;
 bool has_big_cores;
 bool coregroup_enabled;
 bool thread_group_shares_l2;
+<<<<<<< HEAD
+<<<<<<< HEAD
+bool thread_group_shares_l3;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+bool thread_group_shares_l3;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 DEFINE_PER_CPU(cpumask_var_t, cpu_sibling_map);
 DEFINE_PER_CPU(cpumask_var_t, cpu_smallcore_map);
@@ -101,7 +109,15 @@ enum {
 
 #define MAX_THREAD_LIST_SIZE	8
 #define THREAD_GROUP_SHARE_L1   1
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define THREAD_GROUP_SHARE_L2_L3 2
+=======
 #define THREAD_GROUP_SHARE_L2   2
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define THREAD_GROUP_SHARE_L2_L3 2
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct thread_groups {
 	unsigned int property;
 	unsigned int nr_groups;
@@ -122,14 +138,38 @@ static struct thread_groups_list tgl[NR_CPUS] __initdata;
  * On big-cores system, thread_group_l1_cache_map for each CPU corresponds to
  * the set its siblings that share the L1-cache.
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+DEFINE_PER_CPU(cpumask_var_t, thread_group_l1_cache_map);
+=======
 static DEFINE_PER_CPU(cpumask_var_t, thread_group_l1_cache_map);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+DEFINE_PER_CPU(cpumask_var_t, thread_group_l1_cache_map);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * On some big-cores system, thread_group_l2_cache_map for each CPU
  * corresponds to the set its siblings within the core that share the
  * L2-cache.
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+DEFINE_PER_CPU(cpumask_var_t, thread_group_l2_cache_map);
+
+/*
+ * On P10, thread_group_l3_cache_map for each CPU is equal to the
+ * thread_group_l2_cache_map
+ */
+DEFINE_PER_CPU(cpumask_var_t, thread_group_l3_cache_map);
+<<<<<<< HEAD
+=======
 static DEFINE_PER_CPU(cpumask_var_t, thread_group_l2_cache_map);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* SMP operations for this machine */
 struct smp_ops_t *smp_ops;
@@ -889,33 +929,14 @@ out:
 	return tg;
 }
 
-static int __init init_thread_group_cache_map(int cpu, int cache_property)
-
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int update_mask_from_threadgroup(cpumask_var_t *mask, struct thread_groups *tg, int cpu, int cpu_group_start)
 {
 	int first_thread = cpu_first_thread_sibling(cpu);
-	int i, cpu_group_start = -1, err = 0;
-	struct thread_groups *tg = NULL;
-	cpumask_var_t *mask = NULL;
-
-	if (cache_property != THREAD_GROUP_SHARE_L1 &&
-	    cache_property != THREAD_GROUP_SHARE_L2)
-		return -EINVAL;
-
-	tg = get_thread_groups(cpu, cache_property, &err);
-	if (!tg)
-		return err;
-
-	cpu_group_start = get_cpu_thread_group_start(cpu, tg);
-
-	if (unlikely(cpu_group_start == -1)) {
-		WARN_ON_ONCE(1);
-		return -ENODATA;
-	}
-
-	if (cache_property == THREAD_GROUP_SHARE_L1)
-		mask = &per_cpu(thread_group_l1_cache_map, cpu);
-	else if (cache_property == THREAD_GROUP_SHARE_L2)
-		mask = &per_cpu(thread_group_l2_cache_map, cpu);
+	int i;
 
 	zalloc_cpumask_var_node(mask, GFP_KERNEL, cpu_to_node(cpu));
 
@@ -930,6 +951,91 @@ static int __init init_thread_group_cache_map(int cpu, int cache_property)
 		if (i_group_start == cpu_group_start)
 			cpumask_set_cpu(i, *mask);
 	}
+
+	return 0;
+}
+
+<<<<<<< HEAD
+static int __init init_thread_group_cache_map(int cpu, int cache_property)
+
+{
+	int cpu_group_start = -1, err = 0;
+=======
+static int __init init_thread_group_cache_map(int cpu, int cache_property)
+
+{
+	int first_thread = cpu_first_thread_sibling(cpu);
+	int i, cpu_group_start = -1, err = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init init_thread_group_cache_map(int cpu, int cache_property)
+
+{
+	int cpu_group_start = -1, err = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct thread_groups *tg = NULL;
+	cpumask_var_t *mask = NULL;
+
+	if (cache_property != THREAD_GROUP_SHARE_L1 &&
+<<<<<<< HEAD
+<<<<<<< HEAD
+	    cache_property != THREAD_GROUP_SHARE_L2_L3)
+		return -EINVAL;
+
+	tg = get_thread_groups(cpu, cache_property, &err);
+
+=======
+	    cache_property != THREAD_GROUP_SHARE_L2)
+		return -EINVAL;
+
+	tg = get_thread_groups(cpu, cache_property, &err);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    cache_property != THREAD_GROUP_SHARE_L2_L3)
+		return -EINVAL;
+
+	tg = get_thread_groups(cpu, cache_property, &err);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!tg)
+		return err;
+
+	cpu_group_start = get_cpu_thread_group_start(cpu, tg);
+
+	if (unlikely(cpu_group_start == -1)) {
+		WARN_ON_ONCE(1);
+		return -ENODATA;
+	}
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (cache_property == THREAD_GROUP_SHARE_L1) {
+		mask = &per_cpu(thread_group_l1_cache_map, cpu);
+		update_mask_from_threadgroup(mask, tg, cpu, cpu_group_start);
+	}
+	else if (cache_property == THREAD_GROUP_SHARE_L2_L3) {
+		mask = &per_cpu(thread_group_l2_cache_map, cpu);
+		update_mask_from_threadgroup(mask, tg, cpu, cpu_group_start);
+		mask = &per_cpu(thread_group_l3_cache_map, cpu);
+		update_mask_from_threadgroup(mask, tg, cpu, cpu_group_start);
+	}
+
+=======
+	if (cache_property == THREAD_GROUP_SHARE_L1)
+=======
+	if (cache_property == THREAD_GROUP_SHARE_L1) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		mask = &per_cpu(thread_group_l1_cache_map, cpu);
+		update_mask_from_threadgroup(mask, tg, cpu, cpu_group_start);
+	}
+	else if (cache_property == THREAD_GROUP_SHARE_L2_L3) {
+		mask = &per_cpu(thread_group_l2_cache_map, cpu);
+		update_mask_from_threadgroup(mask, tg, cpu, cpu_group_start);
+		mask = &per_cpu(thread_group_l3_cache_map, cpu);
+		update_mask_from_threadgroup(mask, tg, cpu, cpu_group_start);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
 
 	return 0;
 }
@@ -1020,14 +1126,34 @@ static int __init init_big_cores(void)
 	has_big_cores = true;
 
 	for_each_possible_cpu(cpu) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		int err = init_thread_group_cache_map(cpu, THREAD_GROUP_SHARE_L2_L3);
+=======
 		int err = init_thread_group_cache_map(cpu, THREAD_GROUP_SHARE_L2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int err = init_thread_group_cache_map(cpu, THREAD_GROUP_SHARE_L2_L3);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (err)
 			return err;
 	}
 
 	thread_group_shares_l2 = true;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	thread_group_shares_l3 = true;
+	pr_debug("L2/L3 cache only shared by the threads in the small core\n");
+
+=======
 	pr_debug("L2 cache only shared by the threads in the small core\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	thread_group_shares_l3 = true;
+	pr_debug("L2/L3 cache only shared by the threads in the small core\n");
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1085,7 +1211,15 @@ void __init smp_prepare_cpus(unsigned int max_cpus)
 	}
 
 	if (cpu_to_chip_id(boot_cpuid) != -1) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		int idx = DIV_ROUND_UP(num_possible_cpus(), threads_per_core);
+=======
 		int idx = num_possible_cpus() / threads_per_core;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		int idx = DIV_ROUND_UP(num_possible_cpus(), threads_per_core);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * All threads of a core will all belong to the same core,
@@ -1376,7 +1510,15 @@ static bool update_mask_by_l2(int cpu, cpumask_var_t *mask)
 	l2_cache = cpu_to_l2cache(cpu);
 	if (!l2_cache || !*mask) {
 		/* Assume only core siblings share cache with this CPU */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		for_each_cpu(i, cpu_sibling_mask(cpu))
+=======
 		for_each_cpu(i, submask_fn(cpu))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		for_each_cpu(i, cpu_sibling_mask(cpu))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			set_cpus_related(cpu, i, cpu_l2_cache_mask);
 
 		return false;
@@ -1418,6 +1560,16 @@ static void remove_cpu_from_masks(int cpu)
 	struct cpumask *(*mask_fn)(int) = cpu_sibling_mask;
 	int i;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unmap_cpu_from_node(cpu);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unmap_cpu_from_node(cpu);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (shared_caches)
 		mask_fn = cpu_l2_cache_mask;
 
@@ -1502,7 +1654,19 @@ static void add_cpu_to_masks(int cpu)
 	 * This CPU will not be in the online mask yet so we need to manually
 	 * add it to it's own thread sibling mask.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	map_cpu_to_node(cpu, cpu_to_node(cpu));
 	cpumask_set_cpu(cpu, cpu_sibling_mask(cpu));
+	cpumask_set_cpu(cpu, cpu_core_mask(cpu));
+=======
+	cpumask_set_cpu(cpu, cpu_sibling_mask(cpu));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	map_cpu_to_node(cpu, cpu_to_node(cpu));
+	cpumask_set_cpu(cpu, cpu_sibling_mask(cpu));
+	cpumask_set_cpu(cpu, cpu_core_mask(cpu));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = first_thread; i < first_thread + threads_per_core; i++)
 		if (cpu_online(i))
@@ -1520,11 +1684,17 @@ static void add_cpu_to_masks(int cpu)
 	if (chip_id_lookup_table && ret)
 		chip_id = cpu_to_chip_id(cpu);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (chip_id == -1) {
 		cpumask_copy(per_cpu(cpu_core_map, cpu), cpu_cpu_mask(cpu));
 		goto out;
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (shared_caches)
 		submask_fn = cpu_l2_cache_mask;
 
@@ -1534,6 +1704,19 @@ static void add_cpu_to_masks(int cpu)
 	/* Skip all CPUs already part of current CPU core mask */
 	cpumask_andnot(mask, cpu_online_mask, cpu_core_mask(cpu));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* If chip_id is -1; limit the cpu_core_mask to within DIE*/
+	if (chip_id == -1)
+		cpumask_and(mask, mask, cpu_cpu_mask(cpu));
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_cpu(i, mask) {
 		if (chip_id == cpu_to_chip_id(i)) {
 			or_cpumasks_related(cpu, i, submask_fn, cpu_core_mask);
@@ -1543,7 +1726,13 @@ static void add_cpu_to_masks(int cpu)
 		}
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 out:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free_cpumask_var(mask);
 }
 

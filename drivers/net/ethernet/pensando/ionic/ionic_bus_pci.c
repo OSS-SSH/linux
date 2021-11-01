@@ -165,10 +165,24 @@ static int ionic_vf_alloc(struct ionic *ionic, int num_vfs)
 			goto out;
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ionic->num_vfs++;
+		/* ignore failures from older FW, we just won't get stats */
+		(void)ionic_set_vf_config(ionic, i, IONIC_VF_ATTR_STATSADDR,
+					  (u8 *)&v->stats_pa);
+=======
 		/* ignore failures from older FW, we just won't get stats */
 		(void)ionic_set_vf_config(ionic, i, IONIC_VF_ATTR_STATSADDR,
 					  (u8 *)&v->stats_pa);
 		ionic->num_vfs++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ionic->num_vfs++;
+		/* ignore failures from older FW, we just won't get stats */
+		(void)ionic_set_vf_config(ionic, i, IONIC_VF_ATTR_STATSADDR,
+					  (u8 *)&v->stats_pa);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 out:
@@ -373,9 +387,15 @@ static void ionic_remove(struct pci_dev *pdev)
 {
 	struct ionic *ionic = pci_get_drvdata(pdev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (!ionic)
 		return;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	del_timer_sync(&ionic->watchdog_timer);
 
 	if (ionic->lif) {

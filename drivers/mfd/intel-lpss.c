@@ -301,7 +301,17 @@ static int intel_lpss_register_clock_divider(struct intel_lpss *lpss,
 
 	snprintf(name, sizeof(name), "%s-div", devname);
 	tmp = clk_register_fractional_divider(NULL, name, __clk_get_name(tmp),
+<<<<<<< HEAD
+<<<<<<< HEAD
+					      CLK_FRAC_DIVIDER_POWER_OF_TWO_PS,
+					      lpss->priv, 1, 15, 16, 15, 0,
+=======
 					      0, lpss->priv, 1, 15, 16, 15, 0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					      CLK_FRAC_DIVIDER_POWER_OF_TWO_PS,
+					      lpss->priv, 1, 15, 16, 15, 0,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					      NULL);
 	if (IS_ERR(tmp))
 		return PTR_ERR(tmp);

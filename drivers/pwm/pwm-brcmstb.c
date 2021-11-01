@@ -282,12 +282,27 @@ out_clk:
 static int brcmstb_pwm_remove(struct platform_device *pdev)
 {
 	struct brcmstb_pwm *p = platform_get_drvdata(pdev);
-	int ret;
+<<<<<<< HEAD
+<<<<<<< HEAD
 
-	ret = pwmchip_remove(&p->chip);
+	pwmchip_remove(&p->chip);
 	clk_disable_unprepare(p->clk);
 
+	return 0;
+=======
+	int ret;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	pwmchip_remove(&p->chip);
+	clk_disable_unprepare(p->clk);
+
+<<<<<<< HEAD
 	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP

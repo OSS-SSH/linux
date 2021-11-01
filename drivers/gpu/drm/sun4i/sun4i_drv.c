@@ -97,10 +97,20 @@ static int sun4i_drv_bind(struct device *dev)
 	if (ret)
 		goto cleanup_mode_config;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Remove early framebuffers (ie. simplefb) */
+	ret = drm_aperture_remove_framebuffers(false, &sun4i_drv_driver);
+=======
 	drm->irq_enabled = true;
 
 	/* Remove early framebuffers (ie. simplefb) */
 	ret = drm_aperture_remove_framebuffers(false, "sun4i-drm-fb");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Remove early framebuffers (ie. simplefb) */
+	ret = drm_aperture_remove_framebuffers(false, &sun4i_drv_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto cleanup_mode_config;
 

@@ -686,6 +686,24 @@ static int stusb160x_probe(struct i2c_client *client)
 		return -ENODEV;
 
 	/*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	 * This fwnode has a "compatible" property, but is never populated as a
+	 * struct device. Instead we simply parse it to read the properties.
+	 * This it breaks fw_devlink=on. To maintain backward compatibility
+	 * with existing DT files, we work around this by deleting any
+	 * fwnode_links to/from this fwnode.
+	 */
+	fw_devlink_purge_absent_suppliers(fwnode);
+
+	/*
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * When both VDD and VSYS power supplies are present, the low power
 	 * supply VSYS is selected when VSYS voltage is above 3.1 V.
 	 * Otherwise VDD is selected.
@@ -739,10 +757,16 @@ static int stusb160x_probe(struct i2c_client *client)
 	typec_set_pwr_opmode(chip->port, chip->pwr_opmode);
 
 	if (client->irq) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		ret = stusb160x_irq_init(chip, client->irq);
 		if (ret)
 			goto port_unregister;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		chip->role_sw = fwnode_usb_role_switch_get(fwnode);
 		if (IS_ERR(chip->role_sw)) {
 			ret = PTR_ERR(chip->role_sw);
@@ -752,6 +776,19 @@ static int stusb160x_probe(struct i2c_client *client)
 					ret);
 			goto port_unregister;
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+		ret = stusb160x_irq_init(chip, client->irq);
+		if (ret)
+			goto role_sw_put;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		/*
 		 * If Source or Dual power role, need to enable VDD supply
@@ -775,6 +812,18 @@ static int stusb160x_probe(struct i2c_client *client)
 
 	return 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+role_sw_put:
+	if (chip->role_sw)
+		usb_role_switch_put(chip->role_sw);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+role_sw_put:
+	if (chip->role_sw)
+		usb_role_switch_put(chip->role_sw);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 port_unregister:
 	typec_unregister_port(chip->port);
 all_reg_disable:

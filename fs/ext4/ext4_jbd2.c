@@ -218,9 +218,25 @@ static void ext4_check_bdev_write_error(struct super_block *sb)
 }
 
 int __ext4_journal_get_write_access(const char *where, unsigned int line,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				    handle_t *handle, struct super_block *sb,
+				    struct buffer_head *bh,
+				    enum ext4_journal_trigger_type trigger_type)
+{
+	int err;
+=======
 				    handle_t *handle, struct buffer_head *bh)
 {
 	int err = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    handle_t *handle, struct super_block *sb,
+				    struct buffer_head *bh,
+				    enum ext4_journal_trigger_type trigger_type)
+{
+	int err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	might_sleep();
 
@@ -229,11 +245,41 @@ int __ext4_journal_get_write_access(const char *where, unsigned int line,
 
 	if (ext4_handle_valid(handle)) {
 		err = jbd2_journal_get_write_access(handle, bh);
-		if (err)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (err) {
 			ext4_journal_abort_handle(where, line, __func__, bh,
 						  handle, err);
+			return err;
+		}
 	}
+	if (trigger_type == EXT4_JTR_NONE || !ext4_has_metadata_csum(sb))
+		return 0;
+	BUG_ON(trigger_type >= EXT4_JOURNAL_TRIGGER_COUNT);
+	jbd2_journal_set_triggers(bh,
+		&EXT4_SB(sb)->s_journal_triggers[trigger_type].tr_triggers);
+	return 0;
+=======
+		if (err)
+=======
+		if (err) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			ext4_journal_abort_handle(where, line, __func__, bh,
+						  handle, err);
+			return err;
+		}
+	}
+<<<<<<< HEAD
 	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (trigger_type == EXT4_JTR_NONE || !ext4_has_metadata_csum(sb))
+		return 0;
+	BUG_ON(trigger_type >= EXT4_JOURNAL_TRIGGER_COUNT);
+	jbd2_journal_set_triggers(bh,
+		&EXT4_SB(sb)->s_journal_triggers[trigger_type].tr_triggers);
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -244,9 +290,15 @@ int __ext4_journal_get_write_access(const char *where, unsigned int line,
  * "bh" may be NULL: a metadata block may have been freed from memory
  * but there may still be a record of it in the journal, and that record
  * still needs to be revoked.
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  *
  * If the handle isn't valid we're not journaling, but we still need to
  * call into ext4_journal_revoke() to put the buffer head.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int __ext4_forget(const char *where, unsigned int line, handle_t *handle,
 		  int is_metadata, struct inode *inode,
@@ -304,17 +356,59 @@ int __ext4_forget(const char *where, unsigned int line, handle_t *handle,
 }
 
 int __ext4_journal_get_create_access(const char *where, unsigned int line,
-				handle_t *handle, struct buffer_head *bh)
+<<<<<<< HEAD
+<<<<<<< HEAD
+				handle_t *handle, struct super_block *sb,
+				struct buffer_head *bh,
+				enum ext4_journal_trigger_type trigger_type)
 {
-	int err = 0;
+	int err;
 
-	if (ext4_handle_valid(handle)) {
-		err = jbd2_journal_get_create_access(handle, bh);
-		if (err)
-			ext4_journal_abort_handle(where, line, __func__,
-						  bh, handle, err);
+	if (!ext4_handle_valid(handle))
+		return 0;
+
+	err = jbd2_journal_get_create_access(handle, bh);
+	if (err) {
+		ext4_journal_abort_handle(where, line, __func__, bh, handle,
+					  err);
+		return err;
 	}
+	if (trigger_type == EXT4_JTR_NONE || !ext4_has_metadata_csum(sb))
+		return 0;
+	BUG_ON(trigger_type >= EXT4_JOURNAL_TRIGGER_COUNT);
+	jbd2_journal_set_triggers(bh,
+		&EXT4_SB(sb)->s_journal_triggers[trigger_type].tr_triggers);
+	return 0;
+=======
+				handle_t *handle, struct buffer_head *bh)
+=======
+				handle_t *handle, struct super_block *sb,
+				struct buffer_head *bh,
+				enum ext4_journal_trigger_type trigger_type)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	int err;
+
+	if (!ext4_handle_valid(handle))
+		return 0;
+
+	err = jbd2_journal_get_create_access(handle, bh);
+	if (err) {
+		ext4_journal_abort_handle(where, line, __func__, bh, handle,
+					  err);
+		return err;
+	}
+<<<<<<< HEAD
 	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (trigger_type == EXT4_JTR_NONE || !ext4_has_metadata_csum(sb))
+		return 0;
+	BUG_ON(trigger_type >= EXT4_JOURNAL_TRIGGER_COUNT);
+	jbd2_journal_set_triggers(bh,
+		&EXT4_SB(sb)->s_journal_triggers[trigger_type].tr_triggers);
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int __ext4_handle_dirty_metadata(const char *where, unsigned int line,

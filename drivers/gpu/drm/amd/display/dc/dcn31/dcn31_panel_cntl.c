@@ -109,7 +109,15 @@ bool dcn31_is_panel_backlight_on(struct panel_cntl *panel_cntl)
 	union dmub_rb_cmd cmd;
 
 	if (!dcn31_query_backlight_info(panel_cntl, &cmd))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return false;
+=======
 		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return cmd.panel_cntl.data.is_backlight_on;
 }
@@ -119,7 +127,15 @@ bool dcn31_is_panel_powered_on(struct panel_cntl *panel_cntl)
 	union dmub_rb_cmd cmd;
 
 	if (!dcn31_query_backlight_info(panel_cntl, &cmd))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return false;
+=======
 		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return cmd.panel_cntl.data.is_powered_on;
 }

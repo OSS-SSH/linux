@@ -13,6 +13,14 @@ static int hclgevf_resp_to_errno(u16 resp_code)
 	return resp_code ? -resp_code : 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define HCLGEVF_MBX_MATCH_ID_START	1
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define HCLGEVF_MBX_MATCH_ID_START	1
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void hclgevf_reset_mbx_resp_status(struct hclgevf_dev *hdev)
 {
 	/* this function should be called with mbx_resp.mbx_mutex held
@@ -21,6 +29,19 @@ static void hclgevf_reset_mbx_resp_status(struct hclgevf_dev *hdev)
 	hdev->mbx_resp.received_resp  = false;
 	hdev->mbx_resp.origin_mbx_msg = 0;
 	hdev->mbx_resp.resp_status    = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	hdev->mbx_resp.match_id++;
+	/* Update match_id and ensure the value of match_id is not zero */
+	if (hdev->mbx_resp.match_id == 0)
+		hdev->mbx_resp.match_id = HCLGEVF_MBX_MATCH_ID_START;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memset(hdev->mbx_resp.additional_info, 0, HCLGE_MBX_MAX_RESP_DATA_SIZE);
 }
 
@@ -115,6 +136,14 @@ int hclgevf_send_mbx_msg(struct hclgevf_dev *hdev,
 	if (need_resp) {
 		mutex_lock(&hdev->mbx_resp.mbx_mutex);
 		hclgevf_reset_mbx_resp_status(hdev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		req->match_id = hdev->mbx_resp.match_id;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		req->match_id = hdev->mbx_resp.match_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		status = hclgevf_cmd_send(&hdev->hw, &desc, 1);
 		if (status) {
 			dev_err(&hdev->pdev->dev,
@@ -149,18 +178,86 @@ static bool hclgevf_cmd_crq_empty(struct hclgevf_hw *hw)
 	return tail == hw->cmq.crq.next_to_use;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void hclgevf_handle_mbx_response(struct hclgevf_dev *hdev,
+					struct hclge_mbx_pf_to_vf_cmd *req)
+{
+	struct hclgevf_mbx_resp_status *resp = &hdev->mbx_resp;
+
+	if (resp->received_resp)
+		dev_warn(&hdev->pdev->dev,
+			 "VF mbx resp flag not clear(%u)\n",
+			 req->msg.vf_mbx_msg_code);
+
+	resp->origin_mbx_msg =
+			(req->msg.vf_mbx_msg_code << 16);
+	resp->origin_mbx_msg |= req->msg.vf_mbx_msg_subcode;
+	resp->resp_status =
+		hclgevf_resp_to_errno(req->msg.resp_status);
+	memcpy(resp->additional_info, req->msg.resp_data,
+	       HCLGE_MBX_MAX_RESP_DATA_SIZE * sizeof(u8));
+	if (req->match_id) {
+		/* If match_id is not zero, it means PF support match_id.
+		 * if the match_id is right, VF get the right response, or
+		 * ignore the response. and driver will clear hdev->mbx_resp
+		 * when send next message which need response.
+		 */
+		if (req->match_id == resp->match_id)
+			resp->received_resp = true;
+	} else {
+		resp->received_resp = true;
+	}
+}
+
+static void hclgevf_handle_mbx_msg(struct hclgevf_dev *hdev,
+				   struct hclge_mbx_pf_to_vf_cmd *req)
+{
+	/* we will drop the async msg if we find ARQ as full
+	 * and continue with next message
+	 */
+	if (atomic_read(&hdev->arq.count) >=
+	    HCLGE_MBX_MAX_ARQ_MSG_NUM) {
+		dev_warn(&hdev->pdev->dev,
+			 "Async Q full, dropping msg(%u)\n",
+			 req->msg.code);
+		return;
+	}
+
+	/* tail the async message in arq */
+	memcpy(hdev->arq.msg_q[hdev->arq.tail], &req->msg,
+	       HCLGE_MBX_MAX_ARQ_MSG_SIZE * sizeof(u16));
+	hclge_mbx_tail_ptr_move_arq(hdev->arq);
+	atomic_inc(&hdev->arq.count);
+
+	hclgevf_mbx_task_schedule(hdev);
+}
+
+<<<<<<< HEAD
 void hclgevf_mbx_handler(struct hclgevf_dev *hdev)
 {
-	struct hclgevf_mbx_resp_status *resp;
 	struct hclge_mbx_pf_to_vf_cmd *req;
 	struct hclgevf_cmq_ring *crq;
 	struct hclgevf_desc *desc;
-	u16 *msg_q;
 	u16 flag;
-	u8 *temp;
-	int i;
 
+=======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+void hclgevf_mbx_handler(struct hclgevf_dev *hdev)
+{
+	struct hclge_mbx_pf_to_vf_cmd *req;
+	struct hclgevf_cmq_ring *crq;
+	struct hclgevf_desc *desc;
+	u16 flag;
+
+<<<<<<< HEAD
 	resp = &hdev->mbx_resp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	crq = &hdev->hw.cmq.crq;
 
 	while (!hclgevf_cmd_crq_empty(&hdev->hw)) {
@@ -194,6 +291,10 @@ void hclgevf_mbx_handler(struct hclgevf_dev *hdev)
 		 */
 		switch (req->msg.code) {
 		case HCLGE_MBX_PF_VF_RESP:
+<<<<<<< HEAD
+<<<<<<< HEAD
+			hclgevf_handle_mbx_response(hdev, req);
+=======
 			if (resp->received_resp)
 				dev_warn(&hdev->pdev->dev,
 					 "VF mbx resp flag not clear(%u)\n",
@@ -211,12 +312,20 @@ void hclgevf_mbx_handler(struct hclgevf_dev *hdev)
 				resp->additional_info[i] = *temp;
 				temp++;
 			}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			hclgevf_handle_mbx_response(hdev, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		case HCLGE_MBX_LINK_STAT_CHANGE:
 		case HCLGE_MBX_ASSERTING_RESET:
 		case HCLGE_MBX_LINK_STAT_MODE:
 		case HCLGE_MBX_PUSH_VLAN_INFO:
 		case HCLGE_MBX_PUSH_PROMISC_INFO:
+<<<<<<< HEAD
+<<<<<<< HEAD
+			hclgevf_handle_mbx_msg(hdev, req);
+=======
 			/* set this mbx event as pending. This is required as we
 			 * might loose interrupt event when mbx task is busy
 			 * handling. This shall be cleared when mbx task just
@@ -244,6 +353,10 @@ void hclgevf_mbx_handler(struct hclgevf_dev *hdev)
 
 			hclgevf_mbx_task_schedule(hdev);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			hclgevf_handle_mbx_msg(hdev, req);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		default:
 			dev_err(&hdev->pdev->dev,
@@ -279,11 +392,17 @@ void hclgevf_mbx_async_handler(struct hclgevf_dev *hdev)
 	u8 flag;
 	u8 idx;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* we can safely clear it now as we are at start of the async message
 	 * processing
 	 */
 	hdev->mbx_event_pending = false;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tail = hdev->arq.tail;
 
 	/* process all the async queue messages */
@@ -304,8 +423,18 @@ void hclgevf_mbx_async_handler(struct hclgevf_dev *hdev)
 			flag = (u8)msg_q[5];
 
 			/* update upper layer with new link link status */
+<<<<<<< HEAD
+<<<<<<< HEAD
+			hclgevf_update_speed_duplex(hdev, speed, duplex);
+			hclgevf_update_link_status(hdev, link_status);
+=======
 			hclgevf_update_link_status(hdev, link_status);
 			hclgevf_update_speed_duplex(hdev, speed, duplex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			hclgevf_update_speed_duplex(hdev, speed, duplex);
+			hclgevf_update_link_status(hdev, link_status);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (flag & HCLGE_MBX_PUSH_LINK_STATUS_EN)
 				set_bit(HCLGEVF_STATE_PF_PUSH_LINK_STATUS,

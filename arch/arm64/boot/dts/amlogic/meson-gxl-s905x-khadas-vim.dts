@@ -218,6 +218,16 @@
 };
 
 &sd_emmc_a {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	max-frequency = <100000000>;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	max-frequency = <100000000>;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	brcmf: wifi@1 {
 		reg = <1>;
 		compatible = "brcm,bcm4329-fmac";

@@ -154,7 +154,15 @@
 
 			fm1mac3: ethernet@e4000 {
 				phy-handle = <&sgmii_aqr_phy3>;
+<<<<<<< HEAD
+<<<<<<< HEAD
+				phy-connection-type = "2500base-x";
+=======
 				phy-connection-type = "sgmii-2500";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				phy-connection-type = "2500base-x";
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				sleep = <&rcpm 0x20000000>;
 			};
 

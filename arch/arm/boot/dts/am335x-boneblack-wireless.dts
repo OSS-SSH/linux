@@ -7,6 +7,14 @@
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
 #include "am335x-boneblack-common.dtsi"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "am335x-boneblack-hdmi.dtsi"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "am335x-boneblack-hdmi.dtsi"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <dt-bindings/interrupt-controller/irq.h>
 
 / {
@@ -62,7 +70,15 @@
 	};
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+&mac_sw {
+=======
 &mac {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+&mac_sw {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = "disabled";
 };
 

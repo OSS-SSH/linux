@@ -8,12 +8,30 @@
 #include <string.h>
 #include "kvm_util.h"
 #include "processor.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "apic.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "apic.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define VCPU_ID 0
 
 #define DR6_BD		(1 << 13)
 #define DR7_GD		(1 << 13)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define IRQ_VECTOR 0xAA
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IRQ_VECTOR 0xAA
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* For testing data access debug BP */
 uint32_t guest_value;
 
@@ -21,6 +39,20 @@ extern unsigned char sw_bp, hw_bp, write_data, ss_start, bd_start;
 
 static void guest_code(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* Create a pending interrupt on current vCPU */
+	x2apic_enable();
+	x2apic_write_reg(APIC_ICR, APIC_DEST_SELF | APIC_INT_ASSERT |
+			 APIC_DM_FIXED | IRQ_VECTOR);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Software BP tests.
 	 *
@@ -38,12 +70,39 @@ static void guest_code(void)
 		     "mov %%rax,%0;\n\t write_data:"
 		     : "=m" (guest_value) : : "rax");
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * Single step test, covers 2 basic instructions and 2 emulated
+	 *
+	 * Enable interrupts during the single stepping to see that
+	 * pending interrupt we raised is not handled due to KVM_GUESTDBG_BLOCKIRQ
+	 */
+<<<<<<< HEAD
+	asm volatile("ss_start: "
+		     "sti\n\t"
+=======
 	/* Single step test, covers 2 basic instructions and 2 emulated */
 	asm volatile("ss_start: "
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	asm volatile("ss_start: "
+		     "sti\n\t"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     "xor %%eax,%%eax\n\t"
 		     "cpuid\n\t"
 		     "movl $0x1a0,%%ecx\n\t"
 		     "rdmsr\n\t"
+<<<<<<< HEAD
+<<<<<<< HEAD
+		     "cli\n\t"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		     "cli\n\t"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		     : : : "eax", "ebx", "ecx", "edx");
 
 	/* DR6.BD test */
@@ -72,11 +131,29 @@ int main(void)
 	uint64_t cmd;
 	int i;
 	/* Instruction lengths starting at ss_start */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ss_size[6] = {
+		1,		/* sti*/
+=======
 	int ss_size[4] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ss_size[6] = {
+		1,		/* sti*/
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		2,		/* xor */
 		2,		/* cpuid */
 		5,		/* mov */
 		2,		/* rdmsr */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		1,		/* cli */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		1,		/* cli */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	if (!kvm_check_cap(KVM_CAP_SET_GUEST_DEBUG)) {
@@ -154,7 +231,17 @@ int main(void)
 	for (i = 0; i < (sizeof(ss_size) / sizeof(ss_size[0])); i++) {
 		target_rip += ss_size[i];
 		CLEAR_DEBUG();
+<<<<<<< HEAD
+<<<<<<< HEAD
+		debug.control = KVM_GUESTDBG_ENABLE | KVM_GUESTDBG_SINGLESTEP |
+				KVM_GUESTDBG_BLOCKIRQ;
+=======
 		debug.control = KVM_GUESTDBG_ENABLE | KVM_GUESTDBG_SINGLESTEP;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		debug.control = KVM_GUESTDBG_ENABLE | KVM_GUESTDBG_SINGLESTEP |
+				KVM_GUESTDBG_BLOCKIRQ;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		debug.arch.debugreg[7] = 0x00000400;
 		APPLY_DEBUG();
 		vcpu_run(vm, VCPU_ID);

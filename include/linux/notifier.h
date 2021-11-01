@@ -168,8 +168,14 @@ extern int raw_notifier_call_chain(struct raw_notifier_head *nh,
 extern int srcu_notifier_call_chain(struct srcu_notifier_head *nh,
 		unsigned long val, void *v);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 extern int atomic_notifier_call_chain_robust(struct atomic_notifier_head *nh,
 		unsigned long val_up, unsigned long val_down, void *v);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern int blocking_notifier_call_chain_robust(struct blocking_notifier_head *nh,
 		unsigned long val_up, unsigned long val_down, void *v);
 extern int raw_notifier_call_chain_robust(struct raw_notifier_head *nh,

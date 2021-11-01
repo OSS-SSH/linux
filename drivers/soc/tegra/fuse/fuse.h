@@ -34,6 +34,16 @@ struct tegra_fuse_soc {
 	unsigned int num_lookups;
 
 	const struct attribute_group *soc_attr_group;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	bool clk_suspend_on;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	bool clk_suspend_on;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct tegra_fuse {

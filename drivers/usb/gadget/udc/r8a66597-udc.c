@@ -1250,7 +1250,15 @@ static void set_feature(struct r8a66597 *r8a66597, struct usb_ctrlrequest *ctrl)
 			do {
 				tmp = r8a66597_read(r8a66597, INTSTS0) & CTSQ;
 				udelay(1);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			} while (tmp != CS_IDST && timeout-- > 0);
+=======
 			} while (tmp != CS_IDST || timeout-- > 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			} while (tmp != CS_IDST && timeout-- > 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (tmp == CS_IDST)
 				r8a66597_bset(r8a66597,

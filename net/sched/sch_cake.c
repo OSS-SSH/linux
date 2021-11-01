@@ -720,7 +720,15 @@ static u32 cake_hash(struct cake_tin_data *q, const struct sk_buff *skb,
 skip_hash:
 	if (flow_override)
 		flow_hash = flow_override - 1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	else if (use_skbhash && (flow_mode & CAKE_FLOW_FLOWS))
+=======
 	else if (use_skbhash)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (use_skbhash && (flow_mode & CAKE_FLOW_FLOWS))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		flow_hash = skb->hash;
 	if (host_override) {
 		dsthost_hash = host_override - 1;
@@ -1665,7 +1673,15 @@ static u32 cake_classify(struct Qdisc *sch, struct cake_tin_data **t,
 		goto hash;
 
 	*qerr = NET_XMIT_SUCCESS | __NET_XMIT_BYPASS;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	result = tcf_classify(skb, NULL, filter, &res, false);
+=======
 	result = tcf_classify(skb, filter, &res, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	result = tcf_classify(skb, NULL, filter, &res, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (result >= 0) {
 #ifdef CONFIG_NET_CLS_ACT

@@ -114,7 +114,19 @@ struct dmub_srv;
 	DMUB_SR(DMCUB_TIMER_CURRENT) \
 	DMUB_SR(DMCUB_INST_FETCH_FAULT_ADDR) \
 	DMUB_SR(DMCUB_UNDEFINED_ADDRESS_FAULT_ADDR) \
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DMUB_SR(DMCUB_DATA_WRITE_FAULT_ADDR) \
+	DMUB_SR(DMCUB_INTERRUPT_ENABLE) \
+	DMUB_SR(DMCUB_INTERRUPT_ACK)
+=======
 	DMUB_SR(DMCUB_DATA_WRITE_FAULT_ADDR)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DMUB_SR(DMCUB_DATA_WRITE_FAULT_ADDR) \
+	DMUB_SR(DMCUB_INTERRUPT_ENABLE) \
+	DMUB_SR(DMCUB_INTERRUPT_ACK)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define DMUB_DCN31_FIELDS() \
 	DMUB_SF(DMCUB_CNTL, DMCUB_ENABLE) \
@@ -147,7 +159,19 @@ struct dmub_srv;
 	DMUB_SF(MMHUBBUB_SOFT_RESET, DMUIF_SOFT_RESET) \
 	DMUB_SF(DCN_VM_FB_LOCATION_BASE, FB_BASE) \
 	DMUB_SF(DCN_VM_FB_OFFSET, FB_OFFSET) \
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DMUB_SF(DMCUB_INBOX0_WPTR, DMCUB_INBOX0_WPTR) \
+	DMUB_SF(DMCUB_INTERRUPT_ENABLE, DMCUB_GPINT_IH_INT_EN) \
+	DMUB_SF(DMCUB_INTERRUPT_ACK, DMCUB_GPINT_IH_INT_ACK)
+=======
 	DMUB_SF(DMCUB_INBOX0_WPTR, DMCUB_INBOX0_WPTR)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DMUB_SF(DMCUB_INBOX0_WPTR, DMCUB_INBOX0_WPTR) \
+	DMUB_SF(DMCUB_INTERRUPT_ENABLE, DMCUB_GPINT_IH_INT_EN) \
+	DMUB_SF(DMCUB_INTERRUPT_ACK, DMCUB_GPINT_IH_INT_ACK)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct dmub_srv_dcn31_reg_offset {
 #define DMUB_SR(reg) uint32_t reg;
@@ -222,6 +246,16 @@ bool dmub_dcn31_is_gpint_acked(struct dmub_srv *dmub,
 
 uint32_t dmub_dcn31_get_gpint_response(struct dmub_srv *dmub);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+uint32_t dmub_dcn31_get_gpint_dataout(struct dmub_srv *dmub);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+uint32_t dmub_dcn31_get_gpint_dataout(struct dmub_srv *dmub);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void dmub_dcn31_enable_dmub_boot_options(struct dmub_srv *dmub, const struct dmub_srv_hw_params *params);
 
 void dmub_dcn31_skip_dmub_panel_power_sequence(struct dmub_srv *dmub, bool skip);

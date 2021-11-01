@@ -1,3 +1,16 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+.. raw:: latex
+
+	\kerneldocCJKoff
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 NOTE:
 This is a version of Documentation/process/howto.rst translated into korean
 This document is maintained by Minchan Kim <minchan@kernel.org>
@@ -11,6 +24,19 @@ try to update the original English file first.
 
 ----------------------------------
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+.. raw:: latex
+
+	\kerneldocCJKon
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 이 문서는
 Documentation/process/howto.rst
 의 한글 번역입니다.

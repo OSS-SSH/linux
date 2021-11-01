@@ -103,7 +103,15 @@ static struct bpf_prog *ptp_insns __read_mostly;
 
 unsigned int ptp_classify_raw(const struct sk_buff *skb)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return bpf_prog_run(ptp_insns, skb);
+=======
 	return BPF_PROG_RUN(ptp_insns, skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return bpf_prog_run(ptp_insns, skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(ptp_classify_raw);
 

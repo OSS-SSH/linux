@@ -754,7 +754,15 @@ static int init_pfhwdev(struct hinic_pfhwdev *pfhwdev)
 		return err;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = hinic_devlink_register(hwdev->devlink_dev);
+=======
 	err = hinic_devlink_register(hwdev->devlink_dev, &pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = hinic_devlink_register(hwdev->devlink_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		dev_err(&hwif->pdev->dev, "Failed to register devlink\n");
 		hinic_pf_to_mgmt_free(&pfhwdev->pf_to_mgmt);

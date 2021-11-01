@@ -55,9 +55,19 @@ int ib_umem_dmabuf_map_pages(struct ib_umem_dmabuf *umem_dmabuf)
 		cur += sg_dma_len(sg);
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	umem_dmabuf->umem.sgt_append.sgt.sgl = umem_dmabuf->first_sg;
+	umem_dmabuf->umem.sgt_append.sgt.nents = nmap;
+=======
 	umem_dmabuf->umem.sg_head.sgl = umem_dmabuf->first_sg;
 	umem_dmabuf->umem.sg_head.nents = nmap;
 	umem_dmabuf->umem.nmap = nmap;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	umem_dmabuf->umem.sgt_append.sgt.sgl = umem_dmabuf->first_sg;
+	umem_dmabuf->umem.sgt_append.sgt.nents = nmap;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	umem_dmabuf->sgt = sgt;
 
 wait_fence:

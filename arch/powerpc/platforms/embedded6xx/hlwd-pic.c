@@ -108,7 +108,13 @@ static const struct irq_domain_ops hlwd_irq_domain_ops = {
 static unsigned int __hlwd_pic_get_irq(struct irq_domain *h)
 {
 	void __iomem *io_base = h->host_data;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int irq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 irq_status;
 
 	irq_status = in_be32(io_base + HW_BROADWAY_ICR) &
@@ -116,23 +122,51 @@ static unsigned int __hlwd_pic_get_irq(struct irq_domain *h)
 	if (irq_status == 0)
 		return 0;	/* no more IRQs pending */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return __ffs(irq_status);
+=======
 	irq = __ffs(irq_status);
 	return irq_linear_revmap(h, irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return __ffs(irq_status);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void hlwd_pic_irq_cascade(struct irq_desc *desc)
 {
 	struct irq_chip *chip = irq_desc_get_chip(desc);
 	struct irq_domain *irq_domain = irq_desc_get_handler_data(desc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int hwirq;
+=======
 	unsigned int virq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int hwirq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	raw_spin_lock(&desc->lock);
 	chip->irq_mask(&desc->irq_data); /* IRQ_LEVEL */
 	raw_spin_unlock(&desc->lock);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	hwirq = __hlwd_pic_get_irq(irq_domain);
+	if (hwirq)
+		generic_handle_domain_irq(irq_domain, hwirq);
+=======
 	virq = __hlwd_pic_get_irq(irq_domain);
 	if (virq)
 		generic_handle_irq(virq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	hwirq = __hlwd_pic_get_irq(irq_domain);
+	if (hwirq)
+		generic_handle_domain_irq(irq_domain, hwirq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		pr_err("spurious interrupt!\n");
 
@@ -190,7 +224,17 @@ static struct irq_domain *hlwd_pic_init(struct device_node *np)
 
 unsigned int hlwd_pic_get_irq(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int hwirq = __hlwd_pic_get_irq(hlwd_irq_host);
+	return hwirq ? irq_linear_revmap(hlwd_irq_host, hwirq) : 0;
+=======
 	return __hlwd_pic_get_irq(hlwd_irq_host);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int hwirq = __hlwd_pic_get_irq(hlwd_irq_host);
+	return hwirq ? irq_linear_revmap(hlwd_irq_host, hwirq) : 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

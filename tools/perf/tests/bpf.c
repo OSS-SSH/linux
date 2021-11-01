@@ -1,6 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0
 #include <errno.h>
 #include <stdio.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <stdlib.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <stdlib.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <sys/epoll.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -191,7 +199,15 @@ static int do_test(struct bpf_object *obj, int (*func)(void),
 	}
 
 	if (count != expect * evlist->core.nr_entries) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pr_debug("BPF filter result incorrect, expected %d, got %d samples\n", expect * evlist->core.nr_entries, count);
+=======
 		pr_debug("BPF filter result incorrect, expected %d, got %d samples\n", expect, count);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_debug("BPF filter result incorrect, expected %d, got %d samples\n", expect * evlist->core.nr_entries, count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_delete_evlist;
 	}
 
@@ -276,6 +292,14 @@ static int __test__bpf(int idx)
 	}
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	free(obj_buf);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	free(obj_buf);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bpf__clear();
 	return ret;
 }

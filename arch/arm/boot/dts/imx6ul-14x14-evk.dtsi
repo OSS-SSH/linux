@@ -292,7 +292,15 @@
 		compatible = "micron,n25q256a", "jedec,spi-nor";
 		spi-max-frequency = <29000000>;
 		spi-rx-bus-width = <4>;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		spi-tx-bus-width = <1>;
+=======
 		spi-tx-bus-width = <4>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		spi-tx-bus-width = <1>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg = <0>;
 	};
 };

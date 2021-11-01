@@ -104,7 +104,13 @@ static const char * const icc_path_names[] = {"qup-core", "qup-config",
 #define GENI_OUTPUT_CTRL		0x24
 #define GENI_CGC_CTRL			0x28
 #define GENI_CLK_CTRL_RO		0x60
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define GENI_IF_DISABLE_RO		0x64
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define GENI_FW_S_REVISION_RO		0x6c
 #define SE_GENI_BYTE_GRAN		0x254
 #define SE_GENI_TX_PACKING_CFG0		0x260
@@ -322,6 +328,39 @@ static void geni_se_select_dma_mode(struct geni_se *se)
 		writel_relaxed(val, se->base + SE_GENI_DMA_MODE_EN);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void geni_se_select_gpi_mode(struct geni_se *se)
+{
+	u32 val;
+
+	geni_se_irq_clear(se);
+
+	writel(0, se->base + SE_IRQ_EN);
+
+	val = readl(se->base + SE_GENI_S_IRQ_EN);
+	val &= ~S_CMD_DONE_EN;
+	writel(val, se->base + SE_GENI_S_IRQ_EN);
+
+	val = readl(se->base + SE_GENI_M_IRQ_EN);
+	val &= ~(M_CMD_DONE_EN | M_TX_FIFO_WATERMARK_EN |
+		 M_RX_FIFO_WATERMARK_EN | M_RX_FIFO_LAST_EN);
+	writel(val, se->base + SE_GENI_M_IRQ_EN);
+
+	writel(GENI_DMA_MODE_EN, se->base + SE_GENI_DMA_MODE_EN);
+
+	val = readl(se->base + SE_GSI_EVENT_EN);
+	val |= (DMA_RX_EVENT_EN | DMA_TX_EVENT_EN | GENI_M_EVENT_EN | GENI_S_EVENT_EN);
+	writel(val, se->base + SE_GSI_EVENT_EN);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * geni_se_select_mode() - Select the serial engine transfer mode
  * @se:		Pointer to the concerned serial engine.
@@ -329,7 +368,15 @@ static void geni_se_select_dma_mode(struct geni_se *se)
  */
 void geni_se_select_mode(struct geni_se *se, enum geni_se_xfer_mode mode)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(mode != GENI_SE_FIFO && mode != GENI_SE_DMA && mode != GENI_GPI_DMA);
+=======
 	WARN_ON(mode != GENI_SE_FIFO && mode != GENI_SE_DMA);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(mode != GENI_SE_FIFO && mode != GENI_SE_DMA && mode != GENI_GPI_DMA);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (mode) {
 	case GENI_SE_FIFO:
@@ -338,6 +385,18 @@ void geni_se_select_mode(struct geni_se *se, enum geni_se_xfer_mode mode)
 	case GENI_SE_DMA:
 		geni_se_select_dma_mode(se);
 		break;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case GENI_GPI_DMA:
+		geni_se_select_gpi_mode(se);
+		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case GENI_GPI_DMA:
+		geni_se_select_gpi_mode(se);
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case GENI_SE_INVALID:
 	default:
 		break;

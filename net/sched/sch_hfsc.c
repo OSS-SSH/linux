@@ -1130,7 +1130,15 @@ hfsc_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
 	*qerr = NET_XMIT_SUCCESS | __NET_XMIT_BYPASS;
 	head = &q->root;
 	tcf = rcu_dereference_bh(q->root.filter_list);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	while (tcf && (result = tcf_classify(skb, NULL, tcf, &res, false)) >= 0) {
+=======
 	while (tcf && (result = tcf_classify(skb, tcf, &res, false)) >= 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	while (tcf && (result = tcf_classify(skb, NULL, tcf, &res, false)) >= 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_NET_CLS_ACT
 		switch (result) {
 		case TC_ACT_QUEUED:

@@ -1,6 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB
 /* Copyright (c) 2020 Mellanox Technologies Ltd. */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/iova.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/iova.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/mlx5/driver.h>
 #include "mlx5_vdpa.h"
 
@@ -128,6 +136,25 @@ int mlx5_vdpa_create_rqt(struct mlx5_vdpa_dev *mvdev, void *in, int inlen, u32 *
 	return err;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int mlx5_vdpa_modify_rqt(struct mlx5_vdpa_dev *mvdev, void *in, int inlen, u32 rqtn)
+{
+	u32 out[MLX5_ST_SZ_DW(create_rqt_out)] = {};
+
+	MLX5_SET(modify_rqt_in, in, uid, mvdev->res.uid);
+	MLX5_SET(modify_rqt_in, in, rqtn, rqtn);
+	MLX5_SET(modify_rqt_in, in, opcode, MLX5_CMD_OP_MODIFY_RQT);
+	return mlx5_cmd_exec(mvdev->mdev, in, inlen, out, sizeof(out));
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void mlx5_vdpa_destroy_rqt(struct mlx5_vdpa_dev *mvdev, u32 rqtn)
 {
 	u32 in[MLX5_ST_SZ_DW(destroy_rqt_in)] = {};
@@ -221,6 +248,31 @@ int mlx5_vdpa_destroy_mkey(struct mlx5_vdpa_dev *mvdev, struct mlx5_core_mkey *m
 	return mlx5_cmd_exec_in(mvdev->mdev, destroy_mkey, in);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int init_ctrl_vq(struct mlx5_vdpa_dev *mvdev)
+{
+	mvdev->cvq.iotlb = vhost_iotlb_alloc(0, 0);
+	if (!mvdev->cvq.iotlb)
+		return -ENOMEM;
+
+	vringh_set_iotlb(&mvdev->cvq.vring, mvdev->cvq.iotlb, &mvdev->cvq.iommu_lock);
+
+	return 0;
+}
+
+static void cleanup_ctrl_vq(struct mlx5_vdpa_dev *mvdev)
+{
+	vhost_iotlb_free(mvdev->cvq.iotlb);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int mlx5_vdpa_alloc_resources(struct mlx5_vdpa_dev *mvdev)
 {
 	u64 offset = MLX5_CAP64_DEV_VDPA_EMULATION(mvdev->mdev, doorbell_bar_offset);
@@ -260,10 +312,34 @@ int mlx5_vdpa_alloc_resources(struct mlx5_vdpa_dev *mvdev)
 		err = -ENOMEM;
 		goto err_key;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	err = init_ctrl_vq(mvdev);
+	if (err)
+		goto err_ctrl;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	res->valid = true;
 
 	return 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+err_ctrl:
+	iounmap(res->kick_addr);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_ctrl:
+	iounmap(res->kick_addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_key:
 	dealloc_pd(mvdev, res->pdn, res->uid);
 err_pd:
@@ -282,6 +358,14 @@ void mlx5_vdpa_free_resources(struct mlx5_vdpa_dev *mvdev)
 	if (!res->valid)
 		return;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cleanup_ctrl_vq(mvdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cleanup_ctrl_vq(mvdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iounmap(res->kick_addr);
 	res->kick_addr = NULL;
 	dealloc_pd(mvdev, res->pdn, res->uid);

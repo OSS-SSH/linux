@@ -37,7 +37,15 @@ obj-$(CONFIG_CLK_RCAR_CPG_LIB)		+= rcar-cpg-lib.o
 obj-$(CONFIG_CLK_RCAR_GEN2_CPG)		+= rcar-gen2-cpg.o
 obj-$(CONFIG_CLK_RCAR_GEN3_CPG)		+= rcar-gen3-cpg.o
 obj-$(CONFIG_CLK_RCAR_USB2_CLOCK_SEL)	+= rcar-usb2-clock-sel.o
+<<<<<<< HEAD
+<<<<<<< HEAD
+obj-$(CONFIG_CLK_RZG2L)			+= rzg2l-cpg.o
+=======
 obj-$(CONFIG_CLK_RZG2L)			+= renesas-rzg2l-cpg.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_CLK_RZG2L)			+= rzg2l-cpg.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 # Generic
 obj-$(CONFIG_CLK_RENESAS_CPG_MSSR)	+= renesas-cpg-mssr.o

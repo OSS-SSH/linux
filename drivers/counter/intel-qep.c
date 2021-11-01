@@ -8,7 +8,13 @@
  * Author: Jarkko Nikula <jarkko.nikula@linux.intel.com>
  * Author: Raymond Tan <raymond.tan@intel.com>
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <linux/bitops.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/counter.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
@@ -127,8 +133,18 @@ static int intel_qep_count_read(struct counter_device *counter,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const enum counter_function intel_qep_count_functions[] = {
+	COUNTER_FUNCTION_QUADRATURE_X4,
+=======
 static const enum counter_count_function intel_qep_count_functions[] = {
 	COUNTER_COUNT_FUNCTION_QUADRATURE_X4,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const enum counter_function intel_qep_count_functions[] = {
+	COUNTER_FUNCTION_QUADRATURE_X4,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int intel_qep_function_get(struct counter_device *counter,
@@ -320,7 +336,15 @@ static ssize_t spike_filter_ns_write(struct counter_device *counter,
 	}
 
 	if (length > INTEL_QEPFLT_MAX_COUNT(length))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return -ERANGE;
+=======
 		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -ERANGE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&qep->lock);
 	if (qep->enabled) {

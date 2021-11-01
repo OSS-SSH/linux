@@ -11,7 +11,13 @@
 
 #undef DEBUG
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/kernel.h>
 #include <linux/string.h>
 #include <linux/init.h>
@@ -640,7 +646,19 @@ static void __init early_reserve_mem(void)
 	}
 #endif /* CONFIG_BLK_DEV_INITRD */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!IS_ENABLED(CONFIG_PPC32))
+		return;
+
+=======
 #ifdef CONFIG_PPC32
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!IS_ENABLED(CONFIG_PPC32))
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* 
 	 * Handle the case where we might be booting from an old kexec
 	 * image that setup the mem_rsvmap as pairs of 32-bit values
@@ -661,7 +679,13 @@ static void __init early_reserve_mem(void)
 		}
 		return;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PPC_TRANSACTIONAL_MEM

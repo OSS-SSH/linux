@@ -33,6 +33,14 @@ struct dm_irq_params {
 	struct mod_vrr_params vrr_params;
 	struct dc_stream_state *stream;
 	int active_planes;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bool allow_psr_entry;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool allow_psr_entry;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mod_freesync_config freesync_config;
 
 #ifdef CONFIG_DEBUG_FS

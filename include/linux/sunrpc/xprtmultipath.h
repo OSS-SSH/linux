@@ -18,6 +18,14 @@ struct rpc_xprt_switch {
 	unsigned int		xps_id;
 	unsigned int		xps_nxprts;
 	unsigned int		xps_nactive;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int		xps_nunique_destaddr_xprts;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int		xps_nunique_destaddr_xprts;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic_long_t		xps_queuelen;
 	struct list_head	xps_xprt_list;
 

@@ -24,7 +24,15 @@
 	#define pt_element_t u64
 	#define guest_walker guest_walker64
 	#define FNAME(name) paging##64_##name
+<<<<<<< HEAD
+<<<<<<< HEAD
+	#define PT_BASE_ADDR_MASK GUEST_PT64_BASE_ADDR_MASK
+=======
 	#define PT_BASE_ADDR_MASK PT64_BASE_ADDR_MASK
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define PT_BASE_ADDR_MASK GUEST_PT64_BASE_ADDR_MASK
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	#define PT_LVL_ADDR_MASK(lvl) PT64_LVL_ADDR_MASK(lvl)
 	#define PT_LVL_OFFSET_MASK(lvl) PT64_LVL_OFFSET_MASK(lvl)
 	#define PT_INDEX(addr, level) PT64_INDEX(addr, level)
@@ -57,7 +65,15 @@
 	#define pt_element_t u64
 	#define guest_walker guest_walkerEPT
 	#define FNAME(name) ept_##name
+<<<<<<< HEAD
+<<<<<<< HEAD
+	#define PT_BASE_ADDR_MASK GUEST_PT64_BASE_ADDR_MASK
+=======
 	#define PT_BASE_ADDR_MASK PT64_BASE_ADDR_MASK
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	#define PT_BASE_ADDR_MASK GUEST_PT64_BASE_ADDR_MASK
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	#define PT_LVL_ADDR_MASK(lvl) PT64_LVL_ADDR_MASK(lvl)
 	#define PT_LVL_OFFSET_MASK(lvl) PT64_LVL_OFFSET_MASK(lvl)
 	#define PT_INDEX(addr, level) PT64_INDEX(addr, level)
@@ -707,8 +723,38 @@ static int FNAME(fetch)(struct kvm_vcpu *vcpu, gpa_t addr,
 		if (!is_shadow_present_pte(*it.sptep)) {
 			table_gfn = gw->table_gfn[it.level - 2];
 			access = gw->pt_access[it.level - 2];
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			sp = kvm_mmu_get_page(vcpu, table_gfn, addr,
+					      it.level-1, false, access);
+			/*
+			 * We must synchronize the pagetable before linking it
+			 * because the guest doesn't need to flush tlb when
+			 * the gpte is changed from non-present to present.
+			 * Otherwise, the guest may use the wrong mapping.
+			 *
+			 * For PG_LEVEL_4K, kvm_mmu_get_page() has already
+			 * synchronized it transiently via kvm_sync_page().
+			 *
+			 * For higher level pagetable, we synchronize it via
+			 * the slower mmu_sync_children().  If it needs to
+			 * break, some progress has been made; return
+			 * RET_PF_RETRY and retry on the next #PF.
+			 * KVM_REQ_MMU_SYNC is not necessary but it
+			 * expedites the process.
+			 */
+			if (sp->unsync_children &&
+			    mmu_sync_children(vcpu, sp, false))
+				return RET_PF_RETRY;
+<<<<<<< HEAD
+=======
 			sp = kvm_mmu_get_page(vcpu, table_gfn, addr, it.level-1,
 					      false, access);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		/*
@@ -881,9 +927,21 @@ static int FNAME(page_fault)(struct kvm_vcpu *vcpu, gpa_t addr, u32 error_code,
 	mmu_seq = vcpu->kvm->mmu_notifier_seq;
 	smp_rmb();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (kvm_faultin_pfn(vcpu, prefault, walker.gfn, addr, &pfn, &hva,
+			 write_fault, &map_writable, &r))
+		return r;
+=======
 	if (try_async_pf(vcpu, prefault, walker.gfn, addr, &pfn, &hva,
 			 write_fault, &map_writable))
 		return RET_PF_RETRY;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (kvm_faultin_pfn(vcpu, prefault, walker.gfn, addr, &pfn, &hva,
+			 write_fault, &map_writable, &r))
+		return r;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (handle_abnormal_pfn(vcpu, addr, walker.gfn, pfn, walker.pte_access, &r))
 		return r;
@@ -1047,6 +1105,9 @@ static gpa_t FNAME(gva_to_gpa_nested)(struct kvm_vcpu *vcpu, gpa_t vaddr,
  * Using the cached information from sp->gfns is safe because:
  * - The spte has a reference to the struct page, so the pfn for a given gfn
  *   can't change unless all sptes pointing to it are nuked first.
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  *
  * Note:
  *   We should flush all tlbs if spte is dropped even though guest is
@@ -1055,6 +1116,9 @@ static gpa_t FNAME(gva_to_gpa_nested)(struct kvm_vcpu *vcpu, gpa_t vaddr,
  *   used by guest then tlbs are not flushed, so guest is allowed to access the
  *   freed pages.
  *   And we increase kvm->tlbs_dirty to delay tlbs flush in this case.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static int FNAME(sync_page)(struct kvm_vcpu *vcpu, struct kvm_mmu_page *sp)
 {
@@ -1107,6 +1171,10 @@ static int FNAME(sync_page)(struct kvm_vcpu *vcpu, struct kvm_mmu_page *sp)
 			return 0;
 
 		if (FNAME(prefetch_invalid_gpte)(vcpu, sp, &sp->spt[i], gpte)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			set_spte_ret |= SET_SPTE_NEED_REMOTE_TLB_FLUSH;
+=======
 			/*
 			 * Update spte before increasing tlbs_dirty to make
 			 * sure no tlb flush is lost after spte is zapped; see
@@ -1114,6 +1182,10 @@ static int FNAME(sync_page)(struct kvm_vcpu *vcpu, struct kvm_mmu_page *sp)
 			 */
 			smp_wmb();
 			vcpu->kvm->tlbs_dirty++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			set_spte_ret |= SET_SPTE_NEED_REMOTE_TLB_FLUSH;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		}
 
@@ -1128,12 +1200,20 @@ static int FNAME(sync_page)(struct kvm_vcpu *vcpu, struct kvm_mmu_page *sp)
 
 		if (gfn != sp->gfns[i]) {
 			drop_spte(vcpu->kvm, &sp->spt[i]);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			set_spte_ret |= SET_SPTE_NEED_REMOTE_TLB_FLUSH;
+=======
 			/*
 			 * The same as above where we are doing
 			 * prefetch_invalid_gpte().
 			 */
 			smp_wmb();
 			vcpu->kvm->tlbs_dirty++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			set_spte_ret |= SET_SPTE_NEED_REMOTE_TLB_FLUSH;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		}
 

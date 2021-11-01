@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
+/*
+ * Copyright(c) 2016 Intel Corporation.
+=======
 /*
  * Copyright(c) 2016 Intel Corporation.
  *
@@ -43,6 +49,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
+/*
+ * Copyright(c) 2016 Intel Corporation.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/slab.h>
@@ -410,7 +422,15 @@ struct ib_mr *rvt_reg_user_mr(struct ib_pd *pd, u64 start, u64 length,
 	mr->mr.page_shift = PAGE_SHIFT;
 	m = 0;
 	n = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	for_each_sgtable_page (&umem->sgt_append.sgt, &sg_iter, 0) {
+=======
 	for_each_sg_page (umem->sg_head.sgl, &sg_iter, umem->nmap, 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for_each_sgtable_page (&umem->sgt_append.sgt, &sg_iter, 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		void *vaddr;
 
 		vaddr = page_address(sg_page_iter_page(&sg_iter));

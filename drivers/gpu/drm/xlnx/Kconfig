@@ -3,6 +3,16 @@ config DRM_ZYNQMP_DPSUB
 	depends on ARCH_ZYNQMP || COMPILE_TEST
 	depends on COMMON_CLK && DRM && OF
 	depends on DMADEVICES
+<<<<<<< HEAD
+<<<<<<< HEAD
+	depends on PHY_XILINX_ZYNQMP
+	depends on XILINX_ZYNQMP_DPDMA
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PHY_XILINX_ZYNQMP
+	depends on XILINX_ZYNQMP_DPDMA
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select DMA_ENGINE
 	select DRM_GEM_CMA_HELPER
 	select DRM_KMS_CMA_HELPER

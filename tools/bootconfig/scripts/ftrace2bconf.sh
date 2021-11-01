@@ -92,6 +92,19 @@ referred_vars() {
 	grep "^hist" $1/trigger | grep -o '$[a-zA-Z0-9]*'
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+event_is_enabled() { # enable-file
+	test -f $1 & grep -q "1" $1
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 per_event_options() { # event-dir
 	evdir=$1
 	# Check the special event which has no filter and no trigger
@@ -113,7 +126,19 @@ per_event_options() { # event-dir
 		emit_kv $PREFIX.event.$group.$event.actions += \'$action\'
 	done
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if [ $GROUP_ENABLED -eq 0 ] && event_is_enabled $evdir/enable; then
+		emit_kv $PREFIX.event.$group.$event.enable
+	fi
+=======
 	# enable is not checked; this is done by set_event in the instance.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if [ $GROUP_ENABLED -eq 0 ] && event_is_enabled $evdir/enable; then
+		emit_kv $PREFIX.event.$group.$event.enable
+	fi
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	val=`cat $evdir/filter`
 	if [ "$val" != "none" ]; then
 		emit_kv $PREFIX.event.$group.$event.filter = "$val"
@@ -137,8 +162,30 @@ event_options() {
 		kprobe_event_options
 		synth_event_options
 	fi
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ALL_ENABLED=0
+	if event_is_enabled $INSTANCE/events/enable; then
+		emit_kv $PREFIX.event.enable
+		ALL_ENABLED=1
+	fi
 	for group in `ls $INSTANCE/events/` ; do
 		[ ! -d $INSTANCE/events/$group ] && continue
+		GROUP_ENABLED=$ALL_ENABLED
+		if [ $ALL_ENABLED -eq 0 ] && \
+		   event_is_enabled $INSTANCE/events/$group/enable ;then
+			emit_kv $PREFIX.event.$group.enable
+			GROUP_ENABLED=1
+		fi
+<<<<<<< HEAD
+=======
+	for group in `ls $INSTANCE/events/` ; do
+		[ ! -d $INSTANCE/events/$group ] && continue
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for event in `ls $INSTANCE/events/$group/` ;do
 			[ ! -d $INSTANCE/events/$group/$event ] && continue
 			per_event_options $INSTANCE/events/$group/$event
@@ -222,6 +269,13 @@ instance_options() { # [instance-name]
 		emit_kv $PREFIX.cpumask = $val
 	fi
 	val=`cat $INSTANCE/tracing_on`
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if [ "$val" = "0" ]; then
+		emit_kv $PREFIX.tracing_on = 0
+	fi
+
+=======
 	if [ `echo $val | sed -e s/f//g`x != x ]; then
 		emit_kv $PREFIX.tracing_on = $val
 	fi
@@ -231,6 +285,13 @@ instance_options() { # [instance-name]
 		val="$val, $i"
 	done
 	[ "$val" ] && emit_kv $PREFIX.events = "${val#,}"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if [ "$val" = "0" ]; then
+		emit_kv $PREFIX.tracing_on = 0
+	fi
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	val=`cat $INSTANCE/current_tracer`
 	[ $val != nop ] && emit_kv $PREFIX.tracer = $val
 	if grep -qv "^#" $INSTANCE/set_ftrace_filter $INSTANCE/set_ftrace_notrace; then

@@ -90,6 +90,19 @@ static char *speakup_default_msgs[MSG_LAST_INDEX] = {
 	[MSG_COLOR_YELLOW] = "yellow",
 	[MSG_COLOR_WHITE] = "white",
 	[MSG_COLOR_GREY] = "grey",
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	[MSG_COLOR_BRIGHTBLUE] = "bright blue",
+	[MSG_COLOR_BRIGHTGREEN] = "bright green",
+	[MSG_COLOR_BRIGHTCYAN] = "bright cyan",
+	[MSG_COLOR_BRIGHTRED] = "bright red",
+	[MSG_COLOR_BRIGHTMAGENTA] = "bright magenta",
+	[MSG_COLOR_BRIGHTYELLOW] = "bright yellow",
+	[MSG_COLOR_BRIGHTWHITE] = "bright white",
+<<<<<<< HEAD
+=======
 	[MSG_COLOR_BRIGHTBLUE] "bright blue",
 	[MSG_COLOR_BRIGHTGREEN] "bright green",
 	[MSG_COLOR_BRIGHTCYAN] "bright cyan",
@@ -97,6 +110,9 @@ static char *speakup_default_msgs[MSG_LAST_INDEX] = {
 	[MSG_COLOR_BRIGHTMAGENTA] "bright magenta",
 	[MSG_COLOR_BRIGHTYELLOW] "bright yellow",
 	[MSG_COLOR_BRIGHTWHITE] "bright white",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Names of key states. */
 	[MSG_STATE_DOUBLE] = "double",

@@ -253,13 +253,27 @@ static int pwm_mediatek_probe(struct platform_device *pdev)
 		}
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	platform_set_drvdata(pdev, pc);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pc->chip.dev = &pdev->dev;
 	pc->chip.ops = &pwm_mediatek_ops;
 	pc->chip.npwm = pc->soc->num_pwms;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = devm_pwmchip_add(&pdev->dev, &pc->chip);
+=======
 	ret = pwmchip_add(&pc->chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = devm_pwmchip_add(&pdev->dev, &pc->chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0) {
 		dev_err(&pdev->dev, "pwmchip_add() failed: %d\n", ret);
 		return ret;
@@ -268,6 +282,9 @@ static int pwm_mediatek_probe(struct platform_device *pdev)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static int pwm_mediatek_remove(struct platform_device *pdev)
 {
 	struct pwm_mediatek_chip *pc = platform_get_drvdata(pdev);
@@ -275,6 +292,9 @@ static int pwm_mediatek_remove(struct platform_device *pdev)
 	return pwmchip_remove(&pc->chip);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct pwm_mediatek_of_data mt2712_pwm_data = {
 	.num_pwms = 8,
 	.pwm45_fixup = false,
@@ -335,7 +355,13 @@ static struct platform_driver pwm_mediatek_driver = {
 		.of_match_table = pwm_mediatek_of_match,
 	},
 	.probe = pwm_mediatek_probe,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.remove = pwm_mediatek_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 module_platform_driver(pwm_mediatek_driver);
 

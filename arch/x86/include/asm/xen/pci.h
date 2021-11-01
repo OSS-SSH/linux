@@ -14,16 +14,41 @@ static inline int pci_xen_hvm_init(void)
 	return -1;
 }
 #endif
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifdef CONFIG_XEN_PV_DOM0
+int __init pci_xen_initial_domain(void);
+=======
 #if defined(CONFIG_XEN_DOM0)
 int __init pci_xen_initial_domain(void);
 int xen_find_device_domain_owner(struct pci_dev *dev);
 int xen_register_device_domain_owner(struct pci_dev *dev, uint16_t domain);
 int xen_unregister_device_domain_owner(struct pci_dev *dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_XEN_PV_DOM0
+int __init pci_xen_initial_domain(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 static inline int __init pci_xen_initial_domain(void)
 {
 	return -1;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#endif
+#ifdef CONFIG_XEN_DOM0
+int xen_find_device_domain_owner(struct pci_dev *dev);
+int xen_register_device_domain_owner(struct pci_dev *dev, uint16_t domain);
+int xen_unregister_device_domain_owner(struct pci_dev *dev);
+#else
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int xen_find_device_domain_owner(struct pci_dev *dev)
 {
 	return -1;

@@ -1389,8 +1389,18 @@ static void sbp_sense_mangle(struct sbp_target_request *req)
 		(sense[0] & 0x80) |		/* valid */
 		((sense[2] & 0xe0) >> 1) |	/* mark, eom, ili */
 		(sense[2] & 0x0f);		/* sense_key */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	status[2] = 0;				/* XXX sense_code */
+	status[3] = 0;				/* XXX sense_qualifier */
+=======
 	status[2] = se_cmd->scsi_asc;		/* sense_code */
 	status[3] = se_cmd->scsi_ascq;		/* sense_qualifier */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	status[2] = 0;				/* XXX sense_code */
+	status[3] = 0;				/* XXX sense_qualifier */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* information */
 	status[4] = sense[3];

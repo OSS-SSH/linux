@@ -18,7 +18,13 @@
 #include <drm/drm_crtc_helper.h>
 #include <drm/drm_drv.h>
 #include <drm/drm_gem_cma_helper.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_probe_helper.h>
 #include <drm/drm_vblank.h>
 
@@ -130,7 +136,13 @@ DEFINE_DRM_GEM_CMA_FOPS(shmob_drm_fops);
 
 static const struct drm_driver shmob_drm_driver = {
 	.driver_features	= DRIVER_GEM | DRIVER_MODESET,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.irq_handler		= shmob_drm_irq,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DRM_GEM_CMA_DRIVER_OPS,
 	.fops			= &shmob_drm_fops,
 	.name			= "shmob-drm",
@@ -183,7 +195,15 @@ static int shmob_drm_remove(struct platform_device *pdev)
 
 	drm_dev_unregister(ddev);
 	drm_kms_helper_poll_fini(ddev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	free_irq(sdev->irq, ddev);
+=======
 	drm_irq_uninstall(ddev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	free_irq(sdev->irq, ddev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	drm_dev_put(ddev);
 
 	return 0;
@@ -258,7 +278,23 @@ static int shmob_drm_probe(struct platform_device *pdev)
 		goto err_modeset_cleanup;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = platform_get_irq(pdev, 0);
+	if (ret < 0)
+		goto err_modeset_cleanup;
+	sdev->irq = ret;
+
+	ret = request_irq(sdev->irq, shmob_drm_irq, 0, ddev->driver->name,
+			  ddev);
+<<<<<<< HEAD
+=======
 	ret = drm_irq_install(ddev, platform_get_irq(pdev, 0));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0) {
 		dev_err(&pdev->dev, "failed to install IRQ handler\n");
 		goto err_modeset_cleanup;
@@ -275,7 +311,15 @@ static int shmob_drm_probe(struct platform_device *pdev)
 	return 0;
 
 err_irq_uninstall:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	free_irq(sdev->irq, ddev);
+=======
 	drm_irq_uninstall(ddev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	free_irq(sdev->irq, ddev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_modeset_cleanup:
 	drm_kms_helper_poll_fini(ddev);
 err_free_drm_dev:

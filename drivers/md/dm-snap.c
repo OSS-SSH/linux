@@ -2390,6 +2390,25 @@ static void snapshot_status(struct dm_target *ti, status_type_t type,
 				DMEMIT(" discard_passdown_origin");
 		}
 		break;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	case STATUSTYPE_IMA:
+		DMEMIT_TARGET_NAME_VERSION(ti->type);
+		DMEMIT(",snap_origin_name=%s", snap->origin->name);
+		DMEMIT(",snap_cow_name=%s", snap->cow->name);
+		DMEMIT(",snap_valid=%c", snap->valid ? 'y' : 'n');
+		DMEMIT(",snap_merge_failed=%c", snap->merge_failed ? 'y' : 'n');
+		DMEMIT(",snapshot_overflowed=%c", snap->snapshot_overflowed ? 'y' : 'n');
+		DMEMIT(";");
+		break;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -2734,6 +2753,18 @@ static void origin_status(struct dm_target *ti, status_type_t type,
 	case STATUSTYPE_TABLE:
 		snprintf(result, maxlen, "%s", o->dev->name);
 		break;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case STATUSTYPE_IMA:
+		result[0] = '\0';
+		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case STATUSTYPE_IMA:
+		result[0] = '\0';
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

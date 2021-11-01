@@ -155,6 +155,14 @@ struct omap_sr {
 	struct voltagedomain		*voltdm;
 	struct dentry			*dbg_dir;
 	unsigned int			irq;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct clk			*fck;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct clk			*fck;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int				srid;
 	int				ip_type;
 	int				nvalue_count;
@@ -169,6 +177,14 @@ struct omap_sr {
 	u32				senp_mod;
 	u32				senn_mod;
 	void __iomem			*base;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long			enabled:1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long			enabled:1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**

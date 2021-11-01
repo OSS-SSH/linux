@@ -25,7 +25,19 @@ struct itimerspec64 {
 #define TIME64_MIN			(-TIME64_MAX - 1)
 
 #define KTIME_MAX			((s64)~((u64)1 << 63))
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define KTIME_MIN			(-KTIME_MAX - 1)
 #define KTIME_SEC_MAX			(KTIME_MAX / NSEC_PER_SEC)
+#define KTIME_SEC_MIN			(KTIME_MIN / NSEC_PER_SEC)
+=======
+#define KTIME_SEC_MAX			(KTIME_MAX / NSEC_PER_SEC)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define KTIME_MIN			(-KTIME_MAX - 1)
+#define KTIME_SEC_MAX			(KTIME_MAX / NSEC_PER_SEC)
+#define KTIME_SEC_MIN			(KTIME_MIN / NSEC_PER_SEC)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Limits for settimeofday():
@@ -124,10 +136,30 @@ static inline bool timespec64_valid_settod(const struct timespec64 *ts)
  */
 static inline s64 timespec64_to_ns(const struct timespec64 *ts)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Prevent multiplication overflow / underflow */
+	if (ts->tv_sec >= KTIME_SEC_MAX)
+		return KTIME_MAX;
+
+	if (ts->tv_sec <= KTIME_SEC_MIN)
+		return KTIME_MIN;
+
+=======
 	/* Prevent multiplication overflow */
 	if ((unsigned long long)ts->tv_sec >= KTIME_SEC_MAX)
 		return KTIME_MAX;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Prevent multiplication overflow / underflow */
+	if (ts->tv_sec >= KTIME_SEC_MAX)
+		return KTIME_MAX;
+
+	if (ts->tv_sec <= KTIME_SEC_MIN)
+		return KTIME_MIN;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ((s64) ts->tv_sec * NSEC_PER_SEC) + ts->tv_nsec;
 }
 

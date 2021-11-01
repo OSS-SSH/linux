@@ -357,7 +357,15 @@ struct tcf_proto_ops {
 	int			(*change)(struct net *net, struct sk_buff *,
 					struct tcf_proto*, unsigned long,
 					u32 handle, struct nlattr **,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					void **, u32,
+=======
 					void **, bool, bool,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					void **, u32,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					struct netlink_ext_ack *);
 	int			(*delete)(struct tcf_proto *tp, void *arg,
 					  bool *last, bool rtnl_held,

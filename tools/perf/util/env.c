@@ -10,6 +10,14 @@
 #include <sys/utsname.h>
 #include <stdlib.h>
 #include <string.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "strbuf.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "strbuf.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct perf_env perf_env;
 
@@ -186,10 +194,26 @@ void perf_env__exit(struct perf_env *env)
 	zfree(&env->cpuid);
 	zfree(&env->cmdline);
 	zfree(&env->cmdline_argv);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	zfree(&env->sibling_dies);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zfree(&env->sibling_dies);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	zfree(&env->sibling_cores);
 	zfree(&env->sibling_threads);
 	zfree(&env->pmu_mappings);
 	zfree(&env->cpu);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	zfree(&env->cpu_pmu_caps);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	zfree(&env->cpu_pmu_caps);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	zfree(&env->numa_map);
 
 	for (i = 0; i < env->nr_numa_nodes; i++)
@@ -217,13 +241,52 @@ void perf_env__exit(struct perf_env *env)
 	zfree(&env->hybrid_cpc_nodes);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void perf_env__init(struct perf_env *env)
+=======
 void perf_env__init(struct perf_env *env __maybe_unused)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void perf_env__init(struct perf_env *env)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 #ifdef HAVE_LIBBPF_SUPPORT
 	env->bpf_progs.infos = RB_ROOT;
 	env->bpf_progs.btfs = RB_ROOT;
 	init_rwsem(&env->bpf_progs.lock);
 #endif
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	env->kernel_is_64_bit = -1;
+}
+
+static void perf_env__init_kernel_mode(struct perf_env *env)
+{
+	const char *arch = perf_env__raw_arch(env);
+
+	if (!strncmp(arch, "x86_64", 6) || !strncmp(arch, "aarch64", 7) ||
+	    !strncmp(arch, "arm64", 5) || !strncmp(arch, "mips64", 6) ||
+	    !strncmp(arch, "parisc64", 8) || !strncmp(arch, "riscv64", 7) ||
+	    !strncmp(arch, "s390x", 5) || !strncmp(arch, "sparc64", 7))
+		env->kernel_is_64_bit = 1;
+	else
+		env->kernel_is_64_bit = 0;
+}
+
+int perf_env__kernel_is_64_bit(struct perf_env *env)
+{
+	if (env->kernel_is_64_bit == -1)
+		perf_env__init_kernel_mode(env);
+
+	return env->kernel_is_64_bit;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int perf_env__set_cmdline(struct perf_env *env, int argc, const char *argv[])
@@ -282,6 +345,54 @@ int perf_env__read_cpu_topology_map(struct perf_env *env)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int perf_env__read_pmu_mappings(struct perf_env *env)
+{
+	struct perf_pmu *pmu = NULL;
+	u32 pmu_num = 0;
+	struct strbuf sb;
+
+	while ((pmu = perf_pmu__scan(pmu))) {
+		if (!pmu->name)
+			continue;
+		pmu_num++;
+	}
+	if (!pmu_num) {
+		pr_debug("pmu mappings not available\n");
+		return -ENOENT;
+	}
+	env->nr_pmu_mappings = pmu_num;
+
+	if (strbuf_init(&sb, 128 * pmu_num) < 0)
+		return -ENOMEM;
+
+	while ((pmu = perf_pmu__scan(pmu))) {
+		if (!pmu->name)
+			continue;
+		if (strbuf_addf(&sb, "%u:%s", pmu->type, pmu->name) < 0)
+			goto error;
+		/* include a NULL character at the end */
+		if (strbuf_add(&sb, "", 1) < 0)
+			goto error;
+	}
+
+	env->pmu_mappings = strbuf_detach(&sb, NULL);
+
+	return 0;
+
+error:
+	strbuf_release(&sb);
+	return -1;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int perf_env__read_cpuid(struct perf_env *env)
 {
 	char cpuid[128];
@@ -347,7 +458,15 @@ static const char *normalize_arch(char *arch)
 		return "x86";
 	if (!strcmp(arch, "sun4u") || !strncmp(arch, "sparc", 5))
 		return "sparc";
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!strncmp(arch, "aarch64", 7) || !strncmp(arch, "arm64", 5))
+=======
 	if (!strcmp(arch, "aarch64") || !strcmp(arch, "arm64"))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!strncmp(arch, "aarch64", 7) || !strncmp(arch, "arm64", 5))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return "arm64";
 	if (!strncmp(arch, "arm", 3) || !strcmp(arch, "sa110"))
 		return "arm";
@@ -380,6 +499,53 @@ const char *perf_env__arch(struct perf_env *env)
 	return normalize_arch(arch_name);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+const char *perf_env__cpuid(struct perf_env *env)
+{
+	int status;
+
+	if (!env || !env->cpuid) { /* Assume local operation */
+		status = perf_env__read_cpuid(env);
+		if (status)
+			return NULL;
+	}
+
+	return env->cpuid;
+}
+
+int perf_env__nr_pmu_mappings(struct perf_env *env)
+{
+	int status;
+
+	if (!env || !env->nr_pmu_mappings) { /* Assume local operation */
+		status = perf_env__read_pmu_mappings(env);
+		if (status)
+			return 0;
+	}
+
+	return env->nr_pmu_mappings;
+}
+
+const char *perf_env__pmu_mappings(struct perf_env *env)
+{
+	int status;
+
+	if (!env || !env->pmu_mappings) { /* Assume local operation */
+		status = perf_env__read_pmu_mappings(env);
+		if (status)
+			return NULL;
+	}
+
+	return env->pmu_mappings;
+}
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int perf_env__numa_node(struct perf_env *env, int cpu)
 {

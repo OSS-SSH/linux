@@ -13,8 +13,14 @@
 
 #include <generated/utsrelease.h>
 #include <linux/string_helpers.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <linux/devfreq.h>
 #include <linux/devfreq_cooling.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/devcoredump.h>
 #include <linux/sched/task.h>
 
@@ -22,6 +28,9 @@
  * Power Management:
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static int msm_devfreq_target(struct device *dev, unsigned long *freq,
 		u32 flags)
 {
@@ -122,6 +131,9 @@ static void msm_devfreq_init(struct msm_gpu *gpu)
 	}
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int enable_pwrrail(struct msm_gpu *gpu)
 {
 	struct drm_device *dev = gpu->dev;
@@ -196,6 +208,9 @@ static int disable_axi(struct msm_gpu *gpu)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 void msm_gpu_resume_devfreq(struct msm_gpu *gpu)
 {
 	gpu->devfreq.busy_cycles = 0;
@@ -204,6 +219,9 @@ void msm_gpu_resume_devfreq(struct msm_gpu *gpu)
 	devfreq_resume_device(gpu->devfreq.devfreq);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int msm_gpu_pm_resume(struct msm_gpu *gpu)
 {
 	int ret;
@@ -223,7 +241,15 @@ int msm_gpu_pm_resume(struct msm_gpu *gpu)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msm_devfreq_resume(gpu);
+=======
 	msm_gpu_resume_devfreq(gpu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msm_devfreq_resume(gpu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	gpu->needs_hw_init = true;
 
@@ -237,7 +263,15 @@ int msm_gpu_pm_suspend(struct msm_gpu *gpu)
 	DBG("%s", gpu->name);
 	trace_msm_gpu_suspend(0);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msm_devfreq_suspend(gpu);
+=======
 	devfreq_suspend_device(gpu->devfreq.devfreq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msm_devfreq_suspend(gpu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = disable_axi(gpu);
 	if (ret)
@@ -278,16 +312,42 @@ static void update_fences(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
 		uint32_t fence)
 {
 	struct msm_gem_submit *submit;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long flags;
+
+	spin_lock_irqsave(&ring->submit_lock, flags);
+=======
 
 	spin_lock(&ring->submit_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long flags;
+
+	spin_lock_irqsave(&ring->submit_lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry(submit, &ring->submits, node) {
 		if (submit->seqno > fence)
 			break;
 
 		msm_update_fence(submit->ring->fctx,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			submit->hw_fence->seqno);
+		dma_fence_signal(submit->hw_fence);
+	}
+	spin_unlock_irqrestore(&ring->submit_lock, flags);
+=======
 			submit->fence->seqno);
 	}
 	spin_unlock(&ring->submit_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			submit->hw_fence->seqno);
+		dma_fence_signal(submit->hw_fence);
+	}
+	spin_unlock_irqrestore(&ring->submit_lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_DEV_COREDUMP
@@ -443,15 +503,36 @@ static struct msm_gem_submit *
 find_submit(struct msm_ringbuffer *ring, uint32_t fence)
 {
 	struct msm_gem_submit *submit;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long flags;
 
-	spin_lock(&ring->submit_lock);
+	spin_lock_irqsave(&ring->submit_lock, flags);
 	list_for_each_entry(submit, &ring->submits, node) {
 		if (submit->seqno == fence) {
-			spin_unlock(&ring->submit_lock);
+			spin_unlock_irqrestore(&ring->submit_lock, flags);
 			return submit;
 		}
 	}
+	spin_unlock_irqrestore(&ring->submit_lock, flags);
+=======
+=======
+	unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	spin_lock_irqsave(&ring->submit_lock, flags);
+	list_for_each_entry(submit, &ring->submits, node) {
+		if (submit->seqno == fence) {
+			spin_unlock_irqrestore(&ring->submit_lock, flags);
+			return submit;
+		}
+	}
+<<<<<<< HEAD
 	spin_unlock(&ring->submit_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock_irqrestore(&ring->submit_lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return NULL;
 }
@@ -487,10 +568,16 @@ static void recover_worker(struct kthread_work *work)
 			put_task_struct(task);
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		/* msm_rd_dump_submit() needs bo locked to dump: */
 		for (i = 0; i < submit->nr_bos; i++)
 			msm_gem_lock(&submit->bos[i].obj->base);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (comm && cmd) {
 			DRM_DEV_ERROR(dev->dev, "%s: offending task: %s (%s)\n",
 				gpu->name, comm, cmd);
@@ -500,9 +587,15 @@ static void recover_worker(struct kthread_work *work)
 		} else {
 			msm_rd_dump_submit(priv->hangrd, submit, NULL);
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 		for (i = 0; i < submit->nr_bos; i++)
 			msm_gem_unlock(&submit->bos[i].obj->base);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Record the crash state */
@@ -547,11 +640,28 @@ static void recover_worker(struct kthread_work *work)
 		 */
 		for (i = 0; i < gpu->nr_rings; i++) {
 			struct msm_ringbuffer *ring = gpu->rb[i];
+<<<<<<< HEAD
+<<<<<<< HEAD
+			unsigned long flags;
 
-			spin_lock(&ring->submit_lock);
+			spin_lock_irqsave(&ring->submit_lock, flags);
 			list_for_each_entry(submit, &ring->submits, node)
 				gpu->funcs->submit(gpu, submit);
+			spin_unlock_irqrestore(&ring->submit_lock, flags);
+=======
+=======
+			unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+			spin_lock_irqsave(&ring->submit_lock, flags);
+			list_for_each_entry(submit, &ring->submits, node)
+				gpu->funcs->submit(gpu, submit);
+<<<<<<< HEAD
 			spin_unlock(&ring->submit_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			spin_unlock_irqrestore(&ring->submit_lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -641,7 +751,15 @@ static void hangcheck_handler(struct timer_list *t)
 		hangcheck_timer_reset(gpu);
 
 	/* workaround for missing irq: */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msm_gpu_retire(gpu);
+=======
 	kthread_queue_work(gpu->worker, &gpu->retire_work);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msm_gpu_retire(gpu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -752,7 +870,15 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
 	int index = submit->seqno % MSM_GPU_SUBMIT_STATS_COUNT;
 	volatile struct msm_gpu_submit_stats *stats;
 	u64 elapsed, clock = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long flags;
+=======
 	int i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	stats = &ring->memptrs->stats[index];
 	/* Convert 19.2Mhz alwayson ticks to nanoseconds for elapsed time */
@@ -768,6 +894,10 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
 	trace_msm_gpu_submit_retired(submit, elapsed, clock,
 		stats->alwayson_start, stats->alwayson_end);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msm_submit_retire(submit);
+=======
 	for (i = 0; i < submit->nr_bos; i++) {
 		struct drm_gem_object *obj = &submit->bos[i].obj->base;
 
@@ -777,13 +907,45 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
 		msm_gem_unlock(obj);
 		drm_gem_object_put(obj);
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msm_submit_retire(submit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pm_runtime_mark_last_busy(&gpu->pdev->dev);
 	pm_runtime_put_autosuspend(&gpu->pdev->dev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	spin_lock_irqsave(&ring->submit_lock, flags);
+	list_del(&submit->node);
+	spin_unlock_irqrestore(&ring->submit_lock, flags);
+
+	/* Update devfreq on transition from active->idle: */
+	mutex_lock(&gpu->active_lock);
+	gpu->active_submits--;
+	WARN_ON(gpu->active_submits < 0);
+	if (!gpu->active_submits)
+		msm_devfreq_idle(gpu);
+	mutex_unlock(&gpu->active_lock);
+=======
 	spin_lock(&ring->submit_lock);
 	list_del(&submit->node);
 	spin_unlock(&ring->submit_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_irqsave(&ring->submit_lock, flags);
+	list_del(&submit->node);
+	spin_unlock_irqrestore(&ring->submit_lock, flags);
+
+	/* Update devfreq on transition from active->idle: */
+	mutex_lock(&gpu->active_lock);
+	gpu->active_submits--;
+	WARN_ON(gpu->active_submits < 0);
+	if (!gpu->active_submits)
+		msm_devfreq_idle(gpu);
+	mutex_unlock(&gpu->active_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	msm_gem_submit_put(submit);
 }
@@ -798,18 +960,43 @@ static void retire_submits(struct msm_gpu *gpu)
 
 		while (true) {
 			struct msm_gem_submit *submit = NULL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			unsigned long flags;
 
-			spin_lock(&ring->submit_lock);
+			spin_lock_irqsave(&ring->submit_lock, flags);
 			submit = list_first_entry_or_null(&ring->submits,
 					struct msm_gem_submit, node);
+			spin_unlock_irqrestore(&ring->submit_lock, flags);
+=======
+=======
+			unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+			spin_lock_irqsave(&ring->submit_lock, flags);
+			submit = list_first_entry_or_null(&ring->submits,
+					struct msm_gem_submit, node);
+<<<<<<< HEAD
 			spin_unlock(&ring->submit_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			spin_unlock_irqrestore(&ring->submit_lock, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			/*
 			 * If no submit, we are done.  If submit->fence hasn't
 			 * been signalled, then later submits are not signalled
 			 * either, so we are also done.
 			 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if (submit && dma_fence_is_signaled(submit->hw_fence)) {
+=======
 			if (submit && dma_fence_is_signaled(submit->fence)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (submit && dma_fence_is_signaled(submit->hw_fence)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				retire_submit(gpu, ring, submit);
 			} else {
 				break;
@@ -821,10 +1008,16 @@ static void retire_submits(struct msm_gpu *gpu)
 static void retire_worker(struct kthread_work *work)
 {
 	struct msm_gpu *gpu = container_of(work, struct msm_gpu, retire_work);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int i;
 
 	for (i = 0; i < gpu->nr_rings; i++)
 		update_fences(gpu, gpu->rb[i], gpu->rb[i]->memptrs->fence);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	retire_submits(gpu);
 }
@@ -832,6 +1025,20 @@ static void retire_worker(struct kthread_work *work)
 /* call from irq handler to schedule work to retire bo's */
 void msm_gpu_retire(struct msm_gpu *gpu)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	int i;
+
+	for (i = 0; i < gpu->nr_rings; i++)
+		update_fences(gpu, gpu->rb[i], gpu->rb[i]->memptrs->fence);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kthread_queue_work(gpu->worker, &gpu->retire_work);
 	update_sw_cntrs(gpu);
 }
@@ -842,7 +1049,15 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
 	struct drm_device *dev = gpu->dev;
 	struct msm_drm_private *priv = dev->dev_private;
 	struct msm_ringbuffer *ring = submit->ring;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long flags;
+=======
 	int i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	WARN_ON(!mutex_is_locked(&dev->struct_mutex));
 
@@ -856,6 +1071,9 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
 
 	update_sw_cntrs(gpu);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	for (i = 0; i < submit->nr_bos; i++) {
 		struct msm_gem_object *msm_obj = submit->bos[i].obj;
 		struct drm_gem_object *drm_obj = &msm_obj->base;
@@ -873,15 +1091,44 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
 		msm_gem_active_get(drm_obj, gpu);
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * ring->submits holds a ref to the submit, to deal with the case
 	 * that a submit completes before msm_ioctl_gem_submit() returns.
 	 */
 	msm_gem_submit_get(submit);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	spin_lock_irqsave(&ring->submit_lock, flags);
+	list_add_tail(&submit->node, &ring->submits);
+	spin_unlock_irqrestore(&ring->submit_lock, flags);
+
+	/* Update devfreq on transition from idle->active: */
+	mutex_lock(&gpu->active_lock);
+	if (!gpu->active_submits)
+		msm_devfreq_active(gpu);
+	gpu->active_submits++;
+	mutex_unlock(&gpu->active_lock);
+=======
 	spin_lock(&ring->submit_lock);
 	list_add_tail(&submit->node, &ring->submits);
 	spin_unlock(&ring->submit_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_irqsave(&ring->submit_lock, flags);
+	list_add_tail(&submit->node, &ring->submits);
+	spin_unlock_irqrestore(&ring->submit_lock, flags);
+
+	/* Update devfreq on transition from idle->active: */
+	mutex_lock(&gpu->active_lock);
+	if (!gpu->active_submits)
+		msm_devfreq_active(gpu);
+	gpu->active_submits++;
+	mutex_unlock(&gpu->active_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	gpu->funcs->submit(gpu, submit);
 	priv->lastctx = submit->queue->ctx;
@@ -968,6 +1215,14 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
 	sched_set_fifo_low(gpu->worker->task);
 
 	INIT_LIST_HEAD(&gpu->active_list);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mutex_init(&gpu->active_lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_init(&gpu->active_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kthread_init_work(&gpu->retire_work, retire_worker);
 	kthread_init_work(&gpu->recover_work, recover_worker);
 	kthread_init_work(&gpu->fault_work, fault_worker);
@@ -1078,7 +1333,15 @@ fail:
 		gpu->rb[i] = NULL;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msm_gem_kernel_put(gpu->memptrs_bo, gpu->aspace);
+=======
 	msm_gem_kernel_put(gpu->memptrs_bo, gpu->aspace, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msm_gem_kernel_put(gpu->memptrs_bo, gpu->aspace);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	platform_set_drvdata(pdev, NULL);
 	return ret;
@@ -1097,7 +1360,15 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
 		gpu->rb[i] = NULL;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msm_gem_kernel_put(gpu->memptrs_bo, gpu->aspace);
+=======
 	msm_gem_kernel_put(gpu->memptrs_bo, gpu->aspace, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msm_gem_kernel_put(gpu->memptrs_bo, gpu->aspace);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!IS_ERR_OR_NULL(gpu->aspace)) {
 		gpu->aspace->mmu->funcs->detach(gpu->aspace->mmu);
@@ -1108,5 +1379,13 @@ void msm_gpu_cleanup(struct msm_gpu *gpu)
 		kthread_destroy_worker(gpu->worker);
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msm_devfreq_cleanup(gpu);
+=======
 	devfreq_cooling_unregister(gpu->cooling);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msm_devfreq_cleanup(gpu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

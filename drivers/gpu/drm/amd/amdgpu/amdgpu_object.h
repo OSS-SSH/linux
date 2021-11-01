@@ -100,7 +100,13 @@ struct amdgpu_bo {
 	struct ttm_buffer_object	tbo;
 	struct ttm_bo_kmap_obj		kmap;
 	u64				flags;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	unsigned			prime_shared_count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* per VM structure for page tables and with virtual addresses */
 	struct amdgpu_vm_bo_base	*vm_bo;
 	/* Constant after initialization */
@@ -334,7 +340,15 @@ void amdgpu_bo_get_memory(struct amdgpu_bo *bo, uint64_t *vram_mem,
 void amdgpu_bo_add_to_shadow_list(struct amdgpu_bo_vm *vmbo);
 int amdgpu_bo_restore_shadow(struct amdgpu_bo *shadow,
 			     struct dma_fence **fence);
+<<<<<<< HEAD
+<<<<<<< HEAD
+uint32_t amdgpu_bo_get_preferred_domain(struct amdgpu_device *adev,
+=======
 uint32_t amdgpu_bo_get_preferred_pin_domain(struct amdgpu_device *adev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+uint32_t amdgpu_bo_get_preferred_domain(struct amdgpu_device *adev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    uint32_t domain);
 
 /*

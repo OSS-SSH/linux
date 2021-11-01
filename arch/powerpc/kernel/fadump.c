@@ -24,8 +24,18 @@
 #include <linux/slab.h>
 #include <linux/cma.h>
 #include <linux/hugetlb.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/debugfs.h>
+
+=======
 
 #include <asm/debugfs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/debugfs.h>
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/page.h>
 #include <asm/prom.h>
 #include <asm/fadump.h>
@@ -1557,7 +1567,15 @@ static void fadump_init_files(void)
 		return;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	debugfs_create_file("fadump_region", 0444, arch_debugfs_dir, NULL,
+=======
 	debugfs_create_file("fadump_region", 0444, powerpc_debugfs_root, NULL,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	debugfs_create_file("fadump_region", 0444, arch_debugfs_dir, NULL,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    &fadump_region_fops);
 
 	if (fw_dump.dump_active) {

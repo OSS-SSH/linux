@@ -324,6 +324,18 @@ static int __uac_clock_find_source(struct snd_usb_audio *chip,
 					      sources[ret - 1],
 					      visited, validate);
 		if (ret > 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			/* Skip setting clock selector again for some devices */
+			if (chip->quirk_flags & QUIRK_FLAG_SKIP_CLOCK_SELECTOR)
+				return ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			/* Skip setting clock selector again for some devices */
+			if (chip->quirk_flags & QUIRK_FLAG_SKIP_CLOCK_SELECTOR)
+				return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			err = uac_clock_selector_set_val(chip, entity_id, cur);
 			if (err < 0)
 				return err;
@@ -420,7 +432,15 @@ static int set_sample_rate_v1(struct snd_usb_audio *chip,
 
 	/* Don't check the sample rate for devices which we know don't
 	 * support reading */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (chip->quirk_flags & QUIRK_FLAG_GET_SAMPLE_RATE)
+=======
 	if (snd_usb_get_sample_rate_quirk(chip))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (chip->quirk_flags & QUIRK_FLAG_GET_SAMPLE_RATE)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	/* the firmware is likely buggy, don't repeat to fail too many times */
 	if (chip->sample_rate_read_error > 2)
@@ -535,10 +555,20 @@ static int set_sample_rate_v2v3(struct snd_usb_audio *chip,
 		 */
 		clock = snd_usb_clock_find_source(chip, fmt, false);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		/* Hardcoded sample rates */
+		if (chip->quirk_flags & QUIRK_FLAG_IGNORE_CLOCK_SOURCE)
+=======
 		/* Denon DN-X1600 hardcoded
 		 * Sample rate seems to be set on the hardware itself
 		 */
 		if (chip->usb_id == USB_ID(0x154e, 0x500e))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* Hardcoded sample rates */
+		if (chip->quirk_flags & QUIRK_FLAG_IGNORE_CLOCK_SOURCE)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return 0;
 
 		if (clock < 0)

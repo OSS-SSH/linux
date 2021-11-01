@@ -13,7 +13,13 @@
 #define ADF_C62XIOV_ETR_BAR 0
 #define ADF_C62XIOV_ETR_MAX_BANKS 1
 #define ADF_C62XIOV_PF2VF_OFFSET	0x200
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define ADF_C62XIOV_VINTMSK_OFFSET	0x208
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void adf_init_hw_data_c62xiov(struct adf_hw_device_data *hw_data);
 void adf_clean_hw_data_c62xiov(struct adf_hw_device_data *hw_data);

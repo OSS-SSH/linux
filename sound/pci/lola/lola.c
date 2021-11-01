@@ -344,20 +344,44 @@ static void lola_irq_disable(struct lola *chip)
 
 static int setup_corb_rirb(struct lola *chip)
 {
-	int err;
+<<<<<<< HEAD
+<<<<<<< HEAD
 	unsigned char tmp;
 	unsigned long end_time;
 
-	err = snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV,
-				  &chip->pci->dev,
-				  PAGE_SIZE, &chip->rb);
-	if (err < 0)
-		return err;
+	chip->rb = snd_devm_alloc_pages(&chip->pci->dev, SNDRV_DMA_TYPE_DEV,
+					PAGE_SIZE);
+	if (!chip->rb)
+		return -ENOMEM;
 
+	chip->corb.addr = chip->rb->addr;
+	chip->corb.buf = (__le32 *)chip->rb->area;
+	chip->rirb.addr = chip->rb->addr + 2048;
+	chip->rirb.buf = (__le32 *)(chip->rb->area + 2048);
+=======
+	int err;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	unsigned char tmp;
+	unsigned long end_time;
+
+	chip->rb = snd_devm_alloc_pages(&chip->pci->dev, SNDRV_DMA_TYPE_DEV,
+					PAGE_SIZE);
+	if (!chip->rb)
+		return -ENOMEM;
+
+<<<<<<< HEAD
 	chip->corb.addr = chip->rb.addr;
 	chip->corb.buf = (__le32 *)chip->rb.area;
 	chip->rirb.addr = chip->rb.addr + 2048;
 	chip->rirb.buf = (__le32 *)(chip->rb.area + 2048);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chip->corb.addr = chip->rb->addr;
+	chip->corb.buf = (__le32 *)chip->rb->area;
+	chip->rirb.addr = chip->rb->addr + 2048;
+	chip->rirb.buf = (__le32 *)(chip->rb->area + 2048);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* disable ringbuffer DMAs */
 	lola_writeb(chip, BAR0, RIRBCTL, 0);
@@ -529,56 +553,73 @@ static void lola_stop_hw(struct lola *chip)
 	lola_irq_disable(chip);
 }
 
-static void lola_free(struct lola *chip)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void lola_free(struct snd_card *card)
 {
+	struct lola *chip = card->private_data;
+
 	if (chip->initialized)
 		lola_stop_hw(chip);
-	lola_free_pcm(chip);
 	lola_free_mixer(chip);
-	if (chip->irq >= 0)
-		free_irq(chip->irq, (void *)chip);
-	iounmap(chip->bar[0].remap_addr);
-	iounmap(chip->bar[1].remap_addr);
-	if (chip->rb.area)
-		snd_dma_free_pages(&chip->rb);
-	pci_release_regions(chip->pci);
-	pci_disable_device(chip->pci);
-	kfree(chip);
 }
 
-static int lola_dev_free(struct snd_device *device)
+static int lola_create(struct snd_card *card, struct pci_dev *pci, int dev)
 {
-	lola_free(device->device_data);
-	return 0;
-}
-
-static int lola_create(struct snd_card *card, struct pci_dev *pci,
-		       int dev, struct lola **rchip)
-{
-	struct lola *chip;
+	struct lola *chip = card->private_data;
 	int err;
 	unsigned int dever;
-	static const struct snd_device_ops ops = {
-		.dev_free = lola_dev_free,
-	};
 
-	*rchip = NULL;
-
-	err = pci_enable_device(pci);
+	err = pcim_enable_device(pci);
 	if (err < 0)
 		return err;
 
+=======
+static void lola_free(struct lola *chip)
+=======
+static void lola_free(struct snd_card *card)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct lola *chip = card->private_data;
+
+	if (chip->initialized)
+		lola_stop_hw(chip);
+	lola_free_mixer(chip);
+}
+
+static int lola_create(struct snd_card *card, struct pci_dev *pci, int dev)
+{
+	struct lola *chip = card->private_data;
+	int err;
+	unsigned int dever;
+
+	err = pcim_enable_device(pci);
+	if (err < 0)
+		return err;
+
+<<<<<<< HEAD
 	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
 	if (!chip) {
 		pci_disable_device(pci);
 		return -ENOMEM;
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&chip->reg_lock);
 	mutex_init(&chip->open_mutex);
 	chip->card = card;
 	chip->pci = pci;
 	chip->irq = -1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	card->private_free = lola_free;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	card->private_free = lola_free;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chip->granularity = granularity[dev];
 	switch (chip->granularity) {
@@ -607,34 +648,70 @@ static int lola_create(struct snd_card *card, struct pci_dev *pci,
 		chip->sample_rate_min = 16000;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = pcim_iomap_regions(pci, (1 << 0) | (1 << 2), DRVNAME);
+	if (err < 0)
+		return err;
+
+	chip->bar[0].addr = pci_resource_start(pci, 0);
+	chip->bar[0].remap_addr = pcim_iomap_table(pci)[0];
+	chip->bar[1].addr = pci_resource_start(pci, 2);
+	chip->bar[1].remap_addr = pcim_iomap_table(pci)[2];
+=======
 	err = pci_request_regions(pci, DRVNAME);
 	if (err < 0) {
 		kfree(chip);
 		pci_disable_device(pci);
+=======
+	err = pcim_iomap_regions(pci, (1 << 0) | (1 << 2), DRVNAME);
+	if (err < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
-	}
 
 	chip->bar[0].addr = pci_resource_start(pci, 0);
-	chip->bar[0].remap_addr = pci_ioremap_bar(pci, 0);
+	chip->bar[0].remap_addr = pcim_iomap_table(pci)[0];
 	chip->bar[1].addr = pci_resource_start(pci, 2);
+<<<<<<< HEAD
 	chip->bar[1].remap_addr = pci_ioremap_bar(pci, 2);
 	if (!chip->bar[0].remap_addr || !chip->bar[1].remap_addr) {
 		dev_err(chip->card->dev, "ioremap error\n");
 		err = -ENXIO;
 		goto errout;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	chip->bar[1].remap_addr = pcim_iomap_table(pci)[2];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_set_master(pci);
 
 	err = reset_controller(chip);
 	if (err < 0)
-		goto errout;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return err;
 
-	if (request_irq(pci->irq, lola_interrupt, IRQF_SHARED,
-			KBUILD_MODNAME, chip)) {
+	if (devm_request_irq(&pci->dev, pci->irq, lola_interrupt, IRQF_SHARED,
+			     KBUILD_MODNAME, chip)) {
 		dev_err(chip->card->dev, "unable to grab IRQ %d\n", pci->irq);
+		return -EBUSY;
+=======
+		goto errout;
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	if (devm_request_irq(&pci->dev, pci->irq, lola_interrupt, IRQF_SHARED,
+			     KBUILD_MODNAME, chip)) {
+		dev_err(chip->card->dev, "unable to grab IRQ %d\n", pci->irq);
+<<<<<<< HEAD
 		err = -EBUSY;
 		goto errout;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EBUSY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
@@ -653,12 +730,24 @@ static int lola_create(struct snd_card *card, struct pci_dev *pci,
 	    (!chip->pcm[CAPT].num_streams &&
 	     !chip->pcm[PLAY].num_streams)) {
 		dev_err(chip->card->dev, "invalid DEVER = %x\n", dever);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return -EINVAL;
+=======
 		err = -EINVAL;
 		goto errout;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = setup_corb_rirb(chip);
 	if (err < 0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return err;
+=======
 		goto errout;
 
 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
@@ -666,6 +755,10 @@ static int lola_create(struct snd_card *card, struct pci_dev *pci,
 		dev_err(chip->card->dev, "Error creating device [card]!\n");
 		goto errout;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	strcpy(card->driver, "Lola");
 	strscpy(card->shortname, "Digigram Lola", sizeof(card->shortname));
@@ -677,12 +770,20 @@ static int lola_create(struct snd_card *card, struct pci_dev *pci,
 	lola_irq_enable(chip);
 
 	chip->initialized = 1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return 0;
+=======
 	*rchip = chip;
 	return 0;
 
  errout:
 	lola_free(chip);
 	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int lola_probe(struct pci_dev *pci,
@@ -700,34 +801,79 @@ static int lola_probe(struct pci_dev *pci,
 		return -ENOENT;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(*chip), &card);
+=======
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 			   0, &card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+				sizeof(*chip), &card);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0) {
 		dev_err(&pci->dev, "Error creating card!\n");
 		return err;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	chip = card->private_data;
 
-	err = lola_create(card, pci, dev, &chip);
+	err = lola_create(card, pci, dev);
 	if (err < 0)
-		goto out_free;
-	card->private_data = chip;
+		return err;
 
 	err = lola_parse_tree(chip);
 	if (err < 0)
-		goto out_free;
+		return err;
 
 	err = lola_create_pcm(chip);
 	if (err < 0)
-		goto out_free;
+		return err;
 
 	err = lola_create_mixer(chip);
 	if (err < 0)
+		return err;
+=======
+=======
+	chip = card->private_data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	err = lola_create(card, pci, dev);
+	if (err < 0)
+		return err;
+
+	err = lola_parse_tree(chip);
+	if (err < 0)
+		return err;
+
+	err = lola_create_pcm(chip);
+	if (err < 0)
+		return err;
+
+	err = lola_create_mixer(chip);
+	if (err < 0)
+<<<<<<< HEAD
 		goto out_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	lola_proc_debug_new(chip);
 
 	err = snd_card_register(card);
 	if (err < 0)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return err;
+
+	pci_set_drvdata(pci, card);
+	dev++;
+	return 0;
+=======
 		goto out_free;
 
 	pci_set_drvdata(pci, card);
@@ -741,6 +887,14 @@ out_free:
 static void lola_remove(struct pci_dev *pci)
 {
 	snd_card_free(pci_get_drvdata(pci));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return err;
+
+	pci_set_drvdata(pci, card);
+	dev++;
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* PCI IDs */
@@ -755,7 +909,13 @@ static struct pci_driver lola_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = lola_ids,
 	.probe = lola_probe,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.remove = lola_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 module_pci_driver(lola_driver);

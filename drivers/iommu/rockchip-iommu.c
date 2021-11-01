@@ -10,7 +10,13 @@
 #include <linux/compiler.h>
 #include <linux/delay.h>
 #include <linux/device.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <linux/dma-iommu.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/dma-mapping.h>
 #include <linux/errno.h>
 #include <linux/interrupt.h>
@@ -544,12 +550,32 @@ static inline u32 rk_dma_addr_dte(dma_addr_t dt_dma)
 }
 
 #define DT_HI_MASK GENMASK_ULL(39, 32)
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define DTE_BASE_HI_MASK GENMASK(11, 4)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DTE_BASE_HI_MASK GENMASK(11, 4)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DT_SHIFT   28
 
 static inline phys_addr_t rk_dte_addr_phys_v2(u32 addr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u64 addr64 = addr;
+	return (phys_addr_t)(addr64 & RK_DTE_PT_ADDRESS_MASK) |
+	       ((addr64 & DTE_BASE_HI_MASK) << DT_SHIFT);
+=======
 	return (phys_addr_t)(addr & RK_DTE_PT_ADDRESS_MASK) |
 	       ((addr & DT_HI_MASK) << DT_SHIFT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 addr64 = addr;
+	return (phys_addr_t)(addr64 & RK_DTE_PT_ADDRESS_MASK) |
+	       ((addr64 & DTE_BASE_HI_MASK) << DT_SHIFT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline u32 rk_dma_addr_dte_v2(dma_addr_t dt_dma)
@@ -1072,10 +1098,16 @@ static struct iommu_domain *rk_iommu_domain_alloc(unsigned type)
 	if (!rk_domain)
 		return NULL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (type == IOMMU_DOMAIN_DMA &&
 	    iommu_get_dma_cookie(&rk_domain->domain))
 		goto err_free_domain;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * rk32xx iommus use a 2 level pagetable.
 	 * Each level1 (dt) and level2 (pt) table has 1024 4-byte entries.
@@ -1083,7 +1115,15 @@ static struct iommu_domain *rk_iommu_domain_alloc(unsigned type)
 	 */
 	rk_domain->dt = (u32 *)get_zeroed_page(GFP_KERNEL | GFP_DMA32);
 	if (!rk_domain->dt)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err_free_domain;
+=======
 		goto err_put_cookie;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_free_domain;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rk_domain->dt_dma = dma_map_single(dma_dev, rk_domain->dt,
 					   SPAGE_SIZE, DMA_TO_DEVICE);
@@ -1104,9 +1144,15 @@ static struct iommu_domain *rk_iommu_domain_alloc(unsigned type)
 
 err_free_dt:
 	free_page((unsigned long)rk_domain->dt);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 err_put_cookie:
 	if (type == IOMMU_DOMAIN_DMA)
 		iommu_put_dma_cookie(&rk_domain->domain);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_free_domain:
 	kfree(rk_domain);
 
@@ -1135,8 +1181,14 @@ static void rk_iommu_domain_free(struct iommu_domain *domain)
 			 SPAGE_SIZE, DMA_TO_DEVICE);
 	free_page((unsigned long)rk_domain->dt);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (domain->type == IOMMU_DOMAIN_DMA)
 		iommu_put_dma_cookie(&rk_domain->domain);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(rk_domain);
 }
 

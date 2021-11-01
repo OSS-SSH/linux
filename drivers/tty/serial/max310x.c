@@ -1271,6 +1271,19 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
 	/* Always ask for fixed clock rate from a property. */
 	device_property_read_u32(dev, "clock-frequency", &uartclk);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	xtal = device_property_match_string(dev, "clock-names", "osc") < 0;
+	if (xtal)
+		s->clk = devm_clk_get_optional(dev, "xtal");
+	else
+		s->clk = devm_clk_get_optional(dev, "osc");
+<<<<<<< HEAD
+	if (IS_ERR(s->clk))
+		return PTR_ERR(s->clk);
+=======
 	s->clk = devm_clk_get_optional(dev, "osc");
 	if (IS_ERR(s->clk))
 		return PTR_ERR(s->clk);
@@ -1283,6 +1296,11 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
 
 		xtal = true;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(s->clk))
+		return PTR_ERR(s->clk);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = clk_prepare_enable(s->clk);
 	if (ret)
@@ -1293,7 +1311,17 @@ static int max310x_probe(struct device *dev, const struct max310x_devtype *devty
 		freq = uartclk;
 	if (freq == 0) {
 		dev_err(dev, "Cannot get clock rate\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = -EINVAL;
+		goto out_clk;
+=======
 		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = -EINVAL;
+		goto out_clk;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (xtal) {

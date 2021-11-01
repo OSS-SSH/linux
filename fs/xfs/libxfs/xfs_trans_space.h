@@ -57,8 +57,16 @@
 	XFS_DAREMOVE_SPACE_RES(mp, XFS_DATA_FORK)
 #define	XFS_IALLOC_SPACE_RES(mp)	\
 	(M_IGEO(mp)->ialloc_blks + \
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 ((xfs_has_finobt(mp) ? 2 : 1) * M_IGEO(mp)->inobt_maxlevels))
+=======
 	 ((xfs_sb_version_hasfinobt(&mp->m_sb) ? 2 : 1) * \
 	  M_IGEO(mp)->inobt_maxlevels))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 ((xfs_has_finobt(mp) ? 2 : 1) * M_IGEO(mp)->inobt_maxlevels))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Space reservation values for various transactions.
@@ -94,8 +102,16 @@
 #define	XFS_SYMLINK_SPACE_RES(mp,nl,b)	\
 	(XFS_IALLOC_SPACE_RES(mp) + XFS_DIRENTER_SPACE_RES(mp,nl) + (b))
 #define XFS_IFREE_SPACE_RES(mp)		\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	(xfs_has_finobt(mp) ? M_IGEO(mp)->inobt_maxlevels : 0)
+=======
 	(xfs_sb_version_hasfinobt(&mp->m_sb) ? \
 			M_IGEO(mp)->inobt_maxlevels : 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	(xfs_has_finobt(mp) ? M_IGEO(mp)->inobt_maxlevels : 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 #endif	/* __XFS_TRANS_SPACE_H__ */

@@ -37,7 +37,13 @@
 #include <linux/module.h>
 #include <linux/soc/ixp4xx/npe.h>
 #include <linux/soc/ixp4xx/qmgr.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <mach/hardware.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/soc/ixp4xx/cpu.h>
 
 #include "ixp46x_ts.h"
@@ -169,13 +175,31 @@ struct eth_regs {
 
 struct port {
 	struct eth_regs __iomem *regs;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct ixp46x_ts_regs __iomem *timesync_regs;
+	int phc_index;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ixp46x_ts_regs __iomem *timesync_regs;
+	int phc_index;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct npe *npe;
 	struct net_device *netdev;
 	struct napi_struct napi;
 	struct eth_plat_info *plat;
 	buffer_t *rx_buff_tab[RX_DESCS], *tx_buff_tab[TX_DESCS];
 	struct desc *desc_tab;	/* coherent */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dma_addr_t desc_tab_phys;
+=======
 	u32 desc_tab_phys;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_addr_t desc_tab_phys;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int id;			/* logical port ID */
 	int speed, duplex;
 	u8 firmware[4];
@@ -295,7 +319,15 @@ static void ixp_rx_timestamp(struct port *port, struct sk_buff *skb)
 
 	ch = PORT2CHANNEL(port);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	regs = port->timesync_regs;
+=======
 	regs = (struct ixp46x_ts_regs __iomem *) IXP4XX_TIMESYNC_BASE_VIRT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	regs = port->timesync_regs;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	val = __raw_readl(&regs->channel[ch].ch_event);
 
@@ -340,7 +372,15 @@ static void ixp_tx_timestamp(struct port *port, struct sk_buff *skb)
 
 	ch = PORT2CHANNEL(port);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	regs = port->timesync_regs;
+=======
 	regs = (struct ixp46x_ts_regs __iomem *) IXP4XX_TIMESYNC_BASE_VIRT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	regs = port->timesync_regs;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * This really stinks, but we have to poll for the Tx time stamp.
@@ -375,6 +415,14 @@ static int hwtstamp_set(struct net_device *netdev, struct ifreq *ifr)
 	struct hwtstamp_config cfg;
 	struct ixp46x_ts_regs *regs;
 	struct port *port = netdev_priv(netdev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ch;
 
 	if (copy_from_user(&cfg, ifr->ifr_data, sizeof(cfg)))
@@ -383,8 +431,25 @@ static int hwtstamp_set(struct net_device *netdev, struct ifreq *ifr)
 	if (cfg.flags) /* reserved for future extensions */
 		return -EINVAL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = ixp46x_ptp_find(&port->timesync_regs, &port->phc_index);
+	if (ret)
+		return ret;
+
+<<<<<<< HEAD
+	ch = PORT2CHANNEL(port);
+	regs = port->timesync_regs;
+=======
 	ch = PORT2CHANNEL(port);
 	regs = (struct ixp46x_ts_regs __iomem *) IXP4XX_TIMESYNC_BASE_VIRT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ch = PORT2CHANNEL(port);
+	regs = port->timesync_regs;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (cfg.tx_type != HWTSTAMP_TX_OFF && cfg.tx_type != HWTSTAMP_TX_ON)
 		return -ERANGE;
@@ -850,14 +915,30 @@ static int eth_xmit(struct sk_buff *skb, struct net_device *dev)
 	bytes = len;
 	mem = skb->data;
 #else
+<<<<<<< HEAD
+<<<<<<< HEAD
+	offset = (uintptr_t)skb->data & 3; /* keep 32-bit alignment */
+=======
 	offset = (int)skb->data & 3; /* keep 32-bit alignment */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	offset = (uintptr_t)skb->data & 3; /* keep 32-bit alignment */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bytes = ALIGN(offset + len, 4);
 	if (!(mem = kmalloc(bytes, GFP_ATOMIC))) {
 		dev_kfree_skb(skb);
 		dev->stats.tx_dropped++;
 		return NETDEV_TX_OK;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	memcpy_swab32(mem, (u32 *)((uintptr_t)skb->data & ~3), bytes / 4);
+=======
 	memcpy_swab32(mem, (u32 *)((int)skb->data & ~3), bytes / 4);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memcpy_swab32(mem, (u32 *)((uintptr_t)skb->data & ~3), bytes / 4);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	phys = dma_map_single(&dev->dev, mem, bytes, DMA_TO_DEVICE);
@@ -988,6 +1069,20 @@ static void ixp4xx_get_drvinfo(struct net_device *dev,
 	strlcpy(info->bus_info, "internal", sizeof(info->bus_info));
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int ixp4xx_get_ts_info(struct net_device *dev,
+			      struct ethtool_ts_info *info)
+{
+	struct port *port = netdev_priv(dev);
+
+	if (port->phc_index < 0)
+		ixp46x_ptp_find(&port->timesync_regs, &port->phc_index);
+
+	info->phc_index = port->phc_index;
+
+	if (info->phc_index < 0) {
+=======
 int ixp46x_phc_index = -1;
 EXPORT_SYMBOL_GPL(ixp46x_phc_index);
 
@@ -995,18 +1090,44 @@ static int ixp4xx_get_ts_info(struct net_device *dev,
 			      struct ethtool_ts_info *info)
 {
 	if (!cpu_is_ixp46x()) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int ixp4xx_get_ts_info(struct net_device *dev,
+			      struct ethtool_ts_info *info)
+{
+	struct port *port = netdev_priv(dev);
+
+	if (port->phc_index < 0)
+		ixp46x_ptp_find(&port->timesync_regs, &port->phc_index);
+
+	info->phc_index = port->phc_index;
+
+	if (info->phc_index < 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		info->so_timestamping =
 			SOF_TIMESTAMPING_TX_SOFTWARE |
 			SOF_TIMESTAMPING_RX_SOFTWARE |
 			SOF_TIMESTAMPING_SOFTWARE;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		info->phc_index = -1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	}
 	info->so_timestamping =
 		SOF_TIMESTAMPING_TX_HARDWARE |
 		SOF_TIMESTAMPING_RX_HARDWARE |
 		SOF_TIMESTAMPING_RAW_HARDWARE;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	info->phc_index = ixp46x_phc_index;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	info->tx_types =
 		(1 << HWTSTAMP_TX_OFF) |
 		(1 << HWTSTAMP_TX_ON);
@@ -1357,7 +1478,15 @@ static const struct net_device_ops ixp4xx_netdev_ops = {
 	.ndo_stop = eth_close,
 	.ndo_start_xmit = eth_xmit,
 	.ndo_set_rx_mode = eth_set_mcast_list,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl = eth_ioctl,
+=======
 	.ndo_do_ioctl = eth_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl = eth_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_mac_address = eth_mac_addr,
 	.ndo_validate_addr = eth_validate_addr,
 };
@@ -1481,6 +1610,14 @@ static int ixp4xx_eth_probe(struct platform_device *pdev)
 	port = netdev_priv(ndev);
 	port->netdev = ndev;
 	port->id = plat->npe;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	port->phc_index = -1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	port->phc_index = -1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Get the port resource and remap */
 	port->regs = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);

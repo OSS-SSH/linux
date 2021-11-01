@@ -6,7 +6,15 @@
 
 #include "prestera.h"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct prestera_switch *prestera_devlink_alloc(struct prestera_device *dev);
+=======
 struct prestera_switch *prestera_devlink_alloc(void);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct prestera_switch *prestera_devlink_alloc(struct prestera_device *dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void prestera_devlink_free(struct prestera_switch *sw);
 
 int prestera_devlink_register(struct prestera_switch *sw);

@@ -197,6 +197,16 @@ void avic_init_vmcb(struct vcpu_svm *svm)
 	vmcb->control.avic_logical_id = lpa & AVIC_HPA_MASK;
 	vmcb->control.avic_physical_id = ppa & AVIC_HPA_MASK;
 	vmcb->control.avic_physical_id |= AVIC_MAX_PHYSICAL_ID_COUNT;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	vmcb->control.avic_vapic_bar = APIC_DEFAULT_PHYS_BASE & VMCB_AVIC_APIC_BAR_MASK;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vmcb->control.avic_vapic_bar = APIC_DEFAULT_PHYS_BASE & VMCB_AVIC_APIC_BAR_MASK;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (kvm_apicv_activated(svm->vcpu.kvm))
 		vmcb->control.int_ctl |= AVIC_ENABLE_MASK;
 	else
@@ -225,12 +235,25 @@ static u64 *avic_get_physical_id_entry(struct kvm_vcpu *vcpu,
  * field of the VMCB. Therefore, we set up the
  * APIC_ACCESS_PAGE_PRIVATE_MEMSLOT (4KB) here.
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int avic_alloc_access_page(struct kvm *kvm)
+=======
 static int avic_update_access_page(struct kvm *kvm, bool activate)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int avic_alloc_access_page(struct kvm *kvm)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	void __user *ret;
 	int r = 0;
 
 	mutex_lock(&kvm->slots_lock);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	if (kvm->arch.apic_access_memslot_enabled)
+=======
 	/*
 	 * During kvm_destroy_vm(), kvm_pit_set_reinject() could trigger
 	 * APICv mode change, which update APIC_ACCESS_PAGE_PRIVATE_MEMSLOT
@@ -238,18 +261,39 @@ static int avic_update_access_page(struct kvm *kvm, bool activate)
 	 */
 	if ((kvm->arch.apic_access_memslot_enabled == activate) ||
 	    (kvm->mm != current->mm))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (kvm->arch.apic_access_memslot_enabled)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out;
 
 	ret = __x86_set_memory_region(kvm,
 				      APIC_ACCESS_PAGE_PRIVATE_MEMSLOT,
 				      APIC_DEFAULT_PHYS_BASE,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				      PAGE_SIZE);
+=======
 				      activate ? PAGE_SIZE : 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				      PAGE_SIZE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(ret)) {
 		r = PTR_ERR(ret);
 		goto out;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	kvm->arch.apic_access_memslot_enabled = true;
+=======
 	kvm->arch.apic_access_memslot_enabled = activate;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kvm->arch.apic_access_memslot_enabled = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	mutex_unlock(&kvm->slots_lock);
 	return r;
@@ -270,7 +314,15 @@ static int avic_init_backing_page(struct kvm_vcpu *vcpu)
 	if (kvm_apicv_activated(vcpu->kvm)) {
 		int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = avic_alloc_access_page(vcpu->kvm);
+=======
 		ret = avic_update_access_page(vcpu->kvm, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = avic_alloc_access_page(vcpu->kvm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			return ret;
 	}
@@ -587,6 +639,9 @@ void avic_post_state_restore(struct kvm_vcpu *vcpu)
 	avic_handle_ldr_update(vcpu);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 void svm_toggle_avic_for_irq_window(struct kvm_vcpu *vcpu, bool activate)
 {
 	if (!enable_apicv || !lapic_in_kernel(vcpu))
@@ -598,6 +653,9 @@ void svm_toggle_avic_for_irq_window(struct kvm_vcpu *vcpu, bool activate)
 	vcpu->srcu_idx = srcu_read_lock(&vcpu->kvm->srcu);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void svm_set_virtual_apic_mode(struct kvm_vcpu *vcpu)
 {
 	return;
@@ -646,7 +704,15 @@ out:
 void svm_refresh_apicv_exec_ctrl(struct kvm_vcpu *vcpu)
 {
 	struct vcpu_svm *svm = to_svm(vcpu);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct vmcb *vmcb = svm->vmcb01.ptr;
+=======
 	struct vmcb *vmcb = svm->vmcb;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct vmcb *vmcb = svm->vmcb01.ptr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool activated = kvm_vcpu_apicv_active(vcpu);
 
 	if (!enable_apicv)
@@ -667,6 +733,20 @@ void svm_refresh_apicv_exec_ctrl(struct kvm_vcpu *vcpu)
 	}
 	vmcb_mark_dirty(vmcb, VMCB_AVIC);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (activated)
+		avic_vcpu_load(vcpu, vcpu->cpu);
+	else
+		avic_vcpu_put(vcpu);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	svm_set_pi_irte_mode(vcpu, activated);
 }
 
@@ -918,10 +998,16 @@ bool svm_check_apicv_inhibit_reasons(ulong bit)
 	return supported & BIT(bit);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 void svm_pre_update_apicv_exec_ctrl(struct kvm *kvm, bool activate)
 {
 	avic_update_access_page(kvm, activate);
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline int
 avic_update_iommu_vcpu_affinity(struct kvm_vcpu *vcpu, int cpu, bool r)
@@ -960,9 +1046,15 @@ void avic_vcpu_load(struct kvm_vcpu *vcpu, int cpu)
 	int h_physical_id = kvm_cpu_get_apicid(cpu);
 	struct vcpu_svm *svm = to_svm(vcpu);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (!kvm_vcpu_apicv_active(vcpu))
 		return;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Since the host physical APIC id is 8 bits,
 	 * we can support host APIC ID upto 255.
@@ -990,9 +1082,15 @@ void avic_vcpu_put(struct kvm_vcpu *vcpu)
 	u64 entry;
 	struct vcpu_svm *svm = to_svm(vcpu);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (!kvm_vcpu_apicv_active(vcpu))
 		return;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	entry = READ_ONCE(*(svm->avic_physical_id_cache));
 	if (entry & AVIC_PHYSICAL_ID_ENTRY_IS_RUNNING_MASK)
 		avic_update_iommu_vcpu_affinity(vcpu, -1, 0);
@@ -1009,6 +1107,19 @@ static void avic_set_running(struct kvm_vcpu *vcpu, bool is_run)
 	struct vcpu_svm *svm = to_svm(vcpu);
 
 	svm->avic_is_running = is_run;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	if (!kvm_vcpu_apicv_active(vcpu))
+		return;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (is_run)
 		avic_vcpu_load(vcpu, vcpu->cpu);
 	else

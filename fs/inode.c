@@ -190,6 +190,19 @@ int inode_init_always(struct super_block *sb, struct inode *inode)
 	mapping_set_gfp_mask(mapping, GFP_HIGHUSER_MOVABLE);
 	mapping->private_data = NULL;
 	mapping->writeback_index = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	init_rwsem(&mapping->invalidate_lock);
+	lockdep_set_class_and_name(&mapping->invalidate_lock,
+				   &sb->s_type->invalidate_lock_key,
+				   "mapping.invalidate_lock");
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	inode->i_private = NULL;
 	inode->i_mapping = mapping;
 	INIT_HLIST_HEAD(&inode->i_dentry);	/* buggered by rcu freeing */
@@ -768,7 +781,15 @@ static enum lru_status inode_lru_isolate(struct list_head *item,
 		return LRU_ROTATE;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (inode_has_buffers(inode) || !mapping_empty(&inode->i_data)) {
+=======
 	if (inode_has_buffers(inode) || inode->i_data.nrpages) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (inode_has_buffers(inode) || !mapping_empty(&inode->i_data)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		__iget(inode);
 		spin_unlock(&inode->i_lock);
 		spin_unlock(lru_lock);

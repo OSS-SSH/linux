@@ -40,6 +40,9 @@
 #include <mach/usb.h>
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /* OMAP-1510 OHCI has its own MMU for DMA */
 #define OMAP1510_LB_MEMSIZE	32	/* Should be same as SDRAM size */
 #define OMAP1510_LB_CLOCK_DIV	0xfffec10c
@@ -51,6 +54,9 @@
 #define OMAP1510_LB_MMU_RAM_H	0xfffec234
 #define OMAP1510_LB_MMU_RAM_L	0xfffec238
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DRIVER_DESC "OHCI OMAP driver"
 
 struct ohci_omap_priv {
@@ -104,6 +110,9 @@ static int omap_ohci_transceiver_power(struct ohci_omap_priv *priv, int on)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #ifdef CONFIG_ARCH_OMAP15XX
 /*
  * OMAP-1510 specific Local Bus clock on/off
@@ -159,6 +168,9 @@ static int omap_1510_local_bus_init(void)
 #define omap_1510_local_bus_init()	{}
 #endif
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef	CONFIG_USB_OTG
 
 static void start_hnp(struct ohci_hcd *ohci)
@@ -229,10 +241,20 @@ static int ohci_omap_reset(struct usb_hcd *hcd)
 
 	omap_ohci_clock_power(priv, 1);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (config->lb_reset)
+		config->lb_reset();
+=======
 	if (cpu_is_omap15xx()) {
 		omap_1510_local_bus_power(1);
 		omap_1510_local_bus_init();
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (config->lb_reset)
+		config->lb_reset();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = ohci_setup(hcd);
 	if (ret < 0)

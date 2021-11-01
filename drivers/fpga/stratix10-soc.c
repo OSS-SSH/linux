@@ -388,6 +388,10 @@ static int s10_ops_write_complete(struct fpga_manager *mgr,
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const struct fpga_manager_ops s10_ops = {
+=======
 static enum fpga_mgr_states s10_ops_state(struct fpga_manager *mgr)
 {
 	return FPGA_MGR_STATE_UNKNOWN;
@@ -395,6 +399,10 @@ static enum fpga_mgr_states s10_ops_state(struct fpga_manager *mgr)
 
 static const struct fpga_manager_ops s10_ops = {
 	.state = s10_ops_state,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const struct fpga_manager_ops s10_ops = {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.write_init = s10_ops_write_init,
 	.write = s10_ops_write,
 	.write_complete = s10_ops_write_complete,

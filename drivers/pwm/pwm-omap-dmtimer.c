@@ -444,11 +444,21 @@ err_find_timer_pdev:
 static int pwm_omap_dmtimer_remove(struct platform_device *pdev)
 {
 	struct pwm_omap_dmtimer_chip *omap = platform_get_drvdata(pdev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	pwmchip_remove(&omap->chip);
+=======
 	int ret;
 
 	ret = pwmchip_remove(&omap->chip);
 	if (ret)
 		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	pwmchip_remove(&omap->chip);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (pm_runtime_active(&omap->dm_timer_pdev->dev))
 		omap->pdata->stop(omap->dm_timer);

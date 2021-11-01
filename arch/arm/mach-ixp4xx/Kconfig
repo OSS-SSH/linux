@@ -17,6 +17,9 @@ config MACH_IXP4XX_OF
 	help
 	  Say 'Y' here to support Device Tree-based IXP4xx platforms.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config MACH_NSLU2
 	bool
 	prompt "Linksys NSLU2"
@@ -50,6 +53,9 @@ config ARCH_ADI_COYOTE
 	  Engineering Coyote Gateway Reference Platform. For more
 	  information on this platform, see <file:Documentation/arm/ixp4xx.rst>.
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config MACH_GATEWAY7001
 	bool "Gateway 7001"
 	depends on IXP4XX_PCI_LEGACY
@@ -58,6 +64,12 @@ config MACH_GATEWAY7001
 	  7001 Access Point. For more information on this platform,
 	  see http://openwrt.org
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+config MACH_GORAMO_MLR
+	bool "GORAMO Multi Link Router"
+	depends on IXP4XX_PCI_LEGACY
+=======
 config MACH_WG302V2
 	bool "Netgear WG302 v2 / WAG302 v2"
 	depends on IXP4XX_PCI_LEGACY
@@ -91,10 +103,19 @@ config MACH_IXDP465
 
 config MACH_GORAMO_MLR
 	bool "GORAMO Multi Link Router"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+config MACH_GORAMO_MLR
+	bool "GORAMO Multi Link Router"
+	depends on IXP4XX_PCI_LEGACY
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say 'Y' here if you want your kernel to support GORAMO
 	  MultiLink router.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config MACH_KIXRP435
 	bool "KIXRP435"
 	help
@@ -112,6 +133,9 @@ config ARCH_IXCDP1100
 	depends on ARCH_IXDP425
 	default y
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config ARCH_PRPMC1100
 	bool "PrPMC1100"
 	help
@@ -119,6 +143,9 @@ config ARCH_PRPMC1100
 	  PrPCM1100 Processor Mezanine Module. For more information on
 	  this platform, see <file:Documentation/arm/ixp4xx.rst>.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config MACH_NAS100D
 	bool
 	prompt "NAS100D"
@@ -159,6 +186,9 @@ config MACH_ARCOM_VULCAN
 	  Say 'Y' here if you want your kernel to support Arcom's
 	  Vulcan board.
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #
 # Certain registers and IRQs are only enabled if supporting IXP465 CPUs
 #
@@ -172,6 +202,9 @@ config CPU_IXP43X
 	depends on MACH_KIXRP435
 	default y
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config MACH_GTWX5715
 	bool "Gemtek WX5715 (Linksys WRV54G)"
 	depends on ARCH_IXP4XX
@@ -209,6 +242,9 @@ config MACH_MIC256
 	  Say 'Y' here if you want your kernel to support the MIC256
 	  board from OMICRON electronics GmbH.
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 comment "IXP4xx Options"
 
 config IXP4XX_PCI_LEGACY

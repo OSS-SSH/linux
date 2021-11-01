@@ -35,7 +35,15 @@ int ima_appraise = IMA_APPRAISE_ENFORCE;
 int ima_appraise;
 #endif
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int __ro_after_init ima_hash_algo = HASH_ALGO_SHA1;
+=======
 int ima_hash_algo = HASH_ALGO_SHA1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int __ro_after_init ima_hash_algo = HASH_ALGO_SHA1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int hash_setup_done;
 
 static struct notifier_block ima_lsm_policy_notifier = {
@@ -76,6 +84,20 @@ out:
 }
 __setup("ima_hash=", hash_setup);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+enum hash_algo ima_get_current_hash_algo(void)
+{
+	return ima_hash_algo;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Prevent mmap'ing a file execute that is already mmap'ed write */
 static int mmap_violation_check(enum ima_hooks func, struct file *file,
 				char **pathbuf, const char **pathname,
@@ -210,6 +232,14 @@ static int process_measurement(struct file *file, const struct cred *cred,
 	int xattr_len = 0;
 	bool violation_check;
 	enum hash_algo hash_algo;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int allowed_algos = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int allowed_algos = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!ima_policy_flag || !S_ISREG(inode->i_mode))
 		return 0;
@@ -219,7 +249,17 @@ static int process_measurement(struct file *file, const struct cred *cred,
 	 * Included is the appraise submask.
 	 */
 	action = ima_get_action(file_mnt_user_ns(file), inode, cred, secid,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				mask, func, &pcr, &template_desc, NULL,
+				&allowed_algos);
+=======
 				mask, func, &pcr, &template_desc, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				mask, func, &pcr, &template_desc, NULL,
+				&allowed_algos);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	violation_check = ((func == FILE_CHECK || func == MMAP_CHECK) &&
 			   (ima_policy_flag & IMA_MEASURE));
 	if (!action && !violation_check)
@@ -356,6 +396,25 @@ static int process_measurement(struct file *file, const struct cred *cred,
 
 	if ((file->f_flags & O_DIRECT) && (iint->flags & IMA_PERMIT_DIRECTIO))
 		rc = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	/* Ensure the digest was generated using an allowed algorithm */
+	if (rc == 0 && must_appraise && allowed_algos != 0 &&
+	    (allowed_algos & (1U << hash_algo)) == 0) {
+		rc = -EACCES;
+
+		integrity_audit_msg(AUDIT_INTEGRITY_DATA, file_inode(file),
+				    pathname, "collect_data",
+				    "denied-hash-algorithm", rc, 0);
+	}
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_locked:
 	if ((mask & MAY_WRITE) && test_bit(IMA_DIGSIG, &iint->atomic_flags) &&
 	     !(iint->flags & IMA_NEW_FILE))
@@ -433,7 +492,15 @@ int ima_file_mprotect(struct vm_area_struct *vma, unsigned long prot)
 	inode = file_inode(vma->vm_file);
 	action = ima_get_action(file_mnt_user_ns(vma->vm_file), inode,
 				current_cred(), secid, MAY_EXEC, MMAP_CHECK,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				&pcr, &template, NULL, NULL);
+=======
 				&pcr, &template, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				&pcr, &template, NULL, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Is the mmap'ed file in policy? */
 	if (!(action & (IMA_MEASURE | IMA_APPRAISE_SUBMASK)))
@@ -822,7 +889,15 @@ int ima_post_load_data(char *buf, loff_t size,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/**
+=======
 /*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/**
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * process_buffer_measurement - Measure the buffer or the buffer data hash
  * @mnt_userns:	user namespace of the mount the inode was found from
  * @inode: inode associated with the object being measured (NULL for KEY_CHECK)
@@ -833,14 +908,48 @@ int ima_post_load_data(char *buf, loff_t size,
  * @pcr: pcr to extend the measurement
  * @func_data: func specific data, may be NULL
  * @buf_hash: measure buffer data hash
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @digest: buffer digest will be written to
+ * @digest_len: buffer length
  *
  * Based on policy, either the buffer data or buffer data hash is measured
+ *
+ * Return: 0 if the buffer has been successfully measured, 1 if the digest
+ * has been written to the passed location but not added to a measurement entry,
+ * a negative value otherwise.
  */
+int process_buffer_measurement(struct user_namespace *mnt_userns,
+			       struct inode *inode, const void *buf, int size,
+			       const char *eventname, enum ima_hooks func,
+			       int pcr, const char *func_data,
+			       bool buf_hash, u8 *digest, size_t digest_len)
+=======
+=======
+ * @digest: buffer digest will be written to
+ * @digest_len: buffer length
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ *
+ * Based on policy, either the buffer data or buffer data hash is measured
+ *
+ * Return: 0 if the buffer has been successfully measured, 1 if the digest
+ * has been written to the passed location but not added to a measurement entry,
+ * a negative value otherwise.
+ */
+<<<<<<< HEAD
 void process_buffer_measurement(struct user_namespace *mnt_userns,
 				struct inode *inode, const void *buf, int size,
 				const char *eventname, enum ima_hooks func,
 				int pcr, const char *func_data,
 				bool buf_hash)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int process_buffer_measurement(struct user_namespace *mnt_userns,
+			       struct inode *inode, const void *buf, int size,
+			       const char *eventname, enum ima_hooks func,
+			       int pcr, const char *func_data,
+			       bool buf_hash, u8 *digest, size_t digest_len)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret = 0;
 	const char *audit_cause = "ENOMEM";
@@ -861,8 +970,22 @@ void process_buffer_measurement(struct user_namespace *mnt_userns,
 	int action = 0;
 	u32 secid;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (digest && digest_len < digest_hash_len)
+		return -EINVAL;
+
+	if (!ima_policy_flag && !digest)
+		return -ENOENT;
+<<<<<<< HEAD
+=======
 	if (!ima_policy_flag)
 		return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	template = ima_template_desc_buf();
 	if (!template) {
@@ -882,9 +1005,21 @@ void process_buffer_measurement(struct user_namespace *mnt_userns,
 		security_task_getsecid_subj(current, &secid);
 		action = ima_get_action(mnt_userns, inode, current_cred(),
 					secid, 0, func, &pcr, &template,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					func_data, NULL);
+		if (!(action & IMA_MEASURE) && !digest)
+			return -ENOENT;
+=======
 					func_data);
 		if (!(action & IMA_MEASURE))
 			return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					func_data, NULL);
+		if (!(action & IMA_MEASURE) && !digest)
+			return -ENOENT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!pcr)
@@ -914,6 +1049,21 @@ void process_buffer_measurement(struct user_namespace *mnt_userns,
 		event_data.buf_len = digest_hash_len;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (digest)
+		memcpy(digest, iint.ima_hash->digest, digest_hash_len);
+
+	if (!ima_policy_flag || (func && !(action & IMA_MEASURE)))
+		return 1;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = ima_alloc_init_template(&event_data, &entry, template);
 	if (ret < 0) {
 		audit_cause = "alloc_entry";
@@ -932,7 +1082,15 @@ out:
 					func_measure_str(func),
 					audit_cause, ret, 0, ret);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return ret;
+=======
 	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -956,7 +1114,15 @@ void ima_kexec_cmdline(int kernel_fd, const void *buf, int size)
 
 	process_buffer_measurement(file_mnt_user_ns(f.file), file_inode(f.file),
 				   buf, size, "kexec-cmdline", KEXEC_CMDLINE, 0,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				   NULL, false, NULL, 0);
+=======
 				   NULL, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				   NULL, false, NULL, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fdput(f);
 }
 
@@ -967,24 +1133,67 @@ void ima_kexec_cmdline(int kernel_fd, const void *buf, int size)
  * @buf: pointer to buffer data
  * @buf_len: length of buffer data (in bytes)
  * @hash: measure buffer data hash
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @digest: buffer digest will be written to
+ * @digest_len: buffer length
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @digest: buffer digest will be written to
+ * @digest_len: buffer length
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Measure data critical to the integrity of the kernel into the IMA log
  * and extend the pcr.  Examples of critical data could be various data
  * structures, policies, and states stored in kernel memory that can
  * impact the integrity of the system.
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ *
+ * Return: 0 if the buffer has been successfully measured, 1 if the digest
+ * has been written to the passed location but not added to a measurement entry,
+ * a negative value otherwise.
+<<<<<<< HEAD
  */
-void ima_measure_critical_data(const char *event_label,
-			       const char *event_name,
-			       const void *buf, size_t buf_len,
-			       bool hash)
+int ima_measure_critical_data(const char *event_label,
+			      const char *event_name,
+			      const void *buf, size_t buf_len,
+			      bool hash, u8 *digest, size_t digest_len)
 {
 	if (!event_name || !event_label || !buf || !buf_len)
-		return;
+		return -ENOPARAM;
 
-	process_buffer_measurement(&init_user_ns, NULL, buf, buf_len, event_name,
-				   CRITICAL_DATA, 0, event_label,
-				   hash);
+	return process_buffer_measurement(&init_user_ns, NULL, buf, buf_len,
+					  event_name, CRITICAL_DATA, 0,
+					  event_label, hash, digest,
+					  digest_len);
 }
+EXPORT_SYMBOL_GPL(ima_measure_critical_data);
+=======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ */
+int ima_measure_critical_data(const char *event_label,
+			      const char *event_name,
+			      const void *buf, size_t buf_len,
+			      bool hash, u8 *digest, size_t digest_len)
+{
+	if (!event_name || !event_label || !buf || !buf_len)
+		return -ENOPARAM;
+
+	return process_buffer_measurement(&init_user_ns, NULL, buf, buf_len,
+					  event_name, CRITICAL_DATA, 0,
+					  event_label, hash, digest,
+					  digest_len);
+}
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(ima_measure_critical_data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int __init init_ima(void)
 {
@@ -1012,7 +1221,15 @@ static int __init init_ima(void)
 		pr_warn("Couldn't register LSM notifier, error %d\n", error);
 
 	if (!error)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ima_update_policy_flags();
+=======
 		ima_update_policy_flag();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ima_update_policy_flags();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return error;
 }

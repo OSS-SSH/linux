@@ -15,6 +15,16 @@
 #include <drm/drm_gem_framebuffer_helper.h>
 #include <drm/drm_modeset_helper.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "drm_internal.h"
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "drm_internal.h"
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define AFBC_HEADER_SIZE		16
 #define AFBC_TH_LAYOUT_ALIGNMENT	8
 #define AFBC_HDR_ALIGN			64
@@ -48,7 +58,15 @@
 struct drm_gem_object *drm_gem_fb_get_obj(struct drm_framebuffer *fb,
 					  unsigned int plane)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (plane >= ARRAY_SIZE(fb->obj))
+=======
 	if (plane >= 4)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (plane >= ARRAY_SIZE(fb->obj))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return NULL;
 
 	return fb->obj[plane];
@@ -62,7 +80,17 @@ drm_gem_fb_init(struct drm_device *dev,
 		 struct drm_gem_object **obj, unsigned int num_planes,
 		 const struct drm_framebuffer_funcs *funcs)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int i;
+	int ret;
+=======
 	int ret, i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int i;
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	drm_helper_mode_fill_fb_struct(dev, fb, mode_cmd);
 
@@ -86,9 +114,21 @@ drm_gem_fb_init(struct drm_device *dev,
  */
 void drm_gem_fb_destroy(struct drm_framebuffer *fb)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	size_t i;
+
+	for (i = 0; i < ARRAY_SIZE(fb->obj); i++)
+=======
 	int i;
 
 	for (i = 0; i < 4; i++)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	size_t i;
+
+	for (i = 0; i < ARRAY_SIZE(fb->obj); i++)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		drm_gem_object_put(fb->obj[i]);
 
 	drm_framebuffer_cleanup(fb);
@@ -145,8 +185,20 @@ int drm_gem_fb_init_with_funcs(struct drm_device *dev,
 			       const struct drm_framebuffer_funcs *funcs)
 {
 	const struct drm_format_info *info;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct drm_gem_object *objs[DRM_FORMAT_MAX_PLANES];
+	unsigned int i;
+	int ret;
+=======
 	struct drm_gem_object *objs[4];
 	int ret, i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct drm_gem_object *objs[DRM_FORMAT_MAX_PLANES];
+	unsigned int i;
+	int ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	info = drm_get_format_info(dev, mode_cmd);
 	if (!info) {
@@ -187,9 +239,23 @@ int drm_gem_fb_init_with_funcs(struct drm_device *dev,
 	return 0;
 
 err_gem_object_put:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	while (i > 0) {
+		--i;
+		drm_gem_object_put(objs[i]);
+	}
+=======
 	for (i--; i >= 0; i--)
 		drm_gem_object_put(objs[i]);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	while (i > 0) {
+		--i;
+		drm_gem_object_put(objs[i]);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 EXPORT_SYMBOL_GPL(drm_gem_fb_init_with_funcs);
@@ -306,6 +372,193 @@ drm_gem_fb_create_with_dirty(struct drm_device *dev, struct drm_file *file,
 }
 EXPORT_SYMBOL_GPL(drm_gem_fb_create_with_dirty);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/**
+ * drm_gem_fb_vmap - maps all framebuffer BOs into kernel address space
+ * @fb: the framebuffer
+ * @map: returns the mapping's address for each BO
+ * @data: returns the data address for each BO, can be NULL
+ *
+ * This function maps all buffer objects of the given framebuffer into
+ * kernel address space and stores them in struct dma_buf_map. If the
+ * mapping operation fails for one of the BOs, the function unmaps the
+ * already established mappings automatically.
+ *
+ * Callers that want to access a BO's stored data should pass @data.
+ * The argument returns the addresses of the data stored in each BO. This
+ * is different from @map if the framebuffer's offsets field is non-zero.
+ *
+ * See drm_gem_fb_vunmap() for unmapping.
+ *
+ * Returns:
+ * 0 on success, or a negative errno code otherwise.
+ */
+int drm_gem_fb_vmap(struct drm_framebuffer *fb,
+		    struct dma_buf_map map[static DRM_FORMAT_MAX_PLANES],
+		    struct dma_buf_map data[DRM_FORMAT_MAX_PLANES])
+{
+	struct drm_gem_object *obj;
+	unsigned int i;
+	int ret;
+
+	for (i = 0; i < DRM_FORMAT_MAX_PLANES; ++i) {
+		obj = drm_gem_fb_get_obj(fb, i);
+		if (!obj) {
+			dma_buf_map_clear(&map[i]);
+			continue;
+		}
+		ret = drm_gem_vmap(obj, &map[i]);
+		if (ret)
+			goto err_drm_gem_vunmap;
+	}
+
+	if (data) {
+		for (i = 0; i < DRM_FORMAT_MAX_PLANES; ++i) {
+			memcpy(&data[i], &map[i], sizeof(data[i]));
+			if (dma_buf_map_is_null(&data[i]))
+				continue;
+			dma_buf_map_incr(&data[i], fb->offsets[i]);
+		}
+	}
+
+	return 0;
+
+err_drm_gem_vunmap:
+	while (i) {
+		--i;
+		obj = drm_gem_fb_get_obj(fb, i);
+		if (!obj)
+			continue;
+		drm_gem_vunmap(obj, &map[i]);
+	}
+	return ret;
+}
+EXPORT_SYMBOL(drm_gem_fb_vmap);
+
+/**
+ * drm_gem_fb_vunmap - unmaps framebuffer BOs from kernel address space
+ * @fb: the framebuffer
+ * @map: mapping addresses as returned by drm_gem_fb_vmap()
+ *
+ * This function unmaps all buffer objects of the given framebuffer.
+ *
+ * See drm_gem_fb_vmap() for more information.
+ */
+void drm_gem_fb_vunmap(struct drm_framebuffer *fb,
+		       struct dma_buf_map map[static DRM_FORMAT_MAX_PLANES])
+{
+	unsigned int i = DRM_FORMAT_MAX_PLANES;
+	struct drm_gem_object *obj;
+
+	while (i) {
+		--i;
+		obj = drm_gem_fb_get_obj(fb, i);
+		if (!obj)
+			continue;
+		if (dma_buf_map_is_null(&map[i]))
+			continue;
+		drm_gem_vunmap(obj, &map[i]);
+	}
+}
+EXPORT_SYMBOL(drm_gem_fb_vunmap);
+
+/**
+ * drm_gem_fb_begin_cpu_access - prepares GEM buffer objects for CPU access
+ * @fb: the framebuffer
+ * @dir: access mode
+ *
+ * Prepares a framebuffer's GEM buffer objects for CPU access. This function
+ * must be called before accessing the BO data within the kernel. For imported
+ * BOs, the function calls dma_buf_begin_cpu_access().
+ *
+ * See drm_gem_fb_end_cpu_access() for signalling the end of CPU access.
+ *
+ * Returns:
+ * 0 on success, or a negative errno code otherwise.
+ */
+int drm_gem_fb_begin_cpu_access(struct drm_framebuffer *fb, enum dma_data_direction dir)
+{
+	struct dma_buf_attachment *import_attach;
+	struct drm_gem_object *obj;
+	size_t i;
+	int ret, ret2;
+
+	for (i = 0; i < ARRAY_SIZE(fb->obj); ++i) {
+		obj = drm_gem_fb_get_obj(fb, i);
+		if (!obj)
+			continue;
+		import_attach = obj->import_attach;
+		if (!import_attach)
+			continue;
+		ret = dma_buf_begin_cpu_access(import_attach->dmabuf, dir);
+		if (ret)
+			goto err_dma_buf_end_cpu_access;
+	}
+
+	return 0;
+
+err_dma_buf_end_cpu_access:
+	while (i) {
+		--i;
+		obj = drm_gem_fb_get_obj(fb, i);
+		if (!obj)
+			continue;
+		import_attach = obj->import_attach;
+		if (!import_attach)
+			continue;
+		ret2 = dma_buf_end_cpu_access(import_attach->dmabuf, dir);
+		if (ret2) {
+			drm_err(fb->dev,
+				"dma_buf_end_cpu_access() failed during error handling: %d\n",
+				ret2);
+		}
+	}
+
+	return ret;
+}
+EXPORT_SYMBOL(drm_gem_fb_begin_cpu_access);
+
+/**
+ * drm_gem_fb_end_cpu_access - signals end of CPU access to GEM buffer objects
+ * @fb: the framebuffer
+ * @dir: access mode
+ *
+ * Signals the end of CPU access to the given framebuffer's GEM buffer objects. This
+ * function must be paired with a corresponding call to drm_gem_fb_begin_cpu_access().
+ * For imported BOs, the function calls dma_buf_end_cpu_access().
+ *
+ * See also drm_gem_fb_begin_cpu_access().
+ */
+void drm_gem_fb_end_cpu_access(struct drm_framebuffer *fb, enum dma_data_direction dir)
+{
+	size_t i = ARRAY_SIZE(fb->obj);
+	struct dma_buf_attachment *import_attach;
+	struct drm_gem_object *obj;
+	int ret;
+
+	while (i) {
+		--i;
+		obj = drm_gem_fb_get_obj(fb, i);
+		if (!obj)
+			continue;
+		import_attach = obj->import_attach;
+		if (!import_attach)
+			continue;
+		ret = dma_buf_end_cpu_access(import_attach->dmabuf, dir);
+		if (ret)
+			drm_err(fb->dev, "dma_buf_end_cpu_access() failed: %d\n", ret);
+	}
+}
+EXPORT_SYMBOL(drm_gem_fb_end_cpu_access);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static __u32 drm_gem_afbc_get_bpp(struct drm_device *dev,
 				  const struct drm_mode_fb_cmd2 *mode_cmd)
 {

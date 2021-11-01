@@ -423,7 +423,15 @@ rpc_info_open(struct inode *inode, struct file *file)
 		spin_lock(&file->f_path.dentry->d_lock);
 		if (!d_unhashed(file->f_path.dentry))
 			clnt = RPC_I(inode)->private;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (clnt != NULL && refcount_inc_not_zero(&clnt->cl_count)) {
+=======
 		if (clnt != NULL && atomic_inc_not_zero(&clnt->cl_count)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (clnt != NULL && refcount_inc_not_zero(&clnt->cl_count)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			spin_unlock(&file->f_path.dentry->d_lock);
 			m->private = clnt;
 		} else {

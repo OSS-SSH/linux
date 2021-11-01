@@ -731,6 +731,14 @@ static int cdns3_gadget_ep0_queue(struct usb_ep *ep,
 		request->actual = 0;
 		priv_dev->status_completion_no_call = true;
 		priv_dev->pending_status_request = request;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		usb_gadget_set_state(&priv_dev->gadget, USB_STATE_CONFIGURED);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		usb_gadget_set_state(&priv_dev->gadget, USB_STATE_CONFIGURED);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		spin_unlock_irqrestore(&priv_dev->lock, flags);
 
 		/*

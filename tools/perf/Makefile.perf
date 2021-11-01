@@ -360,8 +360,24 @@ ifndef NO_JVMTI
 PROGRAMS += $(OUTPUT)$(LIBJVMTI)
 endif
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+DLFILTERS := dlfilter-test-api-v0.so
+DLFILTERS := $(patsubst %,$(OUTPUT)dlfilters/%,$(DLFILTERS))
+
+# what 'all' will build and 'install' will install, in perfexecdir
+ALL_PROGRAMS = $(PROGRAMS) $(SCRIPTS) $(DLFILTERS)
+=======
 # what 'all' will build and 'install' will install, in perfexecdir
 ALL_PROGRAMS = $(PROGRAMS) $(SCRIPTS)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+DLFILTERS := dlfilter-test-api-v0.so
+DLFILTERS := $(patsubst %,$(OUTPUT)dlfilters/%,$(DLFILTERS))
+
+# what 'all' will build and 'install' will install, in perfexecdir
+ALL_PROGRAMS = $(PROGRAMS) $(SCRIPTS) $(DLFILTERS)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 # what 'all' will build but not install in perfexecdir
 OTHER_PROGRAMS = $(OUTPUT)perf
@@ -780,6 +796,22 @@ $(OUTPUT)perf-read-vdsox32: perf-read-vdso.c util/find-map.c
 	$(QUIET_CC)$(CC) -mx32 $(filter -static,$(LDFLAGS)) -Wall -Werror -o $@ perf-read-vdso.c
 endif
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+$(OUTPUT)dlfilters/%.o: dlfilters/%.c include/perf/perf_dlfilter.h
+	$(Q)$(MKDIR) -p $(OUTPUT)dlfilters
+	$(QUIET_CC)$(CC) -c -Iinclude $(EXTRA_CFLAGS) -o $@ -fpic $<
+
+$(OUTPUT)dlfilters/%.so: $(OUTPUT)dlfilters/%.o
+	$(QUIET_LINK)$(CC) $(EXTRA_CFLAGS) -shared -o $@ $<
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ifndef NO_JVMTI
 LIBJVMTI_IN := $(OUTPUT)jvmti/jvmti-in.o
 
@@ -792,7 +824,15 @@ endif
 
 $(patsubst perf-%,%.o,$(PROGRAMS)): $(wildcard */*.h)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+LIBTRACEEVENT_FLAGS += plugin_dir=$(plugindir_SQ) 'EXTRA_CFLAGS=$(EXTRA_CFLAGS)' 'LDFLAGS=$(filter-out -static,$(LDFLAGS))'
+=======
 LIBTRACEEVENT_FLAGS += plugin_dir=$(plugindir_SQ) 'EXTRA_CFLAGS=$(EXTRA_CFLAGS)' 'LDFLAGS=$(LDFLAGS)'
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+LIBTRACEEVENT_FLAGS += plugin_dir=$(plugindir_SQ) 'EXTRA_CFLAGS=$(EXTRA_CFLAGS)' 'LDFLAGS=$(filter-out -static,$(LDFLAGS))'
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 $(LIBTRACEEVENT): FORCE
 	$(Q)$(MAKE) -C $(TRACE_EVENT_DIR) $(LIBTRACEEVENT_FLAGS) O=$(OUTPUT) $(OUTPUT)libtraceevent.a
@@ -925,7 +965,15 @@ install-tools: all install-gtk
 		$(INSTALL) $(OUTPUT)perf '$(DESTDIR_SQ)$(bindir_SQ)'; \
 		$(LN) '$(DESTDIR_SQ)$(bindir_SQ)/perf' '$(DESTDIR_SQ)$(bindir_SQ)/trace'; \
 		$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(includedir_SQ)/perf'; \
+<<<<<<< HEAD
+<<<<<<< HEAD
+		$(INSTALL) -m 644 include/perf/perf_dlfilter.h -t '$(DESTDIR_SQ)$(includedir_SQ)/perf'
+=======
 		$(INSTALL) util/perf_dlfilter.h -t '$(DESTDIR_SQ)$(includedir_SQ)/perf'
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		$(INSTALL) -m 644 include/perf/perf_dlfilter.h -t '$(DESTDIR_SQ)$(includedir_SQ)/perf'
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 ifndef NO_PERF_READ_VDSO32
 	$(call QUIET_INSTALL, perf-read-vdso32) \
 		$(INSTALL) $(OUTPUT)perf-read-vdso32 '$(DESTDIR_SQ)$(bindir_SQ)';
@@ -978,6 +1026,18 @@ ifndef NO_LIBPYTHON
 		$(INSTALL) scripts/python/*.py -m 644 -t '$(DESTDIR_SQ)$(perfexec_instdir_SQ)/scripts/python'; \
 		$(INSTALL) scripts/python/bin/* -t '$(DESTDIR_SQ)$(perfexec_instdir_SQ)/scripts/python/bin'
 endif
+<<<<<<< HEAD
+<<<<<<< HEAD
+	$(call QUIET_INSTALL, dlfilters) \
+		$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(perfexec_instdir_SQ)/dlfilters'; \
+		$(INSTALL) $(DLFILTERS) '$(DESTDIR_SQ)$(perfexec_instdir_SQ)/dlfilters';
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	$(call QUIET_INSTALL, dlfilters) \
+		$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(perfexec_instdir_SQ)/dlfilters'; \
+		$(INSTALL) $(DLFILTERS) '$(DESTDIR_SQ)$(perfexec_instdir_SQ)/dlfilters';
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	$(call QUIET_INSTALL, perf_completion-script) \
 		$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(sysconfdir_SQ)/bash_completion.d'; \
 		$(INSTALL) perf-completion.sh '$(DESTDIR_SQ)$(sysconfdir_SQ)/bash_completion.d/perf'

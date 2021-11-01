@@ -31,8 +31,18 @@ REALMODE_CFLAGS	:= -m16 -g -Os -DDISABLE_BRANCH_PROFILING \
 
 REALMODE_CFLAGS += -ffreestanding
 REALMODE_CFLAGS += -fno-stack-protector
+<<<<<<< HEAD
+<<<<<<< HEAD
+REALMODE_CFLAGS += -Wno-address-of-packed-member
+REALMODE_CFLAGS += $(cc_stack_align4)
+=======
 REALMODE_CFLAGS += $(call __cc-option, $(CC), $(REALMODE_CFLAGS), -Wno-address-of-packed-member)
 REALMODE_CFLAGS += $(call __cc-option, $(CC), $(REALMODE_CFLAGS), $(cc_stack_align4))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+REALMODE_CFLAGS += -Wno-address-of-packed-member
+REALMODE_CFLAGS += $(cc_stack_align4)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 REALMODE_CFLAGS += $(CLANG_FLAGS)
 export REALMODE_CFLAGS
 
@@ -48,8 +58,16 @@ export BITS
 #
 #    https://gcc.gnu.org/bugzilla/show_bug.cgi?id=53383
 #
+<<<<<<< HEAD
+<<<<<<< HEAD
+KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
+=======
 KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow
 KBUILD_CFLAGS += $(call cc-option,-mno-avx,)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+KBUILD_CFLAGS += -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 # Intel CET isn't enabled in the kernel
 KBUILD_CFLAGS += $(call cc-option,-fcf-protection=none)
@@ -59,9 +77,19 @@ ifeq ($(CONFIG_X86_32),y)
         UTS_MACHINE := i386
         CHECKFLAGS += -D__i386__
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+        KBUILD_AFLAGS += -m32
+        KBUILD_CFLAGS += -m32
+=======
         biarch := $(call cc-option,-m32)
         KBUILD_AFLAGS += $(biarch)
         KBUILD_CFLAGS += $(biarch)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        KBUILD_AFLAGS += -m32
+        KBUILD_CFLAGS += -m32
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
         KBUILD_CFLAGS += -msoft-float -mregparm=3 -freg-struct-return
 
@@ -72,10 +100,24 @@ ifeq ($(CONFIG_X86_32),y)
         # Align the stack to the register width instead of using the default
         # alignment of 16 bytes. This reduces stack usage and the number of
         # alignment instructions.
+<<<<<<< HEAD
+<<<<<<< HEAD
+        KBUILD_CFLAGS += $(cc_stack_align4)
+
+        # CPU-specific tuning. Anything which can be shared with UML should go here.
+        include $(srctree)/arch/x86/Makefile_32.cpu
+=======
         KBUILD_CFLAGS += $(call cc-option,$(cc_stack_align4))
 
         # CPU-specific tuning. Anything which can be shared with UML should go here.
         include arch/x86/Makefile_32.cpu
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        KBUILD_CFLAGS += $(cc_stack_align4)
+
+        # CPU-specific tuning. Anything which can be shared with UML should go here.
+        include $(srctree)/arch/x86/Makefile_32.cpu
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         KBUILD_CFLAGS += $(cflags-y)
 
         # temporary until string.h is fixed
@@ -93,7 +135,13 @@ else
         UTS_MACHINE := x86_64
         CHECKFLAGS += -D__x86_64__
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
         biarch := -m64
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         KBUILD_AFLAGS += -m64
         KBUILD_CFLAGS += -m64
 
@@ -104,7 +152,15 @@ else
         KBUILD_CFLAGS += $(call cc-option,-falign-loops=1)
 
         # Don't autogenerate traditional x87 instructions
+<<<<<<< HEAD
+<<<<<<< HEAD
+        KBUILD_CFLAGS += -mno-80387
+=======
         KBUILD_CFLAGS += $(call cc-option,-mno-80387)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        KBUILD_CFLAGS += -mno-80387
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         KBUILD_CFLAGS += $(call cc-option,-mno-fp-ret-in-387)
 
         # By default gcc and clang use a stack alignment of 16 bytes for x86.
@@ -114,12 +170,31 @@ else
         # default alignment which keep the stack *mis*aligned.
         # Furthermore an alignment to the register width reduces stack usage
         # and the number of alignment instructions.
+<<<<<<< HEAD
+<<<<<<< HEAD
+        KBUILD_CFLAGS += $(cc_stack_align8)
+=======
         KBUILD_CFLAGS += $(call cc-option,$(cc_stack_align8))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+        KBUILD_CFLAGS += $(cc_stack_align8)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	# Use -mskip-rax-setup if supported.
 	KBUILD_CFLAGS += $(call cc-option,-mskip-rax-setup)
 
         # FIXME - should be integrated in Makefile.cpu (Makefile_32.cpu)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+        cflags-$(CONFIG_MK8)		+= -march=k8
+        cflags-$(CONFIG_MPSC)		+= -march=nocona
+        cflags-$(CONFIG_MCORE2)		+= -march=core2
+        cflags-$(CONFIG_MATOM)		+= -march=atom
+        cflags-$(CONFIG_GENERIC_CPU)	+= -mtune=generic
+<<<<<<< HEAD
+=======
         cflags-$(CONFIG_MK8) += $(call cc-option,-march=k8)
         cflags-$(CONFIG_MPSC) += $(call cc-option,-march=nocona)
 
@@ -128,6 +203,9 @@ else
 	cflags-$(CONFIG_MATOM) += $(call cc-option,-march=atom) \
 		$(call cc-option,-mtune=atom,$(call cc-option,-mtune=generic))
         cflags-$(CONFIG_GENERIC_CPU) += $(call cc-option,-mtune=generic)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
         KBUILD_CFLAGS += $(cflags-y)
 
         KBUILD_CFLAGS += -mno-red-zone
@@ -158,6 +236,9 @@ export CONFIG_X86_X32_ABI
 ifdef CONFIG_FUNCTION_GRAPH_TRACER
   ifndef CONFIG_HAVE_FENTRY
 	ACCUMULATE_OUTGOING_ARGS := 1
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
   else
     ifeq ($(call cc-option-yn, -mfentry), n)
 	ACCUMULATE_OUTGOING_ARGS := 1
@@ -170,6 +251,9 @@ ifdef CONFIG_FUNCTION_GRAPH_TRACER
         endif
 
     endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   endif
 endif
 
@@ -193,7 +277,15 @@ ifdef CONFIG_RETPOLINE
   # only been fixed starting from gcc stable version 8.4.0 and
   # onwards, but not for older ones. See gcc bug #86952.
   ifndef CONFIG_CC_IS_CLANG
+<<<<<<< HEAD
+<<<<<<< HEAD
+    KBUILD_CFLAGS += -fno-jump-tables
+=======
     KBUILD_CFLAGS += $(call cc-option,-fno-jump-tables)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    KBUILD_CFLAGS += -fno-jump-tables
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   endif
 endif
 
@@ -275,9 +367,22 @@ endif
 $(BOOT_TARGETS): vmlinux
 	$(Q)$(MAKE) $(build)=$(boot) $@
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+PHONY += install
+install:
+	$(CONFIG_SHELL) $(srctree)/$(boot)/install.sh $(KERNELRELEASE) \
+		$(KBUILD_IMAGE) System.map "$(INSTALL_PATH)"
+<<<<<<< HEAD
+=======
 PHONY += install bzlilo
 install bzlilo:
 	$(Q)$(MAKE) $(build)=$(boot) $@
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 PHONY += vdso_install
 vdso_install:

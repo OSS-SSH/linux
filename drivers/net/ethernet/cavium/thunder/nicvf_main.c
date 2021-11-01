@@ -2096,7 +2096,15 @@ static const struct net_device_ops nicvf_netdev_ops = {
 	.ndo_fix_features       = nicvf_fix_features,
 	.ndo_set_features       = nicvf_set_features,
 	.ndo_bpf		= nicvf_xdp,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl           = nicvf_ioctl,
+=======
 	.ndo_do_ioctl           = nicvf_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl           = nicvf_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_rx_mode        = nicvf_set_rx_mode,
 };
 
@@ -2130,18 +2138,32 @@ static int nicvf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		goto err_disable_device;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(48));
+=======
 	err = pci_set_dma_mask(pdev, DMA_BIT_MASK(48));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(48));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		dev_err(dev, "Unable to get usable DMA configuration\n");
 		goto err_release_regions;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(48));
 	if (err) {
 		dev_err(dev, "unable to get 48-bit DMA for consistent allocations\n");
 		goto err_release_regions;
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qcount = netif_get_num_default_rss_queues();
 
 	/* Restrict multiqset support only for host bound VFs */

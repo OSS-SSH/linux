@@ -436,7 +436,15 @@ struct tegra_pmc {
 
 static struct tegra_pmc *pmc = &(struct tegra_pmc) {
 	.base = NULL,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.suspend_mode = TEGRA_SUSPEND_NOT_READY,
+=======
 	.suspend_mode = TEGRA_SUSPEND_NONE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.suspend_mode = TEGRA_SUSPEND_NOT_READY,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline struct tegra_powergate *
@@ -1812,6 +1820,14 @@ static int tegra_pmc_parse_dt(struct tegra_pmc *pmc, struct device_node *np)
 	u32 value, values[2];
 
 	if (of_property_read_u32(np, "nvidia,suspend-mode", &value)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pmc->suspend_mode = TEGRA_SUSPEND_NONE;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pmc->suspend_mode = TEGRA_SUSPEND_NONE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		switch (value) {
 		case 0:
@@ -2785,6 +2801,20 @@ static int tegra_pmc_regmap_init(struct tegra_pmc *pmc)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void tegra_pmc_reset_suspend_mode(void *data)
+{
+	pmc->suspend_mode = TEGRA_SUSPEND_NOT_READY;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int tegra_pmc_probe(struct platform_device *pdev)
 {
 	void __iomem *base;
@@ -2803,6 +2833,20 @@ static int tegra_pmc_probe(struct platform_device *pdev)
 	if (err < 0)
 		return err;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	err = devm_add_action_or_reset(&pdev->dev, tegra_pmc_reset_suspend_mode,
+				       NULL);
+	if (err)
+		return err;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* take over the memory region from the early initialization */
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	base = devm_ioremap_resource(&pdev->dev, res);
@@ -2909,6 +2953,14 @@ static int tegra_pmc_probe(struct platform_device *pdev)
 
 	tegra_pmc_clock_register(pmc, pdev->dev.of_node);
 	platform_set_drvdata(pdev, pmc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	tegra_pm_init_suspend();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tegra_pm_init_suspend();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 

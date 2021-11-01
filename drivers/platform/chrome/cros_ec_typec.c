@@ -1054,6 +1054,9 @@ static int cros_typec_get_cmd_version(struct cros_typec_data *typec)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /* Check the EC feature flags to see if TYPEC_* features are supported. */
 static int cros_typec_feature_supported(struct cros_typec_data *typec, enum ec_feature_code feature)
 {
@@ -1072,6 +1075,9 @@ static int cros_typec_feature_supported(struct cros_typec_data *typec, enum ec_f
 	return resp.flags[feature / 32] & EC_FEATURE_MASK_1(feature);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void cros_typec_port_work(struct work_struct *work)
 {
 	struct cros_typec_data *typec = container_of(work, struct cros_typec_data, port_work);
@@ -1113,6 +1119,14 @@ MODULE_DEVICE_TABLE(of, cros_typec_of_match);
 
 static int cros_typec_probe(struct platform_device *pdev)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct cros_ec_dev *ec_dev = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct cros_ec_dev *ec_dev = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct device *dev = &pdev->dev;
 	struct cros_typec_data *typec;
 	struct ec_response_usb_pd_ports resp;
@@ -1132,10 +1146,23 @@ static int cros_typec_probe(struct platform_device *pdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ec_dev = dev_get_drvdata(&typec->ec->ec->dev);
+	typec->typec_cmd_supported = !!cros_ec_check_features(ec_dev, EC_FEATURE_TYPEC_CMD);
+	typec->needs_mux_ack = !!cros_ec_check_features(ec_dev,
+							EC_FEATURE_TYPEC_MUX_REQUIRE_AP_ACK);
+<<<<<<< HEAD
+=======
 	typec->typec_cmd_supported = !!cros_typec_feature_supported(typec,
 					EC_FEATURE_TYPEC_CMD);
 	typec->needs_mux_ack = !!cros_typec_feature_supported(typec,
 					EC_FEATURE_TYPEC_MUX_REQUIRE_AP_ACK);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = cros_typec_ec_command(typec, 0, EC_CMD_USB_PD_PORTS, NULL, 0,
 				    &resp, sizeof(resp));

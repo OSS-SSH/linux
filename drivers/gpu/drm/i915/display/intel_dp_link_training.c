@@ -206,7 +206,13 @@ int intel_dp_init_lttpr_and_dprx_caps(struct intel_dp *intel_dp)
 
 	return lttpr_count;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 EXPORT_SYMBOL(intel_dp_init_lttpr_and_dprx_caps);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static u8 dp_voltage_max(u8 preemph)
 {
@@ -849,7 +855,15 @@ intel_dp_link_train_all_phys(struct intel_dp *intel_dp,
 	}
 
 	if (ret)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = intel_dp_link_train_phy(intel_dp, crtc_state, DP_PHY_DPRX);
+=======
 		intel_dp_link_train_phy(intel_dp, crtc_state, DP_PHY_DPRX);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = intel_dp_link_train_phy(intel_dp, crtc_state, DP_PHY_DPRX);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (intel_dp->set_idle_link_train)
 		intel_dp->set_idle_link_train(intel_dp, crtc_state);

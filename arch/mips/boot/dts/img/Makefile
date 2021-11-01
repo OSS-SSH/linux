@@ -1,5 +1,13 @@
 # SPDX-License-Identifier: GPL-2.0
 dtb-$(CONFIG_FIT_IMAGE_FDT_BOSTON)	+= boston.dtb
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+dtb-$(CONFIG_FIT_IMAGE_FDT_MARDUK)	+= pistachio_marduk.dtb
+=======
 dtb-$(CONFIG_MACH_PISTACHIO)	+= pistachio_marduk.dtb
 obj-$(CONFIG_MACH_PISTACHIO)	+= pistachio_marduk.dtb.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+dtb-$(CONFIG_FIT_IMAGE_FDT_MARDUK)	+= pistachio_marduk.dtb
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

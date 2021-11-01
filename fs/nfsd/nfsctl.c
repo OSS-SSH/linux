@@ -793,7 +793,20 @@ out_close:
 		svc_xprt_put(xprt);
 	}
 out_err:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!list_empty(&nn->nfsd_serv->sv_permsocks))
+		nn->nfsd_serv->sv_nrthreads--;
+	 else
+		nfsd_destroy(net);
+<<<<<<< HEAD
+=======
 	nfsd_destroy(net);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -1545,7 +1558,15 @@ static int __init init_nfsd(void)
 		goto out_free_all;
 	return 0;
 out_free_all:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unregister_filesystem(&nfsd_fs_type);
+=======
 	unregister_pernet_subsys(&nfsd_net_ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unregister_filesystem(&nfsd_fs_type);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_free_exports:
 	remove_proc_entry("fs/nfs/exports", NULL);
 	remove_proc_entry("fs/nfs", NULL);

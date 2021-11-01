@@ -219,7 +219,15 @@ do_sigreturn(struct sigcontext __user *sc)
 
 	/* Send SIGTRAP if we're single-stepping: */
 	if (ptrace_cancel_bpt (current)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		send_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *) regs->pc,
+=======
 		send_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *) regs->pc, 0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		send_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *) regs->pc,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       current);
 	}
 	return;
@@ -247,7 +255,15 @@ do_rt_sigreturn(struct rt_sigframe __user *frame)
 
 	/* Send SIGTRAP if we're single-stepping: */
 	if (ptrace_cancel_bpt (current)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		send_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *) regs->pc,
+=======
 		send_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *) regs->pc, 0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		send_sig_fault(SIGTRAP, TRAP_BRKPT, (void __user *) regs->pc,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       current);
 	}
 	return;

@@ -71,6 +71,32 @@ struct compat_group_source_req {
 } __packed;
 
 struct compat_group_filter {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	union {
+		struct {
+			__u32				 gf_interface_aux;
+			struct __kernel_sockaddr_storage gf_group_aux
+				__aligned(4);
+			__u32				 gf_fmode_aux;
+			__u32				 gf_numsrc_aux;
+			struct __kernel_sockaddr_storage gf_slist[1]
+				__aligned(4);
+		} __packed;
+		struct {
+			__u32				 gf_interface;
+			struct __kernel_sockaddr_storage gf_group
+				__aligned(4);
+			__u32				 gf_fmode;
+			__u32				 gf_numsrc;
+			struct __kernel_sockaddr_storage gf_slist_flex[]
+				__aligned(4);
+		} __packed;
+	};
+<<<<<<< HEAD
+=======
 	__u32				 gf_interface;
 	struct __kernel_sockaddr_storage gf_group
 		__aligned(4);
@@ -78,6 +104,9 @@ struct compat_group_filter {
 	__u32				 gf_numsrc;
 	struct __kernel_sockaddr_storage gf_slist[1]
 		__aligned(4);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } __packed;
 
 #endif /* NET_COMPAT_H */

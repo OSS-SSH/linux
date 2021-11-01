@@ -293,14 +293,34 @@ static bool icmp6hdr_ok(struct sk_buff *skb)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * parse_vlan_tag - Parse vlan tag from vlan header.
+=======
  * Parse vlan tag from vlan header.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * parse_vlan_tag - Parse vlan tag from vlan header.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @skb: skb containing frame to parse
  * @key_vh: pointer to parsed vlan tag
  * @untag_vlan: should the vlan header be removed from the frame
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Return: ERROR on memory error.
+ * %0 if it encounters a non-vlan or incomplete packet.
+ * %1 after successfully parsing vlan tag.
+=======
  * Returns ERROR on memory error.
  * Returns 0 if it encounters a non-vlan or incomplete packet.
  * Returns 1 after successfully parsing vlan tag.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Return: ERROR on memory error.
+ * %0 if it encounters a non-vlan or incomplete packet.
+ * %1 after successfully parsing vlan tag.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static int parse_vlan_tag(struct sk_buff *skb, struct vlan_head *key_vh,
 			  bool untag_vlan)
@@ -532,6 +552,14 @@ static int parse_nsh(struct sk_buff *skb, struct sw_flow_key *key)
  *       L3 header
  * @key: output flow key
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Return: %0 if successful, otherwise a negative errno value.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Return: %0 if successful, otherwise a negative errno value.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
 {
@@ -748,8 +776,14 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
  *
  * The caller must ensure that skb->len >= ETH_HLEN.
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  * Returns 0 if successful, otherwise a negative errno value.
  *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Initializes @skb header fields as follows:
  *
  *    - skb->mac_header: the L2 header.
@@ -764,6 +798,16 @@ static int key_extract_l3l4(struct sk_buff *skb, struct sw_flow_key *key)
  *
  *    - skb->protocol: the type of the data starting at skb->network_header.
  *      Equals to key->eth.type.
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *
+ * Return: %0 if successful, otherwise a negative errno value.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+ * Return: %0 if successful, otherwise a negative errno value.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static int key_extract(struct sk_buff *skb, struct sw_flow_key *key)
 {

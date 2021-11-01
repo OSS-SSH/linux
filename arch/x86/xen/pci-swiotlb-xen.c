@@ -18,7 +18,15 @@
 #endif
 #include <linux/export.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int xen_swiotlb __read_mostly;
+=======
 int xen_swiotlb __read_mostly;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int xen_swiotlb __read_mostly;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * pci_xen_swiotlb_detect - set xen_swiotlb to 1 if necessary
@@ -56,7 +64,15 @@ int __init pci_xen_swiotlb_detect(void)
 	return xen_swiotlb;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void __init pci_xen_swiotlb_init(void)
+=======
 void __init pci_xen_swiotlb_init(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __init pci_xen_swiotlb_init(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (xen_swiotlb) {
 		xen_swiotlb_init_early();

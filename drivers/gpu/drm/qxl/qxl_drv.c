@@ -95,7 +95,15 @@ qxl_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &qxl_driver);
+=======
 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, "qxl");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &qxl_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto disable_pci;
 
@@ -281,10 +289,20 @@ static struct drm_driver qxl_driver = {
 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
 	.gem_prime_import_sg_table = qxl_gem_prime_import_sg_table,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.fops = &qxl_fops,
+	.ioctls = qxl_ioctls,
+=======
 	.gem_prime_mmap = qxl_gem_prime_mmap,
 	.fops = &qxl_fops,
 	.ioctls = qxl_ioctls,
 	.irq_handler = qxl_irq_handler,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.fops = &qxl_fops,
+	.ioctls = qxl_ioctls,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.name = DRIVER_NAME,
 	.desc = DRIVER_DESC,
 	.date = DRIVER_DATE,

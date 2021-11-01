@@ -647,26 +647,59 @@ static struct mv88e6xxx_region mv88e6xxx_regions[] = {
 	},
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void mv88e6xxx_teardown_devlink_regions_global(struct dsa_switch *ds)
+{
+	struct mv88e6xxx_chip *chip = ds->priv;
+=======
 static void
 mv88e6xxx_teardown_devlink_regions_global(struct mv88e6xxx_chip *chip)
 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void mv88e6xxx_teardown_devlink_regions_global(struct dsa_switch *ds)
+{
+	struct mv88e6xxx_chip *chip = ds->priv;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int i;
 
 	for (i = 0; i < ARRAY_SIZE(mv88e6xxx_regions); i++)
 		dsa_devlink_region_destroy(chip->regions[i]);
 }
 
-static void
-mv88e6xxx_teardown_devlink_regions_port(struct mv88e6xxx_chip *chip,
-					int port)
+<<<<<<< HEAD
+<<<<<<< HEAD
+void mv88e6xxx_teardown_devlink_regions_port(struct dsa_switch *ds, int port)
 {
+	struct mv88e6xxx_chip *chip = ds->priv;
+
 	dsa_devlink_region_destroy(chip->ports[port].region);
 }
 
-static int mv88e6xxx_setup_devlink_regions_port(struct dsa_switch *ds,
-						struct mv88e6xxx_chip *chip,
-						int port)
+int mv88e6xxx_setup_devlink_regions_port(struct dsa_switch *ds, int port)
 {
+	struct mv88e6xxx_chip *chip = ds->priv;
+=======
+static void
+mv88e6xxx_teardown_devlink_regions_port(struct mv88e6xxx_chip *chip,
+					int port)
+=======
+void mv88e6xxx_teardown_devlink_regions_port(struct dsa_switch *ds, int port)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct mv88e6xxx_chip *chip = ds->priv;
+
+	dsa_devlink_region_destroy(chip->ports[port].region);
+}
+
+int mv88e6xxx_setup_devlink_regions_port(struct dsa_switch *ds, int port)
+{
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct mv88e6xxx_chip *chip = ds->priv;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct devlink_region *region;
 
 	region = dsa_devlink_port_region_create(ds,
@@ -681,6 +714,13 @@ static int mv88e6xxx_setup_devlink_regions_port(struct dsa_switch *ds,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int mv88e6xxx_setup_devlink_regions_global(struct dsa_switch *ds)
+{
+	bool (*cond)(struct mv88e6xxx_chip *chip);
+	struct mv88e6xxx_chip *chip = ds->priv;
+=======
 static void
 mv88e6xxx_teardown_devlink_regions_ports(struct mv88e6xxx_chip *chip)
 {
@@ -715,6 +755,13 @@ static int mv88e6xxx_setup_devlink_regions_global(struct dsa_switch *ds,
 						  struct mv88e6xxx_chip *chip)
 {
 	bool (*cond)(struct mv88e6xxx_chip *chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int mv88e6xxx_setup_devlink_regions_global(struct dsa_switch *ds)
+{
+	bool (*cond)(struct mv88e6xxx_chip *chip);
+	struct mv88e6xxx_chip *chip = ds->priv;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct devlink_region_ops *ops;
 	struct devlink_region *region;
 	u64 size;
@@ -753,6 +800,9 @@ out:
 	return PTR_ERR(region);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 int mv88e6xxx_setup_devlink_regions(struct dsa_switch *ds)
 {
 	struct mv88e6xxx_chip *chip = ds->priv;
@@ -777,6 +827,9 @@ void mv88e6xxx_teardown_devlink_regions(struct dsa_switch *ds)
 	mv88e6xxx_teardown_devlink_regions_global(chip);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int mv88e6xxx_devlink_info_get(struct dsa_switch *ds,
 			       struct devlink_info_req *req,
 			       struct netlink_ext_ack *extack)

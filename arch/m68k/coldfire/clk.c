@@ -78,7 +78,15 @@ int clk_enable(struct clk *clk)
 	unsigned long flags;
 
 	if (!clk)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return 0;
+=======
 		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irqsave(&clk_lock, flags);
 	if ((clk->enabled++ == 0) && clk->clk_ops)

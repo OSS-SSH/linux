@@ -158,6 +158,23 @@ static size_t cfdiag_getctrset(struct cf_ctrset_entry *ctrdata, int ctrset,
 	return need;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static const u64 cpumf_ctr_ctl[CPUMF_CTR_SET_MAX] = {
+	[CPUMF_CTR_SET_BASIC]	= 0x02,
+	[CPUMF_CTR_SET_USER]	= 0x04,
+	[CPUMF_CTR_SET_CRYPTO]	= 0x08,
+	[CPUMF_CTR_SET_EXT]	= 0x01,
+	[CPUMF_CTR_SET_MT_DIAG] = 0x20,
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Read out all counter sets and save them in the provided data buffer.
  * The last 64 byte host an artificial trailer entry.
  */
@@ -745,7 +762,15 @@ static int __init cpumf_pmu_init(void)
 	if (!cf_dbg) {
 		pr_err("Registration of s390dbf(cpum_cf) failed\n");
 		return -ENOMEM;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	}
+=======
 	};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	debug_register_view(cf_dbg, &debug_sprintf_view);
 
 	cpumf_pmu.attr_groups = cpumf_cf_event_group();
@@ -1138,7 +1163,15 @@ static long cfset_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 {
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&cfset_ctrset_mutex);
 	switch (cmd) {
 	case S390_HWCTR_START:
@@ -1155,7 +1188,15 @@ static long cfset_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
 		break;
 	}
 	mutex_unlock(&cfset_ctrset_mutex);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

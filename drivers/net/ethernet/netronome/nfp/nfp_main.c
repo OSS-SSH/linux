@@ -692,7 +692,15 @@ static int nfp_pci_probe(struct pci_dev *pdev,
 		goto err_pci_disable;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	devlink = devlink_alloc(&nfp_devlink_ops, sizeof(*pf), &pdev->dev);
+=======
 	devlink = devlink_alloc(&nfp_devlink_ops, sizeof(*pf));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	devlink = devlink_alloc(&nfp_devlink_ops, sizeof(*pf), &pdev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!devlink) {
 		err = -ENOMEM;
 		goto err_rel_regions;

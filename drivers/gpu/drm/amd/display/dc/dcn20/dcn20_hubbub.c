@@ -605,6 +605,35 @@ static bool hubbub2_program_watermarks(
 	return wm_pending;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+void hubbub2_read_state(struct hubbub *hubbub, struct dcn_hubbub_state *hubbub_state)
+{
+	struct dcn20_hubbub *hubbub1 = TO_DCN20_HUBBUB(hubbub);
+
+	if (REG(DCN_VM_FAULT_ADDR_MSB))
+		hubbub_state->vm_fault_addr_msb = REG_READ(DCN_VM_FAULT_ADDR_MSB);
+
+	if (REG(DCN_VM_FAULT_ADDR_LSB))
+		hubbub_state->vm_fault_addr_msb = REG_READ(DCN_VM_FAULT_ADDR_LSB);
+
+	if (REG(DCN_VM_FAULT_CNTL))
+		REG_GET(DCN_VM_FAULT_CNTL, DCN_VM_ERROR_STATUS_MODE, &hubbub_state->vm_error_mode);
+
+	if (REG(DCN_VM_FAULT_STATUS)) {
+		 REG_GET(DCN_VM_FAULT_STATUS, DCN_VM_ERROR_STATUS, &hubbub_state->vm_error_status);
+		 REG_GET(DCN_VM_FAULT_STATUS, DCN_VM_ERROR_VMID, &hubbub_state->vm_error_vmid);
+		 REG_GET(DCN_VM_FAULT_STATUS, DCN_VM_ERROR_PIPE, &hubbub_state->vm_error_pipe);
+	}
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct hubbub_funcs hubbub2_funcs = {
 	.update_dchub = hubbub2_update_dchub,
 	.init_dchub_sys_ctx = hubbub2_init_dchub_sys_ctx,
@@ -617,6 +646,14 @@ static const struct hubbub_funcs hubbub2_funcs = {
 	.program_watermarks = hubbub2_program_watermarks,
 	.is_allow_self_refresh_enabled = hubbub1_is_allow_self_refresh_enabled,
 	.allow_self_refresh_control = hubbub1_allow_self_refresh_control,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.hubbub_read_state = hubbub2_read_state,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.hubbub_read_state = hubbub2_read_state,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 void hubbub2_construct(struct dcn20_hubbub *hubbub,

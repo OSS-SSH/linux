@@ -90,14 +90,26 @@ int gsi_trans_pool_init(struct gsi_trans_pool *pool, size_t size, u32 count,
 {
 	void *virt;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #ifdef IPA_VALIDATE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!size)
 		return -EINVAL;
 	if (count < max_alloc)
 		return -EINVAL;
 	if (!max_alloc)
 		return -EINVAL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #endif /* IPA_VALIDATE */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* By allocating a few extra entries in our pool (one less
 	 * than the maximum number that will be requested in a
@@ -140,14 +152,26 @@ int gsi_trans_pool_init_dma(struct device *dev, struct gsi_trans_pool *pool,
 	dma_addr_t addr;
 	void *virt;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #ifdef IPA_VALIDATE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!size)
 		return -EINVAL;
 	if (count < max_alloc)
 		return -EINVAL;
 	if (!max_alloc)
 		return -EINVAL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #endif /* IPA_VALIDATE */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Don't let allocations cross a power-of-two boundary */
 	size = __roundup_pow_of_two(size);
@@ -188,8 +212,18 @@ static u32 gsi_trans_pool_alloc_common(struct gsi_trans_pool *pool, u32 count)
 {
 	u32 offset;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(!count);
+	WARN_ON(count > pool->max_alloc);
+=======
 	/* assert(count > 0); */
 	/* assert(count <= pool->max_alloc); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(!count);
+	WARN_ON(count > pool->max_alloc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Allocate from beginning if wrap would occur */
 	if (count > pool->count - pool->free)
@@ -225,9 +259,22 @@ void *gsi_trans_pool_next(struct gsi_trans_pool *pool, void *element)
 {
 	void *end = pool->base + pool->count * pool->size;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	WARN_ON(element < pool->base);
+	WARN_ON(element >= end);
+	WARN_ON(pool->max_alloc != 1);
+
+<<<<<<< HEAD
+=======
 	/* assert(element >= pool->base); */
 	/* assert(element < end); */
 	/* assert(pool->max_alloc == 1); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	element += pool->size;
 
 	return element < end ? element : pool->base;
@@ -332,7 +379,17 @@ struct gsi_trans *gsi_channel_trans_alloc(struct gsi *gsi, u32 channel_id,
 	struct gsi_trans_info *trans_info;
 	struct gsi_trans *trans;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (WARN_ON(tre_count > gsi_channel_trans_tre_max(gsi, channel_id)))
+		return NULL;
+=======
 	/* assert(tre_count <= gsi_channel_trans_tre_max(gsi, channel_id)); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (WARN_ON(tre_count > gsi_channel_trans_tre_max(gsi, channel_id)))
+		return NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	trans_info = &channel->trans_info;
 
@@ -408,7 +465,15 @@ void gsi_trans_cmd_add(struct gsi_trans *trans, void *buf, u32 size,
 	u32 which = trans->used++;
 	struct scatterlist *sg;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(which >= trans->tre_count);
+=======
 	/* assert(which < trans->tre_count); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(which >= trans->tre_count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Commands are quite different from data transfer requests.
 	 * Their payloads come from a pool whose memory is allocated
@@ -441,8 +506,21 @@ int gsi_trans_page_add(struct gsi_trans *trans, struct page *page, u32 size,
 	struct scatterlist *sg = &trans->sgl[0];
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (WARN_ON(trans->tre_count != 1))
+		return -EINVAL;
+	if (WARN_ON(trans->used))
+		return -EINVAL;
+<<<<<<< HEAD
+=======
 	/* assert(trans->tre_count == 1); */
 	/* assert(!trans->used); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sg_set_page(sg, page, size, offset);
 	ret = dma_map_sg(trans->gsi->dev, sg, 1, trans->direction);
@@ -461,8 +539,21 @@ int gsi_trans_skb_add(struct gsi_trans *trans, struct sk_buff *skb)
 	u32 used;
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (WARN_ON(trans->tre_count != 1))
+		return -EINVAL;
+	if (WARN_ON(trans->used))
+		return -EINVAL;
+<<<<<<< HEAD
+=======
 	/* assert(trans->tre_count == 1); */
 	/* assert(!trans->used); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* skb->len will not be 0 (checked early) */
 	ret = skb_to_sgvec(skb, sg, 0, skb->len);
@@ -550,7 +641,15 @@ static void __gsi_trans_commit(struct gsi_trans *trans, bool ring_db)
 	u32 avail;
 	u32 i;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(!trans->used);
+=======
 	/* assert(trans->used > 0); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(!trans->used);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Consume the entries.  If we cross the end of the ring while
 	 * filling them we'll switch to the beginning to finish.

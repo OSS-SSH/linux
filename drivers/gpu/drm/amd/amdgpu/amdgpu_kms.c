@@ -341,27 +341,59 @@ static int amdgpu_firmware_info(struct drm_amdgpu_info_firmware *fw_info,
 		switch (query_fw->index) {
 		case TA_FW_TYPE_PSP_XGMI:
 			fw_info->ver = adev->psp.ta_fw_version;
-			fw_info->feature = adev->psp.ta_xgmi_ucode_version;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			fw_info->feature = adev->psp.xgmi.feature_version;
 			break;
 		case TA_FW_TYPE_PSP_RAS:
 			fw_info->ver = adev->psp.ta_fw_version;
-			fw_info->feature = adev->psp.ta_ras_ucode_version;
+			fw_info->feature = adev->psp.ras.feature_version;
 			break;
 		case TA_FW_TYPE_PSP_HDCP:
 			fw_info->ver = adev->psp.ta_fw_version;
-			fw_info->feature = adev->psp.ta_hdcp_ucode_version;
+			fw_info->feature = adev->psp.hdcp.feature_version;
 			break;
 		case TA_FW_TYPE_PSP_DTM:
 			fw_info->ver = adev->psp.ta_fw_version;
-			fw_info->feature = adev->psp.ta_dtm_ucode_version;
+			fw_info->feature = adev->psp.dtm.feature_version;
 			break;
 		case TA_FW_TYPE_PSP_RAP:
 			fw_info->ver = adev->psp.ta_fw_version;
-			fw_info->feature = adev->psp.ta_rap_ucode_version;
+			fw_info->feature = adev->psp.rap.feature_version;
 			break;
 		case TA_FW_TYPE_PSP_SECUREDISPLAY:
 			fw_info->ver = adev->psp.ta_fw_version;
+			fw_info->feature = adev->psp.securedisplay.feature_version;
+=======
+			fw_info->feature = adev->psp.ta_xgmi_ucode_version;
+=======
+			fw_info->feature = adev->psp.xgmi.feature_version;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			break;
+		case TA_FW_TYPE_PSP_RAS:
+			fw_info->ver = adev->psp.ta_fw_version;
+			fw_info->feature = adev->psp.ras.feature_version;
+			break;
+		case TA_FW_TYPE_PSP_HDCP:
+			fw_info->ver = adev->psp.ta_fw_version;
+			fw_info->feature = adev->psp.hdcp.feature_version;
+			break;
+		case TA_FW_TYPE_PSP_DTM:
+			fw_info->ver = adev->psp.ta_fw_version;
+			fw_info->feature = adev->psp.dtm.feature_version;
+			break;
+		case TA_FW_TYPE_PSP_RAP:
+			fw_info->ver = adev->psp.ta_fw_version;
+			fw_info->feature = adev->psp.rap.feature_version;
+			break;
+		case TA_FW_TYPE_PSP_SECUREDISPLAY:
+			fw_info->ver = adev->psp.ta_fw_version;
+<<<<<<< HEAD
 			fw_info->feature = adev->psp.ta_securedisplay_ucode_version;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			fw_info->feature = adev->psp.securedisplay.feature_version;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		default:
 			return -EINVAL;
@@ -374,12 +406,30 @@ static int amdgpu_firmware_info(struct drm_amdgpu_info_firmware *fw_info,
 		fw_info->feature = adev->sdma.instance[query_fw->index].feature_version;
 		break;
 	case AMDGPU_INFO_FW_SOS:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		fw_info->ver = adev->psp.sos.fw_version;
+		fw_info->feature = adev->psp.sos.feature_version;
+		break;
+	case AMDGPU_INFO_FW_ASD:
+		fw_info->ver = adev->psp.asd.fw_version;
+		fw_info->feature = adev->psp.asd.feature_version;
+=======
 		fw_info->ver = adev->psp.sos_fw_version;
 		fw_info->feature = adev->psp.sos_feature_version;
 		break;
 	case AMDGPU_INFO_FW_ASD:
 		fw_info->ver = adev->psp.asd_fw_version;
 		fw_info->feature = adev->psp.asd_feature_version;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fw_info->ver = adev->psp.sos.fw_version;
+		fw_info->feature = adev->psp.sos.feature_version;
+		break;
+	case AMDGPU_INFO_FW_ASD:
+		fw_info->ver = adev->psp.asd.fw_version;
+		fw_info->feature = adev->psp.asd.feature_version;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case AMDGPU_INFO_FW_DMCU:
 		fw_info->ver = adev->dm.dmcu_fw_version;
@@ -390,8 +440,18 @@ static int amdgpu_firmware_info(struct drm_amdgpu_info_firmware *fw_info,
 		fw_info->feature = 0;
 		break;
 	case AMDGPU_INFO_FW_TOC:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		fw_info->ver = adev->psp.toc.fw_version;
+		fw_info->feature = adev->psp.toc.feature_version;
+=======
 		fw_info->ver = adev->psp.toc_fw_version;
 		fw_info->feature = adev->psp.toc_feature_version;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fw_info->ver = adev->psp.toc.fw_version;
+		fw_info->feature = adev->psp.toc.feature_version;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		return -EINVAL;
@@ -1179,10 +1239,32 @@ int amdgpu_driver_open_kms(struct drm_device *dev, struct drm_file *file_priv)
 		pasid = 0;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	r = amdgpu_vm_init(adev, &fpriv->vm);
+	if (r)
+		goto error_pasid;
+
+	r = amdgpu_vm_set_pasid(adev, &fpriv->vm, pasid);
+	if (r)
+		goto error_vm;
+
+=======
 	r = amdgpu_vm_init(adev, &fpriv->vm, pasid);
 	if (r)
 		goto error_pasid;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	r = amdgpu_vm_init(adev, &fpriv->vm);
+	if (r)
+		goto error_pasid;
+
+	r = amdgpu_vm_set_pasid(adev, &fpriv->vm, pasid);
+	if (r)
+		goto error_vm;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fpriv->prt_va = amdgpu_vm_bo_add(adev, &fpriv->vm, NULL);
 	if (!fpriv->prt_va) {
 		r = -ENOMEM;
@@ -1210,8 +1292,22 @@ error_vm:
 	amdgpu_vm_fini(adev, &fpriv->vm);
 
 error_pasid:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (pasid) {
+		amdgpu_pasid_free(pasid);
+		amdgpu_vm_set_pasid(adev, &fpriv->vm, 0);
+	}
+=======
 	if (pasid)
 		amdgpu_pasid_free(pasid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (pasid) {
+		amdgpu_pasid_free(pasid);
+		amdgpu_vm_set_pasid(adev, &fpriv->vm, 0);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree(fpriv);
 

@@ -51,8 +51,23 @@ void platform_power_off(void)
 
 void platform_restart(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* Try software reset first. */
+	WRITE_ONCE(*(u32 *)XTFPGA_SWRST_VADDR, 0xdead);
+
+	/* If software reset did not work, flush and reset the mmu,
+	 * simulate a processor reset, and jump to the reset vector.
+	 */
+<<<<<<< HEAD
+=======
 	/* Flush and reset the mmu, simulate a processor reset, and
 	 * jump to the reset vector. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cpu_reset();
 	/* control never gets here */
 }
@@ -66,7 +81,15 @@ void __init platform_calibrate_ccount(void)
 
 #endif
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#ifdef CONFIG_USE_OF
+=======
 #ifdef CONFIG_OF
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_USE_OF
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void __init xtfpga_clk_setup(struct device_node *np)
 {
@@ -284,4 +307,12 @@ static int __init xtavnet_init(void)
  */
 arch_initcall(xtavnet_init);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#endif /* CONFIG_USE_OF */
+=======
 #endif /* CONFIG_OF */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif /* CONFIG_USE_OF */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

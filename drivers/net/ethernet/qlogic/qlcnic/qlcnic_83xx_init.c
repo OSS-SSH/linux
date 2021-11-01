@@ -1354,10 +1354,24 @@ static int qlcnic_83xx_copy_fw_file(struct qlcnic_adapter *adapter)
 	struct qlc_83xx_fw_info *fw_info = adapter->ahw->fw_info;
 	const struct firmware *fw = fw_info->fw;
 	u32 dest, *p_cache, *temp;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	__le32 *temp_le;
+	u8 data[16];
+	size_t size;
+	int i, ret;
+=======
 	int i, ret = -EIO;
 	__le32 *temp_le;
 	u8 data[16];
 	size_t size;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__le32 *temp_le;
+	u8 data[16];
+	size_t size;
+	int i, ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 addr;
 
 	temp = vzalloc(fw->size);

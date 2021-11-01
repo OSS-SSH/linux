@@ -329,6 +329,14 @@ struct usb_gadget_ops {
 	struct usb_ep *(*match_ep)(struct usb_gadget *,
 			struct usb_endpoint_descriptor *,
 			struct usb_ss_ep_comp_descriptor *);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int	(*check_config)(struct usb_gadget *gadget);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int	(*check_config)(struct usb_gadget *gadget);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -491,7 +499,15 @@ extern char *usb_get_gadget_udc_name(void);
  */
 static inline size_t usb_ep_align(struct usb_ep *ep, size_t len)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int max_packet_size = (size_t)usb_endpoint_maxp(ep->desc);
+=======
 	int max_packet_size = (size_t)usb_endpoint_maxp(ep->desc) & 0x7ff;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int max_packet_size = (size_t)usb_endpoint_maxp(ep->desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return round_up(len, max_packet_size);
 }
@@ -608,6 +624,14 @@ int usb_gadget_connect(struct usb_gadget *gadget);
 int usb_gadget_disconnect(struct usb_gadget *gadget);
 int usb_gadget_deactivate(struct usb_gadget *gadget);
 int usb_gadget_activate(struct usb_gadget *gadget);
+<<<<<<< HEAD
+<<<<<<< HEAD
+int usb_gadget_check_config(struct usb_gadget *gadget);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int usb_gadget_check_config(struct usb_gadget *gadget);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 static inline int usb_gadget_frame_number(struct usb_gadget *gadget)
 { return 0; }
@@ -631,6 +655,16 @@ static inline int usb_gadget_deactivate(struct usb_gadget *gadget)
 { return 0; }
 static inline int usb_gadget_activate(struct usb_gadget *gadget)
 { return 0; }
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline int usb_gadget_check_config(struct usb_gadget *gadget)
+{ return 0; }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int usb_gadget_check_config(struct usb_gadget *gadget)
+{ return 0; }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CONFIG_USB_GADGET */
 
 /*-------------------------------------------------------------------------*/

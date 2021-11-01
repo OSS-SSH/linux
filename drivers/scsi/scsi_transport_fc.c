@@ -3804,7 +3804,15 @@ bool fc_eh_should_retry_cmd(struct scsi_cmnd *scmd)
 	struct fc_rport *rport = starget_to_rport(scsi_target(scmd->device));
 
 	if ((rport->port_state != FC_PORTSTATE_ONLINE) &&
+<<<<<<< HEAD
+<<<<<<< HEAD
+		(scsi_cmd_to_rq(scmd)->cmd_flags & REQ_FAILFAST_TRANSPORT)) {
+=======
 		(scmd->request->cmd_flags & REQ_FAILFAST_TRANSPORT)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		(scsi_cmd_to_rq(scmd)->cmd_flags & REQ_FAILFAST_TRANSPORT)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		set_host_byte(scmd, DID_TRANSPORT_MARGINAL);
 		return false;
 	}

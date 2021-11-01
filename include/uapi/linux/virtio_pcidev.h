@@ -9,13 +9,33 @@
 
 /**
  * enum virtio_pcidev_ops - virtual PCI device operations
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @VIRTIO_PCIDEV_OP_RESERVED: reserved to catch errors
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @VIRTIO_PCIDEV_OP_RESERVED: reserved to catch errors
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @VIRTIO_PCIDEV_OP_CFG_READ: read config space, size is 1, 2, 4 or 8;
  *	the @data field should be filled in by the device (in little endian).
  * @VIRTIO_PCIDEV_OP_CFG_WRITE: write config space, size is 1, 2, 4 or 8;
  *	the @data field contains the data to write (in little endian).
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @VIRTIO_PCIDEV_OP_MMIO_READ: read BAR mem/pio, size can be variable;
+ *	the @data field should be filled in by the device (in little endian).
+ * @VIRTIO_PCIDEV_OP_MMIO_WRITE: write BAR mem/pio, size can be variable;
+=======
  * @VIRTIO_PCIDEV_OP_BAR_READ: read BAR mem/pio, size can be variable;
  *	the @data field should be filled in by the device (in little endian).
  * @VIRTIO_PCIDEV_OP_BAR_WRITE: write BAR mem/pio, size can be variable;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @VIRTIO_PCIDEV_OP_MMIO_READ: read BAR mem/pio, size can be variable;
+ *	the @data field should be filled in by the device (in little endian).
+ * @VIRTIO_PCIDEV_OP_MMIO_WRITE: write BAR mem/pio, size can be variable;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *	the @data field contains the data to write (in little endian).
  * @VIRTIO_PCIDEV_OP_MMIO_MEMSET: memset MMIO, size is variable but
  *	the @data field only has one byte (unlike @VIRTIO_PCIDEV_OP_MMIO_WRITE)

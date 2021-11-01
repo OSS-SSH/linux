@@ -104,8 +104,16 @@ void bio_integrity_free(struct bio *bio)
 	struct bio_set *bs = bio->bi_pool;
 
 	if (bip->bip_flags & BIP_BLOCK_INTEGRITY)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		kfree(bvec_virt(bip->bip_vec));
+=======
 		kfree(page_address(bip->bip_vec->bv_page) +
 		      bip->bip_vec->bv_offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		kfree(bvec_virt(bip->bip_vec));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	__bio_integrity_free(bs, bip);
 	bio->bi_integrity = NULL;
@@ -163,27 +171,55 @@ static blk_status_t bio_integrity_process(struct bio *bio,
 	struct bio_vec bv;
 	struct bio_integrity_payload *bip = bio_integrity(bio);
 	blk_status_t ret = BLK_STS_OK;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	void *prot_buf = page_address(bip->bip_vec->bv_page) +
 		bip->bip_vec->bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	iter.disk_name = bio->bi_bdev->bd_disk->disk_name;
 	iter.interval = 1 << bi->interval_exp;
 	iter.seed = proc_iter->bi_sector;
-	iter.prot_buf = prot_buf;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	iter.prot_buf = bvec_virt(bip->bip_vec);
 
 	__bio_for_each_segment(bv, bio, bviter, *proc_iter) {
-		void *kaddr = kmap_atomic(bv.bv_page);
+		void *kaddr = bvec_kmap_local(&bv);
 
-		iter.data_buf = kaddr + bv.bv_offset;
+		iter.data_buf = kaddr;
 		iter.data_size = bv.bv_len;
-
 		ret = proc_fn(&iter);
-		if (ret) {
-			kunmap_atomic(kaddr);
-			return ret;
-		}
+		kunmap_local(kaddr);
 
+		if (ret)
+			break;
+
+=======
+	iter.prot_buf = prot_buf;
+=======
+	iter.prot_buf = bvec_virt(bip->bip_vec);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	__bio_for_each_segment(bv, bio, bviter, *proc_iter) {
+		void *kaddr = bvec_kmap_local(&bv);
+
+		iter.data_buf = kaddr;
+		iter.data_size = bv.bv_len;
+		ret = proc_fn(&iter);
+		kunmap_local(kaddr);
+
+		if (ret)
+			break;
+
+<<<<<<< HEAD
 		kunmap_atomic(kaddr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return ret;
 }

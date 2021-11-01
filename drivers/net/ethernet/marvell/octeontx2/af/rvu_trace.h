@@ -1,7 +1,21 @@
 /* SPDX-License-Identifier: GPL-2.0 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Marvell RVU Admin Function driver
+ *
+ * Copyright (C) 2020 Marvell.
+ *
+=======
 /* Marvell OcteonTx2 RVU Admin Function driver tracepoints
  *
  * Copyright (C) 2020 Marvell International Ltd.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Marvell RVU Admin Function driver
+ *
+ * Copyright (C) 2020 Marvell.
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #undef TRACE_SYSTEM
@@ -14,6 +28,16 @@
 #include <linux/tracepoint.h>
 #include <linux/pci.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "mbox.h"
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "mbox.h"
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 TRACE_EVENT(otx2_msg_alloc,
 	    TP_PROTO(const struct pci_dev *pdev, u16 id, u64 size),
 	    TP_ARGS(pdev, id, size),
@@ -25,8 +49,18 @@ TRACE_EVENT(otx2_msg_alloc,
 			   __entry->id = id;
 			   __entry->size = size;
 	    ),
+<<<<<<< HEAD
+<<<<<<< HEAD
+	    TP_printk("[%s] msg:(%s) size:%lld\n", __get_str(dev),
+		      otx2_mbox_id2name(__entry->id), __entry->size)
+=======
 	    TP_printk("[%s] msg:(0x%x) size:%lld\n", __get_str(dev),
 		      __entry->id, __entry->size)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    TP_printk("[%s] msg:(%s) size:%lld\n", __get_str(dev),
+		      otx2_mbox_id2name(__entry->id), __entry->size)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 );
 
 TRACE_EVENT(otx2_msg_send,
@@ -88,8 +122,18 @@ TRACE_EVENT(otx2_msg_process,
 			   __entry->id = id;
 			   __entry->err = err;
 	    ),
+<<<<<<< HEAD
+<<<<<<< HEAD
+	    TP_printk("[%s] msg:(%s) error:%d\n", __get_str(dev),
+		      otx2_mbox_id2name(__entry->id), __entry->err)
+=======
 	    TP_printk("[%s] msg:(0x%x) error:%d\n", __get_str(dev),
 		      __entry->id, __entry->err)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    TP_printk("[%s] msg:(%s) error:%d\n", __get_str(dev),
+		      otx2_mbox_id2name(__entry->id), __entry->err)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 );
 
 #endif /* __RVU_TRACE_H */

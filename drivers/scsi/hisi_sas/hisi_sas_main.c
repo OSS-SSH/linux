@@ -185,7 +185,15 @@ static int hisi_sas_slot_index_alloc(struct hisi_hba *hisi_hba,
 	void *bitmap = hisi_hba->slot_index_tags;
 
 	if (scsi_cmnd)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return scsi_cmd_to_rq(scsi_cmnd)->tag;
+=======
 		return scsi_cmnd->request->tag;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return scsi_cmd_to_rq(scsi_cmnd)->tag;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock(&hisi_hba->lock);
 	index = find_next_zero_bit(bitmap, hisi_hba->slot_index_count,
@@ -449,7 +457,15 @@ static int hisi_sas_task_prep(struct sas_task *task,
 		unsigned int dq_index;
 		u32 blk_tag;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		blk_tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmd));
+=======
 		blk_tag = blk_mq_unique_tag(scmd->request);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		blk_tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmd));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dq_index = blk_mq_unique_tag_to_hwq(blk_tag);
 		*dq_pointer = dq = &hisi_hba->dq[dq_index];
 	} else {

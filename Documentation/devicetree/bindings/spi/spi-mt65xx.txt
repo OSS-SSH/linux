@@ -11,6 +11,14 @@ Required properties:
     - mediatek,mt8135-spi: for mt8135 platforms
     - mediatek,mt8173-spi: for mt8173 platforms
     - mediatek,mt8183-spi: for mt8183 platforms
+<<<<<<< HEAD
+<<<<<<< HEAD
+    - mediatek,mt6893-spi: for mt6893 platforms
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    - mediatek,mt6893-spi: for mt6893 platforms
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     - "mediatek,mt8192-spi", "mediatek,mt6765-spi": for mt8192 platforms
     - "mediatek,mt8195-spi", "mediatek,mt6765-spi": for mt8195 platforms
     - "mediatek,mt8516-spi", "mediatek,mt2712-spi": for mt8516 platforms

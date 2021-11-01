@@ -58,15 +58,44 @@ do {							\
 
 static inline pmd_t *pmd_alloc_one(struct mm_struct *mm, unsigned long address)
 {
-	pmd_t *pmd = NULL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pmd_t *pmd;
 	struct page *pg;
 
-	pg = alloc_pages(GFP_KERNEL | __GFP_ACCOUNT, PMD_ORDER);
-	if (pg) {
-		pgtable_pmd_page_ctor(pg);
-		pmd = (pmd_t *)page_address(pg);
-		pmd_init((unsigned long)pmd, (unsigned long)invalid_pte_table);
+	pg = alloc_pages(GFP_KERNEL_ACCOUNT, PMD_ORDER);
+	if (!pg)
+		return NULL;
+
+	if (!pgtable_pmd_page_ctor(pg)) {
+		__free_pages(pg, PMD_ORDER);
+		return NULL;
 	}
+
+	pmd = (pmd_t *)page_address(pg);
+	pmd_init((unsigned long)pmd, (unsigned long)invalid_pte_table);
+=======
+	pmd_t *pmd = NULL;
+=======
+	pmd_t *pmd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct page *pg;
+
+	pg = alloc_pages(GFP_KERNEL_ACCOUNT, PMD_ORDER);
+	if (!pg)
+		return NULL;
+
+	if (!pgtable_pmd_page_ctor(pg)) {
+		__free_pages(pg, PMD_ORDER);
+		return NULL;
+	}
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	pmd = (pmd_t *)page_address(pg);
+	pmd_init((unsigned long)pmd, (unsigned long)invalid_pte_table);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return pmd;
 }
 

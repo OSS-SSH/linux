@@ -53,6 +53,21 @@ enum amd_asic_type {
 	CHIP_RENOIR,	/* 24 */
 	CHIP_ALDEBARAN, /* 25 */
 	CHIP_NAVI10,	/* 26 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	CHIP_CYAN_SKILLFISH,	/* 27 */
+	CHIP_NAVI14,	/* 28 */
+	CHIP_NAVI12,	/* 29 */
+	CHIP_SIENNA_CICHLID,	/* 30 */
+	CHIP_NAVY_FLOUNDER,	/* 31 */
+	CHIP_VANGOGH,	/* 32 */
+	CHIP_DIMGREY_CAVEFISH,	/* 33 */
+	CHIP_BEIGE_GOBY,	/* 34 */
+	CHIP_YELLOW_CARP,	/* 35 */
+<<<<<<< HEAD
+=======
 	CHIP_NAVI14,	/* 27 */
 	CHIP_NAVI12,	/* 28 */
 	CHIP_SIENNA_CICHLID,	/* 29 */
@@ -61,6 +76,9 @@ enum amd_asic_type {
 	CHIP_DIMGREY_CAVEFISH,	/* 32 */
 	CHIP_BEIGE_GOBY,	/* 33 */
 	CHIP_YELLOW_CARP,	/* 34 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	CHIP_LAST,
 };
 

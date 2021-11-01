@@ -299,6 +299,14 @@ enum {
 	CEPH_SESSION_FLUSHMSG_ACK,
 	CEPH_SESSION_FORCE_RO,
 	CEPH_SESSION_REJECT,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	CEPH_SESSION_REQUEST_FLUSH_MDLOG,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	CEPH_SESSION_REQUEST_FLUSH_MDLOG,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 extern const char *ceph_session_op_name(int op);

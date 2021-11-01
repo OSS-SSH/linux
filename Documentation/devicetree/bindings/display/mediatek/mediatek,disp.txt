@@ -9,7 +9,15 @@ function block.
 
 All DISP device tree nodes must be siblings to the central MMSYS_CONFIG node.
 For a description of the MMSYS_CONFIG binding, see
+<<<<<<< HEAD
+<<<<<<< HEAD
+Documentation/devicetree/bindings/arm/mediatek/mediatek,mmsys.yaml.
+=======
 Documentation/devicetree/bindings/arm/mediatek/mediatek,mmsys.txt.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Documentation/devicetree/bindings/arm/mediatek/mediatek,mmsys.yaml.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 DISP function blocks
 ====================

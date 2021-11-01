@@ -332,8 +332,18 @@ extern const struct sh_pfc_soc_info r8a7791_pinmux_info;
 extern const struct sh_pfc_soc_info r8a7792_pinmux_info;
 extern const struct sh_pfc_soc_info r8a7793_pinmux_info;
 extern const struct sh_pfc_soc_info r8a7794_pinmux_info;
+<<<<<<< HEAD
+<<<<<<< HEAD
+extern const struct sh_pfc_soc_info r8a77950_pinmux_info;
+extern const struct sh_pfc_soc_info r8a77951_pinmux_info;
+=======
 extern const struct sh_pfc_soc_info r8a77950_pinmux_info __weak;
 extern const struct sh_pfc_soc_info r8a77951_pinmux_info __weak;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern const struct sh_pfc_soc_info r8a77950_pinmux_info;
+extern const struct sh_pfc_soc_info r8a77951_pinmux_info;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern const struct sh_pfc_soc_info r8a77960_pinmux_info;
 extern const struct sh_pfc_soc_info r8a77961_pinmux_info;
 extern const struct sh_pfc_soc_info r8a77965_pinmux_info;
@@ -781,6 +791,18 @@ extern const struct sh_pfc_soc_info shx3_pinmux_info;
 /*
  * Bias helpers
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+const struct pinmux_bias_reg *
+rcar_pin_to_bias_reg(const struct sh_pfc *pfc, unsigned int pin,
+		     unsigned int *bit);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+const struct pinmux_bias_reg *
+rcar_pin_to_bias_reg(const struct sh_pfc *pfc, unsigned int pin,
+		     unsigned int *bit);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 unsigned int rcar_pinmux_get_bias(struct sh_pfc *pfc, unsigned int pin);
 void rcar_pinmux_set_bias(struct sh_pfc *pfc, unsigned int pin,
 			  unsigned int bias);

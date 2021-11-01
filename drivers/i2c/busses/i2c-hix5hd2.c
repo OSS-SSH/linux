@@ -413,7 +413,15 @@ static int hix5hd2_i2c_probe(struct platform_device *pdev)
 		return PTR_ERR(priv->regs);
 
 	irq = platform_get_irq(pdev, 0);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (irq < 0)
+=======
 	if (irq <= 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (irq < 0)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return irq;
 
 	priv->clk = devm_clk_get(&pdev->dev, NULL);

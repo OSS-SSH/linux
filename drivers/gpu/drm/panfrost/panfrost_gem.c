@@ -60,7 +60,15 @@ panfrost_gem_mapping_get(struct panfrost_gem_object *bo,
 
 	mutex_lock(&bo->mappings.lock);
 	list_for_each_entry(iter, &bo->mappings.list, node) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (iter->mmu == priv->mmu) {
+=======
 		if (iter->mmu == &priv->mmu) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (iter->mmu == priv->mmu) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			kref_get(&iter->refcount);
 			mapping = iter;
 			break;
@@ -74,16 +82,32 @@ panfrost_gem_mapping_get(struct panfrost_gem_object *bo,
 static void
 panfrost_gem_teardown_mapping(struct panfrost_gem_mapping *mapping)
 {
-	struct panfrost_file_priv *priv;
-
+<<<<<<< HEAD
+<<<<<<< HEAD
 	if (mapping->active)
 		panfrost_mmu_unmap(mapping);
 
-	priv = container_of(mapping->mmu, struct panfrost_file_priv, mmu);
-	spin_lock(&priv->mm_lock);
+	spin_lock(&mapping->mmu->mm_lock);
 	if (drm_mm_node_allocated(&mapping->mmnode))
 		drm_mm_remove_node(&mapping->mmnode);
+	spin_unlock(&mapping->mmu->mm_lock);
+=======
+	struct panfrost_file_priv *priv;
+
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (mapping->active)
+		panfrost_mmu_unmap(mapping);
+
+	spin_lock(&mapping->mmu->mm_lock);
+	if (drm_mm_node_allocated(&mapping->mmnode))
+		drm_mm_remove_node(&mapping->mmnode);
+<<<<<<< HEAD
 	spin_unlock(&priv->mm_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock(&mapping->mmu->mm_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void panfrost_gem_mapping_release(struct kref *kref)
@@ -94,6 +118,14 @@ static void panfrost_gem_mapping_release(struct kref *kref)
 
 	panfrost_gem_teardown_mapping(mapping);
 	drm_gem_object_put(&mapping->obj->base.base);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	panfrost_mmu_ctx_put(mapping->mmu);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	panfrost_mmu_ctx_put(mapping->mmu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(mapping);
 }
 
@@ -143,11 +175,27 @@ int panfrost_gem_open(struct drm_gem_object *obj, struct drm_file *file_priv)
 	else
 		align = size >= SZ_2M ? SZ_2M >> PAGE_SHIFT : 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mapping->mmu = panfrost_mmu_ctx_get(priv->mmu);
+	spin_lock(&mapping->mmu->mm_lock);
+	ret = drm_mm_insert_node_generic(&mapping->mmu->mm, &mapping->mmnode,
+					 size >> PAGE_SHIFT, align, color, 0);
+	spin_unlock(&mapping->mmu->mm_lock);
+=======
 	mapping->mmu = &priv->mmu;
 	spin_lock(&priv->mm_lock);
 	ret = drm_mm_insert_node_generic(&priv->mm, &mapping->mmnode,
 					 size >> PAGE_SHIFT, align, color, 0);
 	spin_unlock(&priv->mm_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mapping->mmu = panfrost_mmu_ctx_get(priv->mmu);
+	spin_lock(&mapping->mmu->mm_lock);
+	ret = drm_mm_insert_node_generic(&mapping->mmu->mm, &mapping->mmnode,
+					 size >> PAGE_SHIFT, align, color, 0);
+	spin_unlock(&mapping->mmu->mm_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto err;
 
@@ -176,7 +224,15 @@ void panfrost_gem_close(struct drm_gem_object *obj, struct drm_file *file_priv)
 
 	mutex_lock(&bo->mappings.lock);
 	list_for_each_entry(iter, &bo->mappings.list, node) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (iter->mmu == priv->mmu) {
+=======
 		if (iter->mmu == &priv->mmu) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (iter->mmu == priv->mmu) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			mapping = iter;
 			list_del(&iter->node);
 			break;

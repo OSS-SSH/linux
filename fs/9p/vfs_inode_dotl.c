@@ -37,7 +37,20 @@ v9fs_vfs_mknod_dotl(struct user_namespace *mnt_userns, struct inode *dir,
 		    struct dentry *dentry, umode_t omode, dev_t rdev);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * v9fs_get_fsgid_for_create - Helper function to get the gid for a new object
+ * @dir_inode: The directory inode
+ *
+ * Helper function to get the gid for creating a
+<<<<<<< HEAD
+=======
  * v9fs_get_fsgid_for_create - Helper function to get the gid for creating a
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * new file system object. This checks the S_ISGID to determine the owning
  * group of the new file system object.
  */
@@ -211,12 +224,30 @@ int v9fs_open_to_dotl_flags(int flags)
 
 /**
  * v9fs_vfs_create_dotl - VFS hook to create files for 9P2000.L protocol.
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @mnt_userns: The user namespace of the mount
  * @dir: directory inode that is being created
  * @dentry:  dentry that is being deleted
  * @omode: create permissions
+ * @excl: True if the file must not yet exist
  *
  */
+=======
+=======
+ * @mnt_userns: The user namespace of the mount
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * @dir: directory inode that is being created
+ * @dentry:  dentry that is being deleted
+ * @omode: create permissions
+ * @excl: True if the file must not yet exist
+ *
+ */
+<<<<<<< HEAD
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 v9fs_vfs_create_dotl(struct user_namespace *mnt_userns, struct inode *dir,
 		     struct dentry *dentry, umode_t omode, bool excl)
@@ -361,6 +392,14 @@ err_clunk_old_fid:
 
 /**
  * v9fs_vfs_mkdir_dotl - VFS mkdir hook to create a directory
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @mnt_userns: The user namespace of the mount
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @mnt_userns: The user namespace of the mount
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dir:  inode that is being unlinked
  * @dentry: dentry that is being unlinked
  * @omode: mode for new directory
@@ -537,6 +576,14 @@ static int v9fs_mapped_iattr_valid(int iattr_valid)
 
 /**
  * v9fs_vfs_setattr_dotl - set file metadata
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @mnt_userns: The user namespace of the mount
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @mnt_userns: The user namespace of the mount
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dentry: file whose metadata to set
  * @iattr: metadata assignment structure
  *
@@ -816,6 +863,14 @@ v9fs_vfs_link_dotl(struct dentry *old_dentry, struct inode *dir,
 
 /**
  * v9fs_vfs_mknod_dotl - create a special file
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @mnt_userns: The user namespace of the mount
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @mnt_userns: The user namespace of the mount
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dir: inode destination for new link
  * @dentry: dentry for file
  * @omode: mode for creation

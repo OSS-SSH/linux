@@ -922,13 +922,38 @@ static void __init ne_add_devices(void)
 	}
 }
 
-#ifdef MODULE
-int __init init_module(void)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int __init ne_init(void)
 {
 	int retval;
-	ne_add_devices();
+
+	if (IS_MODULE(CONFIG_NE2000))
+		ne_add_devices();
+
 	retval = platform_driver_probe(&ne_driver, ne_drv_probe);
+
+	if (IS_MODULE(CONFIG_NE2000) && retval) {
+=======
+#ifdef MODULE
+int __init init_module(void)
+=======
+static int __init ne_init(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	int retval;
+
+	if (IS_MODULE(CONFIG_NE2000))
+		ne_add_devices();
+
+	retval = platform_driver_probe(&ne_driver, ne_drv_probe);
+<<<<<<< HEAD
 	if (retval) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (IS_MODULE(CONFIG_NE2000) && retval) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (io[0] == 0)
 			pr_notice("ne.c: You must supply \"io=0xNNN\""
 			       " value(s) for ISA cards.\n");
@@ -940,6 +965,12 @@ int __init init_module(void)
 	ne_loop_rm_unreg(0);
 	return retval;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+module_init(ne_init);
+
+#if !defined(MODULE) && defined(CONFIG_NETDEV_LEGACY_INIT)
+=======
 #else /* MODULE */
 static int __init ne_init(void)
 {
@@ -951,6 +982,12 @@ static int __init ne_init(void)
 }
 module_init(ne_init);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_init(ne_init);
+
+#if !defined(MODULE) && defined(CONFIG_NETDEV_LEGACY_INIT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct net_device * __init ne_probe(int unit)
 {
 	int this_dev;
@@ -991,7 +1028,15 @@ struct net_device * __init ne_probe(int unit)
 
 	return ERR_PTR(-ENODEV);
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+#endif
+=======
 #endif /* MODULE */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#endif
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void __exit ne_exit(void)
 {

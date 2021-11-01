@@ -101,8 +101,16 @@ static void _batadv_update_route(struct batadv_priv *bat_priv,
 	}
 
 	/* decrease refcount of previous best neighbor */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_neigh_node_put(curr_router);
+=======
 	if (curr_router)
 		batadv_neigh_node_put(curr_router);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_neigh_node_put(curr_router);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -128,8 +136,16 @@ void batadv_update_route(struct batadv_priv *bat_priv,
 		_batadv_update_route(bat_priv, orig_node, recv_if, neigh_node);
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_neigh_node_put(router);
+=======
 	if (router)
 		batadv_neigh_node_put(router);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_neigh_node_put(router);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -269,10 +285,20 @@ static int batadv_recv_my_icmp_packet(struct batadv_priv *bat_priv,
 		goto out;
 	}
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(primary_if);
+	batadv_orig_node_put(orig_node);
+=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 	if (orig_node)
 		batadv_orig_node_put(orig_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+	batadv_orig_node_put(orig_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree_skb(skb);
 
@@ -324,10 +350,20 @@ static int batadv_recv_icmp_ttl_exceeded(struct batadv_priv *bat_priv,
 	skb = NULL;
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(primary_if);
+	batadv_orig_node_put(orig_node);
+=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 	if (orig_node)
 		batadv_orig_node_put(orig_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+	batadv_orig_node_put(orig_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree_skb(skb);
 
@@ -425,8 +461,16 @@ int batadv_recv_icmp_packet(struct sk_buff *skb,
 	skb = NULL;
 
 put_orig_node:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_orig_node_put(orig_node);
+=======
 	if (orig_node)
 		batadv_orig_node_put(orig_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_node_put(orig_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 free_skb:
 	kfree_skb(skb);
 
@@ -513,8 +557,16 @@ batadv_last_bonding_replace(struct batadv_orig_node *orig_node,
 	orig_node->last_bonding_candidate = new_candidate;
 	spin_unlock_bh(&orig_node->neigh_list_lock);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_orig_ifinfo_put(old_candidate);
+=======
 	if (old_candidate)
 		batadv_orig_ifinfo_put(old_candidate);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_ifinfo_put(old_candidate);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -656,8 +708,16 @@ next:
 		batadv_orig_ifinfo_put(next_candidate);
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_orig_ifinfo_put(last_candidate);
+=======
 	if (last_candidate)
 		batadv_orig_ifinfo_put(last_candidate);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_ifinfo_put(last_candidate);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return router;
 }
@@ -785,10 +845,20 @@ batadv_reroute_unicast_packet(struct batadv_priv *bat_priv, struct sk_buff *skb,
 
 	ret = true;
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(primary_if);
+	batadv_orig_node_put(orig_node);
+=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 	if (orig_node)
 		batadv_orig_node_put(orig_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+	batadv_orig_node_put(orig_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -1031,8 +1101,16 @@ int batadv_recv_unicast_packet(struct sk_buff *skb,
 				    orig_node);
 
 rx_success:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		batadv_orig_node_put(orig_node);
+=======
 		if (orig_node)
 			batadv_orig_node_put(orig_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		batadv_orig_node_put(orig_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		return NET_RX_SUCCESS;
 	}
@@ -1279,7 +1357,15 @@ free_skb:
 	kfree_skb(skb);
 	ret = NET_RX_DROP;
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_orig_node_put(orig_node);
+=======
 	if (orig_node)
 		batadv_orig_node_put(orig_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_node_put(orig_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }

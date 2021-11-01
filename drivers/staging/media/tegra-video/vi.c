@@ -508,8 +508,18 @@ static int __tegra_channel_try_format(struct tegra_vi_channel *chan,
 		return -ENODEV;
 
 	sd_state = v4l2_subdev_alloc_state(subdev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_ERR(sd_state))
+		return PTR_ERR(sd_state);
+=======
 	if (!sd_state)
 		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(sd_state))
+		return PTR_ERR(sd_state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Retrieve the format information and if requested format isn't
 	 * supported, keep the current format.

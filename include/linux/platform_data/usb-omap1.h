@@ -48,6 +48,16 @@ struct omap_usb_config {
 	u32 (*usb2_init)(unsigned nwires, unsigned alt_pingroup);
 
 	int (*ocpi_enable)(void);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	void (*lb_reset)(void);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	void (*lb_reset)(void);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #endif /* __LINUX_USB_OMAP1_H */

@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Device Tree Source for the M3ULCB (R-Car Starter Kit Pro) board with R-Car M3-W+
+=======
  * Device Tree Source for the M3ULCB (R-Car Starter Kit Pro) board with R-Car
  * M3-W+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Device Tree Source for the M3ULCB (R-Car Starter Kit Pro) board with R-Car M3-W+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Copyright (C) 2020 Renesas Electronics Corp.
  */

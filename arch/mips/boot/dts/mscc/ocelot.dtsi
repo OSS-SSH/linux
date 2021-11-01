@@ -150,6 +150,53 @@
 
 				port0: port@0 {
 					reg = <0>;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+					status = "disabled";
+				};
+				port1: port@1 {
+					reg = <1>;
+					status = "disabled";
+				};
+				port2: port@2 {
+					reg = <2>;
+					status = "disabled";
+				};
+				port3: port@3 {
+					reg = <3>;
+					status = "disabled";
+				};
+				port4: port@4 {
+					reg = <4>;
+					status = "disabled";
+				};
+				port5: port@5 {
+					reg = <5>;
+					status = "disabled";
+				};
+				port6: port@6 {
+					reg = <6>;
+					status = "disabled";
+				};
+				port7: port@7 {
+					reg = <7>;
+					status = "disabled";
+				};
+				port8: port@8 {
+					reg = <8>;
+					status = "disabled";
+				};
+				port9: port@9 {
+					reg = <9>;
+					status = "disabled";
+				};
+				port10: port@10 {
+					reg = <10>;
+					status = "disabled";
+<<<<<<< HEAD
+=======
 				};
 				port1: port@1 {
 					reg = <1>;
@@ -180,6 +227,9 @@
 				};
 				port10: port@10 {
 					reg = <10>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				};
 			};
 		};

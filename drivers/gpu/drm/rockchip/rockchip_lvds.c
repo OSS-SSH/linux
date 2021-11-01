@@ -636,11 +636,21 @@ static int rockchip_lvds_bind(struct device *dev, struct device *master,
 		}
 	} else {
 		ret = drm_bridge_attach(encoder, lvds->bridge, NULL, 0);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (ret)
+			goto err_free_encoder;
+=======
 		if (ret) {
 			DRM_DEV_ERROR(drm_dev->dev,
 				      "failed to attach bridge: %d\n", ret);
 			goto err_free_encoder;
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ret)
+			goto err_free_encoder;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	pm_runtime_enable(dev);

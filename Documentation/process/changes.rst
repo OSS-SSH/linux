@@ -29,7 +29,15 @@ you probably needn't concern yourself with pcmciautils.
 ====================== ===============  ========================================
         Program        Minimal version       Command to check the version
 ====================== ===============  ========================================
+<<<<<<< HEAD
+<<<<<<< HEAD
+GNU C                  5.1              gcc --version
+=======
 GNU C                  4.9              gcc --version
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+GNU C                  5.1              gcc --version
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Clang/LLVM (optional)  10.0.1           clang --version
 GNU make               3.81             make --version
 binutils               2.23             ld -v

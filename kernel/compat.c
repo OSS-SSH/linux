@@ -269,6 +269,9 @@ get_compat_sigset(sigset_t *set, const compat_sigset_t __user *compat)
 	return 0;
 }
 EXPORT_SYMBOL_GPL(get_compat_sigset);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 /*
  * Allocate user-space memory for the duration of a single system call,
@@ -290,3 +293,6 @@ void __user *compat_alloc_user_space(unsigned long len)
 	return ptr;
 }
 EXPORT_SYMBOL_GPL(compat_alloc_user_space);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

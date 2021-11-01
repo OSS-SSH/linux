@@ -1,11 +1,25 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Marvell RVU Admin Function driver
+ *
+ * Copyright (C) 2018 Marvell.
+ *
+=======
 /* Marvell OcteonTx2 RVU Admin Function driver
+=======
+/* Marvell RVU Admin Function driver
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
- * Copyright (C) 2018 Marvell International Ltd.
+ * Copyright (C) 2018 Marvell.
  *
+<<<<<<< HEAD
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
  * published by the Free Software Foundation.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/types.h>
@@ -63,7 +77,15 @@ static u16 cgxlmac_to_pfmap(struct rvu *rvu, u8 cgx_id, u8 lmac_id)
 	return rvu->cgxlmac2pf_map[CGX_OFFSET(cgx_id) + lmac_id];
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int cgxlmac_to_pf(struct rvu *rvu, int cgx_id, int lmac_id)
+=======
 static int cgxlmac_to_pf(struct rvu *rvu, int cgx_id, int lmac_id)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int cgxlmac_to_pf(struct rvu *rvu, int cgx_id, int lmac_id)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long pfmap;
 
@@ -126,6 +148,14 @@ static int rvu_map_cgx_lmac_pf(struct rvu *rvu)
 	unsigned long lmac_bmap;
 	int size, free_pkind;
 	int cgx, lmac, iter;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int numvfs, hwvfs;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int numvfs, hwvfs;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!cgx_cnt_max)
 		return 0;
@@ -166,6 +196,16 @@ static int rvu_map_cgx_lmac_pf(struct rvu *rvu)
 			pkind->pfchan_map[free_pkind] = ((pf) & 0x3F) << 16;
 			rvu_map_cgx_nix_block(rvu, pf, cgx, lmac);
 			rvu->cgx_mapped_pfs++;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			rvu_get_pf_numvfs(rvu, pf, &numvfs, &hwvfs);
+			rvu->cgx_mapped_vfs += numvfs;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			rvu_get_pf_numvfs(rvu, pf, &numvfs, &hwvfs);
+			rvu->cgx_mapped_vfs += numvfs;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pf++;
 		}
 	}
@@ -445,7 +485,15 @@ int rvu_cgx_config_rxtx(struct rvu *rvu, u16 pcifunc, bool start)
 	u8 cgx_id, lmac_id;
 
 	if (!is_cgx_config_permitted(rvu, pcifunc))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return LMAC_AF_ERR_PERM_DENIED;
+=======
 		return -EPERM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return LMAC_AF_ERR_PERM_DENIED;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
 
@@ -454,6 +502,40 @@ int rvu_cgx_config_rxtx(struct rvu *rvu, u16 pcifunc, bool start)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+void rvu_cgx_disable_dmac_entries(struct rvu *rvu, u16 pcifunc)
+{
+	int pf = rvu_get_pf(pcifunc);
+	int i = 0, lmac_count = 0;
+	u8 max_dmac_filters;
+	u8 cgx_id, lmac_id;
+	void *cgx_dev;
+
+	if (!is_cgx_config_permitted(rvu, pcifunc))
+		return;
+
+	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
+	cgx_dev = cgx_get_pdata(cgx_id);
+	lmac_count = cgx_get_lmac_cnt(cgx_dev);
+	max_dmac_filters = MAX_DMAC_ENTRIES_PER_CGX / lmac_count;
+
+	for (i = 0; i < max_dmac_filters; i++)
+		cgx_lmac_addr_del(cgx_id, lmac_id, i);
+
+	/* As cgx_lmac_addr_del does not clear entry for index 0
+	 * so it needs to be done explicitly
+	 */
+	cgx_lmac_addr_reset(cgx_id, lmac_id);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int rvu_mbox_handler_cgx_start_rxtx(struct rvu *rvu, struct msg_req *req,
 				    struct msg_rsp *rsp)
 {
@@ -479,7 +561,15 @@ static int rvu_lmac_get_stats(struct rvu *rvu, struct msg_req *req,
 	void *cgxd;
 
 	if (!is_cgx_config_permitted(rvu, req->hdr.pcifunc))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return LMAC_AF_ERR_PERM_DENIED;
+=======
 		return -ENODEV;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return LMAC_AF_ERR_PERM_DENIED;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_idx, &lmac);
 	cgxd = rvu_cgx_pdata(cgx_idx, rvu);
@@ -533,7 +623,15 @@ int rvu_mbox_handler_cgx_fec_stats(struct rvu *rvu,
 	void *cgxd;
 
 	if (!is_cgx_config_permitted(rvu, req->hdr.pcifunc))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return LMAC_AF_ERR_PERM_DENIED;
+=======
 		return -EPERM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return LMAC_AF_ERR_PERM_DENIED;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_idx, &lmac);
 
 	cgxd = rvu_cgx_pdata(cgx_idx, rvu);
@@ -557,6 +655,72 @@ int rvu_mbox_handler_cgx_mac_addr_set(struct rvu *rvu,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int rvu_mbox_handler_cgx_mac_addr_add(struct rvu *rvu,
+				      struct cgx_mac_addr_add_req *req,
+				      struct cgx_mac_addr_add_rsp *rsp)
+{
+	int pf = rvu_get_pf(req->hdr.pcifunc);
+	u8 cgx_id, lmac_id;
+	int rc = 0;
+
+	if (!is_cgx_config_permitted(rvu, req->hdr.pcifunc))
+		return -EPERM;
+
+	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
+	rc = cgx_lmac_addr_add(cgx_id, lmac_id, req->mac_addr);
+	if (rc >= 0) {
+		rsp->index = rc;
+		return 0;
+	}
+
+	return rc;
+}
+
+int rvu_mbox_handler_cgx_mac_addr_del(struct rvu *rvu,
+				      struct cgx_mac_addr_del_req *req,
+				      struct msg_rsp *rsp)
+{
+	int pf = rvu_get_pf(req->hdr.pcifunc);
+	u8 cgx_id, lmac_id;
+
+	if (!is_cgx_config_permitted(rvu, req->hdr.pcifunc))
+		return -EPERM;
+
+	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
+	return cgx_lmac_addr_del(cgx_id, lmac_id, req->index);
+}
+
+int rvu_mbox_handler_cgx_mac_max_entries_get(struct rvu *rvu,
+					     struct msg_req *req,
+					     struct cgx_max_dmac_entries_get_rsp
+					     *rsp)
+{
+	int pf = rvu_get_pf(req->hdr.pcifunc);
+	u8 cgx_id, lmac_id;
+
+	/* If msg is received from PFs(which are not mapped to CGX LMACs)
+	 * or VF then no entries are allocated for DMAC filters at CGX level.
+	 * So returning zero.
+	 */
+	if (!is_cgx_config_permitted(rvu, req->hdr.pcifunc)) {
+		rsp->max_dmac_filters = 0;
+		return 0;
+	}
+
+	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
+	rsp->max_dmac_filters = cgx_lmac_addr_max_entries_get(cgx_id, lmac_id);
+	return 0;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int rvu_mbox_handler_cgx_mac_addr_get(struct rvu *rvu,
 				      struct cgx_mac_addr_set_or_get *req,
 				      struct cgx_mac_addr_set_or_get *rsp)
@@ -803,7 +967,15 @@ int rvu_mbox_handler_cgx_get_phy_fec_stats(struct rvu *rvu, struct msg_req *req,
 	u8 cgx_id, lmac_id;
 
 	if (!is_pf_cgxmapped(rvu, pf))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return LMAC_AF_ERR_PF_NOT_MAPPED;
+=======
 		return -EPERM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return LMAC_AF_ERR_PF_NOT_MAPPED;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
 	return cgx_get_phy_fec_stats(rvu_cgx_pdata(cgx_id, rvu), lmac_id);
@@ -953,3 +1125,39 @@ int rvu_mbox_handler_cgx_set_link_mode(struct rvu *rvu,
 	rsp->status = cgx_set_link_mode(cgxd, req->args, cgx_idx, lmac);
 	return 0;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+int rvu_mbox_handler_cgx_mac_addr_reset(struct rvu *rvu, struct msg_req *req,
+					struct msg_rsp *rsp)
+{
+	int pf = rvu_get_pf(req->hdr.pcifunc);
+	u8 cgx_id, lmac_id;
+
+	if (!is_cgx_config_permitted(rvu, req->hdr.pcifunc))
+		return LMAC_AF_ERR_PERM_DENIED;
+
+	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
+	return cgx_lmac_addr_reset(cgx_id, lmac_id);
+}
+
+int rvu_mbox_handler_cgx_mac_addr_update(struct rvu *rvu,
+					 struct cgx_mac_addr_update_req *req,
+					 struct msg_rsp *rsp)
+{
+	int pf = rvu_get_pf(req->hdr.pcifunc);
+	u8 cgx_id, lmac_id;
+
+	if (!is_cgx_config_permitted(rvu, req->hdr.pcifunc))
+		return LMAC_AF_ERR_PERM_DENIED;
+
+	rvu_get_cgx_lmac_id(rvu->pf2cgxlmac_map[pf], &cgx_id, &lmac_id);
+	return cgx_lmac_addr_update(cgx_id, lmac_id, req->mac_addr, req->index);
+}
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

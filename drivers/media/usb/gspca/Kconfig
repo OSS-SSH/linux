@@ -4,7 +4,13 @@ menuconfig USB_GSPCA
 	depends on VIDEO_V4L2
 	depends on INPUT || INPUT=n
 	select VIDEOBUF2_VMALLOC
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	default m
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say Y here if you want to enable selecting webcams based
 	  on the GSPCA framework.

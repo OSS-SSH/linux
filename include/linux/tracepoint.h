@@ -475,7 +475,15 @@ static inline struct tracepoint *tracepoint_ptr_deref(tracepoint_ptr_t *p)
  *	*
  *	* The declared 'local variable' is called '__entry'
  *	*
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *	* __field(pid_t, prev_pid) is equivalent to a standard declaration:
+=======
  *	* __field(pid_t, prev_prid) is equivalent to a standard declaration:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *	* __field(pid_t, prev_pid) is equivalent to a standard declaration:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *	*
  *	*	pid_t	prev_pid;
  *	*

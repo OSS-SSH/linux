@@ -951,6 +951,25 @@ static void nfqnl_nf_hook_drop(struct net *net)
 	struct nfnl_queue_net *q = nfnl_queue_pernet(net);
 	int i;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* This function is also called on net namespace error unwind,
+	 * when pernet_ops->init() failed and ->exit() functions of the
+	 * previous pernet_ops gets called.
+	 *
+	 * This may result in a call to nfqnl_nf_hook_drop() before
+	 * struct nfnl_queue_net was allocated.
+	 */
+	if (!q)
+		return;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < INSTANCE_BUCKETS; i++) {
 		struct nfqnl_instance *inst;
 		struct hlist_head *head = &q->instance_table[i];
@@ -1502,7 +1521,13 @@ static int __net_init nfnl_queue_net_init(struct net *net)
 			&nfqnl_seq_ops, sizeof(struct iter_state)))
 		return -ENOMEM;
 #endif
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	nf_register_queue_handler(net, &nfqh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1511,7 +1536,13 @@ static void __net_exit nfnl_queue_net_exit(struct net *net)
 	struct nfnl_queue_net *q = nfnl_queue_pernet(net);
 	unsigned int i;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	nf_unregister_queue_handler(net);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_PROC_FS
 	remove_proc_entry("nfnetlink_queue", net->nf.proc_netfilter);
 #endif
@@ -1555,6 +1586,16 @@ static int __init nfnetlink_queue_init(void)
 		goto cleanup_netlink_subsys;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	nf_register_queue_handler(&nfqh);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nf_register_queue_handler(&nfqh);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return status;
 
 cleanup_netlink_subsys:
@@ -1568,6 +1609,14 @@ out:
 
 static void __exit nfnetlink_queue_fini(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	nf_unregister_queue_handler();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nf_unregister_queue_handler();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unregister_netdevice_notifier(&nfqnl_dev_notifier);
 	nfnetlink_subsys_unregister(&nfqnl_subsys);
 	netlink_unregister_notifier(&nfqnl_rtnl_notifier);

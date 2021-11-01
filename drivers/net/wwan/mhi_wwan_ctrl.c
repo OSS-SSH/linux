@@ -41,14 +41,30 @@ struct mhi_wwan_dev {
 /* Increment RX budget and schedule RX refill if necessary */
 static void mhi_wwan_rx_budget_inc(struct mhi_wwan_dev *mhiwwan)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	spin_lock_bh(&mhiwwan->rx_lock);
+=======
 	spin_lock(&mhiwwan->rx_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_bh(&mhiwwan->rx_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mhiwwan->rx_budget++;
 
 	if (test_bit(MHI_WWAN_RX_REFILL, &mhiwwan->flags))
 		schedule_work(&mhiwwan->rx_refill);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	spin_unlock_bh(&mhiwwan->rx_lock);
+=======
 	spin_unlock(&mhiwwan->rx_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock_bh(&mhiwwan->rx_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Decrement RX budget if non-zero and return true on success */
@@ -56,7 +72,15 @@ static bool mhi_wwan_rx_budget_dec(struct mhi_wwan_dev *mhiwwan)
 {
 	bool ret = false;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	spin_lock_bh(&mhiwwan->rx_lock);
+=======
 	spin_lock(&mhiwwan->rx_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_bh(&mhiwwan->rx_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (mhiwwan->rx_budget) {
 		mhiwwan->rx_budget--;
@@ -64,7 +88,15 @@ static bool mhi_wwan_rx_budget_dec(struct mhi_wwan_dev *mhiwwan)
 			ret = true;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	spin_unlock_bh(&mhiwwan->rx_lock);
+=======
 	spin_unlock(&mhiwwan->rx_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_unlock_bh(&mhiwwan->rx_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -130,9 +162,21 @@ static void mhi_wwan_ctrl_stop(struct wwan_port *port)
 {
 	struct mhi_wwan_dev *mhiwwan = wwan_port_get_drvdata(port);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	spin_lock_bh(&mhiwwan->rx_lock);
+	clear_bit(MHI_WWAN_RX_REFILL, &mhiwwan->flags);
+	spin_unlock_bh(&mhiwwan->rx_lock);
+=======
 	spin_lock(&mhiwwan->rx_lock);
 	clear_bit(MHI_WWAN_RX_REFILL, &mhiwwan->flags);
 	spin_unlock(&mhiwwan->rx_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	spin_lock_bh(&mhiwwan->rx_lock);
+	clear_bit(MHI_WWAN_RX_REFILL, &mhiwwan->flags);
+	spin_unlock_bh(&mhiwwan->rx_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cancel_work_sync(&mhiwwan->rx_refill);
 

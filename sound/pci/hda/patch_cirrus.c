@@ -9,7 +9,13 @@
 #include <linux/slab.h>
 #include <linux/module.h>
 #include <sound/core.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <linux/mutex.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/pci.h>
 #include <sound/tlv.h>
 #include <sound/hda_codec.h>
@@ -21,9 +27,15 @@
 /*
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define CS42L42_HP_CH     (2U)
 #define CS42L42_HS_MIC_CH (1U)
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct cs_spec {
 	struct hda_gen_spec gen;
 
@@ -42,6 +54,9 @@ struct cs_spec {
 	/* for MBP SPDIF control */
 	int (*spdif_sw_put)(struct snd_kcontrol *kcontrol,
 			    struct snd_ctl_elem_value *ucontrol);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 	unsigned int cs42l42_hp_jack_in:1;
 	unsigned int cs42l42_mic_jack_in:1;
@@ -54,6 +69,9 @@ struct cs_spec {
 	/* verb exec op override */
 	int (*exec_verb)(struct hdac_device *dev, unsigned int cmd,
 				 unsigned int flags, unsigned int *res);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* available models with CS420x */
@@ -1239,6 +1257,9 @@ static int patch_cs4213(struct hda_codec *codec)
 	return err;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /* Cirrus Logic CS8409 HDA bridge with
  * companion codec CS42L42
  */
@@ -2296,6 +2317,9 @@ static int patch_cs8409(struct hda_codec *codec)
 	return 0;
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * patch entries
  */
@@ -2305,7 +2329,13 @@ static const struct hda_device_id snd_hda_id_cirrus[] = {
 	HDA_CODEC_ENTRY(0x10134208, "CS4208", patch_cs4208),
 	HDA_CODEC_ENTRY(0x10134210, "CS4210", patch_cs4210),
 	HDA_CODEC_ENTRY(0x10134213, "CS4213", patch_cs4213),
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	HDA_CODEC_ENTRY(0x10138409, "CS8409", patch_cs8409),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{} /* terminator */
 };
 MODULE_DEVICE_TABLE(hdaudio, snd_hda_id_cirrus);

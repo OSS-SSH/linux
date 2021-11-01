@@ -151,7 +151,15 @@ struct lirc_fh {
  * @tx_ir: transmit IR
  * @s_idle: enable/disable hardware idle mode, upon which,
  *	device doesn't interrupt host until it sees IR pulses
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @s_wideband_receiver: enable wide band receiver used for learning
+=======
  * @s_learning_mode: enable wide band receiver used for learning
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @s_wideband_receiver: enable wide band receiver used for learning
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @s_carrier_report: enable carrier reports
  * @s_filter: set the scancode filter
  * @s_wakeup_filter: set the wakeup scancode filter. If the mask is zero
@@ -218,7 +226,15 @@ struct rc_dev {
 	int				(*s_rx_carrier_range)(struct rc_dev *dev, u32 min, u32 max);
 	int				(*tx_ir)(struct rc_dev *dev, unsigned *txbuf, unsigned n);
 	void				(*s_idle)(struct rc_dev *dev, bool enable);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int				(*s_wideband_receiver)(struct rc_dev *dev, int enable);
+=======
 	int				(*s_learning_mode)(struct rc_dev *dev, int enable);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int				(*s_wideband_receiver)(struct rc_dev *dev, int enable);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int				(*s_carrier_report) (struct rc_dev *dev, int enable);
 	int				(*s_filter)(struct rc_dev *dev,
 						    struct rc_scancode_filter *filter);
@@ -313,6 +329,14 @@ struct ir_raw_event {
 #define MS_TO_US(msec)		((msec) * 1000)
 #define IR_MAX_DURATION		MS_TO_US(500)
 #define IR_DEFAULT_TIMEOUT	MS_TO_US(125)
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define IR_MAX_TIMEOUT		LIRC_VALUE_MASK
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IR_MAX_TIMEOUT		LIRC_VALUE_MASK
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void ir_raw_event_handle(struct rc_dev *dev);
 int ir_raw_event_store(struct rc_dev *dev, struct ir_raw_event *ev);

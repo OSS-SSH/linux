@@ -820,6 +820,18 @@ static int userspace_status(struct dm_dirty_log *log, status_type_t status_type,
 			DMEMIT("integrated_flush ");
 		DMEMIT("%s ", table_args);
 		break;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case STATUSTYPE_IMA:
+		*result = '\0';
+		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case STATUSTYPE_IMA:
+		*result = '\0';
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return (r) ? 0 : (int)sz;
 }

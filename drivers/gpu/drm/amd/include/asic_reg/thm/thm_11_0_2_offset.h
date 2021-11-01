@@ -38,6 +38,18 @@
 #define mmCG_TACH_CTRL                                                                                 0x006a
 #define mmCG_TACH_CTRL_BASE_IDX                                                                        0
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define mmCG_TACH_STATUS                                                                               0x006b
+#define mmCG_TACH_STATUS_BASE_IDX                                                                      0
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define mmCG_TACH_STATUS                                                                               0x006b
+#define mmCG_TACH_STATUS_BASE_IDX                                                                      0
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define mmTHM_THERMAL_INT_ENA                                                                          0x000a
 #define mmTHM_THERMAL_INT_ENA_BASE_IDX                                                                 0
 #define mmTHM_THERMAL_INT_CTRL                                                                         0x000b
@@ -49,4 +61,16 @@
 #define mmTHM_BACO_CNTL                                                                                0x0081
 #define mmTHM_BACO_CNTL_BASE_IDX                                                                       0
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define mmCG_THERMAL_STATUS                                                                            0x006C
+#define mmCG_THERMAL_STATUS_BASE_IDX                                                                   0
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define mmCG_THERMAL_STATUS                                                                            0x006C
+#define mmCG_THERMAL_STATUS_BASE_IDX                                                                   0
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

@@ -353,7 +353,15 @@
 #       define R300_PVS_CNTL_1_PROGRAM_START_SHIFT   0
 #       define R300_PVS_CNTL_1_POS_END_SHIFT         10
 #       define R300_PVS_CNTL_1_PROGRAM_END_SHIFT     20
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* Addresses are relative the vertex program parameters area. */
+=======
 /* Addresses are relative the the vertex program parameters area. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* Addresses are relative the vertex program parameters area. */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define R300_VAP_PVS_CNTL_2                 0x22D4
 #       define R300_PVS_CNTL_2_PARAM_OFFSET_SHIFT 0
 #       define R300_PVS_CNTL_2_PARAM_COUNT_SHIFT  16

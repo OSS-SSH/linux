@@ -38,7 +38,17 @@ extern void panic(const char *fmt, ...)
 #define UM_KERN_CONT	KERN_CONT
 
 #ifdef UML_CONFIG_PRINTK
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define printk(...) _printk(__VA_ARGS__)
+extern int _printk(const char *fmt, ...)
+=======
 extern int printk(const char *fmt, ...)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define printk(...) _printk(__VA_ARGS__)
+extern int _printk(const char *fmt, ...)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__attribute__ ((format (printf, 1, 2)));
 #else
 static inline int printk(const char *fmt, ...)

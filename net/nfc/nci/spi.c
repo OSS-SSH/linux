@@ -27,7 +27,15 @@
 
 #define CRC_INIT		0xFFFF
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int __nci_spi_send(struct nci_spi *nspi, const struct sk_buff *skb,
+=======
 static int __nci_spi_send(struct nci_spi *nspi, struct sk_buff *skb,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __nci_spi_send(struct nci_spi *nspi, const struct sk_buff *skb,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  int cs_change)
 {
 	struct spi_message m;

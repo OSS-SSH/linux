@@ -78,6 +78,57 @@
 { USB_DEVICE_VENDOR_SPEC(0x041e, 0x3f19) },
 
 /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * Creative Technology, Ltd Live! Cam Sync HD [VF0770]
+ * The device advertises 8 formats, but only a rate of 48kHz is honored by the
+ * hardware and 24 bits give chopped audio, so only report the one working
+ * combination.
+ */
+{
+	USB_DEVICE(0x041e, 0x4095),
+	.driver_info = (unsigned long) &(const struct snd_usb_audio_quirk) {
+		.ifnum = QUIRK_ANY_INTERFACE,
+		.type = QUIRK_COMPOSITE,
+		.data = &(const struct snd_usb_audio_quirk[]) {
+			{
+				.ifnum = 2,
+				.type = QUIRK_AUDIO_STANDARD_MIXER,
+			},
+			{
+				.ifnum = 3,
+				.type = QUIRK_AUDIO_FIXED_ENDPOINT,
+				.data = &(const struct audioformat) {
+					.formats = SNDRV_PCM_FMTBIT_S16_LE,
+					.channels = 2,
+					.fmt_bits = 16,
+					.iface = 3,
+					.altsetting = 4,
+					.altset_idx = 4,
+					.endpoint = 0x82,
+					.ep_attr = 0x05,
+					.rates = SNDRV_PCM_RATE_48000,
+					.rate_min = 48000,
+					.rate_max = 48000,
+					.nr_rates = 1,
+					.rate_table = (unsigned int[]) { 48000 },
+				},
+			},
+			{
+				.ifnum = -1
+			},
+		},
+	},
+},
+
+/*
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * HP Wireless Audio
  * When not ignored, causes instability issues for some users, forcing them to
  * skip the entire module.
@@ -2730,6 +2781,9 @@ YAMAHA_DEVICE(0x7010, "UB99"),
 	}
 },
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /* Lenovo ThinkStation P620 Rear Line-in, Line-out and Microphone */
 {
 	USB_DEVICE(0x17aa, 0x1046),
@@ -2747,6 +2801,9 @@ YAMAHA_DEVICE(0x7010, "UB99"),
 	}
 },
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Native Instruments MK2 series */
 {
 	/* Komplete Audio 6 */
@@ -2802,6 +2859,9 @@ YAMAHA_DEVICE(0x7010, "UB99"),
 	}
 },
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /*
  * Auvitek au0828 devices with audio interface.
  * This should be kept in sync with drivers/media/usb/au0828/au0828-cards.c
@@ -2849,6 +2909,9 @@ AU0828_DEVICE(0x2040, 0x7270, "Hauppauge", "HVR-950Q"),
 	}
 },
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Digidesign Mbox */
 {
 	/* Thanks to Clemens Ladisch <clemens@ladisch.de> */
@@ -3811,7 +3874,15 @@ AU0828_DEVICE(0x2040, 0x7270, "Hauppauge", "HVR-950Q"),
  * MacroSilicon MS2109 based HDMI capture cards
  *
  * These claim 96kHz 1ch in the descriptors, but are actually 48kHz 2ch.
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * They also need QUIRK_FLAG_ALIGN_TRANSFER, which makes one wonder if
+=======
  * They also need QUIRK_AUDIO_ALIGN_TRANSFER, which makes one wonder if
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * They also need QUIRK_FLAG_ALIGN_TRANSFER, which makes one wonder if
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * they pretend to be 96kHz mono as a workaround for stereo being broken
  * by that...
  *
@@ -3828,10 +3899,16 @@ AU0828_DEVICE(0x2040, 0x7270, "Hauppauge", "HVR-950Q"),
 		.data = &(const struct snd_usb_audio_quirk[]) {
 			{
 				.ifnum = 2,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 				.type = QUIRK_AUDIO_ALIGN_TRANSFER,
 			},
 			{
 				.ifnum = 2,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				.type = QUIRK_AUDIO_STANDARD_MIXER,
 			},
 			{

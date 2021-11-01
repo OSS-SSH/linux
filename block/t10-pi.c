@@ -147,11 +147,26 @@ static void t10_pi_type1_prepare(struct request *rq)
 			break;
 
 		bip_for_each_vec(iv, bip, iter) {
-			void *p, *pmap;
+<<<<<<< HEAD
+<<<<<<< HEAD
 			unsigned int j;
+			void *p;
 
+			p = bvec_kmap_local(&iv);
+=======
+			void *p, *pmap;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			unsigned int j;
+			void *p;
+
+<<<<<<< HEAD
 			pmap = kmap_atomic(iv.bv_page);
 			p = pmap + iv.bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			p = bvec_kmap_local(&iv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			for (j = 0; j < iv.bv_len; j += tuple_sz) {
 				struct t10_pi_tuple *pi = p;
 
@@ -161,8 +176,16 @@ static void t10_pi_type1_prepare(struct request *rq)
 				ref_tag++;
 				p += tuple_sz;
 			}
+<<<<<<< HEAD
+<<<<<<< HEAD
+			kunmap_local(p);
+=======
 
 			kunmap_atomic(pmap);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			kunmap_local(p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		bip->bip_flags |= BIP_MAPPED_INTEGRITY;
@@ -195,11 +218,26 @@ static void t10_pi_type1_complete(struct request *rq, unsigned int nr_bytes)
 		struct bvec_iter iter;
 
 		bip_for_each_vec(iv, bip, iter) {
-			void *p, *pmap;
+<<<<<<< HEAD
+<<<<<<< HEAD
 			unsigned int j;
+			void *p;
 
+			p = bvec_kmap_local(&iv);
+=======
+			void *p, *pmap;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			unsigned int j;
+			void *p;
+
+<<<<<<< HEAD
 			pmap = kmap_atomic(iv.bv_page);
 			p = pmap + iv.bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			p = bvec_kmap_local(&iv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			for (j = 0; j < iv.bv_len && intervals; j += tuple_sz) {
 				struct t10_pi_tuple *pi = p;
 
@@ -210,8 +248,16 @@ static void t10_pi_type1_complete(struct request *rq, unsigned int nr_bytes)
 				intervals--;
 				p += tuple_sz;
 			}
+<<<<<<< HEAD
+<<<<<<< HEAD
+			kunmap_local(p);
+=======
 
 			kunmap_atomic(pmap);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			kunmap_local(p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }

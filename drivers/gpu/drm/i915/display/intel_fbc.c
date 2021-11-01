@@ -104,7 +104,15 @@ static void i8xx_fbc_activate(struct drm_i915_private *dev_priv)
 	int i;
 	u32 fbc_ctl;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Note: fbc.limit == 1 for i8xx */
+=======
 	/* Note: fbc.threshold == 1 for i8xx */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Note: fbc.limit == 1 for i8xx */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cfb_pitch = params->cfb_size / FBC_LL_SIZE;
 	if (params->fb.stride < cfb_pitch)
 		cfb_pitch = params->fb.stride;
@@ -148,16 +156,56 @@ static bool i8xx_fbc_is_active(struct drm_i915_private *dev_priv)
 	return intel_de_read(dev_priv, FBC_CONTROL) & FBC_CTL_EN;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static u32 g4x_dpfc_ctl_limit(struct drm_i915_private *i915)
+{
+	const struct intel_fbc_reg_params *params = &i915->fbc.params;
+	int limit = i915->fbc.limit;
+
+	if (params->fb.format->cpp[0] == 2)
+		limit <<= 1;
+
+	switch (limit) {
+	default:
+		MISSING_CASE(limit);
+		fallthrough;
+	case 1:
+		return DPFC_CTL_LIMIT_1X;
+	case 2:
+		return DPFC_CTL_LIMIT_2X;
+	case 4:
+		return DPFC_CTL_LIMIT_4X;
+	}
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void g4x_fbc_activate(struct drm_i915_private *dev_priv)
 {
 	struct intel_fbc_reg_params *params = &dev_priv->fbc.params;
 	u32 dpfc_ctl;
 
 	dpfc_ctl = DPFC_CTL_PLANE(params->crtc.i9xx_plane) | DPFC_SR_EN;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	dpfc_ctl |= g4x_dpfc_ctl_limit(dev_priv);
+=======
 	if (params->fb.format->cpp[0] == 2)
 		dpfc_ctl |= DPFC_CTL_LIMIT_2X;
 	else
 		dpfc_ctl |= DPFC_CTL_LIMIT_1X;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	dpfc_ctl |= g4x_dpfc_ctl_limit(dev_priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (params->fence_id >= 0) {
 		dpfc_ctl |= DPFC_CTL_FENCE_EN | params->fence_id;
@@ -235,12 +283,20 @@ static void ilk_fbc_activate(struct drm_i915_private *dev_priv)
 {
 	struct intel_fbc_reg_params *params = &dev_priv->fbc.params;
 	u32 dpfc_ctl;
-	int threshold = dev_priv->fbc.threshold;
+<<<<<<< HEAD
+<<<<<<< HEAD
 
 	dpfc_ctl = DPFC_CTL_PLANE(params->crtc.i9xx_plane);
-	if (params->fb.format->cpp[0] == 2)
-		threshold++;
 
+	dpfc_ctl |= g4x_dpfc_ctl_limit(dev_priv);
+=======
+	int threshold = dev_priv->fbc.threshold;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	dpfc_ctl = DPFC_CTL_PLANE(params->crtc.i9xx_plane);
+
+<<<<<<< HEAD
 	switch (threshold) {
 	case 4:
 	case 3:
@@ -253,6 +309,10 @@ static void ilk_fbc_activate(struct drm_i915_private *dev_priv)
 		dpfc_ctl |= DPFC_CTL_LIMIT_1X;
 		break;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dpfc_ctl |= g4x_dpfc_ctl_limit(dev_priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (params->fence_id >= 0) {
 		dpfc_ctl |= DPFC_CTL_FENCE_EN;
@@ -300,7 +360,13 @@ static void gen7_fbc_activate(struct drm_i915_private *dev_priv)
 {
 	struct intel_fbc_reg_params *params = &dev_priv->fbc.params;
 	u32 dpfc_ctl;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int threshold = dev_priv->fbc.threshold;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Display WA #0529: skl, kbl, bxt. */
 	if (DISPLAY_VER(dev_priv) == 9) {
@@ -318,6 +384,10 @@ static void gen7_fbc_activate(struct drm_i915_private *dev_priv)
 	if (IS_IVYBRIDGE(dev_priv))
 		dpfc_ctl |= IVB_DPFC_CTL_PLANE(params->crtc.i9xx_plane);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dpfc_ctl |= g4x_dpfc_ctl_limit(dev_priv);
+=======
 	if (params->fb.format->cpp[0] == 2)
 		threshold++;
 
@@ -333,6 +403,10 @@ static void gen7_fbc_activate(struct drm_i915_private *dev_priv)
 		dpfc_ctl |= DPFC_CTL_LIMIT_1X;
 		break;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dpfc_ctl |= g4x_dpfc_ctl_limit(dev_priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (params->fence_id >= 0) {
 		dpfc_ctl |= IVB_DPFC_CTL_FENCE_EN;
@@ -433,6 +507,11 @@ static u64 intel_fbc_cfb_base_max(struct drm_i915_private *i915)
 		return BIT_ULL(32);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static u64 intel_fbc_stolen_end(struct drm_i915_private *dev_priv)
+{
+=======
 static int find_compression_threshold(struct drm_i915_private *dev_priv,
 				      struct drm_mm_node *node,
 				      unsigned int size,
@@ -440,6 +519,11 @@ static int find_compression_threshold(struct drm_i915_private *dev_priv,
 {
 	int compression_threshold = 1;
 	int ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u64 intel_fbc_stolen_end(struct drm_i915_private *dev_priv)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 end;
 
 	/* The FBC hardware for BDW/SKL doesn't have access to the stolen
@@ -452,51 +536,148 @@ static int find_compression_threshold(struct drm_i915_private *dev_priv,
 	else
 		end = U64_MAX;
 
-	end = min(end, intel_fbc_cfb_base_max(dev_priv));
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return min(end, intel_fbc_cfb_base_max(dev_priv));
+}
 
-	/* HACK: This code depends on what we will do in *_enable_fbc. If that
-	 * code changes, this code needs to change as well.
-	 *
-	 * The enable_fbc code will attempt to use one of our 2 compression
-	 * thresholds, therefore, in that case, we only have 1 resort.
+static int intel_fbc_max_limit(struct drm_i915_private *dev_priv, int fb_cpp)
+{
+	/*
+	 * FIXME: FBC1 can have arbitrary cfb stride,
+	 * so we could support different compression ratios.
 	 */
+	if (DISPLAY_VER(dev_priv) < 5 && !IS_G4X(dev_priv))
+		return 1;
+
+	/* WaFbcOnly1to1Ratio:ctg */
+	if (IS_G4X(dev_priv))
+		return 1;
+
+	/* FBC2 can only do 1:1, 1:2, 1:4 */
+	return fb_cpp == 2 ? 2 : 4;
+}
+
+static int find_compression_limit(struct drm_i915_private *dev_priv,
+				  unsigned int size,
+				  unsigned int fb_cpp)
+{
+	struct intel_fbc *fbc = &dev_priv->fbc;
+	u64 end = intel_fbc_stolen_end(dev_priv);
+	int ret, limit = 1;
 
 	/* Try to over-allocate to reduce reallocations and fragmentation. */
-	ret = i915_gem_stolen_insert_node_in_range(dev_priv, node, size <<= 1,
-						   4096, 0, end);
+	ret = i915_gem_stolen_insert_node_in_range(dev_priv, &fbc->compressed_fb,
+						   size <<= 1, 4096, 0, end);
 	if (ret == 0)
-		return compression_threshold;
+		return limit;
 
-again:
-	/* HW's ability to limit the CFB is 1:4 */
-	if (compression_threshold > 4 ||
-	    (fb_cpp == 2 && compression_threshold == 2))
-		return 0;
-
-	ret = i915_gem_stolen_insert_node_in_range(dev_priv, node, size >>= 1,
-						   4096, 0, end);
-	if (ret && DISPLAY_VER(dev_priv) <= 4) {
-		return 0;
-	} else if (ret) {
-		compression_threshold <<= 1;
-		goto again;
-	} else {
-		return compression_threshold;
+	for (; limit <= intel_fbc_max_limit(dev_priv, fb_cpp); limit <<= 1) {
+		ret = i915_gem_stolen_insert_node_in_range(dev_priv, &fbc->compressed_fb,
+							   size >>= 1, 4096, 0, end);
+		if (ret == 0)
+			return limit;
 	}
+
+	return 0;
+=======
+	end = min(end, intel_fbc_cfb_base_max(dev_priv));
+=======
+	return min(end, intel_fbc_cfb_base_max(dev_priv));
+}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+static int intel_fbc_max_limit(struct drm_i915_private *dev_priv, int fb_cpp)
+{
+	/*
+	 * FIXME: FBC1 can have arbitrary cfb stride,
+	 * so we could support different compression ratios.
+	 */
+	if (DISPLAY_VER(dev_priv) < 5 && !IS_G4X(dev_priv))
+		return 1;
+
+	/* WaFbcOnly1to1Ratio:ctg */
+	if (IS_G4X(dev_priv))
+		return 1;
+
+	/* FBC2 can only do 1:1, 1:2, 1:4 */
+	return fb_cpp == 2 ? 2 : 4;
+}
+
+static int find_compression_limit(struct drm_i915_private *dev_priv,
+				  unsigned int size,
+				  unsigned int fb_cpp)
+{
+	struct intel_fbc *fbc = &dev_priv->fbc;
+	u64 end = intel_fbc_stolen_end(dev_priv);
+	int ret, limit = 1;
+
+	/* Try to over-allocate to reduce reallocations and fragmentation. */
+	ret = i915_gem_stolen_insert_node_in_range(dev_priv, &fbc->compressed_fb,
+						   size <<= 1, 4096, 0, end);
+	if (ret == 0)
+		return limit;
+
+	for (; limit <= intel_fbc_max_limit(dev_priv, fb_cpp); limit <<= 1) {
+		ret = i915_gem_stolen_insert_node_in_range(dev_priv, &fbc->compressed_fb,
+							   size >>= 1, 4096, 0, end);
+		if (ret == 0)
+			return limit;
+	}
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int intel_fbc_alloc_cfb(struct drm_i915_private *dev_priv,
 			       unsigned int size, unsigned int fb_cpp)
 {
 	struct intel_fbc *fbc = &dev_priv->fbc;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct drm_mm_node *compressed_llb;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	drm_WARN_ON(&dev_priv->drm,
 		    drm_mm_node_allocated(&fbc->compressed_fb));
+<<<<<<< HEAD
+<<<<<<< HEAD
+	drm_WARN_ON(&dev_priv->drm,
+		    drm_mm_node_allocated(&fbc->compressed_llb));
+
+	if (DISPLAY_VER(dev_priv) < 5 && !IS_G4X(dev_priv)) {
+		ret = i915_gem_stolen_insert_node(dev_priv, &fbc->compressed_llb,
+						  4096, 4096);
+		if (ret)
+			goto err;
+	}
+
+	ret = find_compression_limit(dev_priv, size, fb_cpp);
+=======
 
 	ret = find_compression_threshold(dev_priv, &fbc->compressed_fb,
 					 size, fb_cpp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_WARN_ON(&dev_priv->drm,
+		    drm_mm_node_allocated(&fbc->compressed_llb));
+
+	if (DISPLAY_VER(dev_priv) < 5 && !IS_G4X(dev_priv)) {
+		ret = i915_gem_stolen_insert_node(dev_priv, &fbc->compressed_llb,
+						  4096, 4096);
+		if (ret)
+			goto err;
+	}
+
+	ret = find_compression_limit(dev_priv, size, fb_cpp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ret)
 		goto err_llb;
 	else if (ret > 1) {
@@ -504,15 +685,69 @@ static int intel_fbc_alloc_cfb(struct drm_i915_private *dev_priv,
 			      "Reducing the compressed framebuffer size. This may lead to less power savings than a non-reduced-size. Try to increase stolen memory size if available in BIOS.\n");
 	}
 
-	fbc->threshold = ret;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	fbc->limit = ret;
 
-	if (DISPLAY_VER(dev_priv) >= 5)
+	drm_dbg_kms(&dev_priv->drm,
+		    "reserved %llu bytes of contiguous stolen space for FBC, limit: %d\n",
+		    fbc->compressed_fb.size, fbc->limit);
+
+	return 0;
+
+err_llb:
+	if (drm_mm_node_allocated(&fbc->compressed_llb))
+		i915_gem_stolen_remove_node(dev_priv, &fbc->compressed_llb);
+err:
+	if (drm_mm_initialized(&dev_priv->mm.stolen))
+		drm_info_once(&dev_priv->drm, "not enough stolen space for compressed buffer (need %d more bytes), disabling. Hint: you may be able to increase stolen memory size in the BIOS to avoid this.\n", size);
+	return -ENOSPC;
+}
+
+static void intel_fbc_program_cfb(struct drm_i915_private *dev_priv)
+{
+	struct intel_fbc *fbc = &dev_priv->fbc;
+
+	if (DISPLAY_VER(dev_priv) >= 5) {
 		intel_de_write(dev_priv, ILK_DPFC_CB_BASE,
 			       fbc->compressed_fb.start);
-	else if (IS_GM45(dev_priv)) {
+	} else if (IS_GM45(dev_priv)) {
 		intel_de_write(dev_priv, DPFC_CB_BASE,
 			       fbc->compressed_fb.start);
 	} else {
+=======
+	fbc->threshold = ret;
+=======
+	fbc->limit = ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	drm_dbg_kms(&dev_priv->drm,
+		    "reserved %llu bytes of contiguous stolen space for FBC, limit: %d\n",
+		    fbc->compressed_fb.size, fbc->limit);
+
+	return 0;
+
+err_llb:
+	if (drm_mm_node_allocated(&fbc->compressed_llb))
+		i915_gem_stolen_remove_node(dev_priv, &fbc->compressed_llb);
+err:
+	if (drm_mm_initialized(&dev_priv->mm.stolen))
+		drm_info_once(&dev_priv->drm, "not enough stolen space for compressed buffer (need %d more bytes), disabling. Hint: you may be able to increase stolen memory size in the BIOS to avoid this.\n", size);
+	return -ENOSPC;
+}
+
+static void intel_fbc_program_cfb(struct drm_i915_private *dev_priv)
+{
+	struct intel_fbc *fbc = &dev_priv->fbc;
+
+	if (DISPLAY_VER(dev_priv) >= 5) {
+		intel_de_write(dev_priv, ILK_DPFC_CB_BASE,
+			       fbc->compressed_fb.start);
+	} else if (IS_GM45(dev_priv)) {
+		intel_de_write(dev_priv, DPFC_CB_BASE,
+			       fbc->compressed_fb.start);
+	} else {
+<<<<<<< HEAD
 		compressed_llb = kzalloc(sizeof(*compressed_llb), GFP_KERNEL);
 		if (!compressed_llb)
 			goto err_fb;
@@ -524,17 +759,36 @@ static int intel_fbc_alloc_cfb(struct drm_i915_private *dev_priv,
 
 		fbc->compressed_llb = compressed_llb;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		GEM_BUG_ON(range_overflows_end_t(u64, dev_priv->dsm.start,
 						 fbc->compressed_fb.start,
 						 U32_MAX));
 		GEM_BUG_ON(range_overflows_end_t(u64, dev_priv->dsm.start,
-						 fbc->compressed_llb->start,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						 fbc->compressed_llb.start,
 						 U32_MAX));
+
 		intel_de_write(dev_priv, FBC_CFB_BASE,
 			       dev_priv->dsm.start + fbc->compressed_fb.start);
 		intel_de_write(dev_priv, FBC_LL_BASE,
-			       dev_priv->dsm.start + compressed_llb->start);
+			       dev_priv->dsm.start + fbc->compressed_llb.start);
 	}
+=======
+						 fbc->compressed_llb->start,
+=======
+						 fbc->compressed_llb.start,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+						 U32_MAX));
+
+		intel_de_write(dev_priv, FBC_CFB_BASE,
+			       dev_priv->dsm.start + fbc->compressed_fb.start);
+		intel_de_write(dev_priv, FBC_LL_BASE,
+			       dev_priv->dsm.start + fbc->compressed_llb.start);
+	}
+<<<<<<< HEAD
 
 	drm_dbg_kms(&dev_priv->drm,
 		    "reserved %llu bytes of contiguous stolen space for FBC, threshold: %d\n",
@@ -549,6 +803,9 @@ err_llb:
 	if (drm_mm_initialized(&dev_priv->mm.stolen))
 		drm_info_once(&dev_priv->drm, "not enough stolen space for compressed buffer (need %d more bytes), disabling. Hint: you may be able to increase stolen memory size in the BIOS to avoid this.\n", size);
 	return -ENOSPC;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __intel_fbc_cleanup_cfb(struct drm_i915_private *dev_priv)
@@ -558,6 +815,16 @@ static void __intel_fbc_cleanup_cfb(struct drm_i915_private *dev_priv)
 	if (WARN_ON(intel_fbc_hw_is_active(dev_priv)))
 		return;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (drm_mm_node_allocated(&fbc->compressed_llb))
+		i915_gem_stolen_remove_node(dev_priv, &fbc->compressed_llb);
+	if (drm_mm_node_allocated(&fbc->compressed_fb))
+		i915_gem_stolen_remove_node(dev_priv, &fbc->compressed_fb);
+<<<<<<< HEAD
+=======
 	if (!drm_mm_node_allocated(&fbc->compressed_fb))
 		return;
 
@@ -567,6 +834,9 @@ static void __intel_fbc_cleanup_cfb(struct drm_i915_private *dev_priv)
 	}
 
 	i915_gem_stolen_remove_node(dev_priv, &fbc->compressed_fb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void intel_fbc_cleanup_cfb(struct drm_i915_private *dev_priv)
@@ -753,7 +1023,15 @@ static bool intel_fbc_cfb_size_changed(struct drm_i915_private *dev_priv)
 	struct intel_fbc *fbc = &dev_priv->fbc;
 
 	return intel_fbc_calculate_cfb_size(dev_priv, &fbc->state_cache) >
+<<<<<<< HEAD
+<<<<<<< HEAD
+		fbc->compressed_fb.size * fbc->limit;
+=======
 		fbc->compressed_fb.size * fbc->threshold;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		fbc->compressed_fb.size * fbc->limit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static u16 intel_fbc_gen9_wa_cfb_stride(struct drm_i915_private *dev_priv)
@@ -763,7 +1041,15 @@ static u16 intel_fbc_gen9_wa_cfb_stride(struct drm_i915_private *dev_priv)
 
 	if ((DISPLAY_VER(dev_priv) == 9) &&
 	    cache->fb.modifier != I915_FORMAT_MOD_X_TILED)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return DIV_ROUND_UP(cache->plane.src_w, 32 * fbc->limit) * 8;
+=======
 		return DIV_ROUND_UP(cache->plane.src_w, 32 * fbc->threshold) * 8;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return DIV_ROUND_UP(cache->plane.src_w, 32 * fbc->limit) * 8;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		return 0;
 }
@@ -919,11 +1205,27 @@ static bool intel_fbc_can_activate(struct intel_crtc *crtc)
 	}
 
 	/*
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * Display 12+ is not supporting FBC with PSR2.
+	 * Recommendation is to keep this combination disabled
+	 * Bspec: 50422 HSD: 14010260002
+	 */
+	if (fbc->state_cache.psr2_active && DISPLAY_VER(dev_priv) >= 12) {
+=======
 	 * Tigerlake is not supporting FBC with PSR2.
 	 * Recommendation is to keep this combination disabled
 	 * Bspec: 50422 HSD: 14010260002
 	 */
 	if (fbc->state_cache.psr2_active && IS_TIGERLAKE(dev_priv)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * Display 12+ is not supporting FBC with PSR2.
+	 * Recommendation is to keep this combination disabled
+	 * Bspec: 50422 HSD: 14010260002
+	 */
+	if (fbc->state_cache.psr2_active && DISPLAY_VER(dev_priv) >= 12) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fbc->no_fbc_reason = "not supported with PSR2";
 		return false;
 	}
@@ -1302,6 +1604,16 @@ void intel_fbc_enable(struct intel_atomic_state *state,
 	fbc->no_fbc_reason = "FBC enabled but not active yet\n";
 
 	fbc->crtc = crtc;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	intel_fbc_program_cfb(dev_priv);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	intel_fbc_program_cfb(dev_priv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	mutex_unlock(&fbc->lock);
 }

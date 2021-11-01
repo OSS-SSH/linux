@@ -46,7 +46,15 @@ properties:
                               AM437x family of SoCs,
                               AM57xx family of SoCs
                               66AK2G family of SoCs
+<<<<<<< HEAD
+<<<<<<< HEAD
+      Use "ti,icssg-intc" for K3 AM65x, J721E and AM64x family of SoCs
+=======
       Use "ti,icssg-intc" for K3 AM65x & J721E family of SoCs
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      Use "ti,icssg-intc" for K3 AM65x, J721E and AM64x family of SoCs
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   reg:
     maxItems: 1
@@ -95,6 +103,16 @@ properties:
             - AM65x and J721E SoCs have "host_intr5", "host_intr6" and
               "host_intr7" interrupts connected to MPU, and other ICSSG
               instances.
+<<<<<<< HEAD
+<<<<<<< HEAD
+            - AM64x SoCs have all the 8 host interrupts connected to various
+              other SoC entities
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+            - AM64x SoCs have all the 8 host interrupts connected to various
+              other SoC entities
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 required:
   - compatible

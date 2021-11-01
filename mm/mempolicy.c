@@ -31,6 +31,18 @@
  *                but useful to set in a VMA when you have a non default
  *                process policy.
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * preferred many Try a set of nodes first before normal fallback. This is
+ *                similar to preferred without the special case.
+ *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * preferred many Try a set of nodes first before normal fallback. This is
+ *                similar to preferred without the special case.
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * default        Allocate on the local node first, or when on a VMA
  *                use the process policy. This is what Linux always did
  *		  in a NUMA aware kernel and still does by, ahem, default.
@@ -189,7 +201,15 @@ static void mpol_relative_nodemask(nodemask_t *ret, const nodemask_t *orig,
 	nodes_onto(*ret, tmp, *rel);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int mpol_new_nodemask(struct mempolicy *pol, const nodemask_t *nodes)
+=======
 static int mpol_new_interleave(struct mempolicy *pol, const nodemask_t *nodes)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int mpol_new_nodemask(struct mempolicy *pol, const nodemask_t *nodes)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (nodes_empty(*nodes))
 		return -EINVAL;
@@ -207,6 +227,9 @@ static int mpol_new_preferred(struct mempolicy *pol, const nodemask_t *nodes)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static int mpol_new_bind(struct mempolicy *pol, const nodemask_t *nodes)
 {
 	if (nodes_empty(*nodes))
@@ -215,6 +238,9 @@ static int mpol_new_bind(struct mempolicy *pol, const nodemask_t *nodes)
 	return 0;
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * mpol_set_nodemask is called after mpol_new() to set up the nodemask, if
  * any, for the new policy.  mpol_new() has already validated the nodes
@@ -394,7 +420,15 @@ static const struct mempolicy_operations mpol_ops[MPOL_MAX] = {
 		.rebind = mpol_rebind_default,
 	},
 	[MPOL_INTERLEAVE] = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		.create = mpol_new_nodemask,
+=======
 		.create = mpol_new_interleave,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.create = mpol_new_nodemask,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.rebind = mpol_rebind_nodemask,
 	},
 	[MPOL_PREFERRED] = {
@@ -402,12 +436,33 @@ static const struct mempolicy_operations mpol_ops[MPOL_MAX] = {
 		.rebind = mpol_rebind_preferred,
 	},
 	[MPOL_BIND] = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		.create = mpol_new_nodemask,
+=======
 		.create = mpol_new_bind,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		.create = mpol_new_nodemask,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.rebind = mpol_rebind_nodemask,
 	},
 	[MPOL_LOCAL] = {
 		.rebind = mpol_rebind_default,
 	},
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	[MPOL_PREFERRED_MANY] = {
+		.create = mpol_new_nodemask,
+		.rebind = mpol_rebind_preferred,
+	},
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int migrate_page_add(struct page *page, struct list_head *pagelist,
@@ -900,6 +955,14 @@ static void get_policy_nodemask(struct mempolicy *p, nodemask_t *nodes)
 	case MPOL_BIND:
 	case MPOL_INTERLEAVE:
 	case MPOL_PREFERRED:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case MPOL_PREFERRED_MANY:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case MPOL_PREFERRED_MANY:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*nodes = p->nodes;
 		break;
 	case MPOL_LOCAL:
@@ -1084,7 +1147,15 @@ static int migrate_to_node(struct mm_struct *mm, int source, int dest,
 
 	if (!list_empty(&pagelist)) {
 		err = migrate_pages(&pagelist, alloc_migration_target, NULL,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				(unsigned long)&mtc, MIGRATE_SYNC, MR_SYSCALL, NULL);
+=======
 				(unsigned long)&mtc, MIGRATE_SYNC, MR_SYSCALL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				(unsigned long)&mtc, MIGRATE_SYNC, MR_SYSCALL, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err)
 			putback_movable_pages(&pagelist);
 	}
@@ -1338,7 +1409,15 @@ static long do_mbind(unsigned long start, unsigned long len,
 		if (!list_empty(&pagelist)) {
 			WARN_ON_ONCE(flags & MPOL_MF_LAZY);
 			nr_failed = migrate_pages(&pagelist, new_page, NULL,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				start, MIGRATE_SYNC, MR_MEMPOLICY_MBIND, NULL);
+=======
 				start, MIGRATE_SYNC, MR_MEMPOLICY_MBIND);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				start, MIGRATE_SYNC, MR_MEMPOLICY_MBIND, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (nr_failed)
 				putback_movable_pages(&pagelist);
 		}
@@ -1362,16 +1441,53 @@ mpol_out:
 /*
  * User space interface with variable sized bitmaps for nodelists.
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int get_bitmap(unsigned long *mask, const unsigned long __user *nmask,
+		      unsigned long maxnode)
+{
+	unsigned long nlongs = BITS_TO_LONGS(maxnode);
+	int ret;
+
+	if (in_compat_syscall())
+		ret = compat_get_bitmap(mask,
+					(const compat_ulong_t __user *)nmask,
+					maxnode);
+	else
+		ret = copy_from_user(mask, nmask,
+				     nlongs * sizeof(unsigned long));
+
+	if (ret)
+		return -EFAULT;
+
+	if (maxnode % BITS_PER_LONG)
+		mask[nlongs - 1] &= (1UL << (maxnode % BITS_PER_LONG)) - 1;
+
+	return 0;
+}
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Copy a node mask from user space. */
 static int get_nodes(nodemask_t *nodes, const unsigned long __user *nmask,
 		     unsigned long maxnode)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	unsigned long k;
 	unsigned long t;
 	unsigned long nlongs;
 	unsigned long endmask;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	--maxnode;
 	nodes_clear(*nodes);
 	if (maxnode == 0 || !nmask)
@@ -1379,49 +1495,71 @@ static int get_nodes(nodemask_t *nodes, const unsigned long __user *nmask,
 	if (maxnode > PAGE_SIZE*BITS_PER_BYTE)
 		return -EINVAL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/*
+	 * When the user specified more nodes than supported just check
+	 * if the non supported part is all zero, one word at a time,
+	 * starting at the end.
+	 */
+	while (maxnode > MAX_NUMNODES) {
+		unsigned long bits = min_t(unsigned long, maxnode, BITS_PER_LONG);
+		unsigned long t;
+
+		if (get_bitmap(&t, &nmask[maxnode / BITS_PER_LONG], bits))
+			return -EFAULT;
+
+		if (maxnode - bits >= MAX_NUMNODES) {
+			maxnode -= bits;
+		} else {
+			maxnode = MAX_NUMNODES;
+			t &= ~((1UL << (MAX_NUMNODES % BITS_PER_LONG)) - 1);
+		}
+		if (t)
+			return -EINVAL;
+	}
+
+	return get_bitmap(nodes_addr(*nodes), nmask, maxnode);
+=======
 	nlongs = BITS_TO_LONGS(maxnode);
 	if ((maxnode % BITS_PER_LONG) == 0)
 		endmask = ~0UL;
 	else
 		endmask = (1UL << (maxnode % BITS_PER_LONG)) - 1;
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * When the user specified more nodes than supported just check
-	 * if the non supported part is all zero.
-	 *
-	 * If maxnode have more longs than MAX_NUMNODES, check
-	 * the bits in that area first. And then go through to
-	 * check the rest bits which equal or bigger than MAX_NUMNODES.
-	 * Otherwise, just check bits [MAX_NUMNODES, maxnode).
+	 * if the non supported part is all zero, one word at a time,
+	 * starting at the end.
 	 */
-	if (nlongs > BITS_TO_LONGS(MAX_NUMNODES)) {
-		for (k = BITS_TO_LONGS(MAX_NUMNODES); k < nlongs; k++) {
-			if (get_user(t, nmask + k))
-				return -EFAULT;
-			if (k == nlongs - 1) {
-				if (t & endmask)
-					return -EINVAL;
-			} else if (t)
-				return -EINVAL;
-		}
-		nlongs = BITS_TO_LONGS(MAX_NUMNODES);
-		endmask = ~0UL;
-	}
+	while (maxnode > MAX_NUMNODES) {
+		unsigned long bits = min_t(unsigned long, maxnode, BITS_PER_LONG);
+		unsigned long t;
 
-	if (maxnode > MAX_NUMNODES && MAX_NUMNODES % BITS_PER_LONG != 0) {
-		unsigned long valid_mask = endmask;
-
-		valid_mask &= ~((1UL << (MAX_NUMNODES % BITS_PER_LONG)) - 1);
-		if (get_user(t, nmask + nlongs - 1))
+		if (get_bitmap(&t, &nmask[maxnode / BITS_PER_LONG], bits))
 			return -EFAULT;
-		if (t & valid_mask)
+
+		if (maxnode - bits >= MAX_NUMNODES) {
+			maxnode -= bits;
+		} else {
+			maxnode = MAX_NUMNODES;
+			t &= ~((1UL << (MAX_NUMNODES % BITS_PER_LONG)) - 1);
+		}
+		if (t)
 			return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (copy_from_user(nodes_addr(*nodes), nmask, nlongs*sizeof(unsigned long)))
 		return -EFAULT;
 	nodes_addr(*nodes)[nlongs-1] &= endmask;
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return get_bitmap(nodes_addr(*nodes), nmask, maxnode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Copy a kernel node mask to user space */
@@ -1430,6 +1568,19 @@ static int copy_nodes_to_user(unsigned long __user *mask, unsigned long maxnode,
 {
 	unsigned long copy = ALIGN(maxnode-1, 64) / 8;
 	unsigned int nbytes = BITS_TO_LONGS(nr_node_ids) * sizeof(long);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	bool compat = in_compat_syscall();
+
+	if (compat)
+		nbytes = BITS_TO_COMPAT_LONGS(nr_node_ids) * sizeof(compat_long_t);
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (copy > nbytes) {
 		if (copy > PAGE_SIZE)
@@ -1437,7 +1588,23 @@ static int copy_nodes_to_user(unsigned long __user *mask, unsigned long maxnode,
 		if (clear_user((char __user *)mask + nbytes, copy - nbytes))
 			return -EFAULT;
 		copy = nbytes;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		maxnode = nr_node_ids;
 	}
+
+	if (compat)
+		return compat_put_bitmap((compat_ulong_t __user *)mask,
+					 nodes_addr(*nodes), maxnode);
+
+<<<<<<< HEAD
+=======
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return copy_to_user(mask, nodes_addr(*nodes), copy) ? -EFAULT : 0;
 }
 
@@ -1446,7 +1613,17 @@ static inline int sanitize_mpol_flags(int *mode, unsigned short *flags)
 {
 	*flags = *mode & MPOL_MODE_FLAGS;
 	*mode &= ~MPOL_MODE_FLAGS;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	if ((unsigned int)(*mode) >=  MPOL_MAX)
+=======
 	if ((unsigned int)(*mode) >= MPOL_MAX)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if ((unsigned int)(*mode) >=  MPOL_MAX)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	if ((*flags & MPOL_F_STATIC_NODES) && (*flags & MPOL_F_RELATIVE_NODES))
 		return -EINVAL;
@@ -1641,6 +1818,9 @@ SYSCALL_DEFINE5(get_mempolicy, int __user *, policy,
 	return kernel_get_mempolicy(policy, nmask, maxnode, addr, flags);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #ifdef CONFIG_COMPAT
 
 COMPAT_SYSCALL_DEFINE5(get_mempolicy, int __user *, policy,
@@ -1751,6 +1931,9 @@ COMPAT_SYSCALL_DEFINE4(migrate_pages, compat_pid_t, pid,
 
 #endif /* CONFIG_COMPAT */
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool vma_migratable(struct vm_area_struct *vma)
 {
 	if (vma->vm_flags & (VM_IO | VM_PFNMAP))
@@ -1875,16 +2058,56 @@ static int apply_policy_zone(struct mempolicy *policy, enum zone_type zone)
  */
 nodemask_t *policy_nodemask(gfp_t gfp, struct mempolicy *policy)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int mode = policy->mode;
+
+	/* Lower zones don't get a nodemask applied for MPOL_BIND */
+	if (unlikely(mode == MPOL_BIND) &&
+		apply_policy_zone(policy, gfp_zone(gfp)) &&
+		cpuset_nodemask_valid_mems_allowed(&policy->nodes))
+		return &policy->nodes;
+
+	if (mode == MPOL_PREFERRED_MANY)
+=======
 	/* Lower zones don't get a nodemask applied for MPOL_BIND */
 	if (unlikely(policy->mode == MPOL_BIND) &&
 			apply_policy_zone(policy, gfp_zone(gfp)) &&
 			cpuset_nodemask_valid_mems_allowed(&policy->nodes))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int mode = policy->mode;
+
+	/* Lower zones don't get a nodemask applied for MPOL_BIND */
+	if (unlikely(mode == MPOL_BIND) &&
+		apply_policy_zone(policy, gfp_zone(gfp)) &&
+		cpuset_nodemask_valid_mems_allowed(&policy->nodes))
+		return &policy->nodes;
+
+	if (mode == MPOL_PREFERRED_MANY)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return &policy->nodes;
 
 	return NULL;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * Return the  preferred node id for 'prefer' mempolicy, and return
+ * the given id for all other policies.
+ *
+ * policy_node() is always coupled with policy_nodemask(), which
+ * secures the nodemask limit for 'bind' and 'prefer-many' policy.
+ */
+<<<<<<< HEAD
+=======
 /* Return the node id preferred by the given mempolicy, or the given id */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int policy_node(gfp_t gfp, struct mempolicy *policy, int nd)
 {
 	if (policy->mode == MPOL_PREFERRED) {
@@ -1922,7 +2145,15 @@ unsigned int mempolicy_slab_node(void)
 	struct mempolicy *policy;
 	int node = numa_mem_id();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!in_task())
+=======
 	if (in_interrupt())
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!in_task())
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return node;
 
 	policy = current->mempolicy;
@@ -1936,7 +2167,19 @@ unsigned int mempolicy_slab_node(void)
 	case MPOL_INTERLEAVE:
 		return interleave_nodes(policy);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case MPOL_BIND:
+	case MPOL_PREFERRED_MANY:
+	{
+=======
 	case MPOL_BIND: {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case MPOL_BIND:
+	case MPOL_PREFERRED_MANY:
+	{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct zoneref *z;
 
 		/*
@@ -1965,17 +2208,58 @@ unsigned int mempolicy_slab_node(void)
  */
 static unsigned offset_il_node(struct mempolicy *pol, unsigned long n)
 {
-	unsigned nnodes = nodes_weight(pol->nodes);
-	unsigned target;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	nodemask_t nodemask = pol->nodes;
+	unsigned int target, nnodes;
 	int i;
 	int nid;
+	/*
+	 * The barrier will stabilize the nodemask in a register or on
+	 * the stack so that it will stop changing under the code.
+	 *
+	 * Between first_node() and next_node(), pol->nodes could be changed
+	 * by other threads. So we put pol->nodes in a local stack.
+	 */
+	barrier();
 
+	nnodes = nodes_weight(nodemask);
 	if (!nnodes)
 		return numa_node_id();
 	target = (unsigned int)n % nnodes;
-	nid = first_node(pol->nodes);
+	nid = first_node(nodemask);
 	for (i = 0; i < target; i++)
+		nid = next_node(nid, nodemask);
+=======
+	unsigned nnodes = nodes_weight(pol->nodes);
+	unsigned target;
+=======
+	nodemask_t nodemask = pol->nodes;
+	unsigned int target, nnodes;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	int i;
+	int nid;
+	/*
+	 * The barrier will stabilize the nodemask in a register or on
+	 * the stack so that it will stop changing under the code.
+	 *
+	 * Between first_node() and next_node(), pol->nodes could be changed
+	 * by other threads. So we put pol->nodes in a local stack.
+	 */
+	barrier();
+
+	nnodes = nodes_weight(nodemask);
+	if (!nnodes)
+		return numa_node_id();
+	target = (unsigned int)n % nnodes;
+	nid = first_node(nodemask);
+	for (i = 0; i < target; i++)
+<<<<<<< HEAD
 		nid = next_node(nid, pol->nodes);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		nid = next_node(nid, nodemask);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return nid;
 }
 
@@ -2008,12 +2292,30 @@ static inline unsigned interleave_nid(struct mempolicy *pol,
  * @addr: address in @vma for shared policy lookup and interleave policy
  * @gfp_flags: for requested zone
  * @mpol: pointer to mempolicy pointer for reference counted mempolicy
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @nodemask: pointer to nodemask pointer for 'bind' and 'prefer-many' policy
+ *
+ * Returns a nid suitable for a huge page allocation and a pointer
+ * to the struct mempolicy for conditional unref after allocation.
+ * If the effective policy is 'bind' or 'prefer-many', returns a pointer
+ * to the mempolicy's @nodemask for filtering the zonelist.
+=======
  * @nodemask: pointer to nodemask pointer for MPOL_BIND nodemask
  *
  * Returns a nid suitable for a huge page allocation and a pointer
  * to the struct mempolicy for conditional unref after allocation.
  * If the effective policy is 'BIND, returns a pointer to the mempolicy's
  * @nodemask for filtering the zonelist.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @nodemask: pointer to nodemask pointer for 'bind' and 'prefer-many' policy
+ *
+ * Returns a nid suitable for a huge page allocation and a pointer
+ * to the struct mempolicy for conditional unref after allocation.
+ * If the effective policy is 'bind' or 'prefer-many', returns a pointer
+ * to the mempolicy's @nodemask for filtering the zonelist.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Must be protected by read_mems_allowed_begin()
  */
@@ -2021,16 +2323,43 @@ int huge_node(struct vm_area_struct *vma, unsigned long addr, gfp_t gfp_flags,
 				struct mempolicy **mpol, nodemask_t **nodemask)
 {
 	int nid;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int mode;
 
 	*mpol = get_vma_policy(vma, addr);
-	*nodemask = NULL;	/* assume !MPOL_BIND */
+	*nodemask = NULL;
+	mode = (*mpol)->mode;
 
+	if (unlikely(mode == MPOL_INTERLEAVE)) {
+=======
+=======
+	int mode;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	*mpol = get_vma_policy(vma, addr);
+	*nodemask = NULL;
+	mode = (*mpol)->mode;
+
+<<<<<<< HEAD
 	if (unlikely((*mpol)->mode == MPOL_INTERLEAVE)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely(mode == MPOL_INTERLEAVE)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		nid = interleave_nid(*mpol, vma, addr,
 					huge_page_shift(hstate_vma(vma)));
 	} else {
 		nid = policy_node(gfp_flags, *mpol, numa_node_id());
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (mode == MPOL_BIND || mode == MPOL_PREFERRED_MANY)
+=======
 		if ((*mpol)->mode == MPOL_BIND)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (mode == MPOL_BIND || mode == MPOL_PREFERRED_MANY)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			*nodemask = &(*mpol)->nodes;
 	}
 	return nid;
@@ -2063,6 +2392,14 @@ bool init_nodemask_of_mempolicy(nodemask_t *mask)
 	mempolicy = current->mempolicy;
 	switch (mempolicy->mode) {
 	case MPOL_PREFERRED:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case MPOL_PREFERRED_MANY:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case MPOL_PREFERRED_MANY:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case MPOL_BIND:
 	case MPOL_INTERLEAVE:
 		*mask = mempolicy->nodes;
@@ -2128,6 +2465,36 @@ static struct page *alloc_page_interleave(gfp_t gfp, unsigned order,
 	return page;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static struct page *alloc_pages_preferred_many(gfp_t gfp, unsigned int order,
+						int nid, struct mempolicy *pol)
+{
+	struct page *page;
+	gfp_t preferred_gfp;
+
+	/*
+	 * This is a two pass approach. The first pass will only try the
+	 * preferred nodes but skip the direct reclaim and allow the
+	 * allocation to fail, while the second pass will try all the
+	 * nodes in system.
+	 */
+	preferred_gfp = gfp | __GFP_NOWARN;
+	preferred_gfp &= ~(__GFP_DIRECT_RECLAIM | __GFP_NOFAIL);
+	page = __alloc_pages(preferred_gfp, order, nid, &pol->nodes);
+	if (!page)
+		page = __alloc_pages(gfp, order, numa_node_id(), NULL);
+
+	return page;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * alloc_pages_vma - Allocate a page for a VMA.
  * @gfp: GFP flags.
@@ -2163,6 +2530,21 @@ struct page *alloc_pages_vma(gfp_t gfp, int order, struct vm_area_struct *vma,
 		goto out;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (pol->mode == MPOL_PREFERRED_MANY) {
+		page = alloc_pages_preferred_many(gfp, order, node, pol);
+		mpol_cond_put(pol);
+		goto out;
+	}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(IS_ENABLED(CONFIG_TRANSPARENT_HUGEPAGE) && hugepage)) {
 		int hpage_node = node;
 
@@ -2173,7 +2555,15 @@ struct page *alloc_pages_vma(gfp_t gfp, int order, struct vm_area_struct *vma,
 		 * node and don't fall back to other nodes, as the cost of
 		 * remote accesses would likely offset THP benefits.
 		 *
+<<<<<<< HEAD
+<<<<<<< HEAD
+		 * If the policy is interleave or does not allow the current
+=======
 		 * If the policy is interleave, or does not allow the current
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 * If the policy is interleave or does not allow the current
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * node in its nodemask, we allocate the standard way.
 		 */
 		if (pol->mode == MPOL_PREFERRED)
@@ -2240,6 +2630,18 @@ struct page *alloc_pages(gfp_t gfp, unsigned order)
 	 */
 	if (pol->mode == MPOL_INTERLEAVE)
 		page = alloc_page_interleave(gfp, order, interleave_nodes(pol));
+<<<<<<< HEAD
+<<<<<<< HEAD
+	else if (pol->mode == MPOL_PREFERRED_MANY)
+		page = alloc_pages_preferred_many(gfp, order,
+				numa_node_id(), pol);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (pol->mode == MPOL_PREFERRED_MANY)
+		page = alloc_pages_preferred_many(gfp, order,
+				numa_node_id(), pol);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		page = __alloc_pages(gfp, order,
 				policy_node(gfp, pol, numa_node_id()),
@@ -2311,6 +2713,14 @@ bool __mpol_equal(struct mempolicy *a, struct mempolicy *b)
 	case MPOL_BIND:
 	case MPOL_INTERLEAVE:
 	case MPOL_PREFERRED:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case MPOL_PREFERRED_MANY:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case MPOL_PREFERRED_MANY:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return !!nodes_equal(a->nodes, b->nodes);
 	case MPOL_LOCAL:
 		return true;
@@ -2425,8 +2835,18 @@ static void sp_free(struct sp_node *n)
  * node id.  Policy determination "mimics" alloc_page_vma().
  * Called from fault path where we know the vma and faulting address.
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Return: NUMA_NO_NODE if the page is in a node that is valid for this
+ * policy, or a suitable node ID to allocate a replacement page from.
+=======
  * Return: -1 if the page is in a node that is valid for this policy, or a
  * suitable node ID to allocate a replacement page from.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Return: NUMA_NO_NODE if the page is in a node that is valid for this
+ * policy, or a suitable node ID to allocate a replacement page from.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int mpol_misplaced(struct page *page, struct vm_area_struct *vma, unsigned long addr)
 {
@@ -2437,7 +2857,15 @@ int mpol_misplaced(struct page *page, struct vm_area_struct *vma, unsigned long 
 	int thiscpu = raw_smp_processor_id();
 	int thisnid = cpu_to_node(thiscpu);
 	int polnid = NUMA_NO_NODE;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret = NUMA_NO_NODE;
+=======
 	int ret = -1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret = NUMA_NO_NODE;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pol = get_vma_policy(vma, addr);
 	if (!(pol->flags & MPOL_F_MOF))
@@ -2451,6 +2879,16 @@ int mpol_misplaced(struct page *page, struct vm_area_struct *vma, unsigned long 
 		break;
 
 	case MPOL_PREFERRED:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (node_isset(curnid, pol->nodes))
+			goto out;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (node_isset(curnid, pol->nodes))
+			goto out;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		polnid = first_node(pol->nodes);
 		break;
 
@@ -2465,9 +2903,24 @@ int mpol_misplaced(struct page *page, struct vm_area_struct *vma, unsigned long 
 				break;
 			goto out;
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+		fallthrough;
 
+	case MPOL_PREFERRED_MANY:
 		/*
+=======
+=======
+		fallthrough;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	case MPOL_PREFERRED_MANY:
+		/*
+<<<<<<< HEAD
 		 * allows binding to multiple nodes.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * use current page if in policy nodemask,
 		 * else select nearest allowed node, if any.
 		 * If no allowed nodes, use current [!misplaced].
@@ -2829,6 +3282,14 @@ static const char * const policy_modes[] =
 	[MPOL_BIND]       = "bind",
 	[MPOL_INTERLEAVE] = "interleave",
 	[MPOL_LOCAL]      = "local",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	[MPOL_PREFERRED_MANY]  = "prefer (many)",
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	[MPOL_PREFERRED_MANY]  = "prefer (many)",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 
@@ -2907,6 +3368,14 @@ int mpol_parse_str(char *str, struct mempolicy **mpol)
 		if (!nodelist)
 			err = 0;
 		goto out;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case MPOL_PREFERRED_MANY:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case MPOL_PREFERRED_MANY:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case MPOL_BIND:
 		/*
 		 * Insist on a nodelist
@@ -2993,6 +3462,14 @@ void mpol_to_str(char *buffer, int maxlen, struct mempolicy *pol)
 	case MPOL_LOCAL:
 		break;
 	case MPOL_PREFERRED:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case MPOL_PREFERRED_MANY:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case MPOL_PREFERRED_MANY:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case MPOL_BIND:
 	case MPOL_INTERLEAVE:
 		nodes = pol->nodes;
@@ -3021,3 +3498,73 @@ void mpol_to_str(char *buffer, int maxlen, struct mempolicy *pol)
 		p += scnprintf(p, buffer + maxlen - p, ":%*pbl",
 			       nodemask_pr_args(&nodes));
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+bool numa_demotion_enabled = false;
+
+#ifdef CONFIG_SYSFS
+static ssize_t numa_demotion_enabled_show(struct kobject *kobj,
+					  struct kobj_attribute *attr, char *buf)
+{
+	return sysfs_emit(buf, "%s\n",
+			  numa_demotion_enabled? "true" : "false");
+}
+
+static ssize_t numa_demotion_enabled_store(struct kobject *kobj,
+					   struct kobj_attribute *attr,
+					   const char *buf, size_t count)
+{
+	if (!strncmp(buf, "true", 4) || !strncmp(buf, "1", 1))
+		numa_demotion_enabled = true;
+	else if (!strncmp(buf, "false", 5) || !strncmp(buf, "0", 1))
+		numa_demotion_enabled = false;
+	else
+		return -EINVAL;
+
+	return count;
+}
+
+static struct kobj_attribute numa_demotion_enabled_attr =
+	__ATTR(demotion_enabled, 0644, numa_demotion_enabled_show,
+	       numa_demotion_enabled_store);
+
+static struct attribute *numa_attrs[] = {
+	&numa_demotion_enabled_attr.attr,
+	NULL,
+};
+
+static const struct attribute_group numa_attr_group = {
+	.attrs = numa_attrs,
+};
+
+static int __init numa_init_sysfs(void)
+{
+	int err;
+	struct kobject *numa_kobj;
+
+	numa_kobj = kobject_create_and_add("numa", mm_kobj);
+	if (!numa_kobj) {
+		pr_err("failed to create numa kobject\n");
+		return -ENOMEM;
+	}
+	err = sysfs_create_group(numa_kobj, &numa_attr_group);
+	if (err) {
+		pr_err("failed to register numa group\n");
+		goto delete_obj;
+	}
+	return 0;
+
+delete_obj:
+	kobject_put(numa_kobj);
+	return err;
+}
+subsys_initcall(numa_init_sysfs);
+#endif
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -1,12 +1,24 @@
 // SPDX-License-Identifier: GPL-2.0
 /* Copyright(c) 2017 - 2018 Intel Corporation. */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <asm/barrier.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <errno.h>
 #include <getopt.h>
 #include <libgen.h>
 #include <linux/bpf.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <linux/compiler.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/if_link.h>
 #include <linux/if_xdp.h>
 #include <linux/if_ether.h>
@@ -96,6 +108,14 @@ static int opt_xsk_frame_size = XSK_UMEM__DEFAULT_FRAME_SIZE;
 static int opt_timeout = 1000;
 static bool opt_need_wakeup = true;
 static u32 opt_num_xsks = 1;
+<<<<<<< HEAD
+<<<<<<< HEAD
+static u32 prog_id;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u32 prog_id;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static bool opt_busy_poll;
 static bool opt_reduced_cap;
 
@@ -461,6 +481,32 @@ static void *poller(void *arg)
 	return NULL;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void remove_xdp_program(void)
+{
+	u32 curr_prog_id = 0;
+
+	if (bpf_get_link_xdp_id(opt_ifindex, &curr_prog_id, opt_xdp_flags)) {
+		printf("bpf_get_link_xdp_id failed\n");
+		exit(EXIT_FAILURE);
+	}
+
+	if (prog_id == curr_prog_id)
+		bpf_set_link_xdp_fd(opt_ifindex, -1, opt_xdp_flags);
+	else if (!curr_prog_id)
+		printf("couldn't find a prog id on a given interface\n");
+	else
+		printf("program on interface changed, not removing\n");
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void int_exit(int sig)
 {
 	benchmark_done = true;
@@ -471,6 +517,18 @@ static void __exit_with_error(int error, const char *file, const char *func,
 {
 	fprintf(stderr, "%s:%s:%i: errno: %d/\"%s\"\n", file, func,
 		line, error, strerror(error));
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	if (opt_num_xsks > 1)
+		remove_xdp_program();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (opt_num_xsks > 1)
+		remove_xdp_program();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	exit(EXIT_FAILURE);
 }
 
@@ -490,6 +548,18 @@ static void xdpsock_cleanup(void)
 		if (write(sock, &cmd, sizeof(int)) < 0)
 			exit_with_error(errno);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	if (opt_num_xsks > 1)
+		remove_xdp_program();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (opt_num_xsks > 1)
+		remove_xdp_program();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void swap_mac_addresses(void *data)
@@ -629,17 +699,35 @@ out:
 	return result;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 __sum16 ip_fast_csum(const void *iph, unsigned int ihl);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  *	This is a version of ip_compute_csum() optimized for IP headers,
  *	which always checksum on 4 octet boundaries.
  *	This function code has been taken from
  *	Linux kernel lib/checksum.c
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline __sum16 ip_fast_csum(const void *iph, unsigned int ihl)
+{
+	return (__sum16)~do_csum(iph, ihl * 4);
+=======
 __sum16 ip_fast_csum(const void *iph, unsigned int ihl)
 {
 	return (__force __sum16)~do_csum(iph, ihl * 4);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline __sum16 ip_fast_csum(const void *iph, unsigned int ihl)
+{
+	return (__sum16)~do_csum(iph, ihl * 4);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -649,11 +737,27 @@ __sum16 ip_fast_csum(const void *iph, unsigned int ihl)
  */
 static inline __sum16 csum_fold(__wsum csum)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u32 sum = (u32)csum;
+
+	sum = (sum & 0xffff) + (sum >> 16);
+	sum = (sum & 0xffff) + (sum >> 16);
+	return (__sum16)~sum;
+=======
 	u32 sum = (__force u32)csum;
 
 	sum = (sum & 0xffff) + (sum >> 16);
 	sum = (sum & 0xffff) + (sum >> 16);
 	return (__force __sum16)~sum;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u32 sum = (u32)csum;
+
+	sum = (sum & 0xffff) + (sum >> 16);
+	sum = (sum & 0xffff) + (sum >> 16);
+	return (__sum16)~sum;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -679,16 +783,38 @@ __wsum csum_tcpudp_nofold(__be32 saddr, __be32 daddr,
 __wsum csum_tcpudp_nofold(__be32 saddr, __be32 daddr,
 			  __u32 len, __u8 proto, __wsum sum)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long long s = (u32)sum;
+
+	s += (u32)saddr;
+	s += (u32)daddr;
+=======
 	unsigned long long s = (__force u32)sum;
 
 	s += (__force u32)saddr;
 	s += (__force u32)daddr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long long s = (u32)sum;
+
+	s += (u32)saddr;
+	s += (u32)daddr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef __BIG_ENDIAN__
 	s += proto + len;
 #else
 	s += (proto + len) << 8;
 #endif
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return (__wsum)from64to32(s);
+=======
 	return (__force __wsum)from64to32(s);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return (__wsum)from64to32(s);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -857,6 +983,19 @@ static struct xsk_socket_info *xsk_configure_socket(struct xsk_umem_info *umem,
 	if (ret)
 		exit_with_error(-ret);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = bpf_get_link_xdp_id(opt_ifindex, &prog_id, opt_xdp_flags);
+	if (ret)
+		exit_with_error(-ret);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xsk->app_stats.rx_empty_polls = 0;
 	xsk->app_stats.fill_fail_polls = 0;
 	xsk->app_stats.copy_tx_sendtos = 0;

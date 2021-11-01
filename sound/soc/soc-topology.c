@@ -1035,7 +1035,13 @@ err_denum:
 static int soc_tplg_kcontrol_elems_load(struct soc_tplg *tplg,
 	struct snd_soc_tplg_hdr *hdr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct snd_soc_tplg_ctl_hdr *control_hdr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 	int i;
 
@@ -1043,8 +1049,16 @@ static int soc_tplg_kcontrol_elems_load(struct soc_tplg *tplg,
 		soc_tplg_get_offset(tplg));
 
 	for (i = 0; i < le32_to_cpu(hdr->count); i++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		struct snd_soc_tplg_ctl_hdr *control_hdr = (struct snd_soc_tplg_ctl_hdr *)tplg->pos;
+=======
 
 		control_hdr = (struct snd_soc_tplg_ctl_hdr *)tplg->pos;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct snd_soc_tplg_ctl_hdr *control_hdr = (struct snd_soc_tplg_ctl_hdr *)tplg->pos;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (le32_to_cpu(control_hdr->size) != sizeof(*control_hdr)) {
 			dev_err(tplg->dev, "ASoC: invalid control size\n");
@@ -1583,15 +1597,35 @@ err:
 static int soc_tplg_dapm_widget_elems_load(struct soc_tplg *tplg,
 	struct snd_soc_tplg_hdr *hdr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int count, i;
+=======
 	struct snd_soc_tplg_dapm_widget *widget;
 	int ret, count, i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int count, i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	count = le32_to_cpu(hdr->count);
 
 	dev_dbg(tplg->dev, "ASoC: adding %d DAPM widgets\n", count);
 
 	for (i = 0; i < count; i++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		struct snd_soc_tplg_dapm_widget *widget = (struct snd_soc_tplg_dapm_widget *) tplg->pos;
+		int ret;
+
+=======
 		widget = (struct snd_soc_tplg_dapm_widget *) tplg->pos;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct snd_soc_tplg_dapm_widget *widget = (struct snd_soc_tplg_dapm_widget *) tplg->pos;
+		int ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (le32_to_cpu(widget->size) != sizeof(*widget)) {
 			dev_err(tplg->dev, "ASoC: invalid widget size\n");
 			return -EINVAL;
@@ -2125,10 +2159,22 @@ static struct snd_soc_dai_link *snd_soc_find_dai_link(struct snd_soc_card *card,
 						      const char *stream_name)
 {
 	struct snd_soc_pcm_runtime *rtd;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	for_each_card_rtds(card, rtd) {
+		struct snd_soc_dai_link *link = rtd->dai_link;
+=======
 	struct snd_soc_dai_link *link;
 
 	for_each_card_rtds(card, rtd) {
 		link = rtd->dai_link;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	for_each_card_rtds(card, rtd) {
+		struct snd_soc_dai_link *link = rtd->dai_link;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (link->id != id)
 			continue;
@@ -2346,15 +2392,37 @@ err:
 static int soc_tplg_dai_elems_load(struct soc_tplg *tplg,
 				   struct snd_soc_tplg_hdr *hdr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int count;
+	int i;
+=======
 	struct snd_soc_tplg_dai *dai;
 	int count;
 	int i, ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int count;
+	int i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	count = le32_to_cpu(hdr->count);
 
 	/* config the existing BE DAIs */
 	for (i = 0; i < count; i++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		struct snd_soc_tplg_dai *dai = (struct snd_soc_tplg_dai *)tplg->pos;
+		int ret;
+
+=======
 		dai = (struct snd_soc_tplg_dai *)tplg->pos;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct snd_soc_tplg_dai *dai = (struct snd_soc_tplg_dai *)tplg->pos;
+		int ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (le32_to_cpu(dai->size) != sizeof(*dai)) {
 			dev_err(tplg->dev, "ASoC: invalid physical DAI size\n");
 			return -EINVAL;
@@ -2572,13 +2640,27 @@ static int soc_tplg_load_header(struct soc_tplg *tplg,
 /* process the topology file headers */
 static int soc_tplg_process_headers(struct soc_tplg *tplg)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct snd_soc_tplg_hdr *hdr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	tplg->pass = SOC_TPLG_PASS_START;
 
 	/* process the header types from start to end */
 	while (tplg->pass <= SOC_TPLG_PASS_END) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		struct snd_soc_tplg_hdr *hdr;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct snd_soc_tplg_hdr *hdr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		tplg->hdr_pos = tplg->fw->data;
 		hdr = (struct snd_soc_tplg_hdr *)tplg->hdr_pos;

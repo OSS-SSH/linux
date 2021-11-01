@@ -1822,7 +1822,15 @@ static void ofdpa_port_fdb_learn_work(struct work_struct *work)
 		container_of(work, struct ofdpa_fdb_learn_work, work);
 	bool removing = (lw->flags & OFDPA_OP_FLAG_REMOVE);
 	bool learned = (lw->flags & OFDPA_OP_FLAG_LEARNED);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct switchdev_notifier_fdb_info info = {};
+=======
 	struct switchdev_notifier_fdb_info info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct switchdev_notifier_fdb_info info = {};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	info.addr = lw->addr;
 	info.vid = lw->vid;
@@ -2571,8 +2579,22 @@ static int ofdpa_port_obj_fdb_del(struct rocker_port *rocker_port,
 }
 
 static int ofdpa_port_bridge_join(struct ofdpa_port *ofdpa_port,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				  struct net_device *bridge,
+				  struct netlink_ext_ack *extack)
+{
+	struct net_device *dev = ofdpa_port->dev;
+=======
 				  struct net_device *bridge)
 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				  struct net_device *bridge,
+				  struct netlink_ext_ack *extack)
+{
+	struct net_device *dev = ofdpa_port->dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	/* Port is joining bridge, so the internal VLAN for the
@@ -2592,13 +2614,44 @@ static int ofdpa_port_bridge_join(struct ofdpa_port *ofdpa_port,
 
 	ofdpa_port->bridge_dev = bridge;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	err = ofdpa_port_vlan_add(ofdpa_port, OFDPA_UNTAGGED_VID, 0);
+	if (err)
+		return err;
+
+	return switchdev_bridge_port_offload(dev, dev, NULL, NULL, NULL,
+					     false, extack);
+<<<<<<< HEAD
+=======
 	return ofdpa_port_vlan_add(ofdpa_port, OFDPA_UNTAGGED_VID, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ofdpa_port_bridge_leave(struct ofdpa_port *ofdpa_port)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct net_device *dev = ofdpa_port->dev;
 	int err;
 
+	switchdev_bridge_port_unoffload(dev, NULL, NULL, NULL);
+
+=======
+	int err;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct net_device *dev = ofdpa_port->dev;
+	int err;
+
+	switchdev_bridge_port_unoffload(dev, NULL, NULL, NULL);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = ofdpa_port_vlan_del(ofdpa_port, OFDPA_UNTAGGED_VID, 0);
 	if (err)
 		return err;
@@ -2637,13 +2690,31 @@ static int ofdpa_port_ovs_changed(struct ofdpa_port *ofdpa_port,
 }
 
 static int ofdpa_port_master_linked(struct rocker_port *rocker_port,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				    struct net_device *master,
+				    struct netlink_ext_ack *extack)
+=======
 				    struct net_device *master)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    struct net_device *master,
+				    struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ofdpa_port *ofdpa_port = rocker_port->wpriv;
 	int err = 0;
 
 	if (netif_is_bridge_master(master))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		err = ofdpa_port_bridge_join(ofdpa_port, master, extack);
+=======
 		err = ofdpa_port_bridge_join(ofdpa_port, master);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = ofdpa_port_bridge_join(ofdpa_port, master, extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else if (netif_is_ovs_master(master))
 		err = ofdpa_port_ovs_changed(ofdpa_port, master);
 	return err;

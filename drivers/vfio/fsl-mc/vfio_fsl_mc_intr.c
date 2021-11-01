@@ -120,7 +120,15 @@ static int vfio_fsl_mc_set_irq_trigger(struct vfio_fsl_mc_device *vdev,
 	if (start != 0 || count != 1)
 		return -EINVAL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mutex_lock(&vdev->vdev.dev_set->lock);
+=======
 	mutex_lock(&vdev->reflck->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_lock(&vdev->vdev.dev_set->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = fsl_mc_populate_irq_pool(mc_cont,
 			FSL_MC_IRQ_POOL_MAX_TOTAL_IRQS);
 	if (ret)
@@ -129,7 +137,15 @@ static int vfio_fsl_mc_set_irq_trigger(struct vfio_fsl_mc_device *vdev,
 	ret = vfio_fsl_mc_irqs_allocate(vdev);
 	if (ret)
 		goto unlock;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mutex_unlock(&vdev->vdev.dev_set->lock);
+=======
 	mutex_unlock(&vdev->reflck->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&vdev->vdev.dev_set->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (flags & VFIO_IRQ_SET_DATA_EVENTFD) {
 		s32 fd = *(s32 *)data;
@@ -154,7 +170,15 @@ static int vfio_fsl_mc_set_irq_trigger(struct vfio_fsl_mc_device *vdev,
 	return 0;
 
 unlock:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mutex_unlock(&vdev->vdev.dev_set->lock);
+=======
 	mutex_unlock(&vdev->reflck->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&vdev->vdev.dev_set->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 
 }

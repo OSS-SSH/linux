@@ -414,7 +414,15 @@ static void virt_efi_reset_system(int reset_type,
 				  unsigned long data_size,
 				  efi_char16_t *data)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (down_trylock(&efi_runtime_lock)) {
+=======
 	if (down_interruptible(&efi_runtime_lock)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (down_trylock(&efi_runtime_lock)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_warn("failed to invoke the reset_system() runtime service:\n"
 			"could not get exclusive access to the firmware\n");
 		return;

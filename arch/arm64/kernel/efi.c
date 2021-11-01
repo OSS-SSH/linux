@@ -55,6 +55,14 @@ static __init pteval_t create_mapping_protection(efi_memory_desc_t *md)
 
 /* we will fill this structure from the stub, so don't put it in .bss */
 struct screen_info screen_info __section(".data");
+<<<<<<< HEAD
+<<<<<<< HEAD
+EXPORT_SYMBOL(screen_info);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL(screen_info);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int __init efi_create_mapping(struct mm_struct *mm, efi_memory_desc_t *md)
 {

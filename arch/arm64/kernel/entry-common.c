@@ -26,10 +26,31 @@
 #include <asm/system_misc.h>
 
 /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * Handle IRQ/context state management when entering from kernel mode.
+ * Before this function is called it is not safe to call regular kernel code,
+ * intrumentable code, or any code which may trigger an exception.
+ *
+<<<<<<< HEAD
+ * This is intended to match the logic in irqentry_enter(), handling the kernel
+ * mode transitions only.
+ */
+static __always_inline void __enter_from_kernel_mode(struct pt_regs *regs)
+=======
  * This is intended to match the logic in irqentry_enter(), handling the kernel
  * mode transitions only.
  */
 static void noinstr enter_from_kernel_mode(struct pt_regs *regs)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * This is intended to match the logic in irqentry_enter(), handling the kernel
+ * mode transitions only.
+ */
+static __always_inline void __enter_from_kernel_mode(struct pt_regs *regs)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	regs->exit_rcu = false;
 
@@ -45,20 +66,59 @@ static void noinstr enter_from_kernel_mode(struct pt_regs *regs)
 	lockdep_hardirqs_off(CALLER_ADDR0);
 	rcu_irq_enter_check_tick();
 	trace_hardirqs_off_finish();
+<<<<<<< HEAD
+<<<<<<< HEAD
+}
 
+static void noinstr enter_from_kernel_mode(struct pt_regs *regs)
+{
+	__enter_from_kernel_mode(regs);
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+}
+
+static void noinstr enter_from_kernel_mode(struct pt_regs *regs)
+{
+	__enter_from_kernel_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mte_check_tfsr_entry();
 }
 
 /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * Handle IRQ/context state management when exiting to kernel mode.
+ * After this function returns it is not safe to call regular kernel code,
+ * intrumentable code, or any code which may trigger an exception.
+ *
+<<<<<<< HEAD
  * This is intended to match the logic in irqentry_exit(), handling the kernel
  * mode transitions only, and with preemption handled elsewhere.
  */
-static void noinstr exit_to_kernel_mode(struct pt_regs *regs)
+static __always_inline void __exit_to_kernel_mode(struct pt_regs *regs)
 {
 	lockdep_assert_irqs_disabled();
 
+=======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * This is intended to match the logic in irqentry_exit(), handling the kernel
+ * mode transitions only, and with preemption handled elsewhere.
+ */
+static __always_inline void __exit_to_kernel_mode(struct pt_regs *regs)
+{
+	lockdep_assert_irqs_disabled();
+
+<<<<<<< HEAD
 	mte_check_tfsr_exit();
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (interrupts_enabled(regs)) {
 		if (regs->exit_rcu) {
 			trace_hardirqs_on_prepare();
@@ -75,6 +135,80 @@ static void noinstr exit_to_kernel_mode(struct pt_regs *regs)
 	}
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void noinstr exit_to_kernel_mode(struct pt_regs *regs)
+{
+	mte_check_tfsr_exit();
+	__exit_to_kernel_mode(regs);
+}
+
+/*
+ * Handle IRQ/context state management when entering from user mode.
+ * Before this function is called it is not safe to call regular kernel code,
+ * intrumentable code, or any code which may trigger an exception.
+ */
+static __always_inline void __enter_from_user_mode(void)
+{
+	lockdep_hardirqs_off(CALLER_ADDR0);
+	CT_WARN_ON(ct_state() != CONTEXT_USER);
+	user_exit_irqoff();
+	trace_hardirqs_off_finish();
+}
+
+static __always_inline void enter_from_user_mode(struct pt_regs *regs)
+{
+	__enter_from_user_mode();
+}
+
+/*
+ * Handle IRQ/context state management when exiting to user mode.
+ * After this function returns it is not safe to call regular kernel code,
+ * intrumentable code, or any code which may trigger an exception.
+ */
+static __always_inline void __exit_to_user_mode(void)
+{
+	trace_hardirqs_on_prepare();
+	lockdep_hardirqs_on_prepare(CALLER_ADDR0);
+	user_enter_irqoff();
+	lockdep_hardirqs_on(CALLER_ADDR0);
+}
+
+static __always_inline void prepare_exit_to_user_mode(struct pt_regs *regs)
+{
+	unsigned long flags;
+
+	local_daif_mask();
+
+	flags = READ_ONCE(current_thread_info()->flags);
+	if (unlikely(flags & _TIF_WORK_MASK))
+		do_notify_resume(regs, flags);
+}
+
+static __always_inline void exit_to_user_mode(struct pt_regs *regs)
+{
+	prepare_exit_to_user_mode(regs);
+	mte_check_tfsr_exit();
+	__exit_to_user_mode();
+}
+
+asmlinkage void noinstr asm_exit_to_user_mode(struct pt_regs *regs)
+{
+	exit_to_user_mode(regs);
+}
+
+/*
+ * Handle IRQ/context state management when entering an NMI from user/kernel
+ * mode. Before this function is called it is not safe to call regular kernel
+ * code, intrumentable code, or any code which may trigger an exception.
+ */
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void noinstr arm64_enter_nmi(struct pt_regs *regs)
 {
 	regs->lockdep_hardirqs = lockdep_hardirqs_enabled();
@@ -88,6 +222,20 @@ static void noinstr arm64_enter_nmi(struct pt_regs *regs)
 	ftrace_nmi_enter();
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * Handle IRQ/context state management when exiting an NMI from user/kernel
+ * mode. After this function returns it is not safe to call regular kernel
+ * code, intrumentable code, or any code which may trigger an exception.
+ */
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void noinstr arm64_exit_nmi(struct pt_regs *regs)
 {
 	bool restore = regs->lockdep_hardirqs;
@@ -105,6 +253,49 @@ static void noinstr arm64_exit_nmi(struct pt_regs *regs)
 	__nmi_exit();
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * Handle IRQ/context state management when entering a debug exception from
+ * kernel mode. Before this function is called it is not safe to call regular
+ * kernel code, intrumentable code, or any code which may trigger an exception.
+ */
+static void noinstr arm64_enter_el1_dbg(struct pt_regs *regs)
+{
+	regs->lockdep_hardirqs = lockdep_hardirqs_enabled();
+
+	lockdep_hardirqs_off(CALLER_ADDR0);
+	rcu_nmi_enter();
+
+	trace_hardirqs_off_finish();
+}
+
+/*
+ * Handle IRQ/context state management when exiting a debug exception from
+ * kernel mode. After this function returns it is not safe to call regular
+ * kernel code, intrumentable code, or any code which may trigger an exception.
+ */
+static void noinstr arm64_exit_el1_dbg(struct pt_regs *regs)
+{
+	bool restore = regs->lockdep_hardirqs;
+
+	if (restore) {
+		trace_hardirqs_on_prepare();
+		lockdep_hardirqs_on_prepare(CALLER_ADDR0);
+	}
+
+	rcu_nmi_exit();
+	if (restore)
+		lockdep_hardirqs_on(CALLER_ADDR0);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void noinstr enter_el1_irq_or_nmi(struct pt_regs *regs)
 {
 	if (IS_ENABLED(CONFIG_ARM64_PSEUDO_NMI) && !interrupts_enabled(regs))
@@ -265,6 +456,9 @@ static void noinstr el1_undef(struct pt_regs *regs)
 	exit_to_kernel_mode(regs);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static void noinstr arm64_enter_el1_dbg(struct pt_regs *regs)
 {
 	regs->lockdep_hardirqs = lockdep_hardirqs_enabled();
@@ -289,6 +483,9 @@ static void noinstr arm64_exit_el1_dbg(struct pt_regs *regs)
 		lockdep_hardirqs_on(CALLER_ADDR0);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void noinstr el1_dbg(struct pt_regs *regs, unsigned long esr)
 {
 	unsigned long far = read_sysreg(far_el1);
@@ -382,6 +579,9 @@ asmlinkage void noinstr el1h_64_error_handler(struct pt_regs *regs)
 	arm64_exit_nmi(regs);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 asmlinkage void noinstr enter_from_user_mode(void)
 {
 	lockdep_hardirqs_off(CALLER_ADDR0);
@@ -400,13 +600,30 @@ asmlinkage void noinstr exit_to_user_mode(void)
 	lockdep_hardirqs_on(CALLER_ADDR0);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void noinstr el0_da(struct pt_regs *regs, unsigned long esr)
 {
 	unsigned long far = read_sysreg(far_el1);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_mem_abort(far, esr, regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_mem_abort(far, esr, regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_mem_abort(far, esr, regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_ia(struct pt_regs *regs, unsigned long esr)
@@ -421,37 +638,107 @@ static void noinstr el0_ia(struct pt_regs *regs, unsigned long esr)
 	if (!is_ttbr0_addr(far))
 		arm64_apply_bp_hardening();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_mem_abort(far, esr, regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_mem_abort(far, esr, regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_mem_abort(far, esr, regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_fpsimd_acc(struct pt_regs *regs, unsigned long esr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_fpsimd_acc(esr, regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_fpsimd_acc(esr, regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_fpsimd_acc(esr, regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_sve_acc(struct pt_regs *regs, unsigned long esr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_sve_acc(esr, regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_sve_acc(esr, regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_sve_acc(esr, regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_fpsimd_exc(struct pt_regs *regs, unsigned long esr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_fpsimd_exc(esr, regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_fpsimd_exc(esr, regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_fpsimd_exc(esr, regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_sys(struct pt_regs *regs, unsigned long esr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_sysinstr(esr, regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_sysinstr(esr, regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_sysinstr(esr, regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_pc(struct pt_regs *regs, unsigned long esr)
@@ -461,37 +748,107 @@ static void noinstr el0_pc(struct pt_regs *regs, unsigned long esr)
 	if (!is_ttbr0_addr(instruction_pointer(regs)))
 		arm64_apply_bp_hardening();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_sp_pc_abort(far, esr, regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_sp_pc_abort(far, esr, regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_sp_pc_abort(far, esr, regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_sp(struct pt_regs *regs, unsigned long esr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_sp_pc_abort(regs->sp, esr, regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_sp_pc_abort(regs->sp, esr, regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_sp_pc_abort(regs->sp, esr, regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_undef(struct pt_regs *regs)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_undefinstr(regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_undefinstr(regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_undefinstr(regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_bti(struct pt_regs *regs)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_bti(regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_bti(regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_bti(regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_inv(struct pt_regs *regs, unsigned long esr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	bad_el0_sync(regs, 0, esr);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	bad_el0_sync(regs, 0, esr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	bad_el0_sync(regs, 0, esr);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_dbg(struct pt_regs *regs, unsigned long esr)
@@ -499,23 +856,65 @@ static void noinstr el0_dbg(struct pt_regs *regs, unsigned long esr)
 	/* Only watchpoints write FAR_EL1, otherwise its UNKNOWN */
 	unsigned long far = read_sysreg(far_el1);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	do_debug_exception(far, esr, regs);
+	local_daif_restore(DAIF_PROCCTX);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	do_debug_exception(far, esr, regs);
 	local_daif_restore(DAIF_PROCCTX);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	do_debug_exception(far, esr, regs);
+	local_daif_restore(DAIF_PROCCTX);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_svc(struct pt_regs *regs)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	cortex_a76_erratum_1463225_svc_handler();
+	do_el0_svc(regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	cortex_a76_erratum_1463225_svc_handler();
 	do_el0_svc(regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	cortex_a76_erratum_1463225_svc_handler();
+	do_el0_svc(regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_fpac(struct pt_regs *regs, unsigned long esr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_ptrauth_fault(regs, esr);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_ptrauth_fault(regs, esr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_ptrauth_fault(regs, esr);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 asmlinkage void noinstr el0t_64_sync_handler(struct pt_regs *regs)
@@ -574,7 +973,15 @@ asmlinkage void noinstr el0t_64_sync_handler(struct pt_regs *regs)
 static void noinstr el0_interrupt(struct pt_regs *regs,
 				  void (*handler)(struct pt_regs *))
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+=======
 	enter_from_user_mode();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	write_sysreg(DAIF_PROCCTX_NOIRQ, daif);
 
@@ -582,6 +989,16 @@ static void noinstr el0_interrupt(struct pt_regs *regs,
 		arm64_apply_bp_hardening();
 
 	do_interrupt_handler(regs, handler);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	exit_to_user_mode(regs);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr __el0_irq_handler_common(struct pt_regs *regs)
@@ -604,16 +1021,40 @@ asmlinkage void noinstr el0t_64_fiq_handler(struct pt_regs *regs)
 	__el0_fiq_handler_common(regs);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void noinstr __el0_error_handler_common(struct pt_regs *regs)
+{
+	unsigned long esr = read_sysreg(esr_el1);
+
+	enter_from_user_mode(regs);
+=======
 static void __el0_error_handler_common(struct pt_regs *regs)
 {
 	unsigned long esr = read_sysreg(esr_el1);
 
 	enter_from_user_mode();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void noinstr __el0_error_handler_common(struct pt_regs *regs)
+{
+	unsigned long esr = read_sysreg(esr_el1);
+
+	enter_from_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	local_daif_restore(DAIF_ERRCTX);
 	arm64_enter_nmi(regs);
 	do_serror(regs, esr);
 	arm64_exit_nmi(regs);
 	local_daif_restore(DAIF_PROCCTX);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	exit_to_user_mode(regs);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 asmlinkage void noinstr el0t_64_error_handler(struct pt_regs *regs)
@@ -624,16 +1065,44 @@ asmlinkage void noinstr el0t_64_error_handler(struct pt_regs *regs)
 #ifdef CONFIG_COMPAT
 static void noinstr el0_cp15(struct pt_regs *regs, unsigned long esr)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_cp15instr(esr, regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	local_daif_restore(DAIF_PROCCTX);
 	do_cp15instr(esr, regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	local_daif_restore(DAIF_PROCCTX);
+	do_cp15instr(esr, regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void noinstr el0_svc_compat(struct pt_regs *regs)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enter_from_user_mode(regs);
+	cortex_a76_erratum_1463225_svc_handler();
+	do_el0_svc_compat(regs);
+	exit_to_user_mode(regs);
+=======
 	enter_from_user_mode();
 	cortex_a76_erratum_1463225_svc_handler();
 	do_el0_svc_compat(regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enter_from_user_mode(regs);
+	cortex_a76_erratum_1463225_svc_handler();
+	do_el0_svc_compat(regs);
+	exit_to_user_mode(regs);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 asmlinkage void noinstr el0t_32_sync_handler(struct pt_regs *regs)

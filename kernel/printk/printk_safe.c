@@ -4,17 +4,34 @@
  */
 
 #include <linux/preempt.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/kdb.h>
+#include <linux/smp.h>
+#include <linux/cpumask.h>
+=======
 #include <linux/spinlock.h>
 #include <linux/debug_locks.h>
 #include <linux/kdb.h>
 #include <linux/smp.h>
 #include <linux/cpumask.h>
 #include <linux/irq_work.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/kdb.h>
+#include <linux/smp.h>
+#include <linux/cpumask.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/printk.h>
 #include <linux/kprobes.h>
 
 #include "internal.h"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static DEFINE_PER_CPU(int, printk_context);
+
+=======
 /*
  * In NMI and safe mode, printk() avoids taking locks. Instead,
  * it uses an alternative implementation that temporary stores
@@ -345,6 +362,11 @@ static __printf(1, 0) int vprintk_safe(const char *fmt, va_list args)
 	return printk_safe_log_store(s, fmt, args);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static DEFINE_PER_CPU(int, printk_context);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Can be preempted by NMI. */
 void __printk_safe_enter(void)
 {
@@ -369,17 +391,33 @@ asmlinkage int vprintk(const char *fmt, va_list args)
 	 * Use the main logbuf even in NMI. But avoid calling console
 	 * drivers that might have their own locks.
 	 */
-	if ((this_cpu_read(printk_context) & PRINTK_NMI_DIRECT_CONTEXT_MASK)) {
-		unsigned long flags;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (this_cpu_read(printk_context) || in_nmi()) {
 		int len;
 
-		printk_safe_enter_irqsave(flags);
 		len = vprintk_store(0, LOGLEVEL_DEFAULT, NULL, fmt, args);
+=======
+	if ((this_cpu_read(printk_context) & PRINTK_NMI_DIRECT_CONTEXT_MASK)) {
+		unsigned long flags;
+=======
+	if (this_cpu_read(printk_context) || in_nmi()) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		int len;
+
+		len = vprintk_store(0, LOGLEVEL_DEFAULT, NULL, fmt, args);
+<<<<<<< HEAD
 		printk_safe_exit_irqrestore(flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		defer_console_output();
 		return len;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	/* Use extra buffer in NMI. */
 	if (this_cpu_read(printk_context) & PRINTK_NMI_CONTEXT_MASK)
 		return vprintk_nmi(fmt, args);
@@ -388,10 +426,16 @@ asmlinkage int vprintk(const char *fmt, va_list args)
 	if (this_cpu_read(printk_context) & PRINTK_SAFE_CONTEXT_MASK)
 		return vprintk_safe(fmt, args);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* No obstacles. */
 	return vprintk_default(fmt, args);
 }
 EXPORT_SYMBOL(vprintk);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 void __init printk_safe_init(void)
 {
@@ -412,3 +456,6 @@ void __init printk_safe_init(void)
 	/* Flush pending messages that did not have scheduled IRQ works. */
 	printk_safe_flush();
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

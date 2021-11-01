@@ -6,7 +6,11 @@
 
 #ifndef CONFIG_DYNAMIC_FTRACE
 extern void (*ftrace_trace_function)(unsigned long, unsigned long,
+<<<<<<< HEAD
+				     struct ftrace_ops*, struct pt_regs*);
+=======
 				     struct ftrace_ops*, struct ftrace_regs*);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern void ftrace_graph_caller(void);
 
 noinline void __naked ftrace_stub(unsigned long ip, unsigned long parent_ip,

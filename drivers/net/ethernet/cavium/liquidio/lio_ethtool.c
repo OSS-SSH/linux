@@ -2108,7 +2108,19 @@ static int octnet_set_intrmod_cfg(struct lio *lio,
 }
 
 static int lio_get_intr_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 struct ethtool_coalesce *intr_coal,
+				 struct kernel_ethtool_coalesce *kernel_coal,
+				 struct netlink_ext_ack *extack)
+=======
 				 struct ethtool_coalesce *intr_coal)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 struct ethtool_coalesce *intr_coal,
+				 struct kernel_ethtool_coalesce *kernel_coal,
+				 struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct lio *lio = GET_LIO(netdev);
 	struct octeon_device *oct = lio->oct_dev;
@@ -2412,7 +2424,19 @@ oct_cfg_tx_intrcnt(struct lio *lio,
 }
 
 static int lio_set_intr_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				 struct ethtool_coalesce *intr_coal,
+				 struct kernel_ethtool_coalesce *kernel_coal,
+				 struct netlink_ext_ack *extack)
+=======
 				 struct ethtool_coalesce *intr_coal)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				 struct ethtool_coalesce *intr_coal,
+				 struct kernel_ethtool_coalesce *kernel_coal,
+				 struct netlink_ext_ack *extack)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct lio *lio = GET_LIO(netdev);
 	int ret;

@@ -1076,6 +1076,13 @@ static int clk_divider_rtc_set_rate(struct clk_hw *hw, unsigned long rate,
 
 static int clk_divider_rtc_determine_rate(struct clk_hw *hw, struct clk_rate_request *req)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (req->best_parent_hw == clk_hw_get_parent_by_index(hw, HSE_RTC))
+		return clk_divider_ops.determine_rate(hw, req);
+
+	req->rate = req->best_parent_rate;
+=======
 	unsigned long best_parent_rate = req->best_parent_rate;
 
 	if (req->best_parent_hw == clk_hw_get_parent_by_index(hw, HSE_RTC)) {
@@ -1084,6 +1091,13 @@ static int clk_divider_rtc_determine_rate(struct clk_hw *hw, struct clk_rate_req
 	} else {
 		req->rate = best_parent_rate;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (req->best_parent_hw == clk_hw_get_parent_by_index(hw, HSE_RTC))
+		return clk_divider_ops.determine_rate(hw, req);
+
+	req->rate = req->best_parent_rate;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

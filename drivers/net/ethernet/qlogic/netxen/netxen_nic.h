@@ -1863,7 +1863,13 @@ static inline u32 netxen_tx_avail(struct nx_host_tx_ring *tx_ring)
 int netxen_get_flash_mac_addr(struct netxen_adapter *adapter, u64 *mac);
 int netxen_p3_get_mac_addr(struct netxen_adapter *adapter, u64 *mac);
 void netxen_change_ringparam(struct netxen_adapter *adapter);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 int netxen_rom_fast_read(struct netxen_adapter *adapter, int addr, int *valp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern const struct ethtool_ops netxen_nic_ethtool_ops;
 

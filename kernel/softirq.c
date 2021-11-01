@@ -422,7 +422,15 @@ static inline void invoke_softirq(void)
 	if (ksoftirqd_running(local_softirq_pending()))
 		return;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!force_irqthreads() || !__this_cpu_read(ksoftirqd)) {
+=======
 	if (!force_irqthreads || !__this_cpu_read(ksoftirqd)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!force_irqthreads() || !__this_cpu_read(ksoftirqd)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_HAVE_IRQ_EXIT_ON_IRQ_STACK
 		/*
 		 * We can safely execute softirq on the current stack if

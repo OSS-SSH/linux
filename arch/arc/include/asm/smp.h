@@ -105,7 +105,13 @@ static inline const char *arc_platform_smp_cpuinfo(void)
 #include <asm/spinlock.h>
 
 extern arch_spinlock_t smp_atomic_ops_lock;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 extern arch_spinlock_t smp_bitops_lock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define atomic_ops_lock(flags)	do {		\
 	local_irq_save(flags);			\
@@ -117,6 +123,9 @@ extern arch_spinlock_t smp_bitops_lock;
 	local_irq_restore(flags);		\
 } while (0)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define bitops_lock(flags)	do {		\
 	local_irq_save(flags);			\
 	arch_spin_lock(&smp_bitops_lock);	\
@@ -127,14 +136,23 @@ extern arch_spinlock_t smp_bitops_lock;
 	local_irq_restore(flags);		\
 } while (0)
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else /* !CONFIG_SMP */
 
 #define atomic_ops_lock(flags)		local_irq_save(flags)
 #define atomic_ops_unlock(flags)	local_irq_restore(flags)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define bitops_lock(flags)		local_irq_save(flags)
 #define bitops_unlock(flags)		local_irq_restore(flags)
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* !CONFIG_SMP */
 
 #endif	/* !CONFIG_ARC_HAS_LLSC */

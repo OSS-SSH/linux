@@ -31,11 +31,29 @@
 #define FRC_CDR_ISO_EN              BIT(19)
 #define CDR_ISO_EN                  BIT(20)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define UFSPHY_CLKS_CNT    2
+
+struct ufs_mtk_phy {
+	struct device *dev;
+	void __iomem *mmio;
+	struct clk_bulk_data clks[UFSPHY_CLKS_CNT];
+=======
 struct ufs_mtk_phy {
 	struct device *dev;
 	void __iomem *mmio;
 	struct clk *mp_clk;
 	struct clk *unipro_clk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define UFSPHY_CLKS_CNT    2
+
+struct ufs_mtk_phy {
+	struct device *dev;
+	void __iomem *mmio;
+	struct clk_bulk_data clks[UFSPHY_CLKS_CNT];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline u32 mphy_readl(struct ufs_mtk_phy *phy, u32 reg)
@@ -74,6 +92,14 @@ static struct ufs_mtk_phy *get_ufs_mtk_phy(struct phy *generic_phy)
 static int ufs_mtk_phy_clk_init(struct ufs_mtk_phy *phy)
 {
 	struct device *dev = phy->dev;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct clk_bulk_data *clks = phy->clks;
+
+	clks[0].id = "unipro";
+	clks[1].id = "mp";
+	return devm_clk_bulk_get(dev, UFSPHY_CLKS_CNT, clks);
+=======
 
 	phy->unipro_clk = devm_clk_get(dev, "unipro");
 	if (IS_ERR(phy->unipro_clk)) {
@@ -88,6 +114,14 @@ static int ufs_mtk_phy_clk_init(struct ufs_mtk_phy *phy)
 	}
 
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct clk_bulk_data *clks = phy->clks;
+
+	clks[0].id = "unipro";
+	clks[1].id = "mp";
+	return devm_clk_bulk_get(dev, UFSPHY_CLKS_CNT, clks);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void ufs_mtk_phy_set_active(struct ufs_mtk_phy *phy)
@@ -150,6 +184,12 @@ static int ufs_mtk_phy_power_on(struct phy *generic_phy)
 	struct ufs_mtk_phy *phy = get_ufs_mtk_phy(generic_phy);
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = clk_bulk_prepare_enable(UFSPHY_CLKS_CNT, phy->clks);
+	if (ret)
+		return ret;
+=======
 	ret = clk_prepare_enable(phy->unipro_clk);
 	if (ret) {
 		dev_err(phy->dev, "unipro_clk enable failed %d\n", ret);
@@ -161,15 +201,27 @@ static int ufs_mtk_phy_power_on(struct phy *generic_phy)
 		dev_err(phy->dev, "mp_clk enable failed %d\n", ret);
 		goto out_unprepare_unipro_clk;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = clk_bulk_prepare_enable(UFSPHY_CLKS_CNT, phy->clks);
+	if (ret)
+		return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ufs_mtk_phy_set_active(phy);
 
 	return 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 out_unprepare_unipro_clk:
 	clk_disable_unprepare(phy->unipro_clk);
 out:
 	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ufs_mtk_phy_power_off(struct phy *generic_phy)
@@ -178,8 +230,16 @@ static int ufs_mtk_phy_power_off(struct phy *generic_phy)
 
 	ufs_mtk_phy_set_deep_hibern(phy);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	clk_bulk_disable_unprepare(UFSPHY_CLKS_CNT, phy->clks);
+=======
 	clk_disable_unprepare(phy->unipro_clk);
 	clk_disable_unprepare(phy->mp_clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	clk_bulk_disable_unprepare(UFSPHY_CLKS_CNT, phy->clks);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

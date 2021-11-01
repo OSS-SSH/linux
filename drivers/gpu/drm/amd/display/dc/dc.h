@@ -45,7 +45,15 @@
 /* forward declaration */
 struct aux_payload;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define DC_VER "3.2.149"
+=======
 #define DC_VER "3.2.141"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define DC_VER "3.2.149"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define MAX_SURFACES 3
 #define MAX_PLANES 6
@@ -183,6 +191,16 @@ struct dc_caps {
 	unsigned int cursor_cache_size;
 	struct dc_plane_cap planes[MAX_PLANES];
 	struct dc_color_caps color;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bool vbios_lttpr_aware;
+	bool vbios_lttpr_enable;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool vbios_lttpr_aware;
+	bool vbios_lttpr_enable;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct dc_bug_wa {
@@ -354,10 +372,23 @@ enum dcn_pwr_state {
 };
 
 #if defined(CONFIG_DRM_AMD_DC_DCN)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+enum dcn_zstate_support_state {
+	DCN_ZSTATE_SUPPORT_UNKNOWN,
+	DCN_ZSTATE_SUPPORT_ALLOW,
+	DCN_ZSTATE_SUPPORT_DISALLOW,
+<<<<<<< HEAD
+=======
 enum dcn_z9_support_state {
 	DCN_Z9_SUPPORT_UNKNOWN,
 	DCN_Z9_SUPPORT_ALLOW,
 	DCN_Z9_SUPPORT_DISALLOW,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 #endif
 /*
@@ -378,7 +409,15 @@ struct dc_clocks {
 	int dramclk_khz;
 	bool p_state_change_support;
 #if defined(CONFIG_DRM_AMD_DC_DCN)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enum dcn_zstate_support_state zstate_support;
+=======
 	enum dcn_z9_support_state z9_support;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum dcn_zstate_support_state zstate_support;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool dtbclk_en;
 #endif
 	enum dcn_pwr_state pwr_state;
@@ -458,7 +497,78 @@ union mem_low_power_enable_options {
 	uint32_t u32All;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct dc_debug_data {
+	uint32_t ltFailCount;
+	uint32_t i2cErrorCount;
+	uint32_t auxErrorCount;
+};
+
+struct dc_phy_addr_space_config {
+	struct {
+		uint64_t start_addr;
+		uint64_t end_addr;
+		uint64_t fb_top;
+		uint64_t fb_offset;
+		uint64_t fb_base;
+		uint64_t agp_top;
+		uint64_t agp_bot;
+		uint64_t agp_base;
+	} system_aperture;
+
+	struct {
+		uint64_t page_table_start_addr;
+		uint64_t page_table_end_addr;
+		uint64_t page_table_base_addr;
+		bool base_addr_is_mc_addr;
+	} gart_config;
+
+	bool valid;
+	bool is_hvm_enabled;
+	uint64_t page_table_default_page_addr;
+};
+
+struct dc_virtual_addr_space_config {
+	uint64_t	page_table_base_addr;
+	uint64_t	page_table_start_addr;
+	uint64_t	page_table_end_addr;
+	uint32_t	page_table_block_size_in_bytes;
+	uint8_t		page_table_depth; // 1 = 1 level, 2 = 2 level, etc.  0 = invalid
+};
+
+struct dc_bounding_box_overrides {
+	int sr_exit_time_ns;
+	int sr_enter_plus_exit_time_ns;
+	int urgent_latency_ns;
+	int percent_of_ideal_drambw;
+	int dram_clock_change_latency_ns;
+	int dummy_clock_change_latency_ns;
+	/* This forces a hard min on the DCFCLK we use
+	 * for DML.  Unlike the debug option for forcing
+	 * DCFCLK, this override affects watermark calculations
+	 */
+	int min_dcfclk_mhz;
+};
+
+struct dc_state;
+struct resource_pool;
+struct dce_hwseq;
+
+<<<<<<< HEAD
 struct dc_debug_options {
+	bool native422_support;
+	bool disable_dsc;
+=======
+struct dc_debug_options {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct dc_debug_options {
+	bool native422_support;
+	bool disable_dsc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum visual_confirm visual_confirm;
 	bool sanity_checks;
 	bool max_disp_clk;
@@ -484,7 +594,13 @@ struct dc_debug_options {
 	bool disable_dsc_power_gate;
 	int dsc_min_slice_height_override;
 	int dsc_bpp_increment_div;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	bool native422_support;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool disable_pplib_wm_range;
 	enum wm_report_mode pplib_wm_report_mode;
 	unsigned int min_disp_clk_khz;
@@ -554,7 +670,13 @@ struct dc_debug_options {
 	bool validate_dml_output;
 	bool enable_dmcub_surface_flip;
 	bool usbc_combo_phy_reset_wa;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	bool disable_dsc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool enable_dram_clock_change_one_display_vactive;
 	union mem_low_power_enable_options enable_mem_low_power;
 	bool force_vblank_alignment;
@@ -572,6 +694,12 @@ struct dc_debug_options {
 #endif
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct gpu_info_soc_bounding_box_v1_0;
+struct dc {
+	struct dc_debug_options debug;
+=======
 struct dc_debug_data {
 	uint32_t ltFailCount;
 	uint32_t i2cErrorCount;
@@ -630,11 +758,23 @@ struct resource_pool;
 struct dce_hwseq;
 struct gpu_info_soc_bounding_box_v1_0;
 struct dc {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct gpu_info_soc_bounding_box_v1_0;
+struct dc {
+	struct dc_debug_options debug;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct dc_versions versions;
 	struct dc_caps caps;
 	struct dc_cap_funcs cap_funcs;
 	struct dc_config config;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct dc_debug_options debug;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct dc_bounding_box_overrides bb_overrides;
 	struct dc_bug_wa work_arounds;
 	struct dc_context *ctx;
@@ -1336,6 +1476,14 @@ void dc_hardware_release(struct dc *dc);
 bool dc_set_psr_allow_active(struct dc *dc, bool enable);
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 void dc_z10_restore(struct dc *dc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+void dc_z10_save_init(struct dc *dc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void dc_z10_save_init(struct dc *dc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 bool dc_enable_dmub_notifications(struct dc *dc);

@@ -271,7 +271,15 @@ static u32 __init next_test_random(u32 max_bits)
 {
 	u32 n_bits = hweight32(prandom_u32_state(&rnd_state)) % (max_bits + 1);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return prandom_u32_state(&rnd_state) & GENMASK(n_bits, 0);
+=======
 	return prandom_u32_state(&rnd_state) & (UINT_MAX >> (32 - n_bits));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return prandom_u32_state(&rnd_state) & GENMASK(n_bits, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static unsigned long long __init next_test_random_ull(void)
@@ -280,7 +288,15 @@ static unsigned long long __init next_test_random_ull(void)
 	u32 n_bits = (hweight32(rand1) * 3) % 64;
 	u64 val = (u64)prandom_u32_state(&rnd_state) * rand1;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return val & GENMASK_ULL(n_bits, 0);
+=======
 	return val & (ULLONG_MAX >> (64 - n_bits));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return val & GENMASK_ULL(n_bits, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #define random_for_type(T)				\
@@ -398,7 +414,15 @@ do {										\
 	test_array_8(fn, expect, test_buffer, fmt_buffer, result);		\
 } while (0)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void __init numbers_list_ll(const char *delim)
+=======
 static void __init numbers_list(const char *delim)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __init numbers_list_ll(const char *delim)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	numbers_list_8(unsigned long long, "%llu",   delim, "llu", check_ull);
 	numbers_list_8(long long,	   "%lld",   delim, "lld", check_ll);
@@ -406,28 +430,81 @@ static void __init numbers_list(const char *delim)
 	numbers_list_8(unsigned long long, "%llx",   delim, "llx", check_ull);
 	numbers_list_8(unsigned long long, "0x%llx", delim, "llx", check_ull);
 	numbers_list_8(long long,	   "0x%llx", delim, "lli", check_ll);
+<<<<<<< HEAD
+<<<<<<< HEAD
+}
 
+static void __init numbers_list_l(const char *delim)
+{
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+}
+
+static void __init numbers_list_l(const char *delim)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numbers_list_8(unsigned long,	   "%lu",    delim, "lu", check_ulong);
 	numbers_list_8(long,		   "%ld",    delim, "ld", check_long);
 	numbers_list_8(long,		   "%ld",    delim, "li", check_long);
 	numbers_list_8(unsigned long,	   "%lx",    delim, "lx", check_ulong);
 	numbers_list_8(unsigned long,	   "0x%lx",  delim, "lx", check_ulong);
 	numbers_list_8(long,		   "0x%lx",  delim, "li", check_long);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
 
+static void __init numbers_list_d(const char *delim)
+{
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numbers_list_8(unsigned int,	   "%u",     delim, "u", check_uint);
 	numbers_list_8(int,		   "%d",     delim, "d", check_int);
 	numbers_list_8(int,		   "%d",     delim, "i", check_int);
 	numbers_list_8(unsigned int,	   "%x",     delim, "x", check_uint);
 	numbers_list_8(unsigned int,	   "0x%x",   delim, "x", check_uint);
 	numbers_list_8(int,		   "0x%x",   delim, "i", check_int);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
 
+static void __init numbers_list_h(const char *delim)
+{
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numbers_list_8(unsigned short,	   "%hu",    delim, "hu", check_ushort);
 	numbers_list_8(short,		   "%hd",    delim, "hd", check_short);
 	numbers_list_8(short,		   "%hd",    delim, "hi", check_short);
 	numbers_list_8(unsigned short,	   "%hx",    delim, "hx", check_ushort);
 	numbers_list_8(unsigned short,	   "0x%hx",  delim, "hx", check_ushort);
 	numbers_list_8(short,		   "0x%hx",  delim, "hi", check_short);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
 
+static void __init numbers_list_hh(const char *delim)
+{
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numbers_list_8(unsigned char,	   "%hhu",   delim, "hhu", check_uchar);
 	numbers_list_8(signed char,	   "%hhd",   delim, "hhd", check_char);
 	numbers_list_8(signed char,	   "%hhd",   delim, "hhi", check_char);
@@ -436,11 +513,30 @@ static void __init numbers_list(const char *delim)
 	numbers_list_8(signed char,	   "0x%hhx", delim, "hhi", check_char);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void __init numbers_list(const char *delim)
+{
+	numbers_list_ll(delim);
+	numbers_list_l(delim);
+	numbers_list_d(delim);
+	numbers_list_h(delim);
+	numbers_list_hh(delim);
+}
+
+static void __init numbers_list_field_width_ll(const char *delim)
+<<<<<<< HEAD
+=======
 /*
  * List of numbers separated by delim. Each field width specifier is the
  * maximum possible digits for the given type and base.
  */
 static void __init numbers_list_field_width_typemax(const char *delim)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	numbers_list_fix_width(unsigned long long, "%llu",   delim, 20, "llu", check_ull);
 	numbers_list_fix_width(long long,	   "%lld",   delim, 20, "lld", check_ll);
@@ -448,7 +544,20 @@ static void __init numbers_list_field_width_typemax(const char *delim)
 	numbers_list_fix_width(unsigned long long, "%llx",   delim, 16, "llx", check_ull);
 	numbers_list_fix_width(unsigned long long, "0x%llx", delim, 18, "llx", check_ull);
 	numbers_list_fix_width(long long,	   "0x%llx", delim, 18, "lli", check_ll);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
 
+static void __init numbers_list_field_width_l(const char *delim)
+{
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #if BITS_PER_LONG == 64
 	numbers_list_fix_width(unsigned long,	"%lu",	     delim, 20, "lu", check_ulong);
 	numbers_list_fix_width(long,		"%ld",	     delim, 20, "ld", check_long);
@@ -464,21 +573,62 @@ static void __init numbers_list_field_width_typemax(const char *delim)
 	numbers_list_fix_width(unsigned long,	"0x%lx",     delim, 10, "lx", check_ulong);
 	numbers_list_fix_width(long,		"0x%lx",     delim, 10, "li", check_long);
 #endif
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
 
+static void __init numbers_list_field_width_d(const char *delim)
+{
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numbers_list_fix_width(unsigned int,	"%u",	     delim, 10, "u", check_uint);
 	numbers_list_fix_width(int,		"%d",	     delim, 11, "d", check_int);
 	numbers_list_fix_width(int,		"%d",	     delim, 11, "i", check_int);
 	numbers_list_fix_width(unsigned int,	"%x",	     delim, 8,  "x", check_uint);
 	numbers_list_fix_width(unsigned int,	"0x%x",	     delim, 10, "x", check_uint);
 	numbers_list_fix_width(int,		"0x%x",	     delim, 10, "i", check_int);
+<<<<<<< HEAD
+<<<<<<< HEAD
+}
 
+static void __init numbers_list_field_width_h(const char *delim)
+{
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+}
+
+static void __init numbers_list_field_width_h(const char *delim)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numbers_list_fix_width(unsigned short,	"%hu",	     delim, 5, "hu", check_ushort);
 	numbers_list_fix_width(short,		"%hd",	     delim, 6, "hd", check_short);
 	numbers_list_fix_width(short,		"%hd",	     delim, 6, "hi", check_short);
 	numbers_list_fix_width(unsigned short,	"%hx",	     delim, 4, "hx", check_ushort);
 	numbers_list_fix_width(unsigned short,	"0x%hx",     delim, 6, "hx", check_ushort);
 	numbers_list_fix_width(short,		"0x%hx",     delim, 6, "hi", check_short);
+<<<<<<< HEAD
+<<<<<<< HEAD
+}
 
+static void __init numbers_list_field_width_hh(const char *delim)
+{
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+}
+
+static void __init numbers_list_field_width_hh(const char *delim)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numbers_list_fix_width(unsigned char,	"%hhu",	     delim, 3, "hhu", check_uchar);
 	numbers_list_fix_width(signed char,	"%hhd",	     delim, 4, "hhd", check_char);
 	numbers_list_fix_width(signed char,	"%hhd",	     delim, 4, "hhi", check_char);
@@ -489,9 +639,39 @@ static void __init numbers_list_field_width_typemax(const char *delim)
 
 /*
  * List of numbers separated by delim. Each field width specifier is the
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * maximum possible digits for the given type and base.
+ */
+static void __init numbers_list_field_width_typemax(const char *delim)
+{
+	numbers_list_field_width_ll(delim);
+	numbers_list_field_width_l(delim);
+	numbers_list_field_width_d(delim);
+	numbers_list_field_width_h(delim);
+	numbers_list_field_width_hh(delim);
+}
+
+static void __init numbers_list_field_width_val_ll(const char *delim)
+=======
  * exact length of the corresponding value digits in the string being scanned.
  */
 static void __init numbers_list_field_width_val_width(const char *delim)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * maximum possible digits for the given type and base.
+ */
+static void __init numbers_list_field_width_typemax(const char *delim)
+{
+	numbers_list_field_width_ll(delim);
+	numbers_list_field_width_l(delim);
+	numbers_list_field_width_d(delim);
+	numbers_list_field_width_h(delim);
+	numbers_list_field_width_hh(delim);
+}
+
+static void __init numbers_list_field_width_val_ll(const char *delim)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	numbers_list_val_width(unsigned long long, "%llu",   delim, "llu", check_ull);
 	numbers_list_val_width(long long,	   "%lld",   delim, "lld", check_ll);
@@ -499,28 +679,81 @@ static void __init numbers_list_field_width_val_width(const char *delim)
 	numbers_list_val_width(unsigned long long, "%llx",   delim, "llx", check_ull);
 	numbers_list_val_width(unsigned long long, "0x%llx", delim, "llx", check_ull);
 	numbers_list_val_width(long long,	   "0x%llx", delim, "lli", check_ll);
+<<<<<<< HEAD
+<<<<<<< HEAD
+}
 
+static void __init numbers_list_field_width_val_l(const char *delim)
+{
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+}
+
+static void __init numbers_list_field_width_val_l(const char *delim)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numbers_list_val_width(unsigned long,	"%lu",	     delim, "lu", check_ulong);
 	numbers_list_val_width(long,		"%ld",	     delim, "ld", check_long);
 	numbers_list_val_width(long,		"%ld",	     delim, "li", check_long);
 	numbers_list_val_width(unsigned long,	"%lx",	     delim, "lx", check_ulong);
 	numbers_list_val_width(unsigned long,	"0x%lx",     delim, "lx", check_ulong);
 	numbers_list_val_width(long,		"0x%lx",     delim, "li", check_long);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
 
+static void __init numbers_list_field_width_val_d(const char *delim)
+{
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numbers_list_val_width(unsigned int,	"%u",	     delim, "u", check_uint);
 	numbers_list_val_width(int,		"%d",	     delim, "d", check_int);
 	numbers_list_val_width(int,		"%d",	     delim, "i", check_int);
 	numbers_list_val_width(unsigned int,	"%x",	     delim, "x", check_uint);
 	numbers_list_val_width(unsigned int,	"0x%x",	     delim, "x", check_uint);
 	numbers_list_val_width(int,		"0x%x",	     delim, "i", check_int);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
 
+static void __init numbers_list_field_width_val_h(const char *delim)
+{
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numbers_list_val_width(unsigned short,	"%hu",	     delim, "hu", check_ushort);
 	numbers_list_val_width(short,		"%hd",	     delim, "hd", check_short);
 	numbers_list_val_width(short,		"%hd",	     delim, "hi", check_short);
 	numbers_list_val_width(unsigned short,	"%hx",	     delim, "hx", check_ushort);
 	numbers_list_val_width(unsigned short,	"0x%hx",     delim, "hx", check_ushort);
 	numbers_list_val_width(short,		"0x%hx",     delim, "hi", check_short);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+}
 
+static void __init numbers_list_field_width_val_hh(const char *delim)
+{
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	numbers_list_val_width(unsigned char,	"%hhu",	     delim, "hhu", check_uchar);
 	numbers_list_val_width(signed char,	"%hhd",	     delim, "hhd", check_char);
 	numbers_list_val_width(signed char,	"%hhd",	     delim, "hhi", check_char);
@@ -530,6 +763,28 @@ static void __init numbers_list_field_width_val_width(const char *delim)
 }
 
 /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * List of numbers separated by delim. Each field width specifier is the
+ * exact length of the corresponding value digits in the string being scanned.
+ */
+static void __init numbers_list_field_width_val_width(const char *delim)
+{
+	numbers_list_field_width_val_ll(delim);
+	numbers_list_field_width_val_l(delim);
+	numbers_list_field_width_val_d(delim);
+	numbers_list_field_width_val_h(delim);
+	numbers_list_field_width_val_hh(delim);
+}
+
+/*
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Slice a continuous string of digits without field delimiters, containing
  * numbers of varying length, using the field width to extract each group
  * of digits. For example the hex values c0,3,bf01,303 would have a

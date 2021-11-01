@@ -113,6 +113,14 @@
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/compat.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/compat.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/capability.h>
 #include <linux/module.h>
 #include <linux/kernel.h>
@@ -131,7 +139,17 @@
 
 static int eql_open(struct net_device *dev);
 static int eql_close(struct net_device *dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int eql_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+			      void __user *data, int cmd);
+=======
 static int eql_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int eql_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+			      void __user *data, int cmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static netdev_tx_t eql_slave_xmit(struct sk_buff *skb, struct net_device *dev);
 
 #define eql_is_slave(dev)	((dev->flags & IFF_SLAVE) == IFF_SLAVE)
@@ -170,7 +188,15 @@ static const char version[] __initconst =
 static const struct net_device_ops eql_netdev_ops = {
 	.ndo_open	= eql_open,
 	.ndo_stop	= eql_close,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_siocdevprivate = eql_siocdevprivate,
+=======
 	.ndo_do_ioctl	= eql_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate = eql_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_start_xmit	= eql_slave_xmit,
 };
 
@@ -268,25 +294,64 @@ static int eql_s_slave_cfg(struct net_device *dev, slave_config_t __user *sc);
 static int eql_g_master_cfg(struct net_device *dev, master_config_t __user *mc);
 static int eql_s_master_cfg(struct net_device *dev, master_config_t __user *mc);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int eql_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+			      void __user *data, int cmd)
+=======
 static int eql_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int eql_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+			      void __user *data, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (cmd != EQL_GETMASTRCFG && cmd != EQL_GETSLAVECFG &&
 	    !capable(CAP_NET_ADMIN))
 	  	return -EPERM;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (in_compat_syscall()) /* to be implemented */
+		return -EOPNOTSUPP;
+
 	switch (cmd) {
 		case EQL_ENSLAVE:
-			return eql_enslave(dev, ifr->ifr_data);
+			return eql_enslave(dev, data);
 		case EQL_EMANCIPATE:
-			return eql_emancipate(dev, ifr->ifr_data);
+			return eql_emancipate(dev, data);
 		case EQL_GETSLAVECFG:
-			return eql_g_slave_cfg(dev, ifr->ifr_data);
+			return eql_g_slave_cfg(dev, data);
 		case EQL_SETSLAVECFG:
-			return eql_s_slave_cfg(dev, ifr->ifr_data);
+			return eql_s_slave_cfg(dev, data);
 		case EQL_GETMASTRCFG:
-			return eql_g_master_cfg(dev, ifr->ifr_data);
+			return eql_g_master_cfg(dev, data);
 		case EQL_SETMASTRCFG:
+			return eql_s_master_cfg(dev, data);
+=======
+=======
+	if (in_compat_syscall()) /* to be implemented */
+		return -EOPNOTSUPP;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	switch (cmd) {
+		case EQL_ENSLAVE:
+			return eql_enslave(dev, data);
+		case EQL_EMANCIPATE:
+			return eql_emancipate(dev, data);
+		case EQL_GETSLAVECFG:
+			return eql_g_slave_cfg(dev, data);
+		case EQL_SETSLAVECFG:
+			return eql_s_slave_cfg(dev, data);
+		case EQL_GETMASTRCFG:
+			return eql_g_master_cfg(dev, data);
+		case EQL_SETMASTRCFG:
+<<<<<<< HEAD
 			return eql_s_master_cfg(dev, ifr->ifr_data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return eql_s_master_cfg(dev, data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		default:
 			return -EOPNOTSUPP;
 	}

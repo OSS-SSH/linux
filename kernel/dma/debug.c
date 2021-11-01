@@ -567,7 +567,17 @@ static void add_dma_entry(struct dma_debug_entry *entry)
 		pr_err("cacheline tracking ENOMEM, dma-debug disabled\n");
 		global_disable = true;
 	} else if (rc == -EEXIST) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		err_printk(entry->dev, entry,
+			"cacheline tracking EEXIST, overlapping mappings aren't supported\n");
+=======
 		pr_err("cacheline tracking EEXIST, overlapping mappings aren't supported\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err_printk(entry->dev, entry,
+			"cacheline tracking EEXIST, overlapping mappings aren't supported\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -792,7 +802,15 @@ static int dump_show(struct seq_file *seq, void *v)
 }
 DEFINE_SHOW_ATTRIBUTE(dump);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int __init dma_debug_fs_init(void)
+=======
 static void dma_debug_fs_init(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __init dma_debug_fs_init(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct dentry *dentry = debugfs_create_dir("dma-api", NULL);
 
@@ -805,7 +823,21 @@ static void dma_debug_fs_init(void)
 	debugfs_create_u32("nr_total_entries", 0444, dentry, &nr_total_entries);
 	debugfs_create_file("driver_filter", 0644, dentry, NULL, &filter_fops);
 	debugfs_create_file("dump", 0444, dentry, NULL, &dump_fops);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	return 0;
 }
+core_initcall_sync(dma_debug_fs_init);
+=======
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return 0;
+}
+core_initcall_sync(dma_debug_fs_init);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int device_dma_allocations(struct device *dev, struct dma_debug_entry **out_entry)
 {
@@ -890,8 +922,14 @@ static int dma_debug_init(void)
 		spin_lock_init(&dma_entry_hash[i].lock);
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	dma_debug_fs_init();
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nr_pages = DIV_ROUND_UP(nr_prealloc_entries, DMA_DEBUG_DYNAMIC_ENTRIES);
 	for (i = 0; i < nr_pages; ++i)
 		dma_debug_create_entries(GFP_KERNEL);
@@ -1064,6 +1102,13 @@ static void check_for_stack(struct device *dev,
 	}
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void check_for_illegal_area(struct device *dev, void *addr, unsigned long len)
+{
+	if (memory_intersects(_stext, _etext, addr, len) ||
+	    memory_intersects(__start_rodata, __end_rodata, addr, len))
+=======
 static inline bool overlap(void *addr, unsigned long len, void *start, void *end)
 {
 	unsigned long a1 = (unsigned long)addr;
@@ -1078,6 +1123,13 @@ static void check_for_illegal_area(struct device *dev, void *addr, unsigned long
 {
 	if (overlap(addr, len, _stext, _etext) ||
 	    overlap(addr, len, __start_rodata, __end_rodata))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void check_for_illegal_area(struct device *dev, void *addr, unsigned long len)
+{
+	if (memory_intersects(_stext, _etext, addr, len) ||
+	    memory_intersects(__start_rodata, __end_rodata, addr, len))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err_printk(dev, NULL, "device driver maps memory from kernel text or rodata [addr=%p] [len=%lu]\n", addr, len);
 }
 

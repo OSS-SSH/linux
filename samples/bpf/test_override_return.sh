@@ -1,5 +1,13 @@
 #!/bin/bash
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+rm -r tmpmnt
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+rm -r tmpmnt
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 rm -f testfile.img
 dd if=/dev/zero of=testfile.img bs=1M seek=1000 count=1
 DEVICE=$(losetup --show -f testfile.img)

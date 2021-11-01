@@ -4,7 +4,13 @@
  */
 #include "intel_atomic.h"
 #include "intel_ddi.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include "intel_ddi_buf_trans.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "intel_de.h"
 #include "intel_display_types.h"
 #include "intel_fdi.h"
@@ -96,10 +102,24 @@ static int ilk_check_fdi_lanes(struct drm_device *dev, enum pipe pipe,
 	}
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int ilk_fdi_compute_config(struct intel_crtc *crtc,
+			   struct intel_crtc_state *pipe_config)
+{
+	struct drm_device *dev = crtc->base.dev;
+=======
 int ilk_fdi_compute_config(struct intel_crtc *intel_crtc,
 				  struct intel_crtc_state *pipe_config)
 {
 	struct drm_device *dev = intel_crtc->base.dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int ilk_fdi_compute_config(struct intel_crtc *crtc,
+			   struct intel_crtc_state *pipe_config)
+{
+	struct drm_device *dev = crtc->base.dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct drm_i915_private *i915 = to_i915(dev);
 	const struct drm_display_mode *adjusted_mode = &pipe_config->hw.adjusted_mode;
 	int lane, link_bw, fdi_dotclock, ret;
@@ -125,7 +145,15 @@ retry:
 	intel_link_compute_m_n(pipe_config->pipe_bpp, lane, fdi_dotclock,
 			       link_bw, &pipe_config->fdi_m_n, false, false);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = ilk_check_fdi_lanes(dev, crtc->pipe, pipe_config);
+=======
 	ret = ilk_check_fdi_lanes(dev, intel_crtc->pipe, pipe_config);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = ilk_check_fdi_lanes(dev, crtc->pipe, pipe_config);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret == -EDEADLK)
 		return ret;
 
@@ -569,9 +597,21 @@ void hsw_fdi_link_train(struct intel_encoder *encoder,
 	u32 temp, i, rx_ctl_val;
 	int n_entries;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	encoder->get_buf_trans(encoder, crtc_state, &n_entries);
+
+	hsw_prepare_dp_ddi_buffers(encoder, crtc_state);
+=======
 	intel_ddi_get_buf_trans_fdi(dev_priv, &n_entries);
 
 	intel_prepare_dp_ddi_buffers(encoder, crtc_state);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	encoder->get_buf_trans(encoder, crtc_state, &n_entries);
+
+	hsw_prepare_dp_ddi_buffers(encoder, crtc_state);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Set the FDI_RX_MISC pwrdn lanes and the 2 workarounds listed at the
 	 * mode set "sequence for CRT port" document:
@@ -691,9 +731,21 @@ void hsw_fdi_link_train(struct intel_encoder *encoder,
 
 void ilk_fdi_pll_enable(const struct intel_crtc_state *crtc_state)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
+	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
+	enum pipe pipe = crtc->pipe;
+=======
 	struct intel_crtc *intel_crtc = to_intel_crtc(crtc_state->uapi.crtc);
 	struct drm_i915_private *dev_priv = to_i915(intel_crtc->base.dev);
 	enum pipe pipe = intel_crtc->pipe;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
+	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
+	enum pipe pipe = crtc->pipe;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	i915_reg_t reg;
 	u32 temp;
 
@@ -726,11 +778,27 @@ void ilk_fdi_pll_enable(const struct intel_crtc_state *crtc_state)
 	}
 }
 
-void ilk_fdi_pll_disable(struct intel_crtc *intel_crtc)
+<<<<<<< HEAD
+<<<<<<< HEAD
+void ilk_fdi_pll_disable(struct intel_crtc *crtc)
 {
-	struct drm_device *dev = intel_crtc->base.dev;
+	struct drm_device *dev = crtc->base.dev;
 	struct drm_i915_private *dev_priv = to_i915(dev);
+	enum pipe pipe = crtc->pipe;
+=======
+void ilk_fdi_pll_disable(struct intel_crtc *intel_crtc)
+=======
+void ilk_fdi_pll_disable(struct intel_crtc *crtc)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct drm_device *dev = crtc->base.dev;
+	struct drm_i915_private *dev_priv = to_i915(dev);
+<<<<<<< HEAD
 	enum pipe pipe = intel_crtc->pipe;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum pipe pipe = crtc->pipe;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	i915_reg_t reg;
 	u32 temp;
 

@@ -184,6 +184,16 @@
 		dmas = <0>, <0>;
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_flx4_default>;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		i2c-digital-filter;
+		i2c-digital-filter-width-ns = <35>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		i2c-digital-filter;
+		i2c-digital-filter-width-ns = <35>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		status = "okay";
 
 		mcp16502@5b {
@@ -307,6 +317,16 @@
 &i2c0 { /* mikrobus i2c */
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_mikrobus_i2c>;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	i2c-digital-filter;
+	i2c-digital-filter-width-ns = <35>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	i2c-digital-filter;
+	i2c-digital-filter-width-ns = <35>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = "okay";
 };
 
@@ -314,6 +334,16 @@
 	dmas = <0>, <0>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_i2c1_default>;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	i2c-digital-filter;
+	i2c-digital-filter-width-ns = <35>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	i2c-digital-filter;
+	i2c-digital-filter-width-ns = <35>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = "okay";
 
 	eeprom@50 {
@@ -693,7 +723,15 @@
 };
 
 &shutdown_controller {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	debounce-delay-us = <976>;
+=======
 	atmel,shdwc-debouncer = <976>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	debounce-delay-us = <976>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atmel,wakeup-rtc-timer;
 
 	input@0 {

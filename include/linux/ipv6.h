@@ -76,6 +76,18 @@ struct ipv6_devconf {
 	__s32		disable_policy;
 	__s32           ndisc_tclass;
 	__s32		rpl_seg_enabled;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	__u32		ioam6_id;
+	__u32		ioam6_id_wide;
+	__u8		ioam6_enabled;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__u32		ioam6_id;
+	__u32		ioam6_id_wide;
+	__u8		ioam6_enabled;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct ctl_table_header *sysctl_header;
 };

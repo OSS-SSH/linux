@@ -476,10 +476,36 @@ unsigned int ia_css_csi2_calculate_input_system_alignment(
 #endif
 
 #if !defined(ISP2401)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static const mipi_lane_cfg_t MIPI_PORT_LANES[N_RX_MODE][N_MIPI_PORT_ID] = {
+	{MIPI_4LANE_CFG, MIPI_1LANE_CFG, MIPI_0LANE_CFG},
+	{MIPI_3LANE_CFG, MIPI_1LANE_CFG, MIPI_0LANE_CFG},
+	{MIPI_2LANE_CFG, MIPI_1LANE_CFG, MIPI_0LANE_CFG},
+	{MIPI_1LANE_CFG, MIPI_1LANE_CFG, MIPI_0LANE_CFG},
+	{MIPI_2LANE_CFG, MIPI_1LANE_CFG, MIPI_2LANE_CFG},
+	{MIPI_3LANE_CFG, MIPI_1LANE_CFG, MIPI_1LANE_CFG},
+	{MIPI_2LANE_CFG, MIPI_1LANE_CFG, MIPI_1LANE_CFG},
+	{MIPI_1LANE_CFG, MIPI_1LANE_CFG, MIPI_1LANE_CFG}
+};
+
+<<<<<<< HEAD
+void ia_css_isys_rx_configure(const rx_cfg_t *config,
+			      const enum ia_css_input_mode input_mode)
+{
+=======
 void ia_css_isys_rx_configure(const rx_cfg_t *config,
 			      const enum ia_css_input_mode input_mode)
 {
 	bool port_enabled[N_MIPI_PORT_ID];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void ia_css_isys_rx_configure(const rx_cfg_t *config,
+			      const enum ia_css_input_mode input_mode)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool any_port_enabled = false;
 	enum mipi_port_id port;
 
@@ -516,8 +542,14 @@ void ia_css_isys_rx_configure(const rx_cfg_t *config,
 					_HRT_CSS_RECEIVER_2400_RX_COUNT_REG_IDX,
 					config->rxcount);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		port_enabled[port] = true;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (input_mode != IA_CSS_INPUT_MODE_BUFFERED_SENSOR) {
 			/* MW: A bit of a hack, straight wiring of the capture
 			 * units,assuming they are linearly enumerated. */

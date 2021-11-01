@@ -75,6 +75,14 @@ void	target_backend_unregister(const struct target_backend_ops *);
 
 void	target_complete_cmd(struct se_cmd *, u8);
 void	target_set_cmd_data_length(struct se_cmd *, int);
+<<<<<<< HEAD
+<<<<<<< HEAD
+void	target_complete_cmd_with_sense(struct se_cmd *, u8, sense_reason_t);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void	target_complete_cmd_with_sense(struct se_cmd *, u8, sense_reason_t);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void	target_complete_cmd_with_length(struct se_cmd *, u8, int);
 
 void	transport_copy_sense_to_cmd(struct se_cmd *, unsigned char *);

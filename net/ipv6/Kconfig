@@ -328,4 +328,24 @@ config IPV6_RPL_LWTUNNEL
 
 	  If unsure, say N.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+config IPV6_IOAM6_LWTUNNEL
+	bool "IPv6: IOAM Pre-allocated Trace insertion support"
+	depends on IPV6
+	select LWTUNNEL
+	help
+	  Support for the inline insertion of IOAM Pre-allocated
+	  Trace Header (only on locally generated packets), using
+	  the lightweight tunnels mechanism.
+
+	  If unsure, say N.
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endif # IPV6

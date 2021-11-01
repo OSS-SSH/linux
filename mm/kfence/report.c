@@ -5,10 +5,26 @@
  * Copyright (C) 2020, Google LLC.
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/stdarg.h>
+
+#include <linux/kernel.h>
+#include <linux/lockdep.h>
+#include <linux/math.h>
+=======
 #include <stdarg.h>
 
 #include <linux/kernel.h>
 #include <linux/lockdep.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/stdarg.h>
+
+#include <linux/kernel.h>
+#include <linux/lockdep.h>
+#include <linux/math.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/printk.h>
 #include <linux/sched/debug.h>
 #include <linux/seq_file.h>
@@ -100,6 +116,22 @@ static void kfence_print_stack(struct seq_file *seq, const struct kfence_metadat
 			       bool show_alloc)
 {
 	const struct kfence_track *track = show_alloc ? &meta->alloc_track : &meta->free_track;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	u64 ts_sec = track->ts_nsec;
+	unsigned long rem_nsec = do_div(ts_sec, NSEC_PER_SEC);
+
+	/* Timestamp matches printk timestamp format. */
+	seq_con_printf(seq, "%s by task %d on cpu %d at %lu.%06lus:\n",
+		       show_alloc ? "allocated" : "freed", track->pid,
+		       track->cpu, (unsigned long)ts_sec, rem_nsec / 1000);
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (track->num_stack_entries) {
 		/* Skip allocation/free internals stack. */
@@ -126,6 +158,20 @@ void kfence_print_object(struct seq_file *seq, const struct kfence_metadata *met
 		return;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	seq_con_printf(seq, "kfence-#%td: 0x%p-0x%p, size=%d, cache=%s\n\n",
+		       meta - kfence_metadata, (void *)start, (void *)(start + size - 1),
+		       size, (cache && cache->name) ? cache->name : "<destroyed>");
+
+<<<<<<< HEAD
+	kfence_print_stack(seq, meta, true);
+
+	if (meta->state == KFENCE_OBJECT_FREED) {
+		seq_con_printf(seq, "\n");
+=======
 	seq_con_printf(seq,
 		       "kfence-#%td [0x%p-0x%p"
 		       ", size=%d, cache=%s] allocated by task %d:\n",
@@ -135,6 +181,13 @@ void kfence_print_object(struct seq_file *seq, const struct kfence_metadata *met
 
 	if (meta->state == KFENCE_OBJECT_FREED) {
 		seq_con_printf(seq, "\nfreed by task %d:\n", meta->free_track.pid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kfence_print_stack(seq, meta, true);
+
+	if (meta->state == KFENCE_OBJECT_FREED) {
+		seq_con_printf(seq, "\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfence_print_stack(seq, meta, false);
 	}
 }

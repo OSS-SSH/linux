@@ -251,6 +251,14 @@ int pm_init(struct packet_manager *pm, struct device_queue_manager *dqm)
 	case CHIP_DIMGREY_CAVEFISH:
 	case CHIP_BEIGE_GOBY:
 	case CHIP_YELLOW_CARP:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case CHIP_CYAN_SKILLFISH:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case CHIP_CYAN_SKILLFISH:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pm->pmf = &kfd_v9_pm_funcs;
 		break;
 	case CHIP_ALDEBARAN:
@@ -278,6 +286,14 @@ void pm_uninit(struct packet_manager *pm, bool hanging)
 {
 	mutex_destroy(&pm->lock);
 	kernel_queue_uninit(pm->priv_queue, hanging);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pm->priv_queue = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pm->priv_queue = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int pm_send_set_resources(struct packet_manager *pm,
@@ -447,6 +463,18 @@ int pm_debugfs_hang_hws(struct packet_manager *pm)
 	uint32_t *buffer, size;
 	int r = 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!pm->priv_queue)
+		return -EAGAIN;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!pm->priv_queue)
+		return -EAGAIN;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	size = pm->pmf->query_status_size;
 	mutex_lock(&pm->lock);
 	kq_acquire_packet_buffer(pm->priv_queue,

@@ -1695,6 +1695,16 @@ static const struct regmap_config rt5631_regmap_config = {
 	.reg_defaults = rt5631_reg,
 	.num_reg_defaults = ARRAY_SIZE(rt5631_reg),
 	.cache_type = REGCACHE_RBTREE,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.use_single_read = true,
+	.use_single_write = true,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.use_single_read = true,
+	.use_single_write = true,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int rt5631_i2c_probe(struct i2c_client *i2c,

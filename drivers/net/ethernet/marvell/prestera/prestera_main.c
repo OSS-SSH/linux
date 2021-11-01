@@ -746,7 +746,17 @@ static int prestera_netdev_port_event(struct net_device *lower,
 	case NETDEV_CHANGEUPPER:
 		if (netif_is_bridge_master(upper)) {
 			if (info->linking)
+<<<<<<< HEAD
+<<<<<<< HEAD
+				return prestera_bridge_port_join(upper, port,
+								 extack);
+=======
 				return prestera_bridge_port_join(upper, port);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				return prestera_bridge_port_join(upper, port,
+								 extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			else
 				prestera_bridge_port_leave(upper, port);
 		} else if (netif_is_lag_master(upper)) {
@@ -904,7 +914,15 @@ int prestera_device_register(struct prestera_device *dev)
 	struct prestera_switch *sw;
 	int err;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	sw = prestera_devlink_alloc(dev);
+=======
 	sw = prestera_devlink_alloc();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	sw = prestera_devlink_alloc(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!sw)
 		return -ENOMEM;
 

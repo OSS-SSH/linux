@@ -99,10 +99,26 @@ static void u8500_clk_init(struct device_node *np)
 	if (fw_version != NULL) {
 		switch (fw_version->project) {
 		case PRCMU_FW_PROJECT_U8500_C2:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		case PRCMU_FW_PROJECT_U8500_SSG1:
+		case PRCMU_FW_PROJECT_U8520:
+		case PRCMU_FW_PROJECT_U8420:
+		case PRCMU_FW_PROJECT_U8420_SYSCLK:
+		case PRCMU_FW_PROJECT_U8500_SSG2:
+=======
 		case PRCMU_FW_PROJECT_U8500_MBL:
 		case PRCMU_FW_PROJECT_U8520:
 		case PRCMU_FW_PROJECT_U8420:
 		case PRCMU_FW_PROJECT_U8420_SYSCLK:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		case PRCMU_FW_PROJECT_U8500_SSG1:
+		case PRCMU_FW_PROJECT_U8520:
+		case PRCMU_FW_PROJECT_U8420:
+		case PRCMU_FW_PROJECT_U8420_SYSCLK:
+		case PRCMU_FW_PROJECT_U8500_SSG2:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sgaclk_parent = "soc0_pll";
 			break;
 		default:

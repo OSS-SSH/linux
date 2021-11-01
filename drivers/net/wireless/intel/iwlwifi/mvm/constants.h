@@ -1,7 +1,15 @@
 /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
 /*
  * Copyright (C) 2013-2015 Intel Mobile Communications GmbH
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Copyright (C) 2013-2014, 2018-2021 Intel Corporation
+=======
  * Copyright (C) 2013-2014, 2018-2020 Intel Corporation
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Copyright (C) 2013-2014, 2018-2021 Intel Corporation
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Copyright (C) 2015 Intel Deutschland GmbH
  */
 #ifndef __MVM_CONSTANTS_H
@@ -93,6 +101,14 @@
 #define IWL_MVM_ENABLE_EBS			1
 #define IWL_MVM_FTM_INITIATOR_ALGO		IWL_TOF_ALGO_TYPE_MAX_LIKE
 #define IWL_MVM_FTM_INITIATOR_DYNACK		true
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define IWL_MVM_FTM_LMR_FEEDBACK_TERMINATE	false
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IWL_MVM_FTM_LMR_FEEDBACK_TERMINATE	false
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IWL_MVM_FTM_R2I_MAX_REP			7
 #define IWL_MVM_FTM_I2R_MAX_REP			7
 #define IWL_MVM_FTM_R2I_MAX_STS			1
@@ -102,6 +118,16 @@
 #define IWL_MVM_FTM_INITIATOR_SECURE_LTF	false
 #define IWL_MVM_FTM_RESP_NDP_SUPPORT		true
 #define IWL_MVM_FTM_RESP_LMR_FEEDBACK_SUPPORT	true
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define IWL_MVM_FTM_NON_TB_MIN_TIME_BETWEEN_MSR	5
+#define IWL_MVM_FTM_NON_TB_MAX_TIME_BETWEEN_MSR	1000
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define IWL_MVM_FTM_NON_TB_MIN_TIME_BETWEEN_MSR	5
+#define IWL_MVM_FTM_NON_TB_MAX_TIME_BETWEEN_MSR	1000
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IWL_MVM_D3_DEBUG			false
 #define IWL_MVM_USE_TWT				true
 #define IWL_MVM_AMPDU_CONSEC_DROPS_DELBA	10

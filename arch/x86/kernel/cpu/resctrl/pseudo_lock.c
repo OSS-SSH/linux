@@ -250,7 +250,15 @@ static void pseudo_lock_region_clear(struct pseudo_lock_region *plr)
 	plr->line_size = 0;
 	kfree(plr->kmem);
 	plr->kmem = NULL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	plr->s = NULL;
+=======
 	plr->r = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	plr->s = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (plr->d)
 		plr->d->plr = NULL;
 	plr->d = NULL;
@@ -294,10 +302,24 @@ static int pseudo_lock_region_init(struct pseudo_lock_region *plr)
 
 	ci = get_cpu_cacheinfo(plr->cpu);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	plr->size = rdtgroup_cbm_to_size(plr->s->res, plr->d, plr->cbm);
+
+	for (i = 0; i < ci->num_leaves; i++) {
+		if (ci->info_list[i].level == plr->s->res->cache_level) {
+=======
 	plr->size = rdtgroup_cbm_to_size(plr->r, plr->d, plr->cbm);
 
 	for (i = 0; i < ci->num_leaves; i++) {
 		if (ci->info_list[i].level == plr->r->cache_level) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	plr->size = rdtgroup_cbm_to_size(plr->s->res, plr->d, plr->cbm);
+
+	for (i = 0; i < ci->num_leaves; i++) {
+		if (ci->info_list[i].level == plr->s->res->cache_level) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			plr->line_size = ci->info_list[i].coherency_line_size;
 			return 0;
 		}
@@ -688,8 +710,18 @@ int rdtgroup_locksetup_enter(struct rdtgroup *rdtgrp)
 	 *   resource, the portion of cache used by it should be made
 	 *   unavailable to all future allocations from both resources.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L3) ||
+	    resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L2)) {
+=======
 	if (rdt_resources_all[RDT_RESOURCE_L3DATA].alloc_enabled ||
 	    rdt_resources_all[RDT_RESOURCE_L2DATA].alloc_enabled) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L3) ||
+	    resctrl_arch_get_cdp_enabled(RDT_RESOURCE_L2)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rdt_last_cmd_puts("CDP enabled\n");
 		return -EINVAL;
 	}
@@ -800,7 +832,15 @@ bool rdtgroup_cbm_overlaps_pseudo_locked(struct rdt_domain *d, unsigned long cbm
 	unsigned long cbm_b;
 
 	if (d->plr) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cbm_len = d->plr->s->res->cache.cbm_len;
+=======
 		cbm_len = d->plr->r->cache.cbm_len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cbm_len = d->plr->s->res->cache.cbm_len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cbm_b = d->plr->cbm;
 		if (bitmap_intersects(&cbm, &cbm_b, cbm_len))
 			return true;

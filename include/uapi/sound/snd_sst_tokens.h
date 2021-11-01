@@ -233,6 +233,16 @@
  *
  * %SKL_TKN_U32_ASTATE_CLK_SRC: Clock source for A-State entry
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * %SKL_TKN_U32_FMT_CFG_IDX:    Format config index
+ *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * %SKL_TKN_U32_FMT_CFG_IDX:    Format config index
+ *
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * module_id and loadable flags dont have tokens as these values will be
  * read from the DSP FW manifest
  *
@@ -324,7 +334,19 @@ enum SKL_TKNS {
 	SKL_TKN_U32_ASTATE_COUNT,
 	SKL_TKN_U32_ASTATE_KCPS,
 	SKL_TKN_U32_ASTATE_CLK_SRC,
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	SKL_TKN_U32_FMT_CFG_IDX = 96,
+	SKL_TKN_MAX = SKL_TKN_U32_FMT_CFG_IDX,
+=======
 	SKL_TKN_MAX = SKL_TKN_U32_ASTATE_CLK_SRC,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	SKL_TKN_U32_FMT_CFG_IDX = 96,
+	SKL_TKN_MAX = SKL_TKN_U32_FMT_CFG_IDX,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #endif

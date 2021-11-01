@@ -380,6 +380,14 @@ enum dma_slave_buswidth {
 	DMA_SLAVE_BUSWIDTH_16_BYTES = 16,
 	DMA_SLAVE_BUSWIDTH_32_BYTES = 32,
 	DMA_SLAVE_BUSWIDTH_64_BYTES = 64,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DMA_SLAVE_BUSWIDTH_128_BYTES = 128,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DMA_SLAVE_BUSWIDTH_128_BYTES = 128,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -398,7 +406,15 @@ enum dma_slave_buswidth {
  * @src_addr_width: this is the width in bytes of the source (RX)
  * register where DMA data shall be read. If the source
  * is memory this may be ignored depending on architecture.
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Legal values: 1, 2, 3, 4, 8, 16, 32, 64, 128.
+=======
  * Legal values: 1, 2, 3, 4, 8, 16, 32, 64.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Legal values: 1, 2, 3, 4, 8, 16, 32, 64, 128.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dst_addr_width: same as src_addr_width but for destination
  * target (TX) mutatis mutandis.
  * @src_maxburst: the maximum number of words (note: words, as in

@@ -241,7 +241,15 @@ bool drm_scdc_set_high_tmds_clock_ratio(struct i2c_adapter *adapter, bool set)
 	/*
 	 * The spec says that a source should wait minimum 1ms and maximum
 	 * 100ms after writing the TMDS config for clock ratio. Lets allow a
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * wait of up to 2ms here.
+=======
 	 * wait of upto 2ms here.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * wait of up to 2ms here.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	usleep_range(1000, 2000);
 	return true;

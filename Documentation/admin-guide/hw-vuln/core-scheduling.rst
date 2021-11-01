@@ -181,10 +181,25 @@ Open cross-HT issues that core scheduling does not solve
 --------------------------------------------------------
 1. For MDS
 ~~~~~~~~~~
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+Core scheduling cannot protect against MDS attacks between the siblings
+running in user mode and the others running in kernel mode. Even though all
+siblings run tasks which trust each other, when the kernel is executing
+code on behalf of a task, it cannot trust the code running in the
+sibling. Such attacks are possible for any combination of sibling CPU modes
+(host or guest mode).
+<<<<<<< HEAD
+=======
 Core scheduling cannot protect against MDS attacks between an HT running in
 user mode and another running in kernel mode. Even though both HTs run tasks
 which trust each other, kernel memory is still considered untrusted. Such
 attacks are possible for any combination of sibling CPU modes (host or guest mode).
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 2. For L1TF
 ~~~~~~~~~~~

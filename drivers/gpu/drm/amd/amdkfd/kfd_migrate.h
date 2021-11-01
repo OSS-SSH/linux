@@ -47,7 +47,13 @@ unsigned long
 svm_migrate_addr_to_pfn(struct amdgpu_device *adev, unsigned long addr);
 
 int svm_migrate_init(struct amdgpu_device *adev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 void svm_migrate_fini(struct amdgpu_device *adev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #else
 
@@ -55,10 +61,16 @@ static inline int svm_migrate_init(struct amdgpu_device *adev)
 {
 	return 0;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static inline void svm_migrate_fini(struct amdgpu_device *adev)
 {
 	/* empty */
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* IS_ENABLED(CONFIG_HSA_AMD_SVM) */
 

@@ -289,9 +289,21 @@ struct counter_signal_unit {
 	struct counter_signal *signal;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static const char *const counter_signal_level_str[] = {
+	[COUNTER_SIGNAL_LEVEL_LOW] = "low",
+	[COUNTER_SIGNAL_LEVEL_HIGH] = "high"
+=======
 static const char *const counter_signal_value_str[] = {
 	[COUNTER_SIGNAL_LOW] = "low",
 	[COUNTER_SIGNAL_HIGH] = "high"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static const char *const counter_signal_level_str[] = {
+	[COUNTER_SIGNAL_LEVEL_LOW] = "low",
+	[COUNTER_SIGNAL_LEVEL_HIGH] = "high"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static ssize_t counter_signal_show(struct device *dev,
@@ -302,13 +314,31 @@ static ssize_t counter_signal_show(struct device *dev,
 	const struct counter_signal_unit *const component = devattr->component;
 	struct counter_signal *const signal = component->signal;
 	int err;
-	enum counter_signal_value val;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enum counter_signal_level level;
 
-	err = counter->ops->signal_read(counter, signal, &val);
+	err = counter->ops->signal_read(counter, signal, &level);
 	if (err)
 		return err;
 
+	return sprintf(buf, "%s\n", counter_signal_level_str[level]);
+=======
+	enum counter_signal_value val;
+=======
+	enum counter_signal_level level;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	err = counter->ops->signal_read(counter, signal, &level);
+	if (err)
+		return err;
+
+<<<<<<< HEAD
 	return sprintf(buf, "%s\n", counter_signal_value_str[val]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sprintf(buf, "%s\n", counter_signal_level_str[level]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct counter_name_unit {
@@ -744,6 +774,21 @@ static ssize_t counter_count_store(struct device *dev,
 	return len;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static const char *const counter_function_str[] = {
+	[COUNTER_FUNCTION_INCREASE] = "increase",
+	[COUNTER_FUNCTION_DECREASE] = "decrease",
+	[COUNTER_FUNCTION_PULSE_DIRECTION] = "pulse-direction",
+	[COUNTER_FUNCTION_QUADRATURE_X1_A] = "quadrature x1 a",
+	[COUNTER_FUNCTION_QUADRATURE_X1_B] = "quadrature x1 b",
+	[COUNTER_FUNCTION_QUADRATURE_X2_A] = "quadrature x2 a",
+	[COUNTER_FUNCTION_QUADRATURE_X2_B] = "quadrature x2 b",
+	[COUNTER_FUNCTION_QUADRATURE_X4] = "quadrature x4"
+<<<<<<< HEAD
+=======
 static const char *const counter_count_function_str[] = {
 	[COUNTER_COUNT_FUNCTION_INCREASE] = "increase",
 	[COUNTER_COUNT_FUNCTION_DECREASE] = "decrease",
@@ -753,6 +798,9 @@ static const char *const counter_count_function_str[] = {
 	[COUNTER_COUNT_FUNCTION_QUADRATURE_X2_A] = "quadrature x2 a",
 	[COUNTER_COUNT_FUNCTION_QUADRATURE_X2_B] = "quadrature x2 b",
 	[COUNTER_COUNT_FUNCTION_QUADRATURE_X4] = "quadrature x4"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static ssize_t counter_function_show(struct device *dev,
@@ -764,7 +812,15 @@ static ssize_t counter_function_show(struct device *dev,
 	const struct counter_count_unit *const component = devattr->component;
 	struct counter_count *const count = component->count;
 	size_t func_index;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enum counter_function function;
+=======
 	enum counter_count_function function;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum counter_function function;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = counter->ops->function_get(counter, count, &func_index);
 	if (err)
@@ -773,7 +829,15 @@ static ssize_t counter_function_show(struct device *dev,
 	count->function = func_index;
 
 	function = count->functions_list[func_index];
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return sprintf(buf, "%s\n", counter_function_str[function]);
+=======
 	return sprintf(buf, "%s\n", counter_count_function_str[function]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sprintf(buf, "%s\n", counter_function_str[function]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t counter_function_store(struct device *dev,
@@ -785,14 +849,30 @@ static ssize_t counter_function_store(struct device *dev,
 	struct counter_count *const count = component->count;
 	const size_t num_functions = count->num_functions;
 	size_t func_index;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enum counter_function function;
+=======
 	enum counter_count_function function;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum counter_function function;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 	struct counter_device *const counter = dev_get_drvdata(dev);
 
 	/* Find requested Count function mode */
 	for (func_index = 0; func_index < num_functions; func_index++) {
 		function = count->functions_list[func_index];
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (sysfs_streq(buf, counter_function_str[function]))
+=======
 		if (sysfs_streq(buf, counter_count_function_str[function]))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (sysfs_streq(buf, counter_function_str[function]))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 	}
 	/* Return error if requested Count function mode not found */
@@ -880,25 +960,63 @@ err_free_attr_list:
 }
 
 struct counter_func_avail_unit {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const enum counter_function *functions_list;
+	size_t num_functions;
+};
+
+static ssize_t counter_function_available_show(struct device *dev,
+=======
 	const enum counter_count_function *functions_list;
 	size_t num_functions;
 };
 
 static ssize_t counter_count_function_available_show(struct device *dev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const enum counter_function *functions_list;
+	size_t num_functions;
+};
+
+static ssize_t counter_function_available_show(struct device *dev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct device_attribute *attr, char *buf)
 {
 	const struct counter_device_attr *const devattr = to_counter_attr(attr);
 	const struct counter_func_avail_unit *const component = devattr->component;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const enum counter_function *const func_list = component->functions_list;
+	const size_t num_functions = component->num_functions;
+	size_t i;
+	enum counter_function function;
+=======
 	const enum counter_count_function *const func_list = component->functions_list;
 	const size_t num_functions = component->num_functions;
 	size_t i;
 	enum counter_count_function function;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const enum counter_function *const func_list = component->functions_list;
+	const size_t num_functions = component->num_functions;
+	size_t i;
+	enum counter_function function;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ssize_t len = 0;
 
 	for (i = 0; i < num_functions; i++) {
 		function = func_list[i];
 		len += sprintf(buf + len, "%s\n",
+<<<<<<< HEAD
+<<<<<<< HEAD
+			       counter_function_str[function]);
+=======
 			       counter_count_function_str[function]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			       counter_function_str[function]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return len;
@@ -968,7 +1086,15 @@ static int counter_count_attributes_create(
 	parm.group = group;
 	parm.prefix = "";
 	parm.name = "function_available";
+<<<<<<< HEAD
+<<<<<<< HEAD
+	parm.show = counter_function_available_show;
+=======
 	parm.show = counter_count_function_available_show;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	parm.show = counter_function_available_show;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	parm.store = NULL;
 	parm.component = avail_comp;
 	err = counter_attribute_create(&parm);

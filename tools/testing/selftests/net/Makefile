@@ -25,6 +25,18 @@ TEST_PROGS += bareudp.sh
 TEST_PROGS += unicast_extensions.sh
 TEST_PROGS += udpgro_fwd.sh
 TEST_PROGS += veth.sh
+<<<<<<< HEAD
+<<<<<<< HEAD
+TEST_PROGS += ioam6.sh
+TEST_PROGS += gro.sh
+TEST_PROGS += gre_gso.sh
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+TEST_PROGS += ioam6.sh
+TEST_PROGS += gro.sh
+TEST_PROGS += gre_gso.sh
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 TEST_PROGS_EXTENDED := in_netns.sh
 TEST_GEN_FILES =  socket nettest
 TEST_GEN_FILES += psock_fanout psock_tpacket msg_zerocopy reuseport_addr_any
@@ -36,8 +48,22 @@ TEST_GEN_FILES += fin_ack_lat
 TEST_GEN_FILES += reuseaddr_ports_exhausted
 TEST_GEN_FILES += hwtstamp_config rxtimestamp timestamping txtimestamp
 TEST_GEN_FILES += ipsec
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+TEST_GEN_FILES += ioam6_parser
+TEST_GEN_FILES += gro
 TEST_GEN_PROGS = reuseport_bpf reuseport_bpf_cpu reuseport_bpf_numa
 TEST_GEN_PROGS += reuseport_dualstack reuseaddr_conflict tls
+TEST_GEN_FILES += toeplitz
+<<<<<<< HEAD
+=======
+TEST_GEN_PROGS = reuseport_bpf reuseport_bpf_cpu reuseport_bpf_numa
+TEST_GEN_PROGS += reuseport_dualstack reuseaddr_conflict tls
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 TEST_FILES := settings
 

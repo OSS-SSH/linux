@@ -29,6 +29,18 @@ void intel_vga_disable(struct drm_i915_private *dev_priv)
 	i915_reg_t vga_reg = intel_vga_cntrl_reg(dev_priv);
 	u8 sr1;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (intel_de_read(dev_priv, vga_reg) & VGA_DISP_DISABLE)
+		return;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (intel_de_read(dev_priv, vga_reg) & VGA_DISP_DISABLE)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* WaEnableVGAAccessThroughIOPort:ctg,elk,ilk,snb,ivb,vlv,hsw */
 	vga_get_uninterruptible(pdev, VGA_RSRC_LEGACY_IO);
 	outb(SR01, VGA_SR_INDEX);
@@ -121,9 +133,21 @@ intel_vga_set_state(struct drm_i915_private *i915, bool enable_decode)
 }
 
 static unsigned int
+<<<<<<< HEAD
+<<<<<<< HEAD
+intel_vga_set_decode(struct pci_dev *pdev, bool enable_decode)
+{
+	struct drm_i915_private *i915 = pdev_to_i915(pdev);
+=======
 intel_vga_set_decode(void *cookie, bool enable_decode)
 {
 	struct drm_i915_private *i915 = cookie;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+intel_vga_set_decode(struct pci_dev *pdev, bool enable_decode)
+{
+	struct drm_i915_private *i915 = pdev_to_i915(pdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	intel_vga_set_state(i915, enable_decode);
 
@@ -136,6 +160,14 @@ intel_vga_set_decode(void *cookie, bool enable_decode)
 
 int intel_vga_register(struct drm_i915_private *i915)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct pci_dev *pdev = to_pci_dev(i915->drm.dev);
 	int ret;
 
@@ -147,7 +179,15 @@ int intel_vga_register(struct drm_i915_private *i915)
 	 * then we do not take part in VGA arbitration and the
 	 * vga_client_register() fails with -ENODEV.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = vga_client_register(pdev, intel_vga_set_decode);
+=======
 	ret = vga_client_register(pdev, i915, NULL, intel_vga_set_decode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = vga_client_register(pdev, intel_vga_set_decode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret && ret != -ENODEV)
 		return ret;
 
@@ -158,5 +198,13 @@ void intel_vga_unregister(struct drm_i915_private *i915)
 {
 	struct pci_dev *pdev = to_pci_dev(i915->drm.dev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	vga_client_unregister(pdev);
+=======
 	vga_client_register(pdev, NULL, NULL, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vga_client_unregister(pdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

@@ -1622,6 +1622,9 @@ static void dcn301_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *b
 	dml_init_instance(&dc->dml, &dcn3_01_soc, &dcn3_01_ip, DML_PROJECT_DCN30);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static void calculate_wm_set_for_vlevel(
 		int vlevel,
 		struct wm_range_table_entry *table_entry,
@@ -1716,12 +1719,23 @@ static void dcn301_calculate_wm_and_dlg(
 	dcn20_calculate_dlg_params(dc, context, pipes, pipe_cnt, vlevel);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct resource_funcs dcn301_res_pool_funcs = {
 	.destroy = dcn301_destroy_resource_pool,
 	.link_enc_create = dcn301_link_encoder_create,
 	.panel_cntl_create = dcn301_panel_cntl_create,
 	.validate_bandwidth = dcn30_validate_bandwidth,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.calculate_wm_and_dlg = dcn30_calculate_wm_and_dlg,
+=======
 	.calculate_wm_and_dlg = dcn301_calculate_wm_and_dlg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.calculate_wm_and_dlg = dcn30_calculate_wm_and_dlg,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.update_soc_for_wm_a = dcn30_update_soc_for_wm_a,
 	.populate_dml_pipes = dcn30_populate_dml_pipes_from_context,
 	.acquire_idle_pipe_for_layer = dcn20_acquire_idle_pipe_for_layer,

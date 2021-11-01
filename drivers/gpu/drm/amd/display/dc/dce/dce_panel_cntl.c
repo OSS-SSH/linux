@@ -49,7 +49,13 @@
 static unsigned int dce_get_16_bit_backlight_from_pwm(struct panel_cntl *panel_cntl)
 {
 	uint64_t current_backlight;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	uint32_t round_result;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint32_t bl_period, bl_int_count;
 	uint32_t bl_pwm, fractional_duty_cycle_en;
 	uint32_t bl_period_mask, bl_pwm_mask;
@@ -84,6 +90,9 @@ static unsigned int dce_get_16_bit_backlight_from_pwm(struct panel_cntl *panel_c
 	current_backlight = div_u64(current_backlight, bl_period);
 	current_backlight = (current_backlight + 1) >> 1;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	current_backlight = (uint64_t)(current_backlight) * bl_period;
 
 	round_result = (uint32_t)(current_backlight & 0xFFFFFFFF);
@@ -93,6 +102,9 @@ static unsigned int dce_get_16_bit_backlight_from_pwm(struct panel_cntl *panel_c
 	current_backlight >>= bl_int_count;
 	current_backlight += round_result;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return (uint32_t)(current_backlight);
 }
 

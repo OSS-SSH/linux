@@ -313,9 +313,23 @@ check_exception()
 	fi
 	log_test $? 0 "IPv4: ${desc}"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	# No PMTU info for test "redirect" and "mtu exception plus redirect"
+	if [ "$with_redirect" = "yes" ] && [ "$desc" != "redirect exception plus mtu" ]; then
+		ip -netns h1 -6 ro get ${H1_VRF_ARG} ${H2_N2_IP6} | \
+		grep -v "mtu" | grep -q "${H2_N2_IP6} .*via ${R2_LLADDR} dev br0"
+=======
 	if [ "$with_redirect" = "yes" ]; then
 		ip -netns h1 -6 ro get ${H1_VRF_ARG} ${H2_N2_IP6} | \
 		grep -q "${H2_N2_IP6} from :: via ${R2_LLADDR} dev br0.*${mtu}"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	# No PMTU info for test "redirect" and "mtu exception plus redirect"
+	if [ "$with_redirect" = "yes" ] && [ "$desc" != "redirect exception plus mtu" ]; then
+		ip -netns h1 -6 ro get ${H1_VRF_ARG} ${H2_N2_IP6} | \
+		grep -v "mtu" | grep -q "${H2_N2_IP6} .*via ${R2_LLADDR} dev br0"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	elif [ -n "${mtu}" ]; then
 		ip -netns h1 -6 ro get ${H1_VRF_ARG} ${H2_N2_IP6} | \
 		grep -q "${mtu}"

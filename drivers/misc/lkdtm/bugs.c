@@ -267,6 +267,14 @@ void lkdtm_ARRAY_BOUNDS(void)
 	kfree(not_checked);
 	kfree(checked);
 	pr_err("FAIL: survived array bounds overflow!\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pr_expected_config(CONFIG_UBSAN_BOUNDS);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_expected_config(CONFIG_UBSAN_BOUNDS);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void lkdtm_CORRUPT_LIST_ADD(void)
@@ -506,6 +514,9 @@ noinline void lkdtm_CORRUPT_PAC(void)
 	pr_err("XFAIL: this test is arm64-only\n");
 #endif
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 void lkdtm_FORTIFY_OBJECT(void)
 {
@@ -556,3 +567,6 @@ void lkdtm_FORTIFY_SUBOBJECT(void)
 
 	kfree(src);
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

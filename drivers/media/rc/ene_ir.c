@@ -1052,7 +1052,15 @@ static int ene_probe(struct pnp_dev *pnp_dev, const struct pnp_device_id *id)
 	rdev->device_name = "ENE eHome Infrared Remote Receiver";
 
 	if (dev->hw_learning_and_tx_capable) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		rdev->s_wideband_receiver = ene_set_learning_mode;
+=======
 		rdev->s_learning_mode = ene_set_learning_mode;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		rdev->s_wideband_receiver = ene_set_learning_mode;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		init_completion(&dev->tx_complete);
 		rdev->tx_ir = ene_transmit;
 		rdev->s_tx_mask = ene_set_tx_mask;

@@ -8,6 +8,14 @@
 #include <asm/cacheflush.h>
 #include <asm/facility.h>
 #include <asm/pgalloc.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <asm/kfence.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <asm/kfence.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/page.h>
 #include <asm/set_memory.h>
 
@@ -85,6 +93,16 @@ static int walk_pte_level(pmd_t *pmdp, unsigned long addr, unsigned long end,
 {
 	pte_t *ptep, new;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (flags == SET_MEMORY_4K)
+		return 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (flags == SET_MEMORY_4K)
+		return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ptep = pte_offset_kernel(pmdp, addr);
 	do {
 		new = *ptep;
@@ -155,6 +173,14 @@ static int walk_pmd_level(pud_t *pudp, unsigned long addr, unsigned long end,
 			  unsigned long flags)
 {
 	unsigned long next;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int need_split;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int need_split;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pmd_t *pmdp;
 	int rc = 0;
 
@@ -164,7 +190,20 @@ static int walk_pmd_level(pud_t *pudp, unsigned long addr, unsigned long end,
 			return -EINVAL;
 		next = pmd_addr_end(addr, end);
 		if (pmd_large(*pmdp)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			need_split  = !!(flags & SET_MEMORY_4K);
+			need_split |= !!(addr & ~PMD_MASK);
+			need_split |= !!(addr + PMD_SIZE > next);
+			if (need_split) {
+<<<<<<< HEAD
+=======
 			if (addr & ~PMD_MASK || addr + PMD_SIZE > next) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				rc = split_pmd_page(pmdp, addr);
 				if (rc)
 					return rc;
@@ -232,6 +271,14 @@ static int walk_pud_level(p4d_t *p4d, unsigned long addr, unsigned long end,
 			  unsigned long flags)
 {
 	unsigned long next;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int need_split;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int need_split;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pud_t *pudp;
 	int rc = 0;
 
@@ -241,7 +288,20 @@ static int walk_pud_level(p4d_t *p4d, unsigned long addr, unsigned long end,
 			return -EINVAL;
 		next = pud_addr_end(addr, end);
 		if (pud_large(*pudp)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			need_split  = !!(flags & SET_MEMORY_4K);
+			need_split |= !!(addr & ~PUD_MASK);
+			need_split |= !!(addr + PUD_SIZE > next);
+			if (need_split) {
+<<<<<<< HEAD
+=======
 			if (addr & ~PUD_MASK || addr + PUD_SIZE > next) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				rc = split_pud_page(pudp, addr);
 				if (rc)
 					break;
@@ -316,7 +376,15 @@ int __set_memory(unsigned long addr, int numpages, unsigned long flags)
 	return change_page_attr(addr, addr + numpages * PAGE_SIZE, flags);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#if defined(CONFIG_DEBUG_PAGEALLOC) || defined(CONFIG_KFENCE)
+=======
 #ifdef CONFIG_DEBUG_PAGEALLOC
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if defined(CONFIG_DEBUG_PAGEALLOC) || defined(CONFIG_KFENCE)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void ipte_range(pte_t *pte, unsigned long address, int nr)
 {
@@ -340,7 +408,15 @@ void __kernel_map_pages(struct page *page, int numpages, int enable)
 	pte_t *pte;
 
 	for (i = 0; i < numpages;) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		address = (unsigned long)page_to_virt(page + i);
+=======
 		address = page_to_phys(page + i);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		address = (unsigned long)page_to_virt(page + i);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pte = virt_to_kpte(address);
 		nr = (unsigned long)pte >> ilog2(sizeof(long));
 		nr = PTRS_PER_PTE - (nr & (PTRS_PER_PTE - 1));

@@ -47,7 +47,17 @@ int btrfs_find_all_leafs(struct btrfs_trans_handle *trans,
 			 const u64 *extent_item_pos, bool ignore_offset);
 int btrfs_find_all_roots(struct btrfs_trans_handle *trans,
 			 struct btrfs_fs_info *fs_info, u64 bytenr,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			 u64 time_seq, struct ulist **roots,
+			 bool skip_commit_root_sem);
+=======
 			 u64 time_seq, struct ulist **roots, bool ignore_offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 u64 time_seq, struct ulist **roots,
+			 bool skip_commit_root_sem);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 char *btrfs_ref_to_path(struct btrfs_root *fs_root, struct btrfs_path *path,
 			u32 name_len, unsigned long name_off,
 			struct extent_buffer *eb_in, u64 parent,

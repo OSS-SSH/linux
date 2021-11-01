@@ -1422,6 +1422,46 @@ static void python_process_event(union perf_event *event,
 	}
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void python_process_throttle(union perf_event *event,
+				    struct perf_sample *sample,
+				    struct machine *machine)
+{
+	const char *handler_name;
+	PyObject *handler, *t;
+
+	if (event->header.type == PERF_RECORD_THROTTLE)
+		handler_name = "throttle";
+	else
+		handler_name = "unthrottle";
+	handler = get_handler(handler_name);
+	if (!handler)
+		return;
+
+	t = tuple_new(6);
+	if (!t)
+		return;
+
+	tuple_set_u64(t, 0, event->throttle.time);
+	tuple_set_u64(t, 1, event->throttle.id);
+	tuple_set_u64(t, 2, event->throttle.stream_id);
+	tuple_set_s32(t, 3, sample->cpu);
+	tuple_set_s32(t, 4, sample->pid);
+	tuple_set_s32(t, 5, sample->tid);
+
+	call_object(handler, t, handler_name);
+
+	Py_DECREF(t);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void python_do_process_switch(union perf_event *event,
 				     struct perf_sample *sample,
 				     struct machine *machine)
@@ -2079,5 +2119,13 @@ struct scripting_ops python_scripting_ops = {
 	.process_auxtrace_error	= python_process_auxtrace_error,
 	.process_stat		= python_process_stat,
 	.process_stat_interval	= python_process_stat_interval,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.process_throttle	= python_process_throttle,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.process_throttle	= python_process_throttle,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.generate_script	= python_generate_script,
 };

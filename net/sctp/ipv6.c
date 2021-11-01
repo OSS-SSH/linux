@@ -100,8 +100,20 @@ static int sctp_inet6addr_event(struct notifier_block *this, unsigned long ev,
 		list_for_each_entry_safe(addr, temp,
 					&net->sctp.local_addr_list, list) {
 			if (addr->a.sa.sa_family == AF_INET6 &&
+<<<<<<< HEAD
+<<<<<<< HEAD
+			    ipv6_addr_equal(&addr->a.v6.sin6_addr,
+					    &ifa->addr) &&
+			    addr->a.v6.sin6_scope_id == ifa->idev->dev->ifindex) {
+=======
 					ipv6_addr_equal(&addr->a.v6.sin6_addr,
 						&ifa->addr)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			    ipv6_addr_equal(&addr->a.v6.sin6_addr,
+					    &ifa->addr) &&
+			    addr->a.v6.sin6_scope_id == ifa->idev->dev->ifindex) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				sctp_addr_wq_mgmt(net, addr, SCTP_ADDR_DEL);
 				found = 1;
 				addr->valid = 0;

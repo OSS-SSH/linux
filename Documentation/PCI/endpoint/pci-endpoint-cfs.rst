@@ -43,6 +43,14 @@ entries corresponding to EPF driver will be created by the EPF core.
 		.. <EPF Driver1>/
 			... <EPF Device 11>/
 			... <EPF Device 21>/
+<<<<<<< HEAD
+<<<<<<< HEAD
+			... <EPF Device 31>/
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			... <EPF Device 31>/
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.. <EPF Driver2>/
 			... <EPF Device 12>/
 			... <EPF Device 22>/
@@ -68,6 +76,14 @@ created)
 				... subsys_vendor_id
 				... subsys_id
 				... interrupt_pin
+<<<<<<< HEAD
+<<<<<<< HEAD
+			        ... <Symlink EPF Device 31>/
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			        ... <Symlink EPF Device 31>/
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
                                 ... primary/
 			                ... <Symlink EPC Device1>/
                                 ... secondary/
@@ -79,6 +95,22 @@ interface should be added in 'primary' directory and symlink of endpoint
 controller connected to secondary interface should be added in 'secondary'
 directory.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+The <EPF Device> directory can have a list of symbolic links
+(<Symlink EPF Device 31>) to other <EPF Device>. These symbolic links should
+be created by the user to represent the virtual functions that are bound to
+the physical function. In the above directory structure <EPF Device 11> is a
+physical function and <EPF Device 31> is a virtual function. An EPF device once
+it's linked to another EPF device, cannot be linked to a EPC device.
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EPC Device
 ==========
 
@@ -98,7 +130,17 @@ entries corresponding to EPC device will be created by the EPC core.
 
 The <EPC Device> directory will have a list of symbolic links to
 <EPF Device>. These symbolic links should be created by the user to
+<<<<<<< HEAD
+<<<<<<< HEAD
+represent the functions present in the endpoint device. Only <EPF Device>
+that represents a physical function can be linked to a EPC device.
+=======
 represent the functions present in the endpoint device.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+represent the functions present in the endpoint device. Only <EPF Device>
+that represents a physical function can be linked to a EPC device.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 The <EPC Device> directory will also have a *start* field. Once
 "1" is written to this field, the endpoint device will be ready to

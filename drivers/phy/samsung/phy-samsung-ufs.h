@@ -10,6 +10,18 @@
 #ifndef _PHY_SAMSUNG_UFS_
 #define _PHY_SAMSUNG_UFS_
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/phy/phy.h>
+#include <linux/regmap.h>
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/phy/phy.h>
+#include <linux/regmap.h>
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PHY_COMN_BLK	1
 #define PHY_TRSV_BLK	2
 #define END_UFS_PHY_CFG { 0 }
@@ -24,14 +36,38 @@
 	.id = PHY_COMN_BLK,	\
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define PHY_TRSV_REG_CFG_OFFSET(o, v, d, c) {	\
+	.off_0 = PHY_APB_ADDR((o)),	\
+	.off_1 = PHY_APB_ADDR((o) + (c)),	\
+=======
 #define PHY_TRSV_REG_CFG(o, v, d) {	\
 	.off_0 = PHY_APB_ADDR((o)),	\
 	.off_1 = PHY_APB_ADDR((o) + PHY_TRSV_CH_OFFSET),	\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PHY_TRSV_REG_CFG_OFFSET(o, v, d, c) {	\
+	.off_0 = PHY_APB_ADDR((o)),	\
+	.off_1 = PHY_APB_ADDR((o) + (c)),	\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.val = (v),		\
 	.desc = (d),		\
 	.id = PHY_TRSV_BLK,	\
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define PHY_TRSV_REG_CFG(o, v, d)	\
+	PHY_TRSV_REG_CFG_OFFSET(o, v, d, PHY_TRSV_CH_OFFSET)
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PHY_TRSV_REG_CFG(o, v, d)	\
+	PHY_TRSV_REG_CFG_OFFSET(o, v, d, PHY_TRSV_CH_OFFSET)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* UFS PHY registers */
 #define PHY_PLL_LOCK_STATUS	0x1e
 #define PHY_CDR_LOCK_STATUS	0x5e
@@ -134,6 +170,16 @@ static inline void samsung_ufs_phy_ctrl_isol(
 			   phy->isol->mask, isol ? 0 : phy->isol->en);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+extern const struct samsung_ufs_phy_drvdata exynos7_ufs_phy;
+extern const struct samsung_ufs_phy_drvdata exynosautov9_ufs_phy;
+=======
 #include "phy-exynos7-ufs.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+extern const struct samsung_ufs_phy_drvdata exynos7_ufs_phy;
+extern const struct samsung_ufs_phy_drvdata exynosautov9_ufs_phy;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _PHY_SAMSUNG_UFS_ */

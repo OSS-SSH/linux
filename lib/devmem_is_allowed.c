@@ -19,7 +19,15 @@
  */
 int devmem_is_allowed(unsigned long pfn)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (iomem_is_exclusive(PFN_PHYS(pfn)))
+=======
 	if (iomem_is_exclusive(pfn << PAGE_SHIFT))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (iomem_is_exclusive(PFN_PHYS(pfn)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	if (!page_is_ram(pfn))
 		return 1;

@@ -401,11 +401,27 @@ static int ksz8041_config_aneg(struct phy_device *phydev)
 }
 
 static int ksz8051_ksz8795_match_phy_device(struct phy_device *phydev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					    const bool ksz_8051)
+{
+	int ret;
+
+	if ((phydev->phy_id & MICREL_PHY_ID_MASK) != PHY_ID_KSZ8051)
+=======
 					    const u32 ksz_phy_id)
 {
 	int ret;
 
 	if ((phydev->phy_id & MICREL_PHY_ID_MASK) != ksz_phy_id)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					    const bool ksz_8051)
+{
+	int ret;
+
+	if ((phydev->phy_id & MICREL_PHY_ID_MASK) != PHY_ID_KSZ8051)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	ret = phy_read(phydev, MII_BMSR);
@@ -418,7 +434,15 @@ static int ksz8051_ksz8795_match_phy_device(struct phy_device *phydev,
 	 * the switch does not.
 	 */
 	ret &= BMSR_ERCAP;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (ksz_8051)
+=======
 	if (ksz_phy_id == PHY_ID_KSZ8051)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ksz_8051)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ret;
 	else
 		return !ret;
@@ -426,7 +450,15 @@ static int ksz8051_ksz8795_match_phy_device(struct phy_device *phydev,
 
 static int ksz8051_match_phy_device(struct phy_device *phydev)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return ksz8051_ksz8795_match_phy_device(phydev, true);
+=======
 	return ksz8051_ksz8795_match_phy_device(phydev, PHY_ID_KSZ8051);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ksz8051_ksz8795_match_phy_device(phydev, true);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ksz8081_config_init(struct phy_device *phydev)
@@ -535,7 +567,15 @@ static int ksz8061_config_init(struct phy_device *phydev)
 
 static int ksz8795_match_phy_device(struct phy_device *phydev)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return ksz8051_ksz8795_match_phy_device(phydev, false);
+=======
 	return ksz8051_ksz8795_match_phy_device(phydev, PHY_ID_KSZ87XX);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ksz8051_ksz8795_match_phy_device(phydev, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ksz9021_load_values_from_of(struct phy_device *phydev,
@@ -1760,8 +1800,14 @@ static struct phy_driver ksphy_driver[] = {
 	.name		= "Micrel KSZ87XX Switch",
 	/* PHY_BASIC_FEATURES */
 	.config_init	= kszphy_config_init,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.config_aneg	= ksz8873mll_config_aneg,
 	.read_status	= ksz8873mll_read_status,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.match_phy_device = ksz8795_match_phy_device,
 	.suspend	= genphy_suspend,
 	.resume		= genphy_resume,

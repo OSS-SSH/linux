@@ -1044,7 +1044,15 @@ static int iucv_sock_sendmsg(struct socket *sock, struct msghdr *msg,
 			if (err == 0) {
 				atomic_dec(&iucv->skbs_in_xmit);
 				skb_unlink(skb, &iucv->send_skb_q);
+<<<<<<< HEAD
+<<<<<<< HEAD
+				consume_skb(skb);
+=======
 				kfree_skb(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				consume_skb(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 
 			/* this error should never happen since the	*/
@@ -1293,7 +1301,15 @@ static int iucv_sock_recvmsg(struct socket *sock, struct msghdr *msg,
 			}
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		consume_skb(skb);
+=======
 		kfree_skb(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		consume_skb(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (iucv->transport == AF_IUCV_TRANS_HIPER) {
 			atomic_inc(&iucv->msg_recv);
 			if (atomic_read(&iucv->msg_recv) > iucv->msglimit) {
@@ -1756,7 +1772,15 @@ static void iucv_callback_txdone(struct iucv_path *path,
 	spin_unlock_irqrestore(&list->lock, flags);
 
 	if (this) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		consume_skb(this);
+=======
 		kfree_skb(this);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		consume_skb(this);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* wake up any process waiting for sending */
 		iucv_sock_wake_msglim(sk);
 	}
@@ -1903,17 +1927,39 @@ static int afiucv_hs_callback_synack(struct sock *sk, struct sk_buff *skb)
 {
 	struct iucv_sock *iucv = iucv_sk(sk);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!iucv || sk->sk_state != IUCV_BOUND) {
+		kfree_skb(skb);
+		return NET_RX_SUCCESS;
+	}
+
+<<<<<<< HEAD
+=======
 	if (!iucv)
 		goto out;
 	if (sk->sk_state != IUCV_BOUND)
 		goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bh_lock_sock(sk);
 	iucv->msglimit_peer = iucv_trans_hdr(skb)->window;
 	sk->sk_state = IUCV_CONNECTED;
 	sk->sk_state_change(sk);
 	bh_unlock_sock(sk);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	consume_skb(skb);
+=======
 out:
 	kfree_skb(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	consume_skb(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return NET_RX_SUCCESS;
 }
 
@@ -1924,16 +1970,38 @@ static int afiucv_hs_callback_synfin(struct sock *sk, struct sk_buff *skb)
 {
 	struct iucv_sock *iucv = iucv_sk(sk);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!iucv || sk->sk_state != IUCV_BOUND) {
+		kfree_skb(skb);
+		return NET_RX_SUCCESS;
+	}
+
+<<<<<<< HEAD
+=======
 	if (!iucv)
 		goto out;
 	if (sk->sk_state != IUCV_BOUND)
 		goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bh_lock_sock(sk);
 	sk->sk_state = IUCV_DISCONN;
 	sk->sk_state_change(sk);
 	bh_unlock_sock(sk);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	consume_skb(skb);
+=======
 out:
 	kfree_skb(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	consume_skb(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return NET_RX_SUCCESS;
 }
 
@@ -1945,16 +2013,38 @@ static int afiucv_hs_callback_fin(struct sock *sk, struct sk_buff *skb)
 	struct iucv_sock *iucv = iucv_sk(sk);
 
 	/* other end of connection closed */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!iucv) {
+		kfree_skb(skb);
+		return NET_RX_SUCCESS;
+	}
+
+<<<<<<< HEAD
+=======
 	if (!iucv)
 		goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bh_lock_sock(sk);
 	if (sk->sk_state == IUCV_CONNECTED) {
 		sk->sk_state = IUCV_DISCONN;
 		sk->sk_state_change(sk);
 	}
 	bh_unlock_sock(sk);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	consume_skb(skb);
+=======
 out:
 	kfree_skb(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	consume_skb(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return NET_RX_SUCCESS;
 }
 
@@ -2107,7 +2197,15 @@ static int afiucv_hs_rcv(struct sk_buff *skb, struct net_device *dev,
 	case (AF_IUCV_FLAG_WIN):
 		err = afiucv_hs_callback_win(sk, skb);
 		if (skb->len == sizeof(struct af_iucv_trans_hdr)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			consume_skb(skb);
+=======
 			kfree_skb(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			consume_skb(skb);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 		fallthrough;	/* and receive non-zero length data */
@@ -2262,6 +2360,9 @@ static struct packet_type iucv_packet_type = {
 	.func = afiucv_hs_rcv,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static int afiucv_iucv_init(void)
 {
 	return pr_iucv->iucv_register(&af_iucv_handler, 0);
@@ -2272,11 +2373,22 @@ static void afiucv_iucv_exit(void)
 	pr_iucv->iucv_unregister(&af_iucv_handler, 0);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __init afiucv_init(void)
 {
 	int err;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (MACHINE_IS_VM && IS_ENABLED(CONFIG_IUCV)) {
+=======
 	if (MACHINE_IS_VM) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (MACHINE_IS_VM && IS_ENABLED(CONFIG_IUCV)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cpcmd("QUERY USERID", iucv_userid, sizeof(iucv_userid), &err);
 		if (unlikely(err)) {
 			WARN_ON(err);
@@ -2284,11 +2396,19 @@ static int __init afiucv_init(void)
 			goto out;
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pr_iucv = &iucv_if;
+=======
 		pr_iucv = try_then_request_module(symbol_get(iucv_if), "iucv");
 		if (!pr_iucv) {
 			printk(KERN_WARNING "iucv_if lookup failed\n");
 			memset(&iucv_userid, 0, sizeof(iucv_userid));
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_iucv = &iucv_if;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		memset(&iucv_userid, 0, sizeof(iucv_userid));
 		pr_iucv = NULL;
@@ -2302,7 +2422,15 @@ static int __init afiucv_init(void)
 		goto out_proto;
 
 	if (pr_iucv) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		err = pr_iucv->iucv_register(&af_iucv_handler, 0);
+=======
 		err = afiucv_iucv_init();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		err = pr_iucv->iucv_register(&af_iucv_handler, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err)
 			goto out_sock;
 	}
@@ -2316,23 +2444,47 @@ static int __init afiucv_init(void)
 
 out_notifier:
 	if (pr_iucv)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pr_iucv->iucv_unregister(&af_iucv_handler, 0);
+=======
 		afiucv_iucv_exit();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_iucv->iucv_unregister(&af_iucv_handler, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_sock:
 	sock_unregister(PF_IUCV);
 out_proto:
 	proto_unregister(&iucv_proto);
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (pr_iucv)
 		symbol_put(iucv_if);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
 static void __exit afiucv_exit(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (pr_iucv)
+		pr_iucv->iucv_unregister(&af_iucv_handler, 0);
+=======
 	if (pr_iucv) {
 		afiucv_iucv_exit();
 		symbol_put(iucv_if);
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (pr_iucv)
+		pr_iucv->iucv_unregister(&af_iucv_handler, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	unregister_netdevice_notifier(&afiucv_netdev_notifier);
 	dev_remove_pack(&iucv_packet_type);

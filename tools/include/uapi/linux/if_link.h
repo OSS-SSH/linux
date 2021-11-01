@@ -230,6 +230,14 @@ enum {
 	IFLA_INET6_ICMP6STATS,	/* statistics (icmpv6)		*/
 	IFLA_INET6_TOKEN,	/* device token			*/
 	IFLA_INET6_ADDR_GEN_MODE, /* implicit address generator mode */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	IFLA_INET6_RA_MTU,	/* mtu carried in the RA message */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	IFLA_INET6_RA_MTU,	/* mtu carried in the RA message */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__IFLA_INET6_MAX
 };
 
@@ -653,6 +661,14 @@ enum {
 	IFLA_BOND_AD_ACTOR_SYSTEM,
 	IFLA_BOND_TLB_DYNAMIC_LB,
 	IFLA_BOND_PEER_NOTIF_DELAY,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	IFLA_BOND_AD_LACP_ACTIVE,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	IFLA_BOND_AD_LACP_ACTIVE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__IFLA_BOND_MAX,
 };
 

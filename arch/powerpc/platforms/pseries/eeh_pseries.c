@@ -867,6 +867,19 @@ static int __init eeh_pseries_init(void)
 	if (is_kdump_kernel() || reset_devices) {
 		pr_info("Issue PHB reset ...\n");
 		list_for_each_entry(phb, &hose_list, list_node) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			// Skip if the slot is empty
+			if (list_empty(&PCI_DN(phb->dn)->child_list))
+				continue;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pdn = list_first_entry(&PCI_DN(phb->dn)->child_list, struct pci_dn, list);
 			config_addr = pseries_eeh_get_pe_config_addr(pdn);
 

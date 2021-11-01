@@ -34,6 +34,14 @@
 #include <linux/mfd/abx500/ab8500.h>
 #include <linux/iio/consumer.h>
 #include <linux/kernel.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/fixp-arith.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/fixp-arith.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "ab8500-bm.h"
 
@@ -56,9 +64,15 @@
 /* FG constants */
 #define BATT_OVV			0x01
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define interpolate(x, x1, y1, x2, y2) \
 	((y1) + ((((y2) - (y1)) * ((x) - (x1))) / ((x2) - (x1))));
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct ab8500_fg_interrupts - ab8500 fg interrupts
  * @name:	name of the interrupt
@@ -227,7 +241,15 @@ struct ab8500_fg {
 	struct ab8500_fg_avg_cap avg_cap;
 	struct ab8500 *parent;
 	struct iio_channel *main_bat_v;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct ab8500_bm_data *bm;
+=======
 	struct abx500_bm_data *bm;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ab8500_bm_data *bm;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct power_supply *fg_psy;
 	struct workqueue_struct *fg_wq;
 	struct delayed_work fg_periodic_work;
@@ -856,7 +878,15 @@ static int ab8500_fg_bat_voltage(struct ab8500_fg *di)
 static int ab8500_fg_volt_to_capacity(struct ab8500_fg *di, int voltage)
 {
 	int i, tbl_size;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct ab8500_v_to_cap *tbl;
+=======
 	const struct abx500_v_to_cap *tbl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct ab8500_v_to_cap *tbl;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int cap = 0;
 
 	tbl = di->bm->bat_type[di->bm->batt_id].v_to_cap_tbl;
@@ -868,11 +898,29 @@ static int ab8500_fg_volt_to_capacity(struct ab8500_fg *di, int voltage)
 	}
 
 	if ((i > 0) && (i < tbl_size)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		cap = fixp_linear_interpolate(
+			tbl[i].voltage,
+			tbl[i].capacity * 10,
+			tbl[i-1].voltage,
+			tbl[i-1].capacity * 10,
+			voltage);
+=======
 		cap = interpolate(voltage,
 			tbl[i].voltage,
 			tbl[i].capacity * 10,
 			tbl[i-1].voltage,
 			tbl[i-1].capacity * 10);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		cap = fixp_linear_interpolate(
+			tbl[i].voltage,
+			tbl[i].capacity * 10,
+			tbl[i-1].voltage,
+			tbl[i-1].capacity * 10,
+			voltage);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (i == 0) {
 		cap = 1000;
 	} else {
@@ -920,11 +968,29 @@ static int ab8500_fg_battery_resistance(struct ab8500_fg *di)
 	}
 
 	if ((i > 0) && (i < tbl_size)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		resist = fixp_linear_interpolate(
+			tbl[i].temp,
+			tbl[i].resist,
+			tbl[i-1].temp,
+			tbl[i-1].resist,
+			di->bat_temp / 10);
+=======
 		resist = interpolate(di->bat_temp / 10,
 			tbl[i].temp,
 			tbl[i].resist,
 			tbl[i-1].temp,
 			tbl[i-1].resist);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		resist = fixp_linear_interpolate(
+			tbl[i].temp,
+			tbl[i].resist,
+			tbl[i-1].temp,
+			tbl[i-1].resist,
+			di->bat_temp / 10);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (i == 0) {
 		resist = tbl[0].resist;
 	} else {
@@ -1728,6 +1794,14 @@ static void ab8500_fg_algorithm_calibrate(struct ab8500_fg *di)
 		break;
 	case AB8500_FG_CALIB_WAIT:
 		dev_dbg(di->dev, "Calibration WFI\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}
@@ -2224,6 +2298,14 @@ static int ab8500_fg_get_ext_psy_data(struct device *dev, void *data)
 					queue_work(di->fg_wq, &di->fg_work);
 					break;
 				}
+<<<<<<< HEAD
+<<<<<<< HEAD
+				break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			default:
 				break;
 			}
@@ -2233,7 +2315,15 @@ static int ab8500_fg_get_ext_psy_data(struct device *dev, void *data)
 			case POWER_SUPPLY_TYPE_BATTERY:
 				if (!di->flags.batt_id_received &&
 				    di->bm->batt_id != BATTERY_UNKNOWN) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+					const struct ab8500_battery_type *b;
+=======
 					const struct abx500_battery_type *b;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					const struct ab8500_battery_type *b;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 					b = &(di->bm->bat_type[di->bm->batt_id]);
 

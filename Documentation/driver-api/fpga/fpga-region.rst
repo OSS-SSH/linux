@@ -45,19 +45,46 @@ An example of usage can be seen in the probe function of [#f2]_.
 API to add a new FPGA region
 ----------------------------
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+* struct fpga_region - The FPGA region struct
+* devm_fpga_region_create() - Allocate and init a region struct
+* fpga_region_register() -  Register an FPGA region
+* fpga_region_unregister() -  Unregister an FPGA region
+<<<<<<< HEAD
+=======
 * struct fpga_region — The FPGA region struct
 * devm_fpga_region_create() — Allocate and init a region struct
 * fpga_region_register() —  Register an FPGA region
 * fpga_region_unregister() —  Unregister an FPGA region
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 The FPGA region's probe function will need to get a reference to the FPGA
 Manager it will be using to do the programming.  This usually would happen
 during the region's probe function.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+* fpga_mgr_get() - Get a reference to an FPGA manager, raise ref count
+* of_fpga_mgr_get() -  Get a reference to an FPGA manager, raise ref count,
+  given a device node.
+* fpga_mgr_put() - Put an FPGA manager
+=======
 * fpga_mgr_get() — Get a reference to an FPGA manager, raise ref count
 * of_fpga_mgr_get() —  Get a reference to an FPGA manager, raise ref count,
   given a device node.
 * fpga_mgr_put() — Put an FPGA manager
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+* fpga_mgr_get() - Get a reference to an FPGA manager, raise ref count
+* of_fpga_mgr_get() -  Get a reference to an FPGA manager, raise ref count,
+  given a device node.
+* fpga_mgr_put() - Put an FPGA manager
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 The FPGA region will need to specify which bridges to control while programming
 the FPGA.  The region driver can build a list of bridges during probe time
@@ -66,11 +93,27 @@ the list of bridges to program just before programming
 (:c:expr:`fpga_region->get_bridges`).  The FPGA bridge framework supplies the
 following APIs to handle building or tearing down that list.
 
-* fpga_bridge_get_to_list() — Get a ref of an FPGA bridge, add it to a
+<<<<<<< HEAD
+<<<<<<< HEAD
+* fpga_bridge_get_to_list() - Get a ref of an FPGA bridge, add it to a
   list
-* of_fpga_bridge_get_to_list() — Get a ref of an FPGA bridge, add it to a
+* of_fpga_bridge_get_to_list() - Get a ref of an FPGA bridge, add it to a
   list, given a device node
+* fpga_bridges_put() - Given a list of bridges, put them
+=======
+* fpga_bridge_get_to_list() — Get a ref of an FPGA bridge, add it to a
+=======
+* fpga_bridge_get_to_list() - Get a ref of an FPGA bridge, add it to a
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+  list
+* of_fpga_bridge_get_to_list() - Get a ref of an FPGA bridge, add it to a
+  list, given a device node
+<<<<<<< HEAD
 * fpga_bridges_put() — Given a list of bridges, put them
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+* fpga_bridges_put() - Given a list of bridges, put them
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 .. kernel-doc:: include/linux/fpga/fpga-region.h
    :functions: fpga_region

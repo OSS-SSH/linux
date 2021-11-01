@@ -76,7 +76,15 @@ static void cls_cgroup_destroy_work(struct work_struct *work)
 static int cls_cgroup_change(struct net *net, struct sk_buff *in_skb,
 			     struct tcf_proto *tp, unsigned long base,
 			     u32 handle, struct nlattr **tca,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			     void **arg, u32 flags,
+=======
 			     void **arg, bool ovr, bool rtnl_held,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			     void **arg, u32 flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     struct netlink_ext_ack *extack)
 {
 	struct nlattr *tb[TCA_CGROUP_MAX + 1];
@@ -108,8 +116,18 @@ static int cls_cgroup_change(struct net *net, struct sk_buff *in_skb,
 	if (err < 0)
 		goto errout;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = tcf_exts_validate(net, tp, tb, tca[TCA_RATE], &new->exts, flags,
+				extack);
+=======
 	err = tcf_exts_validate(net, tp, tb, tca[TCA_RATE], &new->exts, ovr,
 				true, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = tcf_exts_validate(net, tp, tb, tca[TCA_RATE], &new->exts, flags,
+				extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		goto errout;
 

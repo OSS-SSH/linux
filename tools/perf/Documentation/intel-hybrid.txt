@@ -140,7 +140,15 @@ displayed. The percentage is the event's running time/enabling time.
 One example, 'triad_loop' runs on cpu16 (atom core), while we can see the
 scaled value for core cycles is 160,444,092 and the percentage is 0.47%.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+perf stat -e cycles \-- taskset -c 16 ./triad_loop
+=======
 perf stat -e cycles -- taskset -c 16 ./triad_loop
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+perf stat -e cycles \-- taskset -c 16 ./triad_loop
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 As previous, two events are created.
 

@@ -22,6 +22,9 @@
 
 #include "panel-samsung-s6e63m0.h"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /* Manufacturer Command Set */
 #define MCS_ELVSS_ON		0xb1
 #define MCS_TEMP_SWIRE		0xb2
@@ -47,6 +50,9 @@
 #define MCS_PANELCTL		0xf8
 #define MCS_PGAMMACTL		0xfa
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define S6E63M0_LCD_ID_VALUE_M2		0xA4
 #define S6E63M0_LCD_ID_VALUE_SM2	0xB4
 #define S6E63M0_LCD_ID_VALUE_SM2_1	0xB6
@@ -283,8 +289,20 @@ static u8 const s6e63m0_elvss_per_gamma[NUM_GAMMA_LEVELS] = {
 
 struct s6e63m0 {
 	struct device *dev;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	void *transport_data;
+	int (*dcs_read)(struct device *dev, void *trsp, const u8 cmd, u8 *val);
+	int (*dcs_write)(struct device *dev, void *trsp, const u8 *data, size_t len);
+=======
 	int (*dcs_read)(struct device *dev, const u8 cmd, u8 *val);
 	int (*dcs_write)(struct device *dev, const u8 *data, size_t len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	void *transport_data;
+	int (*dcs_read)(struct device *dev, void *trsp, const u8 cmd, u8 *val);
+	int (*dcs_write)(struct device *dev, void *trsp, const u8 *data, size_t len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct drm_panel panel;
 	struct backlight_device *bl_dev;
 	u8 lcd_type;
@@ -340,7 +358,15 @@ static void s6e63m0_dcs_read(struct s6e63m0 *ctx, const u8 cmd, u8 *data)
 	if (ctx->error < 0)
 		return;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ctx->error = ctx->dcs_read(ctx->dev, ctx->transport_data, cmd, data);
+=======
 	ctx->error = ctx->dcs_read(ctx->dev, cmd, data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ctx->error = ctx->dcs_read(ctx->dev, ctx->transport_data, cmd, data);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void s6e63m0_dcs_write(struct s6e63m0 *ctx, const u8 *data, size_t len)
@@ -348,7 +374,15 @@ static void s6e63m0_dcs_write(struct s6e63m0 *ctx, const u8 *data, size_t len)
 	if (ctx->error < 0 || len == 0)
 		return;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ctx->error = ctx->dcs_write(ctx->dev, ctx->transport_data, data, len);
+=======
 	ctx->error = ctx->dcs_write(ctx->dev, data, len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ctx->error = ctx->dcs_write(ctx->dev, ctx->transport_data, data, len);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #define s6e63m0_dcs_write_seq_static(ctx, seq ...) \
@@ -713,9 +747,21 @@ static int s6e63m0_backlight_register(struct s6e63m0 *ctx, u32 max_brightness)
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int s6e63m0_probe(struct device *dev, void *trsp,
+		  int (*dcs_read)(struct device *dev, void *trsp, const u8 cmd, u8 *val),
+		  int (*dcs_write)(struct device *dev, void *trsp, const u8 *data, size_t len),
+=======
 int s6e63m0_probe(struct device *dev,
 		  int (*dcs_read)(struct device *dev, const u8 cmd, u8 *val),
 		  int (*dcs_write)(struct device *dev, const u8 *data, size_t len),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int s6e63m0_probe(struct device *dev, void *trsp,
+		  int (*dcs_read)(struct device *dev, void *trsp, const u8 cmd, u8 *val),
+		  int (*dcs_write)(struct device *dev, void *trsp, const u8 *data, size_t len),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		  bool dsi_mode)
 {
 	struct s6e63m0 *ctx;
@@ -726,6 +772,14 @@ int s6e63m0_probe(struct device *dev,
 	if (!ctx)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ctx->transport_data = trsp;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ctx->transport_data = trsp;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ctx->dsi_mode = dsi_mode;
 	ctx->dcs_read = dcs_read;
 	ctx->dcs_write = dcs_write;

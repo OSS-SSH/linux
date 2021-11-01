@@ -271,8 +271,16 @@ static int report_raw_events(struct perf_mem *mem)
 		.force = mem->force,
 	};
 	int ret;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct perf_session *session = perf_session__new(&data, &mem->tool);
+=======
 	struct perf_session *session = perf_session__new(&data, false,
 							 &mem->tool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct perf_session *session = perf_session__new(&data, &mem->tool);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (IS_ERR(session))
 		return PTR_ERR(session);

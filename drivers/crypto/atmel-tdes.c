@@ -196,23 +196,35 @@ static void atmel_tdes_write_n(struct atmel_tdes_dev *dd, u32 offset,
 		atmel_tdes_write(dd, offset, *value);
 }
 
-static struct atmel_tdes_dev *atmel_tdes_find_dev(struct atmel_tdes_ctx *ctx)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static struct atmel_tdes_dev *atmel_tdes_dev_alloc(void)
 {
-	struct atmel_tdes_dev *tdes_dd = NULL;
-	struct atmel_tdes_dev *tmp;
+	struct atmel_tdes_dev *tdes_dd;
 
 	spin_lock_bh(&atmel_tdes.lock);
-	if (!ctx->dd) {
-		list_for_each_entry(tmp, &atmel_tdes.dev_list, list) {
-			tdes_dd = tmp;
-			break;
-		}
-		ctx->dd = tdes_dd;
-	} else {
-		tdes_dd = ctx->dd;
-	}
+	/* One TDES IP per SoC. */
+	tdes_dd = list_first_entry_or_null(&atmel_tdes.dev_list,
+					   struct atmel_tdes_dev, list);
 	spin_unlock_bh(&atmel_tdes.lock);
+=======
+static struct atmel_tdes_dev *atmel_tdes_find_dev(struct atmel_tdes_ctx *ctx)
+=======
+static struct atmel_tdes_dev *atmel_tdes_dev_alloc(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	struct atmel_tdes_dev *tdes_dd;
 
+	spin_lock_bh(&atmel_tdes.lock);
+	/* One TDES IP per SoC. */
+	tdes_dd = list_first_entry_or_null(&atmel_tdes.dev_list,
+					   struct atmel_tdes_dev, list);
+	spin_unlock_bh(&atmel_tdes.lock);
+<<<<<<< HEAD
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return tdes_dd;
 }
 
@@ -320,7 +332,15 @@ static int atmel_tdes_crypt_pdc_stop(struct atmel_tdes_dev *dd)
 				dd->buf_out, dd->buflen, dd->dma_size, 1);
 		if (count != dd->dma_size) {
 			err = -EINVAL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dev_dbg(dd->dev, "not all data converted: %zu\n", count);
+=======
 			pr_err("not all data converted: %zu\n", count);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_dbg(dd->dev, "not all data converted: %zu\n", count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -337,24 +357,56 @@ static int atmel_tdes_buff_init(struct atmel_tdes_dev *dd)
 	dd->buflen &= ~(DES_BLOCK_SIZE - 1);
 
 	if (!dd->buf_in || !dd->buf_out) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dev_dbg(dd->dev, "unable to alloc pages.\n");
+=======
 		dev_err(dd->dev, "unable to alloc pages.\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_dbg(dd->dev, "unable to alloc pages.\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto err_alloc;
 	}
 
 	/* MAP here */
 	dd->dma_addr_in = dma_map_single(dd->dev, dd->buf_in,
 					dd->buflen, DMA_TO_DEVICE);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = dma_mapping_error(dd->dev, dd->dma_addr_in);
+	if (err) {
+		dev_dbg(dd->dev, "dma %zd bytes error\n", dd->buflen);
+=======
 	if (dma_mapping_error(dd->dev, dd->dma_addr_in)) {
 		dev_err(dd->dev, "dma %zd bytes error\n", dd->buflen);
 		err = -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = dma_mapping_error(dd->dev, dd->dma_addr_in);
+	if (err) {
+		dev_dbg(dd->dev, "dma %zd bytes error\n", dd->buflen);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto err_map_in;
 	}
 
 	dd->dma_addr_out = dma_map_single(dd->dev, dd->buf_out,
 					dd->buflen, DMA_FROM_DEVICE);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = dma_mapping_error(dd->dev, dd->dma_addr_out);
+	if (err) {
+		dev_dbg(dd->dev, "dma %zd bytes error\n", dd->buflen);
+=======
 	if (dma_mapping_error(dd->dev, dd->dma_addr_out)) {
 		dev_err(dd->dev, "dma %zd bytes error\n", dd->buflen);
 		err = -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = dma_mapping_error(dd->dev, dd->dma_addr_out);
+	if (err) {
+		dev_dbg(dd->dev, "dma %zd bytes error\n", dd->buflen);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto err_map_out;
 	}
 
@@ -367,8 +419,14 @@ err_map_in:
 err_alloc:
 	free_page((unsigned long)dd->buf_out);
 	free_page((unsigned long)dd->buf_in);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (err)
 		pr_err("error: %d\n", err);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -520,14 +578,30 @@ static int atmel_tdes_crypt_start(struct atmel_tdes_dev *dd)
 
 		err = dma_map_sg(dd->dev, dd->in_sg, 1, DMA_TO_DEVICE);
 		if (!err) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dev_dbg(dd->dev, "dma_map_sg() error\n");
+=======
 			dev_err(dd->dev, "dma_map_sg() error\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_dbg(dd->dev, "dma_map_sg() error\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EINVAL;
 		}
 
 		err = dma_map_sg(dd->dev, dd->out_sg, 1,
 				DMA_FROM_DEVICE);
 		if (!err) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dev_dbg(dd->dev, "dma_map_sg() error\n");
+=======
 			dev_err(dd->dev, "dma_map_sg() error\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_dbg(dd->dev, "dma_map_sg() error\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dma_unmap_sg(dd->dev, dd->in_sg, 1,
 				DMA_TO_DEVICE);
 			return -EINVAL;
@@ -646,7 +720,13 @@ static int atmel_tdes_handle_queue(struct atmel_tdes_dev *dd,
 	rctx->mode &= TDES_FLAGS_MODE_MASK;
 	dd->flags = (dd->flags & ~TDES_FLAGS_MODE_MASK) | rctx->mode;
 	dd->ctx = ctx;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	ctx->dd = dd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = atmel_tdes_write_ctrl(dd);
 	if (!err)
@@ -679,7 +759,15 @@ static int atmel_tdes_crypt_dma_stop(struct atmel_tdes_dev *dd)
 				dd->buf_out, dd->buflen, dd->dma_size, 1);
 			if (count != dd->dma_size) {
 				err = -EINVAL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+				dev_dbg(dd->dev, "not all data converted: %zu\n", count);
+=======
 				pr_err("not all data converted: %zu\n", count);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				dev_dbg(dd->dev, "not all data converted: %zu\n", count);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		}
 	}
@@ -691,11 +779,32 @@ static int atmel_tdes_crypt(struct skcipher_request *req, unsigned long mode)
 	struct crypto_skcipher *skcipher = crypto_skcipher_reqtfm(req);
 	struct atmel_tdes_ctx *ctx = crypto_skcipher_ctx(skcipher);
 	struct atmel_tdes_reqctx *rctx = skcipher_request_ctx(req);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct device *dev = ctx->dd->dev;
+
+	if (!req->cryptlen)
+		return 0;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (mode & TDES_FLAGS_OPMODE_MASK) {
 	case TDES_FLAGS_CFB8:
 		if (!IS_ALIGNED(req->cryptlen, CFB8_BLOCK_SIZE)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dev_dbg(dev, "request size is not exact amount of CFB8 blocks\n");
+=======
 			pr_err("request size is not exact amount of CFB8 blocks\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_dbg(dev, "request size is not exact amount of CFB8 blocks\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EINVAL;
 		}
 		ctx->block_size = CFB8_BLOCK_SIZE;
@@ -703,7 +812,15 @@ static int atmel_tdes_crypt(struct skcipher_request *req, unsigned long mode)
 
 	case TDES_FLAGS_CFB16:
 		if (!IS_ALIGNED(req->cryptlen, CFB16_BLOCK_SIZE)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dev_dbg(dev, "request size is not exact amount of CFB16 blocks\n");
+=======
 			pr_err("request size is not exact amount of CFB16 blocks\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_dbg(dev, "request size is not exact amount of CFB16 blocks\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EINVAL;
 		}
 		ctx->block_size = CFB16_BLOCK_SIZE;
@@ -711,7 +828,15 @@ static int atmel_tdes_crypt(struct skcipher_request *req, unsigned long mode)
 
 	case TDES_FLAGS_CFB32:
 		if (!IS_ALIGNED(req->cryptlen, CFB32_BLOCK_SIZE)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dev_dbg(dev, "request size is not exact amount of CFB32 blocks\n");
+=======
 			pr_err("request size is not exact amount of CFB32 blocks\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_dbg(dev, "request size is not exact amount of CFB32 blocks\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EINVAL;
 		}
 		ctx->block_size = CFB32_BLOCK_SIZE;
@@ -719,7 +844,15 @@ static int atmel_tdes_crypt(struct skcipher_request *req, unsigned long mode)
 
 	default:
 		if (!IS_ALIGNED(req->cryptlen, DES_BLOCK_SIZE)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dev_dbg(dev, "request size is not exact amount of DES blocks\n");
+=======
 			pr_err("request size is not exact amount of DES blocks\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_dbg(dev, "request size is not exact amount of DES blocks\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EINVAL;
 		}
 		ctx->block_size = DES_BLOCK_SIZE;
@@ -897,14 +1030,32 @@ static int atmel_tdes_ofb_decrypt(struct skcipher_request *req)
 static int atmel_tdes_init_tfm(struct crypto_skcipher *tfm)
 {
 	struct atmel_tdes_ctx *ctx = crypto_skcipher_ctx(tfm);
-	struct atmel_tdes_dev *dd;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	ctx->dd = atmel_tdes_dev_alloc();
+	if (!ctx->dd)
+		return -ENODEV;
 
 	crypto_skcipher_set_reqsize(tfm, sizeof(struct atmel_tdes_reqctx));
 
-	dd = atmel_tdes_find_dev(ctx);
-	if (!dd)
+=======
+	struct atmel_tdes_dev *dd;
+
+	crypto_skcipher_set_reqsize(tfm, sizeof(struct atmel_tdes_reqctx));
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	ctx->dd = atmel_tdes_dev_alloc();
+	if (!ctx->dd)
 		return -ENODEV;
 
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	crypto_skcipher_set_reqsize(tfm, sizeof(struct atmel_tdes_reqctx));
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -999,7 +1150,15 @@ static struct skcipher_alg tdes_algs[] = {
 {
 	.base.cra_name		= "ofb(des)",
 	.base.cra_driver_name	= "atmel-ofb-des",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.base.cra_blocksize	= 1,
+=======
 	.base.cra_blocksize	= DES_BLOCK_SIZE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.base.cra_blocksize	= 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.base.cra_alignmask	= 0x7,
 
 	.min_keysize		= DES_KEY_SIZE,

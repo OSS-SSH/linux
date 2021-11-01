@@ -17,10 +17,26 @@
 #include <linux/err.h>
 #include <linux/pwm.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "leds.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "leds.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct led_pwm {
 	const char	*name;
 	u8		active_low;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u8		default_state;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u8		default_state;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int	max_brightness;
 };
 
@@ -77,7 +93,48 @@ static int led_pwm_add(struct device *dev, struct led_pwm_priv *priv,
 
 	led_data->cdev.brightness_set_blocking = led_pwm_set;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* init PWM state */
+	switch (led->default_state) {
+	case LEDS_DEFSTATE_KEEP:
+		pwm_get_state(led_data->pwm, &led_data->pwmstate);
+		if (led_data->pwmstate.period)
+			break;
+		led->default_state = LEDS_DEFSTATE_OFF;
+		dev_warn(dev,
+			"failed to read period for %s, default to off",
+			led->name);
+		fallthrough;
+	default:
+		pwm_init_state(led_data->pwm, &led_data->pwmstate);
+		break;
+	}
+
+	/* set brightness */
+	switch (led->default_state) {
+	case LEDS_DEFSTATE_ON:
+		led_data->cdev.brightness = led->max_brightness;
+		break;
+	case LEDS_DEFSTATE_KEEP:
+		{
+		uint64_t brightness;
+
+		brightness = led->max_brightness;
+		brightness *= led_data->pwmstate.duty_cycle;
+		do_div(brightness, led_data->pwmstate.period);
+		led_data->cdev.brightness = brightness;
+		}
+		break;
+	}
+<<<<<<< HEAD
+=======
 	pwm_init_state(led_data->pwm, &led_data->pwmstate);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = devm_led_classdev_register_ext(dev, &led_data->cdev, &init_data);
 	if (ret) {
@@ -86,11 +143,27 @@ static int led_pwm_add(struct device *dev, struct led_pwm_priv *priv,
 		return ret;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (led->default_state != LEDS_DEFSTATE_KEEP) {
+		ret = led_pwm_set(&led_data->cdev, led_data->cdev.brightness);
+		if (ret) {
+			dev_err(dev, "failed to set led PWM value for %s: %d",
+				led->name, ret);
+			return ret;
+		}
+<<<<<<< HEAD
+=======
 	ret = led_pwm_set(&led_data->cdev, led_data->cdev.brightness);
 	if (ret) {
 		dev_err(dev, "failed to set led PWM value for %s: %d",
 			led->name, ret);
 		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	priv->num_leds++;
@@ -120,6 +193,16 @@ static int led_pwm_create_fwnode(struct device *dev, struct led_pwm_priv *priv)
 		fwnode_property_read_u32(fwnode, "max-brightness",
 					 &led.max_brightness);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		led.default_state = led_init_default_state_get(fwnode);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		led.default_state = led_init_default_state_get(fwnode);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = led_pwm_add(dev, priv, &led, fwnode);
 		if (ret)
 			goto err_child_out;

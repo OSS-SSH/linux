@@ -2178,7 +2178,15 @@ mpt3sas_send_diag_release(struct MPT3SAS_ADAPTER *ioc, u8 buffer_type,
 		mpt3sas_check_cmd_timeout(ioc,
 		    ioc->ctl_cmds.status, mpi_request,
 		    sizeof(Mpi2DiagReleaseRequest_t)/4, reset_needed);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		*issue_reset = reset_needed;
+=======
 		 *issue_reset = reset_needed;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		*issue_reset = reset_needed;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rc = -EFAULT;
 		goto out;
 	}
@@ -3820,9 +3828,23 @@ enable_sdev_max_qd_store(struct device *cdev,
 				}
 			} else if (sas_target_priv_data->flags &
 			    MPT_TARGET_FLAGS_PCIE_DEVICE)
+<<<<<<< HEAD
+<<<<<<< HEAD
+				qdepth = ioc->max_nvme_qd;
+			else
+				qdepth = (sas_target_priv_data->sas_dev->port_type > 1) ?
+				    ioc->max_wideport_qd : ioc->max_narrowport_qd;
+=======
 				qdepth = MPT3SAS_NVME_QUEUE_DEPTH;
 			else
 				qdepth = MPT3SAS_SAS_QUEUE_DEPTH;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				qdepth = ioc->max_nvme_qd;
+			else
+				qdepth = (sas_target_priv_data->sas_dev->port_type > 1) ?
+				    ioc->max_wideport_qd : ioc->max_narrowport_qd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			mpt3sas_scsih_change_queue_depth(sdev, qdepth);
 		}
@@ -3919,6 +3941,33 @@ sas_device_handle_show(struct device *dev, struct device_attribute *attr,
 static DEVICE_ATTR_RO(sas_device_handle);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * sas_ncq_prio_supported_show - Indicate if device supports NCQ priority
+ * @dev: pointer to embedded device
+ * @attr: sas_ncq_prio_supported attribute descriptor
+ * @buf: the buffer returned
+ *
+ * A sysfs 'read-only' sdev attribute, only works with SATA
+ */
+static ssize_t
+sas_ncq_prio_supported_show(struct device *dev,
+			    struct device_attribute *attr, char *buf)
+{
+	struct scsi_device *sdev = to_scsi_device(dev);
+
+	return sysfs_emit(buf, "%d\n", scsih_ncq_prio_supp(sdev));
+}
+static DEVICE_ATTR_RO(sas_ncq_prio_supported);
+
+/**
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * sas_ncq_prio_enable_show - send prioritized io commands to device
  * @dev: pointer to embedded device
  * @attr: ?
@@ -3960,6 +4009,14 @@ static DEVICE_ATTR_RW(sas_ncq_prio_enable);
 struct device_attribute *mpt3sas_dev_attrs[] = {
 	&dev_attr_sas_address,
 	&dev_attr_sas_device_handle,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	&dev_attr_sas_ncq_prio_supported,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	&dev_attr_sas_ncq_prio_supported,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	&dev_attr_sas_ncq_prio_enable,
 	NULL,
 };

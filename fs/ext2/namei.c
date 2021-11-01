@@ -293,7 +293,15 @@ static int ext2_unlink(struct inode * dir, struct dentry *dentry)
 		goto out;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = ext2_delete_entry (de, page, page_addr);
+=======
 	err = ext2_delete_entry (de, page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext2_delete_entry (de, page, page_addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ext2_put_page(page, page_addr);
 	if (err)
 		goto out;
@@ -397,7 +405,15 @@ static int ext2_rename (struct user_namespace * mnt_userns,
 	old_inode->i_ctime = current_time(old_inode);
 	mark_inode_dirty(old_inode);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ext2_delete_entry(old_de, old_page, old_page_addr);
+=======
 	ext2_delete_entry(old_de, old_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ext2_delete_entry(old_de, old_page, old_page_addr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (dir_de) {
 		if (old_dir != new_dir)

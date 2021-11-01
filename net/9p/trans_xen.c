@@ -138,7 +138,15 @@ static bool p9_xen_write_todo(struct xen_9pfs_dataring *ring, RING_IDX size)
 
 static int p9_xen_request(struct p9_client *client, struct p9_req_t *p9_req)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct xen_9pfs_front_priv *priv;
+=======
 	struct xen_9pfs_front_priv *priv = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xen_9pfs_front_priv *priv;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	RING_IDX cons, prod, masked_cons, masked_prod;
 	unsigned long flags;
 	u32 size = p9_req->tc.size;
@@ -151,7 +159,15 @@ static int p9_xen_request(struct p9_client *client, struct p9_req_t *p9_req)
 			break;
 	}
 	read_unlock(&xen_9pfs_lock);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (list_entry_is_head(priv, &xen_9pfs_devs, list))
+=======
 	if (!priv || priv->client != client)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (list_entry_is_head(priv, &xen_9pfs_devs, list))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	num = p9_req->tc.tag % priv->num_rings;

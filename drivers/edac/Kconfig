@@ -271,7 +271,15 @@ config EDAC_PND2
 config EDAC_IGEN6
 	tristate "Intel client SoC Integrated MC"
 	depends on PCI && PCI_MMCONFIG && ARCH_HAVE_NMI_SAFE_CMPXCHG
+<<<<<<< HEAD
+<<<<<<< HEAD
+	depends on X86_64 && X86_MCE_INTEL
+=======
 	depends on X64_64 && X86_MCE_INTEL
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on X86_64 && X86_MCE_INTEL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Support for error detection and correction on the Intel
 	  client SoC Integrated Memory Controller using In-Band ECC IP.

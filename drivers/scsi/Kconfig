@@ -14,12 +14,34 @@ config RAID_ATTRS
 	help
 	  Provides RAID
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+config SCSI_COMMON
+	tristate
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+config SCSI_COMMON
+	tristate
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config SCSI
 	tristate "SCSI device support"
 	depends on BLOCK
 	select SCSI_DMA if HAS_DMA
 	select SG_POOL
+<<<<<<< HEAD
+<<<<<<< HEAD
+	select SCSI_COMMON
+	select BLK_DEV_BSG_COMMON if BLK_DEV_BSG
+=======
 	select BLK_SCSI_REQUEST
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select SCSI_COMMON
+	select BLK_DEV_BSG_COMMON if BLK_DEV_BSG
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  If you want to use a SCSI hard disk, SCSI tape drive, SCSI CD-ROM or
 	  any other SCSI device under Linux, say Y and make sure that you know
@@ -140,6 +162,27 @@ config CHR_DEV_SG
 
 	  If unsure, say N.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+config BLK_DEV_BSG
+	bool "/dev/bsg support (SG v4)"
+	depends on SCSI
+	default y
+	help
+	  Saying Y here will enable generic SG (SCSI generic) v4 support
+	  for any SCSI device.
+
+	  This option is required by UDEV to access device serial numbers, etc.
+
+	  If unsure, say Y.
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config CHR_DEV_SCH
 	tristate "SCSI media changer support"
 	depends on SCSI

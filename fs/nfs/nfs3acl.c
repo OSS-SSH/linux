@@ -44,7 +44,15 @@ static void nfs3_abort_get_acl(struct posix_acl **p)
 	cmpxchg(p, sentinel, ACL_NOT_CACHED);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct posix_acl *nfs3_get_acl(struct inode *inode, int type, bool rcu)
+=======
 struct posix_acl *nfs3_get_acl(struct inode *inode, int type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct posix_acl *nfs3_get_acl(struct inode *inode, int type, bool rcu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct nfs_server *server = NFS_SERVER(inode);
 	struct page *pages[NFSACL_MAXPAGES] = { };
@@ -62,6 +70,18 @@ struct posix_acl *nfs3_get_acl(struct inode *inode, int type)
 	};
 	int status, count;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!nfs_server_capable(inode, NFS_CAP_ACLS))
 		return ERR_PTR(-EOPNOTSUPP);
 

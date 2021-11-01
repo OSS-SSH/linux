@@ -365,12 +365,22 @@ out_putf:
 
 int rw_verify_area(int read_write, struct file *file, const loff_t *ppos, size_t count)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (unlikely((ssize_t) count < 0))
+		return -EINVAL;
+=======
 	struct inode *inode;
 	int retval = -EINVAL;
 
 	inode = file_inode(file);
 	if (unlikely((ssize_t) count < 0))
 		return retval;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (unlikely((ssize_t) count < 0))
+		return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * ranged mandatory locking does not apply to streams - it makes sense
@@ -381,11 +391,23 @@ int rw_verify_area(int read_write, struct file *file, const loff_t *ppos, size_t
 
 		if (unlikely(pos < 0)) {
 			if (!unsigned_offsets(file))
+<<<<<<< HEAD
+<<<<<<< HEAD
+				return -EINVAL;
+=======
 				return retval;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (count >= -pos) /* both values are in 0..LLONG_MAX */
 				return -EOVERFLOW;
 		} else if (unlikely((loff_t) (pos + count) < 0)) {
 			if (!unsigned_offsets(file))
+<<<<<<< HEAD
+<<<<<<< HEAD
+				return -EINVAL;
+=======
 				return retval;
 		}
 
@@ -394,6 +416,10 @@ int rw_verify_area(int read_write, struct file *file, const loff_t *ppos, size_t
 					read_write == READ ? F_RDLCK : F_WRLCK);
 			if (retval < 0)
 				return retval;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 

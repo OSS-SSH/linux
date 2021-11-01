@@ -14,6 +14,14 @@
 #include <linux/err.h>
 #include <linux/percpu-defs.h>
 #include <linux/percpu.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/sched.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/sched.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * CAREFUL: Check include/uapi/asm-generic/fcntl.h when defining
@@ -43,11 +51,23 @@ int eventfd_ctx_remove_wait_queue(struct eventfd_ctx *ctx, wait_queue_entry_t *w
 				  __u64 *cnt);
 void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline bool eventfd_signal_allowed(void)
+{
+	return !current->in_eventfd_signal;
+=======
 DECLARE_PER_CPU(int, eventfd_wake_count);
 
 static inline bool eventfd_signal_count(void)
 {
 	return this_cpu_read(eventfd_wake_count);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline bool eventfd_signal_allowed(void)
+{
+	return !current->in_eventfd_signal;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #else /* CONFIG_EVENTFD */
@@ -78,9 +98,21 @@ static inline int eventfd_ctx_remove_wait_queue(struct eventfd_ctx *ctx,
 	return -ENOSYS;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline bool eventfd_signal_allowed(void)
+{
+	return true;
+=======
 static inline bool eventfd_signal_count(void)
 {
 	return false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline bool eventfd_signal_allowed(void)
+{
+	return true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt)

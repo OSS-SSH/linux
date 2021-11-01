@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
+/*
+ * Copyright(c) 2015 - 2020 Intel Corporation.
+=======
 /*
  * Copyright(c) 2015 - 2020 Intel Corporation.
  *
@@ -43,6 +49,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
+/*
+ * Copyright(c) 2015 - 2020 Intel Corporation.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/pci.h>
@@ -650,12 +662,20 @@ void hfi1_init_pportdata(struct pci_dev *pdev, struct hfi1_pportdata *ppd,
 
 	ppd->pkeys[default_pkey_idx] = DEFAULT_P_KEY;
 	ppd->part_enforce |= HFI1_PART_ENFORCE_IN;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ppd->pkeys[0] = 0x8001;
+=======
 
 	if (loopback) {
 		dd_dev_err(dd, "Faking data partition 0x8001 in idx %u\n",
 			   !default_pkey_idx);
 		ppd->pkeys[!default_pkey_idx] = 0x8001;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ppd->pkeys[0] = 0x8001;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	INIT_WORK(&ppd->link_vc_work, handle_verify_cap);
 	INIT_WORK(&ppd->link_up_work, handle_link_up);
@@ -1752,7 +1772,15 @@ static void wait_for_clients(struct hfi1_devdata *dd)
 	 * Remove the device init value and complete the device if there is
 	 * no clients or wait for active clients to finish.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (refcount_dec_and_test(&dd->user_refcount))
+=======
 	if (atomic_dec_and_test(&dd->user_refcount))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (refcount_dec_and_test(&dd->user_refcount))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		complete(&dd->user_comp);
 
 	wait_for_completion(&dd->user_comp);

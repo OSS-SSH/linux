@@ -12,7 +12,17 @@ SYNOPSIS
 
 	**bpftool** [*OPTIONS*] **gen** *COMMAND*
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] | { **-d** | **--debug** } |
+		{ **-L** | **--use-loader** } }
+=======
 	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] | { **-d** | **--debug** } |
+		{ **-L** | **--use-loader** } }
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*COMMAND* := { **object** | **skeleton** | **help** }
 
@@ -152,6 +162,21 @@ OPTIONS
 =======
 	.. include:: common_options.rst
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	-L, --use-loader
+		  For skeletons, generate a "light" skeleton (also known as "loader"
+		  skeleton). A light skeleton contains a loader eBPF program. It does
+		  not use the majority of the libbpf infrastructure, and does not need
+		  libelf.
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EXAMPLES
 ========
 **$ cat example1.bpf.c**

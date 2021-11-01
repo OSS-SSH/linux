@@ -289,7 +289,13 @@ static void fscache_release_retrieval_op(struct fscache_operation *_op)
 	ASSERTIFCMP(op->op.state != FSCACHE_OP_ST_INITIALISED,
 		    atomic_read(&op->n_pages), ==, 0);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	fscache_hist(fscache_retrieval_histogram, op->start_time);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (op->context)
 		fscache_put_context(op->cookie, op->context);
 
@@ -324,7 +330,13 @@ struct fscache_retrieval *fscache_alloc_retrieval(
 	op->mapping	= mapping;
 	op->end_io_func	= end_io_func;
 	op->context	= context;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	op->start_time	= jiffies;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_LIST_HEAD(&op->to_do);
 
 	/* Pin the netfs read context in case we need to do the actual netfs
@@ -340,8 +352,14 @@ struct fscache_retrieval *fscache_alloc_retrieval(
  */
 int fscache_wait_for_deferred_lookup(struct fscache_cookie *cookie)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	unsigned long jif;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	_enter("");
 
 	if (!test_bit(FSCACHE_COOKIE_LOOKING_UP, &cookie->flags)) {
@@ -351,7 +369,13 @@ int fscache_wait_for_deferred_lookup(struct fscache_cookie *cookie)
 
 	fscache_stat(&fscache_n_retrievals_wait);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	jif = jiffies;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (wait_on_bit(&cookie->flags, FSCACHE_COOKIE_LOOKING_UP,
 			TASK_INTERRUPTIBLE) != 0) {
 		fscache_stat(&fscache_n_retrievals_intr);
@@ -362,7 +386,13 @@ int fscache_wait_for_deferred_lookup(struct fscache_cookie *cookie)
 	ASSERT(!test_bit(FSCACHE_COOKIE_LOOKING_UP, &cookie->flags));
 
 	smp_rmb();
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	fscache_hist(fscache_retrieval_delay_histogram, jif);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	_leave(" = 0 [dly]");
 	return 0;
 }

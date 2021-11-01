@@ -273,9 +273,15 @@ static int amdgpufb_create(struct drm_fb_helper *helper,
 	return 0;
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (abo) {
 
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (fb && ret) {
 		drm_gem_object_put(gobj);
 		drm_framebuffer_unregister_private(fb);
@@ -344,7 +350,15 @@ int amdgpu_fbdev_init(struct amdgpu_device *adev)
 	}
 
 	/* disable all the possible outputs/crtcs before entering KMS mode */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!amdgpu_device_has_dc_support(adev) && !amdgpu_virtual_display)
+=======
 	if (!amdgpu_device_has_dc_support(adev))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!amdgpu_device_has_dc_support(adev) && !amdgpu_virtual_display)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		drm_helper_disable_unused_functions(adev_to_drm(adev));
 
 	drm_fb_helper_initial_config(&rfbdev->helper, bpp_sel);

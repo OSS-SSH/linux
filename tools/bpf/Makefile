@@ -97,7 +97,15 @@ clean: bpftool_clean runqslower_clean resolve_btfids_clean
 	$(Q)$(RM) -- $(OUTPUT)FEATURE-DUMP.bpf
 	$(Q)$(RM) -r -- $(OUTPUT)feature
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+install: $(PROGS) bpftool_install
+=======
 install: $(PROGS) bpftool_install runqslower_install
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+install: $(PROGS) bpftool_install
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	$(call QUIET_INSTALL, bpf_jit_disasm)
 	$(Q)$(INSTALL) -m 0755 -d $(DESTDIR)$(prefix)/bin
 	$(Q)$(INSTALL) $(OUTPUT)bpf_jit_disasm $(DESTDIR)$(prefix)/bin/bpf_jit_disasm
@@ -118,9 +126,15 @@ bpftool_clean:
 runqslower:
 	$(call descend,runqslower)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 runqslower_install:
 	$(call descend,runqslower,install)
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 runqslower_clean:
 	$(call descend,runqslower,clean)
 
@@ -131,5 +145,13 @@ resolve_btfids_clean:
 	$(call descend,resolve_btfids,clean)
 
 .PHONY: all install clean bpftool bpftool_install bpftool_clean \
+<<<<<<< HEAD
+<<<<<<< HEAD
+	runqslower runqslower_clean \
+=======
 	runqslower runqslower_install runqslower_clean \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	runqslower runqslower_clean \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	resolve_btfids resolve_btfids_clean

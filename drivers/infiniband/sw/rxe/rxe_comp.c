@@ -349,7 +349,15 @@ static inline enum comp_state do_read(struct rxe_qp *qp,
 
 	ret = copy_data(qp->pd, IB_ACCESS_LOCAL_WRITE,
 			&wqe->dma, payload_addr(pkt),
+<<<<<<< HEAD
+<<<<<<< HEAD
+			payload_size(pkt), RXE_TO_MR_OBJ);
+=======
 			payload_size(pkt), RXE_TO_MR_OBJ, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			payload_size(pkt), RXE_TO_MR_OBJ);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		wqe->status = IB_WC_LOC_PROT_ERR;
 		return COMPST_ERROR;
@@ -371,7 +379,15 @@ static inline enum comp_state do_atomic(struct rxe_qp *qp,
 
 	ret = copy_data(qp->pd, IB_ACCESS_LOCAL_WRITE,
 			&wqe->dma, &atomic_orig,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			sizeof(u64), RXE_TO_MR_OBJ);
+=======
 			sizeof(u64), RXE_TO_MR_OBJ, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			sizeof(u64), RXE_TO_MR_OBJ);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		wqe->status = IB_WC_LOC_PROT_ERR;
 		return COMPST_ERROR;

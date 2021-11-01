@@ -42,7 +42,15 @@
 #include <asm/octeon/cvmx-asxx-defs.h>
 #include <asm/octeon/cvmx-dbg-defs.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*
+=======
 /**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Probe RGMII ports and determine the number present
  *
  * @interface: Interface to probe
@@ -88,7 +96,15 @@ int __cvmx_helper_rgmii_probe(int interface)
 	return num_ports;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*
+=======
 /**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Put an RGMII interface in loopback mode. Internal packets sent
  * out will be received back again on the same port. Externally
  * received packets will echo back out.
@@ -120,7 +136,15 @@ void cvmx_helper_rgmii_internal_loopback(int port)
 	cvmx_write_csr(CVMX_GMXX_PRTX_CFG(index, interface), gmx_cfg.u64);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*
+=======
 /**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Workaround ASX setup errata with CN38XX pass1
  *
  * @interface: Interface to setup
@@ -148,7 +172,15 @@ static int __cvmx_helper_errata_asx_pass1(int interface, int port,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*
+=======
 /**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Configure all of the ASX, GMX, and PKO registers required
  * to get RGMII to function on the supplied interface.
  *
@@ -251,7 +283,15 @@ int __cvmx_helper_rgmii_enable(int interface)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*
+=======
 /**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Return the link state of an IPD/PKO port as returned by
  * auto negotiation. The result of this function may not match
  * Octeon's link config if auto negotiation has changed since
@@ -280,7 +320,15 @@ union cvmx_helper_link_info __cvmx_helper_rgmii_link_get(int ipd_port)
 		return __cvmx_helper_board_link_get(ipd_port);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*
+=======
 /**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Configure an IPD/PKO port for the specified link state. This
  * function does not influence auto negotiation at the PHY level.
  * The passed link state must always match the link state returned

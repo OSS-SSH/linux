@@ -76,12 +76,25 @@ static inline struct Qdisc *tcf_block_q(struct tcf_block *block)
 	return block->q;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int tcf_classify(struct sk_buff *skb,
+		 const struct tcf_block *block,
+		 const struct tcf_proto *tp, struct tcf_result *res,
+		 bool compat_mode);
+<<<<<<< HEAD
+=======
 int tcf_classify(struct sk_buff *skb, const struct tcf_proto *tp,
 		 struct tcf_result *res, bool compat_mode);
 int tcf_classify_ingress(struct sk_buff *skb,
 			 const struct tcf_block *ingress_block,
 			 const struct tcf_proto *tp, struct tcf_result *res,
 			 bool compat_mode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #else
 static inline bool tcf_block_shared(struct tcf_block *block)
@@ -138,12 +151,27 @@ void tc_setup_cb_block_unregister(struct tcf_block *block, flow_setup_cb_t *cb,
 {
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline int tcf_classify(struct sk_buff *skb,
+			       const struct tcf_block *block,
+			       const struct tcf_proto *tp,
+=======
 static inline int tcf_classify(struct sk_buff *skb, const struct tcf_proto *tp,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int tcf_classify(struct sk_buff *skb,
+			       const struct tcf_block *block,
+			       const struct tcf_proto *tp,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       struct tcf_result *res, bool compat_mode)
 {
 	return TC_ACT_UNSPEC;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static inline int tcf_classify_ingress(struct sk_buff *skb,
 				       const struct tcf_block *ingress_block,
 				       const struct tcf_proto *tp,
@@ -152,6 +180,9 @@ static inline int tcf_classify_ingress(struct sk_buff *skb,
 	return TC_ACT_UNSPEC;
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 static inline unsigned long
@@ -327,7 +358,15 @@ tcf_exts_exec(struct sk_buff *skb, struct tcf_exts *exts,
 
 int tcf_exts_validate(struct net *net, struct tcf_proto *tp,
 		      struct nlattr **tb, struct nlattr *rate_tlv,
+<<<<<<< HEAD
+<<<<<<< HEAD
+		      struct tcf_exts *exts, u32 flags,
+=======
 		      struct tcf_exts *exts, bool ovr, bool rtnl_held,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		      struct tcf_exts *exts, u32 flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		      struct netlink_ext_ack *extack);
 void tcf_exts_destroy(struct tcf_exts *exts);
 void tcf_exts_change(struct tcf_exts *dst, struct tcf_exts *src);
@@ -337,6 +376,18 @@ int tcf_exts_dump_stats(struct sk_buff *skb, struct tcf_exts *exts);
 
 /**
  * struct tcf_pkt_info - packet information
+<<<<<<< HEAD
+<<<<<<< HEAD
+ *
+ * @ptr: start of the pkt data
+ * @nexthdr: offset of the next header
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ *
+ * @ptr: start of the pkt data
+ * @nexthdr: offset of the next header
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct tcf_pkt_info {
 	unsigned char *		ptr;
@@ -355,6 +406,14 @@ struct tcf_ematch_ops;
  * @ops: the operations lookup table of the corresponding ematch module
  * @datalen: length of the ematch specific configuration data
  * @data: ematch specific data
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @net: the network namespace
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @net: the network namespace
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct tcf_ematch {
 	struct tcf_ematch_ops * ops;
@@ -820,10 +879,23 @@ enum tc_htb_command {
 struct tc_htb_qopt_offload {
 	struct netlink_ext_ack *extack;
 	enum tc_htb_command command;
-	u16 classid;
+<<<<<<< HEAD
+<<<<<<< HEAD
 	u32 parent_classid;
+	u16 classid;
 	u16 qid;
+=======
+	u16 classid;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	u32 parent_classid;
+	u16 classid;
+	u16 qid;
+<<<<<<< HEAD
 	u16 moved_qid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 rate;
 	u64 ceil;
 };

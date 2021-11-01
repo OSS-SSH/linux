@@ -18,6 +18,14 @@ struct shmem_inode_info {
 	unsigned long		flags;
 	unsigned long		alloced;	/* data pages alloced to file */
 	unsigned long		swapped;	/* subtotal assigned to swap */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pgoff_t			fallocend;	/* highest fallocate endindex */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pgoff_t			fallocend;	/* highest fallocate endindex */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head        shrinklist;     /* shrinkable hpage inodes */
 	struct list_head	swaplist;	/* chain of maybes on swap */
 	struct shared_policy	policy;		/* NUMA memory alloc policy */
@@ -31,7 +39,15 @@ struct shmem_sb_info {
 	struct percpu_counter used_blocks;  /* How many are allocated */
 	unsigned long max_inodes;   /* How many inodes are allowed */
 	unsigned long free_inodes;  /* How many are left for allocation */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	raw_spinlock_t stat_lock;   /* Serialize shmem_sb_info changes */
+=======
 	spinlock_t stat_lock;	    /* Serialize shmem_sb_info changes */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	raw_spinlock_t stat_lock;   /* Serialize shmem_sb_info changes */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	umode_t mode;		    /* Mount mode for root directory */
 	unsigned char huge;	    /* Whether to try for hugepages */
 	kuid_t uid;		    /* Mount uid for root directory */
@@ -85,7 +101,22 @@ extern void shmem_truncate_range(struct inode *inode, loff_t start, loff_t end);
 extern int shmem_unuse(unsigned int type, bool frontswap,
 		       unsigned long *fs_pages_to_unuse);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+extern bool shmem_is_huge(struct vm_area_struct *vma,
+			  struct inode *inode, pgoff_t index);
+static inline bool shmem_huge_enabled(struct vm_area_struct *vma)
+{
+	return shmem_is_huge(vma, file_inode(vma->vm_file), vma->vm_pgoff);
+}
+<<<<<<< HEAD
+=======
 extern bool shmem_huge_enabled(struct vm_area_struct *vma);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern unsigned long shmem_swap_usage(struct vm_area_struct *vma);
 extern unsigned long shmem_partial_swap_usage(struct address_space *mapping,
 						pgoff_t start, pgoff_t end);
@@ -93,9 +124,19 @@ extern unsigned long shmem_partial_swap_usage(struct address_space *mapping,
 /* Flag allocation requirements to shmem_getpage */
 enum sgp_type {
 	SGP_READ,	/* don't exceed i_size, don't allocate page */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	SGP_NOALLOC,	/* similar, but fail on hole or use fallocated page */
+	SGP_CACHE,	/* don't exceed i_size, may allocate page */
+=======
 	SGP_CACHE,	/* don't exceed i_size, may allocate page */
 	SGP_NOHUGE,	/* like SGP_CACHE, but no huge pages */
 	SGP_HUGE,	/* like SGP_CACHE, huge pages preferred */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SGP_NOALLOC,	/* similar, but fail on hole or use fallocated page */
+	SGP_CACHE,	/* don't exceed i_size, may allocate page */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SGP_WRITE,	/* may exceed i_size, may allocate !Uptodate page */
 	SGP_FALLOC,	/* like SGP_WRITE, but make existing page Uptodate */
 };
@@ -119,6 +160,27 @@ static inline bool shmem_file(struct file *file)
 	return shmem_mapping(file->f_mapping);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * If fallocate(FALLOC_FL_KEEP_SIZE) has been used, there may be pages
+ * beyond i_size's notion of EOF, which fallocate has committed to reserving:
+ * which split_huge_page() must therefore not delete.  This use of a single
+ * "fallocend" per inode errs on the side of not deleting a reservation when
+ * in doubt: there are plenty of cases when it preserves unreserved pages.
+ */
+static inline pgoff_t shmem_fallocend(struct inode *inode, pgoff_t eof)
+{
+	return max(eof, SHMEM_I(inode)->fallocend);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern bool shmem_charge(struct inode *inode, long pages);
 extern void shmem_uncharge(struct inode *inode, long pages);
 

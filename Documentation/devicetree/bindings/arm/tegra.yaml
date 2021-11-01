@@ -54,7 +54,15 @@ properties:
           - const: toradex,apalis_t30
           - const: nvidia,tegra30
       - items:
+<<<<<<< HEAD
+<<<<<<< HEAD
+          - const: toradex,apalis_t30-v1.1-eval
+=======
           - const: toradex,apalis_t30-eval-v1.1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+          - const: toradex,apalis_t30-v1.1-eval
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - const: toradex,apalis_t30-eval
           - const: toradex,apalis_t30-v1.1
           - const: toradex,apalis_t30
@@ -111,6 +119,14 @@ properties:
       - items:
           - enum:
               - nvidia,p2771-0000
+<<<<<<< HEAD
+<<<<<<< HEAD
+              - nvidia,p3509-0000+p3636-0001
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+              - nvidia,p3509-0000+p3636-0001
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
           - const: nvidia,tegra186
       - items:
           - enum:

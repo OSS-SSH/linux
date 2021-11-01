@@ -799,7 +799,13 @@ int ext2_get_block(struct inode *inode, sector_t iblock,
 
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #ifdef CONFIG_FS_DAX
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ext2_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
 		unsigned flags, struct iomap *iomap, struct iomap *srcmap)
 {
@@ -852,16 +858,39 @@ const struct iomap_ops ext2_iomap_ops = {
 	.iomap_begin		= ext2_iomap_begin,
 	.iomap_end		= ext2_iomap_end,
 };
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #else
 /* Define empty ops for !CONFIG_FS_DAX case to avoid ugly ifdefs */
 const struct iomap_ops ext2_iomap_ops;
 #endif /* CONFIG_FS_DAX */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int ext2_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
 		u64 start, u64 len)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	int ret;
+
+	inode_lock(inode);
+	len = min_t(u64, len, i_size_read(inode));
+	ret = iomap_fiemap(inode, fieinfo, start, len, &ext2_iomap_ops);
+	inode_unlock(inode);
+
+	return ret;
+<<<<<<< HEAD
+=======
 	return generic_block_fiemap(inode, fieinfo, start, len,
 				    ext2_get_block);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ext2_writepage(struct page *page, struct writeback_control *wbc)
@@ -1177,7 +1206,15 @@ static void ext2_free_branches(struct inode *inode, __le32 *p, __le32 *q, int de
 		ext2_free_data(inode, p, q);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* mapping->invalidate_lock must be held when calling this function */
+=======
 /* dax_sem must be held when calling this function */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* mapping->invalidate_lock must be held when calling this function */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __ext2_truncate_blocks(struct inode *inode, loff_t offset)
 {
 	__le32 *i_data = EXT2_I(inode)->i_data;
@@ -1194,7 +1231,15 @@ static void __ext2_truncate_blocks(struct inode *inode, loff_t offset)
 	iblock = (offset + blocksize-1) >> EXT2_BLOCK_SIZE_BITS(inode->i_sb);
 
 #ifdef CONFIG_FS_DAX
+<<<<<<< HEAD
+<<<<<<< HEAD
+	WARN_ON(!rwsem_is_locked(&inode->i_mapping->invalidate_lock));
+=======
 	WARN_ON(!rwsem_is_locked(&ei->dax_sem));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	WARN_ON(!rwsem_is_locked(&inode->i_mapping->invalidate_lock));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	n = ext2_block_to_path(inode, iblock, offsets, NULL);
@@ -1276,9 +1321,21 @@ static void ext2_truncate_blocks(struct inode *inode, loff_t offset)
 	if (ext2_inode_is_fast_symlink(inode))
 		return;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	filemap_invalidate_lock(inode->i_mapping);
+	__ext2_truncate_blocks(inode, offset);
+	filemap_invalidate_unlock(inode->i_mapping);
+=======
 	dax_sem_down_write(EXT2_I(inode));
 	__ext2_truncate_blocks(inode, offset);
 	dax_sem_up_write(EXT2_I(inode));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_lock(inode->i_mapping);
+	__ext2_truncate_blocks(inode, offset);
+	filemap_invalidate_unlock(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ext2_setsize(struct inode *inode, loff_t newsize)
@@ -1308,10 +1365,24 @@ static int ext2_setsize(struct inode *inode, loff_t newsize)
 	if (error)
 		return error;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	filemap_invalidate_lock(inode->i_mapping);
+	truncate_setsize(inode, newsize);
+	__ext2_truncate_blocks(inode, newsize);
+	filemap_invalidate_unlock(inode->i_mapping);
+=======
 	dax_sem_down_write(EXT2_I(inode));
 	truncate_setsize(inode, newsize);
 	__ext2_truncate_blocks(inode, newsize);
 	dax_sem_up_write(EXT2_I(inode));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	filemap_invalidate_lock(inode->i_mapping);
+	truncate_setsize(inode, newsize);
+	__ext2_truncate_blocks(inode, newsize);
+	filemap_invalidate_unlock(inode->i_mapping);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	inode->i_mtime = inode->i_ctime = current_time(inode);
 	if (inode_needs_sync(inode)) {

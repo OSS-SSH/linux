@@ -1,4 +1,21 @@
 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+<<<<<<< HEAD
+#ifndef _IPT_ECN_H
+#define _IPT_ECN_H
+
+#include <linux/netfilter/xt_ecn.h>
+#define ipt_ecn_info xt_ecn_info
+
+enum {
+	IPT_ECN_IP_MASK       = XT_ECN_IP_MASK,
+	IPT_ECN_OP_MATCH_IP   = XT_ECN_OP_MATCH_IP,
+	IPT_ECN_OP_MATCH_ECE  = XT_ECN_OP_MATCH_ECE,
+	IPT_ECN_OP_MATCH_CWR  = XT_ECN_OP_MATCH_CWR,
+	IPT_ECN_OP_MATCH_MASK = XT_ECN_OP_MATCH_MASK,
+};
+
+#endif /* IPT_ECN_H */
+=======
 /* Header file for iptables ipt_ECN target
  *
  * (C) 2002 by Harald Welte <laforge@gnumonks.org>
@@ -32,3 +49,4 @@ struct ipt_ECN_info {
 };
 
 #endif /* _IPT_ECN_TARGET_H */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

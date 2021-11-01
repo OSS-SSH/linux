@@ -275,7 +275,15 @@ static void ast_set_std_reg(struct ast_private *ast,
 	ast_set_index_reg_mask(ast, AST_IO_SEQ_PORT, 0x01, 0xdf, stdtable->seq[0]);
 	for (i = 1; i < 4; i++) {
 		jreg = stdtable->seq[i];
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ast_set_index_reg(ast, AST_IO_SEQ_PORT, (i + 1), jreg);
+=======
 		ast_set_index_reg(ast, AST_IO_SEQ_PORT, (i + 1) , jreg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ast_set_index_reg(ast, AST_IO_SEQ_PORT, (i + 1), jreg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Set CRTC; except base address and offset */
@@ -498,13 +506,34 @@ static void ast_set_sync_reg(struct ast_private *ast,
 
 	jreg  = ast_io_read8(ast, AST_IO_MISC_PORT_READ);
 	jreg &= ~0xC0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (vbios_mode->enh_table->flags & NVSync)
+		jreg |= 0x80;
+	if (vbios_mode->enh_table->flags & NHSync)
+		jreg |= 0x40;
+<<<<<<< HEAD
+=======
 	if (vbios_mode->enh_table->flags & NVSync) jreg |= 0x80;
 	if (vbios_mode->enh_table->flags & NHSync) jreg |= 0x40;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ast_io_write8(ast, AST_IO_MISC_PORT_WRITE, jreg);
 }
 
 static void ast_set_start_address_crt1(struct ast_private *ast,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				       unsigned int offset)
+=======
 				       unsigned offset)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				       unsigned int offset)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 addr;
 
@@ -612,8 +641,16 @@ ast_primary_plane_helper_atomic_disable(struct drm_plane *plane,
 }
 
 static const struct drm_plane_helper_funcs ast_primary_plane_helper_funcs = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DRM_GEM_VRAM_PLANE_HELPER_FUNCS,
+=======
 	.prepare_fb = drm_gem_vram_plane_helper_prepare_fb,
 	.cleanup_fb = drm_gem_vram_plane_helper_cleanup_fb,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DRM_GEM_VRAM_PLANE_HELPER_FUNCS,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.atomic_check = ast_primary_plane_helper_atomic_check,
 	.atomic_update = ast_primary_plane_helper_atomic_update,
 	.atomic_disable = ast_primary_plane_helper_atomic_disable,
@@ -807,7 +844,15 @@ ast_cursor_plane_helper_atomic_update(struct drm_plane *plane,
 		ast_cursor_plane->hwc[ast_cursor_plane->next_hwc_index].map;
 	u64 dst_off =
 		ast_cursor_plane->hwc[ast_cursor_plane->next_hwc_index].off;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct dma_buf_map src_map = shadow_plane_state->data[0];
+=======
 	struct dma_buf_map src_map = shadow_plane_state->map[0];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct dma_buf_map src_map = shadow_plane_state->data[0];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int offset_x, offset_y;
 	u16 x, y;
 	u8 x_offset, y_offset;
@@ -1212,6 +1257,14 @@ static int ast_get_modes(struct drm_connector *connector)
 	struct edid *edid;
 	int ret;
 	bool flags = false;
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ast->tx_chip_type == AST_TX_DP501) {
 		ast->dp501_maxclk = 0xff;
 		edid = kmalloc(128, GFP_KERNEL);
@@ -1231,8 +1284,18 @@ static int ast_get_modes(struct drm_connector *connector)
 		ret = drm_add_edid_modes(connector, edid);
 		kfree(edid);
 		return ret;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	}
+	drm_connector_update_edid_property(&ast_connector->base, NULL);
+=======
 	} else
 		drm_connector_update_edid_property(&ast_connector->base, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+	drm_connector_update_edid_property(&ast_connector->base, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1272,19 +1335,53 @@ static enum drm_mode_status ast_mode_valid(struct drm_connector *connector,
 	}
 	switch (mode->hdisplay) {
 	case 640:
-		if (mode->vdisplay == 480) flags = MODE_OK;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (mode->vdisplay == 480)
+			flags = MODE_OK;
 		break;
 	case 800:
-		if (mode->vdisplay == 600) flags = MODE_OK;
+		if (mode->vdisplay == 600)
+			flags = MODE_OK;
 		break;
 	case 1024:
-		if (mode->vdisplay == 768) flags = MODE_OK;
+		if (mode->vdisplay == 768)
+			flags = MODE_OK;
 		break;
 	case 1280:
-		if (mode->vdisplay == 1024) flags = MODE_OK;
+		if (mode->vdisplay == 1024)
+			flags = MODE_OK;
 		break;
 	case 1600:
+		if (mode->vdisplay == 1200)
+			flags = MODE_OK;
+=======
+		if (mode->vdisplay == 480) flags = MODE_OK;
+=======
+		if (mode->vdisplay == 480)
+			flags = MODE_OK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		break;
+	case 800:
+		if (mode->vdisplay == 600)
+			flags = MODE_OK;
+		break;
+	case 1024:
+		if (mode->vdisplay == 768)
+			flags = MODE_OK;
+		break;
+	case 1280:
+		if (mode->vdisplay == 1024)
+			flags = MODE_OK;
+		break;
+	case 1600:
+<<<<<<< HEAD
 		if (mode->vdisplay == 1200) flags = MODE_OK;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (mode->vdisplay == 1200)
+			flags = MODE_OK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		return flags;
@@ -1293,9 +1390,34 @@ static enum drm_mode_status ast_mode_valid(struct drm_connector *connector,
 	return flags;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static enum drm_connector_status ast_connector_detect(struct drm_connector
+						   *connector, bool force)
+{
+	int r;
+
+	r = ast_get_modes(connector);
+	if (r <= 0)
+		return connector_status_disconnected;
+
+	return connector_status_connected;
+}
+
 static void ast_connector_destroy(struct drm_connector *connector)
 {
 	struct ast_connector *ast_connector = to_ast_connector(connector);
+
+<<<<<<< HEAD
+=======
+static void ast_connector_destroy(struct drm_connector *connector)
+{
+	struct ast_connector *ast_connector = to_ast_connector(connector);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ast_i2c_destroy(ast_connector->i2c);
 	drm_connector_cleanup(connector);
 }
@@ -1307,6 +1429,14 @@ static const struct drm_connector_helper_funcs ast_connector_helper_funcs = {
 
 static const struct drm_connector_funcs ast_connector_funcs = {
 	.reset = drm_atomic_helper_connector_reset,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.detect = ast_connector_detect,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.detect = ast_connector_detect,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.fill_modes = drm_helper_probe_single_connector_modes,
 	.destroy = ast_connector_destroy,
 	.atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
@@ -1334,7 +1464,17 @@ static int ast_connector_init(struct drm_device *dev)
 	connector->interlace_allowed = 0;
 	connector->doublescan_allowed = 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	connector->polled = DRM_CONNECTOR_POLL_CONNECT |
+						DRM_CONNECTOR_POLL_DISCONNECT;
+=======
 	connector->polled = DRM_CONNECTOR_POLL_CONNECT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	connector->polled = DRM_CONNECTOR_POLL_CONNECT |
+						DRM_CONNECTOR_POLL_DISCONNECT;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	drm_connector_attach_encoder(connector, encoder);
 
@@ -1403,6 +1543,16 @@ int ast_mode_config_init(struct ast_private *ast)
 
 	drm_mode_config_reset(dev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	drm_kms_helper_poll_init(dev);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drm_kms_helper_poll_init(dev);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

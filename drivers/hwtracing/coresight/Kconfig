@@ -8,6 +8,14 @@ menuconfig CORESIGHT
 	depends on OF || ACPI
 	select ARM_AMBA
 	select PERF_EVENTS
+<<<<<<< HEAD
+<<<<<<< HEAD
+	select CONFIGFS_FS
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select CONFIGFS_FS
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This framework provides a kernel interface for the CoreSight debug
 	  and trace drivers to register themselves with. It's intended to build

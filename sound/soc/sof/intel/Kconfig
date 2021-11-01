@@ -249,6 +249,9 @@ config SND_SOC_SOF_HDA_PROBES
 	  Say Y if you want to enable probes.
 	  If unsure, select "N".
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config SND_SOC_SOF_HDA_ALWAYS_ENABLE_DMI_L1
 	bool "SOF enable DMI Link L1"
 	help
@@ -259,6 +262,9 @@ config SND_SOC_SOF_HDA_ALWAYS_ENABLE_DMI_L1
 	  Say Y if you want to enable DMI Link L1.
 	  If unsure, select "N".
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endif ## SND_SOC_SOF_HDA_COMMON
 
 config SND_SOC_SOF_HDA_LINK_BASELINE
@@ -278,6 +284,16 @@ config SND_SOC_SOF_HDA
 
 config SND_SOC_SOF_INTEL_SOUNDWIRE_LINK_BASELINE
 	tristate
+<<<<<<< HEAD
+<<<<<<< HEAD
+	select SOUNDWIRE_INTEL if SND_SOC_SOF_INTEL_SOUNDWIRE
+	select SND_INTEL_SOUNDWIRE_ACPI if SND_SOC_SOF_INTEL_SOUNDWIRE
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select SOUNDWIRE_INTEL if SND_SOC_SOF_INTEL_SOUNDWIRE
+	select SND_INTEL_SOUNDWIRE_ACPI if SND_SOC_SOF_INTEL_SOUNDWIRE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config SND_SOC_SOF_INTEL_SOUNDWIRE
 	tristate "SOF support for SoundWire"
@@ -285,8 +301,14 @@ config SND_SOC_SOF_INTEL_SOUNDWIRE
 	depends on SND_SOC_SOF_INTEL_SOUNDWIRE_LINK_BASELINE
 	depends on ACPI && SOUNDWIRE
 	depends on !(SOUNDWIRE=m && SND_SOC_SOF_INTEL_SOUNDWIRE_LINK_BASELINE=y)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	select SOUNDWIRE_INTEL
 	select SND_INTEL_SOUNDWIRE_ACPI
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This adds support for SoundWire with Sound Open Firmware
 	  for Intel(R) platforms.

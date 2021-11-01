@@ -571,9 +571,15 @@ static enum mod_hdcp_status authenticated(struct mod_hdcp *hdcp,
 	}
 
 	process_rxstatus(hdcp, event_ctx, input, &status);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 	if (status != MOD_HDCP_STATUS_SUCCESS)
 		mod_hdcp_save_current_encryption_states(hdcp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	return status;
 }

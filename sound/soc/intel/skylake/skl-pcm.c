@@ -1214,6 +1214,9 @@ static snd_pcm_uframes_t skl_platform_soc_pointer(
 	return bytes_to_frames(substream->runtime, pos);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static int skl_platform_soc_mmap(struct snd_soc_component *component,
 				 struct snd_pcm_substream *substream,
 				 struct vm_area_struct *area)
@@ -1221,6 +1224,9 @@ static int skl_platform_soc_mmap(struct snd_soc_component *component,
 	return snd_pcm_lib_default_mmap(substream, area);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u64 skl_adjust_codec_delay(struct snd_pcm_substream *substream,
 				u64 nsec)
 {
@@ -1317,6 +1323,9 @@ static int skl_get_module_info(struct skl_dev *skl,
 		return -EIO;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	list_for_each_entry(module, &skl->uuid_list, list) {
 		if (guid_equal(uuid_mod, &module->uuid)) {
 			mconfig->id.module_id = module->id;
@@ -1332,6 +1341,9 @@ static int skl_get_module_info(struct skl_dev *skl,
 
 	uuid_mod = &module->uuid;
 	ret = -EIO;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < skl->nr_modules; i++) {
 		skl_module = skl->modules[i];
 		uuid_tplg = &skl_module->uuid;
@@ -1341,10 +1353,39 @@ static int skl_get_module_info(struct skl_dev *skl,
 			break;
 		}
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+
 	if (skl->nr_modules && ret)
 		return ret;
 
+	ret = -EIO;
 	list_for_each_entry(module, &skl->uuid_list, list) {
+		if (guid_equal(uuid_mod, &module->uuid)) {
+			mconfig->id.module_id = module->id;
+			mconfig->module->loadable = module->is_loadable;
+			ret = 0;
+		}
+
+=======
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (skl->nr_modules && ret)
+		return ret;
+
+	ret = -EIO;
+	list_for_each_entry(module, &skl->uuid_list, list) {
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (guid_equal(uuid_mod, &module->uuid)) {
+			mconfig->id.module_id = module->id;
+			mconfig->module->loadable = module->is_loadable;
+			ret = 0;
+		}
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (i = 0; i < MAX_IN_QUEUE; i++) {
 			pin_id = &mconfig->m_in_pin[i].id;
 			if (guid_equal(&pin_id->mod_uuid, &module->uuid))
@@ -1358,7 +1399,15 @@ static int skl_get_module_info(struct skl_dev *skl,
 		}
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return ret;
+=======
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int skl_populate_modules(struct skl_dev *skl)
@@ -1460,7 +1509,13 @@ static const struct snd_soc_component_driver skl_component  = {
 	.trigger	= skl_platform_soc_trigger,
 	.pointer	= skl_platform_soc_pointer,
 	.get_time_info	= skl_platform_soc_get_time_info,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.mmap		= skl_platform_soc_mmap,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.pcm_construct	= skl_platform_soc_new,
 	.module_get_upon_open = 1, /* increment refcount when a pcm is opened */
 };

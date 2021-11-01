@@ -1376,7 +1376,15 @@ static void nl_fib_input(struct sk_buff *skb)
 	portid = NETLINK_CB(skb).portid;      /* netlink portid */
 	NETLINK_CB(skb).portid = 0;        /* from kernel */
 	NETLINK_CB(skb).dst_group = 0;  /* unicast */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	nlmsg_unicast(net->ipv4.fibnl, skb, portid);
+=======
 	netlink_unicast(net->ipv4.fibnl, skb, portid, MSG_DONTWAIT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nlmsg_unicast(net->ipv4.fibnl, skb, portid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __net_init nl_fib_lookup_init(struct net *net)

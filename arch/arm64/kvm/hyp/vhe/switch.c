@@ -91,6 +91,12 @@ void activate_traps_vhe_load(struct kvm_vcpu *vcpu)
 	__activate_traps_common(vcpu);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void deactivate_traps_vhe_put(struct kvm_vcpu *vcpu)
+{
+	__deactivate_traps_common(vcpu);
+=======
 void deactivate_traps_vhe_put(void)
 {
 	u64 mdcr_el2 = read_sysreg(mdcr_el2);
@@ -102,6 +108,12 @@ void deactivate_traps_vhe_put(void)
 	write_sysreg(mdcr_el2, mdcr_el2);
 
 	__deactivate_traps_common();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void deactivate_traps_vhe_put(struct kvm_vcpu *vcpu)
+{
+	__deactivate_traps_common(vcpu);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Switch to the guest for VHE systems running in EL2 */
@@ -124,11 +136,27 @@ static int __kvm_vcpu_run_vhe(struct kvm_vcpu *vcpu)
 	 *
 	 * We have already configured the guest's stage 1 translation in
 	 * kvm_vcpu_load_sysregs_vhe above.  We must now call
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * __load_stage2 before __activate_traps, because
+	 * __load_stage2 configures stage 2 translation, and
+	 * __activate_traps clear HCR_EL2.TGE (among other things).
+	 */
+	__load_stage2(vcpu->arch.hw_mmu, vcpu->arch.hw_mmu->arch);
+=======
 	 * __load_guest_stage2 before __activate_traps, because
 	 * __load_guest_stage2 configures stage 2 translation, and
 	 * __activate_traps clear HCR_EL2.TGE (among other things).
 	 */
 	__load_guest_stage2(vcpu->arch.hw_mmu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * __load_stage2 before __activate_traps, because
+	 * __load_stage2 configures stage 2 translation, and
+	 * __activate_traps clear HCR_EL2.TGE (among other things).
+	 */
+	__load_stage2(vcpu->arch.hw_mmu, vcpu->arch.hw_mmu->arch);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__activate_traps(vcpu);
 
 	__kvm_adjust_pc(vcpu);

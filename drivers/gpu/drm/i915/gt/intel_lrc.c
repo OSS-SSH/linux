@@ -70,7 +70,15 @@ static void set_offsets(u32 *regs,
 	if (close) {
 		/* Close the batch; used mainly by live_lrc_layout() */
 		*regs = MI_BATCH_BUFFER_END;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (GRAPHICS_VER(engine->i915) >= 11)
+=======
 		if (GRAPHICS_VER(engine->i915) >= 10)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (GRAPHICS_VER(engine->i915) >= 11)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			*regs |= BIT(0);
 	}
 }
@@ -484,6 +492,56 @@ static const u8 gen12_rcs_offsets[] = {
 	END
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static const u8 xehp_rcs_offsets[] = {
+	NOP(1),
+	LRI(13, POSTED),
+	REG16(0x244),
+	REG(0x034),
+	REG(0x030),
+	REG(0x038),
+	REG(0x03c),
+	REG(0x168),
+	REG(0x140),
+	REG(0x110),
+	REG(0x1c0),
+	REG(0x1c4),
+	REG(0x1c8),
+	REG(0x180),
+	REG16(0x2b4),
+
+	NOP(5),
+	LRI(9, POSTED),
+	REG16(0x3a8),
+	REG16(0x28c),
+	REG16(0x288),
+	REG16(0x284),
+	REG16(0x280),
+	REG16(0x27c),
+	REG16(0x278),
+	REG16(0x274),
+	REG16(0x270),
+
+	LRI(3, POSTED),
+	REG(0x1b0),
+	REG16(0x5a8),
+	REG16(0x5ac),
+
+	NOP(6),
+	LRI(1, 0),
+	REG(0x0c8),
+
+	END
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #undef END
 #undef REG16
 #undef REG
@@ -502,7 +560,19 @@ static const u8 *reg_offsets(const struct intel_engine_cs *engine)
 		   !intel_engine_has_relative_mmio(engine));
 
 	if (engine->class == RENDER_CLASS) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
+			return xehp_rcs_offsets;
+		else if (GRAPHICS_VER(engine->i915) >= 12)
+=======
 		if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
+			return xehp_rcs_offsets;
+		else if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return gen12_rcs_offsets;
 		else if (GRAPHICS_VER(engine->i915) >= 11)
 			return gen11_rcs_offsets;
@@ -522,7 +592,19 @@ static const u8 *reg_offsets(const struct intel_engine_cs *engine)
 
 static int lrc_ring_mi_mode(const struct intel_engine_cs *engine)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
+		return 0x70;
+	else if (GRAPHICS_VER(engine->i915) >= 12)
+=======
 	if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
+		return 0x70;
+	else if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0x60;
 	else if (GRAPHICS_VER(engine->i915) >= 9)
 		return 0x54;
@@ -534,7 +616,19 @@ static int lrc_ring_mi_mode(const struct intel_engine_cs *engine)
 
 static int lrc_ring_gpr0(const struct intel_engine_cs *engine)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
+		return 0x84;
+	else if (GRAPHICS_VER(engine->i915) >= 12)
+=======
 	if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
+		return 0x84;
+	else if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0x74;
 	else if (GRAPHICS_VER(engine->i915) >= 9)
 		return 0x68;
@@ -578,10 +672,36 @@ static int lrc_ring_indirect_offset(const struct intel_engine_cs *engine)
 
 static int lrc_ring_cmd_buf_cctl(const struct intel_engine_cs *engine)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
+		/*
+		 * Note that the CSFE context has a dummy slot for CMD_BUF_CCTL
+		 * simply to match the RCS context image layout.
+		 */
+		return 0xc6;
+	else if (engine->class != RENDER_CLASS)
+		return -1;
+	else if (GRAPHICS_VER(engine->i915) >= 12)
+=======
 	if (engine->class != RENDER_CLASS)
 		return -1;
 
 	if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
+		/*
+		 * Note that the CSFE context has a dummy slot for CMD_BUF_CCTL
+		 * simply to match the RCS context image layout.
+		 */
+		return 0xc6;
+	else if (engine->class != RENDER_CLASS)
+		return -1;
+	else if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0xb6;
 	else if (GRAPHICS_VER(engine->i915) >= 11)
 		return 0xaa;
@@ -600,8 +720,14 @@ lrc_ring_indirect_offset_default(const struct intel_engine_cs *engine)
 		return GEN12_CTX_RCS_INDIRECT_CTX_OFFSET_DEFAULT;
 	case 11:
 		return GEN11_CTX_RCS_INDIRECT_CTX_OFFSET_DEFAULT;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	case 10:
 		return GEN10_CTX_RCS_INDIRECT_CTX_OFFSET_DEFAULT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 9:
 		return GEN9_CTX_RCS_INDIRECT_CTX_OFFSET_DEFAULT;
 	case 8:
@@ -845,7 +971,15 @@ int lrc_alloc(struct intel_context *ce, struct intel_engine_cs *engine)
 	if (IS_ERR(vma))
 		return PTR_ERR(vma);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ring = intel_engine_create_ring(engine, ce->ring_size);
+=======
 	ring = intel_engine_create_ring(engine, (unsigned long)ce->ring);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ring = intel_engine_create_ring(engine, ce->ring_size);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(ring)) {
 		err = PTR_ERR(ring);
 		goto err_vma;
@@ -1101,6 +1235,23 @@ setup_indirect_ctx_bb(const struct intel_context *ce,
  *      bits 55-60:    SW counter
  *      bits 61-63:    engine class
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * On Xe_HP, the upper dword of the descriptor has a new format:
+ *
+ *      bits 32-37:    virtual function number
+ *      bit 38:        mbz, reserved for use by hardware
+ *      bits 39-54:    SW context ID
+ *      bits 55-57:    reserved
+ *      bits 58-63:    SW counter
+ *
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * engine info, SW context ID and SW counter need to form a unique number
  * (Context ID) per lrc.
  */
@@ -1387,6 +1538,9 @@ static u32 *gen9_init_indirectctx_bb(struct intel_engine_cs *engine, u32 *batch)
 	return batch;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static u32 *
 gen10_init_indirectctx_bb(struct intel_engine_cs *engine, u32 *batch)
 {
@@ -1421,6 +1575,9 @@ gen10_init_indirectctx_bb(struct intel_engine_cs *engine, u32 *batch)
 	return batch;
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CTX_WA_BB_SIZE (PAGE_SIZE)
 
 static int lrc_create_wa_ctx(struct intel_engine_cs *engine)
@@ -1473,10 +1630,16 @@ void lrc_init_wa_ctx(struct intel_engine_cs *engine)
 	case 12:
 	case 11:
 		return;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	case 10:
 		wa_bb_fn[0] = gen10_init_indirectctx_bb;
 		wa_bb_fn[1] = NULL;
 		break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case 9:
 		wa_bb_fn[0] = gen9_init_indirectctx_bb;
 		wa_bb_fn[1] = NULL;

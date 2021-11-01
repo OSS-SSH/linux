@@ -248,13 +248,31 @@ static int hibvt_pwm_remove(struct platform_device *pdev)
 
 	pwm_chip = platform_get_drvdata(pdev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pwmchip_remove(&pwm_chip->chip);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pwmchip_remove(&pwm_chip->chip);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	reset_control_assert(pwm_chip->rstc);
 	msleep(30);
 	reset_control_deassert(pwm_chip->rstc);
 
 	clk_disable_unprepare(pwm_chip->clk);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return 0;
+=======
 	return pwmchip_remove(&pwm_chip->chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct of_device_id hibvt_pwm_of_match[] = {

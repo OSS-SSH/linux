@@ -10,13 +10,35 @@
 
 #define DRIVER_NAME "smo8800"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/fs.h>
+#include <linux/interrupt.h>
+#include <linux/kernel.h>
+#include <linux/miscdevice.h>
+#include <linux/mod_devicetable.h>
+#include <linux/module.h>
+#include <linux/platform_device.h>
+#include <linux/uaccess.h>
+=======
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/acpi.h>
-#include <linux/interrupt.h>
-#include <linux/miscdevice.h>
-#include <linux/uaccess.h>
+=======
 #include <linux/fs.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#include <linux/interrupt.h>
+#include <linux/kernel.h>
+#include <linux/miscdevice.h>
+#include <linux/mod_devicetable.h>
+#include <linux/module.h>
+#include <linux/platform_device.h>
+#include <linux/uaccess.h>
+<<<<<<< HEAD
+#include <linux/fs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct smo8800_device {
 	u32 irq;                     /* acpi device irq */
@@ -44,6 +66,9 @@ static irqreturn_t smo8800_interrupt_thread(int irq, void *data)
 	return IRQ_HANDLED;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static acpi_status smo8800_get_resource(struct acpi_resource *resource,
 					void *context)
 {
@@ -75,6 +100,9 @@ static u32 smo8800_get_irq(struct acpi_device *device)
 	return irq;
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static ssize_t smo8800_misc_read(struct file *file, char __user *buf,
 				 size_t count, loff_t *pos)
 {
@@ -136,7 +164,15 @@ static const struct file_operations smo8800_misc_fops = {
 	.release = smo8800_misc_release,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int smo8800_probe(struct platform_device *device)
+=======
 static int smo8800_add(struct acpi_device *device)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int smo8800_probe(struct platform_device *device)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int err;
 	struct smo8800_device *smo8800;
@@ -160,14 +196,29 @@ static int smo8800_add(struct acpi_device *device)
 		return err;
 	}
 
-	device->driver_data = smo8800;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	platform_set_drvdata(device, smo8800);
 
-	smo8800->irq = smo8800_get_irq(device);
-	if (!smo8800->irq) {
-		dev_err(&device->dev, "failed to obtain IRQ\n");
-		err = -EINVAL;
+	err = platform_get_irq(device, 0);
+	if (err < 0)
 		goto error;
+	smo8800->irq = err;
+=======
+	device->driver_data = smo8800;
+=======
+	platform_set_drvdata(device, smo8800);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	err = platform_get_irq(device, 0);
+	if (err < 0)
+		goto error;
+<<<<<<< HEAD
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	smo8800->irq = err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = request_threaded_irq(smo8800->irq, smo8800_interrupt_quick,
 				   smo8800_interrupt_thread,
@@ -189,9 +240,21 @@ error:
 	return err;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int smo8800_remove(struct platform_device *device)
+{
+	struct smo8800_device *smo8800 = platform_get_drvdata(device);
+=======
 static int smo8800_remove(struct acpi_device *device)
 {
 	struct smo8800_device *smo8800 = device->driver_data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int smo8800_remove(struct platform_device *device)
+{
+	struct smo8800_device *smo8800 = platform_get_drvdata(device);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	free_irq(smo8800->irq, smo8800);
 	misc_deregister(&smo8800->miscdev);
@@ -211,21 +274,40 @@ static const struct acpi_device_id smo8800_ids[] = {
 	{ "SMO8831", 0 },
 	{ "", 0 },
 };
-
+<<<<<<< HEAD
+<<<<<<< HEAD
 MODULE_DEVICE_TABLE(acpi, smo8800_ids);
 
-static struct acpi_driver smo8800_driver = {
-	.name = DRIVER_NAME,
-	.class = "Latitude",
-	.ids = smo8800_ids,
-	.ops = {
-		.add = smo8800_add,
-		.remove = smo8800_remove,
+static struct platform_driver smo8800_driver = {
+	.probe = smo8800_probe,
+	.remove = smo8800_remove,
+	.driver = {
+		.name = DRIVER_NAME,
+		.acpi_match_table = smo8800_ids,
 	},
-	.owner = THIS_MODULE,
 };
+module_platform_driver(smo8800_driver);
+=======
+
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+MODULE_DEVICE_TABLE(acpi, smo8800_ids);
+
+static struct platform_driver smo8800_driver = {
+	.probe = smo8800_probe,
+	.remove = smo8800_remove,
+	.driver = {
+		.name = DRIVER_NAME,
+		.acpi_match_table = smo8800_ids,
+	},
+};
+<<<<<<< HEAD
 
 module_acpi_driver(smo8800_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_platform_driver(smo8800_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 MODULE_DESCRIPTION("Dell Latitude freefall driver (ACPI SMO88XX)");
 MODULE_LICENSE("GPL");

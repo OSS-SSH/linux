@@ -311,8 +311,14 @@
 			compatible = "atmel,at93c46d";
 			pinctrl-0 = <&pinctrl_gpio_e6185_eeprom_sel>;
 			pinctrl-names = "default";
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			#address-cells = <0>;
 			#size-cells = <0>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <1>;
 			spi-max-frequency = <500000>;
 			spi-cs-high;

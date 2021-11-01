@@ -281,9 +281,22 @@ int register_lte_tty_driver(void)
 	int ret;
 
 	for (i = 0; i < TTY_MAX_COUNT; i++) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		tty_driver = tty_alloc_driver(GDM_TTY_MINOR,
+				TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV);
+		if (IS_ERR(tty_driver))
+			return PTR_ERR(tty_driver);
+<<<<<<< HEAD
+=======
 		tty_driver = alloc_tty_driver(GDM_TTY_MINOR);
 		if (!tty_driver)
 			return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		tty_driver->owner = THIS_MODULE;
 		tty_driver->driver_name = DRIVER_STRING[i];
@@ -291,8 +304,14 @@ int register_lte_tty_driver(void)
 		tty_driver->major = GDM_TTY_MAJOR;
 		tty_driver->type = TTY_DRIVER_TYPE_SERIAL;
 		tty_driver->subtype = SERIAL_TYPE_NORMAL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		tty_driver->flags = TTY_DRIVER_REAL_RAW |
 					TTY_DRIVER_DYNAMIC_DEV;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tty_driver->init_termios = tty_std_termios;
 		tty_driver->init_termios.c_cflag = B9600 | CS8 | HUPCL | CLOCAL;
 		tty_driver->init_termios.c_lflag = ISIG | ICANON | IEXTEN;
@@ -300,7 +319,15 @@ int register_lte_tty_driver(void)
 
 		ret = tty_register_driver(tty_driver);
 		if (ret) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			tty_driver_kref_put(tty_driver);
+=======
 			put_tty_driver(tty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			tty_driver_kref_put(tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return ret;
 		}
 
@@ -319,7 +346,15 @@ void unregister_lte_tty_driver(void)
 		tty_driver = gdm_driver[i];
 		if (tty_driver) {
 			tty_unregister_driver(tty_driver);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			tty_driver_kref_put(tty_driver);
+=======
 			put_tty_driver(tty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			tty_driver_kref_put(tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }

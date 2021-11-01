@@ -1852,6 +1852,14 @@ static void binder_deferred_fd_close(int fd)
 }
 
 static void binder_transaction_buffer_release(struct binder_proc *proc,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					      struct binder_thread *thread,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					      struct binder_thread *thread,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					      struct binder_buffer *buffer,
 					      binder_size_t failed_at,
 					      bool is_failure)
@@ -2011,8 +2019,34 @@ static void binder_transaction_buffer_release(struct binder_proc *proc,
 						&proc->alloc, &fd, buffer,
 						offset, sizeof(fd));
 				WARN_ON(err);
+<<<<<<< HEAD
+<<<<<<< HEAD
+				if (!err) {
+					binder_deferred_fd_close(fd);
+					/*
+					 * Need to make sure the thread goes
+					 * back to userspace to complete the
+					 * deferred close
+					 */
+					if (thread)
+						thread->looper_need_return = true;
+				}
+=======
 				if (!err)
 					binder_deferred_fd_close(fd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				if (!err) {
+					binder_deferred_fd_close(fd);
+					/*
+					 * Need to make sure the thread goes
+					 * back to userspace to complete the
+					 * deferred close
+					 */
+					if (thread)
+						thread->looper_need_return = true;
+				}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		} break;
 		default:
@@ -2547,8 +2581,18 @@ static void binder_transaction(struct binder_proc *proc,
 						ref->node, &target_proc,
 						&return_error);
 			} else {
+<<<<<<< HEAD
+<<<<<<< HEAD
+				binder_user_error("%d:%d got transaction to invalid handle, %u\n",
+						  proc->pid, thread->pid, tr->target.handle);
+=======
 				binder_user_error("%d:%d got transaction to invalid handle\n",
 						  proc->pid, thread->pid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				binder_user_error("%d:%d got transaction to invalid handle, %u\n",
+						  proc->pid, thread->pid, tr->target.handle);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return_error = BR_FAILED_REPLY;
 			}
 			binder_proc_unlock(proc);
@@ -3038,9 +3082,19 @@ static void binder_transaction(struct binder_proc *proc,
 	if (reply) {
 		binder_enqueue_thread_work(thread, tcomplete);
 		binder_inner_proc_lock(target_proc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (target_thread->is_dead) {
+			return_error = BR_DEAD_REPLY;
+=======
 		if (target_thread->is_dead || target_proc->is_frozen) {
 			return_error = target_thread->is_dead ?
 				BR_DEAD_REPLY : BR_FROZEN_REPLY;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (target_thread->is_dead) {
+			return_error = BR_DEAD_REPLY;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			binder_inner_proc_unlock(target_proc);
 			goto err_dead_proc_or_thread;
 		}
@@ -3105,7 +3159,15 @@ err_bad_parent:
 err_copy_data_failed:
 	binder_free_txn_fixups(t);
 	trace_binder_transaction_failed_buffer_release(t->buffer);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	binder_transaction_buffer_release(target_proc, NULL, t->buffer,
+=======
 	binder_transaction_buffer_release(target_proc, t->buffer,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	binder_transaction_buffer_release(target_proc, NULL, t->buffer,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					  buffer_offset, true);
 	if (target_node)
 		binder_dec_node_tmpref(target_node);
@@ -3184,7 +3246,19 @@ err_invalid_target_handle:
  * Cleanup buffer and free it.
  */
 static void
+<<<<<<< HEAD
+<<<<<<< HEAD
+binder_free_buf(struct binder_proc *proc,
+		struct binder_thread *thread,
+		struct binder_buffer *buffer)
+=======
 binder_free_buf(struct binder_proc *proc, struct binder_buffer *buffer)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+binder_free_buf(struct binder_proc *proc,
+		struct binder_thread *thread,
+		struct binder_buffer *buffer)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	binder_inner_proc_lock(proc);
 	if (buffer->transaction) {
@@ -3212,7 +3286,15 @@ binder_free_buf(struct binder_proc *proc, struct binder_buffer *buffer)
 		binder_node_inner_unlock(buf_node);
 	}
 	trace_binder_transaction_buffer_release(buffer);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	binder_transaction_buffer_release(proc, thread, buffer, 0, false);
+=======
 	binder_transaction_buffer_release(proc, buffer, 0, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	binder_transaction_buffer_release(proc, thread, buffer, 0, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	binder_alloc_free_buf(&proc->alloc, buffer);
 }
 
@@ -3414,7 +3496,15 @@ static int binder_thread_write(struct binder_proc *proc,
 				     proc->pid, thread->pid, (u64)data_ptr,
 				     buffer->debug_id,
 				     buffer->transaction ? "active" : "finished");
+<<<<<<< HEAD
+<<<<<<< HEAD
+			binder_free_buf(proc, thread, buffer);
+=======
 			binder_free_buf(proc, buffer);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			binder_free_buf(proc, thread, buffer);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 
@@ -4107,7 +4197,15 @@ retry:
 			buffer->transaction = NULL;
 			binder_cleanup_transaction(t, "fd fixups failed",
 						   BR_FAILED_REPLY);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			binder_free_buf(proc, thread, buffer);
+=======
 			binder_free_buf(proc, buffer);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			binder_free_buf(proc, thread, buffer);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			binder_debug(BINDER_DEBUG_FAILED_TRANSACTION,
 				     "%d:%d %stransaction %d fd fixups failed %d/%d, line %d\n",
 				     proc->pid, thread->pid,
@@ -4648,6 +4746,31 @@ static int binder_ioctl_get_node_debug_info(struct binder_proc *proc,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static bool binder_txns_pending_ilocked(struct binder_proc *proc)
+{
+	struct rb_node *n;
+	struct binder_thread *thread;
+
+	if (proc->outstanding_txns > 0)
+		return true;
+
+	for (n = rb_first(&proc->threads); n; n = rb_next(n)) {
+		thread = rb_entry(n, struct binder_thread, rb_node);
+		if (thread->transaction_stack)
+			return true;
+	}
+	return false;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int binder_ioctl_freeze(struct binder_freeze_info *info,
 			       struct binder_proc *target_proc)
 {
@@ -4679,8 +4802,24 @@ static int binder_ioctl_freeze(struct binder_freeze_info *info,
 			(!target_proc->outstanding_txns),
 			msecs_to_jiffies(info->timeout_ms));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/* Check pending transactions that wait for reply */
+	if (ret >= 0) {
+		binder_inner_proc_lock(target_proc);
+		if (binder_txns_pending_ilocked(target_proc))
+			ret = -EAGAIN;
+		binder_inner_proc_unlock(target_proc);
+	}
+<<<<<<< HEAD
+=======
 	if (!ret && target_proc->outstanding_txns)
 		ret = -EAGAIN;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ret < 0) {
 		binder_inner_proc_lock(target_proc);
@@ -4696,6 +4835,14 @@ static int binder_ioctl_get_freezer_info(
 {
 	struct binder_proc *target_proc;
 	bool found = false;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	__u32 txns_pending;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	__u32 txns_pending;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	info->sync_recv = 0;
 	info->async_recv = 0;
@@ -4705,7 +4852,19 @@ static int binder_ioctl_get_freezer_info(
 		if (target_proc->pid == info->pid) {
 			found = true;
 			binder_inner_proc_lock(target_proc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			txns_pending = binder_txns_pending_ilocked(target_proc);
+			info->sync_recv |= target_proc->sync_recv |
+					(txns_pending << 1);
+=======
 			info->sync_recv |= target_proc->sync_recv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			txns_pending = binder_txns_pending_ilocked(target_proc);
+			info->sync_recv |= target_proc->sync_recv |
+					(txns_pending << 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			info->async_recv |= target_proc->async_recv;
 			binder_inner_proc_unlock(target_proc);
 		}

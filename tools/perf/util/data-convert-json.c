@@ -334,7 +334,15 @@ int bt_convert__perf2json(const char *input_name, const char *output_name,
 		goto err;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	session = perf_session__new(&data, &c.tool);
+=======
 	session = perf_session__new(&data, false, &c.tool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	session = perf_session__new(&data, &c.tool);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(session)) {
 		fprintf(stderr, "Error creating perf session!\n");
 		goto err_fclose;

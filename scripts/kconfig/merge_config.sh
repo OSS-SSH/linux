@@ -28,6 +28,14 @@ usage() {
 	echo "  -r    list redundant entries when merging fragments"
 	echo "  -y    make builtin have precedence over modules"
 	echo "  -O    dir to put generated output files.  Consider setting \$KCONFIG_CONFIG instead."
+<<<<<<< HEAD
+<<<<<<< HEAD
+	echo "  -s    strict mode. Fail if the fragment redefines any value."
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	echo "  -s    strict mode. Fail if the fragment redefines any value."
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	echo
 	echo "Used prefix: '$CONFIG_PREFIX'. You can redefine it with \$CONFIG_ environment variable."
 }
@@ -37,6 +45,14 @@ ALLTARGET=alldefconfig
 WARNREDUN=false
 BUILTIN=false
 OUTPUT=.
+<<<<<<< HEAD
+<<<<<<< HEAD
+STRICT=false
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+STRICT=false
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 CONFIG_PREFIX=${CONFIG_-CONFIG_}
 
 while true; do
@@ -75,6 +91,20 @@ while true; do
 		shift 2
 		continue
 		;;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	"-s")
+		STRICT=true
+		shift
+		continue
+		;;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	*)
 		break
 		;;
@@ -141,6 +171,18 @@ for ORIG_MERGE_FILE in $MERGE_LIST ; do
 			echo Previous  value: $PREV_VAL
 			echo New value:       $NEW_VAL
 			echo
+<<<<<<< HEAD
+<<<<<<< HEAD
+			if [ "$STRICT" = "true" ]; then
+				STRICT_MODE_VIOLATED=true
+			fi
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if [ "$STRICT" = "true" ]; then
+				STRICT_MODE_VIOLATED=true
+			fi
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		elif [ "$WARNREDUN" = "true" ]; then
 			echo Value of $CFG is redundant by fragment $ORIG_MERGE_FILE:
 		fi
@@ -153,6 +195,20 @@ for ORIG_MERGE_FILE in $MERGE_LIST ; do
 	cat $MERGE_FILE >> $TMP_FILE
 done
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+if [ "$STRICT_MODE_VIOLATED" = "true" ]; then
+	echo "The fragment redefined a value and strict mode had been passed."
+	exit 1
+fi
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 if [ "$RUNMAKE" = "false" ]; then
 	cp -T -- "$TMP_FILE" "$KCONFIG_CONFIG"
 	echo "#"

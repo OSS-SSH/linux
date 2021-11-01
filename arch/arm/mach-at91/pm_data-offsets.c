@@ -8,6 +8,16 @@ int main(void)
 	DEFINE(PM_DATA_PMC,		offsetof(struct at91_pm_data, pmc));
 	DEFINE(PM_DATA_RAMC0,		offsetof(struct at91_pm_data, ramc[0]));
 	DEFINE(PM_DATA_RAMC1,		offsetof(struct at91_pm_data, ramc[1]));
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DEFINE(PM_DATA_RAMC_PHY,	offsetof(struct at91_pm_data,
+						 ramc_phy));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DEFINE(PM_DATA_RAMC_PHY,	offsetof(struct at91_pm_data,
+						 ramc_phy));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DEFINE(PM_DATA_MEMCTRL,	offsetof(struct at91_pm_data, memctrl));
 	DEFINE(PM_DATA_MODE,		offsetof(struct at91_pm_data, mode));
 	DEFINE(PM_DATA_SHDWC,		offsetof(struct at91_pm_data, shdwc));

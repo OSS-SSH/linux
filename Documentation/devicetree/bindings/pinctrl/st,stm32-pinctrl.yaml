@@ -24,6 +24,14 @@ properties:
       - st,stm32f746-pinctrl
       - st,stm32f769-pinctrl
       - st,stm32h743-pinctrl
+<<<<<<< HEAD
+<<<<<<< HEAD
+      - st,stm32mp135-pinctrl
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      - st,stm32mp135-pinctrl
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       - st,stm32mp157-pinctrl
       - st,stm32mp157-z-pinctrl
 

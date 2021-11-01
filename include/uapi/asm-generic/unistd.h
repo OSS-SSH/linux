@@ -673,15 +673,35 @@ __SYSCALL(__NR_madvise, sys_madvise)
 #define __NR_remap_file_pages 234
 __SYSCALL(__NR_remap_file_pages, sys_remap_file_pages)
 #define __NR_mbind 235
-__SC_COMP(__NR_mbind, sys_mbind, compat_sys_mbind)
+<<<<<<< HEAD
+<<<<<<< HEAD
+__SYSCALL(__NR_mbind, sys_mbind)
 #define __NR_get_mempolicy 236
-__SC_COMP(__NR_get_mempolicy, sys_get_mempolicy, compat_sys_get_mempolicy)
+__SYSCALL(__NR_get_mempolicy, sys_get_mempolicy)
 #define __NR_set_mempolicy 237
-__SC_COMP(__NR_set_mempolicy, sys_set_mempolicy, compat_sys_set_mempolicy)
+__SYSCALL(__NR_set_mempolicy, sys_set_mempolicy)
 #define __NR_migrate_pages 238
-__SC_COMP(__NR_migrate_pages, sys_migrate_pages, compat_sys_migrate_pages)
+__SYSCALL(__NR_migrate_pages, sys_migrate_pages)
 #define __NR_move_pages 239
+__SYSCALL(__NR_move_pages, sys_move_pages)
+=======
+__SC_COMP(__NR_mbind, sys_mbind, compat_sys_mbind)
+=======
+__SYSCALL(__NR_mbind, sys_mbind)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define __NR_get_mempolicy 236
+__SYSCALL(__NR_get_mempolicy, sys_get_mempolicy)
+#define __NR_set_mempolicy 237
+__SYSCALL(__NR_set_mempolicy, sys_set_mempolicy)
+#define __NR_migrate_pages 238
+__SYSCALL(__NR_migrate_pages, sys_migrate_pages)
+#define __NR_move_pages 239
+<<<<<<< HEAD
 __SC_COMP(__NR_move_pages, sys_move_pages, compat_sys_move_pages)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+__SYSCALL(__NR_move_pages, sys_move_pages)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #define __NR_rt_tgsigqueueinfo 240
@@ -877,9 +897,25 @@ __SYSCALL(__NR_landlock_restrict_self, sys_landlock_restrict_self)
 #define __NR_memfd_secret 447
 __SYSCALL(__NR_memfd_secret, sys_memfd_secret)
 #endif
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define __NR_process_mrelease 448
+__SYSCALL(__NR_process_mrelease, sys_process_mrelease)
+
+#undef __NR_syscalls
+#define __NR_syscalls 449
+=======
 
 #undef __NR_syscalls
 #define __NR_syscalls 448
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define __NR_process_mrelease 448
+__SYSCALL(__NR_process_mrelease, sys_process_mrelease)
+
+#undef __NR_syscalls
+#define __NR_syscalls 449
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * 32 bit systems traditionally used different

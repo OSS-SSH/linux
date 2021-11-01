@@ -4,19 +4,37 @@ config CIFS
 	depends on INET
 	select NLS
 	select CRYPTO
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	select CRYPTO_MD4
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select CRYPTO_MD5
 	select CRYPTO_SHA256
 	select CRYPTO_SHA512
 	select CRYPTO_CMAC
 	select CRYPTO_HMAC
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	select CRYPTO_LIB_ARC4
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select CRYPTO_AEAD2
 	select CRYPTO_CCM
 	select CRYPTO_GCM
 	select CRYPTO_ECB
 	select CRYPTO_AES
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	select CRYPTO_LIB_DES
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select KEYS
 	select DNS_RESOLVER
 	select ASN1
@@ -85,6 +103,9 @@ config CIFS_ALLOW_INSECURE_LEGACY
 
 	  If unsure, say Y.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config CIFS_WEAK_PW_HASH
 	bool "Support legacy servers which use weaker LANMAN security"
 	depends on CIFS && CIFS_ALLOW_INSECURE_LEGACY
@@ -112,6 +133,9 @@ config CIFS_WEAK_PW_HASH
 
 	  If unsure, say N.
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config CIFS_UPCALL
 	bool "Kerberos/SPNEGO advanced session setup"
 	depends on CIFS

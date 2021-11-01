@@ -10,7 +10,15 @@ config MLX5_CORE
 	select NET_DEVLINK
 	depends on VXLAN || !VXLAN
 	depends on MLXFW || !MLXFW
+<<<<<<< HEAD
+<<<<<<< HEAD
+	depends on PTP_1588_CLOCK_OPTIONAL
+=======
 	depends on PTP_1588_CLOCK || !PTP_1588_CLOCK
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PTP_1588_CLOCK_OPTIONAL
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on PCI_HYPERV_INTERFACE || !PCI_HYPERV_INTERFACE
 	help
 	  Core driver for low level functionality of the ConnectX-4 and

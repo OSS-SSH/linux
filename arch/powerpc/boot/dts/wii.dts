@@ -216,7 +216,28 @@
 
 		control@d800100 {
 			compatible = "nintendo,hollywood-control";
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			/*
+			 * Both the address and length are wrong, according to
+			 * Wiibrew this should be <0x0d800000 0x400>, but it
+			 * requires refactoring the PIC1, GPIO and OTP nodes
+			 * before changing that.
+			 */
+			reg = <0x0d800100 0xa0>;
+		};
+
+		otp@d8001ec {
+			compatible = "nintendo,hollywood-otp";
+			reg = <0x0d8001ec 0x8>;
+<<<<<<< HEAD
+=======
 			reg = <0x0d800100 0x300>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 
 		disk@d806000 {

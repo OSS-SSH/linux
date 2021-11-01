@@ -89,7 +89,17 @@ static const struct pci_device_id ath5k_led_devices[] = {
 
 void ath5k_led_enable(struct ath5k_hw *ah)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_ENABLED(CONFIG_MAC80211_LEDS) &&
+	    test_bit(ATH_STAT_LEDSOFT, ah->status)) {
+=======
 	if (test_bit(ATH_STAT_LEDSOFT, ah->status)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ENABLED(CONFIG_MAC80211_LEDS) &&
+	    test_bit(ATH_STAT_LEDSOFT, ah->status)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ath5k_hw_set_gpio_output(ah, ah->led_pin);
 		ath5k_led_off(ah);
 	}
@@ -104,7 +114,17 @@ static void ath5k_led_on(struct ath5k_hw *ah)
 
 void ath5k_led_off(struct ath5k_hw *ah)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!IS_ENABLED(CONFIG_MAC80211_LEDS) ||
+	    !test_bit(ATH_STAT_LEDSOFT, ah->status))
+=======
 	if (!test_bit(ATH_STAT_LEDSOFT, ah->status))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!IS_ENABLED(CONFIG_MAC80211_LEDS) ||
+	    !test_bit(ATH_STAT_LEDSOFT, ah->status))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	ath5k_hw_set_gpio(ah, ah->led_pin, !ah->led_on);
 }
@@ -146,7 +166,15 @@ ath5k_register_led(struct ath5k_hw *ah, struct ath5k_led *led,
 static void
 ath5k_unregister_led(struct ath5k_led *led)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!IS_ENABLED(CONFIG_MAC80211_LEDS) || !led->ah)
+=======
 	if (!led->ah)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!IS_ENABLED(CONFIG_MAC80211_LEDS) || !led->ah)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	led_classdev_unregister(&led->led_dev);
 	ath5k_led_off(led->ah);
@@ -169,7 +197,15 @@ int ath5k_init_leds(struct ath5k_hw *ah)
 	char name[ATH5K_LED_MAX_NAME_LEN + 1];
 	const struct pci_device_id *match;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!IS_ENABLED(CONFIG_MAC80211_LEDS) || !ah->pdev)
+=======
 	if (!ah->pdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!IS_ENABLED(CONFIG_MAC80211_LEDS) || !ah->pdev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 #ifdef CONFIG_ATH5K_AHB

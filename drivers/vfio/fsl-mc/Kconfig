@@ -1,6 +1,16 @@
 config VFIO_FSL_MC
 	tristate "VFIO support for QorIQ DPAA2 fsl-mc bus devices"
+<<<<<<< HEAD
+<<<<<<< HEAD
+	depends on FSL_MC_BUS
+	select EVENTFD
+=======
 	depends on VFIO && FSL_MC_BUS && EVENTFD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on FSL_MC_BUS
+	select EVENTFD
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Driver to enable support for the VFIO QorIQ DPAA2 fsl-mc
 	  (Management Complex) devices. This is required to passthrough

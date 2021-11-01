@@ -1269,10 +1269,26 @@ static int __init capinc_tty_init(void)
 	if (!capiminors)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	drv = tty_alloc_driver(capi_ttyminors, TTY_DRIVER_REAL_RAW |
+			TTY_DRIVER_RESET_TERMIOS | TTY_DRIVER_DYNAMIC_DEV);
+	if (IS_ERR(drv)) {
+		kfree(capiminors);
+		return PTR_ERR(drv);
+=======
 	drv = alloc_tty_driver(capi_ttyminors);
 	if (!drv) {
 		kfree(capiminors);
 		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	drv = tty_alloc_driver(capi_ttyminors, TTY_DRIVER_REAL_RAW |
+			TTY_DRIVER_RESET_TERMIOS | TTY_DRIVER_DYNAMIC_DEV);
+	if (IS_ERR(drv)) {
+		kfree(capiminors);
+		return PTR_ERR(drv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	drv->driver_name = "capi_nc";
 	drv->name = "capi!";
@@ -1285,14 +1301,28 @@ static int __init capinc_tty_init(void)
 	drv->init_termios.c_oflag = OPOST | ONLCR;
 	drv->init_termios.c_cflag = B9600 | CS8 | CREAD | HUPCL | CLOCAL;
 	drv->init_termios.c_lflag = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	drv->flags =
 		TTY_DRIVER_REAL_RAW | TTY_DRIVER_RESET_TERMIOS |
 		TTY_DRIVER_DYNAMIC_DEV;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tty_set_operations(drv, &capinc_ops);
 
 	err = tty_register_driver(drv);
 	if (err) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		tty_driver_kref_put(drv);
+=======
 		put_tty_driver(drv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		tty_driver_kref_put(drv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(capiminors);
 		printk(KERN_ERR "Couldn't register capi_nc driver\n");
 		return err;
@@ -1304,7 +1334,15 @@ static int __init capinc_tty_init(void)
 static void __exit capinc_tty_exit(void)
 {
 	tty_unregister_driver(capinc_tty_driver);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	tty_driver_kref_put(capinc_tty_driver);
+=======
 	put_tty_driver(capinc_tty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(capinc_tty_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(capiminors);
 }
 

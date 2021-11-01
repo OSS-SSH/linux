@@ -17,7 +17,15 @@
 #define PPC_LONG	stringify_in_c(.8byte)
 #define PPC_LONG_ALIGN	stringify_in_c(.balign 8)
 #define PPC_TLNEI	stringify_in_c(tdnei)
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define PPC_LLARX	stringify_in_c(ldarx)
+=======
 #define PPC_LLARX(t, a, b, eh)	PPC_LDARX(t, a, b, eh)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PPC_LLARX	stringify_in_c(ldarx)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PPC_STLCX	stringify_in_c(stdcx.)
 #define PPC_CNTLZL	stringify_in_c(cntlzd)
 #define PPC_MTOCRF(FXM, RS) MTOCRF((FXM), RS)
@@ -50,7 +58,15 @@
 #define PPC_LONG	stringify_in_c(.long)
 #define PPC_LONG_ALIGN	stringify_in_c(.balign 4)
 #define PPC_TLNEI	stringify_in_c(twnei)
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define PPC_LLARX	stringify_in_c(lwarx)
+=======
 #define PPC_LLARX(t, a, b, eh)	PPC_LWARX(t, a, b, eh)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PPC_LLARX	stringify_in_c(lwarx)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PPC_STLCX	stringify_in_c(stwcx.)
 #define PPC_CNTLZL	stringify_in_c(cntlzw)
 #define PPC_MTOCRF	stringify_in_c(mtcrf)

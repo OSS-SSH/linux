@@ -20,6 +20,14 @@
 #include "xfs_bmap.h"
 #include "xfs_attr.h"
 #include "xfs_trans.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "xfs_log.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "xfs_log.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "xfs_log_priv.h"
 #include "xfs_buf_item.h"
 #include "xfs_quota.h"
@@ -32,6 +40,14 @@
 #include "xfs_icache.h"
 #include "xfs_ag.h"
 #include "xfs_ag_resv.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "xfs_error.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "xfs_error.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * We include this last to have the helpers above available for the trace

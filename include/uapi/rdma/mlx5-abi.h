@@ -50,6 +50,14 @@ enum {
 	MLX5_QP_FLAG_ALLOW_SCATTER_CQE	= 1 << 8,
 	MLX5_QP_FLAG_PACKET_BASED_CREDIT_MODE	= 1 << 9,
 	MLX5_QP_FLAG_UAR_PAGE_INDEX = 1 << 10,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	MLX5_QP_FLAG_DCI_STREAM	= 1 << 11,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	MLX5_QP_FLAG_DCI_STREAM	= 1 << 11,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum {
@@ -238,6 +246,20 @@ struct mlx5_ib_striding_rq_caps {
 	__u32 reserved;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct mlx5_ib_dci_streams_caps {
+	__u8 max_log_num_concurent;
+	__u8 max_log_num_errored;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum mlx5_ib_query_dev_resp_flags {
 	/* Support 128B CQE compression */
 	MLX5_IB_QUERY_DEV_RESP_FLAGS_CQE_128B_COMP = 1 << 0,
@@ -266,7 +288,17 @@ struct mlx5_ib_query_device_resp {
 	struct mlx5_ib_sw_parsing_caps sw_parsing_caps;
 	struct mlx5_ib_striding_rq_caps striding_rq_caps;
 	__u32	tunnel_offloads_caps; /* enum mlx5_ib_tunnel_offloads */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct  mlx5_ib_dci_streams_caps dci_streams_caps;
+	__u16 reserved;
+=======
 	__u32	reserved;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct  mlx5_ib_dci_streams_caps dci_streams_caps;
+	__u16 reserved;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum mlx5_ib_create_cq_flags {
@@ -313,6 +345,20 @@ struct mlx5_ib_create_srq_resp {
 	__u32	reserved;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct mlx5_ib_create_qp_dci_streams {
+	__u8 log_num_concurent;
+	__u8 log_num_errored;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mlx5_ib_create_qp {
 	__aligned_u64 buf_addr;
 	__aligned_u64 db_addr;
@@ -327,7 +373,17 @@ struct mlx5_ib_create_qp {
 		__aligned_u64 access_key;
 	};
 	__u32  ece_options;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct  mlx5_ib_create_qp_dci_streams dci_streams;
+	__u16 reserved;
+=======
 	__u32  reserved;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct  mlx5_ib_create_qp_dci_streams dci_streams;
+	__u16 reserved;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* RX Hash function flags */

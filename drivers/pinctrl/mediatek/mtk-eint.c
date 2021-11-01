@@ -319,7 +319,15 @@ static void mtk_eint_irq_handler(struct irq_desc *desc)
 	struct irq_chip *chip = irq_desc_get_chip(desc);
 	struct mtk_eint *eint = irq_desc_get_handler_data(desc);
 	unsigned int status, eint_num;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int offset, mask_offset, index;
+=======
 	int offset, mask_offset, index, virq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int offset, mask_offset, index;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void __iomem *reg =  mtk_eint_get_offset(eint, 0, eint->regs->stat);
 	int dual_edge, start_level, curr_level;
 
@@ -331,7 +339,13 @@ static void mtk_eint_irq_handler(struct irq_desc *desc)
 			offset = __ffs(status);
 			mask_offset = eint_num >> 5;
 			index = eint_num + offset;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 			virq = irq_find_mapping(eint->domain, index);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			status &= ~BIT(offset);
 
 			/*
@@ -361,7 +375,15 @@ static void mtk_eint_irq_handler(struct irq_desc *desc)
 								 index);
 			}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			generic_handle_domain_irq(eint->domain, index);
+=======
 			generic_handle_irq(virq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			generic_handle_domain_irq(eint->domain, index);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (dual_edge) {
 				curr_level = mtk_eint_flip_edge(eint, index);

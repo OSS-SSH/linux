@@ -158,13 +158,31 @@ static int ks_wlan_get_name(struct net_device *dev,
 
 	/* for SLEEP MODE */
 	if (priv->dev_state < DEVICE_STATE_READY)
-		strcpy(cwrq->name, "NOT READY!");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		strscpy(cwrq->name, "NOT READY!", sizeof(cwrq->name));
 	else if (priv->reg.phy_type == D_11B_ONLY_MODE)
-		strcpy(cwrq->name, "IEEE 802.11b");
+		strscpy(cwrq->name, "IEEE 802.11b", sizeof(cwrq->name));
 	else if (priv->reg.phy_type == D_11G_ONLY_MODE)
-		strcpy(cwrq->name, "IEEE 802.11g");
+		strscpy(cwrq->name, "IEEE 802.11g", sizeof(cwrq->name));
 	else
+		strscpy(cwrq->name, "IEEE 802.11b/g", sizeof(cwrq->name));
+=======
+		strcpy(cwrq->name, "NOT READY!");
+=======
+		strscpy(cwrq->name, "NOT READY!", sizeof(cwrq->name));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	else if (priv->reg.phy_type == D_11B_ONLY_MODE)
+		strscpy(cwrq->name, "IEEE 802.11b", sizeof(cwrq->name));
+	else if (priv->reg.phy_type == D_11G_ONLY_MODE)
+		strscpy(cwrq->name, "IEEE 802.11g", sizeof(cwrq->name));
+	else
+<<<<<<< HEAD
 		strcpy(cwrq->name, "IEEE 802.11b/g");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		strscpy(cwrq->name, "IEEE 802.11b/g", sizeof(cwrq->name));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -1808,8 +1826,18 @@ static int ks_wlan_get_firmware_version(struct net_device *dev,
 {
 	struct ks_wlan_private *priv = netdev_priv(dev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dwrq->length = priv->version_size + 1;
+	strscpy(extra, priv->firmware_version, dwrq->length);
+=======
 	strcpy(extra, priv->firmware_version);
 	dwrq->length = priv->version_size + 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dwrq->length = priv->version_size + 1;
+	strscpy(extra, priv->firmware_version, dwrq->length);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

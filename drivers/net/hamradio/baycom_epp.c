@@ -1005,7 +1005,17 @@ static int baycom_setmode(struct baycom_state *bc, const char *modestr)
 
 /* --------------------------------------------------------------------- */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int baycom_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+				 void __user *data, int cmd)
+=======
 static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int baycom_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
+				 void __user *data, int cmd)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct baycom_state *bc = netdev_priv(dev);
 	struct hdlcdrv_ioctl hi;
@@ -1013,7 +1023,15 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 	if (cmd != SIOCDEVPRIVATE)
 		return -ENOIOCTLCMD;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (copy_from_user(&hi, data, sizeof(hi)))
+=======
 	if (copy_from_user(&hi, ifr->ifr_data, sizeof(hi)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (copy_from_user(&hi, data, sizeof(hi)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 	switch (hi.cmd) {
 	default:
@@ -1104,7 +1122,15 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 		return HDLCDRV_PARMASK_IOBASE;
 
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (copy_to_user(data, &hi, sizeof(hi)))
+=======
 	if (copy_to_user(ifr->ifr_data, &hi, sizeof(hi)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (copy_to_user(data, &hi, sizeof(hi)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 	return 0;
 }
@@ -1114,7 +1140,15 @@ static int baycom_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 static const struct net_device_ops baycom_netdev_ops = {
 	.ndo_open	     = epp_open,
 	.ndo_stop	     = epp_close,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_siocdevprivate  = baycom_siocdevprivate,
+=======
 	.ndo_do_ioctl	     = baycom_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_siocdevprivate  = baycom_siocdevprivate,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_start_xmit      = baycom_send_packet,
 	.ndo_set_mac_address = baycom_set_mac_address,
 };

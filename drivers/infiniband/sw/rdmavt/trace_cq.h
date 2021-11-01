@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause */
+/*
+ * Copyright(c) 2016 - 2018 Intel Corporation.
+=======
 /*
  * Copyright(c) 2016 - 2018 Intel Corporation.
  *
@@ -43,6 +49,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause */
+/*
+ * Copyright(c) 2016 - 2018 Intel Corporation.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #if !defined(__RVT_TRACE_CQ_H) || defined(TRACE_HEADER_MULTI_READ)
 #define __RVT_TRACE_CQ_H

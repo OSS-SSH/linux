@@ -423,7 +423,15 @@ xfs_cui_validate_phys(
 	struct xfs_mount		*mp,
 	struct xfs_phys_extent		*refc)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!xfs_has_reflink(mp))
+=======
 	if (!xfs_sb_version_hasreflink(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_reflink(mp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	if (refc->pe_flags & ~XFS_REFCOUNT_EXTENT_FLAGS)
@@ -522,6 +530,18 @@ xfs_cui_item_recover(
 			error = xfs_trans_log_finish_refcount_update(tp, cudp,
 				type, refc->pe_startblock, refc->pe_len,
 				&new_fsb, &new_len, &rcur);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (error == -EFSCORRUPTED)
+			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+					refc, sizeof(*refc));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (error == -EFSCORRUPTED)
+			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
+					refc, sizeof(*refc));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (error)
 			goto abort_error;
 

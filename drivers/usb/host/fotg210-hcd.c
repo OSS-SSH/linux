@@ -1858,9 +1858,25 @@ static struct fotg210_qh *fotg210_qh_alloc(struct fotg210_hcd *fotg210,
 	qh = kzalloc(sizeof(*qh), GFP_ATOMIC);
 	if (!qh)
 		goto done;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	qh->hw = (struct fotg210_qh_hw *)
+		dma_pool_alloc(fotg210->qh_pool, flags, &dma);
+	if (!qh->hw)
+		goto fail;
+	memset(qh->hw, 0, sizeof(*qh->hw));
+=======
 	qh->hw = dma_pool_zalloc(fotg210->qh_pool, flags, &dma);
 	if (!qh->hw)
 		goto fail;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	qh->hw = (struct fotg210_qh_hw *)
+		dma_pool_alloc(fotg210->qh_pool, flags, &dma);
+	if (!qh->hw)
+		goto fail;
+	memset(qh->hw, 0, sizeof(*qh->hw));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qh->qh_dma = dma;
 	INIT_LIST_HEAD(&qh->qtd_list);
 
@@ -2510,11 +2526,17 @@ retry_xacterr:
 	return count;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /* high bandwidth multiplier, as encoded in highspeed endpoint descriptors */
 #define hb_mult(wMaxPacketSize) (1 + (((wMaxPacketSize) >> 11) & 0x03))
 /* ... and packet size, for any kind of endpoint descriptor */
 #define max_packet(wMaxPacketSize) ((wMaxPacketSize) & 0x07ff)
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* reverse of qh_urb_transaction:  free a list of TDs.
  * used for cleanup after errors, before HC sees an URB's TDs.
  */
@@ -2600,7 +2622,15 @@ static struct list_head *qh_urb_transaction(struct fotg210_hcd *fotg210,
 		token |= (1 /* "in" */ << 8);
 	/* else it's already initted to "out" pid (0 << 8) */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	maxpacket = usb_maxpacket(urb->dev, urb->pipe, !is_input);
+=======
 	maxpacket = max_packet(usb_maxpacket(urb->dev, urb->pipe, !is_input));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	maxpacket = usb_maxpacket(urb->dev, urb->pipe, !is_input);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * buffer gets wrapped in one or more qtds;
@@ -2714,9 +2744,23 @@ static struct fotg210_qh *qh_make(struct fotg210_hcd *fotg210, struct urb *urb,
 		gfp_t flags)
 {
 	struct fotg210_qh *qh = fotg210_qh_alloc(fotg210, flags);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct usb_host_endpoint *ep;
 	u32 info1 = 0, info2 = 0;
 	int is_input, type;
 	int maxp = 0;
+	int mult;
+<<<<<<< HEAD
+=======
+	u32 info1 = 0, info2 = 0;
+	int is_input, type;
+	int maxp = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct usb_tt *tt = urb->dev->tt;
 	struct fotg210_qh_hw *hw;
 
@@ -2731,14 +2775,36 @@ static struct fotg210_qh *qh_make(struct fotg210_hcd *fotg210, struct urb *urb,
 
 	is_input = usb_pipein(urb->pipe);
 	type = usb_pipetype(urb->pipe);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ep = usb_pipe_endpoint(urb->dev, urb->pipe);
+	maxp = usb_endpoint_maxp(&ep->desc);
+	mult = usb_endpoint_maxp_mult(&ep->desc);
+=======
 	maxp = usb_maxpacket(urb->dev, urb->pipe, !is_input);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ep = usb_pipe_endpoint(urb->dev, urb->pipe);
+	maxp = usb_endpoint_maxp(&ep->desc);
+	mult = usb_endpoint_maxp_mult(&ep->desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* 1024 byte maxpacket is a hardware ceiling.  High bandwidth
 	 * acts like up to 3KB, but is built from smaller packets.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (maxp > 1024) {
+		fotg210_dbg(fotg210, "bogus qh maxpacket %d\n", maxp);
+=======
 	if (max_packet(maxp) > 1024) {
 		fotg210_dbg(fotg210, "bogus qh maxpacket %d\n",
 				max_packet(maxp));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (maxp > 1024) {
+		fotg210_dbg(fotg210, "bogus qh maxpacket %d\n", maxp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto done;
 	}
 
@@ -2752,8 +2818,16 @@ static struct fotg210_qh *qh_make(struct fotg210_hcd *fotg210, struct urb *urb,
 	 */
 	if (type == PIPE_INTERRUPT) {
 		qh->usecs = NS_TO_US(usb_calc_bus_time(USB_SPEED_HIGH,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				is_input, 0, mult * maxp));
+=======
 				is_input, 0,
 				hb_mult(maxp) * max_packet(maxp)));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				is_input, 0, mult * maxp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		qh->start = NO_FRAME;
 
 		if (urb->dev->speed == USB_SPEED_HIGH) {
@@ -2790,7 +2864,15 @@ static struct fotg210_qh *qh_make(struct fotg210_hcd *fotg210, struct urb *urb,
 			think_time = tt ? tt->think_time : 0;
 			qh->tt_usecs = NS_TO_US(think_time +
 					usb_calc_bus_time(urb->dev->speed,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					is_input, 0, maxp));
+=======
 					is_input, 0, max_packet(maxp)));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					is_input, 0, maxp));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			qh->period = urb->interval;
 			if (qh->period > fotg210->periodic_size) {
 				qh->period = fotg210->periodic_size;
@@ -2853,11 +2935,27 @@ static struct fotg210_qh *qh_make(struct fotg210_hcd *fotg210, struct urb *urb,
 			 * to help them do so.  So now people expect to use
 			 * such nonconformant devices with Linux too; sigh.
 			 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+			info1 |= maxp << 16;
+			info2 |= (FOTG210_TUNE_MULT_HS << 30);
+		} else {		/* PIPE_INTERRUPT */
+			info1 |= maxp << 16;
+			info2 |= mult << 30;
+=======
 			info1 |= max_packet(maxp) << 16;
 			info2 |= (FOTG210_TUNE_MULT_HS << 30);
 		} else {		/* PIPE_INTERRUPT */
 			info1 |= max_packet(maxp) << 16;
 			info2 |= hb_mult(maxp) << 30;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			info1 |= maxp << 16;
+			info2 |= (FOTG210_TUNE_MULT_HS << 30);
+		} else {		/* PIPE_INTERRUPT */
+			info1 |= maxp << 16;
+			info2 |= mult << 30;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 	default:
@@ -3927,6 +4025,14 @@ static void iso_stream_init(struct fotg210_hcd *fotg210,
 	int is_input;
 	long bandwidth;
 	unsigned multi;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct usb_host_endpoint *ep;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct usb_host_endpoint *ep;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * this might be a "high bandwidth" highspeed endpoint,
@@ -3934,14 +4040,32 @@ static void iso_stream_init(struct fotg210_hcd *fotg210,
 	 */
 	epnum = usb_pipeendpoint(pipe);
 	is_input = usb_pipein(pipe) ? USB_DIR_IN : 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ep = usb_pipe_endpoint(dev, pipe);
+	maxp = usb_endpoint_maxp(&ep->desc);
+=======
 	maxp = usb_maxpacket(dev, pipe, !is_input);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ep = usb_pipe_endpoint(dev, pipe);
+	maxp = usb_endpoint_maxp(&ep->desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (is_input)
 		buf1 = (1 << 11);
 	else
 		buf1 = 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	multi = usb_endpoint_maxp_mult(&ep->desc);
+=======
 	maxp = max_packet(maxp);
 	multi = hb_mult(maxp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	multi = usb_endpoint_maxp_mult(&ep->desc);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	buf1 |= maxp;
 	maxp *= multi;
 
@@ -4112,7 +4236,15 @@ static int itd_urb_transaction(struct fotg210_iso_stream *stream,
 		} else {
 alloc_itd:
 			spin_unlock_irqrestore(&fotg210->lock, flags);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			itd = dma_pool_alloc(fotg210->itd_pool, mem_flags,
+=======
 			itd = dma_pool_zalloc(fotg210->itd_pool, mem_flags,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			itd = dma_pool_alloc(fotg210->itd_pool, mem_flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					&itd_dma);
 			spin_lock_irqsave(&fotg210->lock, flags);
 			if (!itd) {
@@ -4122,6 +4254,14 @@ alloc_itd:
 			}
 		}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		memset(itd, 0, sizeof(*itd));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		memset(itd, 0, sizeof(*itd));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		itd->itd_dma = itd_dma;
 		list_add(&itd->itd_list, &sched->td_list);
 	}
@@ -4462,13 +4602,29 @@ static bool itd_complete(struct fotg210_hcd *fotg210, struct fotg210_itd *itd)
 
 			/* HC need not update length with this error */
 			if (!(t & FOTG210_ISOC_BABBLE)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+				desc->actual_length = FOTG210_ITD_LENGTH(t);
+=======
 				desc->actual_length =
 					fotg210_itdlen(urb, desc, t);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				desc->actual_length = FOTG210_ITD_LENGTH(t);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				urb->actual_length += desc->actual_length;
 			}
 		} else if (likely((t & FOTG210_ISOC_ACTIVE) == 0)) {
 			desc->status = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			desc->actual_length = FOTG210_ITD_LENGTH(t);
+=======
 			desc->actual_length = fotg210_itdlen(urb, desc, t);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			desc->actual_length = FOTG210_ITD_LENGTH(t);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			urb->actual_length += desc->actual_length;
 		} else {
 			/* URB was too late */

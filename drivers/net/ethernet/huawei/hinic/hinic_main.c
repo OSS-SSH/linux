@@ -1183,7 +1183,15 @@ static int nic_dev_init(struct pci_dev *pdev)
 	struct devlink *devlink;
 	int err, num_qps;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	devlink = hinic_devlink_alloc(&pdev->dev);
+=======
 	devlink = hinic_devlink_alloc();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	devlink = hinic_devlink_alloc(&pdev->dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!devlink) {
 		dev_err(&pdev->dev, "Hinic devlink alloc failed\n");
 		return -ENOMEM;
@@ -1392,16 +1400,33 @@ static int hinic_probe(struct pci_dev *pdev,
 
 	pci_set_master(pdev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
+	if (err) {
+		dev_warn(&pdev->dev, "Couldn't set 64-bit DMA mask\n");
+		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+=======
 	err = pci_set_dma_mask(pdev, DMA_BIT_MASK(64));
 	if (err) {
 		dev_warn(&pdev->dev, "Couldn't set 64-bit DMA mask\n");
 		err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
+	if (err) {
+		dev_warn(&pdev->dev, "Couldn't set 64-bit DMA mask\n");
+		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			dev_err(&pdev->dev, "Failed to set DMA mask\n");
 			goto err_dma_mask;
 		}
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
 	if (err) {
 		dev_warn(&pdev->dev,
@@ -1414,6 +1439,9 @@ static int hinic_probe(struct pci_dev *pdev,
 		}
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = nic_dev_init(pdev);
 	if (err) {
 		dev_err(&pdev->dev, "Failed to initialize NIC device\n");
@@ -1424,7 +1452,13 @@ static int hinic_probe(struct pci_dev *pdev,
 	return 0;
 
 err_nic_dev_init:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 err_dma_consistent_mask:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_dma_mask:
 	pci_release_regions(pdev);
 

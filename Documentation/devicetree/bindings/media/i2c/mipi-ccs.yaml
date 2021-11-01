@@ -83,10 +83,23 @@ properties:
           link-frequencies: true
           data-lanes: true
           bus-type:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+            enum:
+              - 1 # CSI-2 C-PHY
+              - 3 # CCP2
+              - 4 # CSI-2 D-PHY
+<<<<<<< HEAD
+=======
             oneOf:
               - const: 1 # CSI-2 C-PHY
               - const: 3 # CCP2
               - const: 4 # CSI-2 D-PHY
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
         required:
           - link-frequencies

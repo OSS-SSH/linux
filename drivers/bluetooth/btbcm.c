@@ -387,6 +387,14 @@ struct bcm_subver_table {
 };
 
 static const struct bcm_subver_table bcm_uart_subver_table[] = {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	{ 0x1111, "BCM4362A2"	},	/* 000.017.017 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ 0x1111, "BCM4362A2"	},	/* 000.017.017 */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ 0x4103, "BCM4330B1"	},	/* 002.001.003 */
 	{ 0x410d, "BCM4334B0"	},	/* 002.001.013 */
 	{ 0x410e, "BCM43341B0"	},	/* 002.001.014 */

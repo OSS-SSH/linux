@@ -864,16 +864,49 @@ static int nsim_dev_reload_down(struct devlink *devlink, bool netns_change,
 				struct netlink_ext_ack *extack)
 {
 	struct nsim_dev *nsim_dev = devlink_priv(devlink);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct nsim_bus_dev *nsim_bus_dev;
+
+	nsim_bus_dev = nsim_dev->nsim_bus_dev;
+	if (!mutex_trylock(&nsim_bus_dev->nsim_bus_reload_lock))
+		return -EOPNOTSUPP;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (nsim_dev->dont_allow_reload) {
 		/* For testing purposes, user set debugfs dont_allow_reload
 		 * value to true. So forbid it.
 		 */
 		NL_SET_ERR_MSG_MOD(extack, "User forbid the reload for testing purposes");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
 		return -EOPNOTSUPP;
 	}
+	nsim_bus_dev->in_reload = true;
 
 	nsim_dev_reload_destroy(nsim_dev);
+	mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
+=======
+=======
+		mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		return -EOPNOTSUPP;
+	}
+	nsim_bus_dev->in_reload = true;
+
+	nsim_dev_reload_destroy(nsim_dev);
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -882,17 +915,52 @@ static int nsim_dev_reload_up(struct devlink *devlink, enum devlink_reload_actio
 			      struct netlink_ext_ack *extack)
 {
 	struct nsim_dev *nsim_dev = devlink_priv(devlink);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct nsim_bus_dev *nsim_bus_dev;
+	int ret;
+
+	nsim_bus_dev = nsim_dev->nsim_bus_dev;
+	mutex_lock(&nsim_bus_dev->nsim_bus_reload_lock);
+	nsim_bus_dev->in_reload = false;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (nsim_dev->fail_reload) {
 		/* For testing purposes, user set debugfs fail_reload
 		 * value to true. Fail right away.
 		 */
 		NL_SET_ERR_MSG_MOD(extack, "User setup the reload to fail for testing purposes");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	}
 
 	*actions_performed = BIT(DEVLINK_RELOAD_ACTION_DRIVER_REINIT);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = nsim_dev_reload_create(nsim_dev, extack);
+	mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
+	return ret;
+=======
 	return nsim_dev_reload_create(nsim_dev, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = nsim_dev_reload_create(nsim_dev, extack);
+	mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
+	return ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int nsim_dev_info_get(struct devlink *devlink,
@@ -1431,10 +1499,24 @@ int nsim_dev_probe(struct nsim_bus_dev *nsim_bus_dev)
 	struct devlink *devlink;
 	int err;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	devlink = devlink_alloc_ns(&nsim_dev_devlink_ops, sizeof(*nsim_dev),
+				 nsim_bus_dev->initial_net, &nsim_bus_dev->dev);
+	if (!devlink)
+		return -ENOMEM;
+=======
 	devlink = devlink_alloc(&nsim_dev_devlink_ops, sizeof(*nsim_dev));
 	if (!devlink)
 		return -ENOMEM;
 	devlink_net_set(devlink, nsim_bus_dev->initial_net);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	devlink = devlink_alloc_ns(&nsim_dev_devlink_ops, sizeof(*nsim_dev),
+				 nsim_bus_dev->initial_net, &nsim_bus_dev->dev);
+	if (!devlink)
+		return -ENOMEM;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	nsim_dev = devlink_priv(devlink);
 	nsim_dev->nsim_bus_dev = nsim_bus_dev;
 	nsim_dev->switch_id.id_len = sizeof(nsim_dev->switch_id.id);
@@ -1453,7 +1535,15 @@ int nsim_dev_probe(struct nsim_bus_dev *nsim_bus_dev)
 	if (err)
 		goto err_devlink_free;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = devlink_register(devlink);
+=======
 	err = devlink_register(devlink, &nsim_bus_dev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = devlink_register(devlink);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto err_resources_unregister;
 

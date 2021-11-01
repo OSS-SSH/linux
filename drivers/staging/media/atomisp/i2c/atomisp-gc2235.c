@@ -849,13 +849,26 @@ static int gc2235_get_fmt(struct v4l2_subdev *sd,
 static int gc2235_detect(struct i2c_client *client)
 {
 	struct i2c_adapter *adapter = client->adapter;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u16 high = 0, low = 0;
+=======
 	u16 high, low;
 	int ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 high = 0, low = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u16 id;
 
 	if (!i2c_check_functionality(adapter, I2C_FUNC_I2C))
 		return -ENODEV;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	gc2235_read_reg(client, GC2235_8BIT, GC2235_SENSOR_ID_H, &high);
+	gc2235_read_reg(client, GC2235_8BIT, GC2235_SENSOR_ID_L, &low);
+=======
 	ret = gc2235_read_reg(client, GC2235_8BIT,
 			      GC2235_SENSOR_ID_H, &high);
 	if (ret) {
@@ -864,6 +877,11 @@ static int gc2235_detect(struct i2c_client *client)
 	}
 	ret = gc2235_read_reg(client, GC2235_8BIT,
 			      GC2235_SENSOR_ID_L, &low);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gc2235_read_reg(client, GC2235_8BIT, GC2235_SENSOR_ID_H, &high);
+	gc2235_read_reg(client, GC2235_8BIT, GC2235_SENSOR_ID_L, &low);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	id = ((high << 8) | low);
 
 	if (id != GC2235_ID) {

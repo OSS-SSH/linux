@@ -97,11 +97,27 @@ struct panfrost_device {
 	spinlock_t as_lock;
 	unsigned long as_in_use_mask;
 	unsigned long as_alloc_mask;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long as_faulty_mask;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long as_faulty_mask;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head as_lru_list;
 
 	struct panfrost_job_slot *js;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct panfrost_job *jobs[NUM_JOB_SLOTS][2];
+=======
 	struct panfrost_job *jobs[NUM_JOB_SLOTS];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct panfrost_job *jobs[NUM_JOB_SLOTS][2];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head scheduled_jobs;
 
 	struct panfrost_perfcnt *perfcnt;
@@ -109,6 +125,14 @@ struct panfrost_device {
 	struct mutex sched_lock;
 
 	struct {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		struct workqueue_struct *wq;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		struct workqueue_struct *wq;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct work_struct work;
 		atomic_t pending;
 	} reset;
@@ -121,8 +145,23 @@ struct panfrost_device {
 };
 
 struct panfrost_mmu {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct panfrost_device *pfdev;
+	struct kref refcount;
 	struct io_pgtable_cfg pgtbl_cfg;
 	struct io_pgtable_ops *pgtbl_ops;
+	struct drm_mm mm;
+	spinlock_t mm_lock;
+<<<<<<< HEAD
+=======
+	struct io_pgtable_cfg pgtbl_cfg;
+	struct io_pgtable_ops *pgtbl_ops;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int as;
 	atomic_t as_count;
 	struct list_head list;
@@ -133,9 +172,17 @@ struct panfrost_file_priv {
 
 	struct drm_sched_entity sched_entity[NUM_JOB_SLOTS];
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct panfrost_mmu *mmu;
+=======
 	struct panfrost_mmu mmu;
 	struct drm_mm mm;
 	spinlock_t mm_lock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct panfrost_mmu *mmu;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline struct panfrost_device *to_panfrost_device(struct drm_device *ddev)
@@ -171,6 +218,101 @@ void panfrost_device_reset(struct panfrost_device *pfdev);
 int panfrost_device_resume(struct device *dev);
 int panfrost_device_suspend(struct device *dev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+enum drm_panfrost_exception_type {
+	DRM_PANFROST_EXCEPTION_OK = 0x00,
+	DRM_PANFROST_EXCEPTION_DONE = 0x01,
+	DRM_PANFROST_EXCEPTION_INTERRUPTED = 0x02,
+	DRM_PANFROST_EXCEPTION_STOPPED = 0x03,
+	DRM_PANFROST_EXCEPTION_TERMINATED = 0x04,
+	DRM_PANFROST_EXCEPTION_KABOOM = 0x05,
+	DRM_PANFROST_EXCEPTION_EUREKA = 0x06,
+	DRM_PANFROST_EXCEPTION_ACTIVE = 0x08,
+	DRM_PANFROST_EXCEPTION_MAX_NON_FAULT = 0x3f,
+	DRM_PANFROST_EXCEPTION_JOB_CONFIG_FAULT = 0x40,
+	DRM_PANFROST_EXCEPTION_JOB_POWER_FAULT = 0x41,
+	DRM_PANFROST_EXCEPTION_JOB_READ_FAULT = 0x42,
+	DRM_PANFROST_EXCEPTION_JOB_WRITE_FAULT = 0x43,
+	DRM_PANFROST_EXCEPTION_JOB_AFFINITY_FAULT = 0x44,
+	DRM_PANFROST_EXCEPTION_JOB_BUS_FAULT = 0x48,
+	DRM_PANFROST_EXCEPTION_INSTR_INVALID_PC = 0x50,
+	DRM_PANFROST_EXCEPTION_INSTR_INVALID_ENC = 0x51,
+	DRM_PANFROST_EXCEPTION_INSTR_TYPE_MISMATCH = 0x52,
+	DRM_PANFROST_EXCEPTION_INSTR_OPERAND_FAULT = 0x53,
+	DRM_PANFROST_EXCEPTION_INSTR_TLS_FAULT = 0x54,
+	DRM_PANFROST_EXCEPTION_INSTR_BARRIER_FAULT = 0x55,
+	DRM_PANFROST_EXCEPTION_INSTR_ALIGN_FAULT = 0x56,
+	DRM_PANFROST_EXCEPTION_DATA_INVALID_FAULT = 0x58,
+	DRM_PANFROST_EXCEPTION_TILE_RANGE_FAULT = 0x59,
+	DRM_PANFROST_EXCEPTION_ADDR_RANGE_FAULT = 0x5a,
+	DRM_PANFROST_EXCEPTION_IMPRECISE_FAULT = 0x5b,
+	DRM_PANFROST_EXCEPTION_OOM = 0x60,
+	DRM_PANFROST_EXCEPTION_OOM_AFBC = 0x61,
+	DRM_PANFROST_EXCEPTION_UNKNOWN = 0x7f,
+	DRM_PANFROST_EXCEPTION_DELAYED_BUS_FAULT = 0x80,
+	DRM_PANFROST_EXCEPTION_GPU_SHAREABILITY_FAULT = 0x88,
+	DRM_PANFROST_EXCEPTION_SYS_SHAREABILITY_FAULT = 0x89,
+	DRM_PANFROST_EXCEPTION_GPU_CACHEABILITY_FAULT = 0x8a,
+	DRM_PANFROST_EXCEPTION_TRANSLATION_FAULT_0 = 0xc0,
+	DRM_PANFROST_EXCEPTION_TRANSLATION_FAULT_1 = 0xc1,
+	DRM_PANFROST_EXCEPTION_TRANSLATION_FAULT_2 = 0xc2,
+	DRM_PANFROST_EXCEPTION_TRANSLATION_FAULT_3 = 0xc3,
+	DRM_PANFROST_EXCEPTION_TRANSLATION_FAULT_4 = 0xc4,
+	DRM_PANFROST_EXCEPTION_TRANSLATION_FAULT_IDENTITY = 0xc7,
+	DRM_PANFROST_EXCEPTION_PERM_FAULT_0 = 0xc8,
+	DRM_PANFROST_EXCEPTION_PERM_FAULT_1 = 0xc9,
+	DRM_PANFROST_EXCEPTION_PERM_FAULT_2 = 0xca,
+	DRM_PANFROST_EXCEPTION_PERM_FAULT_3 = 0xcb,
+	DRM_PANFROST_EXCEPTION_TRANSTAB_BUS_FAULT_0 = 0xd0,
+	DRM_PANFROST_EXCEPTION_TRANSTAB_BUS_FAULT_1 = 0xd1,
+	DRM_PANFROST_EXCEPTION_TRANSTAB_BUS_FAULT_2 = 0xd2,
+	DRM_PANFROST_EXCEPTION_TRANSTAB_BUS_FAULT_3 = 0xd3,
+	DRM_PANFROST_EXCEPTION_ACCESS_FLAG_0 = 0xd8,
+	DRM_PANFROST_EXCEPTION_ACCESS_FLAG_1 = 0xd9,
+	DRM_PANFROST_EXCEPTION_ACCESS_FLAG_2 = 0xda,
+	DRM_PANFROST_EXCEPTION_ACCESS_FLAG_3 = 0xdb,
+	DRM_PANFROST_EXCEPTION_ADDR_SIZE_FAULT_IN0 = 0xe0,
+	DRM_PANFROST_EXCEPTION_ADDR_SIZE_FAULT_IN1 = 0xe1,
+	DRM_PANFROST_EXCEPTION_ADDR_SIZE_FAULT_IN2 = 0xe2,
+	DRM_PANFROST_EXCEPTION_ADDR_SIZE_FAULT_IN3 = 0xe3,
+	DRM_PANFROST_EXCEPTION_ADDR_SIZE_FAULT_OUT0 = 0xe4,
+	DRM_PANFROST_EXCEPTION_ADDR_SIZE_FAULT_OUT1 = 0xe5,
+	DRM_PANFROST_EXCEPTION_ADDR_SIZE_FAULT_OUT2 = 0xe6,
+	DRM_PANFROST_EXCEPTION_ADDR_SIZE_FAULT_OUT3 = 0xe7,
+	DRM_PANFROST_EXCEPTION_MEM_ATTR_FAULT_0 = 0xe8,
+	DRM_PANFROST_EXCEPTION_MEM_ATTR_FAULT_1 = 0xe9,
+	DRM_PANFROST_EXCEPTION_MEM_ATTR_FAULT_2 = 0xea,
+	DRM_PANFROST_EXCEPTION_MEM_ATTR_FAULT_3 = 0xeb,
+	DRM_PANFROST_EXCEPTION_MEM_ATTR_NONCACHE_0 = 0xec,
+	DRM_PANFROST_EXCEPTION_MEM_ATTR_NONCACHE_1 = 0xed,
+	DRM_PANFROST_EXCEPTION_MEM_ATTR_NONCACHE_2 = 0xee,
+	DRM_PANFROST_EXCEPTION_MEM_ATTR_NONCACHE_3 = 0xef,
+};
+
+static inline bool
+panfrost_exception_is_fault(u32 exception_code)
+{
+	return exception_code > DRM_PANFROST_EXCEPTION_MAX_NON_FAULT;
+}
+
+const char *panfrost_exception_name(u32 exception_code);
+bool panfrost_exception_needs_reset(const struct panfrost_device *pfdev,
+				    u32 exception_code);
+
+static inline void
+panfrost_device_schedule_reset(struct panfrost_device *pfdev)
+{
+	atomic_set(&pfdev->reset.pending, 1);
+	queue_work(pfdev->reset.wq, &pfdev->reset.work);
+}
+<<<<<<< HEAD
+=======
 const char *panfrost_exception_name(struct panfrost_device *pfdev, u32 exception_code);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

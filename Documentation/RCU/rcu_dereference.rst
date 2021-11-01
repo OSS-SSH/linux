@@ -43,7 +43,15 @@ Follow these rules to keep your RCU code working properly:
 	-	Set bits and clear bits down in the must-be-zero low-order
 		bits of that pointer.  This clearly means that the pointer
 		must have alignment constraints, for example, this does
+<<<<<<< HEAD
+<<<<<<< HEAD
+		*not* work in general for char* pointers.
+=======
 		-not- work in general for char* pointers.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		*not* work in general for char* pointers.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	-	XOR bits to translate pointers, as is done in some
 		classic buddy-allocator algorithms.
@@ -174,7 +182,15 @@ Follow these rules to keep your RCU code working properly:
 		Please see the "CONTROL DEPENDENCIES" section of
 		Documentation/memory-barriers.txt for more details.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	-	The pointers are not equal *and* the compiler does
+=======
 	-	The pointers are not equal -and- the compiler does
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	-	The pointers are not equal *and* the compiler does
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		not have enough information to deduce the value of the
 		pointer.  Note that the volatile cast in rcu_dereference()
 		will normally prevent the compiler from knowing too much.
@@ -360,7 +376,15 @@ in turn destroying the ordering between this load and the loads of the
 return values.  This can result in "p->b" returning pre-initialization
 garbage values.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+In short, rcu_dereference() is *not* optional when you are going to
+=======
 In short, rcu_dereference() is -not- optional when you are going to
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+In short, rcu_dereference() is *not* optional when you are going to
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dereference the resulting pointer.
 
 

@@ -45,7 +45,17 @@ RAMC SDRAM/DDR Controller required properties:
 			"atmel,at91sam9260-sdramc",
 			"atmel,at91sam9g45-ddramc",
 			"atmel,sama5d3-ddramc",
+<<<<<<< HEAD
+<<<<<<< HEAD
+			"microchip,sam9x60-ddramc",
+			"microchip,sama7g5-uddrc"
+=======
 			"microchip,sam9x60-ddramc"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			"microchip,sam9x60-ddramc",
+			"microchip,sama7g5-uddrc"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 - reg: Should contain registers location and length
 
 Examples:
@@ -55,6 +65,26 @@ Examples:
 		reg = <0xffffe800 0x200>;
 	};
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+RAMC PHY Controller required properties:
+- compatible: Should be "microchip,sama7g5-ddr3phy", "syscon"
+- reg: Should contain registers location and length
+
+Example:
+
+	ddr3phy: ddr3phy@e3804000 {
+		compatible = "microchip,sama7g5-ddr3phy", "syscon";
+		reg = <0xe3804000 0x1000>;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 SHDWC Shutdown Controller
 
 required properties:

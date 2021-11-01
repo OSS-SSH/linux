@@ -783,7 +783,15 @@ static int recover_mce(struct pt_regs *regs, struct machine_check_event *evt)
 {
 	int recovered = 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (regs_is_unrecoverable(regs)) {
+=======
 	if (!(regs->msr & MSR_RI)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (regs_is_unrecoverable(regs)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* If MSR_RI isn't set, we cannot recover */
 		pr_err("Machine check interrupt unrecoverable: MSR(RI=0)\n");
 		recovered = 0;

@@ -378,6 +378,14 @@ int isc_clk_init(struct isc_device *isc)
 
 	return 0;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+EXPORT_SYMBOL_GPL(isc_clk_init);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(isc_clk_init);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void isc_clk_cleanup(struct isc_device *isc)
 {
@@ -392,6 +400,14 @@ void isc_clk_cleanup(struct isc_device *isc)
 			clk_unregister(isc_clk->clk);
 	}
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+EXPORT_SYMBOL_GPL(isc_clk_cleanup);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(isc_clk_cleanup);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int isc_queue_setup(struct vb2_queue *vq,
 			    unsigned int *nbuffers, unsigned int *nplanes,
@@ -1578,6 +1594,14 @@ irqreturn_t isc_interrupt(int irq, void *dev_id)
 
 	return ret;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+EXPORT_SYMBOL_GPL(isc_interrupt);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(isc_interrupt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void isc_hist_count(struct isc_device *isc, u32 *min, u32 *max)
 {
@@ -2212,6 +2236,14 @@ const struct v4l2_async_notifier_operations isc_async_ops = {
 	.unbind = isc_async_unbind,
 	.complete = isc_async_complete,
 };
+<<<<<<< HEAD
+<<<<<<< HEAD
+EXPORT_SYMBOL_GPL(isc_async_ops);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(isc_async_ops);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void isc_subdev_cleanup(struct isc_device *isc)
 {
@@ -2224,6 +2256,14 @@ void isc_subdev_cleanup(struct isc_device *isc)
 
 	INIT_LIST_HEAD(&isc->subdev_entities);
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+EXPORT_SYMBOL_GPL(isc_subdev_cleanup);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(isc_subdev_cleanup);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int isc_pipeline_init(struct isc_device *isc)
 {
@@ -2264,6 +2304,14 @@ int isc_pipeline_init(struct isc_device *isc)
 
 	return 0;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+EXPORT_SYMBOL_GPL(isc_pipeline_init);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+EXPORT_SYMBOL_GPL(isc_pipeline_init);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* regmap configuration */
 #define ATMEL_ISC_REG_MAX    0xd5c
@@ -2273,4 +2321,19 @@ const struct regmap_config isc_regmap_config = {
 	.val_bits       = 32,
 	.max_register	= ATMEL_ISC_REG_MAX,
 };
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+EXPORT_SYMBOL_GPL(isc_regmap_config);
 
+MODULE_AUTHOR("Songjun Wu");
+MODULE_AUTHOR("Eugen Hristev");
+MODULE_DESCRIPTION("Atmel ISC common code base");
+MODULE_LICENSE("GPL v2");
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

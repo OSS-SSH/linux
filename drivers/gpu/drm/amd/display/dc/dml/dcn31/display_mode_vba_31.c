@@ -3036,10 +3036,22 @@ static void DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerforman
 		}
 
 		v->PrefetchAndImmediateFlipSupported =
+<<<<<<< HEAD
+<<<<<<< HEAD
+				(v->PrefetchModeSupported == true && ((!v->ImmediateFlipSupport && !v->HostVMEnable
+				&& v->ImmediateFlipRequirement[0] != dm_immediate_flip_required) ||
+				v->ImmediateFlipSupported)) ? true : false;
+=======
 				(v->PrefetchModeSupported == true
 						&& ((!v->ImmediateFlipSupport && !v->HostVMEnable
 								&& v->ImmediateFlipRequirement != dm_immediate_flip_required) || v->ImmediateFlipSupported)) ?
 						true : false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				(v->PrefetchModeSupported == true && ((!v->ImmediateFlipSupport && !v->HostVMEnable
+				&& v->ImmediateFlipRequirement[0] != dm_immediate_flip_required) ||
+				v->ImmediateFlipSupported)) ? true : false;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef __DML_VBA_DEBUG__
 		dml_print("DML::%s: PrefetchModeSupported %d\n", __func__, v->PrefetchModeSupported);
 		dml_print("DML::%s: ImmediateFlipRequirement %d\n", __func__, v->ImmediateFlipRequirement == dm_immediate_flip_required);
@@ -5103,7 +5115,15 @@ void dml31_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
 				v->HostVMMinPageSize,
 				v->HostVMMaxNonCachedPageTableLevels,
 				v->DynamicMetadataVMEnabled,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				v->ImmediateFlipRequirement[0],
+=======
 				v->ImmediateFlipRequirement,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				v->ImmediateFlipRequirement[0],
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				v->ProgressiveToInterlaceUnitInOPP,
 				v->MaxAveragePercentOfIdealFabricAndSDPPortBWDisplayCanUseInNormalSystemOperation,
 				v->PercentOfIdealFabricAndSDPPortBWReceivedAfterUrgLatency,
@@ -5542,7 +5562,17 @@ void dml31_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
 				}
 				v->NextPrefetchMode = v->NextPrefetchMode + 1;
 			} while (!((v->PrefetchSupported[i][j] == true && v->DynamicMetadataSupported[i][j] == true && v->VRatioInPrefetchSupported[i][j] == true
+<<<<<<< HEAD
+<<<<<<< HEAD
+					&& ((v->HostVMEnable == false &&
+							v->ImmediateFlipRequirement[0] != dm_immediate_flip_required)
+=======
 					&& ((v->HostVMEnable == false && v->ImmediateFlipRequirement != dm_immediate_flip_required)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					&& ((v->HostVMEnable == false &&
+							v->ImmediateFlipRequirement[0] != dm_immediate_flip_required)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 							|| v->ImmediateFlipSupportedForState[i][j] == true))
 					|| (v->NextMaxVStartup == v->MaxMaxVStartup[i][j] && NextPrefetchModeState > MaxPrefetchMode)));
 
@@ -5702,7 +5732,17 @@ void dml31_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
 					&& v->PrefetchSupported[i][j] == true && v->DynamicMetadataSupported[i][j] == true
 					&& v->TotalVerticalActiveBandwidthSupport[i][j] == true && v->VRatioInPrefetchSupported[i][j] == true
 					&& v->PTEBufferSizeNotExceeded[i][j] == true && v->NonsupportedDSCInputBPC == false
+<<<<<<< HEAD
+<<<<<<< HEAD
+					&& ((v->HostVMEnable == false
+					&& v->ImmediateFlipRequirement[0] != dm_immediate_flip_required)
+=======
 					&& ((v->HostVMEnable == false && v->ImmediateFlipRequirement != dm_immediate_flip_required)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					&& ((v->HostVMEnable == false
+					&& v->ImmediateFlipRequirement[0] != dm_immediate_flip_required)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 							|| v->ImmediateFlipSupportedForState[i][j] == true)
 					&& FMTBufferExceeded == false) {
 				v->ModeSupport[i][j] = true;

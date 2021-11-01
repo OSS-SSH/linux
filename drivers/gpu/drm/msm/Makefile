@@ -90,6 +90,14 @@ msm-y := \
 	msm_gem_submit.o \
 	msm_gem_vma.o \
 	msm_gpu.o \
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msm_gpu_devfreq.o \
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msm_gpu_devfreq.o \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	msm_iommu.o \
 	msm_perf.o \
 	msm_rd.o \

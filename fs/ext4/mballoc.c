@@ -408,6 +408,19 @@ static void ext4_mb_new_preallocation(struct ext4_allocation_context *ac);
 static bool ext4_mb_good_group(struct ext4_allocation_context *ac,
 			       ext4_group_t group, int cr);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int ext4_try_to_trim_range(struct super_block *sb,
+		struct ext4_buddy *e4b, ext4_grpblk_t start,
+		ext4_grpblk_t max, ext4_grpblk_t minblocks);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * The algorithm using this percpu seq counter goes below:
  * 1. We sample the percpu discard_pa_seq counter before trying for block
@@ -2474,6 +2487,21 @@ static bool ext4_mb_good_group(struct ext4_allocation_context *ac,
  * This could return negative error code if something goes wrong
  * during ext4_mb_init_group(). This should not be called with
  * ext4_lock_group() held.
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ *
+ * Note: because we are conditionally operating with the group lock in
+ * the EXT4_MB_STRICT_CHECK case, we need to fake out sparse in this
+ * function using __acquire and __release.  This means we need to be
+ * super careful before messing with the error path handling via "goto
+ * out"!
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static int ext4_mb_good_group_nolock(struct ext4_allocation_context *ac,
 				     ext4_group_t group, int cr)
@@ -2487,8 +2515,22 @@ static int ext4_mb_good_group_nolock(struct ext4_allocation_context *ac,
 
 	if (sbi->s_mb_stats)
 		atomic64_inc(&sbi->s_bal_cX_groups_considered[ac->ac_criteria]);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (should_lock) {
+		ext4_lock_group(sb, group);
+		__release(ext4_group_lock_ptr(sb, group));
+	}
+=======
 	if (should_lock)
 		ext4_lock_group(sb, group);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (should_lock) {
+		ext4_lock_group(sb, group);
+		__release(ext4_group_lock_ptr(sb, group));
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	free = grp->bb_free;
 	if (free == 0)
 		goto out;
@@ -2496,8 +2538,22 @@ static int ext4_mb_good_group_nolock(struct ext4_allocation_context *ac,
 		goto out;
 	if (unlikely(EXT4_MB_GRP_BBITMAP_CORRUPT(grp)))
 		goto out;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (should_lock) {
+		__acquire(ext4_group_lock_ptr(sb, group));
+		ext4_unlock_group(sb, group);
+	}
+=======
 	if (should_lock)
 		ext4_unlock_group(sb, group);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (should_lock) {
+		__acquire(ext4_group_lock_ptr(sb, group));
+		ext4_unlock_group(sb, group);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* We only do this if the grp has never been initialized */
 	if (unlikely(EXT4_MB_GRP_NEED_INIT(grp))) {
@@ -2524,12 +2580,36 @@ static int ext4_mb_good_group_nolock(struct ext4_allocation_context *ac,
 			return ret;
 	}
 
-	if (should_lock)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (should_lock) {
 		ext4_lock_group(sb, group);
+		__release(ext4_group_lock_ptr(sb, group));
+	}
 	ret = ext4_mb_good_group(ac, group, cr);
 out:
-	if (should_lock)
+	if (should_lock) {
+		__acquire(ext4_group_lock_ptr(sb, group));
 		ext4_unlock_group(sb, group);
+	}
+=======
+	if (should_lock)
+=======
+	if (should_lock) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		ext4_lock_group(sb, group);
+		__release(ext4_group_lock_ptr(sb, group));
+	}
+	ret = ext4_mb_good_group(ac, group, cr);
+out:
+	if (should_lock) {
+		__acquire(ext4_group_lock_ptr(sb, group));
+		ext4_unlock_group(sb, group);
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -2965,6 +3045,14 @@ int ext4_seq_mb_stats_show(struct seq_file *seq, void *offset)
 }
 
 static void *ext4_mb_seq_structs_summary_start(struct seq_file *seq, loff_t *pos)
+<<<<<<< HEAD
+<<<<<<< HEAD
+__acquires(&EXT4_SB(sb)->s_mb_rb_lock)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+__acquires(&EXT4_SB(sb)->s_mb_rb_lock)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct super_block *sb = PDE_DATA(file_inode(seq->file));
 	unsigned long position;
@@ -3037,6 +3125,14 @@ static int ext4_mb_seq_structs_summary_show(struct seq_file *seq, void *v)
 }
 
 static void ext4_mb_seq_structs_summary_stop(struct seq_file *seq, void *v)
+<<<<<<< HEAD
+<<<<<<< HEAD
+__releases(&EXT4_SB(sb)->s_mb_rb_lock)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+__releases(&EXT4_SB(sb)->s_mb_rb_lock)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct super_block *sb = PDE_DATA(file_inode(seq->file));
 
@@ -3308,6 +3404,66 @@ static int ext4_groupinfo_create_slab(size_t size)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void ext4_discard_work(struct work_struct *work)
+{
+	struct ext4_sb_info *sbi = container_of(work,
+			struct ext4_sb_info, s_discard_work);
+	struct super_block *sb = sbi->s_sb;
+	struct ext4_free_data *fd, *nfd;
+	struct ext4_buddy e4b;
+	struct list_head discard_list;
+	ext4_group_t grp, load_grp;
+	int err = 0;
+
+	INIT_LIST_HEAD(&discard_list);
+	spin_lock(&sbi->s_md_lock);
+	list_splice_init(&sbi->s_discard_list, &discard_list);
+	spin_unlock(&sbi->s_md_lock);
+
+	load_grp = UINT_MAX;
+	list_for_each_entry_safe(fd, nfd, &discard_list, efd_list) {
+		/*
+		 * If filesystem is umounting or no memory or suffering
+		 * from no space, give up the discard
+		 */
+		if ((sb->s_flags & SB_ACTIVE) && !err &&
+		    !atomic_read(&sbi->s_retry_alloc_pending)) {
+			grp = fd->efd_group;
+			if (grp != load_grp) {
+				if (load_grp != UINT_MAX)
+					ext4_mb_unload_buddy(&e4b);
+
+				err = ext4_mb_load_buddy(sb, grp, &e4b);
+				if (err) {
+					kmem_cache_free(ext4_free_data_cachep, fd);
+					load_grp = UINT_MAX;
+					continue;
+				} else {
+					load_grp = grp;
+				}
+			}
+
+			ext4_lock_group(sb, grp);
+			ext4_try_to_trim_range(sb, &e4b, fd->efd_start_cluster,
+						fd->efd_start_cluster + fd->efd_count - 1, 1);
+			ext4_unlock_group(sb, grp);
+		}
+		kmem_cache_free(ext4_free_data_cachep, fd);
+	}
+
+	if (load_grp != UINT_MAX)
+		ext4_mb_unload_buddy(&e4b);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int ext4_mb_init(struct super_block *sb)
 {
 	struct ext4_sb_info *sbi = EXT4_SB(sb);
@@ -3376,6 +3532,18 @@ int ext4_mb_init(struct super_block *sb)
 	spin_lock_init(&sbi->s_md_lock);
 	sbi->s_mb_free_pending = 0;
 	INIT_LIST_HEAD(&sbi->s_freed_data_list);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	INIT_LIST_HEAD(&sbi->s_discard_list);
+	INIT_WORK(&sbi->s_discard_work, ext4_discard_work);
+	atomic_set(&sbi->s_retry_alloc_pending, 0);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	INIT_LIST_HEAD(&sbi->s_discard_list);
+	INIT_WORK(&sbi->s_discard_work, ext4_discard_work);
+	atomic_set(&sbi->s_retry_alloc_pending, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sbi->s_mb_max_to_scan = MB_DEFAULT_MAX_TO_SCAN;
 	sbi->s_mb_min_to_scan = MB_DEFAULT_MIN_TO_SCAN;
@@ -3474,6 +3642,23 @@ int ext4_mb_release(struct super_block *sb)
 	struct kmem_cache *cachep = get_groupinfo_cache(sb->s_blocksize_bits);
 	int count;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (test_opt(sb, DISCARD)) {
+		/*
+		 * wait the discard work to drain all of ext4_free_data
+		 */
+		flush_work(&sbi->s_discard_work);
+		WARN_ON_ONCE(!list_empty(&sbi->s_discard_list));
+	}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sbi->s_group_info) {
 		for (i = 0; i < ngroups; i++) {
 			cond_resched();
@@ -3596,7 +3781,13 @@ static void ext4_free_data_in_buddy(struct super_block *sb,
 		put_page(e4b.bd_bitmap_page);
 	}
 	ext4_unlock_group(sb, entry->efd_group);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	kmem_cache_free(ext4_free_data_cachep, entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ext4_mb_unload_buddy(&e4b);
 
 	mb_debug(sb, "freed %d blocks in %d structures\n", count,
@@ -3611,10 +3802,22 @@ void ext4_process_freed_data(struct super_block *sb, tid_t commit_tid)
 {
 	struct ext4_sb_info *sbi = EXT4_SB(sb);
 	struct ext4_free_data *entry, *tmp;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct list_head freed_data_list;
+	struct list_head *cut_pos = NULL;
+	bool wake;
+=======
 	struct bio *discard_bio = NULL;
 	struct list_head freed_data_list;
 	struct list_head *cut_pos = NULL;
 	int err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct list_head freed_data_list;
+	struct list_head *cut_pos = NULL;
+	bool wake;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	INIT_LIST_HEAD(&freed_data_list);
 
@@ -3629,6 +3832,23 @@ void ext4_process_freed_data(struct super_block *sb, tid_t commit_tid)
 				  cut_pos);
 	spin_unlock(&sbi->s_md_lock);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	list_for_each_entry(entry, &freed_data_list, efd_list)
+		ext4_free_data_in_buddy(sb, entry);
+
+	if (test_opt(sb, DISCARD)) {
+		spin_lock(&sbi->s_md_lock);
+		wake = list_empty(&sbi->s_discard_list);
+		list_splice_tail(&freed_data_list, &sbi->s_discard_list);
+		spin_unlock(&sbi->s_md_lock);
+		if (wake)
+			queue_work(system_unbound_wq, &sbi->s_discard_work);
+	} else {
+		list_for_each_entry_safe(entry, tmp, &freed_data_list, efd_list)
+			kmem_cache_free(ext4_free_data_cachep, entry);
+	}
+=======
 	if (test_opt(sb, DISCARD)) {
 		list_for_each_entry(entry, &freed_data_list, efd_list) {
 			err = ext4_issue_discard(sb, entry->efd_group,
@@ -3644,15 +3864,29 @@ void ext4_process_freed_data(struct super_block *sb, tid_t commit_tid)
 			} else if (err == -EOPNOTSUPP)
 				break;
 		}
+=======
+	list_for_each_entry(entry, &freed_data_list, efd_list)
+		ext4_free_data_in_buddy(sb, entry);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		if (discard_bio) {
-			submit_bio_wait(discard_bio);
-			bio_put(discard_bio);
-		}
+	if (test_opt(sb, DISCARD)) {
+		spin_lock(&sbi->s_md_lock);
+		wake = list_empty(&sbi->s_discard_list);
+		list_splice_tail(&freed_data_list, &sbi->s_discard_list);
+		spin_unlock(&sbi->s_md_lock);
+		if (wake)
+			queue_work(system_unbound_wq, &sbi->s_discard_work);
+	} else {
+		list_for_each_entry_safe(entry, tmp, &freed_data_list, efd_list)
+			kmem_cache_free(ext4_free_data_cachep, entry);
 	}
+<<<<<<< HEAD
 
 	list_for_each_entry_safe(entry, tmp, &freed_data_list, efd_list)
 		ext4_free_data_in_buddy(sb, entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int __init ext4_init_mballoc(void)
@@ -3726,7 +3960,17 @@ ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac,
 	}
 
 	BUFFER_TRACE(bitmap_bh, "getting write access");
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = ext4_journal_get_write_access(handle, sb, bitmap_bh,
+					    EXT4_JTR_NONE);
+=======
 	err = ext4_journal_get_write_access(handle, bitmap_bh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, bitmap_bh,
+					    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto out_err;
 
@@ -3739,7 +3983,15 @@ ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac,
 			ext4_free_group_clusters(sb, gdp));
 
 	BUFFER_TRACE(gdp_bh, "get_write_access");
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = ext4_journal_get_write_access(handle, sb, gdp_bh, EXT4_JTR_NONE);
+=======
 	err = ext4_journal_get_write_access(handle, gdp_bh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, gdp_bh, EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto out_err;
 
@@ -5916,7 +6168,17 @@ do_more:
 	}
 
 	BUFFER_TRACE(bitmap_bh, "getting write access");
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = ext4_journal_get_write_access(handle, sb, bitmap_bh,
+					    EXT4_JTR_NONE);
+=======
 	err = ext4_journal_get_write_access(handle, bitmap_bh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, bitmap_bh,
+					    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto error_return;
 
@@ -5926,7 +6188,15 @@ do_more:
 	 * using it
 	 */
 	BUFFER_TRACE(gd_bh, "get_write_access");
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = ext4_journal_get_write_access(handle, sb, gd_bh, EXT4_JTR_NONE);
+=======
 	err = ext4_journal_get_write_access(handle, gd_bh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, gd_bh, EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto error_return;
 #ifdef AGGRESSIVE_CHECK
@@ -6107,7 +6377,17 @@ int ext4_group_add_blocks(handle_t *handle, struct super_block *sb,
 	}
 
 	BUFFER_TRACE(bitmap_bh, "getting write access");
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = ext4_journal_get_write_access(handle, sb, bitmap_bh,
+					    EXT4_JTR_NONE);
+=======
 	err = ext4_journal_get_write_access(handle, bitmap_bh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, bitmap_bh,
+					    EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto error_return;
 
@@ -6117,7 +6397,15 @@ int ext4_group_add_blocks(handle_t *handle, struct super_block *sb,
 	 * using it
 	 */
 	BUFFER_TRACE(gd_bh, "get_write_access");
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = ext4_journal_get_write_access(handle, sb, gd_bh, EXT4_JTR_NONE);
+=======
 	err = ext4_journal_get_write_access(handle, gd_bh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = ext4_journal_get_write_access(handle, sb, gd_bh, EXT4_JTR_NONE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto error_return;
 
@@ -6183,19 +6471,43 @@ error_return:
  * @sb:		super block for the file system
  * @start:	starting block of the free extent in the alloc. group
  * @count:	number of blocks to TRIM
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  * @group:	alloc. group we are working with
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @e4b:	ext4 buddy for the group
  *
  * Trim "count" blocks starting at "start" in the "group". To assure that no
  * one will allocate those blocks, mark it as used in buddy bitmap. This must
  * be called with under the group lock.
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int ext4_trim_extent(struct super_block *sb,
+		int start, int count, struct ext4_buddy *e4b)
+=======
 static int ext4_trim_extent(struct super_block *sb, int start, int count,
 			     ext4_group_t group, struct ext4_buddy *e4b)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int ext4_trim_extent(struct super_block *sb,
+		int start, int count, struct ext4_buddy *e4b)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 __releases(bitlock)
 __acquires(bitlock)
 {
 	struct ext4_free_extent ex;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ext4_group_t group = e4b->bd_group;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ext4_group_t group = e4b->bd_group;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
 	trace_ext4_trim_extent(sb, group, start, count);
@@ -6218,6 +6530,27 @@ __acquires(bitlock)
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int ext4_try_to_trim_range(struct super_block *sb,
+		struct ext4_buddy *e4b, ext4_grpblk_t start,
+		ext4_grpblk_t max, ext4_grpblk_t minblocks)
+__acquires(ext4_group_lock_ptr(sb, e4b->bd_group))
+__releases(ext4_group_lock_ptr(sb, e4b->bd_group))
+<<<<<<< HEAD
+{
+	ext4_grpblk_t next, count, free_count;
+	void *bitmap;
+	int ret = 0;
+
+	bitmap = e4b->bd_bitmap;
+	start = (e4b->bd_info->bb_first_free > start) ?
+		e4b->bd_info->bb_first_free : start;
+	count = 0;
+	free_count = 0;
+=======
 /**
  * ext4_trim_all_free -- function to trim all free space in alloc. group
  * @sb:			super block for file system
@@ -6240,12 +6573,14 @@ static ext4_grpblk_t
 ext4_trim_all_free(struct super_block *sb, ext4_group_t group,
 		   ext4_grpblk_t start, ext4_grpblk_t max,
 		   ext4_grpblk_t minblocks)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+	ext4_grpblk_t next, count, free_count;
 	void *bitmap;
-	ext4_grpblk_t next, count = 0, free_count = 0;
-	struct ext4_buddy e4b;
 	int ret = 0;
 
+<<<<<<< HEAD
 	trace_ext4_trim_all_free(sb, group, start, max);
 
 	ret = ext4_mb_load_buddy(sb, group, &e4b);
@@ -6263,6 +6598,14 @@ ext4_trim_all_free(struct super_block *sb, ext4_group_t group,
 
 	start = (e4b.bd_info->bb_first_free > start) ?
 		e4b.bd_info->bb_first_free : start;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bitmap = e4b->bd_bitmap;
+	start = (e4b->bd_info->bb_first_free > start) ?
+		e4b->bd_info->bb_first_free : start;
+	count = 0;
+	free_count = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	while (start <= max) {
 		start = mb_find_next_zero_bit(bitmap, max + 1, start);
@@ -6271,8 +6614,16 @@ ext4_trim_all_free(struct super_block *sb, ext4_group_t group,
 		next = mb_find_next_bit(bitmap, max + 1, start);
 
 		if ((next - start) >= minblocks) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			ret = ext4_trim_extent(sb, start, next - start, e4b);
+=======
 			ret = ext4_trim_extent(sb, start,
 					       next - start, group, &e4b);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = ext4_trim_extent(sb, start, next - start, e4b);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (ret && ret != -EOPNOTSUPP)
 				break;
 			ret = 0;
@@ -6287,25 +6638,136 @@ ext4_trim_all_free(struct super_block *sb, ext4_group_t group,
 		}
 
 		if (need_resched()) {
-			ext4_unlock_group(sb, group);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			ext4_unlock_group(sb, e4b->bd_group);
 			cond_resched();
-			ext4_lock_group(sb, group);
+			ext4_lock_group(sb, e4b->bd_group);
 		}
 
-		if ((e4b.bd_info->bb_free - free_count) < minblocks)
+		if ((e4b->bd_info->bb_free - free_count) < minblocks)
 			break;
 	}
 
-	if (!ret) {
-		ret = count;
-		EXT4_MB_GRP_SET_TRIMMED(e4b.bd_info);
+	return count;
+}
+
+/**
+ * ext4_trim_all_free -- function to trim all free space in alloc. group
+ * @sb:			super block for file system
+ * @group:		group to be trimmed
+ * @start:		first group block to examine
+ * @max:		last group block to examine
+ * @minblocks:		minimum extent block count
+ *
+ * ext4_trim_all_free walks through group's block bitmap searching for free
+ * extents. When the free extent is found, mark it as used in group buddy
+ * bitmap. Then issue a TRIM command on this extent and free the extent in
+ * the group buddy bitmap.
+ */
+static ext4_grpblk_t
+ext4_trim_all_free(struct super_block *sb, ext4_group_t group,
+		   ext4_grpblk_t start, ext4_grpblk_t max,
+		   ext4_grpblk_t minblocks)
+{
+	struct ext4_buddy e4b;
+	int ret;
+
+	trace_ext4_trim_all_free(sb, group, start, max);
+
+	ret = ext4_mb_load_buddy(sb, group, &e4b);
+	if (ret) {
+		ext4_warning(sb, "Error %d loading buddy information for %u",
+			     ret, group);
+		return ret;
 	}
+
+	ext4_lock_group(sb, group);
+
+	if (!EXT4_MB_GRP_WAS_TRIMMED(e4b.bd_info) ||
+	    minblocks < atomic_read(&EXT4_SB(sb)->s_last_trim_minblks)) {
+		ret = ext4_try_to_trim_range(sb, &e4b, start, max, minblocks);
+		if (ret >= 0)
+			EXT4_MB_GRP_SET_TRIMMED(e4b.bd_info);
+	} else {
+		ret = 0;
+	}
+
+=======
+			ext4_unlock_group(sb, group);
+=======
+			ext4_unlock_group(sb, e4b->bd_group);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			cond_resched();
+			ext4_lock_group(sb, e4b->bd_group);
+		}
+
+		if ((e4b->bd_info->bb_free - free_count) < minblocks)
+			break;
+	}
+
+	return count;
+}
+
+/**
+ * ext4_trim_all_free -- function to trim all free space in alloc. group
+ * @sb:			super block for file system
+ * @group:		group to be trimmed
+ * @start:		first group block to examine
+ * @max:		last group block to examine
+ * @minblocks:		minimum extent block count
+ *
+ * ext4_trim_all_free walks through group's block bitmap searching for free
+ * extents. When the free extent is found, mark it as used in group buddy
+ * bitmap. Then issue a TRIM command on this extent and free the extent in
+ * the group buddy bitmap.
+ */
+static ext4_grpblk_t
+ext4_trim_all_free(struct super_block *sb, ext4_group_t group,
+		   ext4_grpblk_t start, ext4_grpblk_t max,
+		   ext4_grpblk_t minblocks)
+{
+	struct ext4_buddy e4b;
+	int ret;
+
+	trace_ext4_trim_all_free(sb, group, start, max);
+
+	ret = ext4_mb_load_buddy(sb, group, &e4b);
+	if (ret) {
+		ext4_warning(sb, "Error %d loading buddy information for %u",
+			     ret, group);
+		return ret;
+	}
+
+	ext4_lock_group(sb, group);
+
+	if (!EXT4_MB_GRP_WAS_TRIMMED(e4b.bd_info) ||
+	    minblocks < atomic_read(&EXT4_SB(sb)->s_last_trim_minblks)) {
+		ret = ext4_try_to_trim_range(sb, &e4b, start, max, minblocks);
+		if (ret >= 0)
+			EXT4_MB_GRP_SET_TRIMMED(e4b.bd_info);
+	} else {
+		ret = 0;
+	}
+<<<<<<< HEAD
 out:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ext4_unlock_group(sb, group);
 	ext4_mb_unload_buddy(&e4b);
 
 	ext4_debug("trimmed %d blocks in the group %d\n",
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret, group);
+=======
 		count, group);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret, group);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }

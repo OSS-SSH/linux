@@ -145,7 +145,17 @@ xfs_log_dinode_to_disk_ts(
 STATIC void
 xfs_log_dinode_to_disk(
 	struct xfs_log_dinode	*from,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct xfs_dinode	*to,
+	xfs_lsn_t		lsn)
+=======
 	struct xfs_dinode	*to)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xfs_dinode	*to,
+	xfs_lsn_t		lsn)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	to->di_magic = cpu_to_be16(from->di_magic);
 	to->di_mode = cpu_to_be16(from->di_mode);
@@ -182,7 +192,15 @@ xfs_log_dinode_to_disk(
 		to->di_flags2 = cpu_to_be64(from->di_flags2);
 		to->di_cowextsize = cpu_to_be32(from->di_cowextsize);
 		to->di_ino = cpu_to_be64(from->di_ino);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		to->di_lsn = cpu_to_be64(lsn);
+=======
 		to->di_lsn = cpu_to_be64(from->di_lsn);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		to->di_lsn = cpu_to_be64(lsn);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		memcpy(to->di_pad2, from->di_pad2, sizeof(to->di_pad2));
 		uuid_copy(&to->di_uuid, &from->di_uuid);
 		to->di_flushiter = 0;
@@ -261,16 +279,47 @@ xlog_recover_inode_commit_pass2(
 	}
 
 	/*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	 * If the inode has an LSN in it, recover the inode only if the on-disk
+	 * inode's LSN is older than the lsn of the transaction we are
+	 * replaying. We can have multiple checkpoints with the same start LSN,
+	 * so the current LSN being equal to the on-disk LSN doesn't necessarily
+	 * mean that the on-disk inode is more recent than the change being
+	 * replayed.
+	 *
+	 * We must check the current_lsn against the on-disk inode
+	 * here because the we can't trust the log dinode to contain a valid LSN
+	 * (see comment below before replaying the log dinode for details).
+	 *
+	 * Note: we still need to replay an owner change even though the inode
+	 * is more recent than the transaction as there is no guarantee that all
+	 * the btree blocks are more recent than this transaction, too.
+<<<<<<< HEAD
+=======
 	 * If the inode has an LSN in it, recover the inode only if it's less
 	 * than the lsn of the transaction we are replaying. Note: we still
 	 * need to replay an owner change even though the inode is more recent
 	 * than the transaction as there is no guarantee that all the btree
 	 * blocks are more recent than this transaction, too.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	if (dip->di_version >= 3) {
 		xfs_lsn_t	lsn = be64_to_cpu(dip->di_lsn);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (lsn && lsn != -1 && XFS_LSN_CMP(lsn, current_lsn) > 0) {
+=======
 		if (lsn && lsn != -1 && XFS_LSN_CMP(lsn, current_lsn) >= 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (lsn && lsn != -1 && XFS_LSN_CMP(lsn, current_lsn) > 0) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			trace_xfs_log_recover_inode_skip(log, in_f);
 			error = 0;
 			goto out_owner_change;
@@ -285,7 +334,15 @@ xlog_recover_inode_commit_pass2(
 	 * superblock flag to determine whether we need to look at di_flushiter
 	 * to skip replay when the on disk inode is newer than the log one
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!xfs_has_v3inodes(mp) &&
+=======
 	if (!xfs_sb_version_has_v3inode(&mp->m_sb) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!xfs_has_v3inodes(mp) &&
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    ldip->di_flushiter < be16_to_cpu(dip->di_flushiter)) {
 		/*
 		 * Deal with the wrap case, DI_MAX_FLUSH is less
@@ -368,8 +425,28 @@ xlog_recover_inode_commit_pass2(
 		goto out_release;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * Recover the log dinode inode into the on disk inode.
+	 *
+	 * The LSN in the log dinode is garbage - it can be zero or reflect
+	 * stale in-memory runtime state that isn't coherent with the changes
+	 * logged in this transaction or the changes written to the on-disk
+	 * inode.  Hence we write the current lSN into the inode because that
+	 * matches what xfs_iflush() would write inode the inode when flushing
+	 * the changes in this transaction.
+	 */
+	xfs_log_dinode_to_disk(ldip, dip, current_lsn);
+<<<<<<< HEAD
+=======
 	/* recover the log dinode inode into the on disk inode */
 	xfs_log_dinode_to_disk(ldip, dip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	fields = in_f->ilf_fields;
 	if (fields & XFS_ILOG_DEV)

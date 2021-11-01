@@ -55,10 +55,23 @@ static inline bool unwind_error(struct unwind_state *state)
 	return state->error;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static __always_inline void unwind_start(struct unwind_state *state,
+					 struct task_struct *task,
+					 struct pt_regs *regs,
+					 unsigned long first_frame)
+<<<<<<< HEAD
+=======
 static inline void unwind_start(struct unwind_state *state,
 				struct task_struct *task,
 				struct pt_regs *regs,
 				unsigned long first_frame)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	task = task ?: current;
 	first_frame = first_frame ?: get_stack_pointer(task, regs);

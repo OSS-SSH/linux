@@ -224,7 +224,15 @@ struct fib *aac_fib_alloc_tag(struct aac_dev *dev, struct scsi_cmnd *scmd)
 {
 	struct fib *fibptr;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	fibptr = &dev->fibs[scsi_cmd_to_rq(scmd)->tag];
+=======
 	fibptr = &dev->fibs[scmd->request->tag];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	fibptr = &dev->fibs[scsi_cmd_to_rq(scmd)->tag];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 *	Null out fields that depend on being zero at the start of
 	 *	each I/O

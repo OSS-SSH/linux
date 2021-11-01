@@ -2,7 +2,20 @@
 obj-$(CONFIG_PHY_EXYNOS_DP_VIDEO)	+= phy-exynos-dp-video.o
 obj-$(CONFIG_PHY_EXYNOS_MIPI_VIDEO)	+= phy-exynos-mipi-video.o
 obj-$(CONFIG_PHY_EXYNOS_PCIE)		+= phy-exynos-pcie.o
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+obj-$(CONFIG_PHY_SAMSUNG_UFS)		+= phy-exynos-ufs.o
+phy-exynos-ufs-y			+= phy-samsung-ufs.o
+phy-exynos-ufs-y			+= phy-exynos7-ufs.o
+phy-exynos-ufs-y			+= phy-exynosautov9-ufs.o
+<<<<<<< HEAD
+=======
 obj-$(CONFIG_PHY_SAMSUNG_UFS)		+= phy-samsung-ufs.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_PHY_SAMSUNG_USB2)		+= phy-exynos-usb2.o
 phy-exynos-usb2-y			+= phy-samsung-usb2.o
 phy-exynos-usb2-$(CONFIG_PHY_EXYNOS4210_USB2)	+= phy-exynos4210-usb2.o

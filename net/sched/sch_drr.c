@@ -317,7 +317,15 @@ static struct drr_class *drr_classify(struct sk_buff *skb, struct Qdisc *sch,
 
 	*qerr = NET_XMIT_SUCCESS | __NET_XMIT_BYPASS;
 	fl = rcu_dereference_bh(q->filter_list);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	result = tcf_classify(skb, NULL, fl, &res, false);
+=======
 	result = tcf_classify(skb, fl, &res, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	result = tcf_classify(skb, NULL, fl, &res, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (result >= 0) {
 #ifdef CONFIG_NET_CLS_ACT
 		switch (result) {

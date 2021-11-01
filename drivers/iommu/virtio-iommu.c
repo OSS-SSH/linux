@@ -598,12 +598,18 @@ static struct iommu_domain *viommu_domain_alloc(unsigned type)
 	spin_lock_init(&vdomain->mappings_lock);
 	vdomain->mappings = RB_ROOT_CACHED;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (type == IOMMU_DOMAIN_DMA &&
 	    iommu_get_dma_cookie(&vdomain->domain)) {
 		kfree(vdomain);
 		return NULL;
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return &vdomain->domain;
 }
 
@@ -643,8 +649,14 @@ static void viommu_domain_free(struct iommu_domain *domain)
 {
 	struct viommu_domain *vdomain = to_viommu_domain(domain);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	iommu_put_dma_cookie(domain);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Free all remaining mappings (size 2^64) */
 	viommu_del_mappings(vdomain, 0, 0);
 

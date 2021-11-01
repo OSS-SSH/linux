@@ -53,15 +53,62 @@ static inline void sync_with_host(uint64_t phase)
 		     : "+a" (phase));
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void self_smi(void)
+=======
 void self_smi(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void self_smi(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	x2apic_write_reg(APIC_ICR,
 			 APIC_DEST_SELF | APIC_INT_ASSERT | APIC_DM_SMI);
 }
 
-void guest_code(void *arg)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void l2_guest_code(void)
 {
+	sync_with_host(8);
+
+	sync_with_host(10);
+
+	vmcall();
+}
+
+static void guest_code(void *arg)
+{
+	#define L2_GUEST_STACK_SIZE 64
+	unsigned long l2_guest_stack[L2_GUEST_STACK_SIZE];
 	uint64_t apicbase = rdmsr(MSR_IA32_APICBASE);
+	struct svm_test_data *svm = arg;
+	struct vmx_pages *vmx_pages = arg;
+=======
+void guest_code(void *arg)
+=======
+static void l2_guest_code(void)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	sync_with_host(8);
+
+	sync_with_host(10);
+
+	vmcall();
+}
+
+static void guest_code(void *arg)
+{
+	#define L2_GUEST_STACK_SIZE 64
+	unsigned long l2_guest_stack[L2_GUEST_STACK_SIZE];
+	uint64_t apicbase = rdmsr(MSR_IA32_APICBASE);
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct svm_test_data *svm = arg;
+	struct vmx_pages *vmx_pages = arg;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sync_with_host(1);
 
@@ -74,21 +121,81 @@ void guest_code(void *arg)
 	sync_with_host(4);
 
 	if (arg) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		if (cpu_has_svm()) {
+			generic_svm_setup(svm, l2_guest_code,
+					  &l2_guest_stack[L2_GUEST_STACK_SIZE]);
+		} else {
+			GUEST_ASSERT(prepare_for_vmx_operation(vmx_pages));
+			GUEST_ASSERT(load_vmcs(vmx_pages));
+			prepare_vmcs(vmx_pages, l2_guest_code,
+				     &l2_guest_stack[L2_GUEST_STACK_SIZE]);
+		}
+<<<<<<< HEAD
+=======
 		if (cpu_has_svm())
 			generic_svm_setup(arg, NULL, NULL);
 		else
 			GUEST_ASSERT(prepare_for_vmx_operation(arg));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		sync_with_host(5);
 
 		self_smi();
 
 		sync_with_host(7);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+		if (cpu_has_svm()) {
+			run_guest(svm->vmcb, svm->vmcb_gpa);
+			svm->vmcb->save.rip += 3;
+			run_guest(svm->vmcb, svm->vmcb_gpa);
+		} else {
+			vmlaunch();
+			vmresume();
+		}
+
+		/* Stages 8-11 are eaten by SMM (SMRAM_STAGE reported instead) */
+		sync_with_host(12);
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	sync_with_host(DONE);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+void inject_smi(struct kvm_vm *vm)
+{
+	struct kvm_vcpu_events events;
+
+	vcpu_events_get(vm, VCPU_ID, &events);
+
+	events.smi.pending = 1;
+	events.flags |= KVM_VCPUEVENT_VALID_SMM;
+
+	vcpu_events_set(vm, VCPU_ID, &events);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int main(int argc, char *argv[])
 {
 	vm_vaddr_t nested_gva = 0;
@@ -147,6 +254,31 @@ int main(int argc, char *argv[])
 			    "Unexpected stage: #%x, got %x",
 			    stage, stage_reported);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		/*
+		 * Enter SMM during L2 execution and check that we correctly
+		 * return from it. Do not perform save/restore while in SMM yet.
+		 */
+		if (stage == 8) {
+			inject_smi(vm);
+			continue;
+		}
+
+		/*
+		 * Perform save/restore while the guest is in SMM triggered
+		 * during L2 execution.
+		 */
+		if (stage == 10)
+			inject_smi(vm);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		state = vcpu_save_state(vm, VCPU_ID);
 		kvm_vm_release(vm);
 		kvm_vm_restart(vm, O_RDWR);

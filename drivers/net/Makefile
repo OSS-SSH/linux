@@ -18,7 +18,17 @@ obj-$(CONFIG_MACVLAN) += macvlan.o
 obj-$(CONFIG_MACVTAP) += macvtap.o
 obj-$(CONFIG_MII) += mii.o
 obj-$(CONFIG_MDIO) += mdio.o
+<<<<<<< HEAD
+<<<<<<< HEAD
+obj-$(CONFIG_NET) += loopback.o
+obj-$(CONFIG_NETDEV_LEGACY_INIT) += Space.o
+=======
 obj-$(CONFIG_NET) += Space.o loopback.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_NET) += loopback.o
+obj-$(CONFIG_NETDEV_LEGACY_INIT) += Space.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_NETCONSOLE) += netconsole.o
 obj-y += phy/
 obj-y += mdio/
@@ -36,7 +46,15 @@ obj-$(CONFIG_GTP) += gtp.o
 obj-$(CONFIG_NLMON) += nlmon.o
 obj-$(CONFIG_NET_VRF) += vrf.o
 obj-$(CONFIG_VSOCKMON) += vsockmon.o
+<<<<<<< HEAD
+<<<<<<< HEAD
+obj-$(CONFIG_MHI_NET) += mhi_net.o
+=======
 obj-$(CONFIG_MHI_NET) += mhi/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_MHI_NET) += mhi_net.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #
 # Networking Drivers
@@ -69,6 +87,14 @@ obj-$(CONFIG_WAN) += wan/
 obj-$(CONFIG_WLAN) += wireless/
 obj-$(CONFIG_IEEE802154) += ieee802154/
 obj-$(CONFIG_WWAN) += wwan/
+<<<<<<< HEAD
+<<<<<<< HEAD
+obj-$(CONFIG_MCTP) += mctp/
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_MCTP) += mctp/
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 obj-$(CONFIG_VMXNET3) += vmxnet3/
 obj-$(CONFIG_XEN_NETDEV_FRONTEND) += xen-netfront.o

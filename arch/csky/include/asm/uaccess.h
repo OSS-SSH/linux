@@ -209,12 +209,18 @@ unsigned long raw_copy_to_user(void *to, const void *from, unsigned long n);
 unsigned long __clear_user(void __user *to, unsigned long n);
 #define __clear_user __clear_user
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 long __strncpy_from_user(char *dst, const char *src, long count);
 #define __strncpy_from_user __strncpy_from_user
 
 long __strnlen_user(const char *s, long n);
 #define __strnlen_user __strnlen_user
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/segment.h>
 #include <asm-generic/uaccess.h>
 

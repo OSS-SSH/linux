@@ -664,7 +664,15 @@ int zynqmp_pm_write_ggs(u32 index, u32 value)
 EXPORT_SYMBOL_GPL(zynqmp_pm_write_ggs);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * zynqmp_pm_read_ggs() - PM API for reading global general storage (ggs)
+=======
  * zynqmp_pm_write_ggs() - PM API for reading global general storage (ggs)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * zynqmp_pm_read_ggs() - PM API for reading global general storage (ggs)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @index:	GGS register index
  * @value:	Register value to be written
  *
@@ -697,7 +705,15 @@ int zynqmp_pm_write_pggs(u32 index, u32 value)
 EXPORT_SYMBOL_GPL(zynqmp_pm_write_pggs);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * zynqmp_pm_read_pggs() - PM API for reading persistent global general
+=======
  * zynqmp_pm_write_pggs() - PM API for reading persistent global general
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * zynqmp_pm_read_pggs() - PM API for reading persistent global general
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *			     storage (pggs)
  * @index:	PGGS register index
  * @value:	Register value to be written
@@ -1012,7 +1028,34 @@ int zynqmp_pm_set_requirement(const u32 node, const u32 capabilities,
 EXPORT_SYMBOL_GPL(zynqmp_pm_set_requirement);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * zynqmp_pm_load_pdi - Load and process PDI
+ * @src:       Source device where PDI is located
+ * @address:   PDI src address
+ *
+ * This function provides support to load PDI from linux
+ *
+ * Return: Returns status, either success or error+reason
+ */
+int zynqmp_pm_load_pdi(const u32 src, const u64 address)
+{
+	return zynqmp_pm_invoke_fn(PM_LOAD_PDI, src,
+				   lower_32_bits(address),
+				   upper_32_bits(address), 0, NULL);
+}
+EXPORT_SYMBOL_GPL(zynqmp_pm_load_pdi);
+
+/**
+ * zynqmp_pm_aes_engine - Access AES hardware to encrypt/decrypt the data using
+<<<<<<< HEAD
+=======
  * zynqmp_pm_aes - Access AES hardware to encrypt/decrypt the data using
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * AES-GCM core.
  * @address:	Address of the AesParams structure.
  * @out:	Returned output value

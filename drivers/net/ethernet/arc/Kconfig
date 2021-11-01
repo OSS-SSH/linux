@@ -21,6 +21,14 @@ config ARC_EMAC_CORE
 	depends on ARC || ARCH_ROCKCHIP || COMPILE_TEST
 	select MII
 	select PHYLIB
+<<<<<<< HEAD
+<<<<<<< HEAD
+	select CRC32
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select CRC32
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config ARC_EMAC
 	tristate "ARC EMAC support"

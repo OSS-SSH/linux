@@ -174,8 +174,18 @@ static int sysfs_kf_bin_open(struct kernfs_open_file *of)
 {
 	struct bin_attribute *battr = of->kn->priv;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (battr->f_mapping)
+		of->file->f_mapping = battr->f_mapping();
+=======
 	if (battr->mapping)
 		of->file->f_mapping = battr->mapping;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (battr->f_mapping)
+		of->file->f_mapping = battr->f_mapping();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

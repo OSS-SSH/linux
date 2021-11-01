@@ -70,7 +70,15 @@ static inline struct acpi_table_header *get_header(struct config_item *cfg)
 	if (!table->header)
 		pr_err("table not loaded\n");
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return table->header ?: ERR_PTR(-EINVAL);
+=======
 	return table->header;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return table->header ?: ERR_PTR(-EINVAL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t acpi_table_aml_read(struct config_item *cfg,
@@ -78,8 +86,18 @@ static ssize_t acpi_table_aml_read(struct config_item *cfg,
 {
 	struct acpi_table_header *h = get_header(cfg);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+=======
 	if (!h)
 		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (data)
 		memcpy(data, h, h->length);
@@ -100,60 +118,144 @@ static ssize_t acpi_table_signature_show(struct config_item *cfg, char *str)
 {
 	struct acpi_table_header *h = get_header(cfg);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%.*s\n", ACPI_NAMESEG_SIZE, h->signature);
+=======
 	if (!h)
 		return -EINVAL;
 
 	return sprintf(str, "%.*s\n", ACPI_NAMESEG_SIZE, h->signature);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%.*s\n", ACPI_NAMESEG_SIZE, h->signature);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t acpi_table_length_show(struct config_item *cfg, char *str)
 {
 	struct acpi_table_header *h = get_header(cfg);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%d\n", h->length);
+=======
 	if (!h)
 		return -EINVAL;
 
 	return sprintf(str, "%d\n", h->length);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%d\n", h->length);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t acpi_table_revision_show(struct config_item *cfg, char *str)
 {
 	struct acpi_table_header *h = get_header(cfg);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%d\n", h->revision);
+=======
 	if (!h)
 		return -EINVAL;
 
 	return sprintf(str, "%d\n", h->revision);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%d\n", h->revision);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t acpi_table_oem_id_show(struct config_item *cfg, char *str)
 {
 	struct acpi_table_header *h = get_header(cfg);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%.*s\n", ACPI_OEM_ID_SIZE, h->oem_id);
+=======
 	if (!h)
 		return -EINVAL;
 
 	return sprintf(str, "%.*s\n", ACPI_OEM_ID_SIZE, h->oem_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%.*s\n", ACPI_OEM_ID_SIZE, h->oem_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t acpi_table_oem_table_id_show(struct config_item *cfg, char *str)
 {
 	struct acpi_table_header *h = get_header(cfg);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%.*s\n", ACPI_OEM_TABLE_ID_SIZE, h->oem_table_id);
+=======
 	if (!h)
 		return -EINVAL;
 
 	return sprintf(str, "%.*s\n", ACPI_OEM_TABLE_ID_SIZE, h->oem_table_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%.*s\n", ACPI_OEM_TABLE_ID_SIZE, h->oem_table_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t acpi_table_oem_revision_show(struct config_item *cfg, char *str)
 {
 	struct acpi_table_header *h = get_header(cfg);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%d\n", h->oem_revision);
+=======
 	if (!h)
 		return -EINVAL;
 
 	return sprintf(str, "%d\n", h->oem_revision);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%d\n", h->oem_revision);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t acpi_table_asl_compiler_id_show(struct config_item *cfg,
@@ -161,10 +263,24 @@ static ssize_t acpi_table_asl_compiler_id_show(struct config_item *cfg,
 {
 	struct acpi_table_header *h = get_header(cfg);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%.*s\n", ACPI_NAMESEG_SIZE, h->asl_compiler_id);
+=======
 	if (!h)
 		return -EINVAL;
 
 	return sprintf(str, "%.*s\n", ACPI_NAMESEG_SIZE, h->asl_compiler_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%.*s\n", ACPI_NAMESEG_SIZE, h->asl_compiler_id);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t acpi_table_asl_compiler_revision_show(struct config_item *cfg,
@@ -172,10 +288,24 @@ static ssize_t acpi_table_asl_compiler_revision_show(struct config_item *cfg,
 {
 	struct acpi_table_header *h = get_header(cfg);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%d\n", h->asl_compiler_revision);
+=======
 	if (!h)
 		return -EINVAL;
 
 	return sprintf(str, "%d\n", h->asl_compiler_revision);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (IS_ERR(h))
+		return PTR_ERR(h);
+
+	return sysfs_emit(str, "%d\n", h->asl_compiler_revision);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 CONFIGFS_ATTR_RO(acpi_table_, signature);

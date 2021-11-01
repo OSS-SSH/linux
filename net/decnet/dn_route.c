@@ -1026,8 +1026,16 @@ source_ok:
 	if (!fld.daddr) {
 		fld.daddr = fld.saddr;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dev_put(dev_out);
+=======
 		if (dev_out)
 			dev_put(dev_out);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_put(dev_out);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = -EINVAL;
 		dev_out = init_net.loopback_dev;
 		if (!dev_out->dn_ptr)
@@ -1084,8 +1092,16 @@ source_ok:
 					neigh_release(neigh);
 					neigh = NULL;
 				} else {
+<<<<<<< HEAD
+<<<<<<< HEAD
+					dev_put(dev_out);
+=======
 					if (dev_out)
 						dev_put(dev_out);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					dev_put(dev_out);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					if (dn_dev_islocal(neigh->dev, fld.daddr)) {
 						dev_out = init_net.loopback_dev;
 						res.type = RTN_LOCAL;
@@ -1144,8 +1160,16 @@ select_source:
 	if (res.type == RTN_LOCAL) {
 		if (!fld.saddr)
 			fld.saddr = fld.daddr;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dev_put(dev_out);
+=======
 		if (dev_out)
 			dev_put(dev_out);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_put(dev_out);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_out = init_net.loopback_dev;
 		dev_hold(dev_out);
 		if (!dev_out->dn_ptr)
@@ -1168,8 +1192,16 @@ select_source:
 	if (!fld.saddr)
 		fld.saddr = DN_FIB_RES_PREFSRC(res);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dev_put(dev_out);
+=======
 	if (dev_out)
 		dev_put(dev_out);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(dev_out);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_out = DN_FIB_RES_DEV(res);
 	dev_hold(dev_out);
 	fld.flowidn_oif = dev_out->ifindex;
@@ -1222,8 +1254,16 @@ done:
 		neigh_release(neigh);
 	if (free_res)
 		dn_fib_res_put(&res);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dev_put(dev_out);
+=======
 	if (dev_out)
 		dev_put(dev_out);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(dev_out);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	return err;
 
@@ -1503,8 +1543,16 @@ done:
 	if (free_res)
 		dn_fib_res_put(&res);
 	dev_put(in_dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dev_put(out_dev);
+=======
 	if (out_dev)
 		dev_put(out_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dev_put(out_dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	return err;
 

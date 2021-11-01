@@ -78,13 +78,38 @@ TRACE_EVENT(kvm_arm_clear_debug,
 	TP_printk("flags: 0x%08x", __entry->guest_debug)
 );
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * The dreg32 name is a leftover from a distant past. This will really
+ * output a 64bit value...
+ */
+<<<<<<< HEAD
+TRACE_EVENT(kvm_arm_set_dreg32,
+	TP_PROTO(const char *name, __u64 value),
+=======
 TRACE_EVENT(kvm_arm_set_dreg32,
 	TP_PROTO(const char *name, __u32 value),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+TRACE_EVENT(kvm_arm_set_dreg32,
+	TP_PROTO(const char *name, __u64 value),
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	TP_ARGS(name, value),
 
 	TP_STRUCT__entry(
 		__field(const char *, name)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		__field(__u64, value)
+=======
 		__field(__u32, value)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		__field(__u64, value)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	),
 
 	TP_fast_assign(
@@ -92,7 +117,15 @@ TRACE_EVENT(kvm_arm_set_dreg32,
 		__entry->value = value;
 	),
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	TP_printk("%s: 0x%llx", __entry->name, __entry->value)
+=======
 	TP_printk("%s: 0x%08x", __entry->name, __entry->value)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	TP_printk("%s: 0x%llx", __entry->name, __entry->value)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 );
 
 TRACE_DEFINE_SIZEOF(__u64);

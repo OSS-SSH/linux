@@ -262,7 +262,15 @@ int amdgpu_ib_schedule(struct amdgpu_ring *ring, unsigned num_ibs,
 				       fence_flags | AMDGPU_FENCE_FLAG_64BIT);
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	r = amdgpu_fence_emit(ring, f, job, fence_flags);
+=======
 	r = amdgpu_fence_emit(ring, f, fence_flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	r = amdgpu_fence_emit(ring, f, job, fence_flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (r) {
 		dev_err(adev->dev, "failed to emit fence (%d)\n", r);
 		if (job && job->vmid)

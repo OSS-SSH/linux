@@ -26,6 +26,14 @@ static int sig_copyctx = SIGTRAP;
 
 static char const *const feats_names[FMAX_END] = {
 	" SSBS ",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	" SVE ",
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	" SVE ",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define MAX_FEATS_SZ	128
@@ -263,16 +271,48 @@ int test_init(struct tdescr *td)
 		 */
 		if (getauxval(AT_HWCAP) & HWCAP_SSBS)
 			td->feats_supported |= FEAT_SSBS;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (getauxval(AT_HWCAP) & HWCAP_SVE)
+			td->feats_supported |= FEAT_SVE;
+		if (feats_ok(td)) {
+=======
 		if (feats_ok(td))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (getauxval(AT_HWCAP) & HWCAP_SVE)
+			td->feats_supported |= FEAT_SVE;
+		if (feats_ok(td)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			fprintf(stderr,
 				"Required Features: [%s] supported\n",
 				feats_to_string(td->feats_required &
 						td->feats_supported));
+<<<<<<< HEAD
+<<<<<<< HEAD
+		} else {
+=======
 		else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		} else {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			fprintf(stderr,
 				"Required Features: [%s] NOT supported\n",
 				feats_to_string(td->feats_required &
 						~td->feats_supported));
+<<<<<<< HEAD
+<<<<<<< HEAD
+			td->result = KSFT_SKIP;
+			return 0;
+		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			td->result = KSFT_SKIP;
+			return 0;
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Perform test specific additional initialization */

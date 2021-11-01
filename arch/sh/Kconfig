@@ -22,8 +22,14 @@ config SUPERH
 	select GENERIC_IRQ_SHOW
 	select GENERIC_PCI_IOMAP if PCI
 	select GENERIC_SCHED_CLOCK
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	select GENERIC_STRNCPY_FROM_USER
 	select GENERIC_STRNLEN_USER
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select GENERIC_SMP_IDLE_THREAD
 	select GUP_GET_PTE_LOW_HIGH if X2TLB
 	select HAVE_ARCH_AUDITSYSCALL
@@ -39,7 +45,13 @@ config SUPERH
 	select HAVE_FUTEX_CMPXCHG if FUTEX
 	select HAVE_FTRACE_MCOUNT_RECORD
 	select HAVE_HW_BREAKPOINT
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	select HAVE_IDE if HAS_IOPORT_MAP
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select HAVE_IOREMAP_PROT if MMU && !X2TLB
 	select HAVE_KERNEL_BZIP2
 	select HAVE_KERNEL_GZIP
@@ -72,6 +84,14 @@ config SUPERH
 	select RTC_LIB
 	select SET_FS
 	select SPARSE_IRQ
+<<<<<<< HEAD
+<<<<<<< HEAD
+	select TRACE_IRQFLAGS_SUPPORT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select TRACE_IRQFLAGS_SUPPORT
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  The SuperH is a RISC processor targeted for use in embedded systems
 	  and consumer electronics; it was also used in the Sega Dreamcast

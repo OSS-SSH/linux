@@ -147,7 +147,15 @@ static int newque(struct ipc_namespace *ns, struct ipc_params *params)
 	key_t key = params->key;
 	int msgflg = params->flg;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	msq = kmalloc(sizeof(*msq), GFP_KERNEL_ACCOUNT);
+=======
 	msq = kmalloc(sizeof(*msq), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	msq = kmalloc(sizeof(*msq), GFP_KERNEL_ACCOUNT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(!msq))
 		return -ENOMEM;
 

@@ -142,16 +142,40 @@ xbc_node_match_prefix(struct xbc_node *node, const char **prefix)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * xbc_node_find_subkey() - Find a subkey node which matches given key
+ * @parent: An XBC node.
+ * @key: A key string.
+ *
+ * Search a key node under @parent which matches @key. The @key can contain
+=======
  * xbc_node_find_child() - Find a child node which matches given key
  * @parent: An XBC node.
  * @key: A key string.
  *
  * Search a node under @parent which matches @key. The @key can contain
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * xbc_node_find_subkey() - Find a subkey node which matches given key
+ * @parent: An XBC node.
+ * @key: A key string.
+ *
+ * Search a key node under @parent which matches @key. The @key can contain
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * several words jointed with '.'. If @parent is NULL, this searches the
  * node from whole tree. Return NULL if no node is matched.
  */
 struct xbc_node * __init
+<<<<<<< HEAD
+<<<<<<< HEAD
+xbc_node_find_subkey(struct xbc_node *parent, const char *key)
+=======
 xbc_node_find_child(struct xbc_node *parent, const char *key)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+xbc_node_find_subkey(struct xbc_node *parent, const char *key)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct xbc_node *node;
 
@@ -191,7 +215,15 @@ const char * __init
 xbc_node_find_value(struct xbc_node *parent, const char *key,
 		    struct xbc_node **vnode)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct xbc_node *node = xbc_node_find_subkey(parent, key);
+=======
 	struct xbc_node *node = xbc_node_find_child(parent, key);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct xbc_node *node = xbc_node_find_subkey(parent, key);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!node || !xbc_node_is_key(node))
 		return NULL;
@@ -792,7 +824,15 @@ void __init xbc_destroy_all(void)
 	xbc_data = NULL;
 	xbc_data_size = 0;
 	xbc_node_num = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	memblock_free_ptr(xbc_nodes, sizeof(struct xbc_node) * XBC_NODE_MAX);
+=======
 	memblock_free(__pa(xbc_nodes), sizeof(struct xbc_node) * XBC_NODE_MAX);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	memblock_free_ptr(xbc_nodes, sizeof(struct xbc_node) * XBC_NODE_MAX);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xbc_nodes = NULL;
 	brace_index = 0;
 }

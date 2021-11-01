@@ -196,8 +196,24 @@ static struct posix_acl *__f2fs_get_acl(struct inode *inode, int type,
 	return acl;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct posix_acl *f2fs_get_acl(struct inode *inode, int type, bool rcu)
+{
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+=======
 struct posix_acl *f2fs_get_acl(struct inode *inode, int type)
 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct posix_acl *f2fs_get_acl(struct inode *inode, int type, bool rcu)
+{
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return __f2fs_get_acl(inode, type, NULL);
 }
 

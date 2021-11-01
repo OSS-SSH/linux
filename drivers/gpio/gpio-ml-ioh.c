@@ -155,11 +155,25 @@ static int ioh_gpio_direction_input(struct gpio_chip *gpio, unsigned nr)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/*
+ * Save register configuration and disable interrupts.
+ */
+static void __maybe_unused ioh_gpio_save_reg_conf(struct ioh_gpio *chip)
+=======
 #ifdef CONFIG_PM
 /*
  * Save register configuration and disable interrupts.
  */
 static void ioh_gpio_save_reg_conf(struct ioh_gpio *chip)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/*
+ * Save register configuration and disable interrupts.
+ */
+static void __maybe_unused ioh_gpio_save_reg_conf(struct ioh_gpio *chip)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int i;
 
@@ -185,7 +199,15 @@ static void ioh_gpio_save_reg_conf(struct ioh_gpio *chip)
 /*
  * This function restores the register configuration of the GPIO device.
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void __maybe_unused ioh_gpio_restore_reg_conf(struct ioh_gpio *chip)
+=======
 static void ioh_gpio_restore_reg_conf(struct ioh_gpio *chip)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void __maybe_unused ioh_gpio_restore_reg_conf(struct ioh_gpio *chip)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int i;
 
@@ -207,7 +229,13 @@ static void ioh_gpio_restore_reg_conf(struct ioh_gpio *chip)
 				  &chip->reg->ioh_sel_reg[i]);
 	}
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int ioh_gpio_to_irq(struct gpio_chip *gpio, unsigned offset)
 {
@@ -522,17 +550,40 @@ static void ioh_gpio_remove(struct pci_dev *pdev)
 	kfree(chip);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int __maybe_unused ioh_gpio_suspend(struct device *dev)
+{
+	struct ioh_gpio *chip = dev_get_drvdata(dev);
+=======
 #ifdef CONFIG_PM
 static int ioh_gpio_suspend(struct pci_dev *pdev, pm_message_t state)
 {
 	s32 ret;
 	struct ioh_gpio *chip = pci_get_drvdata(pdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __maybe_unused ioh_gpio_suspend(struct device *dev)
+{
+	struct ioh_gpio *chip = dev_get_drvdata(dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long flags;
 
 	spin_lock_irqsave(&chip->spinlock, flags);
 	ioh_gpio_save_reg_conf(chip);
 	spin_unlock_irqrestore(&chip->spinlock, flags);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return 0;
+}
+
+static int __maybe_unused ioh_gpio_resume(struct device *dev)
+{
+	struct ioh_gpio *chip = dev_get_drvdata(dev);
+	unsigned long flags;
+
+=======
 	ret = pci_save_state(pdev);
 	if (ret) {
 		dev_err(&pdev->dev, "pci_save_state Failed-%d\n", ret);
@@ -544,15 +595,17 @@ static int ioh_gpio_suspend(struct pci_dev *pdev, pm_message_t state)
 	if (ret)
 		dev_err(&pdev->dev, "pci_enable_wake Failed -%d\n", ret);
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
-static int ioh_gpio_resume(struct pci_dev *pdev)
+static int __maybe_unused ioh_gpio_resume(struct device *dev)
 {
-	s32 ret;
-	struct ioh_gpio *chip = pci_get_drvdata(pdev);
+	struct ioh_gpio *chip = dev_get_drvdata(dev);
 	unsigned long flags;
 
+<<<<<<< HEAD
 	ret = pci_enable_wake(pdev, PCI_D0, 0);
 
 	pci_set_power_state(pdev, PCI_D0);
@@ -563,6 +616,9 @@ static int ioh_gpio_resume(struct pci_dev *pdev)
 	}
 	pci_restore_state(pdev);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_irqsave(&chip->spinlock, flags);
 	iowrite32(0x01, &chip->reg->srst);
 	iowrite32(0x00, &chip->reg->srst);
@@ -571,10 +627,20 @@ static int ioh_gpio_resume(struct pci_dev *pdev)
 
 	return 0;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+static SIMPLE_DEV_PM_OPS(ioh_gpio_pm_ops, ioh_gpio_suspend, ioh_gpio_resume);
+=======
 #else
 #define ioh_gpio_suspend NULL
 #define ioh_gpio_resume NULL
 #endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+static SIMPLE_DEV_PM_OPS(ioh_gpio_pm_ops, ioh_gpio_suspend, ioh_gpio_resume);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct pci_device_id ioh_gpio_pcidev_id[] = {
 	{ PCI_DEVICE(PCI_VENDOR_ID_ROHM, 0x802E) },
@@ -587,8 +653,20 @@ static struct pci_driver ioh_gpio_driver = {
 	.id_table = ioh_gpio_pcidev_id,
 	.probe = ioh_gpio_probe,
 	.remove = ioh_gpio_remove,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.driver = {
+		.pm = &ioh_gpio_pm_ops,
+	},
+=======
 	.suspend = ioh_gpio_suspend,
 	.resume = ioh_gpio_resume
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.driver = {
+		.pm = &ioh_gpio_pm_ops,
+	},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 module_pci_driver(ioh_gpio_driver);

@@ -35,6 +35,14 @@
 #include <drm/drm_damage_helper.h>
 #include <drm/drm_device.h>
 #include <drm/drm_drv.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <drm/drm_gem_atomic_helper.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <drm/drm_gem_atomic_helper.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_plane_helper.h>
 #include <drm/drm_print.h>
 #include <drm/drm_self_refresh_helper.h>
@@ -633,7 +641,15 @@ drm_atomic_helper_check_modeset(struct drm_device *dev,
 			 * connectors and a NULL mode.
 			 *
 			 * The other way around is true as well. enable != 0
+<<<<<<< HEAD
+<<<<<<< HEAD
+			 * implies that connectors are attached and a mode is set.
+=======
 			 * iff connectors are attached and a mode is set.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			 * implies that connectors are attached and a mode is set.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			 */
 			new_crtc_state->mode_changed = true;
 			new_crtc_state->connectors_changed = true;
@@ -1685,7 +1701,15 @@ static void commit_work(struct work_struct *work)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * drm_atomic_helper_async_check - check if state can be committed asynchronously
+=======
  * drm_atomic_helper_async_check - check if state can be commited asynchronously
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * drm_atomic_helper_async_check - check if state can be committed asynchronously
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dev: DRM device
  * @state: the driver state object
  *
@@ -1694,7 +1718,15 @@ static void commit_work(struct work_struct *work)
  * but just do in-place changes on the current state.
  *
  * It will return 0 if the commit can happen in an asynchronous fashion or error
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * if not. Note that error just mean it can't be committed asynchronously, if it
+=======
  * if not. Note that error just mean it can't be commited asynchronously, if it
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * if not. Note that error just mean it can't be committed asynchronously, if it
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * fails the commit should be treated like a normal synchronous commit.
  */
 int drm_atomic_helper_async_check(struct drm_device *dev,
@@ -2405,6 +2437,24 @@ int drm_atomic_helper_prepare_planes(struct drm_device *dev,
 			ret = funcs->prepare_fb(plane, new_plane_state);
 			if (ret)
 				goto fail;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		} else {
+			WARN_ON_ONCE(funcs->cleanup_fb);
+
+			if (!drm_core_check_feature(dev, DRIVER_GEM))
+				continue;
+
+			ret = drm_gem_plane_helper_prepare_fb(plane, new_plane_state);
+			if (ret)
+				goto fail;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -2573,7 +2623,15 @@ EXPORT_SYMBOL(drm_atomic_helper_commit_planes);
  *
  * This function can only be savely used when planes are not allowed to move
  * between different CRTCs because this function doesn't handle inter-CRTC
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * dependencies. Callers need to ensure that either no such dependencies exist,
+=======
  * depencies. Callers need to ensure that either no such depencies exist,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * dependencies. Callers need to ensure that either no such dependencies exist,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * resolve them through ordering of commit calls or through some other means.
  */
 void
@@ -2710,7 +2768,15 @@ EXPORT_SYMBOL(drm_atomic_helper_cleanup_planes);
 /**
  * drm_atomic_helper_swap_state - store atomic state into current sw state
  * @state: atomic state
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @stall: stall for preceding commits
+=======
  * @stall: stall for preceeding commits
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @stall: stall for preceding commits
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * This function stores the atomic state into the current state pointers in all
  * driver objects. It should be called after all failing steps have been done

@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  *   fs/cifs/cifsencrypt.c
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   Encryption and hashing operations relating to NTLM, NTLMv2.  See MS-NLMP
  *   for more detailed information
@@ -22,7 +28,15 @@
 #include <linux/random.h>
 #include <linux/highmem.h>
 #include <linux/fips.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "../smbfs_common/arc4.h"
+=======
 #include <crypto/arc4.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "../smbfs_common/arc4.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <crypto/aead.h>
 
 int __cifs_calc_signature(struct smb_rqst *rqst,
@@ -250,6 +264,9 @@ int cifs_verify_signature(struct smb_rqst *rqst,
 
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /* first calculate 24 bytes ntlm response and then 16 byte session key */
 int setup_ntlm_response(struct cifs_ses *ses, const struct nls_table *nls_cp)
 {
@@ -331,6 +348,9 @@ int calc_lanman_hash(const char *password, const char *cryptkey, bool encrypt,
 }
 #endif /* CIFS_WEAK_PW_HASH */
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Build a proper attribute value/target info pairs blob.
  * Fill in netbios and dns domain name and workstation name
  * and client time (total five av pairs and + one end of fields indicator.
@@ -780,9 +800,21 @@ calc_seckey(struct cifs_ses *ses)
 		return -ENOMEM;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cifs_arc4_setkey(ctx_arc4, ses->auth_key.response, CIFS_SESS_KEY_SIZE);
+	cifs_arc4_crypt(ctx_arc4, ses->ntlmssp->ciphertext, sec_key,
+			CIFS_CPHTXT_SIZE);
+=======
 	arc4_setkey(ctx_arc4, ses->auth_key.response, CIFS_SESS_KEY_SIZE);
 	arc4_crypt(ctx_arc4, ses->ntlmssp->ciphertext, sec_key,
 		   CIFS_CPHTXT_SIZE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cifs_arc4_setkey(ctx_arc4, ses->auth_key.response, CIFS_SESS_KEY_SIZE);
+	cifs_arc4_crypt(ctx_arc4, ses->ntlmssp->ciphertext, sec_key,
+			CIFS_CPHTXT_SIZE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* make secondary_key/nonce as session key */
 	memcpy(ses->auth_key.response, sec_key, CIFS_SESS_KEY_SIZE);

@@ -1704,17 +1704,63 @@ int btrfs_qgroup_trace_extent_nolock(struct btrfs_fs_info *fs_info,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int btrfs_qgroup_trace_extent_post(struct btrfs_trans_handle *trans,
+=======
 int btrfs_qgroup_trace_extent_post(struct btrfs_fs_info *fs_info,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int btrfs_qgroup_trace_extent_post(struct btrfs_trans_handle *trans,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   struct btrfs_qgroup_extent_record *qrecord)
 {
 	struct ulist *old_root;
 	u64 bytenr = qrecord->bytenr;
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * We are always called in a context where we are already holding a
+	 * transaction handle. Often we are called when adding a data delayed
+	 * reference from btrfs_truncate_inode_items() (truncating or unlinking),
+	 * in which case we will be holding a write lock on extent buffer from a
+	 * subvolume tree. In this case we can't allow btrfs_find_all_roots() to
+	 * acquire fs_info->commit_root_sem, because that is a higher level lock
+	 * that must be acquired before locking any extent buffers.
+	 *
+	 * So we want btrfs_find_all_roots() to not acquire the commit_root_sem
+	 * but we can't pass it a non-NULL transaction handle, because otherwise
+	 * it would not use commit roots and would lock extent buffers, causing
+	 * a deadlock if it ends up trying to read lock the same extent buffer
+	 * that was previously write locked at btrfs_truncate_inode_items().
+	 *
+	 * So pass a NULL transaction handle to btrfs_find_all_roots() and
+	 * explicitly tell it to not acquire the commit_root_sem - if we are
+	 * holding a transaction handle we don't need its protection.
+	 */
+	ASSERT(trans != NULL);
+
+	ret = btrfs_find_all_roots(NULL, trans->fs_info, bytenr, 0, &old_root,
+				   true);
+<<<<<<< HEAD
+	if (ret < 0) {
+		trans->fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
+		btrfs_warn(trans->fs_info,
+=======
 	ret = btrfs_find_all_roots(NULL, fs_info, bytenr, 0, &old_root, false);
 	if (ret < 0) {
 		fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
 		btrfs_warn(fs_info,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (ret < 0) {
+		trans->fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
+		btrfs_warn(trans->fs_info,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 "error accounting new delayed refs extent (err code: %d), quota inconsistent",
 			ret);
 		return 0;
@@ -1758,7 +1804,15 @@ int btrfs_qgroup_trace_extent(struct btrfs_trans_handle *trans, u64 bytenr,
 		kfree(record);
 		return 0;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return btrfs_qgroup_trace_extent_post(trans, record);
+=======
 	return btrfs_qgroup_trace_extent_post(fs_info, record);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return btrfs_qgroup_trace_extent_post(trans, record);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int btrfs_qgroup_trace_leaf_items(struct btrfs_trans_handle *trans,
@@ -2645,7 +2699,15 @@ int btrfs_qgroup_account_extents(struct btrfs_trans_handle *trans)
 			 * current root. It's safe inside commit_transaction().
 			 */
 			ret = btrfs_find_all_roots(trans, fs_info,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			   record->bytenr, BTRFS_SEQ_LAST, &new_roots, false);
+=======
 				record->bytenr, BTRFS_SEQ_LAST, &new_roots, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   record->bytenr, BTRFS_SEQ_LAST, &new_roots, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (ret < 0)
 				goto cleanup;
 			if (qgroup_to_skip) {

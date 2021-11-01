@@ -107,6 +107,14 @@ static int ipc_wwan_link_transmit(struct sk_buff *skb,
 {
 	struct iosm_netdev_priv *priv = wwan_netdev_drvpriv(netdev);
 	struct iosm_wwan *ipc_wwan = priv->ipc_wwan;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int len = skb->len;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int len = skb->len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int if_id = priv->if_id;
 	int ret;
 
@@ -123,6 +131,16 @@ static int ipc_wwan_link_transmit(struct sk_buff *skb,
 
 	/* Return code of zero is success */
 	if (ret == 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		netdev->stats.tx_packets++;
+		netdev->stats.tx_bytes += len;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		netdev->stats.tx_packets++;
+		netdev->stats.tx_bytes += len;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = NETDEV_TX_OK;
 	} else if (ret == -EBUSY) {
 		ret = NETDEV_TX_BUSY;
@@ -140,7 +158,17 @@ exit:
 			ret);
 
 	dev_kfree_skb_any(skb);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	netdev->stats.tx_dropped++;
+	return NETDEV_TX_OK;
+=======
 	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	netdev->stats.tx_dropped++;
+	return NETDEV_TX_OK;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Ops structure for wwan net link */
@@ -158,6 +186,14 @@ static void ipc_wwan_setup(struct net_device *iosm_dev)
 	iosm_dev->priv_flags |= IFF_NO_QUEUE;
 
 	iosm_dev->type = ARPHRD_NONE;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	iosm_dev->mtu = ETH_DATA_LEN;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	iosm_dev->mtu = ETH_DATA_LEN;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iosm_dev->min_mtu = ETH_MIN_MTU;
 	iosm_dev->max_mtu = ETH_MAX_MTU;
 
@@ -223,7 +259,15 @@ static void ipc_wwan_dellink(void *ctxt, struct net_device *dev,
 
 	RCU_INIT_POINTER(ipc_wwan->sub_netlist[if_id], NULL);
 	/* unregistering includes synchronize_net() */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unregister_netdevice_queue(dev, head);
+=======
 	unregister_netdevice(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unregister_netdevice_queue(dev, head);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 unlock:
 	mutex_unlock(&ipc_wwan->if_mutex);
@@ -252,8 +296,18 @@ int ipc_wwan_receive(struct iosm_wwan *ipc_wwan, struct sk_buff *skb_arg,
 
 	skb->pkt_type = PACKET_HOST;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (if_id < IP_MUX_SESSION_START ||
+	    if_id > IP_MUX_SESSION_END) {
+=======
 	if (if_id < (IP_MUX_SESSION_START - 1) ||
 	    if_id > (IP_MUX_SESSION_END - 1)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (if_id < IP_MUX_SESSION_START ||
+	    if_id > IP_MUX_SESSION_END) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -EINVAL;
 		goto free;
 	}

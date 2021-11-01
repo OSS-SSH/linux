@@ -45,7 +45,13 @@ static void *vcpu_worker(void *data)
 	struct kvm_vm *vm = perf_test_args.vm;
 	struct kvm_run *run;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	vcpu_args_set(vm, vcpu_id, 1, vcpu_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	run = vcpu_state(vm, vcpu_id);
 
 	/* Let the guest access its memory until a stop signal is received */
@@ -105,7 +111,15 @@ static void run_test(enum vm_guest_mode mode, void *arg)
 	struct kvm_vm *vm;
 	int vcpu_id;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	vm = perf_test_create_vm(mode, nr_vcpus, guest_percpu_mem_size, 1,
+=======
 	vm = perf_test_create_vm(mode, nr_vcpus, guest_percpu_mem_size,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vm = perf_test_create_vm(mode, nr_vcpus, guest_percpu_mem_size, 1,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 VM_MEM_SRC_ANONYMOUS);
 
 	perf_test_args.wr_fract = 1;

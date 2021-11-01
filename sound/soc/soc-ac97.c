@@ -34,6 +34,9 @@ struct snd_ac97_reset_cfg {
 	int gpio_reset;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 struct snd_ac97_gpio_priv {
 #ifdef CONFIG_GPIOLIB
 	struct gpio_chip gpio_chip;
@@ -42,6 +45,9 @@ struct snd_ac97_gpio_priv {
 	struct snd_soc_component *component;
 };
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct snd_ac97_bus soc_ac97_bus = {
 	.ops = NULL, /* Gets initialized in snd_soc_set_ac97_ops() */
 };
@@ -52,6 +58,21 @@ static void soc_ac97_device_release(struct device *dev)
 }
 
 #ifdef CONFIG_GPIOLIB
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct snd_ac97_gpio_priv {
+	struct gpio_chip gpio_chip;
+	unsigned int gpios_set;
+	struct snd_soc_component *component;
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline struct snd_soc_component *gpio_to_component(struct gpio_chip *chip)
 {
 	struct snd_ac97_gpio_priv *gpio_priv = gpiochip_get_data(chip);

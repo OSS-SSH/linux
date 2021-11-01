@@ -7,6 +7,16 @@
  * Copyright (c) 2010, Citrix
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/init.h>
 #include <linux/io.h>
 #include <linux/export.h>
@@ -30,13 +40,29 @@ static int check_platform_magic(void)
 
 	magic = inw(XEN_IOPORT_MAGIC);
 	if (magic != XEN_IOPORT_MAGIC_VAL) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pr_err("Xen Platform PCI: unrecognised magic value\n");
+=======
 		printk(KERN_ERR "Xen Platform PCI: unrecognised magic value\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_err("Xen Platform PCI: unrecognised magic value\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return XEN_PLATFORM_ERR_MAGIC;
 	}
 
 	protocol = inb(XEN_IOPORT_PROTOVER);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	pr_debug("Xen Platform PCI: I/O protocol version %d\n",
+=======
 	printk(KERN_DEBUG "Xen Platform PCI: I/O protocol version %d\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pr_debug("Xen Platform PCI: I/O protocol version %d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			protocol);
 
 	switch (protocol) {
@@ -44,12 +70,28 @@ static int check_platform_magic(void)
 		outw(XEN_IOPORT_LINUX_PRODNUM, XEN_IOPORT_PRODNUM);
 		outl(XEN_IOPORT_LINUX_DRVVER, XEN_IOPORT_DRVVER);
 		if (inw(XEN_IOPORT_MAGIC) != XEN_IOPORT_MAGIC_VAL) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			pr_err("Xen Platform: blacklisted by host\n");
+=======
 			printk(KERN_ERR "Xen Platform: blacklisted by host\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pr_err("Xen Platform: blacklisted by host\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return XEN_PLATFORM_ERR_BLACKLIST;
 		}
 		break;
 	default:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pr_warn("Xen Platform PCI: unknown I/O protocol version\n");
+=======
 		printk(KERN_WARNING "Xen Platform PCI: unknown I/O protocol version\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_warn("Xen Platform PCI: unknown I/O protocol version\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return XEN_PLATFORM_ERR_PROTOCOL;
 	}
 
@@ -155,12 +197,28 @@ void xen_unplug_emulated_devices(void)
 	 * been compiled for this kernel (modules or built-in are both OK). */
 	if (!xen_emul_unplug) {
 		if (xen_must_unplug_nics()) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			pr_info("Netfront and the Xen platform PCI driver have "
+=======
 			printk(KERN_INFO "Netfront and the Xen platform PCI driver have "
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pr_info("Netfront and the Xen platform PCI driver have "
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					"been compiled for this kernel: unplug emulated NICs.\n");
 			xen_emul_unplug |= XEN_UNPLUG_ALL_NICS;
 		}
 		if (xen_must_unplug_disks()) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			pr_info("Blkfront and the Xen platform PCI driver have "
+=======
 			printk(KERN_INFO "Blkfront and the Xen platform PCI driver have "
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pr_info("Blkfront and the Xen platform PCI driver have "
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					"been compiled for this kernel: unplug emulated disks.\n"
 					"You might have to change the root device\n"
 					"from /dev/hd[a-d] to /dev/xvd[a-d]\n"
@@ -200,7 +258,15 @@ static int __init parse_xen_emul_unplug(char *arg)
 		else if (!strncmp(p, "never", l))
 			xen_emul_unplug |= XEN_UNPLUG_NEVER;
 		else
+<<<<<<< HEAD
+<<<<<<< HEAD
+			pr_warn("unrecognised option '%s' "
+=======
 			printk(KERN_WARNING "unrecognised option '%s' "
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			pr_warn("unrecognised option '%s' "
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 "in parameter 'xen_emul_unplug'\n", p);
 	}
 	return 0;

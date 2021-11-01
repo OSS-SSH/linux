@@ -272,7 +272,15 @@ config PWM_IQS620A
 
 config PWM_JZ4740
 	tristate "Ingenic JZ47xx PWM support"
+<<<<<<< HEAD
+<<<<<<< HEAD
+	depends on MIPS || COMPILE_TEST
+=======
 	depends on MIPS
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on MIPS || COMPILE_TEST
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on COMMON_CLK
 	select MFD_SYSCON
 	help
@@ -284,7 +292,17 @@ config PWM_JZ4740
 
 config PWM_KEEMBAY
 	tristate "Intel Keem Bay PWM driver"
+<<<<<<< HEAD
+<<<<<<< HEAD
+	depends on ARCH_KEEMBAY || COMPILE_TEST
+	depends on COMMON_CLK && HAS_IOMEM
+=======
 	depends on ARCH_KEEMBAY || (ARM64 && COMPILE_TEST)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on ARCH_KEEMBAY || COMPILE_TEST
+	depends on COMMON_CLK && HAS_IOMEM
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  The platform driver for Intel Keem Bay PWM controller.
 

@@ -809,15 +809,35 @@ static int exynos_dsi_init_link(struct exynos_dsi *dsi)
 			reg |= DSIM_AUTO_MODE;
 		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HSE)
 			reg |= DSIM_HSE_MODE;
-		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HFP))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HFP))
 			reg |= DSIM_HFP_MODE;
-		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HBP))
+		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HBP))
 			reg |= DSIM_HBP_MODE;
-		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HSA))
+		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HSA))
 			reg |= DSIM_HSA_MODE;
 	}
 
+	if (!(dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
+=======
+		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HFP))
+=======
+		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HFP))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+			reg |= DSIM_HFP_MODE;
+		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HBP))
+			reg |= DSIM_HBP_MODE;
+		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HSA))
+			reg |= DSIM_HSA_MODE;
+	}
+
+<<<<<<< HEAD
 	if (!(dsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reg |= DSIM_EOT_DISABLE;
 
 	switch (dsi->format) {
@@ -1738,7 +1758,13 @@ static const struct component_ops exynos_dsi_component_ops = {
 static int exynos_dsi_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct resource *res;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct exynos_dsi *dsi;
 	int ret, i;
 
@@ -1789,8 +1815,16 @@ static int exynos_dsi_probe(struct platform_device *pdev)
 		}
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dsi->reg_base = devm_platform_ioremap_resource(pdev, 0);
+=======
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	dsi->reg_base = devm_ioremap_resource(dev, res);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dsi->reg_base = devm_platform_ioremap_resource(pdev, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(dsi->reg_base))
 		return PTR_ERR(dsi->reg_base);
 

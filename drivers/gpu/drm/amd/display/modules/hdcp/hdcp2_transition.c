@@ -242,7 +242,15 @@ enum mod_hdcp_status mod_hdcp_hdcp2_transition(struct mod_hdcp *hdcp,
 		}
 		callback_in_ms(0, output);
 		set_state_id(hdcp, output, H2_A5_AUTHENTICATED);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		set_auth_complete(hdcp, output);
+=======
 		HDCP_FULL_DDC_TRACE(hdcp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		set_auth_complete(hdcp, output);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case H2_A5_AUTHENTICATED:
 		if (input->rxstatus_read == FAIL ||
@@ -559,7 +567,15 @@ enum mod_hdcp_status mod_hdcp_hdcp2_dp_transition(struct mod_hdcp *hdcp,
 			break;
 		}
 		set_state_id(hdcp, output, D2_A5_AUTHENTICATED);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		set_auth_complete(hdcp, output);
+=======
 		HDCP_FULL_DDC_TRACE(hdcp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		set_auth_complete(hdcp, output);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case D2_A5_AUTHENTICATED:
 		if (input->rxstatus_read == FAIL ||

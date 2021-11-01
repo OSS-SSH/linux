@@ -81,6 +81,16 @@ enum skl_s_freq {
 	SKL_FS_INVALID
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define SKL_MAX_PARAMS_TYPES	4
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define SKL_MAX_PARAMS_TYPES	4
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum skl_widget_type {
 	SKL_WIDGET_VMIXER = 1,
 	SKL_WIDGET_MIXER = 2,
@@ -150,6 +160,30 @@ struct skl_up_down_mixer_cfg {
 	u32 ch_map;
 } __packed;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+struct skl_pin_format {
+	u32 pin_idx;
+	u32 buf_size;
+	struct skl_audio_data_format audio_fmt;
+} __packed;
+
+struct skl_base_cfg_ext {
+	u16 nr_input_pins;
+	u16 nr_output_pins;
+	u8 reserved[8];
+	u32 priv_param_length;
+	/* Input pin formats followed by output ones. */
+	struct skl_pin_format pins_fmt[0];
+} __packed;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct skl_algo_cfg {
 	struct skl_base_cfg  base_cfg;
 	char params[];
@@ -311,10 +345,20 @@ struct skl_pipe {
 
 enum skl_module_state {
 	SKL_MODULE_UNINIT = 0,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	SKL_MODULE_INIT_DONE = 1,
+	SKL_MODULE_BIND_DONE = 2,
+=======
 	SKL_MODULE_LOADED = 1,
 	SKL_MODULE_INIT_DONE = 2,
 	SKL_MODULE_BIND_DONE = 3,
 	SKL_MODULE_UNLOADED = 4,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	SKL_MODULE_INIT_DONE = 1,
+	SKL_MODULE_BIND_DONE = 2,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum d0i3_capability {
@@ -373,6 +417,14 @@ struct skl_module_cfg {
 	struct skl_module *module;
 	int res_idx;
 	int fmt_idx;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int fmt_cfg_idx;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int fmt_cfg_idx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 domain;
 	bool homogenous_inputs;
 	bool homogenous_outputs;
@@ -403,7 +455,15 @@ struct skl_module_cfg {
 	enum skl_hw_conn_type  hw_conn_type;
 	enum skl_module_state m_state;
 	struct skl_pipe *pipe;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct skl_specific_cfg formats_config[SKL_MAX_PARAMS_TYPES];
+=======
 	struct skl_specific_cfg formats_config;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct skl_specific_cfg formats_config[SKL_MAX_PARAMS_TYPES];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct skl_pipe_mcfg mod_cfg[SKL_MAX_MODULES_IN_PIPE];
 };
 

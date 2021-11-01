@@ -291,7 +291,15 @@ static int compressed_section_fix(Elf *elf, Elf_Scn *scn, GElf_Shdr *sh)
 	sh->sh_addralign = expected;
 
 	if (gelf_update_shdr(scn, sh) == 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pr_err("FAILED cannot update section header: %s\n",
+=======
 		printf("FAILED cannot update section header: %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_err("FAILED cannot update section header: %s\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			elf_errmsg(-1));
 		return -1;
 	}
@@ -317,6 +325,14 @@ static int elf_collect(struct object *obj)
 
 	elf = elf_begin(fd, ELF_C_RDWR_MMAP, NULL);
 	if (!elf) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		close(fd);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		close(fd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_err("FAILED cannot create ELF descriptor: %s\n",
 			elf_errmsg(-1));
 		return -1;
@@ -484,7 +500,15 @@ static int symbols_resolve(struct object *obj)
 	err = libbpf_get_error(btf);
 	if (err) {
 		pr_err("FAILED: load BTF from %s: %s\n",
+<<<<<<< HEAD
+<<<<<<< HEAD
+			obj->btf ?: obj->path, strerror(-err));
+=======
 			obj->path, strerror(-err));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			obj->btf ?: obj->path, strerror(-err));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -1;
 	}
 
@@ -555,8 +579,16 @@ static int id_patch(struct object *obj, struct btf_id *id)
 	int i;
 
 	if (!id->id) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pr_err("WARN: resolve_btfids: unresolved symbol %s\n", id->name);
+=======
 		pr_err("FAILED unresolved symbol %s\n", id->name);
 		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pr_err("WARN: resolve_btfids: unresolved symbol %s\n", id->name);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	for (i = 0; i < id->addr_cnt; i++) {
@@ -734,8 +766,22 @@ int main(int argc, const char **argv)
 
 	err = 0;
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (obj.efile.elf) {
+		elf_end(obj.efile.elf);
+		close(obj.efile.fd);
+	}
+=======
 	if (obj.efile.elf)
 		elf_end(obj.efile.elf);
 	close(obj.efile.fd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (obj.efile.elf) {
+		elf_end(obj.efile.elf);
+		close(obj.efile.fd);
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }

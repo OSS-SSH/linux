@@ -36,8 +36,14 @@
 
 /* Interrupt mask bits */
 #define CONFIG_ALRT_BIT_ENBL	(1 << 2)
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define STATUS_INTR_SOCMIN_BIT	(1 << 10)
 #define STATUS_INTR_SOCMAX_BIT	(1 << 14)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define VFSOC0_LOCK		0x0000
 #define VFSOC0_UNLOCK		0x0080
@@ -285,8 +291,14 @@ static int max17042_get_property(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_VOLTAGE_MIN_DESIGN:
 		if (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17042)
 			ret = regmap_read(map, MAX17042_V_empty, &data);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		else if (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17055)
 			ret = regmap_read(map, MAX17055_V_empty, &data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else
 			ret = regmap_read(map, MAX17047_V_empty, &data);
 		if (ret < 0)
@@ -748,7 +760,15 @@ static inline void max17042_override_por_values(struct max17042_chip *chip)
 	struct max17042_config_data *config = chip->pdata->config_data;
 
 	max17042_override_por(map, MAX17042_TGAIN, config->tgain);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	max17042_override_por(map, MAX17042_TOFF, config->toff);
+=======
 	max17042_override_por(map, MAx17042_TOFF, config->toff);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	max17042_override_por(map, MAX17042_TOFF, config->toff);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	max17042_override_por(map, MAX17042_CGAIN, config->cgain);
 	max17042_override_por(map, MAX17042_COFF, config->coff);
 
@@ -767,36 +787,81 @@ static inline void max17042_override_por_values(struct max17042_chip *chip)
 	max17042_override_por(map, MAX17042_FilterCFG, config->filter_cfg);
 	max17042_override_por(map, MAX17042_RelaxCFG, config->relax_cfg);
 	max17042_override_por(map, MAX17042_MiscCFG, config->misc_cfg);
-	max17042_override_por(map, MAX17042_MaskSOC, config->masksoc);
+<<<<<<< HEAD
+<<<<<<< HEAD
 
 	max17042_override_por(map, MAX17042_FullCAP, config->fullcap);
 	max17042_override_por(map, MAX17042_FullCAPNom, config->fullcapnom);
-	if (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17042)
-		max17042_override_por(map, MAX17042_SOC_empty,
-						config->socempty);
-	max17042_override_por(map, MAX17042_LAvg_empty, config->lavg_empty);
 	max17042_override_por(map, MAX17042_dQacc, config->dqacc);
 	max17042_override_por(map, MAX17042_dPacc, config->dpacc);
 
-	if (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17042)
-		max17042_override_por(map, MAX17042_V_empty, config->vempty);
-	if (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17055)
-		max17042_override_por(map, MAX17055_V_empty, config->vempty);
-	else
-		max17042_override_por(map, MAX17047_V_empty, config->vempty);
-	max17042_override_por(map, MAX17042_TempNom, config->temp_nom);
-	max17042_override_por(map, MAX17042_TempLim, config->temp_lim);
-	max17042_override_por(map, MAX17042_FCTC, config->fctc);
 	max17042_override_por(map, MAX17042_RCOMP0, config->rcomp0);
 	max17042_override_por(map, MAX17042_TempCo, config->tcompc0);
-	if (chip->chip_type &&
-	    ((chip->chip_type == MAXIM_DEVICE_TYPE_MAX17042) ||
+
+	if (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17042) {
+		max17042_override_por(map, MAX17042_MaskSOC, config->masksoc);
+		max17042_override_por(map, MAX17042_SOC_empty, config->socempty);
+		max17042_override_por(map, MAX17042_V_empty, config->vempty);
+		max17042_override_por(map, MAX17042_EmptyTempCo, config->empty_tempco);
+		max17042_override_por(map, MAX17042_K_empty0, config->kempty0);
+	}
+
+	if ((chip->chip_type == MAXIM_DEVICE_TYPE_MAX17042) ||
 	    (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17047) ||
+	    (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17050)) {
+		max17042_override_por(map, MAX17042_LAvg_empty, config->lavg_empty);
+		max17042_override_por(map, MAX17042_TempNom, config->temp_nom);
+		max17042_override_por(map, MAX17042_TempLim, config->temp_lim);
+		max17042_override_por(map, MAX17042_FCTC, config->fctc);
+	}
+
+	if ((chip->chip_type == MAXIM_DEVICE_TYPE_MAX17047) ||
+	    (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17050) ||
+	    (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17055)) {
+		max17042_override_por(map, MAX17047_V_empty, config->vempty);
+=======
+	max17042_override_por(map, MAX17042_MaskSOC, config->masksoc);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	max17042_override_por(map, MAX17042_FullCAP, config->fullcap);
+	max17042_override_por(map, MAX17042_FullCAPNom, config->fullcapnom);
+	max17042_override_por(map, MAX17042_dQacc, config->dqacc);
+	max17042_override_por(map, MAX17042_dPacc, config->dpacc);
+
+	max17042_override_por(map, MAX17042_RCOMP0, config->rcomp0);
+	max17042_override_por(map, MAX17042_TempCo, config->tcompc0);
+
+	if (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17042) {
+		max17042_override_por(map, MAX17042_MaskSOC, config->masksoc);
+		max17042_override_por(map, MAX17042_SOC_empty, config->socempty);
+		max17042_override_por(map, MAX17042_V_empty, config->vempty);
+		max17042_override_por(map, MAX17042_EmptyTempCo, config->empty_tempco);
+		max17042_override_por(map, MAX17042_K_empty0, config->kempty0);
+	}
+
+	if ((chip->chip_type == MAXIM_DEVICE_TYPE_MAX17042) ||
+	    (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17047) ||
+<<<<<<< HEAD
 	    (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17050))) {
 		max17042_override_por(map, MAX17042_EmptyTempCo,
 						config->empty_tempco);
 		max17042_override_por(map, MAX17042_K_empty0,
 						config->kempty0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	    (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17050)) {
+		max17042_override_por(map, MAX17042_LAvg_empty, config->lavg_empty);
+		max17042_override_por(map, MAX17042_TempNom, config->temp_nom);
+		max17042_override_por(map, MAX17042_TempLim, config->temp_lim);
+		max17042_override_por(map, MAX17042_FCTC, config->fctc);
+	}
+
+	if ((chip->chip_type == MAXIM_DEVICE_TYPE_MAX17047) ||
+	    (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17050) ||
+	    (chip->chip_type == MAXIM_DEVICE_TYPE_MAX17055)) {
+		max17042_override_por(map, MAX17047_V_empty, config->vempty);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -869,11 +934,33 @@ static irqreturn_t max17042_thread_handler(int id, void *dev)
 {
 	struct max17042_chip *chip = dev;
 	u32 val;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret;
+
+	ret = regmap_read(chip->regmap, MAX17042_STATUS, &val);
+	if (ret)
+		return IRQ_HANDLED;
+
+	if ((val & STATUS_SMN_BIT) || (val & STATUS_SMX_BIT)) {
+		dev_dbg(&chip->client->dev, "SOC threshold INTR\n");
+=======
 
 	regmap_read(chip->regmap, MAX17042_STATUS, &val);
 	if ((val & STATUS_INTR_SOCMIN_BIT) ||
 		(val & STATUS_INTR_SOCMAX_BIT)) {
 		dev_info(&chip->client->dev, "SOC threshold INTR\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret;
+
+	ret = regmap_read(chip->regmap, MAX17042_STATUS, &val);
+	if (ret)
+		return IRQ_HANDLED;
+
+	if ((val & STATUS_SMN_BIT) || (val & STATUS_SMX_BIT)) {
+		dev_dbg(&chip->client->dev, "SOC threshold INTR\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		max17042_set_soc_threshold(chip, 1);
 	}
 
@@ -1196,6 +1283,14 @@ static const struct of_device_id max17042_dt_match[] = {
 	{ .compatible = "maxim,max17047" },
 	{ .compatible = "maxim,max17050" },
 	{ .compatible = "maxim,max17055" },
+<<<<<<< HEAD
+<<<<<<< HEAD
+	{ .compatible = "maxim,max77849-battery" },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ .compatible = "maxim,max77849-battery" },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ },
 };
 MODULE_DEVICE_TABLE(of, max17042_dt_match);
@@ -1206,6 +1301,14 @@ static const struct i2c_device_id max17042_id[] = {
 	{ "max17047", MAXIM_DEVICE_TYPE_MAX17047 },
 	{ "max17050", MAXIM_DEVICE_TYPE_MAX17050 },
 	{ "max17055", MAXIM_DEVICE_TYPE_MAX17055 },
+<<<<<<< HEAD
+<<<<<<< HEAD
+	{ "max77849-battery", MAXIM_DEVICE_TYPE_MAX17047 },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	{ "max77849-battery", MAXIM_DEVICE_TYPE_MAX17047 },
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ }
 };
 MODULE_DEVICE_TABLE(i2c, max17042_id);

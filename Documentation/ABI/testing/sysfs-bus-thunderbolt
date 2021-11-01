@@ -232,7 +232,15 @@ Description:	When new NVM image is written to the non-active NVM
 What:		/sys/bus/thunderbolt/devices/.../nvm_authenticate_on_disconnect
 Date:		Oct 2020
 KernelVersion:	v5.9
+<<<<<<< HEAD
+<<<<<<< HEAD
+Contact:	Mario Limonciello <mario.limonciello@outlook.com>
+=======
 Contact:	Mario Limonciello <mario.limonciello@dell.com>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+Contact:	Mario Limonciello <mario.limonciello@outlook.com>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Description:	For supported devices, automatically authenticate the new Thunderbolt
 		image when the device is disconnected from the host system.
 

@@ -499,7 +499,15 @@ check_frags:
 				 * the header's copy failed, and they are
 				 * sharing a slot, send an error
 				 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+				if (i == 0 && !first_shinfo && sharedslot)
+=======
 				if (i == 0 && sharedslot)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				if (i == 0 && !first_shinfo && sharedslot)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					xenvif_idx_release(queue, pending_idx,
 							   XEN_NETIF_RSP_ERROR);
 				else

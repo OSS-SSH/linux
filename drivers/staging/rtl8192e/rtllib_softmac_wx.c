@@ -539,6 +539,17 @@ int rtllib_wx_set_rawtx(struct rtllib_device *ieee,
 }
 EXPORT_SYMBOL(rtllib_wx_set_rawtx);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int rtllib_wx_get_name(struct rtllib_device *ieee, struct iw_request_info *info,
+		       union iwreq_data *wrqu, char *extra)
+{
+	const char *b = ieee->modulation & RTLLIB_CCK_MODULATION ? "b" : "";
+	const char *g = ieee->modulation & RTLLIB_OFDM_MODULATION ? "g" : "";
+	const char *n = ieee->mode & (IEEE_N_24G | IEEE_N_5G) ? "n" : "";
+
+	scnprintf(wrqu->name, sizeof(wrqu->name), "802.11%s%s%s", b, g, n);
+=======
 int rtllib_wx_get_name(struct rtllib_device *ieee,
 			     struct iw_request_info *info,
 			     union iwreq_data *wrqu, char *extra)
@@ -551,6 +562,17 @@ int rtllib_wx_get_name(struct rtllib_device *ieee,
 		strcat(wrqu->name, "g");
 	if (ieee->mode & (IEEE_N_24G | IEEE_N_5G))
 		strcat(wrqu->name, "n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int rtllib_wx_get_name(struct rtllib_device *ieee, struct iw_request_info *info,
+		       union iwreq_data *wrqu, char *extra)
+{
+	const char *b = ieee->modulation & RTLLIB_CCK_MODULATION ? "b" : "";
+	const char *g = ieee->modulation & RTLLIB_OFDM_MODULATION ? "g" : "";
+	const char *n = ieee->mode & (IEEE_N_24G | IEEE_N_5G) ? "n" : "";
+
+	scnprintf(wrqu->name, sizeof(wrqu->name), "802.11%s%s%s", b, g, n);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 EXPORT_SYMBOL(rtllib_wx_get_name);

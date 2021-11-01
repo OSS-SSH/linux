@@ -340,10 +340,59 @@ static int dsa_loop_drv_probe(struct mdio_device *mdiodev)
 static void dsa_loop_drv_remove(struct mdio_device *mdiodev)
 {
 	struct dsa_switch *ds = dev_get_drvdata(&mdiodev->dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	struct dsa_loop_priv *ps;
+
+	if (!ds)
+		return;
+
+	ps = ds->priv;
+<<<<<<< HEAD
+
+	dsa_unregister_switch(ds);
+	dev_put(ps->netdev);
+
+	dev_set_drvdata(&mdiodev->dev, NULL);
+}
+
+static void dsa_loop_drv_shutdown(struct mdio_device *mdiodev)
+{
+	struct dsa_switch *ds = dev_get_drvdata(&mdiodev->dev);
+
+	if (!ds)
+		return;
+
+	dsa_switch_shutdown(ds);
+
+	dev_set_drvdata(&mdiodev->dev, NULL);
+=======
 	struct dsa_loop_priv *ps = ds->priv;
 
 	dsa_unregister_switch(ds);
 	dev_put(ps->netdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	dsa_unregister_switch(ds);
+	dev_put(ps->netdev);
+
+	dev_set_drvdata(&mdiodev->dev, NULL);
+}
+
+static void dsa_loop_drv_shutdown(struct mdio_device *mdiodev)
+{
+	struct dsa_switch *ds = dev_get_drvdata(&mdiodev->dev);
+
+	if (!ds)
+		return;
+
+	dsa_switch_shutdown(ds);
+
+	dev_set_drvdata(&mdiodev->dev, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct mdio_driver dsa_loop_drv = {
@@ -352,6 +401,14 @@ static struct mdio_driver dsa_loop_drv = {
 	},
 	.probe	= dsa_loop_drv_probe,
 	.remove	= dsa_loop_drv_remove,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.shutdown = dsa_loop_drv_shutdown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.shutdown = dsa_loop_drv_shutdown,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define NUM_FIXED_PHYS	(DSA_LOOP_NUM_PORTS - 2)

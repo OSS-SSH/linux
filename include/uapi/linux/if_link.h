@@ -417,6 +417,14 @@ enum {
 	IFLA_INET6_ICMP6STATS,	/* statistics (icmpv6)		*/
 	IFLA_INET6_TOKEN,	/* device token			*/
 	IFLA_INET6_ADDR_GEN_MODE, /* implicit address generator mode */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	IFLA_INET6_RA_MTU,	/* mtu carried in the RA message */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	IFLA_INET6_RA_MTU,	/* mtu carried in the RA message */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__IFLA_INET6_MAX
 };
 
@@ -479,6 +487,14 @@ enum {
 	IFLA_BR_MCAST_MLD_VERSION,
 	IFLA_BR_VLAN_STATS_PER_PORT,
 	IFLA_BR_MULTI_BOOLOPT,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	IFLA_BR_MCAST_QUERIER_STATE,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	IFLA_BR_MCAST_QUERIER_STATE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__IFLA_BR_MAX,
 };
 
@@ -855,6 +871,14 @@ enum {
 	IFLA_BOND_AD_ACTOR_SYSTEM,
 	IFLA_BOND_TLB_DYNAMIC_LB,
 	IFLA_BOND_PEER_NOTIF_DELAY,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	IFLA_BOND_AD_LACP_ACTIVE,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	IFLA_BOND_AD_LACP_ACTIVE,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__IFLA_BOND_MAX,
 };
 
@@ -1260,4 +1284,23 @@ struct ifla_rmnet_flags {
 	__u32	mask;
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* MCTP section */
+
+enum {
+	IFLA_MCTP_UNSPEC,
+	IFLA_MCTP_NET,
+	__IFLA_MCTP_MAX,
+};
+
+#define IFLA_MCTP_MAX (__IFLA_MCTP_MAX - 1)
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* _UAPI_LINUX_IF_LINK_H */

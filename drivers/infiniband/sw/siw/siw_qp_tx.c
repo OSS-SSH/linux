@@ -76,7 +76,15 @@ static int siw_try_1seg(struct siw_iwarp_tx *c_tx, void *paddr)
 			if (unlikely(!p))
 				return -EFAULT;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+			buffer = kmap_local_page(p);
+=======
 			buffer = kmap(p);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			buffer = kmap_local_page(p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (likely(PAGE_SIZE - off >= bytes)) {
 				memcpy(paddr, buffer + off, bytes);
@@ -84,7 +92,15 @@ static int siw_try_1seg(struct siw_iwarp_tx *c_tx, void *paddr)
 				unsigned long part = bytes - (PAGE_SIZE - off);
 
 				memcpy(paddr, buffer + off, part);
+<<<<<<< HEAD
+<<<<<<< HEAD
+				kunmap_local(buffer);
+=======
 				kunmap(p);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				kunmap_local(buffer);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 				if (!mem->is_pbl)
 					p = siw_get_upage(mem->umem,
@@ -96,10 +112,24 @@ static int siw_try_1seg(struct siw_iwarp_tx *c_tx, void *paddr)
 				if (unlikely(!p))
 					return -EFAULT;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+				buffer = kmap_local_page(p);
+				memcpy(paddr + part, buffer, bytes - part);
+			}
+			kunmap_local(buffer);
+=======
 				buffer = kmap(p);
 				memcpy(paddr + part, buffer, bytes - part);
 			}
 			kunmap(p);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				buffer = kmap_local_page(p);
+				memcpy(paddr + part, buffer, bytes - part);
+			}
+			kunmap_local(buffer);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 	return (int)bytes;
@@ -396,6 +426,23 @@ static int siw_0copy_tx(struct socket *s, struct page **page,
 
 #define MAX_TRAILER (MPA_CRC_SIZE + 4)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void siw_unmap_pages(struct kvec *iov, unsigned long kmap_mask, int len)
+{
+	int i;
+
+	/*
+	 * Work backwards through the array to honor the kmap_local_page()
+	 * ordering requirements.
+	 */
+	for (i = (len-1); i >= 0; i--) {
+		if (kmap_mask & BIT(i)) {
+			unsigned long addr = (unsigned long)iov[i].iov_base;
+
+			kunmap_local((void *)(addr & PAGE_MASK));
+		}
+=======
 static void siw_unmap_pages(struct page **pp, unsigned long kmap_mask)
 {
 	while (kmap_mask) {
@@ -403,6 +450,23 @@ static void siw_unmap_pages(struct page **pp, unsigned long kmap_mask)
 			kunmap(*pp);
 		pp++;
 		kmap_mask >>= 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void siw_unmap_pages(struct kvec *iov, unsigned long kmap_mask, int len)
+{
+	int i;
+
+	/*
+	 * Work backwards through the array to honor the kmap_local_page()
+	 * ordering requirements.
+	 */
+	for (i = (len-1); i >= 0; i--) {
+		if (kmap_mask & BIT(i)) {
+			unsigned long addr = (unsigned long)iov[i].iov_base;
+
+			kunmap_local((void *)(addr & PAGE_MASK));
+		}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -485,6 +549,14 @@ static int siw_tx_hdt(struct siw_iwarp_tx *c_tx, struct socket *s)
 
 		while (sge_len) {
 			size_t plen = min((int)PAGE_SIZE - fp_off, sge_len);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			void *kaddr;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			void *kaddr;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (!is_kva) {
 				struct page *p;
@@ -497,7 +569,15 @@ static int siw_tx_hdt(struct siw_iwarp_tx *c_tx, struct socket *s)
 					p = siw_get_upage(mem->umem,
 							  sge->laddr + sge_off);
 				if (unlikely(!p)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+					siw_unmap_pages(iov, kmap_mask, seg);
+=======
 					siw_unmap_pages(page_array, kmap_mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					siw_unmap_pages(iov, kmap_mask, seg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					wqe->processed -= c_tx->bytes_unsent;
 					rv = -EFAULT;
 					goto done_crc;
@@ -505,11 +585,29 @@ static int siw_tx_hdt(struct siw_iwarp_tx *c_tx, struct socket *s)
 				page_array[seg] = p;
 
 				if (!c_tx->use_sendpage) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+					void *kaddr = kmap_local_page(p);
+
+					/* Remember for later kunmap() */
+					kmap_mask |= BIT(seg);
+					iov[seg].iov_base = kaddr + fp_off;
+					iov[seg].iov_len = plen;
+=======
 					iov[seg].iov_base = kmap(p) + fp_off;
 					iov[seg].iov_len = plen;
 
 					/* Remember for later kunmap() */
 					kmap_mask |= BIT(seg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					void *kaddr = kmap_local_page(p);
+
+					/* Remember for later kunmap() */
+					kmap_mask |= BIT(seg);
+					iov[seg].iov_base = kaddr + fp_off;
+					iov[seg].iov_len = plen;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 					if (do_crc)
 						crypto_shash_update(
@@ -517,10 +615,26 @@ static int siw_tx_hdt(struct siw_iwarp_tx *c_tx, struct socket *s)
 							iov[seg].iov_base,
 							plen);
 				} else if (do_crc) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+					kaddr = kmap_local_page(p);
 					crypto_shash_update(c_tx->mpa_crc_hd,
-							    kmap(p) + fp_off,
+							    kaddr + fp_off,
 							    plen);
+					kunmap_local(kaddr);
+=======
+=======
+					kaddr = kmap_local_page(p);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+					crypto_shash_update(c_tx->mpa_crc_hd,
+							    kaddr + fp_off,
+							    plen);
+<<<<<<< HEAD
 					kunmap(p);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					kunmap_local(kaddr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				}
 			} else {
 				u64 va = sge->laddr + sge_off;
@@ -540,7 +654,15 @@ static int siw_tx_hdt(struct siw_iwarp_tx *c_tx, struct socket *s)
 
 			if (++seg > (int)MAX_ARRAY) {
 				siw_dbg_qp(tx_qp(c_tx), "to many fragments\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+				siw_unmap_pages(iov, kmap_mask, seg-1);
+=======
 				siw_unmap_pages(page_array, kmap_mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				siw_unmap_pages(iov, kmap_mask, seg-1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				wqe->processed -= c_tx->bytes_unsent;
 				rv = -EMSGSIZE;
 				goto done_crc;
@@ -591,7 +713,15 @@ sge_done:
 	} else {
 		rv = kernel_sendmsg(s, &msg, iov, seg + 1,
 				    hdr_len + data_len + trl_len);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		siw_unmap_pages(iov, kmap_mask, seg);
+=======
 		siw_unmap_pages(page_array, kmap_mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		siw_unmap_pages(iov, kmap_mask, seg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (rv < (int)hdr_len) {
 		/* Not even complete hdr pushed or negative rv */

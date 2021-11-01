@@ -12,9 +12,21 @@
 #include <linux/pci.h>
 #include <linux/io.h>
 #include <linux/io-64-nonatomic-lo-hi.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include "cxlmem.h"
+#include "pci.h"
+#include "cxl.h"
+=======
 #include "pci.h"
 #include "cxl.h"
 #include "mem.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include "cxlmem.h"
+#include "pci.h"
+#include "cxl.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * DOC: cxl pci
@@ -64,6 +76,24 @@ enum opcode {
 	CXL_MBOX_OP_MAX			= 0x10000
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * CXL 2.0 - Memory capacity multiplier
+ * See Section 8.2.9.5
+ *
+ * Volatile, Persistent, and Partition capacities are specified to be in
+ * multiples of 256MB - define a multiplier to convert to/from bytes.
+ */
+#define CXL_CAPACITY_MULTIPLIER SZ_256M
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct mbox_cmd - A command to be submitted to hardware.
  * @opcode: (input) The command set and command submitted to hardware.
@@ -94,8 +124,14 @@ struct mbox_cmd {
 #define CXL_MBOX_SUCCESS 0
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static int cxl_mem_major;
 static DEFINE_IDA(cxl_memdev_ida);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static DECLARE_RWSEM(cxl_memdev_rwsem);
 static struct dentry *cxl_debugfs;
 static bool cxl_raw_allow_all;
@@ -568,7 +604,15 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
 	if (!IS_ENABLED(CONFIG_CXL_MEM_RAW_COMMANDS))
 		return false;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (security_locked_down(LOCKDOWN_PCI_ACCESS))
+=======
 	if (security_locked_down(LOCKDOWN_NONE))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (security_locked_down(LOCKDOWN_PCI_ACCESS))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return false;
 
 	if (cxl_raw_allow_all)
@@ -806,6 +850,31 @@ static int cxl_memdev_release_file(struct inode *inode, struct file *file)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void cxl_memdev_shutdown(struct device *dev)
+{
+	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+
+	down_write(&cxl_memdev_rwsem);
+	cxlmd->cxlm = NULL;
+	up_write(&cxl_memdev_rwsem);
+}
+
+static const struct cdevm_file_operations cxl_memdev_fops = {
+	.fops = {
+		.owner = THIS_MODULE,
+		.unlocked_ioctl = cxl_memdev_ioctl,
+		.open = cxl_memdev_open,
+		.release = cxl_memdev_release_file,
+		.compat_ioctl = compat_ptr_ioctl,
+		.llseek = noop_llseek,
+	},
+	.shutdown = cxl_memdev_shutdown,
+<<<<<<< HEAD
+=======
 static const struct file_operations cxl_memdev_fops = {
 	.owner = THIS_MODULE,
 	.unlocked_ioctl = cxl_memdev_ioctl,
@@ -813,6 +882,9 @@ static const struct file_operations cxl_memdev_fops = {
 	.release = cxl_memdev_release_file,
 	.compat_ioctl = compat_ptr_ioctl,
 	.llseek = noop_llseek,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static inline struct cxl_mem_command *cxl_mem_find_command(u16 opcode)
@@ -1022,8 +1094,18 @@ static int cxl_probe_regs(struct cxl_mem *cxlm, void __iomem *base,
 		    !dev_map->memdev.valid) {
 			dev_err(dev, "registers not found: %s%s%s\n",
 				!dev_map->status.valid ? "status " : "",
+<<<<<<< HEAD
+<<<<<<< HEAD
+				!dev_map->mbox.valid ? "mbox " : "",
+				!dev_map->memdev.valid ? "memdev " : "");
+=======
 				!dev_map->mbox.valid ? "status " : "",
 				!dev_map->memdev.valid ? "status " : "");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				!dev_map->mbox.valid ? "mbox " : "",
+				!dev_map->memdev.valid ? "memdev " : "");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENXIO;
 		}
 
@@ -1081,9 +1163,19 @@ static int cxl_mem_setup_regs(struct cxl_mem *cxlm)
 	struct device *dev = &pdev->dev;
 	u32 regloc_size, regblocks;
 	void __iomem *base;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int regloc, i, n_maps;
+	struct cxl_register_map *map, maps[CXL_REGLOC_RBI_TYPES];
+=======
 	int regloc, i;
 	struct cxl_register_map *map, *n;
 	LIST_HEAD(register_maps);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int regloc, i, n_maps;
+	struct cxl_register_map *map, maps[CXL_REGLOC_RBI_TYPES];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret = 0;
 
 	regloc = cxl_mem_dvsec(pdev, PCI_DVSEC_ID_CXL_REGLOC_DVSEC_ID);
@@ -1102,12 +1194,23 @@ static int cxl_mem_setup_regs(struct cxl_mem *cxlm)
 	regloc += PCI_DVSEC_ID_CXL_REGLOC_BLOCK1_OFFSET;
 	regblocks = (regloc_size - PCI_DVSEC_ID_CXL_REGLOC_BLOCK1_OFFSET) / 8;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	for (i = 0, n_maps = 0; i < regblocks; i++, regloc += 8) {
+=======
 	for (i = 0; i < regblocks; i++, regloc += 8) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0, n_maps = 0; i < regblocks; i++, regloc += 8) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u32 reg_lo, reg_hi;
 		u8 reg_type;
 		u64 offset;
 		u8 bar;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		map = kzalloc(sizeof(*map), GFP_KERNEL);
 		if (!map) {
 			ret = -ENOMEM;
@@ -1116,6 +1219,9 @@ static int cxl_mem_setup_regs(struct cxl_mem *cxlm)
 
 		list_add(&map->list, &register_maps);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pci_read_config_dword(pdev, regloc, &reg_lo);
 		pci_read_config_dword(pdev, regloc + 4, &reg_hi);
 
@@ -1125,12 +1231,32 @@ static int cxl_mem_setup_regs(struct cxl_mem *cxlm)
 		dev_dbg(dev, "Found register block in bar %u @ 0x%llx of type %u\n",
 			bar, offset, reg_type);
 
-		base = cxl_mem_map_regblock(cxlm, bar, offset);
-		if (!base) {
-			ret = -ENOMEM;
-			goto free_maps;
-		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		/* Ignore unknown register block types */
+		if (reg_type > CXL_REGLOC_RBI_MEMDEV)
+			continue;
 
+<<<<<<< HEAD
+		base = cxl_mem_map_regblock(cxlm, bar, offset);
+		if (!base)
+			return -ENOMEM;
+
+		map = &maps[n_maps];
+=======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		base = cxl_mem_map_regblock(cxlm, bar, offset);
+		if (!base)
+			return -ENOMEM;
+
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		map = &maps[n_maps];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		map->barno = bar;
 		map->block_offset = offset;
 		map->reg_type = reg_type;
@@ -1141,11 +1267,30 @@ static int cxl_mem_setup_regs(struct cxl_mem *cxlm)
 		cxl_mem_unmap_regblock(cxlm, base);
 
 		if (ret)
+<<<<<<< HEAD
+<<<<<<< HEAD
+			return ret;
+
+		n_maps++;
+=======
 			goto free_maps;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return ret;
+
+		n_maps++;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	pci_release_mem_regions(pdev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	for (i = 0; i < n_maps; i++) {
+		ret = cxl_map_regs(cxlm, &maps[i]);
+		if (ret)
+			break;
+=======
 	list_for_each_entry(map, &register_maps, list) {
 		ret = cxl_map_regs(cxlm, map);
 		if (ret)
@@ -1156,11 +1301,21 @@ free_maps:
 	list_for_each_entry_safe(map, n, &register_maps, list) {
 		list_del(&map->list);
 		kfree(map);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	for (i = 0; i < n_maps; i++) {
+		ret = cxl_map_regs(cxlm, &maps[i]);
+		if (ret)
+			break;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return ret;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static struct cxl_memdev *to_cxl_memdev(struct device *dev)
 {
 	return container_of(dev, struct cxl_memdev, dev);
@@ -1375,6 +1530,9 @@ err:
 	return ERR_PTR(rc);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int cxl_xfer_log(struct cxl_mem *cxlm, uuid_t *uuid, u32 size, u8 *out)
 {
 	u32 remaining = size;
@@ -1469,6 +1627,62 @@ static struct cxl_mbox_get_supported_logs *cxl_get_gsl(struct cxl_mem *cxlm)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * cxl_mem_get_partition_info - Get partition info
+ * @cxlm: The device to act on
+ * @active_volatile_bytes: returned active volatile capacity
+ * @active_persistent_bytes: returned active persistent capacity
+ * @next_volatile_bytes: return next volatile capacity
+ * @next_persistent_bytes: return next persistent capacity
+ *
+ * Retrieve the current partition info for the device specified.  If not 0, the
+ * 'next' values are pending and take affect on next cold reset.
+ *
+ * Return: 0 if no error: or the result of the mailbox command.
+ *
+ * See CXL @8.2.9.5.2.1 Get Partition Info
+ */
+static int cxl_mem_get_partition_info(struct cxl_mem *cxlm,
+				      u64 *active_volatile_bytes,
+				      u64 *active_persistent_bytes,
+				      u64 *next_volatile_bytes,
+				      u64 *next_persistent_bytes)
+{
+	struct cxl_mbox_get_partition_info {
+		__le64 active_volatile_cap;
+		__le64 active_persistent_cap;
+		__le64 next_volatile_cap;
+		__le64 next_persistent_cap;
+	} __packed pi;
+	int rc;
+
+	rc = cxl_mem_mbox_send_cmd(cxlm, CXL_MBOX_OP_GET_PARTITION_INFO,
+				   NULL, 0, &pi, sizeof(pi));
+	if (rc)
+		return rc;
+
+	*active_volatile_bytes = le64_to_cpu(pi.active_volatile_cap);
+	*active_persistent_bytes = le64_to_cpu(pi.active_persistent_cap);
+	*next_volatile_bytes = le64_to_cpu(pi.next_volatile_cap);
+	*next_persistent_bytes = le64_to_cpu(pi.next_volatile_cap);
+
+	*active_volatile_bytes *= CXL_CAPACITY_MULTIPLIER;
+	*active_persistent_bytes *= CXL_CAPACITY_MULTIPLIER;
+	*next_volatile_bytes *= CXL_CAPACITY_MULTIPLIER;
+	*next_persistent_bytes *= CXL_CAPACITY_MULTIPLIER;
+
+	return 0;
+}
+
+/**
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * cxl_mem_enumerate_cmds() - Enumerate commands for a device.
  * @cxlm: The device.
  *
@@ -1564,6 +1778,33 @@ static int cxl_mem_identify(struct cxl_mem *cxlm)
 	if (rc < 0)
 		return rc;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	cxlm->total_bytes = le64_to_cpu(id.total_capacity);
+	cxlm->total_bytes *= CXL_CAPACITY_MULTIPLIER;
+
+	cxlm->volatile_only_bytes = le64_to_cpu(id.volatile_capacity);
+	cxlm->volatile_only_bytes *= CXL_CAPACITY_MULTIPLIER;
+<<<<<<< HEAD
+
+	cxlm->persistent_only_bytes = le64_to_cpu(id.persistent_capacity);
+	cxlm->persistent_only_bytes *= CXL_CAPACITY_MULTIPLIER;
+
+	cxlm->partition_align_bytes = le64_to_cpu(id.partition_align);
+	cxlm->partition_align_bytes *= CXL_CAPACITY_MULTIPLIER;
+
+	dev_dbg(&cxlm->pdev->dev, "Identify Memory Device\n"
+		"     total_bytes = %#llx\n"
+		"     volatile_only_bytes = %#llx\n"
+		"     persistent_only_bytes = %#llx\n"
+		"     partition_align_bytes = %#llx\n",
+			cxlm->total_bytes,
+			cxlm->volatile_only_bytes,
+			cxlm->persistent_only_bytes,
+			cxlm->partition_align_bytes);
+=======
 	/*
 	 * TODO: enumerate DPA map, as 'ram' and 'pmem' do not alias.
 	 * For now, only the capacity is exported in sysfs
@@ -1574,6 +1815,25 @@ static int cxl_mem_identify(struct cxl_mem *cxlm)
 	cxlm->pmem_range.start = 0;
 	cxlm->pmem_range.end =
 		le64_to_cpu(id.persistent_capacity) * SZ_256M - 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	cxlm->persistent_only_bytes = le64_to_cpu(id.persistent_capacity);
+	cxlm->persistent_only_bytes *= CXL_CAPACITY_MULTIPLIER;
+
+	cxlm->partition_align_bytes = le64_to_cpu(id.partition_align);
+	cxlm->partition_align_bytes *= CXL_CAPACITY_MULTIPLIER;
+
+	dev_dbg(&cxlm->pdev->dev, "Identify Memory Device\n"
+		"     total_bytes = %#llx\n"
+		"     volatile_only_bytes = %#llx\n"
+		"     persistent_only_bytes = %#llx\n"
+		"     partition_align_bytes = %#llx\n",
+			cxlm->total_bytes,
+			cxlm->volatile_only_bytes,
+			cxlm->persistent_only_bytes,
+			cxlm->partition_align_bytes);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cxlm->lsa_size = le32_to_cpu(id.lsa_size);
 	memcpy(cxlm->firmware_version, id.fw_revision, sizeof(id.fw_revision));
@@ -1581,6 +1841,58 @@ static int cxl_mem_identify(struct cxl_mem *cxlm)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static int cxl_mem_create_range_info(struct cxl_mem *cxlm)
+{
+	int rc;
+
+	if (cxlm->partition_align_bytes == 0) {
+		cxlm->ram_range.start = 0;
+		cxlm->ram_range.end = cxlm->volatile_only_bytes - 1;
+		cxlm->pmem_range.start = cxlm->volatile_only_bytes;
+		cxlm->pmem_range.end = cxlm->volatile_only_bytes +
+					cxlm->persistent_only_bytes - 1;
+		return 0;
+	}
+
+	rc = cxl_mem_get_partition_info(cxlm,
+					&cxlm->active_volatile_bytes,
+					&cxlm->active_persistent_bytes,
+					&cxlm->next_volatile_bytes,
+					&cxlm->next_persistent_bytes);
+	if (rc < 0) {
+		dev_err(&cxlm->pdev->dev, "Failed to query partition information\n");
+		return rc;
+	}
+
+	dev_dbg(&cxlm->pdev->dev, "Get Partition Info\n"
+		"     active_volatile_bytes = %#llx\n"
+		"     active_persistent_bytes = %#llx\n"
+		"     next_volatile_bytes = %#llx\n"
+		"     next_persistent_bytes = %#llx\n",
+			cxlm->active_volatile_bytes,
+			cxlm->active_persistent_bytes,
+			cxlm->next_volatile_bytes,
+			cxlm->next_persistent_bytes);
+
+	cxlm->ram_range.start = 0;
+	cxlm->ram_range.end = cxlm->active_volatile_bytes - 1;
+
+	cxlm->pmem_range.start = cxlm->active_volatile_bytes;
+	cxlm->pmem_range.end = cxlm->active_volatile_bytes +
+				cxlm->active_persistent_bytes - 1;
+
+	return 0;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int cxl_mem_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 {
 	struct cxl_memdev *cxlmd;
@@ -1611,7 +1923,21 @@ static int cxl_mem_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	if (rc)
 		return rc;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	rc = cxl_mem_create_range_info(cxlm);
+	if (rc)
+		return rc;
+
+	cxlmd = devm_cxl_add_memdev(&pdev->dev, cxlm, &cxl_memdev_fops);
+<<<<<<< HEAD
+=======
 	cxlmd = devm_cxl_add_memdev(&pdev->dev, cxlm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(cxlmd))
 		return PTR_ERR(cxlmd);
 
@@ -1640,26 +1966,39 @@ static struct pci_driver cxl_mem_driver = {
 static __init int cxl_mem_init(void)
 {
 	struct dentry *mbox_debugfs;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	dev_t devt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int rc;
 
 	/* Double check the anonymous union trickery in struct cxl_regs */
 	BUILD_BUG_ON(offsetof(struct cxl_regs, memdev) !=
 		     offsetof(struct cxl_regs, device_regs.memdev));
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	rc = pci_register_driver(&cxl_mem_driver);
+	if (rc)
+		return rc;
+
+=======
 	rc = alloc_chrdev_region(&devt, 0, CXL_MEM_MAX_DEVS, "cxl");
 	if (rc)
 		return rc;
 
 	cxl_mem_major = MAJOR(devt);
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = pci_register_driver(&cxl_mem_driver);
-	if (rc) {
-		unregister_chrdev_region(MKDEV(cxl_mem_major, 0),
-					 CXL_MEM_MAX_DEVS);
+	if (rc)
 		return rc;
-	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cxl_debugfs = debugfs_create_dir("cxl", NULL);
 	mbox_debugfs = debugfs_create_dir("mbox", cxl_debugfs);
 	debugfs_create_bool("raw_allow_all", 0600, mbox_debugfs,
@@ -1672,7 +2011,13 @@ static __exit void cxl_mem_exit(void)
 {
 	debugfs_remove_recursive(cxl_debugfs);
 	pci_unregister_driver(&cxl_mem_driver);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	unregister_chrdev_region(MKDEV(cxl_mem_major, 0), CXL_MEM_MAX_DEVS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 MODULE_LICENSE("GPL v2");

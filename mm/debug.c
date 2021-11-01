@@ -24,7 +24,19 @@ const char *migrate_reason_names[MR_TYPES] = {
 	"syscall_or_cpuset",
 	"mempolicy_mbind",
 	"numa_misplaced",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	"contig_range",
+	"longterm_pin",
+	"demotion",
+=======
 	"cma",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	"contig_range",
+	"longterm_pin",
+	"demotion",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 const struct trace_print_flags pageflag_names[] = {

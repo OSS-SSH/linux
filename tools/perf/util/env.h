@@ -61,6 +61,14 @@ struct perf_env {
 	unsigned long long	total_mem;
 	unsigned int		msr_pmu_type;
 	unsigned int		max_branches;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int			kernel_is_64_bit;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int			kernel_is_64_bit;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	int			nr_cmdline;
 	int			nr_sibling_cores;
@@ -143,14 +151,46 @@ extern struct perf_env perf_env;
 
 void perf_env__exit(struct perf_env *env);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int perf_env__kernel_is_64_bit(struct perf_env *env);
+
 int perf_env__set_cmdline(struct perf_env *env, int argc, const char *argv[]);
 
 int perf_env__read_cpuid(struct perf_env *env);
+int perf_env__read_pmu_mappings(struct perf_env *env);
+int perf_env__nr_pmu_mappings(struct perf_env *env);
+const char *perf_env__pmu_mappings(struct perf_env *env);
+
+=======
+int perf_env__set_cmdline(struct perf_env *env, int argc, const char *argv[]);
+
+int perf_env__read_cpuid(struct perf_env *env);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int perf_env__kernel_is_64_bit(struct perf_env *env);
+
+int perf_env__set_cmdline(struct perf_env *env, int argc, const char *argv[]);
+
+int perf_env__read_cpuid(struct perf_env *env);
+int perf_env__read_pmu_mappings(struct perf_env *env);
+int perf_env__nr_pmu_mappings(struct perf_env *env);
+const char *perf_env__pmu_mappings(struct perf_env *env);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int perf_env__read_cpu_topology_map(struct perf_env *env);
 
 void cpu_cache_level__free(struct cpu_cache_level *cache);
 
 const char *perf_env__arch(struct perf_env *env);
+<<<<<<< HEAD
+<<<<<<< HEAD
+const char *perf_env__cpuid(struct perf_env *env);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+const char *perf_env__cpuid(struct perf_env *env);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 const char *perf_env__raw_arch(struct perf_env *env);
 int perf_env__nr_cpus_avail(struct perf_env *env);
 

@@ -676,7 +676,15 @@ struct vba_vars_st {
 	double         AlignedDCCMetaPitchY[DC__NUM_DPP__MAX];
 	double         AlignedDCCMetaPitchC[DC__NUM_DPP__MAX];
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned int NotEnoughUrgentLatencyHiding[DC__VOLTAGE_STATES][2];
+=======
 	unsigned int NotEnoughUrgentLatencyHiding;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned int NotEnoughUrgentLatencyHiding[DC__VOLTAGE_STATES][2];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int NotEnoughUrgentLatencyHidingPre;
 	int PTEBufferSizeInRequestsForLuma;
 	int PTEBufferSizeInRequestsForChroma;
@@ -877,7 +885,15 @@ struct vba_vars_st {
 
 	int PercentMarginOverMinimumRequiredDCFCLK;
 	bool DynamicMetadataSupported[DC__VOLTAGE_STATES][2];
+<<<<<<< HEAD
+<<<<<<< HEAD
+	enum immediate_flip_requirement ImmediateFlipRequirement[DC__NUM_DPP__MAX];
+=======
 	enum immediate_flip_requirement ImmediateFlipRequirement;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	enum immediate_flip_requirement ImmediateFlipRequirement[DC__NUM_DPP__MAX];
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int DETBufferSizeYThisState[DC__NUM_DPP__MAX];
 	unsigned int DETBufferSizeCThisState[DC__NUM_DPP__MAX];
 	bool NoUrgentLatencyHiding[DC__NUM_DPP__MAX];

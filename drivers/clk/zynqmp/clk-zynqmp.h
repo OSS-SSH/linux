@@ -56,6 +56,14 @@ enum topology_type {
  * @type:	Type of topology
  * @flag:	Topology flags
  * @type_flag:	Topology type specific flag
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @custom_type_flag: Topology type specific custom flag
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @custom_type_flag: Topology type specific custom flag
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct clock_topology {
 	u32 type;

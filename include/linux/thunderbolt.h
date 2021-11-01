@@ -468,6 +468,14 @@ static inline struct tb_xdomain *tb_service_parent(struct tb_service *svc)
  * @interrupt_work: Work scheduled to handle ring interrupt when no
  *		    MSI-X is used.
  * @hop_count: Number of rings (end point hops) supported by NHI.
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @quirks: NHI specific quirks if any
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @quirks: NHI specific quirks if any
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct tb_nhi {
 	spinlock_t lock;
@@ -480,6 +488,14 @@ struct tb_nhi {
 	bool going_away;
 	struct work_struct interrupt_work;
 	u32 hop_count;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long quirks;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long quirks;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**

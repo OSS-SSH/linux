@@ -28,9 +28,21 @@
  */
 
 #include <linux/delay.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/stdarg.h>
+
+#include "dm_services.h"
+=======
 
 #include "dm_services.h"
 #include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/stdarg.h>
+
+#include "dm_services.h"
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "dc.h"
 #include "dc_dmub_srv.h"

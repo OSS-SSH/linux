@@ -526,6 +526,10 @@ static int ptdump_show(struct seq_file *m, void *v)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+DEFINE_SHOW_ATTRIBUTE(ptdump);
+=======
 static int ptdump_open(struct inode *inode, struct file *file)
 {
 	return single_open(file, ptdump_show, NULL);
@@ -537,6 +541,10 @@ static const struct file_operations ptdump_fops = {
 	.llseek		= seq_lseek,
 	.release	= single_release,
 };
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+DEFINE_SHOW_ATTRIBUTE(ptdump);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int ptdump_init(void)
 {

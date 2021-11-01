@@ -568,6 +568,14 @@ out:
 
 int __init nsproxy_cache_init(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	nsproxy_cachep = KMEM_CACHE(nsproxy, SLAB_PANIC|SLAB_ACCOUNT);
+=======
 	nsproxy_cachep = KMEM_CACHE(nsproxy, SLAB_PANIC);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	nsproxy_cachep = KMEM_CACHE(nsproxy, SLAB_PANIC|SLAB_ACCOUNT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }

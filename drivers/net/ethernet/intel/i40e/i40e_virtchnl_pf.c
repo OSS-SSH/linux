@@ -1160,12 +1160,28 @@ static int i40e_quiesce_vf_pci(struct i40e_vf *vf)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * __i40e_getnum_vf_vsi_vlan_filters
+=======
  * i40e_getnum_vf_vsi_vlan_filters
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * __i40e_getnum_vf_vsi_vlan_filters
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @vsi: pointer to the vsi
  *
  * called to get the number of VLANs offloaded on this VF
  **/
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int __i40e_getnum_vf_vsi_vlan_filters(struct i40e_vsi *vsi)
+=======
 static int i40e_getnum_vf_vsi_vlan_filters(struct i40e_vsi *vsi)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int __i40e_getnum_vf_vsi_vlan_filters(struct i40e_vsi *vsi)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct i40e_mac_filter *f;
 	u16 num_vlans = 0, bkt;
@@ -1179,6 +1195,32 @@ static int i40e_getnum_vf_vsi_vlan_filters(struct i40e_vsi *vsi)
 }
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * i40e_getnum_vf_vsi_vlan_filters
+ * @vsi: pointer to the vsi
+ *
+ * wrapper for __i40e_getnum_vf_vsi_vlan_filters() with spinlock held
+ **/
+static int i40e_getnum_vf_vsi_vlan_filters(struct i40e_vsi *vsi)
+{
+	int num_vlans;
+
+	spin_lock_bh(&vsi->mac_filter_hash_lock);
+	num_vlans = __i40e_getnum_vf_vsi_vlan_filters(vsi);
+	spin_unlock_bh(&vsi->mac_filter_hash_lock);
+
+	return num_vlans;
+}
+
+/**
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * i40e_get_vlan_list_sync
  * @vsi: pointer to the VSI
  * @num_vlans: number of VLANs in mac_filter_hash, returned to caller
@@ -1195,7 +1237,15 @@ static void i40e_get_vlan_list_sync(struct i40e_vsi *vsi, u16 *num_vlans,
 	int bkt;
 
 	spin_lock_bh(&vsi->mac_filter_hash_lock);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	*num_vlans = __i40e_getnum_vf_vsi_vlan_filters(vsi);
+=======
 	*num_vlans = i40e_getnum_vf_vsi_vlan_filters(vsi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*num_vlans = __i40e_getnum_vf_vsi_vlan_filters(vsi);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	*vlan_list = kcalloc(*num_vlans, sizeof(**vlan_list), GFP_ATOMIC);
 	if (!(*vlan_list))
 		goto err;

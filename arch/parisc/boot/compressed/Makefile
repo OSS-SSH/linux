@@ -26,7 +26,15 @@ endif
 OBJECTS += $(obj)/head.o $(obj)/real2.o $(obj)/firmware.o $(obj)/misc.o $(obj)/piggy.o
 
 LDFLAGS_vmlinux := -X -e startup --as-needed -T
+<<<<<<< HEAD
+<<<<<<< HEAD
+$(obj)/vmlinux: $(obj)/vmlinux.lds $(OBJECTS) $(LIBGCC) FORCE
+=======
 $(obj)/vmlinux: $(obj)/vmlinux.lds $(OBJECTS) $(LIBGCC)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+$(obj)/vmlinux: $(obj)/vmlinux.lds $(OBJECTS) $(LIBGCC) FORCE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	$(call if_changed,ld)
 
 sed-sizes := -e 's/^\([0-9a-fA-F]*\) . \(__bss_start\|_end\|parisc_kernel_start\)$$/\#define SZ\2 0x\1/p'
@@ -34,7 +42,15 @@ sed-sizes := -e 's/^\([0-9a-fA-F]*\) . \(__bss_start\|_end\|parisc_kernel_start\
 quiet_cmd_sizes = GEN $@
       cmd_sizes = $(NM) $< | sed -n $(sed-sizes) > $@
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+$(obj)/sizes.h: vmlinux FORCE
+=======
 $(obj)/sizes.h: vmlinux
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+$(obj)/sizes.h: vmlinux FORCE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	$(call if_changed,sizes)
 
 AFLAGS_head.o += -I$(objtree)/$(obj) -DBOOTLOADER
@@ -70,19 +86,45 @@ suffix-$(CONFIG_KERNEL_LZMA)  := lzma
 suffix-$(CONFIG_KERNEL_LZO)  := lzo
 suffix-$(CONFIG_KERNEL_XZ)  := xz
 
-$(obj)/vmlinux.bin.gz: $(vmlinux.bin.all-y)
+<<<<<<< HEAD
+<<<<<<< HEAD
+$(obj)/vmlinux.bin.gz: $(vmlinux.bin.all-y) FORCE
 	$(call if_changed,gzip)
-$(obj)/vmlinux.bin.bz2: $(vmlinux.bin.all-y)
+$(obj)/vmlinux.bin.bz2: $(vmlinux.bin.all-y) FORCE
 	$(call if_changed,bzip2)
-$(obj)/vmlinux.bin.lz4: $(vmlinux.bin.all-y)
+$(obj)/vmlinux.bin.lz4: $(vmlinux.bin.all-y) FORCE
 	$(call if_changed,lz4)
-$(obj)/vmlinux.bin.lzma: $(vmlinux.bin.all-y)
+$(obj)/vmlinux.bin.lzma: $(vmlinux.bin.all-y) FORCE
 	$(call if_changed,lzma)
-$(obj)/vmlinux.bin.lzo: $(vmlinux.bin.all-y)
+$(obj)/vmlinux.bin.lzo: $(vmlinux.bin.all-y) FORCE
 	$(call if_changed,lzo)
-$(obj)/vmlinux.bin.xz: $(vmlinux.bin.all-y)
+$(obj)/vmlinux.bin.xz: $(vmlinux.bin.all-y) FORCE
 	$(call if_changed,xzkern)
 
 LDFLAGS_piggy.o := -r --format binary --oformat $(LD_BFD) -T
+$(obj)/piggy.o: $(obj)/vmlinux.scr $(obj)/vmlinux.bin.$(suffix-y) FORCE
+=======
+$(obj)/vmlinux.bin.gz: $(vmlinux.bin.all-y)
+=======
+$(obj)/vmlinux.bin.gz: $(vmlinux.bin.all-y) FORCE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	$(call if_changed,gzip)
+$(obj)/vmlinux.bin.bz2: $(vmlinux.bin.all-y) FORCE
+	$(call if_changed,bzip2)
+$(obj)/vmlinux.bin.lz4: $(vmlinux.bin.all-y) FORCE
+	$(call if_changed,lz4)
+$(obj)/vmlinux.bin.lzma: $(vmlinux.bin.all-y) FORCE
+	$(call if_changed,lzma)
+$(obj)/vmlinux.bin.lzo: $(vmlinux.bin.all-y) FORCE
+	$(call if_changed,lzo)
+$(obj)/vmlinux.bin.xz: $(vmlinux.bin.all-y) FORCE
+	$(call if_changed,xzkern)
+
+LDFLAGS_piggy.o := -r --format binary --oformat $(LD_BFD) -T
+<<<<<<< HEAD
 $(obj)/piggy.o: $(obj)/vmlinux.scr $(obj)/vmlinux.bin.$(suffix-y)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+$(obj)/piggy.o: $(obj)/vmlinux.scr $(obj)/vmlinux.bin.$(suffix-y) FORCE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	$(call if_changed,ld)

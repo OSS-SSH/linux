@@ -28,11 +28,27 @@
  */
 
 static unsigned int ks0108_port = CONFIG_KS0108_PORT;
+<<<<<<< HEAD
+<<<<<<< HEAD
+module_param(ks0108_port, uint, 0444);
+MODULE_PARM_DESC(ks0108_port, "Parallel port where the LCD is connected");
+
+static unsigned int ks0108_delay = CONFIG_KS0108_DELAY;
+module_param(ks0108_delay, uint, 0444);
+=======
 module_param(ks0108_port, uint, S_IRUGO);
 MODULE_PARM_DESC(ks0108_port, "Parallel port where the LCD is connected");
 
 static unsigned int ks0108_delay = CONFIG_KS0108_DELAY;
 module_param(ks0108_delay, uint, S_IRUGO);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_param(ks0108_port, uint, 0444);
+MODULE_PARM_DESC(ks0108_port, "Parallel port where the LCD is connected");
+
+static unsigned int ks0108_delay = CONFIG_KS0108_DELAY;
+module_param(ks0108_delay, uint, 0444);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_PARM_DESC(ks0108_delay, "Delay between each control writing (microseconds)");
 
 /*
@@ -167,6 +183,10 @@ static struct parport_driver ks0108_parport_driver = {
 	.detach = ks0108_parport_detach,
 	.devmodel = true,
 };
+<<<<<<< HEAD
+<<<<<<< HEAD
+module_parport_driver(ks0108_parport_driver);
+=======
 
 static int __init ks0108_init(void)
 {
@@ -180,6 +200,10 @@ static void __exit ks0108_exit(void)
 
 module_init(ks0108_init);
 module_exit(ks0108_exit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+module_parport_driver(ks0108_parport_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 MODULE_LICENSE("GPL v2");
 MODULE_AUTHOR("Miguel Ojeda <ojeda@kernel.org>");

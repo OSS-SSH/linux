@@ -104,6 +104,13 @@ static int hclge_dcb_common_validate(struct hclge_dev *hdev, u8 num_tc,
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static u8 hclge_ets_tc_changed(struct hclge_dev *hdev, struct ieee_ets *ets,
+			       bool *changed)
+{
+	u8 max_tc_id = 0;
+=======
 static int hclge_ets_validate(struct hclge_dev *hdev, struct ieee_ets *ets,
 			      u8 *tc, bool *changed)
 {
@@ -111,12 +118,36 @@ static int hclge_ets_validate(struct hclge_dev *hdev, struct ieee_ets *ets,
 	u32 total_ets_bw = 0;
 	u8 max_tc = 0;
 	int ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static u8 hclge_ets_tc_changed(struct hclge_dev *hdev, struct ieee_ets *ets,
+			       bool *changed)
+{
+	u8 max_tc_id = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 i;
 
 	for (i = 0; i < HNAE3_MAX_USER_PRIO; i++) {
 		if (ets->prio_tc[i] != hdev->tm_info.prio_tc[i])
 			*changed = true;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (ets->prio_tc[i] > max_tc_id)
+			max_tc_id = ets->prio_tc[i];
+	}
+
+	/* return max tc number, max tc id need to plus 1 */
+	return max_tc_id + 1;
+}
+
+static int hclge_ets_sch_mode_validate(struct hclge_dev *hdev,
+				       struct ieee_ets *ets, bool *changed)
+{
+	bool has_ets_tc = false;
+	u32 total_ets_bw = 0;
+	u8 i;
+=======
 		if (ets->prio_tc[i] > max_tc)
 			max_tc = ets->prio_tc[i];
 	}
@@ -124,6 +155,23 @@ static int hclge_ets_validate(struct hclge_dev *hdev, struct ieee_ets *ets,
 	ret = hclge_dcb_common_validate(hdev, max_tc + 1, ets->prio_tc);
 	if (ret)
 		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (ets->prio_tc[i] > max_tc_id)
+			max_tc_id = ets->prio_tc[i];
+	}
+
+	/* return max tc number, max tc id need to plus 1 */
+	return max_tc_id + 1;
+}
+
+static int hclge_ets_sch_mode_validate(struct hclge_dev *hdev,
+				       struct ieee_ets *ets, bool *changed)
+{
+	bool has_ets_tc = false;
+	u32 total_ets_bw = 0;
+	u8 i;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = 0; i < hdev->tc_max; i++) {
 		switch (ets->tc_tsa[i]) {
@@ -148,7 +196,36 @@ static int hclge_ets_validate(struct hclge_dev *hdev, struct ieee_ets *ets,
 	if (has_ets_tc && total_ets_bw != BW_PERCENT)
 		return -EINVAL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	return 0;
+}
+
+static int hclge_ets_validate(struct hclge_dev *hdev, struct ieee_ets *ets,
+			      u8 *tc, bool *changed)
+{
+	u8 tc_num;
+	int ret;
+
+	tc_num = hclge_ets_tc_changed(hdev, ets, changed);
+
+	ret = hclge_dcb_common_validate(hdev, tc_num, ets->prio_tc);
+	if (ret)
+		return ret;
+
+	ret = hclge_ets_sch_mode_validate(hdev, ets, changed);
+	if (ret)
+		return ret;
+
+	*tc = tc_num;
+<<<<<<< HEAD
+=======
 	*tc = max_tc + 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (*tc != hdev->tm_info.num_tc)
 		*changed = true;
 
@@ -224,6 +301,19 @@ static int hclge_ieee_setets(struct hnae3_handle *h, struct ieee_ets *ets)
 	}
 
 	hclge_tm_schd_info_update(hdev, num_tc);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (num_tc > 1)
+		hdev->flag |= HCLGE_FLAG_DCB_ENABLE;
+	else
+		hdev->flag &= ~HCLGE_FLAG_DCB_ENABLE;
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = hclge_ieee_ets_to_tm_info(hdev, ets);
 	if (ret)
@@ -234,9 +324,17 @@ static int hclge_ieee_setets(struct hnae3_handle *h, struct ieee_ets *ets)
 		if (ret)
 			goto err_out;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return hclge_notify_init_up(hdev);
+=======
 		ret = hclge_notify_init_up(hdev);
 		if (ret)
 			return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return hclge_notify_init_up(hdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return hclge_tm_dwrr_cfg(hdev);
@@ -255,11 +353,24 @@ static int hclge_ieee_getpfc(struct hnae3_handle *h, struct ieee_pfc *pfc)
 	u64 requests[HNAE3_MAX_TC], indications[HNAE3_MAX_TC];
 	struct hclge_vport *vport = hclge_get_vport(h);
 	struct hclge_dev *hdev = vport->back;
-	u8 i, j, pfc_map, *prio_tc;
+<<<<<<< HEAD
+<<<<<<< HEAD
 	int ret;
+	u8 i;
 
 	memset(pfc, 0, sizeof(*pfc));
 	pfc->pfc_cap = hdev->pfc_max;
+	pfc->pfc_en = hdev->tm_info.pfc_en;
+=======
+	u8 i, j, pfc_map, *prio_tc;
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	int ret;
+	u8 i;
+
+	memset(pfc, 0, sizeof(*pfc));
+	pfc->pfc_cap = hdev->pfc_max;
+<<<<<<< HEAD
 	prio_tc = hdev->tm_info.prio_tc;
 	pfc_map = hdev->tm_info.hw_pfc_map;
 
@@ -270,6 +381,10 @@ static int hclge_ieee_getpfc(struct hnae3_handle *h, struct ieee_pfc *pfc)
 				pfc->pfc_en |= BIT(j);
 		}
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	pfc->pfc_en = hdev->tm_info.pfc_en;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = hclge_pfc_tx_stats_get(hdev, requests);
 	if (ret)
@@ -294,8 +409,16 @@ static int hclge_ieee_setpfc(struct hnae3_handle *h, struct ieee_pfc *pfc)
 	u8 i, j, pfc_map, *prio_tc;
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!(hdev->dcbx_cap & DCB_CAP_DCBX_VER_IEEE))
+=======
 	if (!(hdev->dcbx_cap & DCB_CAP_DCBX_VER_IEEE) ||
 	    hdev->flag & HCLGE_FLAG_MQPRIO_ENABLE)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!(hdev->dcbx_cap & DCB_CAP_DCBX_VER_IEEE))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	if (pfc->pfc_en == hdev->tm_info.pfc_en)
@@ -429,8 +552,14 @@ static int hclge_mqprio_qopt_check(struct hclge_dev *hdev,
 static void hclge_sync_mqprio_qopt(struct hnae3_tc_info *tc_info,
 				   struct tc_mqprio_qopt_offload *mqprio_qopt)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	int i;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	memset(tc_info, 0, sizeof(*tc_info));
 	tc_info->num_tc = mqprio_qopt->qopt.num_tc;
 	memcpy(tc_info->prio_tc, mqprio_qopt->qopt.prio_tc_map,
@@ -439,9 +568,15 @@ static void hclge_sync_mqprio_qopt(struct hnae3_tc_info *tc_info,
 	       sizeof_field(struct hnae3_tc_info, tqp_count));
 	memcpy(tc_info->tqp_offset, mqprio_qopt->qopt.offset,
 	       sizeof_field(struct hnae3_tc_info, tqp_offset));
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 	for (i = 0; i < HNAE3_MAX_USER_PRIO; i++)
 		set_bit(tc_info->prio_tc[i], &tc_info->tc_en);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int hclge_config_tc(struct hclge_dev *hdev,
@@ -507,12 +642,32 @@ static int hclge_setup_tc(struct hnae3_handle *h,
 	return hclge_notify_init_up(hdev);
 
 err_out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!tc) {
+		dev_warn(&hdev->pdev->dev,
+			 "failed to destroy mqprio, will active after reset, ret = %d\n",
+			 ret);
+	} else {
+		/* roll-back */
+		memcpy(&kinfo->tc_info, &old_tc_info, sizeof(old_tc_info));
+		if (hclge_config_tc(hdev, &kinfo->tc_info))
+			dev_err(&hdev->pdev->dev,
+				"failed to roll back tc configuration\n");
+	}
+<<<<<<< HEAD
+=======
 	/* roll-back */
 	memcpy(&kinfo->tc_info, &old_tc_info, sizeof(old_tc_info));
 	if (hclge_config_tc(hdev, &kinfo->tc_info))
 		dev_err(&hdev->pdev->dev,
 			"failed to roll back tc configuration\n");
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hclge_notify_init_up(hdev);
 
 	return ret;

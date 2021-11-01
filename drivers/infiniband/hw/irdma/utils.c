@@ -1141,10 +1141,18 @@ void irdma_free_qp_rsrc(struct irdma_qp *iwqp)
 			  iwqp->kqp.dma_mem.va, iwqp->kqp.dma_mem.pa);
 	iwqp->kqp.dma_mem.va = NULL;
 	kfree(iwqp->kqp.sq_wrid_mem);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	kfree(iwqp->kqp.rq_wrid_mem);
+=======
 	iwqp->kqp.sq_wrid_mem = NULL;
 	kfree(iwqp->kqp.rq_wrid_mem);
 	iwqp->kqp.rq_wrid_mem = NULL;
 	kfree(iwqp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	kfree(iwqp->kqp.rq_wrid_mem);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -2510,7 +2518,15 @@ void irdma_modify_qp_to_err(struct irdma_sc_qp *sc_qp)
 	struct irdma_qp *qp = sc_qp->qp_uk.back_qp;
 	struct ib_qp_attr attr;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (qp->iwdev->rf->reset)
+=======
 	if (qp->iwdev->reset)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (qp->iwdev->rf->reset)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	attr.qp_state = IB_QPS_ERR;
 

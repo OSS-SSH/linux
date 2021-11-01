@@ -187,14 +187,28 @@ static int fw_unit_probe(struct device *dev)
 	return driver->probe(fw_unit(dev), unit_match(dev, dev->driver));
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void fw_unit_remove(struct device *dev)
+=======
 static int fw_unit_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void fw_unit_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct fw_driver *driver =
 			container_of(dev->driver, struct fw_driver, driver);
 
 	driver->remove(fw_unit(dev));
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int get_modalias(struct fw_unit *unit, char *buffer, size_t buffer_size)

@@ -11,9 +11,21 @@
 #include "nouveau_vga.h"
 
 static unsigned int
+<<<<<<< HEAD
+<<<<<<< HEAD
+nouveau_vga_set_decode(struct pci_dev *pdev, bool state)
+{
+	struct nouveau_drm *drm = nouveau_drm(pci_get_drvdata(pdev));
+=======
 nouveau_vga_set_decode(void *priv, bool state)
 {
 	struct nouveau_drm *drm = nouveau_drm(priv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+nouveau_vga_set_decode(struct pci_dev *pdev, bool state)
+{
+	struct nouveau_drm *drm = nouveau_drm(pci_get_drvdata(pdev));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct nvif_object *device = &drm->client.device.object;
 
 	if (drm->client.device.info.family == NV_DEVICE_INFO_V0_CURIE &&
@@ -94,7 +106,15 @@ nouveau_vga_init(struct nouveau_drm *drm)
 		return;
 	pdev = to_pci_dev(dev->dev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	vga_client_register(pdev, nouveau_vga_set_decode);
+=======
 	vga_client_register(pdev, dev, NULL, nouveau_vga_set_decode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vga_client_register(pdev, nouveau_vga_set_decode);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* don't register Thunderbolt eGPU with vga_switcheroo */
 	if (pci_is_thunderbolt_attached(pdev))
@@ -118,7 +138,15 @@ nouveau_vga_fini(struct nouveau_drm *drm)
 		return;
 	pdev = to_pci_dev(dev->dev);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	vga_client_unregister(pdev);
+=======
 	vga_client_register(pdev, NULL, NULL, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	vga_client_unregister(pdev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (pci_is_thunderbolt_attached(pdev))
 		return;

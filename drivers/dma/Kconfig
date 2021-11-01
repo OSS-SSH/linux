@@ -277,10 +277,32 @@ config INTEL_IDMA64
 	  Enable DMA support for Intel Low Power Subsystem such as found on
 	  Intel Skylake PCH.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+config INTEL_IDXD_BUS
+	tristate
+	default INTEL_IDXD
+
+<<<<<<< HEAD
 config INTEL_IDXD
 	tristate "Intel Data Accelerators support"
-	depends on PCI && X86_64
+	depends on PCI && X86_64 && !UML
 	depends on PCI_MSI
+	depends on PCI_PASID
+=======
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+config INTEL_IDXD
+	tristate "Intel Data Accelerators support"
+	depends on PCI && X86_64 && !UML
+	depends on PCI_MSI
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PCI_PASID
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on SBITMAP
 	select DMA_ENGINE
 	help
@@ -291,6 +313,32 @@ config INTEL_IDXD
 
 	  If unsure, say N.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+config INTEL_IDXD_COMPAT
+	bool "Legacy behavior for idxd driver"
+	depends on PCI && X86_64
+	select INTEL_IDXD_BUS
+	help
+	  Compatible driver to support old /sys/bus/dsa/drivers/dsa behavior.
+	  The old behavior performed driver bind/unbind for device and wq
+	  devices all under the dsa driver. The compat driver will emulate
+	  the legacy behavior in order to allow existing support apps (i.e.
+	  accel-config) to continue function. It is expected that accel-config
+	  v3.2 and earlier will need the compat mode. A distro with later
+	  accel-config version can disable this compat config.
+
+	  Say Y if you have old applications that require such behavior.
+
+	  If unsure, say N.
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 # Config symbol that collects all the dependencies that's necessary to
 # support shared virtual memory for the devices supported by idxd.
 config INTEL_IDXD_SVM
@@ -315,7 +363,15 @@ config INTEL_IDXD_PERFMON
 
 config INTEL_IOATDMA
 	tristate "Intel I/OAT DMA support"
+<<<<<<< HEAD
+<<<<<<< HEAD
+	depends on PCI && X86_64 && !UML
+=======
 	depends on PCI && X86_64
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	depends on PCI && X86_64 && !UML
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select DMA_ENGINE
 	select DMA_ENGINE_RAID
 	select DCA
@@ -716,6 +772,16 @@ source "drivers/dma/bestcomm/Kconfig"
 
 source "drivers/dma/mediatek/Kconfig"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+source "drivers/dma/ptdma/Kconfig"
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+source "drivers/dma/ptdma/Kconfig"
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "drivers/dma/qcom/Kconfig"
 
 source "drivers/dma/dw/Kconfig"

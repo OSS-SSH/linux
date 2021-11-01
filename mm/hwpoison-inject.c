@@ -30,7 +30,15 @@ static int hwpoison_inject(void *data, u64 val)
 	if (!hwpoison_filter_enable)
 		goto inject;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	shake_page(hpage);
+=======
 	shake_page(hpage, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	shake_page(hpage);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * This implies unable to support non-LRU pages.
 	 */

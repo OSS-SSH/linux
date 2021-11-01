@@ -813,7 +813,15 @@ static int axp288_charger_probe(struct platform_device *pdev)
 	if (val == 0)
 		return -ENODEV;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	info = devm_kzalloc(dev, sizeof(*info), GFP_KERNEL);
+=======
 	info = devm_kzalloc(&pdev->dev, sizeof(*info), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	info = devm_kzalloc(dev, sizeof(*info), GFP_KERNEL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!info)
 		return -ENOMEM;
 
@@ -823,7 +831,15 @@ static int axp288_charger_probe(struct platform_device *pdev)
 
 	info->cable.edev = extcon_get_extcon_dev(AXP288_EXTCON_DEV_NAME);
 	if (info->cable.edev == NULL) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dev_dbg(dev, "%s is not ready, probe deferred\n",
+=======
 		dev_dbg(&pdev->dev, "%s is not ready, probe deferred\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_dbg(dev, "%s is not ready, probe deferred\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			AXP288_EXTCON_DEV_NAME);
 		return -EPROBE_DEFER;
 	}
@@ -834,8 +850,16 @@ static int axp288_charger_probe(struct platform_device *pdev)
 			dev_dbg(dev, "EXTCON_USB_HOST is not ready, probe deferred\n");
 			return -EPROBE_DEFER;
 		}
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dev_info(dev, "Using " USB_HOST_EXTCON_HID " extcon for usb-id\n");
+=======
 		dev_info(&pdev->dev,
 			 "Using " USB_HOST_EXTCON_HID " extcon for usb-id\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dev_info(dev, "Using " USB_HOST_EXTCON_HID " extcon for usb-id\n");
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	platform_set_drvdata(pdev, info);
@@ -874,7 +898,15 @@ static int axp288_charger_probe(struct platform_device *pdev)
 	INIT_WORK(&info->otg.work, axp288_charger_otg_evt_worker);
 	info->otg.id_nb.notifier_call = axp288_charger_handle_otg_evt;
 	if (info->otg.cable) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = devm_extcon_register_notifier(dev, info->otg.cable,
+=======
 		ret = devm_extcon_register_notifier(&pdev->dev, info->otg.cable,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = devm_extcon_register_notifier(dev, info->otg.cable,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					EXTCON_USB_HOST, &info->otg.id_nb);
 		if (ret) {
 			dev_err(dev, "failed to register EXTCON_USB_HOST notifier\n");
@@ -899,7 +931,15 @@ static int axp288_charger_probe(struct platform_device *pdev)
 					NULL, axp288_charger_irq_thread_handler,
 					IRQF_ONESHOT, info->pdev->name, info);
 		if (ret) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dev_err(dev, "failed to request interrupt=%d\n",
+=======
 			dev_err(&pdev->dev, "failed to request interrupt=%d\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dev_err(dev, "failed to request interrupt=%d\n",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 								info->irq[i]);
 			return ret;
 		}

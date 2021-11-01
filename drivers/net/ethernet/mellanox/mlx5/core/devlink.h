@@ -31,9 +31,21 @@ int mlx5_devlink_trap_get_num_active(struct mlx5_core_dev *dev);
 int mlx5_devlink_traps_get_action(struct mlx5_core_dev *dev, int trap_id,
 				  enum devlink_trap_action *action);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct devlink *mlx5_devlink_alloc(struct device *dev);
+void mlx5_devlink_free(struct devlink *devlink);
+int mlx5_devlink_register(struct devlink *devlink);
+=======
 struct devlink *mlx5_devlink_alloc(void);
 void mlx5_devlink_free(struct devlink *devlink);
 int mlx5_devlink_register(struct devlink *devlink, struct device *dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct devlink *mlx5_devlink_alloc(struct device *dev);
+void mlx5_devlink_free(struct devlink *devlink);
+int mlx5_devlink_register(struct devlink *devlink);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void mlx5_devlink_unregister(struct devlink *devlink);
 
 #endif /* __MLX5_DEVLINK_H__ */

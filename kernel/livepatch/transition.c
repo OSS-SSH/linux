@@ -411,7 +411,15 @@ void klp_try_complete_transition(void)
 	/*
 	 * Ditto for the idle "swapper" tasks.
 	 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_lock();
+=======
 	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_lock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for_each_possible_cpu(cpu) {
 		task = idle_task(cpu);
 		if (cpu_online(cpu)) {
@@ -423,7 +431,15 @@ void klp_try_complete_transition(void)
 			task->patch_state = klp_target_state;
 		}
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cpus_read_unlock();
+=======
 	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cpus_read_unlock();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!complete) {
 		if (klp_signals_cnt && !(klp_signals_cnt % SIGNALS_TIMEOUT))

@@ -12,11 +12,29 @@
  *    Jaswinder Singh (jaswinder.singh@linaro.org)
  */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/kernel.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/kernel.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/module.h>
 #include <sound/core.h>
 #include <sound/pcm.h>
 #include <sound/pcm_params.h>
 #include <sound/control.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <sound/tlv.h>
+#include <linux/usb/audio.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <sound/tlv.h>
+#include <linux/usb/audio.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "u_audio.h"
 
@@ -24,6 +42,21 @@
 #define PRD_SIZE_MAX	PAGE_SIZE
 #define MIN_PERIODS	4
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+enum {
+	UAC_FBACK_CTRL,
+	UAC_MUTE_CTRL,
+	UAC_VOLUME_CTRL,
+};
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Runtime data params for one stream */
 struct uac_rtd_params {
 	struct snd_uac_chip *uac; /* parent chip */
@@ -43,6 +76,26 @@ struct uac_rtd_params {
 
 	struct usb_request *req_fback; /* Feedback endpoint request */
 	bool fb_ep_enabled; /* if the ep is enabled */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+  /* Volume/Mute controls and their state */
+  int fu_id; /* Feature Unit ID */
+  struct snd_kcontrol *snd_kctl_volume;
+  struct snd_kcontrol *snd_kctl_mute;
+  s16 volume_min, volume_max, volume_res;
+  s16 volume;
+  int mute;
+
+  spinlock_t lock; /* lock for control transfers */
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct snd_uac_chip {
@@ -76,11 +129,27 @@ static const struct snd_pcm_hardware uac_pcm_hardware = {
 };
 
 static void u_audio_set_fback_frequency(enum usb_device_speed speed,
+<<<<<<< HEAD
+<<<<<<< HEAD
+					struct usb_ep *out_ep,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					struct usb_ep *out_ep,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					unsigned long long freq,
 					unsigned int pitch,
 					void *buf)
 {
 	u32 ff = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct usb_endpoint_descriptor *ep_desc;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct usb_endpoint_descriptor *ep_desc;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Because the pitch base is 1000000, the final divider here
@@ -108,8 +177,27 @@ static void u_audio_set_fback_frequency(enum usb_device_speed speed,
 		 * byte fromat (that is Q16.16)
 		 *
 		 * ff = (freq << 16) / 8000
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		 *
+		 * Win10 and OSX UAC2 drivers require number of samples per packet
+		 * in order to honor the feedback value.
+		 * Linux snd-usb-audio detects the applied bit-shift automatically.
+<<<<<<< HEAD
+		 */
+		ep_desc = out_ep->desc;
+		freq <<= 4 + (ep_desc->bInterval - 1);
+=======
 		 */
 		freq <<= 4;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 */
+		ep_desc = out_ep->desc;
+		freq <<= 4 + (ep_desc->bInterval - 1);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ff = DIV_ROUND_CLOSEST_ULL((freq * pitch), 1953125);
@@ -230,7 +318,23 @@ static void u_audio_iso_fback_complete(struct usb_ep *ep,
 	int status = req->status;
 
 	/* i/f shutting down */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!prm->fb_ep_enabled) {
+		kfree(req->buf);
+		usb_ep_free_request(ep, req);
+		return;
+	}
+
+	if (req->status == -ESHUTDOWN)
+<<<<<<< HEAD
+=======
 	if (!prm->fb_ep_enabled || req->status == -ESHUTDOWN)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	/*
@@ -241,7 +345,15 @@ static void u_audio_iso_fback_complete(struct usb_ep *ep,
 		pr_debug("%s: iso_complete status(%d) %d/%d\n",
 			__func__, status, req->actual, req->length);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u_audio_set_fback_frequency(audio_dev->gadget->speed, audio_dev->out_ep,
+=======
 	u_audio_set_fback_frequency(audio_dev->gadget->speed,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u_audio_set_fback_frequency(audio_dev->gadget->speed, audio_dev->out_ep,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    params->c_srate, prm->pitch,
 				    req->buf);
 
@@ -388,8 +500,14 @@ static inline void free_ep(struct uac_rtd_params *prm, struct usb_ep *ep)
 	if (!prm->ep_enabled)
 		return;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	prm->ep_enabled = false;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	audio_dev = uac->audio_dev;
 	params = &audio_dev->params;
 
@@ -407,6 +525,16 @@ static inline void free_ep(struct uac_rtd_params *prm, struct usb_ep *ep)
 		}
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	prm->ep_enabled = false;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	prm->ep_enabled = false;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (usb_ep_disable(ep))
 		dev_err(uac->card->dev, "%s:%d Error!\n", __func__, __LINE__);
 }
@@ -418,15 +546,37 @@ static inline void free_ep_fback(struct uac_rtd_params *prm, struct usb_ep *ep)
 	if (!prm->fb_ep_enabled)
 		return;
 
-	prm->fb_ep_enabled = false;
-
+<<<<<<< HEAD
+<<<<<<< HEAD
 	if (prm->req_fback) {
-		usb_ep_dequeue(ep, prm->req_fback);
-		kfree(prm->req_fback->buf);
-		usb_ep_free_request(ep, prm->req_fback);
+		if (usb_ep_dequeue(ep, prm->req_fback)) {
+			kfree(prm->req_fback->buf);
+			usb_ep_free_request(ep, prm->req_fback);
+		}
 		prm->req_fback = NULL;
 	}
 
+	prm->fb_ep_enabled = false;
+
+=======
+	prm->fb_ep_enabled = false;
+
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (prm->req_fback) {
+		if (usb_ep_dequeue(ep, prm->req_fback)) {
+			kfree(prm->req_fback->buf);
+			usb_ep_free_request(ep, prm->req_fback);
+		}
+		prm->req_fback = NULL;
+	}
+
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	prm->fb_ep_enabled = false;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (usb_ep_disable(ep))
 		dev_err(uac->card->dev, "%s:%d Error!\n", __func__, __LINE__);
 }
@@ -499,7 +649,15 @@ int u_audio_start_capture(struct g_audio *audio_dev)
 	 * be meauserd at start of playback
 	 */
 	prm->pitch = 1000000;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u_audio_set_fback_frequency(audio_dev->gadget->speed, ep,
+=======
 	u_audio_set_fback_frequency(audio_dev->gadget->speed,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u_audio_set_fback_frequency(audio_dev->gadget->speed, ep,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    params->c_srate, prm->pitch,
 				    req_fback->buf);
 
@@ -597,6 +755,112 @@ void u_audio_stop_playback(struct g_audio *audio_dev)
 }
 EXPORT_SYMBOL_GPL(u_audio_stop_playback);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int u_audio_get_volume(struct g_audio *audio_dev, int playback, s16 *val)
+{
+	struct snd_uac_chip *uac = audio_dev->uac;
+	struct uac_rtd_params *prm;
+	unsigned long flags;
+
+	if (playback)
+		prm = &uac->p_prm;
+	else
+		prm = &uac->c_prm;
+
+	spin_lock_irqsave(&prm->lock, flags);
+	*val = prm->volume;
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	return 0;
+}
+EXPORT_SYMBOL_GPL(u_audio_get_volume);
+
+int u_audio_set_volume(struct g_audio *audio_dev, int playback, s16 val)
+{
+	struct snd_uac_chip *uac = audio_dev->uac;
+	struct uac_rtd_params *prm;
+	unsigned long flags;
+	int change = 0;
+
+	if (playback)
+		prm = &uac->p_prm;
+	else
+		prm = &uac->c_prm;
+
+	spin_lock_irqsave(&prm->lock, flags);
+	val = clamp(val, prm->volume_min, prm->volume_max);
+	if (prm->volume != val) {
+		prm->volume = val;
+		change = 1;
+	}
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	if (change)
+		snd_ctl_notify(uac->card, SNDRV_CTL_EVENT_MASK_VALUE,
+				&prm->snd_kctl_volume->id);
+
+	return 0;
+}
+EXPORT_SYMBOL_GPL(u_audio_set_volume);
+
+int u_audio_get_mute(struct g_audio *audio_dev, int playback, int *val)
+{
+	struct snd_uac_chip *uac = audio_dev->uac;
+	struct uac_rtd_params *prm;
+	unsigned long flags;
+
+	if (playback)
+		prm = &uac->p_prm;
+	else
+		prm = &uac->c_prm;
+
+	spin_lock_irqsave(&prm->lock, flags);
+	*val = prm->mute;
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	return 0;
+}
+EXPORT_SYMBOL_GPL(u_audio_get_mute);
+
+int u_audio_set_mute(struct g_audio *audio_dev, int playback, int val)
+{
+	struct snd_uac_chip *uac = audio_dev->uac;
+	struct uac_rtd_params *prm;
+	unsigned long flags;
+	int change = 0;
+	int mute;
+
+	if (playback)
+		prm = &uac->p_prm;
+	else
+		prm = &uac->c_prm;
+
+	mute = val ? 1 : 0;
+
+	spin_lock_irqsave(&prm->lock, flags);
+	if (prm->mute != mute) {
+		prm->mute = mute;
+		change = 1;
+	}
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	if (change)
+		snd_ctl_notify(uac->card, SNDRV_CTL_EVENT_MASK_VALUE,
+			       &prm->snd_kctl_mute->id);
+
+	return 0;
+}
+EXPORT_SYMBOL_GPL(u_audio_set_mute);
+
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int u_audio_pitch_info(struct snd_kcontrol *kcontrol,
 				   struct snd_ctl_elem_info *uinfo)
 {
@@ -656,6 +920,161 @@ static int u_audio_pitch_put(struct snd_kcontrol *kcontrol,
 	return change;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int u_audio_mute_info(struct snd_kcontrol *kcontrol,
+				   struct snd_ctl_elem_info *uinfo)
+{
+	uinfo->type = SNDRV_CTL_ELEM_TYPE_BOOLEAN;
+	uinfo->count = 1;
+	uinfo->value.integer.min = 0;
+	uinfo->value.integer.max = 1;
+	uinfo->value.integer.step = 1;
+
+	return 0;
+}
+
+static int u_audio_mute_get(struct snd_kcontrol *kcontrol,
+				   struct snd_ctl_elem_value *ucontrol)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+	unsigned long flags;
+
+	spin_lock_irqsave(&prm->lock, flags);
+	ucontrol->value.integer.value[0] = !prm->mute;
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	return 0;
+}
+
+static int u_audio_mute_put(struct snd_kcontrol *kcontrol,
+				  struct snd_ctl_elem_value *ucontrol)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+	struct snd_uac_chip *uac = prm->uac;
+	struct g_audio *audio_dev = uac->audio_dev;
+	unsigned int val;
+	unsigned long flags;
+	int change = 0;
+
+	val = !ucontrol->value.integer.value[0];
+
+	spin_lock_irqsave(&prm->lock, flags);
+	if (val != prm->mute) {
+		prm->mute = val;
+		change = 1;
+	}
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	if (change && audio_dev->notify)
+		audio_dev->notify(audio_dev, prm->fu_id, UAC_FU_MUTE);
+
+	return change;
+}
+
+/*
+ * TLV callback for mixer volume controls
+ */
+static int u_audio_volume_tlv(struct snd_kcontrol *kcontrol, int op_flag,
+			 unsigned int size, unsigned int __user *_tlv)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+	DECLARE_TLV_DB_MINMAX(scale, 0, 0);
+
+	if (size < sizeof(scale))
+		return -ENOMEM;
+
+	/* UAC volume resolution is 1/256 dB, TLV is 1/100 dB */
+	scale[2] = (prm->volume_min * 100) / 256;
+	scale[3] = (prm->volume_max * 100) / 256;
+	if (copy_to_user(_tlv, scale, sizeof(scale)))
+		return -EFAULT;
+
+	return 0;
+}
+
+static int u_audio_volume_info(struct snd_kcontrol *kcontrol,
+				   struct snd_ctl_elem_info *uinfo)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+
+	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
+	uinfo->count = 1;
+	uinfo->value.integer.min = 0;
+	uinfo->value.integer.max =
+		(prm->volume_max - prm->volume_min + prm->volume_res - 1)
+		/ prm->volume_res;
+	uinfo->value.integer.step = 1;
+
+	return 0;
+}
+
+static int u_audio_volume_get(struct snd_kcontrol *kcontrol,
+				   struct snd_ctl_elem_value *ucontrol)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+	unsigned long flags;
+
+	spin_lock_irqsave(&prm->lock, flags);
+	ucontrol->value.integer.value[0] =
+			(prm->volume - prm->volume_min) / prm->volume_res;
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	return 0;
+}
+
+static int u_audio_volume_put(struct snd_kcontrol *kcontrol,
+				  struct snd_ctl_elem_value *ucontrol)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+	struct snd_uac_chip *uac = prm->uac;
+	struct g_audio *audio_dev = uac->audio_dev;
+	unsigned int val;
+	s16 volume;
+	unsigned long flags;
+	int change = 0;
+
+	val = ucontrol->value.integer.value[0];
+
+	spin_lock_irqsave(&prm->lock, flags);
+	volume = (val * prm->volume_res) + prm->volume_min;
+	volume = clamp(volume, prm->volume_min, prm->volume_max);
+	if (volume != prm->volume) {
+		prm->volume = volume;
+		change = 1;
+	}
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	if (change && audio_dev->notify)
+		audio_dev->notify(audio_dev, prm->fu_id, UAC_FU_VOLUME);
+
+	return change;
+}
+
+
+static struct snd_kcontrol_new u_audio_controls[]  = {
+  [UAC_FBACK_CTRL] {
+    .iface =        SNDRV_CTL_ELEM_IFACE_PCM,
+    .name =         "Capture Pitch 1000000",
+    .info =         u_audio_pitch_info,
+    .get =          u_audio_pitch_get,
+    .put =          u_audio_pitch_put,
+  },
+  [UAC_MUTE_CTRL] {
+		.iface =	SNDRV_CTL_ELEM_IFACE_MIXER,
+		.name =		"", /* will be filled later */
+		.info =		u_audio_mute_info,
+		.get =		u_audio_mute_get,
+		.put =		u_audio_mute_put,
+	},
+	[UAC_VOLUME_CTRL] {
+		.iface =	SNDRV_CTL_ELEM_IFACE_MIXER,
+		.name =		"", /* will be filled later */
+		.info =		u_audio_volume_info,
+		.get =		u_audio_volume_get,
+		.put =		u_audio_volume_put,
+	},
+=======
 static const struct snd_kcontrol_new u_audio_controls[]  = {
 {
 	.iface =        SNDRV_CTL_ELEM_IFACE_PCM,
@@ -664,6 +1083,161 @@ static const struct snd_kcontrol_new u_audio_controls[]  = {
 	.get =          u_audio_pitch_get,
 	.put =          u_audio_pitch_put,
 },
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int u_audio_mute_info(struct snd_kcontrol *kcontrol,
+				   struct snd_ctl_elem_info *uinfo)
+{
+	uinfo->type = SNDRV_CTL_ELEM_TYPE_BOOLEAN;
+	uinfo->count = 1;
+	uinfo->value.integer.min = 0;
+	uinfo->value.integer.max = 1;
+	uinfo->value.integer.step = 1;
+
+	return 0;
+}
+
+static int u_audio_mute_get(struct snd_kcontrol *kcontrol,
+				   struct snd_ctl_elem_value *ucontrol)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+	unsigned long flags;
+
+	spin_lock_irqsave(&prm->lock, flags);
+	ucontrol->value.integer.value[0] = !prm->mute;
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	return 0;
+}
+
+static int u_audio_mute_put(struct snd_kcontrol *kcontrol,
+				  struct snd_ctl_elem_value *ucontrol)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+	struct snd_uac_chip *uac = prm->uac;
+	struct g_audio *audio_dev = uac->audio_dev;
+	unsigned int val;
+	unsigned long flags;
+	int change = 0;
+
+	val = !ucontrol->value.integer.value[0];
+
+	spin_lock_irqsave(&prm->lock, flags);
+	if (val != prm->mute) {
+		prm->mute = val;
+		change = 1;
+	}
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	if (change && audio_dev->notify)
+		audio_dev->notify(audio_dev, prm->fu_id, UAC_FU_MUTE);
+
+	return change;
+}
+
+/*
+ * TLV callback for mixer volume controls
+ */
+static int u_audio_volume_tlv(struct snd_kcontrol *kcontrol, int op_flag,
+			 unsigned int size, unsigned int __user *_tlv)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+	DECLARE_TLV_DB_MINMAX(scale, 0, 0);
+
+	if (size < sizeof(scale))
+		return -ENOMEM;
+
+	/* UAC volume resolution is 1/256 dB, TLV is 1/100 dB */
+	scale[2] = (prm->volume_min * 100) / 256;
+	scale[3] = (prm->volume_max * 100) / 256;
+	if (copy_to_user(_tlv, scale, sizeof(scale)))
+		return -EFAULT;
+
+	return 0;
+}
+
+static int u_audio_volume_info(struct snd_kcontrol *kcontrol,
+				   struct snd_ctl_elem_info *uinfo)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+
+	uinfo->type = SNDRV_CTL_ELEM_TYPE_INTEGER;
+	uinfo->count = 1;
+	uinfo->value.integer.min = 0;
+	uinfo->value.integer.max =
+		(prm->volume_max - prm->volume_min + prm->volume_res - 1)
+		/ prm->volume_res;
+	uinfo->value.integer.step = 1;
+
+	return 0;
+}
+
+static int u_audio_volume_get(struct snd_kcontrol *kcontrol,
+				   struct snd_ctl_elem_value *ucontrol)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+	unsigned long flags;
+
+	spin_lock_irqsave(&prm->lock, flags);
+	ucontrol->value.integer.value[0] =
+			(prm->volume - prm->volume_min) / prm->volume_res;
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	return 0;
+}
+
+static int u_audio_volume_put(struct snd_kcontrol *kcontrol,
+				  struct snd_ctl_elem_value *ucontrol)
+{
+	struct uac_rtd_params *prm = snd_kcontrol_chip(kcontrol);
+	struct snd_uac_chip *uac = prm->uac;
+	struct g_audio *audio_dev = uac->audio_dev;
+	unsigned int val;
+	s16 volume;
+	unsigned long flags;
+	int change = 0;
+
+	val = ucontrol->value.integer.value[0];
+
+	spin_lock_irqsave(&prm->lock, flags);
+	volume = (val * prm->volume_res) + prm->volume_min;
+	volume = clamp(volume, prm->volume_min, prm->volume_max);
+	if (volume != prm->volume) {
+		prm->volume = volume;
+		change = 1;
+	}
+	spin_unlock_irqrestore(&prm->lock, flags);
+
+	if (change && audio_dev->notify)
+		audio_dev->notify(audio_dev, prm->fu_id, UAC_FU_VOLUME);
+
+	return change;
+}
+
+
+static struct snd_kcontrol_new u_audio_controls[]  = {
+  [UAC_FBACK_CTRL] {
+    .iface =        SNDRV_CTL_ELEM_IFACE_PCM,
+    .name =         "Capture Pitch 1000000",
+    .info =         u_audio_pitch_info,
+    .get =          u_audio_pitch_get,
+    .put =          u_audio_pitch_put,
+  },
+  [UAC_MUTE_CTRL] {
+		.iface =	SNDRV_CTL_ELEM_IFACE_MIXER,
+		.name =		"", /* will be filled later */
+		.info =		u_audio_mute_info,
+		.get =		u_audio_mute_get,
+		.put =		u_audio_mute_put,
+	},
+	[UAC_VOLUME_CTRL] {
+		.iface =	SNDRV_CTL_ELEM_IFACE_MIXER,
+		.name =		"", /* will be filled later */
+		.info =		u_audio_volume_info,
+		.get =		u_audio_volume_get,
+		.put =		u_audio_volume_put,
+	},
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
@@ -675,7 +1249,15 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 	struct snd_kcontrol *kctl;
 	struct uac_params *params;
 	int p_chmask, c_chmask;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int i, err;
+=======
 	int err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int i, err;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!g_audio)
 		return -EINVAL;
@@ -693,7 +1275,17 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 	if (c_chmask) {
 		struct uac_rtd_params *prm = &uac->c_prm;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    spin_lock_init(&prm->lock);
+    uac->c_prm.uac = uac;
+=======
 		uac->c_prm.uac = uac;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    spin_lock_init(&prm->lock);
+    uac->c_prm.uac = uac;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		prm->max_psize = g_audio->out_ep_maxpsize;
 
 		prm->reqs = kcalloc(params->req_number,
@@ -716,6 +1308,14 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 	if (p_chmask) {
 		struct uac_rtd_params *prm = &uac->p_prm;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		spin_lock_init(&prm->lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		spin_lock_init(&prm->lock);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uac->p_prm.uac = uac;
 		prm->max_psize = g_audio->in_ep_maxpsize;
 
@@ -760,10 +1360,36 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &uac_pcm_ops);
 	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_CAPTURE, &uac_pcm_ops);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * Create mixer and controls
+	 * Create only if it's required on USB side
+	 */
+	if ((c_chmask && g_audio->in_ep_fback)
+			|| (p_chmask && params->p_fu.id)
+			|| (c_chmask && params->c_fu.id))
+<<<<<<< HEAD
+		strscpy(card->mixername, card_name, sizeof(card->driver));
+
+	if (c_chmask && g_audio->in_ep_fback) {
+		kctl = snd_ctl_new1(&u_audio_controls[UAC_FBACK_CTRL],
+				    &uac->c_prm);
+=======
 	if (c_chmask && g_audio->in_ep_fback) {
 		strscpy(card->mixername, card_name, sizeof(card->driver));
 
 		kctl = snd_ctl_new1(&u_audio_controls[0], &uac->c_prm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		strscpy(card->mixername, card_name, sizeof(card->driver));
+
+	if (c_chmask && g_audio->in_ep_fback) {
+		kctl = snd_ctl_new1(&u_audio_controls[UAC_FBACK_CTRL],
+				    &uac->c_prm);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!kctl) {
 			err = -ENOMEM;
 			goto snd_fail;
@@ -777,6 +1403,91 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 			goto snd_fail;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	for (i = 0; i <= SNDRV_PCM_STREAM_LAST; i++) {
+		struct uac_rtd_params *prm;
+		struct uac_fu_params *fu;
+		char ctrl_name[24];
+		char *direction;
+
+		if (!pcm->streams[i].substream_count)
+			continue;
+
+		if (i == SNDRV_PCM_STREAM_PLAYBACK) {
+			prm = &uac->p_prm;
+			fu = &params->p_fu;
+			direction = "Playback";
+		} else {
+			prm = &uac->c_prm;
+			fu = &params->c_fu;
+			direction = "Capture";
+		}
+
+		prm->fu_id = fu->id;
+
+		if (fu->mute_present) {
+			snprintf(ctrl_name, sizeof(ctrl_name),
+					"PCM %s Switch", direction);
+
+			u_audio_controls[UAC_MUTE_CTRL].name = ctrl_name;
+
+			kctl = snd_ctl_new1(&u_audio_controls[UAC_MUTE_CTRL],
+					    prm);
+			if (!kctl) {
+				err = -ENOMEM;
+				goto snd_fail;
+			}
+
+			kctl->id.device = pcm->device;
+			kctl->id.subdevice = i;
+
+			err = snd_ctl_add(card, kctl);
+			if (err < 0)
+				goto snd_fail;
+			prm->snd_kctl_mute = kctl;
+			prm->mute = 0;
+		}
+
+		if (fu->volume_present) {
+			snprintf(ctrl_name, sizeof(ctrl_name),
+					"PCM %s Volume", direction);
+
+			u_audio_controls[UAC_VOLUME_CTRL].name = ctrl_name;
+
+			kctl = snd_ctl_new1(&u_audio_controls[UAC_VOLUME_CTRL],
+					    prm);
+			if (!kctl) {
+				err = -ENOMEM;
+				goto snd_fail;
+			}
+
+			kctl->id.device = pcm->device;
+			kctl->id.subdevice = i;
+
+
+			kctl->tlv.c = u_audio_volume_tlv;
+			kctl->vd[0].access |= SNDRV_CTL_ELEM_ACCESS_TLV_READ |
+					SNDRV_CTL_ELEM_ACCESS_TLV_CALLBACK;
+
+			err = snd_ctl_add(card, kctl);
+			if (err < 0)
+				goto snd_fail;
+			prm->snd_kctl_volume = kctl;
+			prm->volume = fu->volume_max;
+			prm->volume_max = fu->volume_max;
+			prm->volume_min = fu->volume_min;
+			prm->volume_res = fu->volume_res;
+		}
+	}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	strscpy(card->driver, card_name, sizeof(card->driver));
 	strscpy(card->shortname, card_name, sizeof(card->shortname));
 	sprintf(card->longname, "%s %i", card_name, card->dev->id);

@@ -883,7 +883,15 @@ and "r" can be combined to get calls and returns.
 
 "Transactions" events correspond to the start or end of transactions. The
 'flags' field can be used in perf script to determine whether the event is a
+<<<<<<< HEAD
+<<<<<<< HEAD
+transaction start, commit or abort.
+=======
 tranasaction start, commit or abort.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+transaction start, commit or abort.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Note that "instructions", "branches" and "transactions" events depend on code
 flow packets which can be disabled by using the config term "branch=0".  Refer

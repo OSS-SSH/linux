@@ -170,7 +170,15 @@ static bool reset_fw_if_needed(struct mlx5_core_dev *dev)
 
 	/* The reset only needs to be issued by one PF. The health buffer is
 	 * shared between all functions, and will be cleared during a reset.
+<<<<<<< HEAD
+<<<<<<< HEAD
+	 * Check again to avoid a redundant 2nd reset. If the fatal errors was
+=======
 	 * Check again to avoid a redundant 2nd reset. If the fatal erros was
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	 * Check again to avoid a redundant 2nd reset. If the fatal errors was
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * PCI related a reset won't help.
 	 */
 	fatal_error = mlx5_health_check_fatal_sensors(dev);
@@ -213,10 +221,16 @@ void mlx5_enter_error_state(struct mlx5_core_dev *dev, bool force)
 	mutex_lock(&dev->intf_state_mutex);
 	if (!err_detected && dev->state == MLX5_DEVICE_STATE_INTERNAL_ERROR)
 		goto unlock;/* a previous error is still being handled */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (dev->state == MLX5_DEVICE_STATE_UNINITIALIZED) {
 		dev->state = MLX5_DEVICE_STATE_INTERNAL_ERROR;
 		goto unlock;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	enter_error_state(dev, force);
 unlock:
@@ -626,8 +640,27 @@ static void mlx5_fw_fatal_reporter_err_work(struct work_struct *work)
 	}
 	fw_reporter_ctx.err_synd = health->synd;
 	fw_reporter_ctx.miss_counter = health->miss_counter;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (devlink_health_report(health->fw_fatal_reporter,
+				  "FW fatal error reported", &fw_reporter_ctx) == -ECANCELED) {
+		/* If recovery wasn't performed, due to grace period,
+		 * unload the driver. This ensures that the driver
+		 * closes all its resources and it is not subjected to
+		 * requests from the kernel.
+		 */
+		mlx5_core_err(dev, "Driver is in error state. Unloading\n");
+		mlx5_unload_one(dev);
+	}
+<<<<<<< HEAD
+=======
 	devlink_health_report(health->fw_fatal_reporter,
 			      "FW fatal error reported", &fw_reporter_ctx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct devlink_health_reporter_ops mlx5_fw_fatal_reporter_ops = {

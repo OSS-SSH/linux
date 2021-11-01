@@ -54,10 +54,18 @@ static void invoke_syscall(struct pt_regs *regs, unsigned int scno,
 		ret = do_ni_syscall(regs, scno);
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	syscall_set_return_value(current, regs, 0, ret);
+=======
 	if (is_compat_task())
 		ret = lower_32_bits(ret);
 
 	regs->regs[0] = ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	syscall_set_return_value(current, regs, 0, ret);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Ultimately, this value will get limited by KSTACK_OFFSET_MAX(),
@@ -115,7 +123,15 @@ static void el0_svc_common(struct pt_regs *regs, int scno, int sc_nr,
 		 * syscall. do_notify_resume() will send a signal to userspace
 		 * before the syscall is restarted.
 		 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		syscall_set_return_value(current, regs, -ERESTARTNOINTR, 0);
+=======
 		regs->regs[0] = -ERESTARTNOINTR;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		syscall_set_return_value(current, regs, -ERESTARTNOINTR, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 
@@ -136,7 +152,15 @@ static void el0_svc_common(struct pt_regs *regs, int scno, int sc_nr,
 		 * anyway.
 		 */
 		if (scno == NO_SYSCALL)
+<<<<<<< HEAD
+<<<<<<< HEAD
+			syscall_set_return_value(current, regs, -ENOSYS, 0);
+=======
 			regs->regs[0] = -ENOSYS;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			syscall_set_return_value(current, regs, -ENOSYS, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		scno = syscall_trace_enter(regs);
 		if (scno == NO_SYSCALL)
 			goto trace_exit;

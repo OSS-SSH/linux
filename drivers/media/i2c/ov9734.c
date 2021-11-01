@@ -60,6 +60,21 @@
 #define OV9734_TEST_PATTERN_ENABLE	BIT(7)
 #define OV9734_TEST_PATTERN_BAR_SHIFT	2
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* Group Access */
+#define OV9734_REG_GROUP_ACCESS		0x3208
+#define OV9734_GROUP_HOLD_START		0x0
+#define OV9734_GROUP_HOLD_END		0x10
+#define OV9734_GROUP_HOLD_LAUNCH	0xa0
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum {
 	OV9734_LINK_FREQ_180MHZ_INDEX,
 };
@@ -433,6 +448,20 @@ static int ov9734_update_digital_gain(struct ov9734 *ov9734, u32 d_gain)
 {
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = ov9734_write_reg(ov9734, OV9734_REG_GROUP_ACCESS, 1,
+			       OV9734_GROUP_HOLD_START);
+	if (ret)
+		return ret;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = ov9734_write_reg(ov9734, OV9734_REG_MWB_R_GAIN, 2, d_gain);
 	if (ret)
 		return ret;
@@ -441,7 +470,28 @@ static int ov9734_update_digital_gain(struct ov9734 *ov9734, u32 d_gain)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = ov9734_write_reg(ov9734, OV9734_REG_MWB_B_GAIN, 2, d_gain);
+	if (ret)
+		return ret;
+
+	ret = ov9734_write_reg(ov9734, OV9734_REG_GROUP_ACCESS, 1,
+			       OV9734_GROUP_HOLD_END);
+	if (ret)
+		return ret;
+
+	ret = ov9734_write_reg(ov9734, OV9734_REG_GROUP_ACCESS, 1,
+			       OV9734_GROUP_HOLD_LAUNCH);
+	return ret;
+<<<<<<< HEAD
+=======
 	return ov9734_write_reg(ov9734, OV9734_REG_MWB_B_GAIN, 2, d_gain);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int ov9734_test_pattern(struct ov9734 *ov9734, u32 pattern)

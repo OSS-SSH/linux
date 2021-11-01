@@ -1263,6 +1263,14 @@ static int myrb_host_reset(struct scsi_cmnd *scmd)
 static int myrb_pthru_queuecommand(struct Scsi_Host *shost,
 		struct scsi_cmnd *scmd)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct request *rq = scsi_cmd_to_rq(scmd);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct request *rq = scsi_cmd_to_rq(scmd);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct myrb_hba *cb = shost_priv(shost);
 	struct myrb_cmdblk *cmd_blk = scsi_cmd_priv(scmd);
 	union myrb_cmd_mbox *mbox = &cmd_blk->mbox;
@@ -1286,7 +1294,15 @@ static int myrb_pthru_queuecommand(struct Scsi_Host *shost,
 	}
 
 	mbox->type3.opcode = MYRB_CMD_DCDB;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mbox->type3.id = rq->tag + 3;
+=======
 	mbox->type3.id = scmd->request->tag + 3;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mbox->type3.id = rq->tag + 3;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mbox->type3.addr = dcdb_addr;
 	dcdb->channel = sdev->channel;
 	dcdb->target = sdev->id;
@@ -1305,11 +1321,27 @@ static int myrb_pthru_queuecommand(struct Scsi_Host *shost,
 		break;
 	}
 	dcdb->early_status = false;
-	if (scmd->request->timeout <= 10)
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (rq->timeout <= 10)
 		dcdb->timeout = MYRB_DCDB_TMO_10_SECS;
-	else if (scmd->request->timeout <= 60)
+	else if (rq->timeout <= 60)
 		dcdb->timeout = MYRB_DCDB_TMO_60_SECS;
+	else if (rq->timeout <= 600)
+=======
+	if (scmd->request->timeout <= 10)
+=======
+	if (rq->timeout <= 10)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		dcdb->timeout = MYRB_DCDB_TMO_10_SECS;
+	else if (rq->timeout <= 60)
+		dcdb->timeout = MYRB_DCDB_TMO_60_SECS;
+<<<<<<< HEAD
 	else if (scmd->request->timeout <= 600)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	else if (rq->timeout <= 600)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dcdb->timeout = MYRB_DCDB_TMO_10_MINS;
 	else
 		dcdb->timeout = MYRB_DCDB_TMO_24_HRS;
@@ -1550,7 +1582,15 @@ static int myrb_ldev_queuecommand(struct Scsi_Host *shost,
 	}
 
 	myrb_reset_cmd(cmd_blk);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mbox->type5.id = scsi_cmd_to_rq(scmd)->tag + 3;
+=======
 	mbox->type5.id = scmd->request->tag + 3;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mbox->type5.id = scsi_cmd_to_rq(scmd)->tag + 3;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (scmd->sc_data_direction == DMA_NONE)
 		goto submit;
 	nsge = scsi_dma_map(scmd);

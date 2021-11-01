@@ -14,7 +14,13 @@
  */
 #include <linux/kernel.h>
 #include <linux/module.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <linux/backing-dev.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/bio.h>
 #include <linux/blkdev.h>
 #include <linux/blk-mq.h>
@@ -50,7 +56,13 @@
 #include "blk-mq.h"
 #include "blk-mq-sched.h"
 #include "blk-pm.h"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include "blk-rq-qos.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct dentry *blk_debugfs_root;
 
@@ -122,7 +134,13 @@ void blk_rq_init(struct request_queue *q, struct request *rq)
 	rq->internal_tag = BLK_MQ_NO_TAG;
 	rq->start_time_ns = ktime_get_ns();
 	rq->part = NULL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	refcount_set(&rq->ref, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	blk_crypto_rq_set_defaults(rq);
 }
 EXPORT_SYMBOL(blk_rq_init);
@@ -339,23 +357,58 @@ void blk_put_queue(struct request_queue *q)
 }
 EXPORT_SYMBOL(blk_put_queue);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+void blk_queue_start_drain(struct request_queue *q)
+{
+=======
 void blk_set_queue_dying(struct request_queue *q)
 {
 	blk_queue_flag_set(QUEUE_FLAG_DYING, q);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+void blk_queue_start_drain(struct request_queue *q)
+{
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * When queue DYING flag is set, we need to block new req
 	 * entering queue, so we call blk_freeze_queue_start() to
 	 * prevent I/O from crossing blk_queue_enter().
 	 */
 	blk_freeze_queue_start(q);
-
+<<<<<<< HEAD
+<<<<<<< HEAD
 	if (queue_is_mq(q))
 		blk_mq_wake_waiters(q);
-
 	/* Make blk_queue_enter() reexamine the DYING flag. */
 	wake_up_all(&q->mq_freeze_wq);
 }
+
+void blk_set_queue_dying(struct request_queue *q)
+{
+	blk_queue_flag_set(QUEUE_FLAG_DYING, q);
+	blk_queue_start_drain(q);
+}
+=======
+
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (queue_is_mq(q))
+		blk_mq_wake_waiters(q);
+	/* Make blk_queue_enter() reexamine the DYING flag. */
+	wake_up_all(&q->mq_freeze_wq);
+}
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+void blk_set_queue_dying(struct request_queue *q)
+{
+	blk_queue_flag_set(QUEUE_FLAG_DYING, q);
+	blk_queue_start_drain(q);
+}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EXPORT_SYMBOL_GPL(blk_set_queue_dying);
 
 /**
@@ -387,17 +440,24 @@ void blk_cleanup_queue(struct request_queue *q)
 	 */
 	blk_freeze_queue(q);
 
-	rq_qos_exit(q);
-
+<<<<<<< HEAD
+<<<<<<< HEAD
 	blk_queue_flag_set(QUEUE_FLAG_DEAD, q);
 
-	/* for synchronous bio-based driver finish in-flight integrity i/o */
-	blk_flush_integrity();
-
-	/* @q won't process any more request, flush async actions */
-	del_timer_sync(&q->backing_dev_info->laptop_mode_wb_timer);
 	blk_sync_queue(q);
+=======
+	rq_qos_exit(q);
 
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	blk_queue_flag_set(QUEUE_FLAG_DEAD, q);
+
+	blk_sync_queue(q);
+<<<<<<< HEAD
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (queue_is_mq(q))
 		blk_mq_exit_queue(q);
 
@@ -421,6 +481,39 @@ void blk_cleanup_queue(struct request_queue *q)
 }
 EXPORT_SYMBOL(blk_cleanup_queue);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static bool blk_try_enter_queue(struct request_queue *q, bool pm)
+{
+	rcu_read_lock();
+	if (!percpu_ref_tryget_live(&q->q_usage_counter))
+		goto fail;
+
+	/*
+	 * The code that increments the pm_only counter must ensure that the
+	 * counter is globally visible before the queue is unfrozen.
+	 */
+	if (blk_queue_pm_only(q) &&
+	    (!pm || queue_rpm_status(q) == RPM_SUSPENDED))
+		goto fail_put;
+
+	rcu_read_unlock();
+	return true;
+
+fail_put:
+	percpu_ref_put(&q->q_usage_counter);
+fail:
+	rcu_read_unlock();
+	return false;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * blk_queue_enter() - try to increase q->q_usage_counter
  * @q: request queue pointer
@@ -430,6 +523,10 @@ int blk_queue_enter(struct request_queue *q, blk_mq_req_flags_t flags)
 {
 	const bool pm = flags & BLK_MQ_REQ_PM;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	while (!blk_try_enter_queue(q, pm)) {
+=======
 	while (true) {
 		bool success = false;
 
@@ -452,10 +549,27 @@ int blk_queue_enter(struct request_queue *q, blk_mq_req_flags_t flags)
 		if (success)
 			return 0;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	while (!blk_try_enter_queue(q, pm)) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (flags & BLK_MQ_REQ_NOWAIT)
 			return -EBUSY;
 
 		/*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		 * read pair of barrier in blk_freeze_queue_start(), we need to
+		 * order reading __PERCPU_REF_DEAD flag of .q_usage_counter and
+		 * reading .mq_freeze_depth or queue dying flag, otherwise the
+		 * following wait may never return if the two reads are
+		 * reordered.
+<<<<<<< HEAD
+		 */
+		smp_rmb();
+=======
 		 * read pair of barrier in blk_freeze_queue_start(),
 		 * we need to order reading __PERCPU_REF_DEAD flag of
 		 * .q_usage_counter and reading .mq_freeze_depth or
@@ -464,6 +578,11 @@ int blk_queue_enter(struct request_queue *q, blk_mq_req_flags_t flags)
 		 */
 		smp_rmb();
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		 */
+		smp_rmb();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		wait_event(q->mq_freeze_wq,
 			   (!q->mq_freeze_depth &&
 			    blk_pm_resume_queue(pm, q)) ||
@@ -471,23 +590,95 @@ int blk_queue_enter(struct request_queue *q, blk_mq_req_flags_t flags)
 		if (blk_queue_dying(q))
 			return -ENODEV;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	return 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline int bio_queue_enter(struct bio *bio)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct gendisk *disk = bio->bi_bdev->bd_disk;
+	struct request_queue *q = disk->queue;
+
+	while (!blk_try_enter_queue(q, false)) {
+		if (bio->bi_opf & REQ_NOWAIT) {
+			if (test_bit(GD_DEAD, &disk->state))
+				goto dead;
+			bio_wouldblock_error(bio);
+			return -EBUSY;
+		}
+
+		/*
+		 * read pair of barrier in blk_freeze_queue_start(), we need to
+		 * order reading __PERCPU_REF_DEAD flag of .q_usage_counter and
+		 * reading .mq_freeze_depth or queue dying flag, otherwise the
+		 * following wait may never return if the two reads are
+		 * reordered.
+		 */
+		smp_rmb();
+		wait_event(q->mq_freeze_wq,
+			   (!q->mq_freeze_depth &&
+			    blk_pm_resume_queue(false, q)) ||
+			   test_bit(GD_DEAD, &disk->state));
+		if (test_bit(GD_DEAD, &disk->state))
+			goto dead;
+	}
+
+	return 0;
+dead:
+	bio_io_error(bio);
+	return -ENODEV;
+=======
 	struct request_queue *q = bio->bi_bdev->bd_disk->queue;
 	bool nowait = bio->bi_opf & REQ_NOWAIT;
 	int ret;
+=======
+	struct gendisk *disk = bio->bi_bdev->bd_disk;
+	struct request_queue *q = disk->queue;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	ret = blk_queue_enter(q, nowait ? BLK_MQ_REQ_NOWAIT : 0);
-	if (unlikely(ret)) {
-		if (nowait && !blk_queue_dying(q))
+	while (!blk_try_enter_queue(q, false)) {
+		if (bio->bi_opf & REQ_NOWAIT) {
+			if (test_bit(GD_DEAD, &disk->state))
+				goto dead;
 			bio_wouldblock_error(bio);
-		else
-			bio_io_error(bio);
+			return -EBUSY;
+		}
+
+		/*
+		 * read pair of barrier in blk_freeze_queue_start(), we need to
+		 * order reading __PERCPU_REF_DEAD flag of .q_usage_counter and
+		 * reading .mq_freeze_depth or queue dying flag, otherwise the
+		 * following wait may never return if the two reads are
+		 * reordered.
+		 */
+		smp_rmb();
+		wait_event(q->mq_freeze_wq,
+			   (!q->mq_freeze_depth &&
+			    blk_pm_resume_queue(false, q)) ||
+			   test_bit(GD_DEAD, &disk->state));
+		if (test_bit(GD_DEAD, &disk->state))
+			goto dead;
 	}
 
+<<<<<<< HEAD
 	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return 0;
+dead:
+	bio_io_error(bio);
+	return -ENODEV;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void blk_queue_exit(struct request_queue *q)
@@ -534,6 +725,12 @@ struct request_queue *blk_alloc_queue(int node_id)
 	if (ret)
 		goto fail_id;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	q->stats = blk_alloc_queue_stats();
+	if (!q->stats)
+		goto fail_split;
+=======
 	q->backing_dev_info = bdi_alloc(node_id);
 	if (!q->backing_dev_info)
 		goto fail_split;
@@ -541,13 +738,25 @@ struct request_queue *blk_alloc_queue(int node_id)
 	q->stats = blk_alloc_queue_stats();
 	if (!q->stats)
 		goto fail_stats;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	q->stats = blk_alloc_queue_stats();
+	if (!q->stats)
+		goto fail_split;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	q->node = node_id;
 
 	atomic_set(&q->nr_active_requests_shared_sbitmap, 0);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	timer_setup(&q->backing_dev_info->laptop_mode_wb_timer,
 		    laptop_mode_timer_fn, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	timer_setup(&q->timeout, blk_rq_timed_out_timer, 0);
 	INIT_WORK(&q->timeout_work, blk_timeout_work);
 	INIT_LIST_HEAD(&q->icq_list);
@@ -572,7 +781,15 @@ struct request_queue *blk_alloc_queue(int node_id)
 	if (percpu_ref_init(&q->q_usage_counter,
 				blk_queue_usage_counter_release,
 				PERCPU_REF_INIT_ATOMIC, GFP_KERNEL))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto fail_stats;
+=======
 		goto fail_bdi;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto fail_stats;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (blkcg_init_queue(q))
 		goto fail_ref;
@@ -585,10 +802,20 @@ struct request_queue *blk_alloc_queue(int node_id)
 
 fail_ref:
 	percpu_ref_exit(&q->q_usage_counter);
+<<<<<<< HEAD
+<<<<<<< HEAD
+fail_stats:
+	blk_free_queue_stats(q->stats);
+=======
 fail_bdi:
 	blk_free_queue_stats(q->stats);
 fail_stats:
 	bdi_put(q->backing_dev_info);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+fail_stats:
+	blk_free_queue_stats(q->stats);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fail_split:
 	bioset_exit(&q->bio_split);
 fail_id:
@@ -834,7 +1061,15 @@ static noinline_for_stack bool submit_bio_checks(struct bio *bio)
 	}
 
 	if (!test_bit(QUEUE_FLAG_POLL, &q->queue_flags))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		bio_clear_hipri(bio);
+=======
 		bio->bi_opf &= ~REQ_HIPRI;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		bio_clear_hipri(bio);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (bio_op(bio)) {
 	case REQ_OP_DISCARD:
@@ -912,11 +1147,39 @@ static blk_qc_t __submit_bio(struct bio *bio)
 	struct gendisk *disk = bio->bi_bdev->bd_disk;
 	blk_qc_t ret = BLK_QC_T_NONE;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (unlikely(bio_queue_enter(bio) != 0))
+		return BLK_QC_T_NONE;
+
+	if (!submit_bio_checks(bio) || !blk_crypto_bio_prep(&bio))
+		goto queue_exit;
+	if (disk->fops->submit_bio) {
+<<<<<<< HEAD
+		ret = disk->fops->submit_bio(bio);
+		goto queue_exit;
+	}
+	return blk_mq_submit_bio(bio);
+
+queue_exit:
+=======
 	if (blk_crypto_bio_prep(&bio)) {
 		if (!disk->fops->submit_bio)
 			return blk_mq_submit_bio(bio);
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = disk->fops->submit_bio(bio);
+		goto queue_exit;
 	}
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return blk_mq_submit_bio(bio);
+
+queue_exit:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	blk_queue_exit(disk->queue);
 	return ret;
 }
@@ -954,9 +1217,15 @@ static blk_qc_t __submit_bio_noacct(struct bio *bio)
 		struct request_queue *q = bio->bi_bdev->bd_disk->queue;
 		struct bio_list lower, same;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		if (unlikely(bio_queue_enter(bio) != 0))
 			continue;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Create a fresh bio_list for all subordinate requests.
 		 */
@@ -992,11 +1261,23 @@ static blk_qc_t __submit_bio_noacct(struct bio *bio)
 static blk_qc_t __submit_bio_noacct_mq(struct bio *bio)
 {
 	struct bio_list bio_list[2] = { };
+<<<<<<< HEAD
+<<<<<<< HEAD
+	blk_qc_t ret;
+=======
 	blk_qc_t ret = BLK_QC_T_NONE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	blk_qc_t ret;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	current->bio_list = bio_list;
 
 	do {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = __submit_bio(bio);
+=======
 		struct gendisk *disk = bio->bi_bdev->bd_disk;
 
 		if (unlikely(bio_queue_enter(bio) != 0))
@@ -1009,6 +1290,10 @@ static blk_qc_t __submit_bio_noacct_mq(struct bio *bio)
 		}
 
 		ret = blk_mq_submit_bio(bio);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = __submit_bio(bio);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} while ((bio = bio_list_pop(&bio_list[0])));
 
 	current->bio_list = NULL;
@@ -1026,9 +1311,15 @@ static blk_qc_t __submit_bio_noacct_mq(struct bio *bio)
  */
 blk_qc_t submit_bio_noacct(struct bio *bio)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	if (!submit_bio_checks(bio))
 		return BLK_QC_T_NONE;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * We only want one ->submit_bio to be active at a time, else stack
 	 * usage with stacked devices could be a problem.  Use current->bio_list

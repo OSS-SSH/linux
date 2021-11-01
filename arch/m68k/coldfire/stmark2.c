@@ -111,7 +111,19 @@ static int __init init_stmark2(void)
 	__raw_writeb(0x00, MCFGPIO_PAR_BE);
 	__raw_writeb(0x00, MCFGPIO_PAR_FBCTL);
 	__raw_writeb(0x00, MCFGPIO_PAR_CS);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	/* CAN pads */
+	__raw_writeb(0x50, MCFGPIO_PAR_CANI2C);
+=======
 	__raw_writeb(0x00, MCFGPIO_PAR_CANI2C);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	/* CAN pads */
+	__raw_writeb(0x50, MCFGPIO_PAR_CANI2C);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	platform_add_devices(stmark2_devices, ARRAY_SIZE(stmark2_devices));
 
@@ -121,4 +133,12 @@ static int __init init_stmark2(void)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+device_initcall(init_stmark2);
+=======
 late_initcall(init_stmark2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+device_initcall(init_stmark2);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -24,13 +24,31 @@ properties:
     items:
       - description: Control and Status Register Slave Port
       - description: Descriptor Slave Port
+<<<<<<< HEAD
+<<<<<<< HEAD
+      - description: Response Slave Port (Optional)
+    minItems: 2
+=======
       - description: Response Slave Port
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      - description: Response Slave Port (Optional)
+    minItems: 2
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   reg-names:
     items:
       - const: csr
       - const: desc
       - const: resp
+<<<<<<< HEAD
+<<<<<<< HEAD
+    minItems: 2
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+    minItems: 2
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   interrupts:
     maxItems: 1

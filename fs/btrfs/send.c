@@ -1198,7 +1198,15 @@ struct backref_ctx {
 static int __clone_root_cmp_bsearch(const void *key, const void *elt)
 {
 	u64 root = (u64)(uintptr_t)key;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct clone_root *cr = elt;
+=======
 	struct clone_root *cr = (struct clone_root *)elt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct clone_root *cr = elt;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (root < cr->root->root_key.objectid)
 		return -1;
@@ -1209,8 +1217,18 @@ static int __clone_root_cmp_bsearch(const void *key, const void *elt)
 
 static int __clone_root_cmp_sort(const void *e1, const void *e2)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	const struct clone_root *cr1 = e1;
+	const struct clone_root *cr2 = e2;
+=======
 	struct clone_root *cr1 = (struct clone_root *)e1;
 	struct clone_root *cr2 = (struct clone_root *)e2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	const struct clone_root *cr1 = e1;
+	const struct clone_root *cr2 = e2;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (cr1->root->root_key.objectid < cr2->root->root_key.objectid)
 		return -1;
@@ -1307,7 +1325,15 @@ static int find_extent_clone(struct send_ctx *sctx,
 	u64 flags = 0;
 	struct btrfs_file_extent_item *fi;
 	struct extent_buffer *eb = path->nodes[0];
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct backref_ctx backref_ctx = {0};
+=======
 	struct backref_ctx *backref_ctx = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct backref_ctx backref_ctx = {0};
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct clone_root *cur_clone_root;
 	struct btrfs_key found_key;
 	struct btrfs_path *tmp_path;
@@ -1322,12 +1348,18 @@ static int find_extent_clone(struct send_ctx *sctx,
 	/* We only use this path under the commit sem */
 	tmp_path->need_commit_sem = 0;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	backref_ctx = kmalloc(sizeof(*backref_ctx), GFP_KERNEL);
 	if (!backref_ctx) {
 		ret = -ENOMEM;
 		goto out;
 	}
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (data_offset >= ino_size) {
 		/*
 		 * There may be extents that lie behind the file's size.
@@ -1392,12 +1424,27 @@ static int find_extent_clone(struct send_ctx *sctx,
 		cur_clone_root->found_refs = 0;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	backref_ctx.sctx = sctx;
+	backref_ctx.found = 0;
+	backref_ctx.cur_objectid = ino;
+	backref_ctx.cur_offset = data_offset;
+	backref_ctx.found_itself = 0;
+	backref_ctx.extent_len = num_bytes;
+<<<<<<< HEAD
+=======
 	backref_ctx->sctx = sctx;
 	backref_ctx->found = 0;
 	backref_ctx->cur_objectid = ino;
 	backref_ctx->cur_offset = data_offset;
 	backref_ctx->found_itself = 0;
 	backref_ctx->extent_len = num_bytes;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * The last extent of a file may be too large due to page alignment.
@@ -1405,7 +1452,15 @@ static int find_extent_clone(struct send_ctx *sctx,
 	 * __iterate_backrefs work.
 	 */
 	if (data_offset + num_bytes >= ino_size)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		backref_ctx.extent_len = ino_size - data_offset;
+=======
 		backref_ctx->extent_len = ino_size - data_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		backref_ctx.extent_len = ino_size - data_offset;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Now collect all backrefs.
@@ -1416,12 +1471,28 @@ static int find_extent_clone(struct send_ctx *sctx,
 		extent_item_pos = 0;
 	ret = iterate_extent_inodes(fs_info, found_key.objectid,
 				    extent_item_pos, 1, __iterate_backrefs,
+<<<<<<< HEAD
+<<<<<<< HEAD
+				    &backref_ctx, false);
+=======
 				    backref_ctx, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+				    &backref_ctx, false);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ret < 0)
 		goto out;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!backref_ctx.found_itself) {
+=======
 	if (!backref_ctx->found_itself) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!backref_ctx.found_itself) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* found a bug in backref code? */
 		ret = -EIO;
 		btrfs_err(fs_info,
@@ -1434,7 +1505,15 @@ static int find_extent_clone(struct send_ctx *sctx,
 		    "find_extent_clone: data_offset=%llu, ino=%llu, num_bytes=%llu, logical=%llu",
 		    data_offset, ino, num_bytes, logical);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!backref_ctx.found)
+=======
 	if (!backref_ctx->found)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!backref_ctx.found)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		btrfs_debug(fs_info, "no clones found");
 
 	cur_clone_root = NULL;
@@ -1458,7 +1537,13 @@ static int find_extent_clone(struct send_ctx *sctx,
 
 out:
 	btrfs_free_path(tmp_path);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	kfree(backref_ctx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

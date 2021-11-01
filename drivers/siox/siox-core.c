@@ -520,7 +520,15 @@ static int siox_probe(struct device *dev)
 	return sdriver->probe(sdevice);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void siox_remove(struct device *dev)
+=======
 static int siox_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void siox_remove(struct device *dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct siox_driver *sdriver =
 		container_of(dev->driver, struct siox_driver, driver);
@@ -528,8 +536,14 @@ static int siox_remove(struct device *dev)
 
 	if (sdriver->remove)
 		sdriver->remove(sdevice);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void siox_shutdown(struct device *dev)

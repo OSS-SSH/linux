@@ -335,7 +335,15 @@ static bool pnfs_seqid_is_newer(u32 s1, u32 s2)
 
 static void pnfs_barrier_update(struct pnfs_layout_hdr *lo, u32 newseq)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (pnfs_seqid_is_newer(newseq, lo->plh_barrier) || !lo->plh_barrier)
+=======
 	if (pnfs_seqid_is_newer(newseq, lo->plh_barrier))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (pnfs_seqid_is_newer(newseq, lo->plh_barrier) || !lo->plh_barrier)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lo->plh_barrier = newseq;
 }
 
@@ -347,11 +355,31 @@ pnfs_set_plh_return_info(struct pnfs_layout_hdr *lo, enum pnfs_iomode iomode,
 		iomode = IOMODE_ANY;
 	lo->plh_return_iomode = iomode;
 	set_bit(NFS_LAYOUT_RETURN_REQUESTED, &lo->plh_flags);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	/*
+	 * We must set lo->plh_return_seq to avoid livelocks with
+	 * pnfs_layout_need_return()
+	 */
+	if (seq == 0)
+		seq = be32_to_cpu(lo->plh_stateid.seqid);
+	if (!lo->plh_return_seq || pnfs_seqid_is_newer(seq, lo->plh_return_seq))
+<<<<<<< HEAD
+		lo->plh_return_seq = seq;
+	pnfs_barrier_update(lo, seq);
+=======
 	if (seq != 0) {
 		WARN_ON_ONCE(lo->plh_return_seq != 0 && lo->plh_return_seq != seq);
 		lo->plh_return_seq = seq;
 		pnfs_barrier_update(lo, seq);
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		lo->plh_return_seq = seq;
+	pnfs_barrier_update(lo, seq);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
@@ -592,10 +620,16 @@ pnfs_put_lseg(struct pnfs_layout_segment *lseg)
 	inode = lo->plh_inode;
 
 	if (refcount_dec_and_lock(&lseg->pls_refcount, &inode->i_lock)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		if (test_bit(NFS_LSEG_VALID, &lseg->pls_flags)) {
 			spin_unlock(&inode->i_lock);
 			return;
 		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pnfs_get_layout_hdr(lo);
 		pnfs_layout_remove_lseg(lo, lseg);
 		if (pnfs_cache_lseg_for_layoutreturn(lo, lseg))
@@ -1000,7 +1034,15 @@ pnfs_layout_stateid_blocked(const struct pnfs_layout_hdr *lo,
 {
 	u32 seqid = be32_to_cpu(stateid->seqid);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return lo->plh_barrier && pnfs_seqid_is_newer(lo->plh_barrier, seqid);
+=======
 	return !pnfs_seqid_is_newer(seqid, lo->plh_barrier) && lo->plh_barrier;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return lo->plh_barrier && pnfs_seqid_is_newer(lo->plh_barrier, seqid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* lget is set to 1 if called from inside send_layoutget call chain */

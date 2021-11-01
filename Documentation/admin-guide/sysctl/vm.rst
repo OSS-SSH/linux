@@ -118,7 +118,17 @@ compaction_proactiveness
 
 This tunable takes a value in the range [0, 100] with a default value of
 20. This tunable determines how aggressively compaction is done in the
+<<<<<<< HEAD
+<<<<<<< HEAD
+background. Write of a non zero value to this tunable will immediately
+trigger the proactive compaction. Setting it to 0 disables proactive compaction.
+=======
 background. Setting it to 0 disables proactive compaction.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+background. Write of a non zero value to this tunable will immediately
+trigger the proactive compaction. Setting it to 0 disables proactive compaction.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 Note that compaction has a non-trivial system-wide impact as pages
 belonging to different processes are moved around, which could also lead

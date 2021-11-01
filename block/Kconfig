@@ -29,35 +29,38 @@ if BLOCK
 config BLK_RQ_ALLOC_TIME
 	bool
 
-config BLK_SCSI_REQUEST
-	bool
-
+<<<<<<< HEAD
+<<<<<<< HEAD
 config BLK_CGROUP_RWSTAT
 	bool
 
-config BLK_DEV_BSG
-	bool "Block layer SG support v4"
-	default y
-	select BLK_SCSI_REQUEST
-	help
-	  Saying Y here will enable generic SG (SCSI generic) v4 support
-	  for any block device.
-
-	  Unlike SG v3 (aka block/scsi_ioctl.c drivers/scsi/sg.c), SG v4
-	  can handle complicated SCSI commands: tagged variable length cdbs
-	  with bidirectional data transfers and generic request/response
-	  protocols (e.g. Task Management Functions and SMP in Serial
-	  Attached SCSI).
-
-	  This option is required by recent UDEV versions to properly
-	  access device serial numbers, etc.
-
-	  If unsure, say Y.
+config BLK_DEV_BSG_COMMON
+	tristate
 
 config BLK_DEV_BSGLIB
 	bool "Block layer SG support v4 helper lib"
+	select BLK_DEV_BSG_COMMON
+=======
+config BLK_SCSI_REQUEST
+	bool
+
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+config BLK_CGROUP_RWSTAT
+	bool
+
+config BLK_DEV_BSG_COMMON
+	tristate
+
+config BLK_DEV_BSGLIB
+	bool "Block layer SG support v4 helper lib"
+<<<<<<< HEAD
 	select BLK_DEV_BSG
 	select BLK_SCSI_REQUEST
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select BLK_DEV_BSG_COMMON
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Subsystems will normally enable this if needed. Users will not
 	  normally need to manually enable this.
@@ -114,6 +117,9 @@ config BLK_DEV_THROTTLING_LOW
 
 	Note, this is an experimental interface and could be changed someday.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config BLK_CMDLINE_PARSER
 	bool "Block device command line partition parser"
 	help
@@ -124,6 +130,9 @@ config BLK_CMDLINE_PARSER
 
 	See Documentation/block/cmdline-partition.rst for more information.
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config BLK_WBT
 	bool "Enable support for block device writeback throttling"
 	help
@@ -251,4 +260,17 @@ config BLK_MQ_RDMA
 config BLK_PM
 	def_bool BLOCK && PM
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+# do not use in new code
+config BLOCK_HOLDER_DEPRECATED
+	bool
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "block/Kconfig.iosched"

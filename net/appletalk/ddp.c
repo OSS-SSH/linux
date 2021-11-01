@@ -666,7 +666,15 @@ static int atif_ioctl(int cmd, void __user *arg)
 	struct rtentry rtdef;
 	int add_route;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (get_user_ifreq(&atreq, NULL, arg))
+=======
 	if (copy_from_user(&atreq, arg, sizeof(atreq)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (get_user_ifreq(&atreq, NULL, arg))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 
 	dev = __dev_get_by_name(&init_net, atreq.ifr_name);
@@ -865,7 +873,15 @@ static int atif_ioctl(int cmd, void __user *arg)
 		return 0;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return put_user_ifreq(&atreq, arg);
+=======
 	return copy_to_user(arg, &atreq, sizeof(atreq)) ? -EFAULT : 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return put_user_ifreq(&atreq, arg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int atrtr_ioctl_addrt(struct rtentry *rt)

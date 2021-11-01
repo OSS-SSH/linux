@@ -347,19 +347,49 @@ static void cgroup_base_stat_flush(struct cgroup *cgrp, int cpu)
 }
 
 static struct cgroup_rstat_cpu *
+<<<<<<< HEAD
+<<<<<<< HEAD
+cgroup_base_stat_cputime_account_begin(struct cgroup *cgrp, unsigned long *flags)
+=======
 cgroup_base_stat_cputime_account_begin(struct cgroup *cgrp)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+cgroup_base_stat_cputime_account_begin(struct cgroup *cgrp, unsigned long *flags)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cgroup_rstat_cpu *rstatc;
 
 	rstatc = get_cpu_ptr(cgrp->rstat_cpu);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	*flags = u64_stats_update_begin_irqsave(&rstatc->bsync);
+=======
 	u64_stats_update_begin(&rstatc->bsync);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	*flags = u64_stats_update_begin_irqsave(&rstatc->bsync);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rstatc;
 }
 
 static void cgroup_base_stat_cputime_account_end(struct cgroup *cgrp,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						 struct cgroup_rstat_cpu *rstatc,
+						 unsigned long flags)
+{
+	u64_stats_update_end_irqrestore(&rstatc->bsync, flags);
+=======
 						 struct cgroup_rstat_cpu *rstatc)
 {
 	u64_stats_update_end(&rstatc->bsync);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						 struct cgroup_rstat_cpu *rstatc,
+						 unsigned long flags)
+{
+	u64_stats_update_end_irqrestore(&rstatc->bsync, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cgroup_rstat_updated(cgrp, smp_processor_id());
 	put_cpu_ptr(rstatc);
 }
@@ -367,18 +397,46 @@ static void cgroup_base_stat_cputime_account_end(struct cgroup *cgrp,
 void __cgroup_account_cputime(struct cgroup *cgrp, u64 delta_exec)
 {
 	struct cgroup_rstat_cpu *rstatc;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long flags;
 
-	rstatc = cgroup_base_stat_cputime_account_begin(cgrp);
+	rstatc = cgroup_base_stat_cputime_account_begin(cgrp, &flags);
 	rstatc->bstat.cputime.sum_exec_runtime += delta_exec;
+	cgroup_base_stat_cputime_account_end(cgrp, rstatc, flags);
+=======
+=======
+	unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	rstatc = cgroup_base_stat_cputime_account_begin(cgrp, &flags);
+	rstatc->bstat.cputime.sum_exec_runtime += delta_exec;
+<<<<<<< HEAD
 	cgroup_base_stat_cputime_account_end(cgrp, rstatc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cgroup_base_stat_cputime_account_end(cgrp, rstatc, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void __cgroup_account_cputime_field(struct cgroup *cgrp,
 				    enum cpu_usage_stat index, u64 delta_exec)
 {
 	struct cgroup_rstat_cpu *rstatc;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	unsigned long flags;
+
+	rstatc = cgroup_base_stat_cputime_account_begin(cgrp, &flags);
+=======
 
 	rstatc = cgroup_base_stat_cputime_account_begin(cgrp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	unsigned long flags;
+
+	rstatc = cgroup_base_stat_cputime_account_begin(cgrp, &flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (index) {
 	case CPUTIME_USER:
@@ -394,7 +452,15 @@ void __cgroup_account_cputime_field(struct cgroup *cgrp,
 		break;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	cgroup_base_stat_cputime_account_end(cgrp, rstatc, flags);
+=======
 	cgroup_base_stat_cputime_account_end(cgrp, rstatc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	cgroup_base_stat_cputime_account_end(cgrp, rstatc, flags);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

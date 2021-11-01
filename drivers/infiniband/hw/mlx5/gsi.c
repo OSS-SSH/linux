@@ -116,8 +116,14 @@ int mlx5_ib_create_gsi(struct ib_pd *pd, struct mlx5_ib_qp *mqp,
 		goto err_free_tx;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	mutex_lock(&dev->devr.mutex);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dev->devr.ports[port_num - 1].gsi) {
 		mlx5_ib_warn(dev, "GSI QP already exists on port %d\n",
 			     port_num);
@@ -147,13 +153,26 @@ int mlx5_ib_create_gsi(struct ib_pd *pd, struct mlx5_ib_qp *mqp,
 		hw_init_attr.cap.max_inline_data = 0;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	gsi->rx_qp = ib_create_qp(pd, &hw_init_attr);
+=======
 	gsi->rx_qp = mlx5_ib_create_qp(pd, &hw_init_attr, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	gsi->rx_qp = ib_create_qp(pd, &hw_init_attr);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(gsi->rx_qp)) {
 		mlx5_ib_warn(dev, "unable to create hardware GSI QP. error %ld\n",
 			     PTR_ERR(gsi->rx_qp));
 		ret = PTR_ERR(gsi->rx_qp);
 		goto err_destroy_cq;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	dev->devr.ports[attr->port_num - 1].gsi = gsi;
+=======
 	gsi->rx_qp->device = pd->device;
 	gsi->rx_qp->pd = pd;
 	gsi->rx_qp->real_qp = gsi->rx_qp;
@@ -170,12 +189,23 @@ int mlx5_ib_create_gsi(struct ib_pd *pd, struct mlx5_ib_qp *mqp,
 
 	mutex_unlock(&dev->devr.mutex);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	dev->devr.ports[attr->port_num - 1].gsi = gsi;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
 err_destroy_cq:
 	ib_free_cq(gsi->cq);
 err_free_wrs:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	mutex_unlock(&dev->devr.mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(gsi->outstanding_wrs);
 err_free_tx:
 	kfree(gsi->tx_qps);
@@ -190,16 +220,32 @@ int mlx5_ib_destroy_gsi(struct mlx5_ib_qp *mqp)
 	int qp_index;
 	int ret;
 
-	mutex_lock(&dev->devr.mutex);
-	ret = mlx5_ib_destroy_qp(gsi->rx_qp, NULL);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = ib_destroy_qp(gsi->rx_qp);
 	if (ret) {
 		mlx5_ib_warn(dev, "unable to destroy hardware GSI QP. error %d\n",
 			     ret);
-		mutex_unlock(&dev->devr.mutex);
 		return ret;
 	}
 	dev->devr.ports[port_num - 1].gsi = NULL;
+=======
+	mutex_lock(&dev->devr.mutex);
+	ret = mlx5_ib_destroy_qp(gsi->rx_qp, NULL);
+=======
+	ret = ib_destroy_qp(gsi->rx_qp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (ret) {
+		mlx5_ib_warn(dev, "unable to destroy hardware GSI QP. error %d\n",
+			     ret);
+		return ret;
+	}
+	dev->devr.ports[port_num - 1].gsi = NULL;
+<<<<<<< HEAD
 	mutex_unlock(&dev->devr.mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gsi->rx_qp = NULL;
 
 	for (qp_index = 0; qp_index < gsi->num_qps; ++qp_index) {
@@ -213,8 +259,14 @@ int mlx5_ib_destroy_gsi(struct mlx5_ib_qp *mqp)
 
 	kfree(gsi->outstanding_wrs);
 	kfree(gsi->tx_qps);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	kfree(mqp);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -339,6 +391,9 @@ err_destroy_qp:
 	WARN_ON_ONCE(qp);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static void setup_qps(struct mlx5_ib_gsi_qp *gsi)
 {
 	struct mlx5_ib_dev *dev = to_mdev(gsi->rx_qp->device);
@@ -350,12 +405,23 @@ static void setup_qps(struct mlx5_ib_gsi_qp *gsi)
 	mutex_unlock(&dev->devr.mutex);
 }
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int mlx5_ib_gsi_modify_qp(struct ib_qp *qp, struct ib_qp_attr *attr,
 			  int attr_mask)
 {
 	struct mlx5_ib_dev *dev = to_mdev(qp->device);
 	struct mlx5_ib_qp *mqp = to_mqp(qp);
 	struct mlx5_ib_gsi_qp *gsi = &mqp->gsi;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u16 qp_index;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 qp_index;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	mlx5_ib_dbg(dev, "modifying GSI QP to state %d\n", attr->qp_state);
@@ -366,8 +432,22 @@ int mlx5_ib_gsi_modify_qp(struct ib_qp *qp, struct ib_qp_attr *attr,
 		return ret;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (to_mqp(gsi->rx_qp)->state != IB_QPS_RTS)
+		return 0;
+
+	for (qp_index = 0; qp_index < gsi->num_qps; ++qp_index)
+		setup_qp(gsi, qp_index);
+<<<<<<< HEAD
+=======
 	if (to_mqp(gsi->rx_qp)->state == IB_QPS_RTS)
 		setup_qps(gsi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -511,8 +591,22 @@ int mlx5_ib_gsi_post_recv(struct ib_qp *qp, const struct ib_recv_wr *wr,
 
 void mlx5_ib_gsi_pkey_change(struct mlx5_ib_gsi_qp *gsi)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u16 qp_index;
+
+	for (qp_index = 0; qp_index < gsi->num_qps; ++qp_index)
+		setup_qp(gsi, qp_index);
+=======
 	if (!gsi)
 		return;
 
 	setup_qps(gsi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u16 qp_index;
+
+	for (qp_index = 0; qp_index < gsi->num_qps; ++qp_index)
+		setup_qp(gsi, qp_index);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

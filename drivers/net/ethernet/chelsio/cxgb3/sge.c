@@ -244,8 +244,18 @@ static inline void unmap_skb(struct sk_buff *skb, struct sge_txq *q,
 	frag_idx = d->fragidx;
 
 	if (frag_idx == 0 && skb_headlen(skb)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dma_unmap_single(&pdev->dev, be64_to_cpu(sgp->addr[0]),
+				 skb_headlen(skb), DMA_TO_DEVICE);
+=======
 		pci_unmap_single(pdev, be64_to_cpu(sgp->addr[0]),
 				 skb_headlen(skb), PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_single(&pdev->dev, be64_to_cpu(sgp->addr[0]),
+				 skb_headlen(skb), DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		j = 1;
 	}
 
@@ -253,9 +263,21 @@ static inline void unmap_skb(struct sk_buff *skb, struct sge_txq *q,
 	nfrags = skb_shinfo(skb)->nr_frags;
 
 	while (frag_idx < nfrags && curflit < WR_FLITS) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dma_unmap_page(&pdev->dev, be64_to_cpu(sgp->addr[j]),
+			       skb_frag_size(&skb_shinfo(skb)->frags[frag_idx]),
+			       DMA_TO_DEVICE);
+=======
 		pci_unmap_page(pdev, be64_to_cpu(sgp->addr[j]),
 			       skb_frag_size(&skb_shinfo(skb)->frags[frag_idx]),
 			       PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_page(&pdev->dev, be64_to_cpu(sgp->addr[j]),
+			       skb_frag_size(&skb_shinfo(skb)->frags[frag_idx]),
+			       DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		j ^= 1;
 		if (j == 0) {
 			sgp++;
@@ -355,15 +377,35 @@ static void clear_rx_desc(struct pci_dev *pdev, const struct sge_fl *q,
 	if (q->use_pages && d->pg_chunk.page) {
 		(*d->pg_chunk.p_cnt)--;
 		if (!*d->pg_chunk.p_cnt)
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dma_unmap_page(&pdev->dev, d->pg_chunk.mapping,
+				       q->alloc_size, DMA_FROM_DEVICE);
+=======
 			pci_unmap_page(pdev,
 				       d->pg_chunk.mapping,
 				       q->alloc_size, PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_unmap_page(&pdev->dev, d->pg_chunk.mapping,
+				       q->alloc_size, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		put_page(d->pg_chunk.page);
 		d->pg_chunk.page = NULL;
 	} else {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dma_unmap_single(&pdev->dev, dma_unmap_addr(d, dma_addr),
+				 q->buf_size, DMA_FROM_DEVICE);
+=======
 		pci_unmap_single(pdev, dma_unmap_addr(d, dma_addr),
 				 q->buf_size, PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_single(&pdev->dev, dma_unmap_addr(d, dma_addr),
+				 q->buf_size, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree_skb(d->skb);
 		d->skb = NULL;
 	}
@@ -414,8 +456,18 @@ static inline int add_one_rx_buf(void *va, unsigned int len,
 {
 	dma_addr_t mapping;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	mapping = dma_map_single(&pdev->dev, va, len, DMA_FROM_DEVICE);
+	if (unlikely(dma_mapping_error(&pdev->dev, mapping)))
+=======
 	mapping = pci_map_single(pdev, va, len, PCI_DMA_FROMDEVICE);
 	if (unlikely(pci_dma_mapping_error(pdev, mapping)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	mapping = dma_map_single(&pdev->dev, va, len, DMA_FROM_DEVICE);
+	if (unlikely(dma_mapping_error(&pdev->dev, mapping)))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
 
 	dma_unmap_addr_set(sd, dma_addr, mapping);
@@ -453,9 +505,21 @@ static int alloc_pg_chunk(struct adapter *adapter, struct sge_fl *q,
 		q->pg_chunk.p_cnt = q->pg_chunk.va + (PAGE_SIZE << order) -
 				    SGE_PG_RSVD;
 		q->pg_chunk.offset = 0;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		mapping = dma_map_page(&adapter->pdev->dev, q->pg_chunk.page,
+				       0, q->alloc_size, DMA_FROM_DEVICE);
+		if (unlikely(dma_mapping_error(&adapter->pdev->dev, mapping))) {
+=======
 		mapping = pci_map_page(adapter->pdev, q->pg_chunk.page,
 				       0, q->alloc_size, PCI_DMA_FROMDEVICE);
 		if (unlikely(pci_dma_mapping_error(adapter->pdev, mapping))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		mapping = dma_map_page(&adapter->pdev->dev, q->pg_chunk.page,
+				       0, q->alloc_size, DMA_FROM_DEVICE);
+		if (unlikely(dma_mapping_error(&adapter->pdev->dev, mapping))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__free_pages(q->pg_chunk.page, order);
 			q->pg_chunk.page = NULL;
 			return -EIO;
@@ -522,9 +586,21 @@ nomem:				q->alloc_failed++;
 			dma_unmap_addr_set(sd, dma_addr, mapping);
 
 			add_one_rx_chunk(mapping, d, q->gen);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dma_sync_single_for_device(&adap->pdev->dev, mapping,
+						   q->buf_size - SGE_PG_RSVD,
+						   DMA_FROM_DEVICE);
+=======
 			pci_dma_sync_single_for_device(adap->pdev, mapping,
 						q->buf_size - SGE_PG_RSVD,
 						PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_sync_single_for_device(&adap->pdev->dev, mapping,
+						   q->buf_size - SGE_PG_RSVD,
+						   DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			void *buf_start;
 
@@ -793,6 +869,16 @@ static struct sk_buff *get_packet(struct adapter *adap, struct sge_fl *fl,
 		skb = alloc_skb(len, GFP_ATOMIC);
 		if (likely(skb != NULL)) {
 			__skb_put(skb, len);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dma_sync_single_for_cpu(&adap->pdev->dev,
+						dma_unmap_addr(sd, dma_addr),
+						len, DMA_FROM_DEVICE);
+			memcpy(skb->data, sd->skb->data, len);
+			dma_sync_single_for_device(&adap->pdev->dev,
+						   dma_unmap_addr(sd, dma_addr),
+						   len, DMA_FROM_DEVICE);
+=======
 			pci_dma_sync_single_for_cpu(adap->pdev,
 					    dma_unmap_addr(sd, dma_addr), len,
 					    PCI_DMA_FROMDEVICE);
@@ -800,6 +886,16 @@ static struct sk_buff *get_packet(struct adapter *adap, struct sge_fl *fl,
 			pci_dma_sync_single_for_device(adap->pdev,
 					    dma_unmap_addr(sd, dma_addr), len,
 					    PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_sync_single_for_cpu(&adap->pdev->dev,
+						dma_unmap_addr(sd, dma_addr),
+						len, DMA_FROM_DEVICE);
+			memcpy(skb->data, sd->skb->data, len);
+			dma_sync_single_for_device(&adap->pdev->dev,
+						   dma_unmap_addr(sd, dma_addr),
+						   len, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else if (!drop_thres)
 			goto use_orig_buf;
 recycle:
@@ -813,8 +909,18 @@ recycle:
 		goto recycle;
 
 use_orig_buf:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dma_unmap_single(&adap->pdev->dev, dma_unmap_addr(sd, dma_addr),
+			 fl->buf_size, DMA_FROM_DEVICE);
+=======
 	pci_unmap_single(adap->pdev, dma_unmap_addr(sd, dma_addr),
 			 fl->buf_size, PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_unmap_single(&adap->pdev->dev, dma_unmap_addr(sd, dma_addr),
+			 fl->buf_size, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	skb = sd->skb;
 	skb_put(skb, len);
 	__refill_fl(adap, fl);
@@ -854,12 +960,28 @@ static struct sk_buff *get_packet_pg(struct adapter *adap, struct sge_fl *fl,
 		newskb = alloc_skb(len, GFP_ATOMIC);
 		if (likely(newskb != NULL)) {
 			__skb_put(newskb, len);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			dma_sync_single_for_cpu(&adap->pdev->dev, dma_addr,
+						len, DMA_FROM_DEVICE);
+			memcpy(newskb->data, sd->pg_chunk.va, len);
+			dma_sync_single_for_device(&adap->pdev->dev, dma_addr,
+						   len, DMA_FROM_DEVICE);
+=======
 			pci_dma_sync_single_for_cpu(adap->pdev, dma_addr, len,
 					    PCI_DMA_FROMDEVICE);
 			memcpy(newskb->data, sd->pg_chunk.va, len);
 			pci_dma_sync_single_for_device(adap->pdev, dma_addr,
 						       len,
 						       PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			dma_sync_single_for_cpu(&adap->pdev->dev, dma_addr,
+						len, DMA_FROM_DEVICE);
+			memcpy(newskb->data, sd->pg_chunk.va, len);
+			dma_sync_single_for_device(&adap->pdev->dev, dma_addr,
+						   len, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else if (!drop_thres)
 			return NULL;
 recycle:
@@ -883,6 +1005,15 @@ recycle:
 		goto recycle;
 	}
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dma_sync_single_for_cpu(&adap->pdev->dev, dma_addr, len,
+				DMA_FROM_DEVICE);
+	(*sd->pg_chunk.p_cnt)--;
+	if (!*sd->pg_chunk.p_cnt && sd->pg_chunk.page != fl->pg_chunk.page)
+		dma_unmap_page(&adap->pdev->dev, sd->pg_chunk.mapping,
+			       fl->alloc_size, DMA_FROM_DEVICE);
+=======
 	pci_dma_sync_single_for_cpu(adap->pdev, dma_addr, len,
 				    PCI_DMA_FROMDEVICE);
 	(*sd->pg_chunk.p_cnt)--;
@@ -891,6 +1022,15 @@ recycle:
 			       sd->pg_chunk.mapping,
 			       fl->alloc_size,
 			       PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_sync_single_for_cpu(&adap->pdev->dev, dma_addr, len,
+				DMA_FROM_DEVICE);
+	(*sd->pg_chunk.p_cnt)--;
+	if (!*sd->pg_chunk.p_cnt && sd->pg_chunk.page != fl->pg_chunk.page)
+		dma_unmap_page(&adap->pdev->dev, sd->pg_chunk.mapping,
+			       fl->alloc_size, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!skb) {
 		__skb_put(newskb, SGE_RX_PULL_LEN);
 		memcpy(newskb->data, sd->pg_chunk.va, SGE_RX_PULL_LEN);
@@ -968,9 +1108,21 @@ static int map_skb(struct pci_dev *pdev, const struct sk_buff *skb,
 	const struct skb_shared_info *si;
 
 	if (skb_headlen(skb)) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		*addr = dma_map_single(&pdev->dev, skb->data,
+				       skb_headlen(skb), DMA_TO_DEVICE);
+		if (dma_mapping_error(&pdev->dev, *addr))
+=======
 		*addr = pci_map_single(pdev, skb->data, skb_headlen(skb),
 				       PCI_DMA_TODEVICE);
 		if (pci_dma_mapping_error(pdev, *addr))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		*addr = dma_map_single(&pdev->dev, skb->data,
+				       skb_headlen(skb), DMA_TO_DEVICE);
+		if (dma_mapping_error(&pdev->dev, *addr))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto out_err;
 		addr++;
 	}
@@ -981,7 +1133,15 @@ static int map_skb(struct pci_dev *pdev, const struct sk_buff *skb,
 	for (fp = si->frags; fp < end; fp++) {
 		*addr = skb_frag_dma_map(&pdev->dev, fp, 0, skb_frag_size(fp),
 					 DMA_TO_DEVICE);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (dma_mapping_error(&pdev->dev, *addr))
+=======
 		if (pci_dma_mapping_error(pdev, *addr))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (dma_mapping_error(&pdev->dev, *addr))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto unwind;
 		addr++;
 	}
@@ -992,7 +1152,17 @@ unwind:
 		dma_unmap_page(&pdev->dev, *--addr, skb_frag_size(fp),
 			       DMA_TO_DEVICE);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dma_unmap_single(&pdev->dev, addr[-1], skb_headlen(skb),
+			 DMA_TO_DEVICE);
+=======
 	pci_unmap_single(pdev, addr[-1], skb_headlen(skb), PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_unmap_single(&pdev->dev, addr[-1], skb_headlen(skb),
+			 DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_err:
 	return -ENOMEM;
 }
@@ -1592,6 +1762,17 @@ static void deferred_unmap_destructor(struct sk_buff *skb)
 	p = dui->addr;
 
 	if (skb_tail_pointer(skb) - skb_transport_header(skb))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dma_unmap_single(&dui->pdev->dev, *p++,
+				 skb_tail_pointer(skb) - skb_transport_header(skb),
+				 DMA_TO_DEVICE);
+
+	si = skb_shinfo(skb);
+	for (i = 0; i < si->nr_frags; i++)
+		dma_unmap_page(&dui->pdev->dev, *p++,
+			       skb_frag_size(&si->frags[i]), DMA_TO_DEVICE);
+=======
 		pci_unmap_single(dui->pdev, *p++, skb_tail_pointer(skb) -
 				 skb_transport_header(skb), PCI_DMA_TODEVICE);
 
@@ -1599,6 +1780,17 @@ static void deferred_unmap_destructor(struct sk_buff *skb)
 	for (i = 0; i < si->nr_frags; i++)
 		pci_unmap_page(dui->pdev, *p++, skb_frag_size(&si->frags[i]),
 			       PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_single(&dui->pdev->dev, *p++,
+				 skb_tail_pointer(skb) - skb_transport_header(skb),
+				 DMA_TO_DEVICE);
+
+	si = skb_shinfo(skb);
+	for (i = 0; i < si->nr_frags; i++)
+		dma_unmap_page(&dui->pdev->dev, *p++,
+			       skb_frag_size(&si->frags[i]), DMA_TO_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void setup_deferred_unmapping(struct sk_buff *skb, struct pci_dev *pdev,
@@ -2153,6 +2345,17 @@ static void lro_add_page(struct adapter *adap, struct sge_qset *qs,
 
 	fl->credits--;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	dma_sync_single_for_cpu(&adap->pdev->dev,
+				dma_unmap_addr(sd, dma_addr),
+				fl->buf_size - SGE_PG_RSVD, DMA_FROM_DEVICE);
+
+	(*sd->pg_chunk.p_cnt)--;
+	if (!*sd->pg_chunk.p_cnt && sd->pg_chunk.page != fl->pg_chunk.page)
+		dma_unmap_page(&adap->pdev->dev, sd->pg_chunk.mapping,
+			       fl->alloc_size, DMA_FROM_DEVICE);
+=======
 	pci_dma_sync_single_for_cpu(adap->pdev,
 				    dma_unmap_addr(sd, dma_addr),
 				    fl->buf_size - SGE_PG_RSVD,
@@ -2164,6 +2367,17 @@ static void lro_add_page(struct adapter *adap, struct sge_qset *qs,
 			       sd->pg_chunk.mapping,
 			       fl->alloc_size,
 			       PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	dma_sync_single_for_cpu(&adap->pdev->dev,
+				dma_unmap_addr(sd, dma_addr),
+				fl->buf_size - SGE_PG_RSVD, DMA_FROM_DEVICE);
+
+	(*sd->pg_chunk.p_cnt)--;
+	if (!*sd->pg_chunk.p_cnt && sd->pg_chunk.page != fl->pg_chunk.page)
+		dma_unmap_page(&adap->pdev->dev, sd->pg_chunk.mapping,
+			       fl->alloc_size, DMA_FROM_DEVICE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!skb) {
 		put_page(sd->pg_chunk.page);
@@ -3306,6 +3520,18 @@ void t3_sge_stop(struct adapter *adap)
 
 	t3_sge_stop_dma(adap);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* workqueues aren't initialized otherwise */
+	if (!(adap->flags & FULL_INIT_DONE))
+		return;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* workqueues aren't initialized otherwise */
+	if (!(adap->flags & FULL_INIT_DONE))
+		return;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for (i = 0; i < SGE_QSETS; ++i) {
 		struct sge_qset *qs = &adap->sge.qs[i];
 

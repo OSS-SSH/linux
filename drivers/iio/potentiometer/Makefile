@@ -4,6 +4,14 @@
 #
 
 # When adding new entries keep the list in alphabetical order
+<<<<<<< HEAD
+<<<<<<< HEAD
+obj-$(CONFIG_AD5110) += ad5110.o
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_AD5110) += ad5110.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_AD5272) += ad5272.o
 obj-$(CONFIG_DS1803) += ds1803.o
 obj-$(CONFIG_MAX5432) += max5432.o

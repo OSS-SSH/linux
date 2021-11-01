@@ -89,10 +89,26 @@ static inline int ics_opal_init(void) { return -ENODEV; }
 /* ICS instance, hooked up to chip_data of an irq */
 struct ics {
 	struct list_head link;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int (*check)(struct ics *ics, unsigned int hwirq);
+	void (*mask_unknown)(struct ics *ics, unsigned long vec);
+	long (*get_server)(struct ics *ics, unsigned long vec);
+	int (*host_match)(struct ics *ics, struct device_node *node);
+	struct irq_chip *chip;
+=======
 	int (*map)(struct ics *ics, unsigned int virq);
 	void (*mask_unknown)(struct ics *ics, unsigned long vec);
 	long (*get_server)(struct ics *ics, unsigned long vec);
 	int (*host_match)(struct ics *ics, struct device_node *node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int (*check)(struct ics *ics, unsigned int hwirq);
+	void (*mask_unknown)(struct ics *ics, unsigned long vec);
+	long (*get_server)(struct ics *ics, unsigned long vec);
+	int (*host_match)(struct ics *ics, struct device_node *node);
+	struct irq_chip *chip;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char data[];
 };
 

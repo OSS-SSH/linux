@@ -23,7 +23,13 @@
 #include <linux/uaccess.h>
 #include <asm/page.h>
 #include <asm/sun3mmu.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <asm/segment.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/oplib.h>
 #include <asm/mmu_context.h>
 #include <asm/dvma.h>
@@ -191,14 +197,30 @@ void __init mmu_emu_init(unsigned long bootmem_end)
 	for(seg = 0; seg < PAGE_OFFSET; seg += SUN3_PMEG_SIZE)
 		sun3_put_segmap(seg, SUN3_INVALID_PMEG);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	set_fc(3);
+=======
 	set_fs(MAKE_MM_SEG(3));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_fc(3);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for(seg = 0; seg < 0x10000000; seg += SUN3_PMEG_SIZE) {
 		i = sun3_get_segmap(seg);
 		for(j = 1; j < CONTEXTS_NUM; j++)
 			(*(romvec->pv_setctxt))(j, (void *)seg, i);
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	set_fc(USER_DATA);
+=======
 	set_fs(KERNEL_DS);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	set_fc(USER_DATA);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* erase the mappings for a dead context.  Uses the pg_dir for hints

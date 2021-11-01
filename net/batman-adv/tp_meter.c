@@ -358,6 +358,18 @@ static void batadv_tp_vars_release(struct kref *ref)
  */
 static void batadv_tp_vars_put(struct batadv_tp_vars *tp_vars)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!tp_vars)
+		return;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!tp_vars)
+		return;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kref_put(&tp_vars->refcount, batadv_tp_vars_release);
 }
 
@@ -748,12 +760,24 @@ move_twnd:
 
 	wake_up(&tp_vars->more_bytes);
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(primary_if);
+	batadv_orig_node_put(orig_node);
+	batadv_tp_vars_put(tp_vars);
+=======
 	if (likely(primary_if))
 		batadv_hardif_put(primary_if);
 	if (likely(orig_node))
 		batadv_orig_node_put(orig_node);
 	if (likely(tp_vars))
 		batadv_tp_vars_put(tp_vars);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+	batadv_orig_node_put(orig_node);
+	batadv_tp_vars_put(tp_vars);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -882,10 +906,20 @@ static int batadv_tp_send(void *arg)
 	}
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_hardif_put(primary_if);
+	batadv_orig_node_put(orig_node);
+=======
 	if (likely(primary_if))
 		batadv_hardif_put(primary_if);
 	if (likely(orig_node))
 		batadv_orig_node_put(orig_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_hardif_put(primary_if);
+	batadv_orig_node_put(orig_node);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	batadv_tp_sender_end(bat_priv, tp_vars);
 	batadv_tp_sender_cleanup(bat_priv, tp_vars);
@@ -1205,10 +1239,20 @@ static int batadv_tp_send_ack(struct batadv_priv *bat_priv, const u8 *dst,
 	ret = 0;
 
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_orig_node_put(orig_node);
+	batadv_hardif_put(primary_if);
+=======
 	if (likely(orig_node))
 		batadv_orig_node_put(orig_node);
 	if (likely(primary_if))
 		batadv_hardif_put(primary_if);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_orig_node_put(orig_node);
+	batadv_hardif_put(primary_if);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -1456,8 +1500,16 @@ send_ack:
 	batadv_tp_send_ack(bat_priv, icmp->orig, tp_vars->last_recv,
 			   icmp->timestamp, icmp->session, icmp->uid);
 out:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	batadv_tp_vars_put(tp_vars);
+=======
 	if (likely(tp_vars))
 		batadv_tp_vars_put(tp_vars);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	batadv_tp_vars_put(tp_vars);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**

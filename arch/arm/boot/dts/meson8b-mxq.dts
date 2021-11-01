@@ -34,6 +34,16 @@
 		regulator-min-microvolt = <860000>;
 		regulator-max-microvolt = <1140000>;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pwm-supply = <&vcc_5v>;
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pwm-supply = <&vcc_5v>;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pwms = <&pwm_cd 0 1148 0>;
 		pwm-dutycycle-range = <100 0>;
 
@@ -79,7 +89,15 @@
 		regulator-min-microvolt = <860000>;
 		regulator-max-microvolt = <1140000>;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		pwm-supply = <&vcc_5v>;
+=======
 		vin-supply = <&vcc_5v>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		pwm-supply = <&vcc_5v>;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		pwms = <&pwm_cd 1 1148 0>;
 		pwm-dutycycle-range = <100 0>;

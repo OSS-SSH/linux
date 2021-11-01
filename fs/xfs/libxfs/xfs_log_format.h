@@ -41,10 +41,24 @@ typedef uint32_t xlog_tid_t;
 #define XFS_MIN_LOG_FACTOR	3
 
 #define XLOG_REC_SHIFT(log) \
+<<<<<<< HEAD
+<<<<<<< HEAD
+	BTOBB(1 << (xfs_has_logv2(log->l_mp) ? \
+	 XLOG_MAX_RECORD_BSHIFT : XLOG_BIG_RECORD_BSHIFT))
+#define XLOG_TOTAL_REC_SHIFT(log) \
+	BTOBB(XLOG_MAX_ICLOGS << (xfs_has_logv2(log->l_mp) ? \
+=======
 	BTOBB(1 << (xfs_sb_version_haslogv2(&log->l_mp->m_sb) ? \
 	 XLOG_MAX_RECORD_BSHIFT : XLOG_BIG_RECORD_BSHIFT))
 #define XLOG_TOTAL_REC_SHIFT(log) \
 	BTOBB(XLOG_MAX_ICLOGS << (xfs_sb_version_haslogv2(&log->l_mp->m_sb) ? \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	BTOBB(1 << (xfs_has_logv2(log->l_mp) ? \
+	 XLOG_MAX_RECORD_BSHIFT : XLOG_BIG_RECORD_BSHIFT))
+#define XLOG_TOTAL_REC_SHIFT(log) \
+	BTOBB(XLOG_MAX_ICLOGS << (xfs_has_logv2(log->l_mp) ? \
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 XLOG_MAX_RECORD_BSHIFT : XLOG_BIG_RECORD_BSHIFT))
 
 /* get lsn fields */
@@ -411,7 +425,26 @@ struct xfs_log_dinode {
 	/* start of the extended dinode, writable fields */
 	uint32_t	di_crc;		/* CRC of the inode */
 	uint64_t	di_changecount;	/* number of attribute changes */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	/*
+	 * The LSN we write to this field during formatting is not a reflection
+	 * of the current on-disk LSN. It should never be used for recovery
+	 * sequencing, nor should it be recovered into the on-disk inode at all.
+	 * See xlog_recover_inode_commit_pass2() and xfs_log_dinode_to_disk()
+	 * for details.
+	 */
+	xfs_lsn_t	di_lsn;
+
+<<<<<<< HEAD
+=======
 	xfs_lsn_t	di_lsn;		/* flush sequence */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint64_t	di_flags2;	/* more random flags */
 	uint32_t	di_cowextsize;	/* basic cow extent size for file */
 	uint8_t		di_pad2[12];	/* more padding for future expansion */
@@ -425,7 +458,15 @@ struct xfs_log_dinode {
 };
 
 #define xfs_log_dinode_size(mp)						\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	(xfs_has_v3inodes((mp)) ?					\
+=======
 	(xfs_sb_version_has_v3inode(&(mp)->m_sb) ?			\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	(xfs_has_v3inodes((mp)) ?					\
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sizeof(struct xfs_log_dinode) :				\
 		offsetof(struct xfs_log_dinode, di_next_unlinked))
 

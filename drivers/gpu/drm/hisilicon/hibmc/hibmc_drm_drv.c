@@ -19,7 +19,13 @@
 #include <drm/drm_drv.h>
 #include <drm/drm_gem_framebuffer_helper.h>
 #include <drm/drm_gem_vram_helper.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_managed.h>
 #include <drm/drm_vblank.h>
 
@@ -28,7 +34,15 @@
 
 DEFINE_DRM_GEM_FOPS(hibmc_fops);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static irqreturn_t hibmc_interrupt(int irq, void *arg)
+=======
 static irqreturn_t hibmc_drm_interrupt(int irq, void *arg)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static irqreturn_t hibmc_interrupt(int irq, void *arg)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct drm_device *dev = (struct drm_device *)arg;
 	struct hibmc_drm_private *priv = to_hibmc_drm_private(dev);
@@ -63,7 +77,13 @@ static const struct drm_driver hibmc_driver = {
 	.dumb_create            = hibmc_dumb_create,
 	.dumb_map_offset        = drm_gem_ttm_dumb_map_offset,
 	.gem_prime_mmap		= drm_gem_prime_mmap,
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	.irq_handler		= hibmc_drm_interrupt,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int __maybe_unused hibmc_pm_suspend(struct device *dev)
@@ -251,10 +271,26 @@ static int hibmc_hw_init(struct hibmc_drm_private *priv)
 
 static int hibmc_unload(struct drm_device *dev)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct pci_dev *pdev = to_pci_dev(dev->dev);
+
+	drm_atomic_helper_shutdown(dev);
+
+	free_irq(pdev->irq, dev);
+=======
 	drm_atomic_helper_shutdown(dev);
 
 	if (dev->irq_enabled)
 		drm_irq_uninstall(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct pci_dev *pdev = to_pci_dev(dev->dev);
+
+	drm_atomic_helper_shutdown(dev);
+
+	free_irq(pdev->irq, dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_disable_msi(to_pci_dev(dev->dev));
 
@@ -291,7 +327,19 @@ static int hibmc_load(struct drm_device *dev)
 	if (ret) {
 		drm_warn(dev, "enabling MSI failed: %d\n", ret);
 	} else {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		/* PCI devices require shared interrupts. */
+		ret = request_irq(pdev->irq, hibmc_interrupt, IRQF_SHARED,
+				  dev->driver->name, dev);
+=======
 		ret = drm_irq_install(dev, pdev->irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		/* PCI devices require shared interrupts. */
+		ret = request_irq(pdev->irq, hibmc_interrupt, IRQF_SHARED,
+				  dev->driver->name, dev);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			drm_warn(dev, "install irq failed: %d\n", ret);
 	}
@@ -314,7 +362,15 @@ static int hibmc_pci_probe(struct pci_dev *pdev,
 	struct drm_device *dev;
 	int ret;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &hibmc_driver);
+=======
 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, "hibmcdrmfb");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &hibmc_driver);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 

@@ -104,6 +104,14 @@
 #include <linux/sockios.h>
 #include <net/busy_poll.h>
 #include <linux/errqueue.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/ptp_clock_kernel.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/ptp_clock_kernel.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_NET_RX_BUSY_POLL
 unsigned int sysctl_net_busy_read __read_mostly;
@@ -211,6 +219,14 @@ static const char * const pf_family_names[] = {
 	[PF_QIPCRTR]	= "PF_QIPCRTR",
 	[PF_SMC]	= "PF_SMC",
 	[PF_XDP]	= "PF_XDP",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	[PF_MCTP]	= "PF_MCTP",
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	[PF_MCTP]	= "PF_MCTP",
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -873,12 +889,33 @@ void __sock_recv_timestamp(struct msghdr *msg, struct sock *sk,
 		empty = 0;
 	if (shhwtstamps &&
 	    (sk->sk_tsflags & SOF_TIMESTAMPING_RAW_HARDWARE) &&
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	    !skb_is_swtx_tstamp(skb, false_tstamp)) {
+		if (sk->sk_tsflags & SOF_TIMESTAMPING_BIND_PHC)
+			ptp_convert_timestamp(shhwtstamps, sk->sk_bind_phc);
+
+		if (ktime_to_timespec64_cond(shhwtstamps->hwtstamp,
+					     tss.ts + 2)) {
+			empty = 0;
+
+			if ((sk->sk_tsflags & SOF_TIMESTAMPING_OPT_PKTINFO) &&
+			    !skb_is_err_queue(skb))
+				put_ts_pktinfo(msg, skb);
+		}
+<<<<<<< HEAD
+=======
 	    !skb_is_swtx_tstamp(skb, false_tstamp) &&
 	    ktime_to_timespec64_cond(shhwtstamps->hwtstamp, tss.ts + 2)) {
 		empty = 0;
 		if ((sk->sk_tsflags & SOF_TIMESTAMPING_OPT_PKTINFO) &&
 		    !skb_is_err_queue(skb))
 			put_ts_pktinfo(msg, skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	if (!empty) {
 		if (sock_flag(sk, SOCK_TSTAMP_NEW))
@@ -1057,9 +1094,29 @@ static ssize_t sock_write_iter(struct kiocb *iocb, struct iov_iter *from)
  */
 
 static DEFINE_MUTEX(br_ioctl_mutex);
+<<<<<<< HEAD
+<<<<<<< HEAD
+static int (*br_ioctl_hook)(struct net *net, struct net_bridge *br,
+			    unsigned int cmd, struct ifreq *ifr,
+			    void __user *uarg);
+
+void brioctl_set(int (*hook)(struct net *net, struct net_bridge *br,
+			     unsigned int cmd, struct ifreq *ifr,
+			     void __user *uarg))
+=======
 static int (*br_ioctl_hook) (struct net *, unsigned int cmd, void __user *arg);
 
 void brioctl_set(int (*hook) (struct net *, unsigned int, void __user *))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static int (*br_ioctl_hook)(struct net *net, struct net_bridge *br,
+			    unsigned int cmd, struct ifreq *ifr,
+			    void __user *uarg);
+
+void brioctl_set(int (*hook)(struct net *net, struct net_bridge *br,
+			     unsigned int cmd, struct ifreq *ifr,
+			     void __user *uarg))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	mutex_lock(&br_ioctl_mutex);
 	br_ioctl_hook = hook;
@@ -1067,6 +1124,31 @@ void brioctl_set(int (*hook) (struct net *, unsigned int, void __user *))
 }
 EXPORT_SYMBOL(brioctl_set);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int br_ioctl_call(struct net *net, struct net_bridge *br, unsigned int cmd,
+		  struct ifreq *ifr, void __user *uarg)
+{
+	int err = -ENOPKG;
+
+	if (!br_ioctl_hook)
+		request_module("bridge");
+
+	mutex_lock(&br_ioctl_mutex);
+	if (br_ioctl_hook)
+		err = br_ioctl_hook(net, br, cmd, ifr, uarg);
+	mutex_unlock(&br_ioctl_mutex);
+
+	return err;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static DEFINE_MUTEX(vlan_ioctl_mutex);
 static int (*vlan_ioctl_hook) (struct net *, void __user *arg);
 
@@ -1081,8 +1163,24 @@ EXPORT_SYMBOL(vlan_ioctl_set);
 static long sock_do_ioctl(struct net *net, struct socket *sock,
 			  unsigned int cmd, unsigned long arg)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	struct ifreq ifr;
+	bool need_copyout;
 	int err;
 	void __user *argp = (void __user *)arg;
+	void __user *data;
+=======
+	int err;
+	void __user *argp = (void __user *)arg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct ifreq ifr;
+	bool need_copyout;
+	int err;
+	void __user *argp = (void __user *)arg;
+	void __user *data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = sock->ops->ioctl(sock, cmd, arg);
 
@@ -1093,6 +1191,22 @@ static long sock_do_ioctl(struct net *net, struct socket *sock,
 	if (err != -ENOIOCTLCMD)
 		return err;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (!is_socket_ioctl_cmd(cmd))
+		return -ENOTTY;
+
+	if (get_user_ifreq(&ifr, &data, argp))
+		return -EFAULT;
+	err = dev_ioctl(net, cmd, &ifr, data, &need_copyout);
+	if (!err && need_copyout)
+		if (put_user_ifreq(&ifr, argp))
+<<<<<<< HEAD
+			return -EFAULT;
+
+=======
 	if (cmd == SIOCGIFCONF) {
 		struct ifconf ifc;
 		if (copy_from_user(&ifc, argp, sizeof(struct ifconf)))
@@ -1112,6 +1226,11 @@ static long sock_do_ioctl(struct net *net, struct socket *sock,
 			if (copy_to_user(argp, &ifr, sizeof(struct ifreq)))
 				return -EFAULT;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			return -EFAULT;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -1133,12 +1252,30 @@ static long sock_ioctl(struct file *file, unsigned cmd, unsigned long arg)
 	net = sock_net(sk);
 	if (unlikely(cmd >= SIOCDEVPRIVATE && cmd <= (SIOCDEVPRIVATE + 15))) {
 		struct ifreq ifr;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		void __user *data;
 		bool need_copyout;
-		if (copy_from_user(&ifr, argp, sizeof(struct ifreq)))
+		if (get_user_ifreq(&ifr, &data, argp))
 			return -EFAULT;
-		err = dev_ioctl(net, cmd, &ifr, &need_copyout);
+		err = dev_ioctl(net, cmd, &ifr, data, &need_copyout);
 		if (!err && need_copyout)
+			if (put_user_ifreq(&ifr, argp))
+=======
+=======
+		void __user *data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		bool need_copyout;
+		if (get_user_ifreq(&ifr, &data, argp))
+			return -EFAULT;
+		err = dev_ioctl(net, cmd, &ifr, data, &need_copyout);
+		if (!err && need_copyout)
+<<<<<<< HEAD
 			if (copy_to_user(argp, &ifr, sizeof(struct ifreq)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			if (put_user_ifreq(&ifr, argp))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return -EFAULT;
 	} else
 #ifdef CONFIG_WEXT_CORE
@@ -1163,6 +1300,10 @@ static long sock_ioctl(struct file *file, unsigned cmd, unsigned long arg)
 		case SIOCSIFBR:
 		case SIOCBRADDBR:
 		case SIOCBRDELBR:
+<<<<<<< HEAD
+<<<<<<< HEAD
+			err = br_ioctl_call(net, NULL, cmd, NULL, argp);
+=======
 			err = -ENOPKG;
 			if (!br_ioctl_hook)
 				request_module("bridge");
@@ -1171,6 +1312,10 @@ static long sock_ioctl(struct file *file, unsigned cmd, unsigned long arg)
 			if (br_ioctl_hook)
 				err = br_ioctl_hook(net, cmd, argp);
 			mutex_unlock(&br_ioctl_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			err = br_ioctl_call(net, NULL, cmd, NULL, argp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		case SIOCGIFVLAN:
 		case SIOCSIFVLAN:
@@ -1210,6 +1355,20 @@ static long sock_ioctl(struct file *file, unsigned cmd, unsigned long arg)
 						   cmd == SIOCGSTAMP_NEW,
 						   false);
 			break;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+		case SIOCGIFCONF:
+			err = dev_ifconf(net, argp);
+			break;
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		default:
 			err = sock_do_ioctl(net, sock, cmd, arg);
 			break;
@@ -1715,32 +1874,49 @@ SYSCALL_DEFINE2(listen, int, fd, int, backlog)
 	return __sys_listen(fd, backlog);
 }
 
-int __sys_accept4_file(struct file *file, unsigned file_flags,
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct file *do_accept(struct file *file, unsigned file_flags,
 		       struct sockaddr __user *upeer_sockaddr,
-		       int __user *upeer_addrlen, int flags,
-		       unsigned long nofile)
+		       int __user *upeer_addrlen, int flags)
 {
 	struct socket *sock, *newsock;
 	struct file *newfile;
-	int err, len, newfd;
+	int err, len;
 	struct sockaddr_storage address;
 
-	if (flags & ~(SOCK_CLOEXEC | SOCK_NONBLOCK))
-		return -EINVAL;
-
-	if (SOCK_NONBLOCK != O_NONBLOCK && (flags & SOCK_NONBLOCK))
-		flags = (flags & ~SOCK_NONBLOCK) | O_NONBLOCK;
-
 	sock = sock_from_file(file);
-	if (!sock) {
-		err = -ENOTSOCK;
-		goto out;
-	}
+	if (!sock)
+		return ERR_PTR(-ENOTSOCK);
 
-	err = -ENFILE;
 	newsock = sock_alloc();
 	if (!newsock)
+		return ERR_PTR(-ENFILE);
+=======
+int __sys_accept4_file(struct file *file, unsigned file_flags,
+=======
+struct file *do_accept(struct file *file, unsigned file_flags,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		       struct sockaddr __user *upeer_sockaddr,
+		       int __user *upeer_addrlen, int flags)
+{
+	struct socket *sock, *newsock;
+	struct file *newfile;
+	int err, len;
+	struct sockaddr_storage address;
+
+	sock = sock_from_file(file);
+	if (!sock)
+		return ERR_PTR(-ENOTSOCK);
+
+	newsock = sock_alloc();
+	if (!newsock)
+<<<<<<< HEAD
 		goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return ERR_PTR(-ENFILE);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	newsock->type = sock->type;
 	newsock->ops = sock->ops;
@@ -1751,6 +1927,12 @@ int __sys_accept4_file(struct file *file, unsigned file_flags,
 	 */
 	__module_get(newsock->ops->owner);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	newfile = sock_alloc_file(newsock, flags, sock->sk->sk_prot_creator->name);
+	if (IS_ERR(newfile))
+		return newfile;
+=======
 	newfd = __get_unused_fd_flags(flags, nofile);
 	if (unlikely(newfd < 0)) {
 		err = newfd;
@@ -1763,6 +1945,12 @@ int __sys_accept4_file(struct file *file, unsigned file_flags,
 		put_unused_fd(newfd);
 		goto out;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	newfile = sock_alloc_file(newsock, flags, sock->sk->sk_prot_creator->name);
+	if (IS_ERR(newfile))
+		return newfile;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	err = security_socket_accept(sock, newsock);
 	if (err)
@@ -1787,16 +1975,84 @@ int __sys_accept4_file(struct file *file, unsigned file_flags,
 	}
 
 	/* File flags are not inherited via accept() unlike another OSes. */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return newfile;
+out_fd:
+	fput(newfile);
+	return ERR_PTR(err);
+}
+
+int __sys_accept4_file(struct file *file, unsigned file_flags,
+		       struct sockaddr __user *upeer_sockaddr,
+		       int __user *upeer_addrlen, int flags,
+		       unsigned long nofile)
+{
+	struct file *newfile;
+	int newfd;
+
+	if (flags & ~(SOCK_CLOEXEC | SOCK_NONBLOCK))
+		return -EINVAL;
+
+	if (SOCK_NONBLOCK != O_NONBLOCK && (flags & SOCK_NONBLOCK))
+		flags = (flags & ~SOCK_NONBLOCK) | O_NONBLOCK;
+
+	newfd = __get_unused_fd_flags(flags, nofile);
+	if (unlikely(newfd < 0))
+		return newfd;
+
+	newfile = do_accept(file, file_flags, upeer_sockaddr, upeer_addrlen,
+			    flags);
+	if (IS_ERR(newfile)) {
+		put_unused_fd(newfd);
+		return PTR_ERR(newfile);
+	}
+	fd_install(newfd, newfile);
+	return newfd;
+=======
 
 	fd_install(newfd, newfile);
 	err = newfd;
 out:
 	return err;
+=======
+	return newfile;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_fd:
 	fput(newfile);
-	put_unused_fd(newfd);
-	goto out;
+	return ERR_PTR(err);
+}
 
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int __sys_accept4_file(struct file *file, unsigned file_flags,
+		       struct sockaddr __user *upeer_sockaddr,
+		       int __user *upeer_addrlen, int flags,
+		       unsigned long nofile)
+{
+	struct file *newfile;
+	int newfd;
+
+	if (flags & ~(SOCK_CLOEXEC | SOCK_NONBLOCK))
+		return -EINVAL;
+
+	if (SOCK_NONBLOCK != O_NONBLOCK && (flags & SOCK_NONBLOCK))
+		flags = (flags & ~SOCK_NONBLOCK) | O_NONBLOCK;
+
+	newfd = __get_unused_fd_flags(flags, nofile);
+	if (unlikely(newfd < 0))
+		return newfd;
+
+	newfile = do_accept(file, file_flags, upeer_sockaddr, upeer_addrlen,
+			    flags);
+	if (IS_ERR(newfile)) {
+		put_unused_fd(newfd);
+		return PTR_ERR(newfile);
+	}
+	fd_install(newfd, newfile);
+	return newfd;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -3119,154 +3375,108 @@ void socket_seq_show(struct seq_file *seq)
 }
 #endif				/* CONFIG_PROC_FS */
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/* Handle the fact that while struct ifreq has the same *layout* on
+ * 32/64 for everything but ifreq::ifru_ifmap and ifreq::ifru_data,
+ * which are handled elsewhere, it still has different *size* due to
+ * ifreq::ifru_ifmap (which is 16 bytes on 32 bit, 24 bytes on 64-bit,
+ * resulting in struct ifreq being 32 and 40 bytes respectively).
+ * As a result, if the struct happens to be at the end of a page and
+ * the next page isn't readable/writable, we get a fault. To prevent
+ * that, copy back and forth to the full size.
+ */
+int get_user_ifreq(struct ifreq *ifr, void __user **ifrdata, void __user *arg)
+<<<<<<< HEAD
+{
+	if (in_compat_syscall()) {
+		struct compat_ifreq *ifr32 = (struct compat_ifreq *)ifr;
+
+		memset(ifr, 0, sizeof(*ifr));
+		if (copy_from_user(ifr32, arg, sizeof(*ifr32)))
+			return -EFAULT;
+
+		if (ifrdata)
+			*ifrdata = compat_ptr(ifr32->ifr_data);
+
+		return 0;
+	}
+
+	if (copy_from_user(ifr, arg, sizeof(*ifr)))
+		return -EFAULT;
+
+	if (ifrdata)
+		*ifrdata = ifr->ifr_data;
+
+	return 0;
+}
+EXPORT_SYMBOL(get_user_ifreq);
+
+int put_user_ifreq(struct ifreq *ifr, void __user *arg)
+{
+	size_t size = sizeof(*ifr);
+
+	if (in_compat_syscall())
+		size = sizeof(struct compat_ifreq);
+
+	if (copy_to_user(arg, ifr, size))
+		return -EFAULT;
+
+	return 0;
+}
+EXPORT_SYMBOL(put_user_ifreq);
+
+#ifdef CONFIG_COMPAT
+=======
 #ifdef CONFIG_COMPAT
 static int compat_dev_ifconf(struct net *net, struct compat_ifconf __user *uifc32)
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct compat_ifconf ifc32;
-	struct ifconf ifc;
-	int err;
+	if (in_compat_syscall()) {
+		struct compat_ifreq *ifr32 = (struct compat_ifreq *)ifr;
 
-	if (copy_from_user(&ifc32, uifc32, sizeof(struct compat_ifconf)))
+		memset(ifr, 0, sizeof(*ifr));
+		if (copy_from_user(ifr32, arg, sizeof(*ifr32)))
+			return -EFAULT;
+
+		if (ifrdata)
+			*ifrdata = compat_ptr(ifr32->ifr_data);
+
+		return 0;
+	}
+
+	if (copy_from_user(ifr, arg, sizeof(*ifr)))
 		return -EFAULT;
 
-	ifc.ifc_len = ifc32.ifc_len;
-	ifc.ifc_req = compat_ptr(ifc32.ifcbuf);
+	if (ifrdata)
+		*ifrdata = ifr->ifr_data;
 
-	rtnl_lock();
-	err = dev_ifconf(net, &ifc, sizeof(struct compat_ifreq));
-	rtnl_unlock();
-	if (err)
-		return err;
+	return 0;
+}
+EXPORT_SYMBOL(get_user_ifreq);
 
-	ifc32.ifc_len = ifc.ifc_len;
-	if (copy_to_user(uifc32, &ifc32, sizeof(struct compat_ifconf)))
+int put_user_ifreq(struct ifreq *ifr, void __user *arg)
+{
+	size_t size = sizeof(*ifr);
+
+	if (in_compat_syscall())
+		size = sizeof(struct compat_ifreq);
+
+	if (copy_to_user(arg, ifr, size))
 		return -EFAULT;
 
 	return 0;
 }
+EXPORT_SYMBOL(put_user_ifreq);
 
-static int ethtool_ioctl(struct net *net, struct compat_ifreq __user *ifr32)
-{
-	struct compat_ethtool_rxnfc __user *compat_rxnfc;
-	bool convert_in = false, convert_out = false;
-	size_t buf_size = 0;
-	struct ethtool_rxnfc __user *rxnfc = NULL;
-	struct ifreq ifr;
-	u32 rule_cnt = 0, actual_rule_cnt;
-	u32 ethcmd;
-	u32 data;
-	int ret;
-
-	if (get_user(data, &ifr32->ifr_ifru.ifru_data))
-		return -EFAULT;
-
-	compat_rxnfc = compat_ptr(data);
-
-	if (get_user(ethcmd, &compat_rxnfc->cmd))
-		return -EFAULT;
-
-	/* Most ethtool structures are defined without padding.
-	 * Unfortunately struct ethtool_rxnfc is an exception.
-	 */
-	switch (ethcmd) {
-	default:
-		break;
-	case ETHTOOL_GRXCLSRLALL:
-		/* Buffer size is variable */
-		if (get_user(rule_cnt, &compat_rxnfc->rule_cnt))
-			return -EFAULT;
-		if (rule_cnt > KMALLOC_MAX_SIZE / sizeof(u32))
-			return -ENOMEM;
-		buf_size += rule_cnt * sizeof(u32);
-		fallthrough;
-	case ETHTOOL_GRXRINGS:
-	case ETHTOOL_GRXCLSRLCNT:
-	case ETHTOOL_GRXCLSRULE:
-	case ETHTOOL_SRXCLSRLINS:
-		convert_out = true;
-		fallthrough;
-	case ETHTOOL_SRXCLSRLDEL:
-		buf_size += sizeof(struct ethtool_rxnfc);
-		convert_in = true;
-		rxnfc = compat_alloc_user_space(buf_size);
-		break;
-	}
-
-	if (copy_from_user(&ifr.ifr_name, &ifr32->ifr_name, IFNAMSIZ))
-		return -EFAULT;
-
-	ifr.ifr_data = convert_in ? rxnfc : (void __user *)compat_rxnfc;
-
-	if (convert_in) {
-		/* We expect there to be holes between fs.m_ext and
-		 * fs.ring_cookie and at the end of fs, but nowhere else.
-		 */
-		BUILD_BUG_ON(offsetof(struct compat_ethtool_rxnfc, fs.m_ext) +
-			     sizeof(compat_rxnfc->fs.m_ext) !=
-			     offsetof(struct ethtool_rxnfc, fs.m_ext) +
-			     sizeof(rxnfc->fs.m_ext));
-		BUILD_BUG_ON(
-			offsetof(struct compat_ethtool_rxnfc, fs.location) -
-			offsetof(struct compat_ethtool_rxnfc, fs.ring_cookie) !=
-			offsetof(struct ethtool_rxnfc, fs.location) -
-			offsetof(struct ethtool_rxnfc, fs.ring_cookie));
-
-		if (copy_in_user(rxnfc, compat_rxnfc,
-				 (void __user *)(&rxnfc->fs.m_ext + 1) -
-				 (void __user *)rxnfc) ||
-		    copy_in_user(&rxnfc->fs.ring_cookie,
-				 &compat_rxnfc->fs.ring_cookie,
-				 (void __user *)(&rxnfc->fs.location + 1) -
-				 (void __user *)&rxnfc->fs.ring_cookie))
-			return -EFAULT;
-		if (ethcmd == ETHTOOL_GRXCLSRLALL) {
-			if (put_user(rule_cnt, &rxnfc->rule_cnt))
-				return -EFAULT;
-		} else if (copy_in_user(&rxnfc->rule_cnt,
-					&compat_rxnfc->rule_cnt,
-					sizeof(rxnfc->rule_cnt)))
-			return -EFAULT;
-	}
-
-	ret = dev_ioctl(net, SIOCETHTOOL, &ifr, NULL);
-	if (ret)
-		return ret;
-
-	if (convert_out) {
-		if (copy_in_user(compat_rxnfc, rxnfc,
-				 (const void __user *)(&rxnfc->fs.m_ext + 1) -
-				 (const void __user *)rxnfc) ||
-		    copy_in_user(&compat_rxnfc->fs.ring_cookie,
-				 &rxnfc->fs.ring_cookie,
-				 (const void __user *)(&rxnfc->fs.location + 1) -
-				 (const void __user *)&rxnfc->fs.ring_cookie) ||
-		    copy_in_user(&compat_rxnfc->rule_cnt, &rxnfc->rule_cnt,
-				 sizeof(rxnfc->rule_cnt)))
-			return -EFAULT;
-
-		if (ethcmd == ETHTOOL_GRXCLSRLALL) {
-			/* As an optimisation, we only copy the actual
-			 * number of rules that the underlying
-			 * function returned.  Since Mallory might
-			 * change the rule count in user memory, we
-			 * check that it is less than the rule count
-			 * originally given (as the user buffer size),
-			 * which has been range-checked.
-			 */
-			if (get_user(actual_rule_cnt, &rxnfc->rule_cnt))
-				return -EFAULT;
-			if (actual_rule_cnt < rule_cnt)
-				rule_cnt = actual_rule_cnt;
-			if (copy_in_user(&compat_rxnfc->rule_locs[0],
-					 &rxnfc->rule_locs[0],
-					 rule_cnt * sizeof(u32)))
-				return -EFAULT;
-		}
-	}
-
-	return 0;
-}
-
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#ifdef CONFIG_COMPAT
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int compat_siocwandev(struct net *net, struct compat_ifreq __user *uifr32)
 {
 	compat_uptr_t uptr32;
@@ -3274,7 +3484,15 @@ static int compat_siocwandev(struct net *net, struct compat_ifreq __user *uifr32
 	void __user *saved;
 	int err;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (get_user_ifreq(&ifr, NULL, uifr32))
+=======
 	if (copy_from_user(&ifr, uifr32, sizeof(struct compat_ifreq)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (get_user_ifreq(&ifr, NULL, uifr32))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 
 	if (get_user(uptr32, &uifr32->ifr_settings.ifs_ifsu))
@@ -3283,10 +3501,24 @@ static int compat_siocwandev(struct net *net, struct compat_ifreq __user *uifr32
 	saved = ifr.ifr_settings.ifs_ifsu.raw_hdlc;
 	ifr.ifr_settings.ifs_ifsu.raw_hdlc = compat_ptr(uptr32);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	err = dev_ioctl(net, SIOCWANDEV, &ifr, NULL, NULL);
+	if (!err) {
+		ifr.ifr_settings.ifs_ifsu.raw_hdlc = saved;
+		if (put_user_ifreq(&ifr, uifr32))
+=======
 	err = dev_ioctl(net, SIOCWANDEV, &ifr, NULL);
 	if (!err) {
 		ifr.ifr_settings.ifs_ifsu.raw_hdlc = saved;
 		if (copy_to_user(uifr32, &ifr, sizeof(struct compat_ifreq)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	err = dev_ioctl(net, SIOCWANDEV, &ifr, NULL, NULL);
+	if (!err) {
+		ifr.ifr_settings.ifs_ifsu.raw_hdlc = saved;
+		if (put_user_ifreq(&ifr, uifr32))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			err = -EFAULT;
 	}
 	return err;
@@ -3297,14 +3529,30 @@ static int compat_ifr_data_ioctl(struct net *net, unsigned int cmd,
 				 struct compat_ifreq __user *u_ifreq32)
 {
 	struct ifreq ifreq;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	void __user *data;
+
+	if (!is_socket_ioctl_cmd(cmd))
+		return -ENOTTY;
+	if (get_user_ifreq(&ifreq, &data, u_ifreq32))
+		return -EFAULT;
+	ifreq.ifr_data = data;
+
+	return dev_ioctl(net, cmd, &ifreq, data, NULL);
+=======
 	u32 data32;
+=======
+	void __user *data;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (copy_from_user(ifreq.ifr_name, u_ifreq32->ifr_name, IFNAMSIZ))
+	if (!is_socket_ioctl_cmd(cmd))
+		return -ENOTTY;
+	if (get_user_ifreq(&ifreq, &data, u_ifreq32))
 		return -EFAULT;
-	if (get_user(data32, &u_ifreq32->ifr_data))
-		return -EFAULT;
-	ifreq.ifr_data = compat_ptr(data32);
+	ifreq.ifr_data = data;
 
+<<<<<<< HEAD
 	return dev_ioctl(net, cmd, &ifreq, NULL);
 }
 
@@ -3388,6 +3636,10 @@ static int compat_sioc_ifmap(struct net *net, unsigned int cmd,
 			err = -EFAULT;
 	}
 	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return dev_ioctl(net, cmd, &ifreq, data, NULL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Since old style bridge ioctl's endup using SIOCDEVPRIVATE
@@ -3413,12 +3665,25 @@ static int compat_sock_ioctl_trans(struct file *file, struct socket *sock,
 	struct net *net = sock_net(sk);
 
 	if (cmd >= SIOCDEVPRIVATE && cmd <= (SIOCDEVPRIVATE + 15))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return sock_ioctl(file, cmd, (unsigned long)argp);
+=======
 		return compat_ifr_data_ioctl(net, cmd, argp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return sock_ioctl(file, cmd, (unsigned long)argp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (cmd) {
 	case SIOCSIFBR:
 	case SIOCGIFBR:
 		return old_bridge_ioctl(argp);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case SIOCWANDEV:
+		return compat_siocwandev(net, argp);
+=======
 	case SIOCGIFCONF:
 		return compat_dev_ifconf(net, argp);
 	case SIOCETHTOOL:
@@ -3428,6 +3693,11 @@ static int compat_sock_ioctl_trans(struct file *file, struct socket *sock,
 	case SIOCGIFMAP:
 	case SIOCSIFMAP:
 		return compat_sioc_ifmap(net, cmd, argp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case SIOCWANDEV:
+		return compat_siocwandev(net, argp);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SIOCGSTAMP_OLD:
 	case SIOCGSTAMPNS_OLD:
 		if (!sock->ops->gettstamp)
@@ -3435,6 +3705,14 @@ static int compat_sock_ioctl_trans(struct file *file, struct socket *sock,
 		return sock->ops->gettstamp(sock, argp, cmd == SIOCGSTAMP_OLD,
 					    !COMPAT_USE_64BIT_TIME);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case SIOCETHTOOL:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case SIOCETHTOOL:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SIOCBONDSLAVEINFOQUERY:
 	case SIOCBONDINFOQUERY:
 	case SIOCSHWTSTAMP:
@@ -3452,10 +3730,28 @@ static int compat_sock_ioctl_trans(struct file *file, struct socket *sock,
 	case SIOCGSKNS:
 	case SIOCGSTAMP_NEW:
 	case SIOCGSTAMPNS_NEW:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case SIOCGIFCONF:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case SIOCGIFCONF:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return sock_ioctl(file, cmd, arg);
 
 	case SIOCGIFFLAGS:
 	case SIOCSIFFLAGS:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	case SIOCGIFMAP:
+	case SIOCSIFMAP:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	case SIOCGIFMAP:
+	case SIOCSIFMAP:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SIOCGIFMETRIC:
 	case SIOCSIFMETRIC:
 	case SIOCGIFMTU:
@@ -3492,8 +3788,14 @@ static int compat_sock_ioctl_trans(struct file *file, struct socket *sock,
 	case SIOCBONDRELEASE:
 	case SIOCBONDSETHWADDR:
 	case SIOCBONDCHANGEACTIVE:
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 		return compat_ifreq_ioctl(net, sock, cmd, argp);
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SIOCSARP:
 	case SIOCGARP:
 	case SIOCDARP:

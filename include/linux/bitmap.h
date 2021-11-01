@@ -227,6 +227,21 @@ unsigned int bitmap_ord_to_pos(const unsigned long *bitmap, unsigned int ord, un
 int bitmap_print_to_pagebuf(bool list, char *buf,
 				   const unsigned long *maskp, int nmaskbits);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+extern int bitmap_print_bitmask_to_buf(char *buf, const unsigned long *maskp,
+				      int nmaskbits, loff_t off, size_t count);
+
+extern int bitmap_print_list_to_buf(char *buf, const unsigned long *maskp,
+				      int nmaskbits, loff_t off, size_t count);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define BITMAP_FIRST_WORD_MASK(start) (~0UL << ((start) & (BITS_PER_LONG - 1)))
 #define BITMAP_LAST_WORD_MASK(nbits) (~0UL >> (-(nbits) & (BITS_PER_LONG - 1)))
 

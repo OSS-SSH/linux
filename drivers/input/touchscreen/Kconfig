@@ -932,7 +932,15 @@ config TOUCHSCREEN_USB_COMPOSITE
 	  - JASTEC USB Touch Controller/DigiTech DTR-02U
 	  - Zytronic controllers
 	  - Elo TouchSystems 2700 IntelliTouch
+<<<<<<< HEAD
+<<<<<<< HEAD
+	  - EasyTouch USB Touch Controller from Data Module
+=======
 	  - EasyTouch USB Touch Controller from Data Modul
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	  - EasyTouch USB Touch Controller from Data Module
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	  - e2i (Mimo monitors)
 
 	  Have a look at <http://linux.chapter7.ch/touchkit/> for

@@ -36,19 +36,48 @@ void vhost_iotlb_map_free(struct vhost_iotlb *iotlb,
 EXPORT_SYMBOL_GPL(vhost_iotlb_map_free);
 
 /**
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * vhost_iotlb_add_range_ctx - add a new range to vhost IOTLB
+=======
  * vhost_iotlb_add_range - add a new range to vhost IOTLB
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * vhost_iotlb_add_range_ctx - add a new range to vhost IOTLB
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @iotlb: the IOTLB
  * @start: start of the IOVA range
  * @last: last of IOVA range
  * @addr: the address that is mapped to @start
  * @perm: access permission of this range
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * @opaque: the opaque pointer for the new mapping
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * @opaque: the opaque pointer for the new mapping
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Returns an error last is smaller than start or memory allocation
  * fails
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb,
+			      u64 start, u64 last,
+			      u64 addr, unsigned int perm,
+			      void *opaque)
+<<<<<<< HEAD
+=======
 int vhost_iotlb_add_range(struct vhost_iotlb *iotlb,
 			  u64 start, u64 last,
 			  u64 addr, unsigned int perm)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vhost_iotlb_map *map;
 
@@ -71,6 +100,14 @@ int vhost_iotlb_add_range(struct vhost_iotlb *iotlb,
 	map->last = last;
 	map->addr = addr;
 	map->perm = perm;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	map->opaque = opaque;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	map->opaque = opaque;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	iotlb->nmaps++;
 	vhost_iotlb_itree_insert(map, &iotlb->root);
@@ -80,6 +117,24 @@ int vhost_iotlb_add_range(struct vhost_iotlb *iotlb,
 
 	return 0;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+EXPORT_SYMBOL_GPL(vhost_iotlb_add_range_ctx);
+
+int vhost_iotlb_add_range(struct vhost_iotlb *iotlb,
+			  u64 start, u64 last,
+			  u64 addr, unsigned int perm)
+{
+	return vhost_iotlb_add_range_ctx(iotlb, start, last,
+					 addr, perm, NULL);
+}
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EXPORT_SYMBOL_GPL(vhost_iotlb_add_range);
 
 /**

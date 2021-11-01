@@ -110,6 +110,14 @@ config S390
 	select ARCH_STACKWALK
 	select ARCH_SUPPORTS_ATOMIC_RMW
 	select ARCH_SUPPORTS_DEBUG_PAGEALLOC
+<<<<<<< HEAD
+<<<<<<< HEAD
+	select ARCH_SUPPORTS_HUGETLBFS
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select ARCH_SUPPORTS_HUGETLBFS
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select ARCH_SUPPORTS_NUMA_BALANCING
 	select ARCH_USE_BUILTIN_BSWAP
 	select ARCH_USE_CMPXCHG_LOCKREF
@@ -138,6 +146,16 @@ config S390
 	select HAVE_ARCH_JUMP_LABEL_RELATIVE
 	select HAVE_ARCH_KASAN
 	select HAVE_ARCH_KASAN_VMALLOC
+<<<<<<< HEAD
+<<<<<<< HEAD
+	select HAVE_ARCH_KCSAN
+	select HAVE_ARCH_KFENCE
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select HAVE_ARCH_KCSAN
+	select HAVE_ARCH_KFENCE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select HAVE_ARCH_RANDOMIZE_KSTACK_OFFSET
 	select HAVE_ARCH_SECCOMP_FILTER
 	select HAVE_ARCH_SOFT_DIRTY
@@ -207,6 +225,14 @@ config S390
 	select SWIOTLB
 	select SYSCTL_EXCEPTION_TRACE
 	select THREAD_INFO_IN_TASK
+<<<<<<< HEAD
+<<<<<<< HEAD
+	select TRACE_IRQFLAGS_SUPPORT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	select TRACE_IRQFLAGS_SUPPORT
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select TTY
 	select VIRT_CPU_ACCOUNTING
 	select ZONE_DMA
@@ -681,6 +707,9 @@ config STACK_GUARD
 	  The minimum size for the stack guard should be 256 for 31 bit and
 	  512 for 64 bit.
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 config WARN_DYNAMIC_STACK
 	def_bool n
 	prompt "Emit compiler warnings for function with dynamic stack usage"
@@ -691,6 +720,9 @@ config WARN_DYNAMIC_STACK
 
 	  Say N if you are unsure.
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 endmenu
 
 menu "I/O subsystem"

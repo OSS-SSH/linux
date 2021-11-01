@@ -10,18 +10,48 @@
 #define _XHCI_MTK_H_
 
 #include <linux/clk.h>
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/hashtable.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/hashtable.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "xhci.h"
 
 #define BULK_CLKS_NUM	5
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+/* support at most 64 ep, use 32 size hash table */
+#define SCH_EP_HASH_BITS	5
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+/* support at most 64 ep, use 32 size hash table */
+#define SCH_EP_HASH_BITS	5
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * To simplify scheduler algorithm, set a upper limit for ESIT,
  * if a synchromous ep's ESIT is larger than @XHCI_MTK_MAX_ESIT,
  * round down to the limit value, that means allocating more
  * bandwidth to it.
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define XHCI_MTK_MAX_ESIT	(1 << 6)
+#define XHCI_MTK_BW_INDEX(x)	((x) & (XHCI_MTK_MAX_ESIT - 1))
+=======
 #define XHCI_MTK_MAX_ESIT	64
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define XHCI_MTK_MAX_ESIT	(1 << 6)
+#define XHCI_MTK_BW_INDEX(x)	((x) & (XHCI_MTK_MAX_ESIT - 1))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * @fs_bus_bw: array to keep track of bandwidth already used for FS
@@ -36,25 +66,54 @@ struct mu3h_sch_tt {
  * struct mu3h_sch_bw_info: schedule information for bandwidth domain
  *
  * @bus_bw: array to keep track of bandwidth already used at each uframes
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  * @bw_ep_list: eps in the bandwidth domain
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * treat a HS root port as a bandwidth domain, but treat a SS root port as
  * two bandwidth domains, one for IN eps and another for OUT eps.
  */
 struct mu3h_sch_bw_info {
 	u32 bus_bw[XHCI_MTK_MAX_ESIT];
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	struct list_head bw_ep_list;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
  * struct mu3h_sch_ep_info: schedule information for endpoint
  *
  * @esit: unit is 125us, equal to 2 << Interval field in ep-context
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+ * @num_esit: number of @esit in a period
+ * @num_budget_microframes: number of continuous uframes
+ *		(@repeat==1) scheduled within the interval
+ * @bw_cost_per_microframe: bandwidth cost per microframe
+ * @hentry: hash table entry
+ * @endpoint: linked into bandwidth domain which it belongs to
+ * @tt_endpoint: linked into mu3h_sch_tt's list which it belongs to
+ * @bw_info: bandwidth domain which this endpoint belongs
+<<<<<<< HEAD
+=======
  * @num_budget_microframes: number of continuous uframes
  *		(@repeat==1) scheduled within the interval
  * @bw_cost_per_microframe: bandwidth cost per microframe
  * @endpoint: linked into bandwidth domain which it belongs to
  * @tt_endpoint: linked into mu3h_sch_tt's list which it belongs to
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @sch_tt: mu3h_sch_tt linked into
  * @ep_type: endpoint type
  * @maxpkt: max packet size of endpoint
@@ -79,10 +138,26 @@ struct mu3h_sch_bw_info {
  */
 struct mu3h_sch_ep_info {
 	u32 esit;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	u32 num_esit;
+	u32 num_budget_microframes;
+	u32 bw_cost_per_microframe;
+	struct list_head endpoint;
+	struct hlist_node hentry;
+	struct list_head tt_endpoint;
+	struct mu3h_sch_bw_info *bw_info;
+<<<<<<< HEAD
+=======
 	u32 num_budget_microframes;
 	u32 bw_cost_per_microframe;
 	struct list_head endpoint;
 	struct list_head tt_endpoint;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mu3h_sch_tt *sch_tt;
 	u32 ep_type;
 	u32 maxpkt;
@@ -135,9 +210,25 @@ struct xhci_hcd_mtk {
 	struct usb_hcd *hcd;
 	struct mu3h_sch_bw_info *sch_array;
 	struct list_head bw_ep_chk_list;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	DECLARE_HASHTABLE(sch_ep_hash, SCH_EP_HASH_BITS);
 	struct mu3c_ippc_regs __iomem *ippc_regs;
 	int num_u2_ports;
 	int num_u3_ports;
+	int u2p_dis_msk;
+=======
+	struct mu3c_ippc_regs __iomem *ippc_regs;
+	int num_u2_ports;
+	int num_u3_ports;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	DECLARE_HASHTABLE(sch_ep_hash, SCH_EP_HASH_BITS);
+	struct mu3c_ippc_regs __iomem *ippc_regs;
+	int num_u2_ports;
+	int num_u3_ports;
+	int u2p_dis_msk;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int u3p_dis_msk;
 	struct regulator *vusb33;
 	struct regulator *vbus;

@@ -20,12 +20,21 @@
 #define WLAN_HDR_A3_LEN		24
 #define WLAN_HDR_A3_QOS_LEN	26
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 #define P80211CAPTURE_VERSION	0x80211001
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum WIFI_FRAME_TYPE {
 	WIFI_QOS_DATA_TYPE	= (BIT(7) | BIT(3)),	/*!< QoS Data */
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 enum WIFI_REG_DOMAIN {
 	DOMAIN_FCC	= 1,
 	DOMAIN_IC	= 2,
@@ -40,6 +49,9 @@ enum WIFI_REG_DOMAIN {
 	DOMAIN_MAX
 };
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define SetToDs(pbuf) ({ \
 	*(__le16 *)(pbuf) |= cpu_to_le16(IEEE80211_FCTL_TODS); \
 })
@@ -194,6 +206,9 @@ static inline unsigned char *get_hdr_bssid(unsigned char *pframe)
 	return sa;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 /*-----------------------------------------------------------------------------
  *		Below is for the security related definition
  *-----------------------------------------------------------------------------
@@ -210,21 +225,29 @@ static inline unsigned char *get_hdr_bssid(unsigned char *pframe)
 
 #define _FIXED_IE_LENGTH_	_BEACON_IE_OFFSET_
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* ---------------------------------------------------------------------------
  *			Below is the fixed elements...
  * ---------------------------------------------------------------------------
  */
-#define _AUTH_ALGM_NUM_			2
-#define _AUTH_SEQ_NUM_			2
+<<<<<<< HEAD
+<<<<<<< HEAD
 #define _BEACON_ITERVAL_		2
 #define _CAPABILITY_			2
-#define _CURRENT_APADDR_		6
-#define _LISTEN_INTERVAL_		2
-#define _RSON_CODE_				2
-#define _ASOC_ID_				2
-#define _STATUS_CODE_			2
 #define _TIMESTAMP_				8
 
+=======
+#define _AUTH_ALGM_NUM_			2
+#define _AUTH_SEQ_NUM_			2
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define _BEACON_ITERVAL_		2
+#define _CAPABILITY_			2
+#define _TIMESTAMP_				8
+
+<<<<<<< HEAD
 #define AUTH_ODD_TO				0
 #define AUTH_EVEN_TO			1
 
@@ -234,6 +257,9 @@ static inline unsigned char *get_hdr_bssid(unsigned char *pframe)
  */
 #define _IEEE8021X_MGT_			1	/*WPA */
 #define _IEEE8021X_PSK_			2	/* WPA with pre-shared key */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*-----------------------------------------------------------------------------
  *			Below is the definition for WMM

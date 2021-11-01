@@ -96,7 +96,15 @@ opt_err:
 static ssize_t iunit_dbglvl_show(struct device_driver *drv, char *buf)
 {
 	iunit_debug.dbglvl = dbg_level;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return sysfs_emit(buf, "dtrace level:%u\n", iunit_debug.dbglvl);
+=======
 	return sprintf(buf, "dtrace level:%u\n", iunit_debug.dbglvl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(buf, "dtrace level:%u\n", iunit_debug.dbglvl);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t iunit_dbglvl_store(struct device_driver *drv, const char *buf,
@@ -115,7 +123,15 @@ static ssize_t iunit_dbglvl_store(struct device_driver *drv, const char *buf,
 static ssize_t iunit_dbgfun_show(struct device_driver *drv, char *buf)
 {
 	iunit_debug.dbgfun = atomisp_get_css_dbgfunc();
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return sysfs_emit(buf, "dbgfun opt:%u\n", iunit_debug.dbgfun);
+=======
 	return sprintf(buf, "dbgfun opt:%u\n", iunit_debug.dbgfun);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(buf, "dbgfun opt:%u\n", iunit_debug.dbgfun);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t iunit_dbgfun_store(struct device_driver *drv, const char *buf,
@@ -139,7 +155,15 @@ static ssize_t iunit_dbgfun_store(struct device_driver *drv, const char *buf,
 
 static ssize_t iunit_dbgopt_show(struct device_driver *drv, char *buf)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	return sysfs_emit(buf, "option:0x%x\n", iunit_debug.dbgopt);
+=======
 	return sprintf(buf, "option:0x%x\n", iunit_debug.dbgopt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return sysfs_emit(buf, "option:0x%x\n", iunit_debug.dbgopt);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static ssize_t iunit_dbgopt_store(struct device_driver *drv, const char *buf,

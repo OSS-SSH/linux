@@ -1079,8 +1079,16 @@ static void hso_init_termios(struct ktermios *termios)
 	tty_termios_encode_baud_rate(termios, 115200, 115200);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void _hso_serial_set_termios(struct tty_struct *tty)
+=======
 static void _hso_serial_set_termios(struct tty_struct *tty,
 				    struct ktermios *old)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void _hso_serial_set_termios(struct tty_struct *tty)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct hso_serial *serial = tty->driver_data;
 
@@ -1262,7 +1270,15 @@ static int hso_serial_open(struct tty_struct *tty, struct file *filp)
 	if (serial->port.count == 1) {
 		serial->rx_state = RX_IDLE;
 		/* Force default termio settings */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		_hso_serial_set_termios(tty);
+=======
 		_hso_serial_set_termios(tty, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		_hso_serial_set_termios(tty);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tasklet_setup(&serial->unthrottle_tasklet,
 			      hso_unthrottle_tasklet);
 		result = hso_start_serial_device(serial->parent, GFP_KERNEL);
@@ -1394,7 +1410,15 @@ static void hso_serial_set_termios(struct tty_struct *tty, struct ktermios *old)
 	/* the actual setup */
 	spin_lock_irqsave(&serial->serial_lock, flags);
 	if (serial->port.count)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		_hso_serial_set_termios(tty);
+=======
 		_hso_serial_set_termios(tty, old);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		_hso_serial_set_termios(tty);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		tty->termios = *old;
 	spin_unlock_irqrestore(&serial->serial_lock, flags);
@@ -2353,7 +2377,15 @@ static int remove_net_device(struct hso_device *hso_dev)
 }
 
 /* Frees our network device */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static void hso_free_net_device(struct hso_device *hso_dev)
+=======
 static void hso_free_net_device(struct hso_device *hso_dev, bool bailout)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static void hso_free_net_device(struct hso_device *hso_dev)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int i;
 	struct hso_net *hso_net = dev2net(hso_dev);
@@ -2376,7 +2408,15 @@ static void hso_free_net_device(struct hso_device *hso_dev, bool bailout)
 	kfree(hso_net->mux_bulk_tx_buf);
 	hso_net->mux_bulk_tx_buf = NULL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (hso_net->net)
+=======
 	if (hso_net->net && !bailout)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (hso_net->net)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		free_netdev(hso_net->net);
 
 	kfree(hso_dev);
@@ -2495,7 +2535,15 @@ static struct hso_device *hso_create_net_device(struct usb_interface *interface,
 			   hso_net_init);
 	if (!net) {
 		dev_err(&interface->dev, "Unable to create ethernet device\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err_hso_dev;
+=======
 		goto exit;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_hso_dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	hso_net = netdev_priv(net);
@@ -2508,13 +2556,29 @@ static struct hso_device *hso_create_net_device(struct usb_interface *interface,
 				      USB_DIR_IN);
 	if (!hso_net->in_endp) {
 		dev_err(&interface->dev, "Can't find BULK IN endpoint\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err_net;
+=======
 		goto exit;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_net;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	hso_net->out_endp = hso_get_ep(interface, USB_ENDPOINT_XFER_BULK,
 				       USB_DIR_OUT);
 	if (!hso_net->out_endp) {
 		dev_err(&interface->dev, "Can't find BULK OUT endpoint\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err_net;
+=======
 		goto exit;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_net;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	SET_NETDEV_DEV(net, &interface->dev);
 	SET_NETDEV_DEVTYPE(net, &hso_type);
@@ -2523,26 +2587,67 @@ static struct hso_device *hso_create_net_device(struct usb_interface *interface,
 	for (i = 0; i < MUX_BULK_RX_BUF_COUNT; i++) {
 		hso_net->mux_bulk_rx_urb_pool[i] = usb_alloc_urb(0, GFP_KERNEL);
 		if (!hso_net->mux_bulk_rx_urb_pool[i])
-			goto exit;
+<<<<<<< HEAD
+<<<<<<< HEAD
+			goto err_mux_bulk_rx;
 		hso_net->mux_bulk_rx_buf_pool[i] = kzalloc(MUX_BULK_RX_BUF_SIZE,
 							   GFP_KERNEL);
 		if (!hso_net->mux_bulk_rx_buf_pool[i])
-			goto exit;
+			goto err_mux_bulk_rx;
 	}
 	hso_net->mux_bulk_tx_urb = usb_alloc_urb(0, GFP_KERNEL);
 	if (!hso_net->mux_bulk_tx_urb)
-		goto exit;
+		goto err_mux_bulk_rx;
 	hso_net->mux_bulk_tx_buf = kzalloc(MUX_BULK_TX_BUF_SIZE, GFP_KERNEL);
 	if (!hso_net->mux_bulk_tx_buf)
-		goto exit;
+		goto err_free_tx_urb;
 
+	result = add_net_device(hso_dev);
+	if (result) {
+		dev_err(&interface->dev, "Failed to add net device\n");
+		goto err_free_tx_buf;
+	}
+=======
+			goto exit;
+=======
+			goto err_mux_bulk_rx;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		hso_net->mux_bulk_rx_buf_pool[i] = kzalloc(MUX_BULK_RX_BUF_SIZE,
+							   GFP_KERNEL);
+		if (!hso_net->mux_bulk_rx_buf_pool[i])
+			goto err_mux_bulk_rx;
+	}
+	hso_net->mux_bulk_tx_urb = usb_alloc_urb(0, GFP_KERNEL);
+	if (!hso_net->mux_bulk_tx_urb)
+		goto err_mux_bulk_rx;
+	hso_net->mux_bulk_tx_buf = kzalloc(MUX_BULK_TX_BUF_SIZE, GFP_KERNEL);
+	if (!hso_net->mux_bulk_tx_buf)
+		goto err_free_tx_urb;
+
+<<<<<<< HEAD
 	add_net_device(hso_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	result = add_net_device(hso_dev);
+	if (result) {
+		dev_err(&interface->dev, "Failed to add net device\n");
+		goto err_free_tx_buf;
+	}
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* registering our net device */
 	result = register_netdev(net);
 	if (result) {
 		dev_err(&interface->dev, "Failed to register device\n");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err_rmv_ndev;
+=======
 		goto exit;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_rmv_ndev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	hso_log_port(hso_dev);
@@ -2550,8 +2655,33 @@ static struct hso_device *hso_create_net_device(struct usb_interface *interface,
 	hso_create_rfkill(hso_dev, interface);
 
 	return hso_dev;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+err_rmv_ndev:
+	remove_net_device(hso_dev);
+err_free_tx_buf:
+	kfree(hso_net->mux_bulk_tx_buf);
+err_free_tx_urb:
+	usb_free_urb(hso_net->mux_bulk_tx_urb);
+err_mux_bulk_rx:
+	for (i = 0; i < MUX_BULK_RX_BUF_COUNT; i++) {
+		usb_free_urb(hso_net->mux_bulk_rx_urb_pool[i]);
+		kfree(hso_net->mux_bulk_rx_buf_pool[i]);
+	}
+err_net:
+	free_netdev(net);
+err_hso_dev:
+	kfree(hso_dev);
+<<<<<<< HEAD
+=======
 exit:
 	hso_free_net_device(hso_dev, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return NULL;
 }
 
@@ -2702,14 +2832,30 @@ struct hso_device *hso_create_mux_serial_device(struct usb_interface *interface,
 
 	serial = kzalloc(sizeof(*serial), GFP_KERNEL);
 	if (!serial)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err_free_dev;
+=======
 		goto exit;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_free_dev;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	hso_dev->port_data.dev_serial = serial;
 	serial->parent = hso_dev;
 
 	if (hso_serial_common_create
 	    (serial, 1, CTRL_URB_RX_SIZE, CTRL_URB_TX_SIZE))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto err_free_serial;
+=======
 		goto exit;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto err_free_serial;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	serial->tx_data_length--;
 	serial->write_data = hso_mux_serial_write_data;
@@ -2725,11 +2871,23 @@ struct hso_device *hso_create_mux_serial_device(struct usb_interface *interface,
 	/* done, return it */
 	return hso_dev;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+err_free_serial:
+	kfree(serial);
+err_free_dev:
+=======
 exit:
 	if (serial) {
 		tty_unregister_device(tty_drv, serial->minor);
 		kfree(serial);
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+err_free_serial:
+	kfree(serial);
+err_free_dev:
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(hso_dev);
 	return NULL;
 
@@ -3120,7 +3278,15 @@ static void hso_free_interface(struct usb_interface *interface)
 				rfkill_unregister(rfk);
 				rfkill_destroy(rfk);
 			}
+<<<<<<< HEAD
+<<<<<<< HEAD
+			hso_free_net_device(network_table[i]);
+=======
 			hso_free_net_device(network_table[i], false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			hso_free_net_device(network_table[i]);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }
@@ -3229,9 +3395,22 @@ static int __init hso_init(void)
 		serial_table[i] = NULL;
 
 	/* allocate our driver using the proper amount of supported minors */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	tty_drv = tty_alloc_driver(HSO_SERIAL_TTY_MINORS, TTY_DRIVER_REAL_RAW |
+			TTY_DRIVER_DYNAMIC_DEV);
+	if (IS_ERR(tty_drv))
+		return PTR_ERR(tty_drv);
+<<<<<<< HEAD
+=======
 	tty_drv = alloc_tty_driver(HSO_SERIAL_TTY_MINORS);
 	if (!tty_drv)
 		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* fill in all needed values */
 	tty_drv->driver_name = driver_name;
@@ -3244,7 +3423,13 @@ static int __init hso_init(void)
 	tty_drv->minor_start = 0;
 	tty_drv->type = TTY_DRIVER_TYPE_SERIAL;
 	tty_drv->subtype = SERIAL_TYPE_NORMAL;
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 	tty_drv->flags = TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tty_drv->init_termios = tty_std_termios;
 	hso_init_termios(&tty_drv->init_termios);
 	tty_set_operations(tty_drv, &hso_serial_ops);
@@ -3269,7 +3454,15 @@ static int __init hso_init(void)
 err_unreg_tty:
 	tty_unregister_driver(tty_drv);
 err_free_tty:
+<<<<<<< HEAD
+<<<<<<< HEAD
+	tty_driver_kref_put(tty_drv);
+=======
 	put_tty_driver(tty_drv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(tty_drv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return result;
 }
 
@@ -3280,7 +3473,15 @@ static void __exit hso_exit(void)
 	tty_unregister_driver(tty_drv);
 	/* deregister the usb driver */
 	usb_deregister(&hso_driver);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	tty_driver_kref_put(tty_drv);
+=======
 	put_tty_driver(tty_drv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	tty_driver_kref_put(tty_drv);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Module definitions */

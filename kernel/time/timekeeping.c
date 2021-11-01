@@ -1323,8 +1323,18 @@ out:
 	write_seqcount_end(&tk_core.seq);
 	raw_spin_unlock_irqrestore(&timekeeper_lock, flags);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Signal hrtimers about time change */
+	clock_was_set(CLOCK_SET_WALL);
+=======
 	/* signal hrtimers about time change */
 	clock_was_set();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Signal hrtimers about time change */
+	clock_was_set(CLOCK_SET_WALL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!ret)
 		audit_tk_injoffset(ts_delta);
@@ -1371,8 +1381,18 @@ error: /* even if we error out, we forwarded the time, so call update */
 	write_seqcount_end(&tk_core.seq);
 	raw_spin_unlock_irqrestore(&timekeeper_lock, flags);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Signal hrtimers about time change */
+	clock_was_set(CLOCK_SET_WALL);
+=======
 	/* signal hrtimers about time change */
 	clock_was_set();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Signal hrtimers about time change */
+	clock_was_set(CLOCK_SET_WALL);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -1746,8 +1766,18 @@ void timekeeping_inject_sleeptime64(const struct timespec64 *delta)
 	write_seqcount_end(&tk_core.seq);
 	raw_spin_unlock_irqrestore(&timekeeper_lock, flags);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Signal hrtimers about time change */
+	clock_was_set(CLOCK_SET_WALL | CLOCK_SET_BOOT);
+=======
 	/* signal hrtimers about time change */
 	clock_was_set();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Signal hrtimers about time change */
+	clock_was_set(CLOCK_SET_WALL | CLOCK_SET_BOOT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 #endif
 
@@ -1810,8 +1840,22 @@ void timekeeping_resume(void)
 
 	touch_softlockup_watchdog();
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Resume the clockevent device(s) and hrtimers */
+	tick_resume();
+	/* Notify timerfd as resume is equivalent to clock_was_set() */
+	timerfd_resume();
+=======
 	tick_resume();
 	hrtimers_resume();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	/* Resume the clockevent device(s) and hrtimers */
+	tick_resume();
+	/* Notify timerfd as resume is equivalent to clock_was_set() */
+	timerfd_resume();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int timekeeping_suspend(void)
@@ -2125,7 +2169,15 @@ static u64 logarithmic_accumulation(struct timekeeper *tk, u64 offset,
  * timekeeping_advance - Updates the timekeeper to the current time and
  * current NTP tick length
  */
+<<<<<<< HEAD
+<<<<<<< HEAD
+static bool timekeeping_advance(enum timekeeping_adv_mode mode)
+=======
 static void timekeeping_advance(enum timekeeping_adv_mode mode)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static bool timekeeping_advance(enum timekeeping_adv_mode mode)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct timekeeper *real_tk = &tk_core.timekeeper;
 	struct timekeeper *tk = &shadow_timekeeper;
@@ -2196,9 +2248,19 @@ static void timekeeping_advance(enum timekeeping_adv_mode mode)
 	write_seqcount_end(&tk_core.seq);
 out:
 	raw_spin_unlock_irqrestore(&timekeeper_lock, flags);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	return !!clock_set;
+=======
 	if (clock_set)
 		/* Have to call _delayed version, since in irq context*/
 		clock_was_set_delayed();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return !!clock_set;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -2207,7 +2269,17 @@ out:
  */
 void update_wall_time(void)
 {
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (timekeeping_advance(TK_ADV_TICK))
+		clock_was_set_delayed();
+=======
 	timekeeping_advance(TK_ADV_TICK);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (timekeeping_advance(TK_ADV_TICK))
+		clock_was_set_delayed();
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -2387,8 +2459,20 @@ int do_adjtimex(struct __kernel_timex *txc)
 {
 	struct timekeeper *tk = &tk_core.timekeeper;
 	struct audit_ntp_data ad;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	bool clock_set = false;
+	struct timespec64 ts;
+	unsigned long flags;
+=======
 	unsigned long flags;
 	struct timespec64 ts;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	bool clock_set = false;
+	struct timespec64 ts;
+	unsigned long flags;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	s32 orig_tai, tai;
 	int ret;
 
@@ -2423,6 +2507,14 @@ int do_adjtimex(struct __kernel_timex *txc)
 	if (tai != orig_tai) {
 		__timekeeping_set_tai_offset(tk, tai);
 		timekeeping_update(tk, TK_MIRROR | TK_CLOCK_WAS_SET);
+<<<<<<< HEAD
+<<<<<<< HEAD
+		clock_set = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		clock_set = true;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	tk_update_leap_state(tk);
 
@@ -2433,10 +2525,24 @@ int do_adjtimex(struct __kernel_timex *txc)
 
 	/* Update the multiplier immediately if frequency was set directly */
 	if (txc->modes & (ADJ_FREQUENCY | ADJ_TICK))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		clock_set |= timekeeping_advance(TK_ADV_FREQ);
+
+	if (clock_set)
+		clock_was_set(CLOCK_REALTIME);
+=======
 		timekeeping_advance(TK_ADV_FREQ);
 
 	if (tai != orig_tai)
 		clock_was_set();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		clock_set |= timekeeping_advance(TK_ADV_FREQ);
+
+	if (clock_set)
+		clock_was_set(CLOCK_REALTIME);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ntp_notify_cmos_timer();
 

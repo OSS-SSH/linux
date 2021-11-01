@@ -30,6 +30,14 @@ struct events_stats {
 	u64 total_lost_samples;
 	u64 total_aux_lost;
 	u64 total_aux_partial;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u64 total_aux_collision;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	u64 total_aux_collision;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u64 total_invalid_chains;
 	u32 nr_events[PERF_RECORD_HEADER_MAX];
 	u32 nr_lost_warned;

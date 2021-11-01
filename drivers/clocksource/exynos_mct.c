@@ -51,6 +51,24 @@
 
 #define TICK_BASE_CNT	1
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#ifdef CONFIG_ARM
+/* Use values higher than ARM arch timer. See 6282edb72bed. */
+#define MCT_CLKSOURCE_RATING		450
+#define MCT_CLKEVENTS_RATING		500
+#else
+#define MCT_CLKSOURCE_RATING		350
+#define MCT_CLKEVENTS_RATING		350
+#endif
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum {
 	MCT_INT_SPI,
 	MCT_INT_PPI
@@ -206,7 +224,15 @@ static void exynos4_frc_resume(struct clocksource *cs)
 
 static struct clocksource mct_frc = {
 	.name		= "mct-frc",
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.rating		= MCT_CLKSOURCE_RATING,
+=======
 	.rating		= 450,	/* use value higher than ARM arch timer */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.rating		= MCT_CLKSOURCE_RATING,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.read		= exynos4_frc_read,
 	.mask		= CLOCKSOURCE_MASK(32),
 	.flags		= CLOCK_SOURCE_IS_CONTINUOUS,
@@ -456,8 +482,20 @@ static int exynos4_mct_starting_cpu(unsigned int cpu)
 	evt->set_state_oneshot = set_state_shutdown;
 	evt->set_state_oneshot_stopped = set_state_shutdown;
 	evt->tick_resume = set_state_shutdown;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	evt->features = CLOCK_EVT_FEAT_PERIODIC | CLOCK_EVT_FEAT_ONESHOT |
+			CLOCK_EVT_FEAT_PERCPU;
+	evt->rating = MCT_CLKEVENTS_RATING,
+=======
 	evt->features = CLOCK_EVT_FEAT_PERIODIC | CLOCK_EVT_FEAT_ONESHOT;
 	evt->rating = 500;	/* use value higher than ARM arch timer */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	evt->features = CLOCK_EVT_FEAT_PERIODIC | CLOCK_EVT_FEAT_ONESHOT |
+			CLOCK_EVT_FEAT_PERCPU;
+	evt->rating = MCT_CLKEVENTS_RATING,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	exynos4_mct_write(TICK_BASE_CNT, mevt->base + MCT_L_TCNTB_OFFSET);
 

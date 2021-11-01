@@ -73,6 +73,21 @@
 #define MCFINT0_FECENTC1	55
 
 /* on interrupt controller 1 */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#define MCFINT1_FLEXCAN0_IFL	0
+#define MCFINT1_FLEXCAN0_BOFF	1
+#define MCFINT1_FLEXCAN0_ERR	3
+#define MCFINT1_FLEXCAN1_IFL	4
+#define MCFINT1_FLEXCAN1_BOFF	5
+#define MCFINT1_FLEXCAN1_ERR	7
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MCFINT1_UART4		48
 #define MCFINT1_UART5		49
 #define MCFINT1_UART6		50
@@ -314,4 +329,26 @@
 #define MCF_IRQ_SDHC		(MCFINT2_VECBASE + MCFINT2_SDHC)
 #define MCFSDHC_CLK		(MCFSDHC_BASE + 0x2c)
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * Flexcan module
+ */
+#define MCFFLEXCAN_BASE0	0xfc020000
+#define MCFFLEXCAN_BASE1	0xfc024000
+#define MCFFLEXCAN_SIZE		0x4000
+#define MCF_IRQ_IFL0		(MCFINT1_VECBASE + MCFINT1_FLEXCAN0_IFL)
+#define MCF_IRQ_BOFF0		(MCFINT1_VECBASE + MCFINT1_FLEXCAN0_BOFF)
+#define MCF_IRQ_ERR0		(MCFINT1_VECBASE + MCFINT1_FLEXCAN0_ERR)
+#define MCF_IRQ_IFL1		(MCFINT1_VECBASE + MCFINT1_FLEXCAN1_IFL)
+#define MCF_IRQ_BOFF1		(MCFINT1_VECBASE + MCFINT1_FLEXCAN1_BOFF)
+#define MCF_IRQ_ERR1		(MCFINT1_VECBASE + MCFINT1_FLEXCAN1_ERR)
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* m5441xsim_h */

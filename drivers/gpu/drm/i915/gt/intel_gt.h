@@ -48,6 +48,16 @@ void intel_gt_driver_release(struct intel_gt *gt);
 
 void intel_gt_driver_late_release(struct intel_gt *gt);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+int intel_gt_wait_for_idle(struct intel_gt *gt, long timeout);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int intel_gt_wait_for_idle(struct intel_gt *gt, long timeout);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_gt_check_and_clear_faults(struct intel_gt *gt);
 void intel_gt_clear_error_registers(struct intel_gt *gt,
 				    intel_engine_mask_t engine_mask);
@@ -75,6 +85,23 @@ static inline bool intel_gt_is_wedged(const struct intel_gt *gt)
 	return unlikely(test_bit(I915_WEDGED, &gt->reset.flags));
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static inline bool intel_gt_needs_read_steering(struct intel_gt *gt,
+						enum intel_steering_type type)
+{
+	return gt->steering_table[type];
+}
+
+u32 intel_gt_read_register_fw(struct intel_gt *gt, i915_reg_t reg);
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_gt_info_print(const struct intel_gt_info *info,
 			 struct drm_printer *p);
 

@@ -25,15 +25,34 @@ static int kvm_xen_shared_info_init(struct kvm *kvm, gfn_t gfn)
 {
 	gpa_t gpa = gfn_to_gpa(gfn);
 	int wc_ofs, sec_hi_ofs;
-	int ret;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	int ret = 0;
 	int idx = srcu_read_lock(&kvm->srcu);
 
-	ret = kvm_gfn_to_hva_cache_init(kvm, &kvm->arch.xen.shinfo_cache,
-					gpa, PAGE_SIZE);
-	if (ret)
+	if (kvm_is_error_hva(gfn_to_hva(kvm, gfn))) {
+		ret = -EFAULT;
 		goto out;
+	}
+	kvm->arch.xen.shinfo_gfn = gfn;
+=======
+	int ret;
+=======
+	int ret = 0;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	int idx = srcu_read_lock(&kvm->srcu);
+
+	if (kvm_is_error_hva(gfn_to_hva(kvm, gfn))) {
+		ret = -EFAULT;
+		goto out;
+<<<<<<< HEAD
 
 	kvm->arch.xen.shinfo_set = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	}
+	kvm->arch.xen.shinfo_gfn = gfn;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Paranoia checks on the 32-bit struct layout */
 	BUILD_BUG_ON(offsetof(struct compat_shared_info, wc) != 0x900);
@@ -245,7 +264,15 @@ int kvm_xen_hvm_set_attr(struct kvm *kvm, struct kvm_xen_hvm_attr *data)
 
 	case KVM_XEN_ATTR_TYPE_SHARED_INFO:
 		if (data->u.shared_info.gfn == GPA_INVALID) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+			kvm->arch.xen.shinfo_gfn = GPA_INVALID;
+=======
 			kvm->arch.xen.shinfo_set = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			kvm->arch.xen.shinfo_gfn = GPA_INVALID;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			r = 0;
 			break;
 		}
@@ -283,10 +310,18 @@ int kvm_xen_hvm_get_attr(struct kvm *kvm, struct kvm_xen_hvm_attr *data)
 		break;
 
 	case KVM_XEN_ATTR_TYPE_SHARED_INFO:
+<<<<<<< HEAD
+<<<<<<< HEAD
+		data->u.shared_info.gfn = gpa_to_gfn(kvm->arch.xen.shinfo_gfn);
+=======
 		if (kvm->arch.xen.shinfo_set)
 			data->u.shared_info.gfn = gpa_to_gfn(kvm->arch.xen.shinfo_cache.gpa);
 		else
 			data->u.shared_info.gfn = GPA_INVALID;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		data->u.shared_info.gfn = gpa_to_gfn(kvm->arch.xen.shinfo_gfn);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		r = 0;
 		break;
 
@@ -646,6 +681,20 @@ int kvm_xen_hvm_config(struct kvm *kvm, struct kvm_xen_hvm_config *xhc)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+void kvm_xen_init_vm(struct kvm *kvm)
+{
+	kvm->arch.xen.shinfo_gfn = GPA_INVALID;
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void kvm_xen_destroy_vm(struct kvm *kvm)
 {
 	if (kvm->arch.xen_hvm_config.msr)

@@ -221,6 +221,16 @@ static int adf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	}
 
 	/* Set DMA identifier */
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
+	if (ret) {
+		dev_err(&pdev->dev, "No usable DMA configuration.\n");
+		goto out_err;
+<<<<<<< HEAD
+=======
 	if (pci_set_dma_mask(pdev, DMA_BIT_MASK(64))) {
 		if ((pci_set_dma_mask(pdev, DMA_BIT_MASK(32)))) {
 			dev_err(&pdev->dev, "No usable DMA configuration.\n");
@@ -231,6 +241,9 @@ static int adf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		}
 	} else {
 		pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Get accelerator capabilities mask */

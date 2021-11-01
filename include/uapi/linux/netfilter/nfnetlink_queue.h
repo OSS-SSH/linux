@@ -51,11 +51,27 @@ enum nfqnl_attr_type {
 	NFQA_IFINDEX_PHYSOUTDEV,	/* __u32 ifindex */
 	NFQA_HWADDR,			/* nfqnl_msg_packet_hw */
 	NFQA_PAYLOAD,			/* opaque data payload */
+<<<<<<< HEAD
+<<<<<<< HEAD
+	NFQA_CT,			/* nfnetlink_conntrack.h */
+	NFQA_CT_INFO,			/* enum ip_conntrack_info */
+	NFQA_CAP_LEN,			/* __u32 length of captured packet */
+	NFQA_SKB_INFO,			/* __u32 skb meta information */
+	NFQA_EXP,			/* nfnetlink_conntrack.h */
+=======
 	NFQA_CT,			/* nf_conntrack_netlink.h */
 	NFQA_CT_INFO,			/* enum ip_conntrack_info */
 	NFQA_CAP_LEN,			/* __u32 length of captured packet */
 	NFQA_SKB_INFO,			/* __u32 skb meta information */
 	NFQA_EXP,			/* nf_conntrack_netlink.h */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	NFQA_CT,			/* nfnetlink_conntrack.h */
+	NFQA_CT_INFO,			/* enum ip_conntrack_info */
+	NFQA_CAP_LEN,			/* __u32 length of captured packet */
+	NFQA_SKB_INFO,			/* __u32 skb meta information */
+	NFQA_EXP,			/* nfnetlink_conntrack.h */
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	NFQA_UID,			/* __u32 sk uid */
 	NFQA_GID,			/* __u32 sk gid */
 	NFQA_SECCTX,			/* security context string */

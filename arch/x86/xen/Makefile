@@ -45,7 +45,15 @@ obj-$(CONFIG_PARAVIRT_SPINLOCKS)+= spinlock.o
 
 obj-$(CONFIG_XEN_DEBUG_FS)	+= debugfs.o
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+obj-$(CONFIG_XEN_PV_DOM0)	+= vga.o
+=======
 obj-$(CONFIG_XEN_DOM0)		+= vga.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+obj-$(CONFIG_XEN_PV_DOM0)	+= vga.o
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 obj-$(CONFIG_SWIOTLB_XEN)	+= pci-swiotlb-xen.o
 

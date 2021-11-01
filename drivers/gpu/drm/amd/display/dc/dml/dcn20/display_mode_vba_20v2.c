@@ -2641,7 +2641,15 @@ static void dml20v2_DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndP
 		for (k = 0; k < mode_lib->vba.NumberOfActivePlanes; ++k) {
 			if (mode_lib->vba.PrefetchMode[mode_lib->vba.VoltageLevel][mode_lib->vba.maxMpcComb] == 0) {
 				if (mode_lib->vba.DRAMClockChangeWatermark >
+<<<<<<< HEAD
+<<<<<<< HEAD
+					dml_max(mode_lib->vba.StutterEnterPlusExitWatermark, mode_lib->vba.UrgentWatermark))
+=======
 				dml_max(mode_lib->vba.StutterEnterPlusExitWatermark, mode_lib->vba.UrgentWatermark))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+					dml_max(mode_lib->vba.StutterEnterPlusExitWatermark, mode_lib->vba.UrgentWatermark))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					mode_lib->vba.MinTTUVBlank[k] += 25;
 			}
 		}

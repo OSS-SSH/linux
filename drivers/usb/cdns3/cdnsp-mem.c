@@ -882,7 +882,15 @@ static u32 cdnsp_get_endpoint_max_burst(struct usb_gadget *g,
 	if (g->speed == USB_SPEED_HIGH &&
 	    (usb_endpoint_xfer_isoc(pep->endpoint.desc) ||
 	     usb_endpoint_xfer_int(pep->endpoint.desc)))
+<<<<<<< HEAD
+<<<<<<< HEAD
+		return usb_endpoint_maxp_mult(pep->endpoint.desc) - 1;
+=======
 		return (usb_endpoint_maxp(pep->endpoint.desc) & 0x1800) >> 11;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		return usb_endpoint_maxp_mult(pep->endpoint.desc) - 1;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

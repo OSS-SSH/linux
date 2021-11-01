@@ -57,10 +57,36 @@ struct br_ip_list {
 #define BR_MRP_AWARE		BIT(17)
 #define BR_MRP_LOST_CONT	BIT(18)
 #define BR_MRP_LOST_IN_CONT	BIT(19)
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define BR_TX_FWD_OFFLOAD	BIT(20)
+
+#define BR_DEFAULT_AGEING_TIME	(300 * HZ)
+
+struct net_bridge;
+void brioctl_set(int (*hook)(struct net *net, struct net_bridge *br,
+			     unsigned int cmd, struct ifreq *ifr,
+			     void __user *uarg));
+int br_ioctl_call(struct net *net, struct net_bridge *br, unsigned int cmd,
+		  struct ifreq *ifr, void __user *uarg);
+=======
 
 #define BR_DEFAULT_AGEING_TIME	(300 * HZ)
 
 extern void brioctl_set(int (*ioctl_hook)(struct net *, unsigned int, void __user *));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define BR_TX_FWD_OFFLOAD	BIT(20)
+
+#define BR_DEFAULT_AGEING_TIME	(300 * HZ)
+
+struct net_bridge;
+void brioctl_set(int (*hook)(struct net *net, struct net_bridge *br,
+			     unsigned int cmd, struct ifreq *ifr,
+			     void __user *uarg));
+int br_ioctl_call(struct net *net, struct net_bridge *br, unsigned int cmd,
+		  struct ifreq *ifr, void __user *uarg);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #if IS_ENABLED(CONFIG_BRIDGE) && IS_ENABLED(CONFIG_BRIDGE_IGMP_SNOOPING)
 int br_multicast_list_adjacent(struct net_device *dev,
@@ -70,9 +96,15 @@ bool br_multicast_has_querier_adjacent(struct net_device *dev, int proto);
 bool br_multicast_has_router_adjacent(struct net_device *dev, int proto);
 bool br_multicast_enabled(const struct net_device *dev);
 bool br_multicast_router(const struct net_device *dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 int br_mdb_replay(struct net_device *br_dev, struct net_device *dev,
 		  const void *ctx, bool adding, struct notifier_block *nb,
 		  struct netlink_ext_ack *extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 static inline int br_multicast_list_adjacent(struct net_device *dev,
 					     struct list_head *br_ip_list)
@@ -104,6 +136,9 @@ static inline bool br_multicast_router(const struct net_device *dev)
 {
 	return false;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 static inline int br_mdb_replay(const struct net_device *br_dev,
 				const struct net_device *dev, const void *ctx,
 				bool adding, struct notifier_block *nb,
@@ -111,6 +146,9 @@ static inline int br_mdb_replay(const struct net_device *br_dev,
 {
 	return -EOPNOTSUPP;
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #if IS_ENABLED(CONFIG_BRIDGE) && IS_ENABLED(CONFIG_BRIDGE_VLAN_FILTERING)
@@ -120,9 +158,19 @@ int br_vlan_get_pvid_rcu(const struct net_device *dev, u16 *p_pvid);
 int br_vlan_get_proto(const struct net_device *dev, u16 *p_proto);
 int br_vlan_get_info(const struct net_device *dev, u16 vid,
 		     struct bridge_vlan_info *p_vinfo);
+<<<<<<< HEAD
+<<<<<<< HEAD
+int br_vlan_get_info_rcu(const struct net_device *dev, u16 vid,
+			 struct bridge_vlan_info *p_vinfo);
+=======
 int br_vlan_replay(struct net_device *br_dev, struct net_device *dev,
 		   const void *ctx, bool adding, struct notifier_block *nb,
 		   struct netlink_ext_ack *extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+int br_vlan_get_info_rcu(const struct net_device *dev, u16 vid,
+			 struct bridge_vlan_info *p_vinfo);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 static inline bool br_vlan_enabled(const struct net_device *dev)
 {
@@ -150,12 +198,26 @@ static inline int br_vlan_get_info(const struct net_device *dev, u16 vid,
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+static inline int br_vlan_get_info_rcu(const struct net_device *dev, u16 vid,
+				       struct bridge_vlan_info *p_vinfo)
+{
+	return -EINVAL;
+=======
 static inline int br_vlan_replay(struct net_device *br_dev,
 				 struct net_device *dev, const void *ctx,
 				 bool adding, struct notifier_block *nb,
 				 struct netlink_ext_ack *extack)
 {
 	return -EOPNOTSUPP;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+static inline int br_vlan_get_info_rcu(const struct net_device *dev, u16 vid,
+				       struct bridge_vlan_info *p_vinfo)
+{
+	return -EINVAL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 #endif
 
@@ -167,8 +229,14 @@ void br_fdb_clear_offload(const struct net_device *dev, u16 vid);
 bool br_port_flag_is_set(const struct net_device *dev, unsigned long flag);
 u8 br_port_get_stp_state(const struct net_device *dev);
 clock_t br_get_ageing_time(const struct net_device *br_dev);
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 int br_fdb_replay(const struct net_device *br_dev, const struct net_device *dev,
 		  const void *ctx, bool adding, struct notifier_block *nb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
 static inline struct net_device *
 br_fdb_find_port(const struct net_device *br_dev,
@@ -197,6 +265,9 @@ static inline clock_t br_get_ageing_time(const struct net_device *br_dev)
 {
 	return 0;
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 
 static inline int br_fdb_replay(const struct net_device *br_dev,
 				const struct net_device *dev, const void *ctx,
@@ -204,6 +275,9 @@ static inline int br_fdb_replay(const struct net_device *br_dev,
 {
 	return -EOPNOTSUPP;
 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #endif

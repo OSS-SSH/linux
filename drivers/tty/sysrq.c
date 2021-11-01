@@ -258,7 +258,15 @@ static void sysrq_handle_showallcpus(int key)
 	if (!trigger_all_cpu_backtrace()) {
 		struct pt_regs *regs = NULL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (in_hardirq())
+=======
 		if (in_irq())
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (in_hardirq())
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			regs = get_irq_regs();
 		if (regs) {
 			pr_info("CPU%d:\n", smp_processor_id());
@@ -280,7 +288,15 @@ static void sysrq_handle_showregs(int key)
 {
 	struct pt_regs *regs = NULL;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (in_hardirq())
+=======
 	if (in_irq())
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (in_hardirq())
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		regs = get_irq_regs();
 	if (regs)
 		show_regs(regs);

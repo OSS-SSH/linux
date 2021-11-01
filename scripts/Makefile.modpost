@@ -13,7 +13,15 @@
 # Stage 2 is handled by this file and does the following
 # 1) Find all modules listed in modules.order
 # 2) modpost is then used to
+<<<<<<< HEAD
+<<<<<<< HEAD
+# 3)  create one <module>.mod.c file per module
+=======
 # 3)  create one <module>.mod.c file pr. module
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# 3)  create one <module>.mod.c file per module
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 # 4)  create one Module.symvers file with CRC for all exported symbols
 
 # Step 3 is used to place certain information in the module's ELF
@@ -41,7 +49,15 @@ __modpost:
 include include/config/auto.conf
 include $(srctree)/scripts/Kbuild.include
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+# for mod-prelink-ext
+=======
 # for ld_flags
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+# for mod-prelink-ext
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 include $(srctree)/scripts/Makefile.lib
 
 MODPOST = scripts/mod/modpost								\
@@ -118,6 +134,9 @@ $(input-symdump):
 	@echo >&2 '         Modules may not have dependencies or modversions.'
 	@echo >&2 '         You may get many unresolved symbol warnings.'
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
 ifdef CONFIG_LTO_CLANG
 # With CONFIG_LTO_CLANG, .o files might be LLVM bitcode, so we need to run
 # LTO to compile them into native code before running modpost
@@ -134,6 +153,9 @@ cmd_cc_lto_link_modules =						\
 	$(call if_changed,cc_lto_link_modules)
 endif
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 modules := $(sort $(shell cat $(MODORDER)))
 
 # KBUILD_MODPOST_WARN can be set to avoid error out in case of undefined symbols
@@ -144,9 +166,21 @@ endif
 # Read out modules.order to pass in modpost.
 # Otherwise, allmodconfig would fail with "Argument list too long".
 quiet_cmd_modpost = MODPOST $@
+<<<<<<< HEAD
+<<<<<<< HEAD
+      cmd_modpost = sed 's/\.ko$$/$(mod-prelink-ext)\.o/' $< | $(MODPOST) -T -
+
+$(output-symdump): $(MODORDER) $(input-symdump) $(modules:.ko=$(mod-prelink-ext).o) FORCE
+=======
       cmd_modpost = sed 's/\.ko$$/$(prelink-ext)\.o/' $< | $(MODPOST) -T -
 
 $(output-symdump): $(MODORDER) $(input-symdump) $(modules:.ko=$(prelink-ext).o) FORCE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+      cmd_modpost = sed 's/\.ko$$/$(mod-prelink-ext)\.o/' $< | $(MODPOST) -T -
+
+$(output-symdump): $(MODORDER) $(input-symdump) $(modules:.ko=$(mod-prelink-ext).o) FORCE
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	$(call if_changed,modpost)
 
 targets += $(output-symdump)

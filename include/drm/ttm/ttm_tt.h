@@ -27,11 +27,27 @@
 #ifndef _TTM_TT_H_
 #define _TTM_TT_H_
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#include <linux/pagemap.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#include <linux/pagemap.h>
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/types.h>
 #include <drm/ttm/ttm_caching.h>
 #include <drm/ttm/ttm_kmap_iter.h>
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct ttm_device;
+=======
 struct ttm_bo_device;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct ttm_device;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct ttm_tt;
 struct ttm_resource;
 struct ttm_buffer_object;

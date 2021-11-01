@@ -190,7 +190,15 @@ void scsi_finish_command(struct scsi_cmnd *cmd)
 				"(result %x)\n", cmd->result));
 
 	good_bytes = scsi_bufflen(cmd);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (!blk_rq_is_passthrough(scsi_cmd_to_rq(cmd))) {
+=======
 	if (!blk_rq_is_passthrough(cmd->request)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (!blk_rq_is_passthrough(scsi_cmd_to_rq(cmd))) {
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		int old_good_bytes = good_bytes;
 		drv = scsi_cmd_to_driver(cmd);
 		if (drv->done)

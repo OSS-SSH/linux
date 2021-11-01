@@ -16,13 +16,33 @@
 #include "btrfs_inode.h"
 #include "xattr.h"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+struct posix_acl *btrfs_get_acl(struct inode *inode, int type, bool rcu)
+=======
 struct posix_acl *btrfs_get_acl(struct inode *inode, int type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+struct posix_acl *btrfs_get_acl(struct inode *inode, int type, bool rcu)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int size;
 	const char *name;
 	char *value = NULL;
 	struct posix_acl *acl;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (rcu)
+		return ERR_PTR(-ECHILD);
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (type) {
 	case ACL_TYPE_ACCESS:
 		name = XATTR_NAME_POSIX_ACL_ACCESS;
@@ -53,7 +73,17 @@ struct posix_acl *btrfs_get_acl(struct inode *inode, int type)
 }
 
 static int __btrfs_set_acl(struct btrfs_trans_handle *trans,
+<<<<<<< HEAD
+<<<<<<< HEAD
+			   struct user_namespace *mnt_userns,
+			   struct inode *inode, struct posix_acl *acl, int type)
+=======
 			 struct inode *inode, struct posix_acl *acl, int type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			   struct user_namespace *mnt_userns,
+			   struct inode *inode, struct posix_acl *acl, int type)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret, size = 0;
 	const char *name;
@@ -114,12 +144,28 @@ int btrfs_set_acl(struct user_namespace *mnt_userns, struct inode *inode,
 	umode_t old_mode = inode->i_mode;
 
 	if (type == ACL_TYPE_ACCESS && acl) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = posix_acl_update_mode(mnt_userns, inode,
+=======
 		ret = posix_acl_update_mode(&init_user_ns, inode,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = posix_acl_update_mode(mnt_userns, inode,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    &inode->i_mode, &acl);
 		if (ret)
 			return ret;
 	}
+<<<<<<< HEAD
+<<<<<<< HEAD
+	ret = __btrfs_set_acl(NULL, mnt_userns, inode, acl, type);
+=======
 	ret = __btrfs_set_acl(NULL, inode, acl, type);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	ret = __btrfs_set_acl(NULL, mnt_userns, inode, acl, type);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		inode->i_mode = old_mode;
 	return ret;
@@ -140,14 +186,30 @@ int btrfs_init_acl(struct btrfs_trans_handle *trans,
 		return ret;
 
 	if (default_acl) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		ret = __btrfs_set_acl(trans, &init_user_ns, inode, default_acl,
+=======
 		ret = __btrfs_set_acl(trans, inode, default_acl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = __btrfs_set_acl(trans, &init_user_ns, inode, default_acl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      ACL_TYPE_DEFAULT);
 		posix_acl_release(default_acl);
 	}
 
 	if (acl) {
 		if (!ret)
+<<<<<<< HEAD
+<<<<<<< HEAD
+			ret = __btrfs_set_acl(trans, &init_user_ns, inode, acl,
+=======
 			ret = __btrfs_set_acl(trans, inode, acl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ret = __btrfs_set_acl(trans, &init_user_ns, inode, acl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					      ACL_TYPE_ACCESS);
 		posix_acl_release(acl);
 	}

@@ -153,7 +153,17 @@ struct rtnl_af_ops {
 						    u32 ext_filter_mask);
 
 	int			(*validate_link_af)(const struct net_device *dev,
+<<<<<<< HEAD
+<<<<<<< HEAD
+						    const struct nlattr *attr,
+						    struct netlink_ext_ack *extack);
+=======
 						    const struct nlattr *attr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+						    const struct nlattr *attr,
+						    struct netlink_ext_ack *extack);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			(*set_link_af)(struct net_device *dev,
 					       const struct nlattr *attr,
 					       struct netlink_ext_ack *extack);

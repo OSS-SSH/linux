@@ -526,7 +526,15 @@ static void octeon_destroy_resources(struct octeon_device *oct)
 			oct->irq_name_storage = NULL;
 		}
 		/* Soft reset the octeon device before exiting */
+<<<<<<< HEAD
+<<<<<<< HEAD
+		if (!pcie_reset_flr(oct->pci_dev, PCI_RESET_PROBE))
+=======
 		if (oct->pci_dev->reset_fn)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (!pcie_reset_flr(oct->pci_dev, PCI_RESET_PROBE))
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			octeon_pci_flr(oct);
 		else
 			cn23xx_vf_ask_pf_to_do_flr(oct);
@@ -843,7 +851,15 @@ static void free_netsgbuf(void *buf)
 	while (frags--) {
 		skb_frag_t *frag = &skb_shinfo(skb)->frags[i - 1];
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dma_unmap_page(&lio->oct_dev->pci_dev->dev,
+=======
 		pci_unmap_page((lio->oct_dev)->pci_dev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_page(&lio->oct_dev->pci_dev->dev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       g->sg[(i >> 2)].ptr[(i & 3)],
 			       skb_frag_size(frag), DMA_TO_DEVICE);
 		i++;
@@ -887,7 +903,15 @@ static void free_netsgbuf_with_resp(void *buf)
 	while (frags--) {
 		skb_frag_t *frag = &skb_shinfo(skb)->frags[i - 1];
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		dma_unmap_page(&lio->oct_dev->pci_dev->dev,
+=======
 		pci_unmap_page((lio->oct_dev)->pci_dev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		dma_unmap_page(&lio->oct_dev->pci_dev->dev,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       g->sg[(i >> 2)].ptr[(i & 3)],
 			       skb_frag_size(frag), DMA_TO_DEVICE);
 		i++;
@@ -1889,7 +1913,15 @@ static const struct net_device_ops lionetdevops = {
 	.ndo_vlan_rx_add_vid    = liquidio_vlan_rx_add_vid,
 	.ndo_vlan_rx_kill_vid   = liquidio_vlan_rx_kill_vid,
 	.ndo_change_mtu		= liquidio_change_mtu,
+<<<<<<< HEAD
+<<<<<<< HEAD
+	.ndo_eth_ioctl		= liquidio_ioctl,
+=======
 	.ndo_do_ioctl		= liquidio_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	.ndo_eth_ioctl		= liquidio_ioctl,
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_fix_features	= liquidio_fix_features,
 	.ndo_set_features	= liquidio_set_features,
 };

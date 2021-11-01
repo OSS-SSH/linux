@@ -1346,7 +1346,15 @@ static int stk_camera_probe(struct usb_interface *interface,
 	if (!dev->isoc_ep) {
 		pr_err("Could not find isoc-in endpoint\n");
 		err = -ENODEV;
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto error_put;
+=======
 		goto error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto error_put;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	dev->vsettings.palette = V4L2_PIX_FMT_RGB565;
 	dev->vsettings.mode = MODE_VGA;
@@ -1359,10 +1367,28 @@ static int stk_camera_probe(struct usb_interface *interface,
 
 	err = stk_register_video_device(dev);
 	if (err)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		goto error_put;
+
+	return 0;
+
+error_put:
+	usb_put_intf(interface);
+=======
 		goto error;
 
 	return 0;
 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		goto error_put;
+
+	return 0;
+
+error_put:
+	usb_put_intf(interface);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 error:
 	v4l2_ctrl_handler_free(hdl);
 	v4l2_device_unregister(&dev->v4l2_dev);

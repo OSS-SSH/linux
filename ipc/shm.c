@@ -619,7 +619,15 @@ static int newseg(struct ipc_namespace *ns, struct ipc_params *params)
 			ns->shm_tot + numpages > ns->shm_ctlall)
 		return -ENOSPC;
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	shp = kmalloc(sizeof(*shp), GFP_KERNEL_ACCOUNT);
+=======
 	shp = kmalloc(sizeof(*shp), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	shp = kmalloc(sizeof(*shp), GFP_KERNEL_ACCOUNT);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(!shp))
 		return -ENOMEM;
 

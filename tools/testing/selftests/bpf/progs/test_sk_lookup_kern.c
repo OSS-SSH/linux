@@ -91,7 +91,15 @@ int bpf_sk_lookup_test1(struct __sk_buff *skb)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+SEC("classifier/err_use_after_free")
+=======
 SEC("classifier/fail_use_after_free")
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+SEC("classifier/err_use_after_free")
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int bpf_sk_lookup_uaf(struct __sk_buff *skb)
 {
 	struct bpf_sock_tuple tuple = {};
@@ -106,7 +114,15 @@ int bpf_sk_lookup_uaf(struct __sk_buff *skb)
 	return family;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+SEC("classifier/err_modify_sk_pointer")
+=======
 SEC("classifier/fail_modify_sk_pointer")
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+SEC("classifier/err_modify_sk_pointer")
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int bpf_sk_lookup_modptr(struct __sk_buff *skb)
 {
 	struct bpf_sock_tuple tuple = {};
@@ -121,7 +137,15 @@ int bpf_sk_lookup_modptr(struct __sk_buff *skb)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+SEC("classifier/err_modify_sk_or_null_pointer")
+=======
 SEC("classifier/fail_modify_sk_or_null_pointer")
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+SEC("classifier/err_modify_sk_or_null_pointer")
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int bpf_sk_lookup_modptr_or_null(struct __sk_buff *skb)
 {
 	struct bpf_sock_tuple tuple = {};
@@ -135,7 +159,15 @@ int bpf_sk_lookup_modptr_or_null(struct __sk_buff *skb)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+SEC("classifier/err_no_release")
+=======
 SEC("classifier/fail_no_release")
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+SEC("classifier/err_no_release")
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int bpf_sk_lookup_test2(struct __sk_buff *skb)
 {
 	struct bpf_sock_tuple tuple = {};
@@ -144,7 +176,15 @@ int bpf_sk_lookup_test2(struct __sk_buff *skb)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+SEC("classifier/err_release_twice")
+=======
 SEC("classifier/fail_release_twice")
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+SEC("classifier/err_release_twice")
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int bpf_sk_lookup_test3(struct __sk_buff *skb)
 {
 	struct bpf_sock_tuple tuple = {};
@@ -156,7 +196,15 @@ int bpf_sk_lookup_test3(struct __sk_buff *skb)
 	return 0;
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+SEC("classifier/err_release_unchecked")
+=======
 SEC("classifier/fail_release_unchecked")
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+SEC("classifier/err_release_unchecked")
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int bpf_sk_lookup_test4(struct __sk_buff *skb)
 {
 	struct bpf_sock_tuple tuple = {};
@@ -173,7 +221,15 @@ void lookup_no_release(struct __sk_buff *skb)
 	bpf_sk_lookup_tcp(skb, &tuple, sizeof(tuple), BPF_F_CURRENT_NETNS, 0);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+SEC("classifier/err_no_release_subcall")
+=======
 SEC("classifier/fail_no_release_subcall")
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+SEC("classifier/err_no_release_subcall")
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int bpf_sk_lookup_test5(struct __sk_buff *skb)
 {
 	lookup_no_release(skb);

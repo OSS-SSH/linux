@@ -22,13 +22,118 @@ static char *extract_string(struct prepend_buffer *p)
 	return ERR_PTR(-ENAMETOOLONG);
 }
 
-static void prepend(struct prepend_buffer *p, const char *str, int namelen)
+<<<<<<< HEAD
+<<<<<<< HEAD
+static bool prepend_char(struct prepend_buffer *p, unsigned char c)
 {
-	p->len -= namelen;
-	if (likely(p->len >= 0)) {
-		p->buf -= namelen;
-		memcpy(p->buf, str, namelen);
+	if (likely(p->len > 0)) {
+		p->len--;
+		*--p->buf = c;
+		return true;
 	}
+	p->len = -1;
+	return false;
+}
+
+/*
+ * The source of the prepend data can be an optimistoc load
+ * of a dentry name and length. And because we don't hold any
+ * locks, the length and the pointer to the name may not be
+ * in sync if a concurrent rename happens, and the kernel
+ * copy might fault as a result.
+ *
+ * The end result will correct itself when we check the
+ * rename sequence count, but we need to be able to handle
+ * the fault gracefully.
+ */
+static bool prepend_copy(void *dst, const void *src, int len)
+{
+	if (unlikely(copy_from_kernel_nofault(dst, src, len))) {
+		memset(dst, 'x', len);
+		return false;
+	}
+	return true;
+}
+
+static bool prepend(struct prepend_buffer *p, const char *str, int namelen)
+{
+	// Already overflowed?
+	if (p->len < 0)
+		return false;
+
+	// Will overflow?
+	if (p->len < namelen) {
+		// Fill as much as possible from the end of the name
+		str += namelen - p->len;
+		p->buf -= p->len;
+		prepend_copy(p->buf, str, p->len);
+		p->len = -1;
+		return false;
+	}
+
+	// Fits fully
+	p->len -= namelen;
+	p->buf -= namelen;
+	return prepend_copy(p->buf, str, namelen);
+=======
+static void prepend(struct prepend_buffer *p, const char *str, int namelen)
+=======
+static bool prepend_char(struct prepend_buffer *p, unsigned char c)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+{
+	if (likely(p->len > 0)) {
+		p->len--;
+		*--p->buf = c;
+		return true;
+	}
+	p->len = -1;
+	return false;
+}
+
+/*
+ * The source of the prepend data can be an optimistoc load
+ * of a dentry name and length. And because we don't hold any
+ * locks, the length and the pointer to the name may not be
+ * in sync if a concurrent rename happens, and the kernel
+ * copy might fault as a result.
+ *
+ * The end result will correct itself when we check the
+ * rename sequence count, but we need to be able to handle
+ * the fault gracefully.
+ */
+static bool prepend_copy(void *dst, const void *src, int len)
+{
+	if (unlikely(copy_from_kernel_nofault(dst, src, len))) {
+		memset(dst, 'x', len);
+		return false;
+	}
+<<<<<<< HEAD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	return true;
+}
+
+static bool prepend(struct prepend_buffer *p, const char *str, int namelen)
+{
+	// Already overflowed?
+	if (p->len < 0)
+		return false;
+
+	// Will overflow?
+	if (p->len < namelen) {
+		// Fill as much as possible from the end of the name
+		str += namelen - p->len;
+		p->buf -= p->len;
+		prepend_copy(p->buf, str, p->len);
+		p->len = -1;
+		return false;
+	}
+
+	// Fits fully
+	p->len -= namelen;
+	p->buf -= namelen;
+	return prepend_copy(p->buf, str, namelen);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -40,18 +145,43 @@ static void prepend(struct prepend_buffer *p, const char *str, int namelen)
  * With RCU path tracing, it may race with d_move(). Use READ_ONCE() to
  * make sure that either the old or the new name pointer and length are
  * fetched. However, there may be mismatch between length and pointer.
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * But since the length cannot be trusted, we need to copy the name very
+ * carefully when doing the prepend_copy(). It also prepends "/" at
+=======
  * The length cannot be trusted, we need to copy it byte-by-byte until
  * the length is reached or a null byte is found. It also prepends "/" at
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * But since the length cannot be trusted, we need to copy the name very
+ * carefully when doing the prepend_copy(). It also prepends "/" at
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * the beginning of the name. The sequence number check at the caller will
  * retry it again when a d_move() does happen. So any garbage in the buffer
  * due to mismatched pointer and length will be discarded.
  *
+<<<<<<< HEAD
+<<<<<<< HEAD
+ * Load acquire is needed to make sure that we see the new name data even
+ * if we might get the length wrong.
+=======
  * Load acquire is needed to make sure that we see that terminating NUL.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+ * Load acquire is needed to make sure that we see the new name data even
+ * if we might get the length wrong.
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static bool prepend_name(struct prepend_buffer *p, const struct qstr *name)
 {
 	const char *dname = smp_load_acquire(&name->name); /* ^^^ */
 	u32 dlen = READ_ONCE(name->len);
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+	return prepend(p, dname, dlen) && prepend_char(p, '/');
+=======
 	char *s;
 
 	p->len -= dlen + 1;
@@ -66,6 +196,11 @@ static bool prepend_name(struct prepend_buffer *p, const struct qstr *name)
 		*s++ = c;
 	}
 	return true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+
+	return prepend(p, dname, dlen) && prepend_char(p, '/');
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __prepend_path(const struct dentry *dentry, const struct mount *mnt,
@@ -158,7 +293,15 @@ restart:
 		b = *p;
 
 	if (b.len == p->len)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		prepend_char(&b, '/');
+=======
 		prepend(&b, "/", 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		prepend_char(&b, '/');
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*p = b;
 	return error;
@@ -186,7 +329,15 @@ char *__d_path(const struct path *path,
 {
 	DECLARE_BUFFER(b, buf, buflen);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	prepend_char(&b, 0);
+=======
 	prepend(&b, "", 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	prepend_char(&b, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(prepend_path(path, root, &b) > 0))
 		return NULL;
 	return extract_string(&b);
@@ -198,7 +349,15 @@ char *d_absolute_path(const struct path *path,
 	struct path root = {};
 	DECLARE_BUFFER(b, buf, buflen);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	prepend_char(&b, 0);
+=======
 	prepend(&b, "", 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	prepend_char(&b, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (unlikely(prepend_path(path, &root, &b) > 1))
 		return ERR_PTR(-EINVAL);
 	return extract_string(&b);
@@ -255,7 +414,15 @@ char *d_path(const struct path *path, char *buf, int buflen)
 	if (unlikely(d_unlinked(path->dentry)))
 		prepend(&b, " (deleted)", 11);
 	else
+<<<<<<< HEAD
+<<<<<<< HEAD
+		prepend_char(&b, 0);
+=======
 		prepend(&b, "", 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		prepend_char(&b, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	prepend_path(path, &root, &b);
 	rcu_read_unlock();
 
@@ -290,7 +457,15 @@ char *simple_dname(struct dentry *dentry, char *buffer, int buflen)
 	/* these dentries are never renamed, so d_lock is not needed */
 	prepend(&b, " (deleted)", 11);
 	prepend(&b, dentry->d_name.name, dentry->d_name.len);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	prepend_char(&b, '/');
+=======
 	prepend(&b, "/", 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	prepend_char(&b, '/');
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return extract_string(&b);
 }
 
@@ -324,7 +499,15 @@ restart:
 	}
 	done_seqretry(&rename_lock, seq);
 	if (b.len == p->len)
+<<<<<<< HEAD
+<<<<<<< HEAD
+		prepend_char(&b, '/');
+=======
 		prepend(&b, "/", 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		prepend_char(&b, '/');
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return extract_string(&b);
 }
 
@@ -332,7 +515,15 @@ char *dentry_path_raw(const struct dentry *dentry, char *buf, int buflen)
 {
 	DECLARE_BUFFER(b, buf, buflen);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	prepend_char(&b, 0);
+=======
 	prepend(&b, "", 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	prepend_char(&b, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return __dentry_path(dentry, &b);
 }
 EXPORT_SYMBOL(dentry_path_raw);
@@ -344,7 +535,15 @@ char *dentry_path(const struct dentry *dentry, char *buf, int buflen)
 	if (unlikely(d_unlinked(dentry)))
 		prepend(&b, "//deleted", 10);
 	else
+<<<<<<< HEAD
+<<<<<<< HEAD
+		prepend_char(&b, 0);
+=======
 		prepend(&b, "", 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		prepend_char(&b, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return __dentry_path(dentry, &b);
 }
 
@@ -397,7 +596,15 @@ SYSCALL_DEFINE2(getcwd, char __user *, buf, unsigned long, size)
 		unsigned len;
 		DECLARE_BUFFER(b, page, PATH_MAX);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+		prepend_char(&b, 0);
+=======
 		prepend(&b, "", 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		prepend_char(&b, 0);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (unlikely(prepend_path(&pwd, &root, &b) > 0))
 			prepend(&b, "(unreachable)", 13);
 		rcu_read_unlock();

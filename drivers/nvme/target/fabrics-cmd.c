@@ -109,19 +109,78 @@ static u16 nvmet_install_queue(struct nvmet_ctrl *ctrl, struct nvmet_req *req)
 	u16 qid = le16_to_cpu(c->qid);
 	u16 sqsize = le16_to_cpu(c->sqsize);
 	struct nvmet_ctrl *old;
+<<<<<<< HEAD
+<<<<<<< HEAD
+	u16 mqes = NVME_CAP_MQES(ctrl->cap);
 	u16 ret;
 
+	if (!sqsize) {
+		pr_warn("queue size zero!\n");
+		req->error_loc = offsetof(struct nvmf_connect_command, sqsize);
+		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(sqsize);
+		ret = NVME_SC_CONNECT_INVALID_PARAM | NVME_SC_DNR;
+		goto err;
+	}
+
+	if (ctrl->sqs[qid] != NULL) {
+		pr_warn("qid %u has already been created\n", qid);
+		req->error_loc = offsetof(struct nvmf_connect_command, qid);
+		return NVME_SC_CMD_SEQ_ERROR | NVME_SC_DNR;
+	}
+
+	if (sqsize > mqes) {
+		pr_warn("sqsize %u is larger than MQES supported %u cntlid %d\n",
+				sqsize, mqes, ctrl->cntlid);
+		req->error_loc = offsetof(struct nvmf_connect_command, sqsize);
+		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(sqsize);
+		return NVME_SC_CONNECT_INVALID_PARAM | NVME_SC_DNR;
+	}
+
+=======
+	u16 ret;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	old = cmpxchg(&req->sq->ctrl, NULL, ctrl);
 	if (old) {
 		pr_warn("queue already connected!\n");
 		req->error_loc = offsetof(struct nvmf_connect_command, opcode);
 		return NVME_SC_CONNECT_CTRL_BUSY | NVME_SC_DNR;
 	}
+<<<<<<< HEAD
+=======
+=======
+	u16 mqes = NVME_CAP_MQES(ctrl->cap);
+	u16 ret;
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!sqsize) {
 		pr_warn("queue size zero!\n");
 		req->error_loc = offsetof(struct nvmf_connect_command, sqsize);
+		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(sqsize);
 		ret = NVME_SC_CONNECT_INVALID_PARAM | NVME_SC_DNR;
 		goto err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	if (ctrl->sqs[qid] != NULL) {
+		pr_warn("qid %u has already been created\n", qid);
+		req->error_loc = offsetof(struct nvmf_connect_command, qid);
+		return NVME_SC_CMD_SEQ_ERROR | NVME_SC_DNR;
+	}
+
+	if (sqsize > mqes) {
+		pr_warn("sqsize %u is larger than MQES supported %u cntlid %d\n",
+				sqsize, mqes, ctrl->cntlid);
+		req->error_loc = offsetof(struct nvmf_connect_command, sqsize);
+		req->cqe->result.u32 = IPO_IATTR_CONNECT_SQE(sqsize);
+		return NVME_SC_CONNECT_INVALID_PARAM | NVME_SC_DNR;
+	}
+
+	old = cmpxchg(&req->sq->ctrl, NULL, ctrl);
+	if (old) {
+		pr_warn("queue already connected!\n");
+		req->error_loc = offsetof(struct nvmf_connect_command, opcode);
+		return NVME_SC_CONNECT_CTRL_BUSY | NVME_SC_DNR;
 	}
 
 	/* note: convert queue size from 0's-based value to 1's-based value */
@@ -138,6 +197,14 @@ static u16 nvmet_install_queue(struct nvmet_ctrl *ctrl, struct nvmet_req *req)
 		if (ret) {
 			pr_err("failed to install queue %d cntlid %d ret %x\n",
 				qid, ctrl->cntlid, ret);
+<<<<<<< HEAD
+<<<<<<< HEAD
+			ctrl->sqs[qid] = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			ctrl->sqs[qid] = NULL;
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto err;
 		}
 	}
@@ -260,11 +327,27 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
 	}
 
 	status = nvmet_install_queue(ctrl, req);
+<<<<<<< HEAD
+<<<<<<< HEAD
+	if (status)
+		goto out_ctrl_put;
+
+	/* pass back cntlid for successful completion */
+	req->cqe->result.u16 = cpu_to_le16(ctrl->cntlid);
+=======
 	if (status) {
 		/* pass back cntlid that had the issue of installing queue */
 		req->cqe->result.u16 = cpu_to_le16(ctrl->cntlid);
 		goto out_ctrl_put;
 	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (status)
+		goto out_ctrl_put;
+
+	/* pass back cntlid for successful completion */
+	req->cqe->result.u16 = cpu_to_le16(ctrl->cntlid);
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pr_debug("adding queue %d to ctrl %d.\n", qid, ctrl->cntlid);
 

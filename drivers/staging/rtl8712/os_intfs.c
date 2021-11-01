@@ -203,7 +203,15 @@ struct net_device *r8712_init_netdev(void)
 	if (!pnetdev)
 		return NULL;
 	if (dev_alloc_name(pnetdev, ifname) < 0) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		strscpy(ifname, "wlan%d", sizeof(ifname));
+=======
 		strcpy(ifname, "wlan%d");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		strscpy(ifname, "wlan%d", sizeof(ifname));
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_alloc_name(pnetdev, ifname);
 	}
 	padapter = netdev_priv(pnetdev);

@@ -131,7 +131,15 @@ enum pageflags {
 #ifdef CONFIG_MEMORY_FAILURE
 	PG_hwpoison,		/* hardware poisoned page. Don't touch */
 #endif
+<<<<<<< HEAD
+<<<<<<< HEAD
+#if defined(CONFIG_PAGE_IDLE_FLAG) && defined(CONFIG_64BIT)
+=======
 #if defined(CONFIG_IDLE_PAGE_TRACKING) && defined(CONFIG_64BIT)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if defined(CONFIG_PAGE_IDLE_FLAG) && defined(CONFIG_64BIT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	PG_young,
 	PG_idle,
 #endif
@@ -178,6 +186,16 @@ enum pageflags {
 	PG_reported = PG_uptodate,
 };
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#define PAGEFLAGS_MASK		((1UL << NR_PAGEFLAGS) - 1)
+
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#define PAGEFLAGS_MASK		((1UL << NR_PAGEFLAGS) - 1)
+
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifndef __GENERATING_BOUNDS_H
 
 static inline unsigned long _compound_head(const struct page *page)
@@ -439,7 +457,15 @@ PAGEFLAG_FALSE(HWPoison)
 #define __PG_HWPOISON 0
 #endif
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+#if defined(CONFIG_PAGE_IDLE_FLAG) && defined(CONFIG_64BIT)
+=======
 #if defined(CONFIG_IDLE_PAGE_TRACKING) && defined(CONFIG_64BIT)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+#if defined(CONFIG_PAGE_IDLE_FLAG) && defined(CONFIG_64BIT)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 TESTPAGEFLAG(Young, young, PF_ANY)
 SETPAGEFLAG(Young, young, PF_ANY)
 TESTCLEARFLAG(Young, young, PF_ANY)
@@ -633,6 +659,9 @@ static inline int PageTransCompound(struct page *page)
 }
 
 /*
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
  * PageTransCompoundMap is the same as PageTransCompound, but it also
  * guarantees the primary MMU has the entire compound page mapped
  * through pmd_trans_huge, which in turn guarantees the secondary MMUs
@@ -670,6 +699,9 @@ static inline int PageTransCompoundMap(struct page *page)
 }
 
 /*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * PageTransTail returns true for both transparent huge pages
  * and hugetlbfs pages, so it should only be called when it's known
  * that hugetlbfs pages aren't involved.
@@ -815,6 +847,24 @@ static inline int PageSlabPfmemalloc(struct page *page)
 	return PageActive(page);
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+/*
+ * A version of PageSlabPfmemalloc() for opportunistic checks where the page
+ * might have been freed under us and not be a PageSlab anymore.
+ */
+static inline int __PageSlabPfmemalloc(struct page *page)
+{
+	return PageActive(page);
+}
+
+<<<<<<< HEAD
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void SetPageSlabPfmemalloc(struct page *page)
 {
 	VM_BUG_ON_PAGE(!PageSlab(page), page);
@@ -859,7 +909,15 @@ static inline void ClearPageSlabPfmemalloc(struct page *page)
  * alloc-free cycle to prevent from reusing the page.
  */
 #define PAGE_FLAGS_CHECK_AT_PREP	\
+<<<<<<< HEAD
+<<<<<<< HEAD
+	(PAGEFLAGS_MASK & ~__PG_HWPOISON)
+=======
 	(((1UL << NR_PAGEFLAGS) - 1) & ~__PG_HWPOISON)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	(PAGEFLAGS_MASK & ~__PG_HWPOISON)
+>>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define PAGE_FLAGS_PRIVATE				\
 	(1UL << PG_private | 1UL << PG_private_2)
