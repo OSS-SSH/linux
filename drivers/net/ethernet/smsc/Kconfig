@@ -23,14 +23,6 @@ config SMC9194
 	tristate "SMC 9194 support"
 	depends on ISA
 	select CRC32
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select NETDEV_LEGACY_INIT
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select NETDEV_LEGACY_INIT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This is support for the SMC9xxx based Ethernet cards. Choose this
 	  option if you have a DELL laptop with the docking station, or

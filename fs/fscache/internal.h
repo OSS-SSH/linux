@@ -45,14 +45,6 @@ extern struct fscache_cache *fscache_select_cache_for_object(
  * cookie.c
  */
 extern struct kmem_cache *fscache_cookie_jar;
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern const struct seq_operations fscache_cookies_seq_ops;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern const struct seq_operations fscache_cookies_seq_ops;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 extern void fscache_free_cookie(struct fscache_cookie *);
 extern struct fscache_cookie *fscache_alloc_cookie(struct fscache_cookie *,
@@ -61,30 +53,9 @@ extern struct fscache_cookie *fscache_alloc_cookie(struct fscache_cookie *,
 						   const void *, size_t,
 						   void *, loff_t);
 extern struct fscache_cookie *fscache_hash_cookie(struct fscache_cookie *);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-extern struct fscache_cookie *fscache_cookie_get(struct fscache_cookie *,
-						 enum fscache_cookie_trace);
 extern void fscache_cookie_put(struct fscache_cookie *,
 			       enum fscache_cookie_trace);
 
-static inline void fscache_cookie_see(struct fscache_cookie *cookie,
-				      enum fscache_cookie_trace where)
-{
-	trace_fscache_cookie(cookie->debug_id, refcount_read(&cookie->ref),
-			     where);
-}
-
-<<<<<<< HEAD
-=======
-extern void fscache_cookie_put(struct fscache_cookie *,
-			       enum fscache_cookie_trace);
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * fsdef.c
  */
@@ -92,9 +63,6 @@ extern struct fscache_cookie fscache_fsdef_index;
 extern struct fscache_cookie_def fscache_fsdef_netfs_def;
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * histogram.c
  */
 #ifdef CONFIG_FSCACHE_HISTOGRAM
@@ -119,9 +87,6 @@ extern const struct seq_operations fscache_histogram_ops;
 #endif
 
 /*
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * main.c
  */
 extern unsigned fscache_defer_lookup;
@@ -132,16 +97,6 @@ extern struct workqueue_struct *fscache_object_wq;
 extern struct workqueue_struct *fscache_op_wq;
 DECLARE_PER_CPU(wait_queue_head_t, fscache_object_cong_wait);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern unsigned int fscache_hash(unsigned int salt, unsigned int *data, unsigned int n);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern unsigned int fscache_hash(unsigned int salt, unsigned int *data, unsigned int n);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline bool fscache_object_congested(void)
 {
 	return workqueue_congested(WORK_CPU_UNBOUND, fscache_object_wq);
@@ -153,9 +108,6 @@ static inline bool fscache_object_congested(void)
 extern void fscache_enqueue_object(struct fscache_object *);
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * object-list.c
  */
 #ifdef CONFIG_FSCACHE_OBJECT_LIST
@@ -169,9 +121,6 @@ extern void fscache_objlist_remove(struct fscache_object *);
 #endif
 
 /*
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * operation.c
  */
 extern int fscache_submit_exclusive_op(struct fscache_object *,
@@ -371,9 +320,6 @@ static inline void fscache_raise_event(struct fscache_object *object,
 		fscache_enqueue_object(object);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline void fscache_cookie_get(struct fscache_cookie *cookie,
 				      enum fscache_cookie_trace where)
 {
@@ -382,9 +328,6 @@ static inline void fscache_cookie_get(struct fscache_cookie *cookie,
 	trace_fscache_cookie(cookie, where, usage);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * get an extra reference to a netfs retrieval context
  */

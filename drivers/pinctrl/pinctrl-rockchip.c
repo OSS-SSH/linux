@@ -21,18 +21,8 @@
 #include <linux/io.h>
 #include <linux/bitops.h>
 #include <linux/gpio/driver.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/of_address.h>
-#include <linux/of_device.h>
-=======
 #include <linux/of_device.h>
 #include <linux/of_address.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/of_address.h>
-#include <linux/of_device.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/of_irq.h>
 #include <linux/pinctrl/machine.h>
 #include <linux/pinctrl/pinconf.h>
@@ -47,10 +37,6 @@
 
 #include "core.h"
 #include "pinconf.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "pinctrl-rockchip.h"
-=======
 
 /* GPIO control registers */
 #define GPIO_SWPORT_DR		0x00
@@ -80,10 +66,6 @@ enum rockchip_pinctrl_type {
 	RK3568,
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "pinctrl-rockchip.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * Generate a bitmask for setting a value (v) with a write mask bit in hiword
@@ -102,9 +84,6 @@ enum rockchip_pinctrl_type {
 #define IOMUX_WIDTH_3BIT	BIT(4)
 #define IOMUX_WIDTH_2BIT	BIT(5)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /**
  * struct rockchip_iomux
  * @type: iomux variant using IOMUX_* constants
@@ -202,9 +181,6 @@ struct rockchip_pin_bank {
 	u32				route_mask;
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define PIN_BANK(id, pins, label)			\
 	{						\
 		.bank_num	= id,			\
@@ -344,9 +320,6 @@ struct rockchip_pin_bank {
 #define RK_MUXROUTE_PMU(ID, PIN, FUNC, REG, VAL)	\
 	PIN_BANK_MUX_ROUTE_FLAGS(ID, PIN, FUNC, REG, VAL, ROCKCHIP_ROUTE_PMU)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /**
  * struct rockchip_mux_recalced_data: represent a pin iomux data.
  * @num: bank number.
@@ -460,9 +433,6 @@ struct rockchip_pinctrl {
 	unsigned int			nfunctions;
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct regmap_config rockchip_regmap_config = {
 	.reg_bits = 32,
 	.val_bits = 32,
@@ -2325,9 +2295,6 @@ static int rockchip_pmx_set(struct pinctrl_dev *pctldev, unsigned selector,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int rockchip_gpio_get_direction(struct gpio_chip *chip, unsigned offset)
 {
 	struct rockchip_pin_bank *bank = gpiochip_get_data(chip);
@@ -2402,21 +2369,12 @@ static int rockchip_pmx_gpio_set_direction(struct pinctrl_dev *pctldev,
 						input);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct pinmux_ops rockchip_pmx_ops = {
 	.get_functions_count	= rockchip_pmx_get_funcs_count,
 	.get_function_name	= rockchip_pmx_get_func_name,
 	.get_function_groups	= rockchip_pmx_get_groups,
 	.set_mux		= rockchip_pmx_set,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.gpio_set_direction	= rockchip_pmx_gpio_set_direction,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -2447,33 +2405,8 @@ static bool rockchip_pinconf_pull_valid(struct rockchip_pin_ctrl *ctrl,
 	return false;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int rockchip_pinconf_defer_output(struct rockchip_pin_bank *bank,
-					 unsigned int pin, u32 arg)
-{
-	struct rockchip_pin_output_deferred *cfg;
-
-	cfg = kzalloc(sizeof(*cfg), GFP_KERNEL);
-	if (!cfg)
-		return -ENOMEM;
-
-	cfg->pin = pin;
-	cfg->arg = arg;
-
-	list_add_tail(&cfg->head, &bank->deferred_output);
-
-	return 0;
-}
-<<<<<<< HEAD
-=======
 static void rockchip_gpio_set(struct gpio_chip *gc, unsigned offset, int value);
 static int rockchip_gpio_get(struct gpio_chip *gc, unsigned offset);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* set the pin config settings for a specified pin */
 static int rockchip_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
@@ -2481,14 +2414,6 @@ static int rockchip_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
 {
 	struct rockchip_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
 	struct rockchip_pin_bank *bank = pin_to_bank(info, pin);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct gpio_chip *gpio = &bank->gpio_chip;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct gpio_chip *gpio = &bank->gpio_chip;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum pin_config_param param;
 	u32 arg;
 	int i;
@@ -2521,42 +2446,10 @@ static int rockchip_pinconf_set(struct pinctrl_dev *pctldev, unsigned int pin,
 				return rc;
 			break;
 		case PIN_CONFIG_OUTPUT:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			rc = rockchip_set_mux(bank, pin - bank->pin_base,
-					      RK_FUNC_GPIO);
-			if (rc != RK_FUNC_GPIO)
-				return -EINVAL;
-
-			/*
-			 * Check for gpio driver not being probed yet.
-			 * The lock makes sure that either gpio-probe has completed
-			 * or the gpio driver hasn't probed yet.
-			 */
-			mutex_lock(&bank->deferred_lock);
-			if (!gpio || !gpio->direction_output) {
-				rc = rockchip_pinconf_defer_output(bank, pin - bank->pin_base, arg);
-				mutex_unlock(&bank->deferred_lock);
-				if (rc)
-					return rc;
-
-				break;
-			}
-			mutex_unlock(&bank->deferred_lock);
-
-			rc = gpio->direction_output(gpio, pin - bank->pin_base,
-						    arg);
-<<<<<<< HEAD
-=======
 			rockchip_gpio_set(&bank->gpio_chip,
 					  pin - bank->pin_base, arg);
 			rc = _rockchip_pmx_gpio_set_direction(&bank->gpio_chip,
 					  pin - bank->pin_base, false);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (rc)
 				return rc;
 			break;
@@ -2594,14 +2487,6 @@ static int rockchip_pinconf_get(struct pinctrl_dev *pctldev, unsigned int pin,
 {
 	struct rockchip_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
 	struct rockchip_pin_bank *bank = pin_to_bank(info, pin);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct gpio_chip *gpio = &bank->gpio_chip;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct gpio_chip *gpio = &bank->gpio_chip;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum pin_config_param param = pinconf_to_config_param(*config);
 	u16 arg;
 	int rc;
@@ -2630,22 +2515,7 @@ static int rockchip_pinconf_get(struct pinctrl_dev *pctldev, unsigned int pin,
 		if (rc != RK_FUNC_GPIO)
 			return -EINVAL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (!gpio || !gpio->get) {
-			arg = 0;
-			break;
-		}
-
-		rc = gpio->get(gpio, pin - bank->pin_base);
-<<<<<<< HEAD
-=======
 		rc = rockchip_gpio_get(&bank->gpio_chip, pin - bank->pin_base);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (rc < 0)
 			return rc;
 
@@ -2883,15 +2753,7 @@ static int rockchip_pinctrl_register(struct platform_device *pdev,
 	ctrldesc->npins = info->ctrl->nr_pins;
 
 	pdesc = pindesc;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	for (bank = 0, k = 0; bank < info->ctrl->nr_banks; bank++) {
-=======
 	for (bank = 0 , k = 0; bank < info->ctrl->nr_banks; bank++) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (bank = 0, k = 0; bank < info->ctrl->nr_banks; bank++) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pin_bank = &info->ctrl->pin_banks[bank];
 		for (pin = 0; pin < pin_bank->nr_pins; pin++, k++) {
 			pdesc->number = k;
@@ -2899,18 +2761,6 @@ static int rockchip_pinctrl_register(struct platform_device *pdev,
 						pin_bank->name, pin);
 			pdesc++;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-		INIT_LIST_HEAD(&pin_bank->deferred_output);
-		mutex_init(&pin_bank->deferred_lock);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-		INIT_LIST_HEAD(&pin_bank->deferred_output);
-		mutex_init(&pin_bank->deferred_lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = rockchip_pinctrl_parse_dt(pdev, info);
@@ -2923,12 +2773,6 @@ static int rockchip_pinctrl_register(struct platform_device *pdev,
 		return PTR_ERR(info->pctl_dev);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return 0;
-}
-
-=======
 	for (bank = 0; bank < info->ctrl->nr_banks; ++bank) {
 		pin_bank = &info->ctrl->pin_banks[bank];
 		pin_bank->grange.name = pin_bank->name;
@@ -3476,12 +3320,6 @@ static int rockchip_get_bank_data(struct rockchip_pin_bank *bank,
 	return clk_prepare(bank->clk);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 0;
-}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id rockchip_pinctrl_dt_match[];
 
 /* retrieve the soc specific data */
@@ -3491,13 +3329,7 @@ static struct rockchip_pin_ctrl *rockchip_pinctrl_get_soc_data(
 {
 	const struct of_device_id *match;
 	struct device_node *node = pdev->dev.of_node;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct device_node *np;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct rockchip_pin_ctrl *ctrl;
 	struct rockchip_pin_bank *bank;
 	int grf_offs, pmu_offs, drv_grf_offs, drv_pmu_offs, i, j;
@@ -3505,9 +3337,6 @@ static struct rockchip_pin_ctrl *rockchip_pinctrl_get_soc_data(
 	match = of_match_node(rockchip_pinctrl_dt_match, node);
 	ctrl = (struct rockchip_pin_ctrl *)match->data;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	for_each_child_of_node(node, np) {
 		if (!of_find_property(np, "gpio-controller", NULL))
 			continue;
@@ -3525,9 +3354,6 @@ static struct rockchip_pin_ctrl *rockchip_pinctrl_get_soc_data(
 		}
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	grf_offs = ctrl->grf_mux_offset;
 	pmu_offs = ctrl->pmu_mux_offset;
 	drv_pmu_offs = ctrl->pmu_drv_offset;
@@ -3748,89 +3574,17 @@ static int rockchip_pinctrl_probe(struct platform_device *pdev)
 			return PTR_ERR(info->regmap_pmu);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = rockchip_pinctrl_register(pdev, info);
-	if (ret)
-		return ret;
-
-	platform_set_drvdata(pdev, info);
-
-	ret = of_platform_populate(np, rockchip_bank_match, NULL, NULL);
-	if (ret) {
-		dev_err(&pdev->dev, "failed to register gpio device\n");
-		return ret;
-	}
-
-	return 0;
-}
-
-static int rockchip_pinctrl_remove(struct platform_device *pdev)
-{
-	struct rockchip_pinctrl *info = platform_get_drvdata(pdev);
-	struct rockchip_pin_bank *bank;
-	struct rockchip_pin_output_deferred *cfg;
-	int i;
-
-	of_platform_depopulate(&pdev->dev);
-
-	for (i = 0; i < info->ctrl->nr_banks; i++) {
-		bank = &info->ctrl->pin_banks[i];
-
-		mutex_lock(&bank->deferred_lock);
-		while (!list_empty(&bank->deferred_output)) {
-			cfg = list_first_entry(&bank->deferred_output,
-					       struct rockchip_pin_output_deferred, head);
-			list_del(&cfg->head);
-			kfree(cfg);
-		}
-		mutex_unlock(&bank->deferred_lock);
-	}
-=======
 	ret = rockchip_gpiolib_register(pdev, info);
-=======
-	ret = rockchip_pinctrl_register(pdev, info);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
-	platform_set_drvdata(pdev, info);
-
-	ret = of_platform_populate(np, rockchip_bank_match, NULL, NULL);
+	ret = rockchip_pinctrl_register(pdev, info);
 	if (ret) {
-		dev_err(&pdev->dev, "failed to register gpio device\n");
+		rockchip_gpiolib_unregister(pdev, info);
 		return ret;
 	}
 
-<<<<<<< HEAD
 	platform_set_drvdata(pdev, info);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 0;
-}
-
-static int rockchip_pinctrl_remove(struct platform_device *pdev)
-{
-	struct rockchip_pinctrl *info = platform_get_drvdata(pdev);
-	struct rockchip_pin_bank *bank;
-	struct rockchip_pin_output_deferred *cfg;
-	int i;
-
-	of_platform_depopulate(&pdev->dev);
-
-	for (i = 0; i < info->ctrl->nr_banks; i++) {
-		bank = &info->ctrl->pin_banks[i];
-
-		mutex_lock(&bank->deferred_lock);
-		while (!list_empty(&bank->deferred_output)) {
-			cfg = list_first_entry(&bank->deferred_output,
-					       struct rockchip_pin_output_deferred, head);
-			list_del(&cfg->head);
-			kfree(cfg);
-		}
-		mutex_unlock(&bank->deferred_lock);
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -4294,14 +4048,6 @@ static const struct of_device_id rockchip_pinctrl_dt_match[] = {
 
 static struct platform_driver rockchip_pinctrl_driver = {
 	.probe		= rockchip_pinctrl_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.remove		= rockchip_pinctrl_remove,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.remove		= rockchip_pinctrl_remove,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.name	= "rockchip-pinctrl",
 		.pm = &rockchip_pinctrl_dev_pm_ops,

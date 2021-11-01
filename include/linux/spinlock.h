@@ -12,16 +12,6 @@
  *  asm/spinlock_types.h: contains the arch_spinlock_t/arch_rwlock_t and the
  *                        initializers
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- *  linux/spinlock_types_raw:
- *			  The raw types and initializers
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *  linux/spinlock_types_raw:
- *			  The raw types and initializers
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *  linux/spinlock_types.h:
  *                        defines the generic type and initializers
  *
@@ -41,16 +31,6 @@
  *                        contains the generic, simplified UP spinlock type.
  *                        (which is an empty structure on non-debug builds)
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- *  linux/spinlock_types_raw:
- *			  The raw RT types and initializers
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *  linux/spinlock_types_raw:
- *			  The raw RT types and initializers
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *  linux/spinlock_types.h:
  *                        defines the generic type and initializers
  *
@@ -328,22 +308,8 @@ static inline void do_raw_spin_unlock(raw_spinlock_t *lock) __releases(lock)
 	1 : ({ local_irq_restore(flags); 0; }); \
 })
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifndef CONFIG_PREEMPT_RT
-/* Include rwlock functions for !RT */
-#include <linux/rwlock.h>
-#endif
-=======
 /* Include rwlock functions */
 #include <linux/rwlock.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifndef CONFIG_PREEMPT_RT
-/* Include rwlock functions for !RT */
-#include <linux/rwlock.h>
-#endif
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Pull the _spin_*()/_read_*()/_write_*() functions/declarations:
@@ -354,18 +320,6 @@ static inline void do_raw_spin_unlock(raw_spinlock_t *lock) __releases(lock)
 # include <linux/spinlock_api_up.h>
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* Non PREEMPT_RT kernel, map to raw spinlocks: */
-#ifndef CONFIG_PREEMPT_RT
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* Non PREEMPT_RT kernel, map to raw spinlocks: */
-#ifndef CONFIG_PREEMPT_RT
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Map the spin_lock functions to the raw variants for PREEMPT_RT=n
  */
@@ -500,19 +454,6 @@ static __always_inline int spin_is_contended(spinlock_t *lock)
 
 #define assert_spin_locked(lock)	assert_raw_spin_locked(&(lock)->rlock)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#else  /* !CONFIG_PREEMPT_RT */
-# include <linux/spinlock_rt.h>
-#endif /* CONFIG_PREEMPT_RT */
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Pull the atomic_t declaration:
  * (asm-mips/atomic.h needs above definitions)

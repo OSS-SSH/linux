@@ -271,17 +271,9 @@ static irqreturn_t ast2600_timer_interrupt(int irq, void *dev_id)
 }
 
 static int __init fttmr010_common_init(struct device_node *np,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				       bool is_aspeed, bool is_ast2600)
-=======
 		bool is_aspeed,
 		int (*timer_shutdown)(struct clock_event_device *),
 		irq_handler_t irq_handler)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				       bool is_aspeed, bool is_ast2600)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct fttmr010 *fttmr010;
 	int irq;
@@ -382,14 +374,8 @@ static int __init fttmr010_common_init(struct device_node *np,
 				     fttmr010->tick_rate);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	fttmr010->timer_shutdown = timer_shutdown;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Setup clockevent timer (interrupt-driven) on timer 1.
 	 */
@@ -397,29 +383,8 @@ static int __init fttmr010_common_init(struct device_node *np,
 	writel(0, fttmr010->base + TIMER1_LOAD);
 	writel(0, fttmr010->base + TIMER1_MATCH1);
 	writel(0, fttmr010->base + TIMER1_MATCH2);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (is_ast2600) {
-		fttmr010->timer_shutdown = ast2600_timer_shutdown;
-		ret = request_irq(irq, ast2600_timer_interrupt,
-				  IRQF_TIMER, "FTTMR010-TIMER1",
-				  &fttmr010->clkevt);
-	} else {
-		fttmr010->timer_shutdown = fttmr010_timer_shutdown;
-		ret = request_irq(irq, fttmr010_timer_interrupt,
-				  IRQF_TIMER, "FTTMR010-TIMER1",
-				  &fttmr010->clkevt);
-	}
-<<<<<<< HEAD
-=======
 	ret = request_irq(irq, irq_handler, IRQF_TIMER,
 			  "FTTMR010-TIMER1", &fttmr010->clkevt);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		pr_err("FTTMR010-TIMER1 no IRQ\n");
 		goto out_unmap;
@@ -467,47 +432,23 @@ out_disable_clock:
 
 static __init int ast2600_timer_init(struct device_node *np)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return fttmr010_common_init(np, true, true);
-=======
 	return fttmr010_common_init(np, true,
 			ast2600_timer_shutdown,
 			ast2600_timer_interrupt);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return fttmr010_common_init(np, true, true);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static __init int aspeed_timer_init(struct device_node *np)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return fttmr010_common_init(np, true, false);
-=======
 	return fttmr010_common_init(np, true,
 			fttmr010_timer_shutdown,
 			fttmr010_timer_interrupt);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return fttmr010_common_init(np, true, false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static __init int fttmr010_timer_init(struct device_node *np)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return fttmr010_common_init(np, false, false);
-=======
 	return fttmr010_common_init(np, false,
 			fttmr010_timer_shutdown,
 			fttmr010_timer_interrupt);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return fttmr010_common_init(np, false, false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 TIMER_OF_DECLARE(fttmr010, "faraday,fttmr010", fttmr010_timer_init);

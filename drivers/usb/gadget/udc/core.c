@@ -1003,34 +1003,6 @@ int usb_gadget_ep_match_desc(struct usb_gadget *gadget,
 }
 EXPORT_SYMBOL_GPL(usb_gadget_ep_match_desc);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/**
- * usb_gadget_check_config - checks if the UDC can support the binded
- *	configuration
- * @gadget: controller to check the USB configuration
- *
- * Ensure that a UDC is able to support the requested resources by a
- * configuration, and that there are no resource limitations, such as
- * internal memory allocated to all requested endpoints.
- *
- * Returns zero on success, else a negative errno.
- */
-int usb_gadget_check_config(struct usb_gadget *gadget)
-{
-	if (gadget->ops->check_config)
-		return gadget->ops->check_config(gadget);
-	return 0;
-}
-EXPORT_SYMBOL_GPL(usb_gadget_check_config);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* ------------------------------------------------------------------------- */
 
 static void usb_gadget_state_work(struct work_struct *work)

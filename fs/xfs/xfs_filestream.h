@@ -21,15 +21,7 @@ static inline int
 xfs_inode_is_filestream(
 	struct xfs_inode	*ip)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return xfs_has_filestreams(ip->i_mount) ||
-=======
 	return (ip->i_mount->m_flags & XFS_MOUNT_FILESTREAMS) ||
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return xfs_has_filestreams(ip->i_mount) ||
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		(ip->i_diflags & XFS_DIFLAG_FILESTREAM);
 }
 

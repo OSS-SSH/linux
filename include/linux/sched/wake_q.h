@@ -42,22 +42,8 @@ struct wake_q_head {
 
 #define WAKE_Q_TAIL ((struct wake_q_node *) 0x01)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define WAKE_Q_HEAD_INITIALIZER(name)				\
-	{ WAKE_Q_TAIL, &name.first }
-
-#define DEFINE_WAKE_Q(name)					\
-	struct wake_q_head name = WAKE_Q_HEAD_INITIALIZER(name)
-<<<<<<< HEAD
-=======
 #define DEFINE_WAKE_Q(name)				\
 	struct wake_q_head name = { WAKE_Q_TAIL, &name.first }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static inline void wake_q_init(struct wake_q_head *head)
 {

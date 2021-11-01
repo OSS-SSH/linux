@@ -255,29 +255,11 @@ vfio_unregister_group_dev() respectively::
 	void vfio_init_group_dev(struct vfio_device *device,
 				struct device *dev,
 				const struct vfio_device_ops *ops);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	void vfio_uninit_group_dev(struct vfio_device *device);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	void vfio_uninit_group_dev(struct vfio_device *device);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int vfio_register_group_dev(struct vfio_device *device);
 	void vfio_unregister_group_dev(struct vfio_device *device);
 
 The driver should embed the vfio_device in its own structure and call
-<<<<<<< HEAD
-<<<<<<< HEAD
-vfio_init_group_dev() to pre-configure it before going to registration
-and call vfio_uninit_group_dev() after completing the un-registration.
-=======
 vfio_init_group_dev() to pre-configure it before going to registration.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-vfio_init_group_dev() to pre-configure it before going to registration
-and call vfio_uninit_group_dev() after completing the un-registration.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 vfio_register_group_dev() indicates to the core to begin tracking the
 iommu_group of the specified dev and register the dev as owned by a VFIO bus
 driver. Once vfio_register_group_dev() returns it is possible for userspace to

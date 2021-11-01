@@ -122,14 +122,6 @@ endif
 
 LDFLAGS_vmlinux-y := -Bstatic
 LDFLAGS_vmlinux-$(CONFIG_RELOCATABLE) := -pie
-<<<<<<< HEAD
-<<<<<<< HEAD
-LDFLAGS_vmlinux-$(CONFIG_RELOCATABLE) += -z notext
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-LDFLAGS_vmlinux-$(CONFIG_RELOCATABLE) += -z notext
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 LDFLAGS_vmlinux	:= $(LDFLAGS_vmlinux-y)
 
 ifdef CONFIG_PPC64
@@ -415,17 +407,7 @@ endef
 
 PHONY += install
 install:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sh -x $(srctree)/$(boot)/install.sh "$(KERNELRELEASE)" vmlinux \
-	System.map "$(INSTALL_PATH)"
-=======
 	$(Q)$(MAKE) $(build)=$(boot) install
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	sh -x $(srctree)/$(boot)/install.sh "$(KERNELRELEASE)" vmlinux \
-	System.map "$(INSTALL_PATH)"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 archclean:
 	$(Q)$(MAKE) $(clean)=$(boot)

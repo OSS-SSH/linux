@@ -34,14 +34,6 @@ parameters, info versions, and other features it supports.
    :maxdepth: 1
 
    bnxt
-<<<<<<< HEAD
-<<<<<<< HEAD
-   hns3
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-   hns3
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    ionic
    ice
    mlx4
@@ -50,13 +42,7 @@ parameters, info versions, and other features it supports.
    mv88e6xxx
    netdevsim
    nfp
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
    sja1105
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    qed
    ti-cpsw-switch
    am65-nuss-cpsw-switch

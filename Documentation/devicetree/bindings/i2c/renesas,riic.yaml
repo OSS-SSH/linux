@@ -27,31 +27,6 @@ properties:
 
   interrupts:
     items:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-      - description: Transmit End Interrupt
-      - description: Receive Data Full Interrupt
-      - description: Transmit Data Empty Interrupt
-      - description: Stop Condition Detection Interrupt
-      - description: Start Condition Detection Interrupt
-      - description: NACK Reception Interrupt
-      - description: Arbitration-Lost Interrupt
-      - description: Timeout Interrupt
-
-  interrupt-names:
-    items:
-      - const: tei
-      - const: ri
-      - const: ti
-      - const: spi
-      - const: sti
-      - const: naki
-      - const: ali
-      - const: tmoi
-<<<<<<< HEAD
-=======
       - description: Transmit End Interrupt (TEI)
       - description: Receive Data Full Interrupt (RI)
       - description: Transmit Data Empty Interrupt (TI)
@@ -60,9 +35,6 @@ properties:
       - description: NACK Reception Interrupt (NAKI)
       - description: Arbitration-Lost Interrupt (ALI)
       - description: Timeout Interrupt (TMOI)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   clock-frequency:
     description:
@@ -79,14 +51,6 @@ required:
   - compatible
   - reg
   - interrupts
-<<<<<<< HEAD
-<<<<<<< HEAD
-  - interrupt-names
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  - interrupt-names
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   - clocks
   - clock-frequency
   - power-domains
@@ -121,16 +85,6 @@ examples:
                          <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>,
                          <GIC_SPI 163 IRQ_TYPE_LEVEL_HIGH>,
                          <GIC_SPI 164 IRQ_TYPE_LEVEL_HIGH>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-            interrupt-names = "tei", "ri", "ti", "spi", "sti", "naki", "ali",
-                              "tmoi";
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-            interrupt-names = "tei", "ri", "ti", "spi", "sti", "naki", "ali",
-                              "tmoi";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             clocks = <&mstp9_clks R7S72100_CLK_I2C0>;
             clock-frequency = <100000>;
             power-domains = <&cpg_clocks>;

@@ -137,15 +137,7 @@ int afs_write_end(struct file *file, struct address_space *mapping,
 		write_seqlock(&vnode->cb_lock);
 		i_size = i_size_read(&vnode->vfs_inode);
 		if (maybe_i_size > i_size)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			afs_set_i_size(vnode, maybe_i_size);
-=======
 			i_size_write(&vnode->vfs_inode, maybe_i_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			afs_set_i_size(vnode, maybe_i_size);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		write_sequnlock(&vnode->cb_lock);
 	}
 
@@ -479,40 +471,13 @@ static void afs_extend_writeback(struct address_space *mapping,
 			}
 
 			/* Has the page moved or been split? */
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (unlikely(page != xas_reload(&xas))) {
-				put_page(page);
-				break;
-			}
-
-			if (!trylock_page(page)) {
-				put_page(page);
-				break;
-			}
-			if (!PageDirty(page) || PageWriteback(page)) {
-				unlock_page(page);
-				put_page(page);
-=======
 			if (unlikely(page != xas_reload(&xas)))
-=======
-			if (unlikely(page != xas_reload(&xas))) {
-				put_page(page);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				break;
-			}
 
-			if (!trylock_page(page)) {
-				put_page(page);
+			if (!trylock_page(page))
 				break;
-			}
 			if (!PageDirty(page) || PageWriteback(page)) {
 				unlock_page(page);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				put_page(page);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				break;
 			}
 
@@ -522,14 +487,6 @@ static void afs_extend_writeback(struct address_space *mapping,
 			t = afs_page_dirty_to(page, priv);
 			if (f != 0 && !new_content) {
 				unlock_page(page);
-<<<<<<< HEAD
-<<<<<<< HEAD
-				put_page(page);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				put_page(page);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				break;
 			}
 
@@ -814,26 +771,6 @@ int afs_writepages(struct address_space *mapping,
 	if (wbc->range_cyclic) {
 		start = mapping->writeback_index * PAGE_SIZE;
 		ret = afs_writepages_region(mapping, wbc, start, LLONG_MAX, &next);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (ret == 0) {
-			mapping->writeback_index = next / PAGE_SIZE;
-			if (start > 0 && wbc->nr_to_write > 0) {
-				ret = afs_writepages_region(mapping, wbc, 0,
-							    start, &next);
-				if (ret == 0)
-					mapping->writeback_index =
-						next / PAGE_SIZE;
-			}
-		}
-<<<<<<< HEAD
-	} else if (wbc->range_start == 0 && wbc->range_end == LLONG_MAX) {
-		ret = afs_writepages_region(mapping, wbc, 0, LLONG_MAX, &next);
-		if (wbc->nr_to_write > 0 && ret == 0)
-			mapping->writeback_index = next / PAGE_SIZE;
-=======
 		if (start > 0 && wbc->nr_to_write > 0 && ret == 0)
 			ret = afs_writepages_region(mapping, wbc, 0, start,
 						    &next);
@@ -842,13 +779,6 @@ int afs_writepages(struct address_space *mapping,
 		ret = afs_writepages_region(mapping, wbc, 0, LLONG_MAX, &next);
 		if (wbc->nr_to_write > 0)
 			mapping->writeback_index = next;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} else if (wbc->range_start == 0 && wbc->range_end == LLONG_MAX) {
-		ret = afs_writepages_region(mapping, wbc, 0, LLONG_MAX, &next);
-		if (wbc->nr_to_write > 0 && ret == 0)
-			mapping->writeback_index = next / PAGE_SIZE;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		ret = afs_writepages_region(mapping, wbc,
 					    wbc->range_start, wbc->range_end, &next);
@@ -865,14 +795,6 @@ int afs_writepages(struct address_space *mapping,
 ssize_t afs_file_write(struct kiocb *iocb, struct iov_iter *from)
 {
 	struct afs_vnode *vnode = AFS_FS_I(file_inode(iocb->ki_filp));
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct afs_file *af = iocb->ki_filp->private_data;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct afs_file *af = iocb->ki_filp->private_data;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ssize_t result;
 	size_t count = iov_iter_count(from);
 
@@ -888,19 +810,6 @@ ssize_t afs_file_write(struct kiocb *iocb, struct iov_iter *from)
 	if (!count)
 		return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	result = afs_validate(vnode, af->key);
-	if (result < 0)
-		return result;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	result = generic_file_write_iter(iocb, from);
 
 	_leave(" = %zd", result);
@@ -914,38 +823,13 @@ ssize_t afs_file_write(struct kiocb *iocb, struct iov_iter *from)
  */
 int afs_fsync(struct file *file, loff_t start, loff_t end, int datasync)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct afs_vnode *vnode = AFS_FS_I(file_inode(file));
-	struct afs_file *af = file->private_data;
-	int ret;
-=======
 	struct inode *inode = file_inode(file);
 	struct afs_vnode *vnode = AFS_FS_I(inode);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct afs_vnode *vnode = AFS_FS_I(file_inode(file));
-	struct afs_file *af = file->private_data;
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	_enter("{%llx:%llu},{n=%pD},%d",
 	       vnode->fid.vid, vnode->fid.vnode, file,
 	       datasync);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ret = afs_validate(vnode, af->key);
-	if (ret < 0)
-		return ret;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return file_write_and_wait_range(file, start, end);
 }
 
@@ -959,29 +843,11 @@ vm_fault_t afs_page_mkwrite(struct vm_fault *vmf)
 	struct file *file = vmf->vma->vm_file;
 	struct inode *inode = file_inode(file);
 	struct afs_vnode *vnode = AFS_FS_I(inode);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct afs_file *af = file->private_data;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct afs_file *af = file->private_data;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long priv;
 	vm_fault_t ret = VM_FAULT_RETRY;
 
 	_enter("{{%llx:%llu}},{%lx}", vnode->fid.vid, vnode->fid.vnode, page->index);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	afs_validate(vnode, af->key);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	afs_validate(vnode, af->key);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sb_start_pagefault(inode->i_sb);
 
 	/* Wait for the page to be written to the cache before we allow it to
@@ -1083,16 +949,8 @@ int afs_launder_page(struct page *page)
 		iov_iter_bvec(&iter, WRITE, bv, 1, bv[0].bv_len);
 
 		trace_afs_page_dirty(vnode, tracepoint_string("launder"), page);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = afs_store_data(vnode, &iter, page_offset(page) + f, true);
-=======
 		ret = afs_store_data(vnode, &iter, (loff_t)page->index * PAGE_SIZE,
 				     true);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = afs_store_data(vnode, &iter, page_offset(page) + f, true);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	trace_afs_page_dirty(vnode, tracepoint_string("laundered"), page);

@@ -17,13 +17,5 @@
  */
 selftest(engine_cs, intel_engine_cs_perf_selftests)
 selftest(request, i915_request_perf_selftests)
-<<<<<<< HEAD
-<<<<<<< HEAD
-selftest(migrate, intel_migrate_perf_selftests)
-=======
 selftest(blt, i915_gem_object_blt_perf_selftests)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-selftest(migrate, intel_migrate_perf_selftests)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 selftest(region, intel_memory_region_perf_selftests)

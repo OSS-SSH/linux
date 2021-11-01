@@ -140,13 +140,7 @@ static const struct drm_simple_display_pipe_funcs ili9341_pipe_funcs = {
 	.enable = yx240qv29_enable,
 	.disable = mipi_dbi_pipe_disable,
 	.update = mipi_dbi_pipe_update,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.prepare_fb = drm_gem_simple_display_pipe_prepare_fb,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct drm_display_mode yx240qv29_mode = {

@@ -1285,16 +1285,8 @@ qed_rdma_create_qp(void *rdma_cxt,
 
 	if (!rdma_cxt || !in_params || !out_params ||
 	    !p_hwfn->p_rdma_info->active) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		pr_err("qed roce create qp failed due to NULL entry (rdma_cxt=%p, in=%p, out=%p, roce_info=?\n",
-=======
 		DP_ERR(p_hwfn->cdev,
 		       "qed roce create qp failed due to NULL entry (rdma_cxt=%p, in=%p, out=%p, roce_info=?\n",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		pr_err("qed roce create qp failed due to NULL entry (rdma_cxt=%p, in=%p, out=%p, roce_info=?\n",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       rdma_cxt, in_params, out_params);
 		return NULL;
 	}

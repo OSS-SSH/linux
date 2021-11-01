@@ -346,15 +346,7 @@ static long kvmppc_tce_to_ua(struct kvm *kvm, unsigned long tce,
 	unsigned long gfn = tce >> PAGE_SHIFT;
 	struct kvm_memory_slot *memslot;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	memslot = __gfn_to_memslot(kvm_memslots(kvm), gfn);
-=======
 	memslot = search_memslots(kvm_memslots(kvm), gfn);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	memslot = __gfn_to_memslot(kvm_memslots(kvm), gfn);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!memslot)
 		return -EINVAL;
 

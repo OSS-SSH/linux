@@ -269,29 +269,11 @@ enum bup_vch_sel {
 
 /*
  * ADC for the battery thermistor.
-<<<<<<< HEAD
-<<<<<<< HEAD
- * When using the AB8500_ADC_THERM_BATCTRL the battery ID resistor is combined
-=======
  * When using the ABx500_ADC_THERM_BATCTRL the battery ID resistor is combined
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * When using the AB8500_ADC_THERM_BATCTRL the battery ID resistor is combined
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * with a NTC resistor to both identify the battery and to measure its
  * temperature. Different phone manufactures uses different techniques to both
  * identify the battery and to read its temperature.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-enum ab8500_adc_therm {
-	AB8500_ADC_THERM_BATCTRL,
-	AB8500_ADC_THERM_BATTEMP,
-};
-
-/**
- * struct ab8500_res_to_temp - defines one point in a temp to res curve. To
-=======
 enum abx500_adc_therm {
 	ABx500_ADC_THERM_BATCTRL,
 	ABx500_ADC_THERM_BATTEMP,
@@ -299,79 +281,31 @@ enum abx500_adc_therm {
 
 /**
  * struct abx500_res_to_temp - defines one point in a temp to res curve. To
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-enum ab8500_adc_therm {
-	AB8500_ADC_THERM_BATCTRL,
-	AB8500_ADC_THERM_BATTEMP,
-};
-
-/**
- * struct ab8500_res_to_temp - defines one point in a temp to res curve. To
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * be used in battery packs that combines the identification resistor with a
  * NTC resistor.
  * @temp:			battery pack temperature in Celsius
  * @resist:			NTC resistor net total resistance
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct ab8500_res_to_temp {
-=======
 struct abx500_res_to_temp {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct ab8500_res_to_temp {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int temp;
 	int resist;
 };
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * struct ab8500_v_to_cap - Table for translating voltage to capacity
- * @voltage:		Voltage in mV
- * @capacity:		Capacity in percent
- */
-struct ab8500_v_to_cap {
-=======
  * struct abx500_v_to_cap - Table for translating voltage to capacity
  * @voltage:		Voltage in mV
  * @capacity:		Capacity in percent
  */
 struct abx500_v_to_cap {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * struct ab8500_v_to_cap - Table for translating voltage to capacity
- * @voltage:		Voltage in mV
- * @capacity:		Capacity in percent
- */
-struct ab8500_v_to_cap {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int voltage;
 	int capacity;
 };
 
 /* Forward declaration */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct ab8500_fg;
-
-/**
- * struct ab8500_fg_parameters - Fuel gauge algorithm parameters, in seconds
-=======
 struct abx500_fg;
 
 /**
  * struct abx500_fg_parameters - Fuel gauge algorithm parameters, in seconds
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct ab8500_fg;
-
-/**
- * struct ab8500_fg_parameters - Fuel gauge algorithm parameters, in seconds
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * if not specified
  * @recovery_sleep_timer:	Time between measurements while recovering
  * @recovery_total_time:	Total recovery time
@@ -399,15 +333,7 @@ struct ab8500_fg;
  * @pcut_max_restart:		Max number of restarts
  * @pcut_debounce_time:		Sets battery debounce time
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct ab8500_fg_parameters {
-=======
 struct abx500_fg_parameters {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct ab8500_fg_parameters {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int recovery_sleep_timer;
 	int recovery_total_time;
 	int init_timer;
@@ -431,29 +357,13 @@ struct ab8500_fg_parameters {
 };
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * struct ab8500_charger_maximization - struct used by the board config.
-=======
  * struct abx500_charger_maximization - struct used by the board config.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * struct ab8500_charger_maximization - struct used by the board config.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @use_maxi:		Enable maximization for this battery type
  * @maxi_chg_curr:	Maximum charger current allowed
  * @maxi_wait_cycles:	cycles to wait before setting charger current
  * @charger_curr_step	delta between two charger current settings (mA)
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct ab8500_maxim_parameters {
-=======
 struct abx500_maxim_parameters {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct ab8500_maxim_parameters {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool ena_maxi;
 	int chg_curr;
 	int wait_cycles;
@@ -461,15 +371,7 @@ struct ab8500_maxim_parameters {
 };
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * struct ab8500_battery_type - different batteries supported
-=======
  * struct abx500_battery_type - different batteries supported
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * struct ab8500_battery_type - different batteries supported
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @name:			battery technology
  * @resis_high:			battery upper resistance limit
  * @resis_low:			battery lower resistance limit
@@ -498,15 +400,7 @@ struct ab8500_maxim_parameters {
  * @n_batres_tbl_elements	number of elements in the batres_tbl
  * @batres_tbl			battery internal resistance vs temperature table
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct ab8500_battery_type {
-=======
 struct abx500_battery_type {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct ab8500_battery_type {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int name;
 	int resis_high;
 	int resis_low;
@@ -527,50 +421,22 @@ struct ab8500_battery_type {
 	int low_high_vol_lvl;
 	int battery_resistance;
 	int n_temp_tbl_elements;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct ab8500_res_to_temp *r_to_t_tbl;
-	int n_v_cap_tbl_elements;
-	const struct ab8500_v_to_cap *v_to_cap_tbl;
-=======
 	const struct abx500_res_to_temp *r_to_t_tbl;
 	int n_v_cap_tbl_elements;
 	const struct abx500_v_to_cap *v_to_cap_tbl;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct ab8500_res_to_temp *r_to_t_tbl;
-	int n_v_cap_tbl_elements;
-	const struct ab8500_v_to_cap *v_to_cap_tbl;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int n_batres_tbl_elements;
 	const struct batres_vs_temp *batres_tbl;
 };
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * struct ab8500_bm_capacity_levels - ab8500 capacity level data
-=======
  * struct abx500_bm_capacity_levels - abx500 capacity level data
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * struct ab8500_bm_capacity_levels - ab8500 capacity level data
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @critical:		critical capacity level in percent
  * @low:		low capacity level in percent
  * @normal:		normal capacity level in percent
  * @high:		high capacity level in percent
  * @full:		full capacity level in percent
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct ab8500_bm_capacity_levels {
-=======
 struct abx500_bm_capacity_levels {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct ab8500_bm_capacity_levels {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int critical;
 	int low;
 	int normal;
@@ -579,29 +445,13 @@ struct ab8500_bm_capacity_levels {
 };
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * struct ab8500_bm_charger_parameters - Charger specific parameters
-=======
  * struct abx500_bm_charger_parameters - Charger specific parameters
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * struct ab8500_bm_charger_parameters - Charger specific parameters
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @usb_volt_max:	maximum allowed USB charger voltage in mV
  * @usb_curr_max:	maximum allowed USB charger current in mA
  * @ac_volt_max:	maximum allowed AC charger voltage in mV
  * @ac_curr_max:	maximum allowed AC charger current in mA
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct ab8500_bm_charger_parameters {
-=======
 struct abx500_bm_charger_parameters {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct ab8500_bm_charger_parameters {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int usb_volt_max;
 	int usb_curr_max;
 	int ac_volt_max;
@@ -609,15 +459,7 @@ struct ab8500_bm_charger_parameters {
 };
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * struct ab8500_bm_data - ab8500 battery management data
-=======
  * struct abx500_bm_data - abx500 battery management data
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * struct ab8500_bm_data - ab8500 battery management data
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @temp_under		under this temp, charging is stopped
  * @temp_low		between this temp and temp_under charging is reduced
  * @temp_high		between this temp and temp_over charging is reduced
@@ -631,15 +473,7 @@ struct ab8500_bm_charger_parameters {
  * @bkup_bat_i		current which we charge the backup battery with
  * @no_maintenance	indicates that maintenance charging is disabled
  * @capacity_scaling    indicates whether capacity scaling is to be used
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @ab8500_adc_therm	placement of thermistor, batctrl or battemp adc
-=======
  * @abx500_adc_therm	placement of thermistor, batctrl or battemp adc
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @ab8500_adc_therm	placement of thermistor, batctrl or battemp adc
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @chg_unknown_bat	flag to enable charging of unknown batteries
  * @enable_overshoot	flag to enable VBAT overshoot control
  * @auto_trig		flag to enable auto adc trigger
@@ -660,15 +494,7 @@ struct ab8500_bm_charger_parameters {
  * @chg_params		charger parameters
  * @fg_params		fuel gauge parameters
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct ab8500_bm_data {
-=======
 struct abx500_bm_data {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct ab8500_bm_data {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int temp_under;
 	int temp_low;
 	int temp_high;
@@ -685,15 +511,7 @@ struct ab8500_bm_data {
 	bool chg_unknown_bat;
 	bool enable_overshoot;
 	bool auto_trig;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	enum ab8500_adc_therm adc_therm;
-=======
 	enum abx500_adc_therm adc_therm;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	enum ab8500_adc_therm adc_therm;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int fg_res;
 	int n_btypes;
 	int batt_id;
@@ -705,25 +523,11 @@ struct ab8500_bm_data {
 	int n_chg_in_curr;
 	int *chg_output_curr;
 	int *chg_input_curr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	const struct ab8500_maxim_parameters *maxi;
-	const struct ab8500_bm_capacity_levels *cap_levels;
-	struct ab8500_battery_type *bat_type;
-	const struct ab8500_bm_charger_parameters *chg_params;
-	const struct ab8500_fg_parameters *fg_params;
-<<<<<<< HEAD
-=======
 	const struct abx500_maxim_parameters *maxi;
 	const struct abx500_bm_capacity_levels *cap_levels;
 	struct abx500_battery_type *bat_type;
 	const struct abx500_bm_charger_parameters *chg_params;
 	const struct abx500_fg_parameters *fg_params;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum {
@@ -757,10 +561,6 @@ struct batres_vs_temp {
 /* Forward declaration */
 struct ab8500_fg;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern struct ab8500_bm_data ab8500_bm_data;
-=======
 /**
  * struct ab8500_fg_parameters - Fuel gauge algorithm parameters, in seconds
  * if not specified
@@ -915,10 +715,6 @@ struct ab8500_bm_data {
 };
 
 extern struct abx500_bm_data ab8500_bm_data;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern struct ab8500_bm_data ab8500_bm_data;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void ab8500_charger_usb_state_changed(u8 bm_usb_state, u16 mA);
 struct ab8500_fg *ab8500_fg_get(void);
@@ -929,26 +725,10 @@ int ab8500_fg_inst_curr_started(struct ab8500_fg *di);
 int ab8500_fg_inst_curr_done(struct ab8500_fg *di);
 int ab8500_bm_of_probe(struct device *dev,
 		       struct device_node *np,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		       struct ab8500_bm_data *bm);
-
-extern struct platform_driver ab8500_fg_driver;
-extern struct platform_driver ab8500_btemp_driver;
-extern struct platform_driver ab8500_chargalg_driver;
-=======
 		       struct abx500_bm_data *bm);
 
 extern struct platform_driver ab8500_fg_driver;
 extern struct platform_driver ab8500_btemp_driver;
 extern struct platform_driver abx500_chargalg_driver;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		       struct ab8500_bm_data *bm);
-
-extern struct platform_driver ab8500_fg_driver;
-extern struct platform_driver ab8500_btemp_driver;
-extern struct platform_driver ab8500_chargalg_driver;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _AB8500_CHARGER_H_ */

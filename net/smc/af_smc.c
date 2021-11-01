@@ -795,15 +795,7 @@ static int smc_connect_rdma(struct smc_sock *smc,
 			reason_code = SMC_CLC_DECL_NOSRVLINK;
 			goto connect_abort;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		smc_switch_link_and_count(&smc->conn, link);
-=======
 		smc->conn.lnk = link;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		smc_switch_link_and_count(&smc->conn, link);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* create send buffer and rmb */

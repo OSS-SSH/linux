@@ -407,15 +407,7 @@ frequency_sample(struct intel_gt *gt, unsigned int period_ns)
 
 	if (pmu->enable & config_mask(I915_PMU_REQUESTED_FREQUENCY)) {
 		add_sample_mult(&pmu->sample[__I915_SAMPLE_FREQ_REQ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-				intel_rps_get_requested_frequency(rps),
-=======
 				intel_gpu_freq(rps, rps->cur_freq),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				intel_rps_get_requested_frequency(rps),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				period_ns / 1000);
 	}
 
@@ -1096,15 +1088,7 @@ static int i915_pmu_cpu_offline(unsigned int cpu, struct hlist_node *node)
 
 static enum cpuhp_state cpuhp_slot = CPUHP_INVALID;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int i915_pmu_init(void)
-=======
 void i915_pmu_init(void)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int i915_pmu_init(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int ret;
 
@@ -1117,16 +1101,6 @@ int i915_pmu_init(void)
 			  ret);
 	else
 		cpuhp_slot = ret;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	return 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void i915_pmu_exit(void)

@@ -242,15 +242,7 @@ scsi_abort_command(struct scsi_cmnd *scmd)
  */
 static void scsi_eh_reset(struct scsi_cmnd *scmd)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!blk_rq_is_passthrough(scsi_cmd_to_rq(scmd))) {
-=======
 	if (!blk_rq_is_passthrough(scmd->request)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!blk_rq_is_passthrough(scsi_cmd_to_rq(scmd))) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct scsi_driver *sdrv = scsi_cmd_to_driver(scmd);
 		if (sdrv->eh_reset)
 			sdrv->eh_reset(scmd);
@@ -1190,15 +1182,7 @@ static enum scsi_disposition scsi_request_sense(struct scsi_cmnd *scmd)
 static enum scsi_disposition
 scsi_eh_action(struct scsi_cmnd *scmd, enum scsi_disposition rtn)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!blk_rq_is_passthrough(scsi_cmd_to_rq(scmd))) {
-=======
 	if (!blk_rq_is_passthrough(scmd->request)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!blk_rq_is_passthrough(scsi_cmd_to_rq(scmd))) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct scsi_driver *sdrv = scsi_cmd_to_driver(scmd);
 		if (sdrv->eh_action)
 			rtn = sdrv->eh_action(scmd, rtn);
@@ -1766,51 +1750,21 @@ static void scsi_eh_offline_sdevs(struct list_head *work_q,
  */
 int scsi_noretry_cmd(struct scsi_cmnd *scmd)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct request *req = scsi_cmd_to_rq(scmd);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct request *req = scsi_cmd_to_rq(scmd);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (host_byte(scmd->result)) {
 	case DID_OK:
 		break;
 	case DID_TIME_OUT:
 		goto check_type;
 	case DID_BUS_BUSY:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return req->cmd_flags & REQ_FAILFAST_TRANSPORT;
-	case DID_PARITY:
-		return req->cmd_flags & REQ_FAILFAST_DEV;
-=======
 		return (scmd->request->cmd_flags & REQ_FAILFAST_TRANSPORT);
 	case DID_PARITY:
 		return (scmd->request->cmd_flags & REQ_FAILFAST_DEV);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return req->cmd_flags & REQ_FAILFAST_TRANSPORT;
-	case DID_PARITY:
-		return req->cmd_flags & REQ_FAILFAST_DEV;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case DID_ERROR:
 		if (get_status_byte(scmd) == SAM_STAT_RESERVATION_CONFLICT)
 			return 0;
 		fallthrough;
 	case DID_SOFT_ERROR:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return req->cmd_flags & REQ_FAILFAST_DRIVER;
-=======
 		return (scmd->request->cmd_flags & REQ_FAILFAST_DRIVER);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return req->cmd_flags & REQ_FAILFAST_DRIVER;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (!scsi_status_is_check_condition(scmd->result))
@@ -1821,16 +1775,8 @@ check_type:
 	 * assume caller has checked sense and determined
 	 * the check condition was retryable.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (req->cmd_flags & REQ_FAILFAST_DEV || blk_rq_is_passthrough(req))
-=======
 	if (scmd->request->cmd_flags & REQ_FAILFAST_DEV ||
 	    blk_rq_is_passthrough(scmd->request))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (req->cmd_flags & REQ_FAILFAST_DEV || blk_rq_is_passthrough(req))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 1;
 
 	return 0;
@@ -2430,13 +2376,7 @@ scsi_ioctl_reset(struct scsi_device *dev, int __user *arg)
 
 	scmd = (struct scsi_cmnd *)(rq + 1);
 	scsi_init_command(dev, scmd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	scmd->request = rq;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	scmd->cmnd = scsi_req(rq)->cmd;
 
 	scmd->scsi_done		= scsi_reset_provider_done_command;

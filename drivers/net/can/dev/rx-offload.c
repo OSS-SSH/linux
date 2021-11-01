@@ -1,15 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /* Copyright (c) 2014      Protonic Holland,
  *                         David Jander
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Copyright (C) 2014-2021 Pengutronix,
-=======
  * Copyright (C) 2014-2017 Pengutronix,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Copyright (C) 2014-2021 Pengutronix,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *                         Marc Kleine-Budde <kernel@pengutronix.de>
  */
 
@@ -182,20 +174,10 @@ can_rx_offload_offload_one(struct can_rx_offload *offload, unsigned int n)
 int can_rx_offload_irq_offload_timestamp(struct can_rx_offload *offload,
 					 u64 pending)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int i;
-	int received = 0;
-=======
 	struct sk_buff_head skb_queue;
 	unsigned int i;
 
 	__skb_queue_head_init(&skb_queue);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int i;
-	int received = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = offload->mb_first;
 	     can_rx_offload_le(offload, i, offload->mb_last);
@@ -209,15 +191,6 @@ int can_rx_offload_irq_offload_timestamp(struct can_rx_offload *offload,
 		if (IS_ERR_OR_NULL(skb))
 			continue;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		__skb_queue_add_sort(&offload->skb_irq_queue, skb,
-				     can_rx_offload_compare);
-		received++;
-	}
-
-	return received;
-=======
 		__skb_queue_add_sort(&skb_queue, skb, can_rx_offload_compare);
 	}
 
@@ -238,15 +211,6 @@ int can_rx_offload_irq_offload_timestamp(struct can_rx_offload *offload,
 	}
 
 	return skb_queue_len(&skb_queue);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		__skb_queue_add_sort(&offload->skb_irq_queue, skb,
-				     can_rx_offload_compare);
-		received++;
-	}
-
-	return received;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(can_rx_offload_irq_offload_timestamp);
 
@@ -262,13 +226,6 @@ int can_rx_offload_irq_offload_fifo(struct can_rx_offload *offload)
 		if (!skb)
 			break;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		__skb_queue_tail(&offload->skb_irq_queue, skb);
-		received++;
-	}
-
-=======
 		skb_queue_tail(&offload->skb_queue, skb);
 		received++;
 	}
@@ -276,13 +233,6 @@ int can_rx_offload_irq_offload_fifo(struct can_rx_offload *offload)
 	if (received)
 		can_rx_offload_schedule(offload);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		__skb_queue_tail(&offload->skb_irq_queue, skb);
-		received++;
-	}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return received;
 }
 EXPORT_SYMBOL_GPL(can_rx_offload_irq_offload_fifo);
@@ -291,13 +241,7 @@ int can_rx_offload_queue_sorted(struct can_rx_offload *offload,
 				struct sk_buff *skb, u32 timestamp)
 {
 	struct can_rx_offload_cb *cb;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	unsigned long flags;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (skb_queue_len(&offload->skb_queue) >
 	    offload->skb_queue_len_max) {
@@ -308,21 +252,11 @@ int can_rx_offload_queue_sorted(struct can_rx_offload *offload,
 	cb = can_rx_offload_get_cb(skb);
 	cb->timestamp = timestamp;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__skb_queue_add_sort(&offload->skb_irq_queue, skb,
-			     can_rx_offload_compare);
-=======
 	spin_lock_irqsave(&offload->skb_queue.lock, flags);
 	__skb_queue_add_sort(&offload->skb_queue, skb, can_rx_offload_compare);
 	spin_unlock_irqrestore(&offload->skb_queue.lock, flags);
 
 	can_rx_offload_schedule(offload);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__skb_queue_add_sort(&offload->skb_irq_queue, skb,
-			     can_rx_offload_compare);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -361,74 +295,13 @@ int can_rx_offload_queue_tail(struct can_rx_offload *offload,
 		return -ENOBUFS;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__skb_queue_tail(&offload->skb_irq_queue, skb);
-=======
 	skb_queue_tail(&offload->skb_queue, skb);
 	can_rx_offload_schedule(offload);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__skb_queue_tail(&offload->skb_irq_queue, skb);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
 EXPORT_SYMBOL_GPL(can_rx_offload_queue_tail);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-void can_rx_offload_irq_finish(struct can_rx_offload *offload)
-{
-	unsigned long flags;
-	int queue_len;
-
-	if (skb_queue_empty_lockless(&offload->skb_irq_queue))
-		return;
-
-	spin_lock_irqsave(&offload->skb_queue.lock, flags);
-	skb_queue_splice_tail_init(&offload->skb_irq_queue, &offload->skb_queue);
-	spin_unlock_irqrestore(&offload->skb_queue.lock, flags);
-
-	queue_len = skb_queue_len(&offload->skb_queue);
-	if (queue_len > offload->skb_queue_len_max / 8)
-		netdev_dbg(offload->dev, "%s: queue_len=%d\n",
-			   __func__, queue_len);
-
-	napi_schedule(&offload->napi);
-}
-EXPORT_SYMBOL_GPL(can_rx_offload_irq_finish);
-
-void can_rx_offload_threaded_irq_finish(struct can_rx_offload *offload)
-{
-	unsigned long flags;
-	int queue_len;
-
-	if (skb_queue_empty_lockless(&offload->skb_irq_queue))
-		return;
-
-	spin_lock_irqsave(&offload->skb_queue.lock, flags);
-	skb_queue_splice_tail_init(&offload->skb_irq_queue, &offload->skb_queue);
-	spin_unlock_irqrestore(&offload->skb_queue.lock, flags);
-
-	queue_len = skb_queue_len(&offload->skb_queue);
-	if (queue_len > offload->skb_queue_len_max / 8)
-		netdev_dbg(offload->dev, "%s: queue_len=%d\n",
-			   __func__, queue_len);
-
-	local_bh_disable();
-	napi_schedule(&offload->napi);
-	local_bh_enable();
-}
-EXPORT_SYMBOL_GPL(can_rx_offload_threaded_irq_finish);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int can_rx_offload_init_queue(struct net_device *dev,
 				     struct can_rx_offload *offload,
 				     unsigned int weight)
@@ -439,14 +312,6 @@ static int can_rx_offload_init_queue(struct net_device *dev,
 	offload->skb_queue_len_max = 2 << fls(weight);
 	offload->skb_queue_len_max *= 4;
 	skb_queue_head_init(&offload->skb_queue);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__skb_queue_head_init(&offload->skb_irq_queue);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__skb_queue_head_init(&offload->skb_irq_queue);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	netif_napi_add(dev, &offload->napi, can_rx_offload_napi_poll, weight);
 
@@ -508,13 +373,5 @@ void can_rx_offload_del(struct can_rx_offload *offload)
 {
 	netif_napi_del(&offload->napi);
 	skb_queue_purge(&offload->skb_queue);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__skb_queue_purge(&offload->skb_irq_queue);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__skb_queue_purge(&offload->skb_irq_queue);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(can_rx_offload_del);

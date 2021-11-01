@@ -229,14 +229,6 @@ Matthew Wilcox <willy@infradead.org> <mawilcox@microsoft.com>
 Matthew Wilcox <willy@infradead.org> <willy@debian.org>
 Matthew Wilcox <willy@infradead.org> <willy@linux.intel.com>
 Matthew Wilcox <willy@infradead.org> <willy@parisc-linux.org>
-<<<<<<< HEAD
-<<<<<<< HEAD
-Matthias Fuchs <socketcan@esd.eu> <matthias.fuchs@esd.eu>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-Matthias Fuchs <socketcan@esd.eu> <matthias.fuchs@esd.eu>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Matthieu CASTET <castet.matthieu@free.fr>
 Matt Ranostay <matt.ranostay@konsulko.com> <matt@ranostay.consulting>
 Matt Ranostay <mranostay@gmail.com> Matthew Ranostay <mranostay@embeddedalley.com>
@@ -349,14 +341,6 @@ Sumit Semwal <sumit.semwal@ti.com>
 Takashi YOSHII <takashi.yoshii.zj@renesas.com>
 Tejun Heo <htejun@gmail.com>
 Thomas Graf <tgraf@suug.ch>
-<<<<<<< HEAD
-<<<<<<< HEAD
-Thomas Körper <socketcan@esd.eu> <thomas.koerper@esd.eu>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-Thomas Körper <socketcan@esd.eu> <thomas.koerper@esd.eu>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Thomas Pedersen <twp@codeaurora.org>
 Tiezhu Yang <yangtiezhu@loongson.cn> <kernelpatch@126.com>
 Todor Tomov <todor.too@gmail.com> <todor.tomov@linaro.org>

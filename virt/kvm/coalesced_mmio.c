@@ -186,13 +186,7 @@ int kvm_vm_ioctl_unregister_coalesced_mmio(struct kvm *kvm,
 		    coalesced_mmio_in_range(dev, zone->addr, zone->size)) {
 			r = kvm_io_bus_unregister_dev(kvm,
 				zone->pio ? KVM_PIO_BUS : KVM_MMIO_BUS, &dev->dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			kvm_iodevice_destructor(&dev->dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			/*
 			 * On failure, unregister destroys all devices on the
@@ -202,14 +196,6 @@ int kvm_vm_ioctl_unregister_coalesced_mmio(struct kvm *kvm,
 			 */
 			if (r)
 				break;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			kvm_iodevice_destructor(&dev->dev);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			kvm_iodevice_destructor(&dev->dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 

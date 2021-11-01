@@ -77,20 +77,6 @@ struct spi_imx_devtype_data {
 	bool has_slavemode;
 	unsigned int fifo_size;
 	bool dynamic_burst;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * ERR009165 fixed or not:
-	 * https://www.nxp.com/docs/en/errata/IMX6DQCE.pdf
-	 */
-	bool tx_glitch_fixed;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum spi_imx_devtype devtype;
 };
 
@@ -519,22 +505,8 @@ static int mx51_ecspi_prepare_message(struct spi_imx_data *spi_imx,
 				      struct spi_message *msg)
 {
 	struct spi_device *spi = msg->spi;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct spi_transfer *xfer;
-	u32 ctrl = MX51_ECSPI_CTRL_ENABLE;
-	u32 min_speed_hz = ~0U;
-	u32 testreg, delay;
-=======
 	u32 ctrl = MX51_ECSPI_CTRL_ENABLE;
 	u32 testreg;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct spi_transfer *xfer;
-	u32 ctrl = MX51_ECSPI_CTRL_ENABLE;
-	u32 min_speed_hz = ~0U;
-	u32 testreg, delay;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 cfg = readl(spi_imx->base + MX51_ECSPI_CONFIG);
 
 	/* set Master or Slave mode */
@@ -595,44 +567,6 @@ static int mx51_ecspi_prepare_message(struct spi_imx_data *spi_imx,
 
 	writel(cfg, spi_imx->base + MX51_ECSPI_CONFIG);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Wait until the changes in the configuration register CONFIGREG
-	 * propagate into the hardware. It takes exactly one tick of the
-	 * SCLK clock, but we will wait two SCLK clock just to be sure. The
-	 * effect of the delay it takes for the hardware to apply changes
-	 * is noticable if the SCLK clock run very slow. In such a case, if
-	 * the polarity of SCLK should be inverted, the GPIO ChipSelect might
-	 * be asserted before the SCLK polarity changes, which would disrupt
-	 * the SPI communication as the device on the other end would consider
-	 * the change of SCLK polarity as a clock tick already.
-	 *
-	 * Because spi_imx->spi_bus_clk is only set in bitbang prepare_message
-	 * callback, iterate over all the transfers in spi_message, find the
-	 * one with lowest bus frequency, and use that bus frequency for the
-	 * delay calculation. In case all transfers have speed_hz == 0, then
-	 * min_speed_hz is ~0 and the resulting delay is zero.
-	 */
-	list_for_each_entry(xfer, &msg->transfers, transfer_list) {
-		if (!xfer->speed_hz)
-			continue;
-		min_speed_hz = min(xfer->speed_hz, min_speed_hz);
-	}
-
-	delay = (2 * 1000000) / min_speed_hz;
-	if (likely(delay < 10))	/* SCLK is faster than 200 kHz */
-		udelay(delay);
-	else			/* SCLK is _very_ slow */
-		usleep_range(delay, delay + 10);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -640,15 +574,7 @@ static int mx51_ecspi_prepare_transfer(struct spi_imx_data *spi_imx,
 				       struct spi_device *spi)
 {
 	u32 ctrl = readl(spi_imx->base + MX51_ECSPI_CTRL);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 clk;
-=======
 	u32 clk, delay;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 clk;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Clear BL field and set the right value */
 	ctrl &= ~MX51_ECSPI_CTRL_BL_MASK;
@@ -665,33 +591,11 @@ static int mx51_ecspi_prepare_transfer(struct spi_imx_data *spi_imx,
 	ctrl |= mx51_ecspi_clkdiv(spi_imx, spi_imx->spi_bus_clk, &clk);
 	spi_imx->spi_bus_clk = clk;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * ERR009165: work in XHC mode instead of SMC as PIO on the chips
-	 * before i.mx6ul.
-	 */
-	if (spi_imx->usedma && spi_imx->devtype_data->tx_glitch_fixed)
-<<<<<<< HEAD
-		ctrl |= MX51_ECSPI_CTRL_SMC;
-	else
-		ctrl &= ~MX51_ECSPI_CTRL_SMC;
-
-	writel(ctrl, spi_imx->base + MX51_ECSPI_CTRL);
-
-=======
 	if (spi_imx->usedma)
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ctrl |= MX51_ECSPI_CTRL_SMC;
-	else
-		ctrl &= ~MX51_ECSPI_CTRL_SMC;
 
 	writel(ctrl, spi_imx->base + MX51_ECSPI_CTRL);
 
-<<<<<<< HEAD
 	/*
 	 * Wait until the changes in the configuration register CONFIGREG
 	 * propagate into the hardware. It takes exactly one tick of the
@@ -709,41 +613,17 @@ static int mx51_ecspi_prepare_transfer(struct spi_imx_data *spi_imx,
 	else			/* SCLK is _very_ slow */
 		usleep_range(delay, delay + 10);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
 static void mx51_setup_wml(struct spi_imx_data *spi_imx)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	u32 tx_wml = 0;
-
-	if (spi_imx->devtype_data->tx_glitch_fixed)
-		tx_wml = spi_imx->wml;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Configure the DMA register: setup the watermark
 	 * and enable DMA request.
 	 */
 	writel(MX51_ECSPI_DMA_RX_WML(spi_imx->wml - 1) |
-<<<<<<< HEAD
-<<<<<<< HEAD
-		MX51_ECSPI_DMA_TX_WML(tx_wml) |
-=======
 		MX51_ECSPI_DMA_TX_WML(spi_imx->wml) |
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		MX51_ECSPI_DMA_TX_WML(tx_wml) |
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		MX51_ECSPI_DMA_RXT_WML(spi_imx->wml) |
 		MX51_ECSPI_DMA_TEDEN | MX51_ECSPI_DMA_RXDEN |
 		MX51_ECSPI_DMA_RXTDEN, spi_imx->base + MX51_ECSPI_DMA);
@@ -1134,32 +1014,6 @@ static struct spi_imx_devtype_data imx53_ecspi_devtype_data = {
 	.devtype = IMX53_ECSPI,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static struct spi_imx_devtype_data imx6ul_ecspi_devtype_data = {
-	.intctrl = mx51_ecspi_intctrl,
-	.prepare_message = mx51_ecspi_prepare_message,
-	.prepare_transfer = mx51_ecspi_prepare_transfer,
-	.trigger = mx51_ecspi_trigger,
-	.rx_available = mx51_ecspi_rx_available,
-	.reset = mx51_ecspi_reset,
-	.setup_wml = mx51_setup_wml,
-	.fifo_size = 64,
-	.has_dmamode = true,
-	.dynamic_burst = true,
-	.has_slavemode = true,
-	.tx_glitch_fixed = true,
-	.disable = mx51_ecspi_disable,
-	.devtype = IMX51_ECSPI,
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id spi_imx_dt_ids[] = {
 	{ .compatible = "fsl,imx1-cspi", .data = &imx1_cspi_devtype_data, },
 	{ .compatible = "fsl,imx21-cspi", .data = &imx21_cspi_devtype_data, },
@@ -1168,14 +1022,6 @@ static const struct of_device_id spi_imx_dt_ids[] = {
 	{ .compatible = "fsl,imx35-cspi", .data = &imx35_cspi_devtype_data, },
 	{ .compatible = "fsl,imx51-ecspi", .data = &imx51_ecspi_devtype_data, },
 	{ .compatible = "fsl,imx53-ecspi", .data = &imx53_ecspi_devtype_data, },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "fsl,imx6ul-ecspi", .data = &imx6ul_ecspi_devtype_data, },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "fsl,imx6ul-ecspi", .data = &imx6ul_ecspi_devtype_data, },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ /* sentinel */ }
 };
 MODULE_DEVICE_TABLE(of, spi_imx_dt_ids);
@@ -1192,22 +1038,12 @@ static void spi_imx_set_burst_len(struct spi_imx_data *spi_imx, int n_bits)
 
 static void spi_imx_push(struct spi_imx_data *spi_imx)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int burst_len;
-
-=======
 	unsigned int burst_len, fifo_words;
 
 	if (spi_imx->dynamic_burst)
 		fifo_words = 4;
 	else
 		fifo_words = spi_imx_bytes_per_word(spi_imx->bits_per_word);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int burst_len;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Reload the FIFO when the remaining bytes to be transferred in the
 	 * current burst is 0. This only applies when bits_per_word is a
@@ -1226,15 +1062,7 @@ static void spi_imx_push(struct spi_imx_data *spi_imx)
 
 			spi_imx->remainder = burst_len;
 		} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			spi_imx->remainder = spi_imx_bytes_per_word(spi_imx->bits_per_word);
-=======
 			spi_imx->remainder = fifo_words;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			spi_imx->remainder = spi_imx_bytes_per_word(spi_imx->bits_per_word);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -1242,16 +1070,8 @@ static void spi_imx_push(struct spi_imx_data *spi_imx)
 		if (!spi_imx->count)
 			break;
 		if (spi_imx->dynamic_burst &&
-<<<<<<< HEAD
-<<<<<<< HEAD
-		    spi_imx->txfifo >= DIV_ROUND_UP(spi_imx->remainder, 4))
-=======
 		    spi_imx->txfifo >= DIV_ROUND_UP(spi_imx->remainder,
 						     fifo_words))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		    spi_imx->txfifo >= DIV_ROUND_UP(spi_imx->remainder, 4))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		spi_imx->tx(spi_imx);
 		spi_imx->txfifo++;
@@ -1361,14 +1181,6 @@ static int spi_imx_setupxfer(struct spi_device *spi,
 	 * dynamic_burst in that case.
 	 */
 	if (spi_imx->devtype_data->dynamic_burst && !spi_imx->slave_mode &&
-<<<<<<< HEAD
-<<<<<<< HEAD
-	    !(spi->mode & SPI_CS_WORD) &&
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	    !(spi->mode & SPI_CS_WORD) &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    (spi_imx->bits_per_word == 8 ||
 	    spi_imx->bits_per_word == 16 ||
 	    spi_imx->bits_per_word == 32)) {
@@ -1427,16 +1239,10 @@ static int spi_imx_sdma_init(struct device *dev, struct spi_imx_data *spi_imx,
 {
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/* use pio mode for i.mx6dl chip TKT238285 */
 	if (of_machine_is_compatible("fsl,imx6dl"))
 		return 0;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spi_imx->wml = spi_imx->devtype_data->fifo_size / 2;
 
 	/* Prepare for TX DMA: */
@@ -1810,24 +1616,6 @@ static int spi_imx_probe(struct platform_device *pdev)
 	    is_imx53_ecspi(spi_imx))
 		spi_imx->bitbang.master->mode_bits |= SPI_LOOP | SPI_READY;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (is_imx51_ecspi(spi_imx) &&
-	    device_property_read_u32(&pdev->dev, "cs-gpios", NULL))
-		/*
-		 * When using HW-CS implementing SPI_CS_WORD can be done by just
-		 * setting the burst length to the word size. This is
-		 * considerably faster than manually controlling the CS.
-		 */
-		spi_imx->bitbang.master->mode_bits |= SPI_CS_WORD;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spi_imx->spi_drctl = spi_drctl;
 
 	init_completion(&spi_imx->xfer_done);

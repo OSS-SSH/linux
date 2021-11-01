@@ -1164,21 +1164,9 @@ static bool sh_mmcif_end_cmd(struct sh_mmcif_host *host)
 		data->bytes_xfered = 0;
 		/* Abort DMA */
 		if (data->flags & MMC_DATA_READ)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dmaengine_terminate_sync(host->chan_rx);
-		else
-			dmaengine_terminate_sync(host->chan_tx);
-=======
 			dmaengine_terminate_all(host->chan_rx);
 		else
 			dmaengine_terminate_all(host->chan_tx);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dmaengine_terminate_sync(host->chan_rx);
-		else
-			dmaengine_terminate_sync(host->chan_tx);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return false;

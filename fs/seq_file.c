@@ -32,18 +32,6 @@ static void seq_set_overflow(struct seq_file *m)
 
 static void *seq_buf_alloc(unsigned long size)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (unlikely(size > MAX_RW_COUNT))
-		return NULL;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (unlikely(size > MAX_RW_COUNT))
-		return NULL;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return kvmalloc(size, GFP_KERNEL_ACCOUNT);
 }
 

@@ -423,15 +423,7 @@ static int i2c_imx_dma_xfer(struct imx_i2c_struct *i2c_imx,
 	return 0;
 
 err_submit:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dmaengine_terminate_sync(dma->chan_using);
-=======
 	dmaengine_terminate_all(dma->chan_using);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dmaengine_terminate_sync(dma->chan_using);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_desc:
 	dma_unmap_single(chan_dev, dma->dma_buf,
 			dma->dma_len, dma->dma_data_dir);
@@ -902,15 +894,7 @@ static int i2c_imx_dma_write(struct imx_i2c_struct *i2c_imx,
 				&i2c_imx->dma->cmd_complete,
 				msecs_to_jiffies(DMA_TIMEOUT));
 	if (time_left == 0) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dmaengine_terminate_sync(dma->chan_using);
-=======
 		dmaengine_terminate_all(dma->chan_using);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dmaengine_terminate_sync(dma->chan_using);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ETIMEDOUT;
 	}
 
@@ -965,15 +949,7 @@ static int i2c_imx_dma_read(struct imx_i2c_struct *i2c_imx,
 				&i2c_imx->dma->cmd_complete,
 				msecs_to_jiffies(DMA_TIMEOUT));
 	if (time_left == 0) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dmaengine_terminate_sync(dma->chan_using);
-=======
 		dmaengine_terminate_all(dma->chan_using);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dmaengine_terminate_sync(dma->chan_using);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ETIMEDOUT;
 	}
 

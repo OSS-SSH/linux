@@ -65,14 +65,8 @@ tu102_fifo_gpfifo_new(struct gk104_fifo *fifo, const struct nvkm_oclass *oclass,
 				   "runlist %016llx priv %d\n",
 			   args->v0.version, args->v0.vmm, args->v0.ioffset,
 			   args->v0.ilength, args->v0.runlist, args->v0.priv);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		if (args->v0.priv && !oclass->client->super)
 			return -EINVAL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return gv100_fifo_gpfifo_new_(&tu102_fifo_gpfifo, fifo,
 					      &args->v0.runlist,
 					      &args->v0.chid,

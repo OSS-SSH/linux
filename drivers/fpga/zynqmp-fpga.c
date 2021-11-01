@@ -66,18 +66,12 @@ static int zynqmp_fpga_ops_write(struct fpga_manager *mgr,
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int zynqmp_fpga_ops_write_complete(struct fpga_manager *mgr,
 					  struct fpga_image_info *info)
 {
 	return 0;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static enum fpga_mgr_states zynqmp_fpga_ops_state(struct fpga_manager *mgr)
 {
 	u32 status = 0;
@@ -93,13 +87,7 @@ static const struct fpga_manager_ops zynqmp_fpga_ops = {
 	.state = zynqmp_fpga_ops_state,
 	.write_init = zynqmp_fpga_ops_write_init,
 	.write = zynqmp_fpga_ops_write,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.write_complete = zynqmp_fpga_ops_write_complete,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int zynqmp_fpga_probe(struct platform_device *pdev)
@@ -122,30 +110,12 @@ static int zynqmp_fpga_probe(struct platform_device *pdev)
 	return devm_fpga_mgr_register(dev, mgr);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifdef CONFIG_OF
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifdef CONFIG_OF
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id zynqmp_fpga_of_match[] = {
 	{ .compatible = "xlnx,zynqmp-pcap-fpga", },
 	{},
 };
-<<<<<<< HEAD
-<<<<<<< HEAD
-MODULE_DEVICE_TABLE(of, zynqmp_fpga_of_match);
-#endif
-=======
 
 MODULE_DEVICE_TABLE(of, zynqmp_fpga_of_match);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-MODULE_DEVICE_TABLE(of, zynqmp_fpga_of_match);
-#endif
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct platform_driver zynqmp_fpga_driver = {
 	.probe = zynqmp_fpga_probe,

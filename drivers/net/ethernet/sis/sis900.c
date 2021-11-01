@@ -404,15 +404,7 @@ static const struct net_device_ops sis900_netdev_ops = {
 	.ndo_set_rx_mode	= set_rx_mode,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address 	= eth_mac_addr,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl		= mii_ioctl,
-=======
 	.ndo_do_ioctl		= mii_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl		= mii_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout		= sis900_tx_timeout,
 #ifdef CONFIG_NET_POLL_CONTROLLER
         .ndo_poll_controller	= sis900_poll,
@@ -451,15 +443,7 @@ static int sis900_probe(struct pci_dev *pci_dev,
 #endif
 
 	/* setup various bits in PCI command register */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = pcim_enable_device(pci_dev);
-=======
 	ret = pci_enable_device(pci_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = pcim_enable_device(pci_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if(ret) return ret;
 
 	i = dma_set_mask(&pci_dev->dev, DMA_BIT_MASK(32));
@@ -485,15 +469,7 @@ static int sis900_probe(struct pci_dev *pci_dev,
 	ioaddr = pci_iomap(pci_dev, 0, 0);
 	if (!ioaddr) {
 		ret = -ENOMEM;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto err_out;
-=======
 		goto err_out_cleardev;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto err_out;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	sis_priv = netdev_priv(net_dev);
@@ -605,14 +581,8 @@ err_unmap_tx:
 			  sis_priv->tx_ring_dma);
 err_out_unmap:
 	pci_iounmap(pci_dev, ioaddr);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 err_out_cleardev:
 	pci_release_regions(pci_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  err_out:
 	free_netdev(net_dev);
 	return ret;
@@ -2529,13 +2499,7 @@ static void sis900_remove(struct pci_dev *pci_dev)
 			  sis_priv->tx_ring_dma);
 	pci_iounmap(pci_dev, sis_priv->ioaddr);
 	free_netdev(net_dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	pci_release_regions(pci_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __maybe_unused sis900_suspend(struct device *dev)

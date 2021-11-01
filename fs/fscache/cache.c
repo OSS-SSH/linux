@@ -116,15 +116,7 @@ struct fscache_cache *fscache_select_cache_for_object(
 			cache = NULL;
 
 		spin_unlock(&cookie->lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		_leave(" = %s [parent]", cache ? cache->tag->name : "NULL");
-=======
 		_leave(" = %p [parent]", cache);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		_leave(" = %s [parent]", cache ? cache->tag->name : "NULL");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return cache;
 	}
 
@@ -160,30 +152,14 @@ struct fscache_cache *fscache_select_cache_for_object(
 	if (test_bit(FSCACHE_IOERROR, &tag->cache->flags))
 		return NULL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	_leave(" = %s [specific]", tag->name);
-=======
 	_leave(" = %p [specific]", tag->cache);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	_leave(" = %s [specific]", tag->name);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return tag->cache;
 
 no_preference:
 	/* netfs has no preference - just select first cache */
 	cache = list_entry(fscache_cache_list.next,
 			   struct fscache_cache, link);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	_leave(" = %s [first]", cache->tag->name);
-=======
 	_leave(" = %p [first]", cache);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	_leave(" = %s [first]", cache->tag->name);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return cache;
 }
 
@@ -285,13 +261,7 @@ int fscache_add_cache(struct fscache_cache *cache,
 	spin_lock(&cache->object_list_lock);
 	list_add_tail(&ifsdef->cache_link, &cache->object_list);
 	spin_unlock(&cache->object_list_lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	fscache_objlist_add(ifsdef);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* add the cache's netfs definition index object to the top level index
 	 * cookie as a known backing object */
@@ -300,15 +270,7 @@ int fscache_add_cache(struct fscache_cache *cache,
 	hlist_add_head(&ifsdef->cookie_link,
 		       &fscache_fsdef_index.backing_objects);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	refcount_inc(&fscache_fsdef_index.ref);
-=======
 	atomic_inc(&fscache_fsdef_index.usage);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	refcount_inc(&fscache_fsdef_index.ref);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* done */
 	spin_unlock(&fscache_fsdef_index.lock);
@@ -373,15 +335,7 @@ static void fscache_withdraw_all_objects(struct fscache_cache *cache,
 					    struct fscache_object, cache_link);
 			list_move_tail(&object->cache_link, dying_objects);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			_debug("withdraw %x", object->cookie->debug_id);
-=======
 			_debug("withdraw %p", object->cookie);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			_debug("withdraw %x", object->cookie->debug_id);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			/* This must be done under object_list_lock to prevent
 			 * a race with fscache_drop_object().

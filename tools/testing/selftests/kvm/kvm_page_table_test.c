@@ -456,18 +456,10 @@ static void help(char *name)
 	       "     (default: 1G)\n");
 	printf(" -v: specify the number of vCPUs to run\n"
 	       "     (default: 1)\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	backing_src_help("-s");
-=======
 	printf(" -s: specify the type of memory that should be used to\n"
 	       "     back the guest data region.\n"
 	       "     (default: anonymous)\n\n");
 	backing_src_help();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	backing_src_help("-s");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	puts("");
 }
 
@@ -476,15 +468,7 @@ int main(int argc, char *argv[])
 	int max_vcpus = kvm_check_cap(KVM_CAP_MAX_VCPUS);
 	struct test_params p = {
 		.test_mem_size = DEFAULT_TEST_MEM_SIZE,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.src_type = DEFAULT_VM_MEM_SRC,
-=======
 		.src_type = VM_MEM_SRC_ANONYMOUS,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.src_type = DEFAULT_VM_MEM_SRC,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 	int opt;
 

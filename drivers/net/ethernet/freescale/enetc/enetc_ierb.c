@@ -1,13 +1,5 @@
 // SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* Copyright 2021 NXP
-=======
 /* Copyright 2021 NXP Semiconductors
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* Copyright 2021 NXP
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * The Integrated Endpoint Register Block (IERB) is configured by pre-boot
  * software and is supposed to be to ENETC what a NVRAM is to a 'real' PCIe

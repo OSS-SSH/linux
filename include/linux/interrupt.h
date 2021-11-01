@@ -13,14 +13,6 @@
 #include <linux/hrtimer.h>
 #include <linux/kref.h>
 #include <linux/workqueue.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/jump_label.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/jump_label.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/atomic.h>
 #include <asm/ptrace.h>
@@ -482,31 +474,12 @@ extern int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
 
 #ifdef CONFIG_IRQ_FORCED_THREADING
 # ifdef CONFIG_PREEMPT_RT
-<<<<<<< HEAD
-<<<<<<< HEAD
-#  define force_irqthreads()	(true)
-# else
-DECLARE_STATIC_KEY_FALSE(force_irqthreads_key);
-#  define force_irqthreads()	(static_branch_unlikely(&force_irqthreads_key))
-# endif
-#else
-#define force_irqthreads()	(false)
-=======
 #  define force_irqthreads	(true)
-=======
-#  define force_irqthreads()	(true)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 # else
-DECLARE_STATIC_KEY_FALSE(force_irqthreads_key);
-#  define force_irqthreads()	(static_branch_unlikely(&force_irqthreads_key))
+extern bool force_irqthreads;
 # endif
 #else
-<<<<<<< HEAD
 #define force_irqthreads	(0)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define force_irqthreads()	(false)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #ifndef local_softirq_pending

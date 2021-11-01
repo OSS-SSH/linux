@@ -6,25 +6,6 @@
 
 menu "Digital potentiometers"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-config AD5110
-	tristate "Analog Devices AD5110 and similar Digital Potentiometer driver"
-	depends on I2C
-	help
-	  Say yes here to build support for the Analog Devices AD5110, AD5112 
-	  and AD5114 digital potentiometer chip.
-
-	  To compile this driver as a module, choose M here: the
-	  module will be called ad5110.
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config AD5272
 	tristate "Analog Devices AD5272 and similar Digital Potentiometer driver"
 	depends on I2C

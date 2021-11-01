@@ -163,30 +163,21 @@ static void snd_als300_set_irq_flag(struct snd_als300 *chip, int cmd)
 	snd_als300_gcr_write(chip->port, MISC_CONTROL, tmp);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void snd_als300_free(struct snd_card *card)
-{
-	struct snd_als300 *chip = card->private_data;
-
-	snd_als300_set_irq_flag(chip, IRQ_DISABLE);
-=======
 static int snd_als300_free(struct snd_als300 *chip)
-=======
-static void snd_als300_free(struct snd_card *card)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct snd_als300 *chip = card->private_data;
+	snd_als300_set_irq_flag(chip, IRQ_DISABLE);
+	if (chip->irq >= 0)
+		free_irq(chip->irq, chip);
+	pci_release_regions(chip->pci);
+	pci_disable_device(chip->pci);
+	kfree(chip);
+	return 0;
+}
 
-<<<<<<< HEAD
 static int snd_als300_dev_free(struct snd_device *device)
 {
 	struct snd_als300 *chip = device->device_data;
 	return snd_als300_free(chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	snd_als300_set_irq_flag(chip, IRQ_DISABLE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static irqreturn_t snd_als300_interrupt(int irq, void *dev_id)
@@ -257,17 +248,11 @@ static irqreturn_t snd_als300plus_interrupt(int irq, void *dev_id)
 	return IRQ_HANDLED;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void snd_als300_remove(struct pci_dev *pci)
 {
 	snd_card_free(pci_get_drvdata(pci));
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static unsigned short snd_als300_ac97_read(struct snd_ac97 *ac97,
 							unsigned short reg)
 {
@@ -625,65 +610,35 @@ static void snd_als300_init(struct snd_als300 *chip)
 }
 
 static int snd_als300_create(struct snd_card *card,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			     struct pci_dev *pci, int chip_type)
-{
-	struct snd_als300 *chip = card->private_data;
-	void *irq_handler;
-	int err;
-
-	err = pcim_enable_device(pci);
-=======
 			     struct pci_dev *pci, int chip_type,
 			     struct snd_als300 **rchip)
-=======
-			     struct pci_dev *pci, int chip_type)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct snd_als300 *chip = card->private_data;
+	struct snd_als300 *chip;
 	void *irq_handler;
 	int err;
 
-<<<<<<< HEAD
 	static const struct snd_device_ops ops = {
 		.dev_free = snd_als300_dev_free,
 	};
 	*rchip = NULL;
 
 	err = pci_enable_device(pci);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = pcim_enable_device(pci);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 
 	if (dma_set_mask_and_coherent(&pci->dev, DMA_BIT_MASK(28))) {
 		dev_err(card->dev, "error setting 28bit DMA mask\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		pci_disable_device(pci);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENXIO;
 	}
 	pci_set_master(pci);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
 	if (chip == NULL) {
 		pci_disable_device(pci);
 		return -ENOMEM;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	chip->card = card;
 	chip->pci = pci;
 	chip->irq = -1;
@@ -691,23 +646,11 @@ static int snd_als300_create(struct snd_card *card,
 	spin_lock_init(&chip->reg_lock);
 
 	err = pci_request_regions(pci, "ALS300");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err < 0)
-		return err;
-
-=======
 	if (err < 0) {
 		kfree(chip);
 		pci_disable_device(pci);
 		return err;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err < 0)
-		return err;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	chip->port = pci_resource_start(pci, 0);
 
 	if (chip->chip_type == DEVICE_ALS300_PLUS)
@@ -715,59 +658,27 @@ static int snd_als300_create(struct snd_card *card,
 	else
 		irq_handler = snd_als300_interrupt;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (devm_request_irq(&pci->dev, pci->irq, irq_handler, IRQF_SHARED,
-			     KBUILD_MODNAME, chip)) {
-		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
-=======
 	if (request_irq(pci->irq, irq_handler, IRQF_SHARED,
 			KBUILD_MODNAME, chip)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
 		snd_als300_free(chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (devm_request_irq(&pci->dev, pci->irq, irq_handler, IRQF_SHARED,
-			     KBUILD_MODNAME, chip)) {
-		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	card->private_free = snd_als300_free;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	card->private_free = snd_als300_free;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snd_als300_init(chip);
 
 	err = snd_als300_ac97(chip);
 	if (err < 0) {
 		dev_err(card->dev, "Could not create ac97\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		snd_als300_free(chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
 	}
 
 	err = snd_als300_new_pcm(chip);
 	if (err < 0) {
 		dev_err(card->dev, "Could not create PCM\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return err;
-	}
-
-=======
 		snd_als300_free(chip);
 		return err;
 	}
@@ -779,12 +690,6 @@ static int snd_als300_create(struct snd_card *card,
 	}
 
 	*rchip = chip;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return err;
-	}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -832,42 +737,20 @@ static int snd_als300_probe(struct pci_dev *pci,
 		return -ENOENT;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				sizeof(*chip), &card);
-	if (err < 0)
-		return err;
-	chip = card->private_data;
-
-	chip_type = pci_id->driver_data;
-
-	err = snd_als300_create(card, pci, chip_type);
-	if (err < 0)
-		return err;
-=======
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 			   0, &card);
 
-=======
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				sizeof(*chip), &card);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
-	chip = card->private_data;
 
 	chip_type = pci_id->driver_data;
 
-	err = snd_als300_create(card, pci, chip_type);
-	if (err < 0)
+	err = snd_als300_create(card, pci, chip_type, &chip);
+	if (err < 0) {
+		snd_card_free(card);
 		return err;
-<<<<<<< HEAD
 	}
 	card->private_data = chip;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	strcpy(card->driver, "ALS300");
 	if (chip->chip_type == DEVICE_ALS300_PLUS)
@@ -881,22 +764,10 @@ static int snd_als300_probe(struct pci_dev *pci,
 				card->shortname, chip->port, chip->irq);
 
 	err = snd_card_register(card);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err < 0)
-		return err;
-
-=======
 	if (err < 0) {
 		snd_card_free(card);
 		return err;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err < 0)
-		return err;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
@@ -906,13 +777,7 @@ static struct pci_driver als300_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_als300_ids,
 	.probe = snd_als300_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove = snd_als300_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = SND_ALS300_PM_OPS,
 	},

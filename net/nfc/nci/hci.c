@@ -16,25 +16,11 @@
 #include <linux/nfc.h>
 
 struct nci_data {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	u8 conn_id;
-	u8 pipe;
-	u8 cmd;
-	const u8 *data;
-	u32 data_len;
-<<<<<<< HEAD
-=======
 	u8              conn_id;
 	u8              pipe;
 	u8              cmd;
 	const u8        *data;
 	u32             data_len;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } __packed;
 
 struct nci_hci_create_pipe_params {
@@ -156,15 +142,7 @@ static int nci_hci_send_data(struct nci_dev *ndev, u8 pipe,
 			     const u8 data_type, const u8 *data,
 			     size_t data_len)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct nci_conn_info *conn_info;
-=======
 	struct nci_conn_info    *conn_info;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct nci_conn_info *conn_info;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct sk_buff *skb;
 	int len, i, r;
 	u8 cb = pipe;
@@ -217,21 +195,9 @@ static int nci_hci_send_data(struct nci_dev *ndev, u8 pipe,
 	return i;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void nci_hci_send_data_req(struct nci_dev *ndev, const void *opt)
-{
-	const struct nci_data *data = opt;
-=======
 static void nci_hci_send_data_req(struct nci_dev *ndev, unsigned long opt)
 {
 	struct nci_data *data = (struct nci_data *)opt;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void nci_hci_send_data_req(struct nci_dev *ndev, const void *opt)
-{
-	const struct nci_data *data = opt;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	nci_hci_send_data(ndev, data->pipe, data->cmd,
 			  data->data, data->data_len);
@@ -255,18 +221,8 @@ int nci_hci_send_cmd(struct nci_dev *ndev, u8 gate, u8 cmd,
 		     const u8 *param, size_t param_len,
 		     struct sk_buff **skb)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct nci_hcp_message *message;
-	const struct nci_conn_info *conn_info;
-=======
 	struct nci_hcp_message *message;
 	struct nci_conn_info   *conn_info;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct nci_hcp_message *message;
-	const struct nci_conn_info *conn_info;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct nci_data data;
 	int r;
 	u8 pipe = ndev->hci_dev->gate2pipe[gate];
@@ -284,15 +240,7 @@ int nci_hci_send_cmd(struct nci_dev *ndev, u8 gate, u8 cmd,
 	data.data = param;
 	data.data_len = param_len;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	r = nci_request(ndev, nci_hci_send_data_req, &data,
-=======
 	r = nci_request(ndev, nci_hci_send_data_req, (unsigned long)&data,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	r = nci_request(ndev, nci_hci_send_data_req, &data,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			msecs_to_jiffies(NCI_DATA_TIMEOUT));
 	if (r == NCI_STATUS_OK) {
 		message = (struct nci_hcp_message *)conn_info->rx_skb->data;
@@ -415,15 +363,7 @@ exit:
 static void nci_hci_resp_received(struct nci_dev *ndev, u8 pipe,
 				  struct sk_buff *skb)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct nci_conn_info *conn_info;
-=======
 	struct nci_conn_info    *conn_info;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct nci_conn_info *conn_info;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	conn_info = ndev->hci_dev->conn_info;
 	if (!conn_info)
@@ -466,15 +406,7 @@ static void nci_hci_msg_rx_work(struct work_struct *work)
 	struct nci_hci_dev *hdev =
 		container_of(work, struct nci_hci_dev, msg_rx_work);
 	struct sk_buff *skb;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct nci_hcp_message *message;
-=======
 	struct nci_hcp_message *message;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct nci_hcp_message *message;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 pipe, type, instruction;
 
 	while ((skb = skb_dequeue(&hdev->msg_rx_queue)) != NULL) {
@@ -566,15 +498,7 @@ void nci_hci_data_received_cb(void *context,
 int nci_hci_open_pipe(struct nci_dev *ndev, u8 pipe)
 {
 	struct nci_data data;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct nci_conn_info *conn_info;
-=======
 	struct nci_conn_info    *conn_info;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct nci_conn_info *conn_info;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	conn_info = ndev->hci_dev->conn_info;
 	if (!conn_info)
@@ -587,19 +511,9 @@ int nci_hci_open_pipe(struct nci_dev *ndev, u8 pipe)
 	data.data = NULL;
 	data.data_len = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return nci_request(ndev, nci_hci_send_data_req, &data,
-			   msecs_to_jiffies(NCI_DATA_TIMEOUT));
-=======
 	return nci_request(ndev, nci_hci_send_data_req,
 			(unsigned long)&data,
 			msecs_to_jiffies(NCI_DATA_TIMEOUT));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return nci_request(ndev, nci_hci_send_data_req, &data,
-			   msecs_to_jiffies(NCI_DATA_TIMEOUT));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(nci_hci_open_pipe);
 
@@ -609,15 +523,7 @@ static u8 nci_hci_create_pipe(struct nci_dev *ndev, u8 dest_host,
 	u8 pipe;
 	struct sk_buff *skb;
 	struct nci_hci_create_pipe_params params;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct nci_hci_create_pipe_resp *resp;
-=======
 	struct nci_hci_create_pipe_resp *resp;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct nci_hci_create_pipe_resp *resp;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pr_debug("gate=%d\n", dest_gate);
 
@@ -651,18 +557,8 @@ static int nci_hci_delete_pipe(struct nci_dev *ndev, u8 pipe)
 int nci_hci_set_param(struct nci_dev *ndev, u8 gate, u8 idx,
 		      const u8 *param, size_t param_len)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct nci_hcp_message *message;
-	const struct nci_conn_info *conn_info;
-=======
 	struct nci_hcp_message *message;
 	struct nci_conn_info *conn_info;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct nci_hcp_message *message;
-	const struct nci_conn_info *conn_info;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct nci_data data;
 	int r;
 	u8 *tmp;
@@ -691,16 +587,8 @@ int nci_hci_set_param(struct nci_dev *ndev, u8 gate, u8 idx,
 	data.data = tmp;
 	data.data_len = param_len + 1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	r = nci_request(ndev, nci_hci_send_data_req, &data,
-=======
 	r = nci_request(ndev, nci_hci_send_data_req,
 			(unsigned long)&data,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	r = nci_request(ndev, nci_hci_send_data_req, &data,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			msecs_to_jiffies(NCI_DATA_TIMEOUT));
 	if (r == NCI_STATUS_OK) {
 		message = (struct nci_hcp_message *)conn_info->rx_skb->data;
@@ -717,18 +605,8 @@ EXPORT_SYMBOL(nci_hci_set_param);
 int nci_hci_get_param(struct nci_dev *ndev, u8 gate, u8 idx,
 		      struct sk_buff **skb)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct nci_hcp_message *message;
-	const struct nci_conn_info *conn_info;
-=======
 	struct nci_hcp_message *message;
 	struct nci_conn_info    *conn_info;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct nci_hcp_message *message;
-	const struct nci_conn_info *conn_info;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct nci_data data;
 	int r;
 	u8 pipe = ndev->hci_dev->gate2pipe[gate];
@@ -749,15 +627,7 @@ int nci_hci_get_param(struct nci_dev *ndev, u8 gate, u8 idx,
 	data.data = &idx;
 	data.data_len = 1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	r = nci_request(ndev, nci_hci_send_data_req, &data,
-=======
 	r = nci_request(ndev, nci_hci_send_data_req, (unsigned long)&data,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	r = nci_request(ndev, nci_hci_send_data_req, &data,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			msecs_to_jiffies(NCI_DATA_TIMEOUT));
 
 	if (r == NCI_STATUS_OK) {
@@ -827,15 +697,7 @@ EXPORT_SYMBOL(nci_hci_connect_gate);
 
 static int nci_hci_dev_connect_gates(struct nci_dev *ndev,
 				     u8 gate_count,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				     const struct nci_hci_gate *gates)
-=======
 				     struct nci_hci_gate *gates)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				     const struct nci_hci_gate *gates)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int r;
 
@@ -852,15 +714,7 @@ static int nci_hci_dev_connect_gates(struct nci_dev *ndev,
 
 int nci_hci_dev_session_init(struct nci_dev *ndev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct nci_conn_info *conn_info;
-=======
 	struct nci_conn_info    *conn_info;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct nci_conn_info *conn_info;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct sk_buff *skb;
 	int r;
 

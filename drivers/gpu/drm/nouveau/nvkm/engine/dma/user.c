@@ -26,13 +26,7 @@
 #include <core/client.h>
 #include <core/gpuobj.h>
 #include <subdev/fb.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <subdev/instmem.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <nvif/cl0002.h>
 #include <nvif/unpack.h>
@@ -78,19 +72,11 @@ nvkm_dmaobj_ctor(const struct nvkm_dmaobj_func *func, struct nvkm_dma *dma,
 	union {
 		struct nv_dma_v0 v0;
 	} *args = *pdata;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct nvkm_object *parent = oclass->parent;
-=======
 	struct nvkm_device *device = dma->engine.subdev.device;
 	struct nvkm_client *client = oclass->client;
 	struct nvkm_object *parent = oclass->parent;
 	struct nvkm_instmem *instmem = device->imem;
 	struct nvkm_fb *fb = device->fb;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct nvkm_object *parent = oclass->parent;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *data = *pdata;
 	u32 size = *psize;
 	int ret = -ENOSYS;
@@ -123,12 +109,6 @@ nvkm_dmaobj_ctor(const struct nvkm_dmaobj_func *func, struct nvkm_dma *dma,
 		dmaobj->target = NV_MEM_TARGET_VM;
 		break;
 	case NV_DMA_V0_TARGET_VRAM:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dmaobj->target = NV_MEM_TARGET_VRAM;
-		break;
-	case NV_DMA_V0_TARGET_PCI:
-=======
 		if (!client->super) {
 			if (dmaobj->limit >= fb->ram->size - instmem->reserved)
 				return -EACCES;
@@ -140,24 +120,12 @@ nvkm_dmaobj_ctor(const struct nvkm_dmaobj_func *func, struct nvkm_dma *dma,
 	case NV_DMA_V0_TARGET_PCI:
 		if (!client->super)
 			return -EACCES;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dmaobj->target = NV_MEM_TARGET_VRAM;
-		break;
-	case NV_DMA_V0_TARGET_PCI:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dmaobj->target = NV_MEM_TARGET_PCI;
 		break;
 	case NV_DMA_V0_TARGET_PCI_US:
 	case NV_DMA_V0_TARGET_AGP:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		if (!client->super)
 			return -EACCES;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dmaobj->target = NV_MEM_TARGET_PCI_NOSNOOP;
 		break;
 	default:

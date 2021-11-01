@@ -2380,27 +2380,11 @@ void __init fib_trie_init(void)
 {
 	fn_alias_kmem = kmem_cache_create("ip_fib_alias",
 					  sizeof(struct fib_alias),
-<<<<<<< HEAD
-<<<<<<< HEAD
-					  0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
-
-	trie_leaf_kmem = kmem_cache_create("ip_fib_trie",
-					   LEAF_SIZE,
-					   0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
-=======
 					  0, SLAB_PANIC, NULL);
 
 	trie_leaf_kmem = kmem_cache_create("ip_fib_trie",
 					   LEAF_SIZE,
 					   0, SLAB_PANIC, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					  0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
-
-	trie_leaf_kmem = kmem_cache_create("ip_fib_trie",
-					   LEAF_SIZE,
-					   0, SLAB_PANIC | SLAB_ACCOUNT, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct fib_table *fib_trie_table(u32 id, struct fib_table *alias)

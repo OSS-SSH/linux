@@ -19,14 +19,6 @@
 #include <linux/hypervisor.h>
 #include <linux/irqdomain.h>
 #include <linux/pm_runtime.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/bitfield.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/bitfield.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "pci.h"
 
 #define CARDBUS_LATENCY_TIMER	176	/* secondary latency timer */
@@ -602,14 +594,6 @@ static void pci_init_host_bridge(struct pci_host_bridge *bridge)
 	bridge->native_pme = 1;
 	bridge->native_ltr = 1;
 	bridge->native_dpc = 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bridge->domain_nr = PCI_DOMAIN_NR_NOT_SET;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bridge->domain_nr = PCI_DOMAIN_NR_NOT_SET;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	device_initialize(&bridge->dev);
 }
@@ -844,33 +828,11 @@ static struct irq_domain *pci_host_bridge_msi_domain(struct pci_bus *bus)
 {
 	struct irq_domain *d;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* If the host bridge driver sets a MSI domain of the bridge, use it */
-	d = dev_get_msi_domain(bus->bridge);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* If the host bridge driver sets a MSI domain of the bridge, use it */
-	d = dev_get_msi_domain(bus->bridge);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Any firmware interface that can resolve the msi_domain
 	 * should be called from here.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!d)
-		d = pci_host_bridge_of_msi_domain(bus);
-=======
 	d = pci_host_bridge_of_msi_domain(bus);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!d)
-		d = pci_host_bridge_of_msi_domain(bus);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!d)
 		d = pci_host_bridge_acpi_msi_domain(bus);
 
@@ -936,20 +898,7 @@ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
 	bus->ops = bridge->ops;
 	bus->number = bus->busn_res.start = bridge->busnr;
 #ifdef CONFIG_PCI_DOMAINS_GENERIC
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (bridge->domain_nr == PCI_DOMAIN_NR_NOT_SET)
-		bus->domain_nr = pci_bus_find_domain_nr(bus, parent);
-	else
-		bus->domain_nr = bridge->domain_nr;
-<<<<<<< HEAD
-=======
 	bus->domain_nr = pci_bus_find_domain_nr(bus, parent);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	b = pci_find_bus(pci_domain_nr(bus), bridge->busnr);
@@ -1549,18 +1498,8 @@ void set_pcie_port_type(struct pci_dev *pdev)
 	pdev->pcie_cap = pos;
 	pci_read_config_word(pdev, pos + PCI_EXP_FLAGS, &reg16);
 	pdev->pcie_flags_reg = reg16;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	pci_read_config_dword(pdev, pos + PCI_EXP_DEVCAP, &pdev->devcap);
-	pdev->pcie_mpss = FIELD_GET(PCI_EXP_DEVCAP_PAYLOAD, pdev->devcap);
-=======
 	pci_read_config_word(pdev, pos + PCI_EXP_DEVCAP, &reg16);
 	pdev->pcie_mpss = reg16 & PCI_EXP_DEVCAP_PAYLOAD;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	pci_read_config_dword(pdev, pos + PCI_EXP_DEVCAP, &pdev->devcap);
-	pdev->pcie_mpss = FIELD_GET(PCI_EXP_DEVCAP_PAYLOAD, pdev->devcap);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	parent = pci_upstream_bridge(pdev);
 	if (!parent)
@@ -1870,18 +1809,6 @@ int pci_setup_device(struct pci_dev *dev)
 	dev->error_state = pci_channel_io_normal;
 	set_pcie_port_type(dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	pci_set_of_node(dev);
-	pci_set_acpi_fwnode(dev);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	pci_set_of_node(dev);
-	pci_set_acpi_fwnode(dev);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_dev_assign_slot(dev);
 
 	/*
@@ -2019,14 +1946,6 @@ int pci_setup_device(struct pci_dev *dev)
 	default:				    /* unknown header */
 		pci_err(dev, "unknown header type %02x, ignoring device\n",
 			dev->hdr_type);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		pci_release_of_node(dev);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		pci_release_of_node(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EIO;
 
 	bad:
@@ -2306,13 +2225,7 @@ static void pci_release_capabilities(struct pci_dev *dev)
 {
 	pci_aer_exit(dev);
 	pci_rcec_exit(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	pci_vpd_release(dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_iov_release(dev);
 	pci_free_cap_save_buffers(dev);
 }
@@ -2461,18 +2374,10 @@ static struct pci_dev *pci_scan_device(struct pci_bus *bus, int devfn)
 	dev->vendor = l & 0xffff;
 	dev->device = (l >> 16) & 0xffff;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (pci_setup_device(dev)) {
-=======
 	pci_set_of_node(dev);
 
 	if (pci_setup_device(dev)) {
 		pci_release_of_node(dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (pci_setup_device(dev)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pci_bus_put(dev->bus);
 		kfree(dev);
 		return NULL;
@@ -2523,17 +2428,9 @@ static void pci_init_capabilities(struct pci_dev *dev)
 	pci_rcec_init(dev);		/* Root Complex Event Collector */
 
 	pcie_report_downtraining(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	pci_init_reset_methods(dev);
-=======
 
 	if (pci_probe_reset_function(dev) == 0)
 		dev->reset_fn = 1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	pci_init_reset_methods(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*

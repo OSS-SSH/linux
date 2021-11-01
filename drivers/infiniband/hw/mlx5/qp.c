@@ -1906,13 +1906,7 @@ static int get_atomic_mode(struct mlx5_ib_dev *dev,
 static int create_xrc_tgt_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
 			     struct mlx5_create_qp_params *params)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct mlx5_ib_create_qp *ucmd = params->ucmd;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ib_qp_init_attr *attr = params->attr;
 	u32 uidx = params->uidx;
 	struct mlx5_ib_resources *devr = &dev->devr;
@@ -1932,14 +1926,8 @@ static int create_xrc_tgt_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
 	if (!in)
 		return -ENOMEM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (MLX5_CAP_GEN(mdev, ece_support) && ucmd)
 		MLX5_SET(create_qp_in, in, ece, ucmd->ece_options);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qpc = MLX5_ADDR_OF(create_qp_in, in, qpc);
 
 	MLX5_SET(qpc, qpc, st, MLX5_QP_ST_XRC);
@@ -1994,176 +1982,6 @@ static int create_xrc_tgt_qp(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int create_dci(struct mlx5_ib_dev *dev, struct ib_pd *pd,
-		      struct mlx5_ib_qp *qp,
-		      struct mlx5_create_qp_params *params)
-{
-	struct ib_qp_init_attr *init_attr = params->attr;
-	struct mlx5_ib_create_qp *ucmd = params->ucmd;
-	u32 out[MLX5_ST_SZ_DW(create_qp_out)] = {};
-	struct ib_udata *udata = params->udata;
-	u32 uidx = params->uidx;
-	struct mlx5_ib_resources *devr = &dev->devr;
-	int inlen = MLX5_ST_SZ_BYTES(create_qp_in);
-	struct mlx5_core_dev *mdev = dev->mdev;
-	struct mlx5_ib_cq *send_cq;
-	struct mlx5_ib_cq *recv_cq;
-	unsigned long flags;
-	struct mlx5_ib_qp_base *base;
-	int ts_format;
-	int mlx5_st;
-	void *qpc;
-	u32 *in;
-	int err;
-
-	spin_lock_init(&qp->sq.lock);
-	spin_lock_init(&qp->rq.lock);
-
-	mlx5_st = to_mlx5_st(qp->type);
-	if (mlx5_st < 0)
-		return -EINVAL;
-
-	if (init_attr->sq_sig_type == IB_SIGNAL_ALL_WR)
-		qp->sq_signal_bits = MLX5_WQE_CTRL_CQ_UPDATE;
-
-	base = &qp->trans_qp.base;
-
-	qp->has_rq = qp_has_rq(init_attr);
-	err = set_rq_size(dev, &init_attr->cap, qp->has_rq, qp, ucmd);
-	if (err) {
-		mlx5_ib_dbg(dev, "err %d\n", err);
-		return err;
-	}
-
-	if (ucmd->rq_wqe_shift != qp->rq.wqe_shift ||
-	    ucmd->rq_wqe_count != qp->rq.wqe_cnt)
-		return -EINVAL;
-
-	if (ucmd->sq_wqe_count > (1 << MLX5_CAP_GEN(mdev, log_max_qp_sz)))
-		return -EINVAL;
-
-	ts_format = get_qp_ts_format(dev, to_mcq(init_attr->send_cq),
-				     to_mcq(init_attr->recv_cq));
-
-	if (ts_format < 0)
-		return ts_format;
-
-	err = _create_user_qp(dev, pd, qp, udata, init_attr, &in, &params->resp,
-			      &inlen, base, ucmd);
-	if (err)
-		return err;
-
-	if (MLX5_CAP_GEN(mdev, ece_support))
-		MLX5_SET(create_qp_in, in, ece, ucmd->ece_options);
-	qpc = MLX5_ADDR_OF(create_qp_in, in, qpc);
-
-	MLX5_SET(qpc, qpc, st, mlx5_st);
-	MLX5_SET(qpc, qpc, pm_state, MLX5_QP_PM_MIGRATED);
-	MLX5_SET(qpc, qpc, pd, to_mpd(pd)->pdn);
-
-	if (qp->flags_en & MLX5_QP_FLAG_SIGNATURE)
-		MLX5_SET(qpc, qpc, wq_signature, 1);
-
-	if (qp->flags & IB_QP_CREATE_CROSS_CHANNEL)
-		MLX5_SET(qpc, qpc, cd_master, 1);
-	if (qp->flags & IB_QP_CREATE_MANAGED_SEND)
-		MLX5_SET(qpc, qpc, cd_slave_send, 1);
-	if (qp->flags_en & MLX5_QP_FLAG_SCATTER_CQE)
-		configure_requester_scat_cqe(dev, qp, init_attr, qpc);
-
-	if (qp->rq.wqe_cnt) {
-		MLX5_SET(qpc, qpc, log_rq_stride, qp->rq.wqe_shift - 4);
-		MLX5_SET(qpc, qpc, log_rq_size, ilog2(qp->rq.wqe_cnt));
-	}
-
-	if (qp->flags_en & MLX5_QP_FLAG_DCI_STREAM) {
-		MLX5_SET(qpc, qpc, log_num_dci_stream_channels,
-			 ucmd->dci_streams.log_num_concurent);
-		MLX5_SET(qpc, qpc, log_num_dci_errored_streams,
-			 ucmd->dci_streams.log_num_errored);
-	}
-
-	MLX5_SET(qpc, qpc, ts_format, ts_format);
-	MLX5_SET(qpc, qpc, rq_type, get_rx_type(qp, init_attr));
-
-	MLX5_SET(qpc, qpc, log_sq_size, ilog2(qp->sq.wqe_cnt));
-
-	/* Set default resources */
-	if (init_attr->srq) {
-		MLX5_SET(qpc, qpc, xrcd, devr->xrcdn0);
-		MLX5_SET(qpc, qpc, srqn_rmpn_xrqn,
-			 to_msrq(init_attr->srq)->msrq.srqn);
-	} else {
-		MLX5_SET(qpc, qpc, xrcd, devr->xrcdn1);
-		MLX5_SET(qpc, qpc, srqn_rmpn_xrqn,
-			 to_msrq(devr->s1)->msrq.srqn);
-	}
-
-	if (init_attr->send_cq)
-		MLX5_SET(qpc, qpc, cqn_snd,
-			 to_mcq(init_attr->send_cq)->mcq.cqn);
-
-	if (init_attr->recv_cq)
-		MLX5_SET(qpc, qpc, cqn_rcv,
-			 to_mcq(init_attr->recv_cq)->mcq.cqn);
-
-	MLX5_SET64(qpc, qpc, dbr_addr, qp->db.dma);
-
-	/* 0xffffff means we ask to work with cqe version 0 */
-	if (MLX5_CAP_GEN(mdev, cqe_version) == MLX5_CQE_VERSION_V1)
-		MLX5_SET(qpc, qpc, user_index, uidx);
-
-	if (qp->flags & IB_QP_CREATE_PCI_WRITE_END_PADDING) {
-		MLX5_SET(qpc, qpc, end_padding_mode,
-			 MLX5_WQ_END_PAD_MODE_ALIGN);
-		/* Special case to clean flag */
-		qp->flags &= ~IB_QP_CREATE_PCI_WRITE_END_PADDING;
-	}
-
-	err = mlx5_qpc_create_qp(dev, &base->mqp, in, inlen, out);
-
-	kvfree(in);
-	if (err)
-		goto err_create;
-
-	base->container_mibqp = qp;
-	base->mqp.event = mlx5_ib_qp_event;
-	if (MLX5_CAP_GEN(mdev, ece_support))
-		params->resp.ece_options = MLX5_GET(create_qp_out, out, ece);
-
-	get_cqs(qp->type, init_attr->send_cq, init_attr->recv_cq,
-		&send_cq, &recv_cq);
-	spin_lock_irqsave(&dev->reset_flow_resource_lock, flags);
-	mlx5_ib_lock_cqs(send_cq, recv_cq);
-	/* Maintain device to QPs access, needed for further handling via reset
-	 * flow
-	 */
-	list_add_tail(&qp->qps_list, &dev->qp_list);
-	/* Maintain CQ to QPs access, needed for further handling via reset flow
-	 */
-	if (send_cq)
-		list_add_tail(&qp->cq_send_list, &send_cq->list_send_qp);
-	if (recv_cq)
-		list_add_tail(&qp->cq_recv_list, &recv_cq->list_recv_qp);
-	mlx5_ib_unlock_cqs(send_cq, recv_cq);
-	spin_unlock_irqrestore(&dev->reset_flow_resource_lock, flags);
-
-	return 0;
-
-err_create:
-	destroy_qp(dev, qp, base, udata);
-	return err;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int create_user_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
 			  struct mlx5_ib_qp *qp,
 			  struct mlx5_create_qp_params *params)
@@ -2694,13 +2512,7 @@ static int create_dct(struct mlx5_ib_dev *dev, struct ib_pd *pd,
 	}
 
 	qp->state = IB_QPS_RESET;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	rdma_restrack_no_track(&qp->ibqp.res);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2841,18 +2653,6 @@ static int process_vendor_flags(struct mlx5_ib_dev *dev, struct mlx5_ib_qp *qp,
 
 	process_vendor_flag(dev, &flags, MLX5_QP_FLAG_TYPE_DCI, true, qp);
 	process_vendor_flag(dev, &flags, MLX5_QP_FLAG_TYPE_DCT, true, qp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	process_vendor_flag(dev, &flags, MLX5_QP_FLAG_DCI_STREAM,
-			    MLX5_CAP_GEN(mdev, log_max_dci_stream_channels),
-			    qp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	process_vendor_flag(dev, &flags, MLX5_QP_FLAG_DCI_STREAM,
-			    MLX5_CAP_GEN(mdev, log_max_dci_stream_channels),
-			    qp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	process_vendor_flag(dev, &flags, MLX5_QP_FLAG_SIGNATURE, true, qp);
 	process_vendor_flag(dev, &flags, MLX5_QP_FLAG_SCATTER_CQE,
@@ -3047,19 +2847,6 @@ static int create_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
 	switch (qp->type) {
 	case MLX5_IB_QPT_DCT:
 		err = create_dct(dev, pd, qp, params);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		rdma_restrack_no_track(&qp->ibqp.res);
-		break;
-	case MLX5_IB_QPT_DCI:
-		err = create_dci(dev, pd, qp, params);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case IB_QPT_XRC_TGT:
 		err = create_xrc_tgt_qp(dev, qp, params);
@@ -3067,19 +2854,6 @@ static int create_qp(struct mlx5_ib_dev *dev, struct ib_pd *pd,
 	case IB_QPT_GSI:
 		err = mlx5_ib_create_gsi(pd, qp, params->attr);
 		break;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	case MLX5_IB_QPT_HW_GSI:
-	case MLX5_IB_QPT_REG_UMR:
-		rdma_restrack_no_track(&qp->ibqp.res);
-		fallthrough;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		if (params->udata)
 			err = create_user_qp(dev, pd, qp, params);
@@ -3168,13 +2942,7 @@ static int mlx5_ib_destroy_dct(struct mlx5_ib_qp *mqp)
 	}
 
 	kfree(mqp->dct.in);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	kfree(mqp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -3212,52 +2980,25 @@ static int check_ucmd_data(struct mlx5_ib_dev *dev,
 	return ret ? 0 : -EINVAL;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int mlx5_ib_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attr,
-		      struct ib_udata *udata)
-{
-	struct mlx5_create_qp_params params = {};
-	struct mlx5_ib_dev *dev = to_mdev(ibqp->device);
-	struct mlx5_ib_qp *qp = to_mqp(ibqp);
-	struct ib_pd *pd = ibqp->pd;
-	enum ib_qp_type type;
-	int err;
-
-	err = check_qp_type(dev, attr, &type);
-	if (err)
-		return err;
-
-	err = check_valid_flow(dev, pd, attr, udata);
-	if (err)
-		return err;
-=======
 struct ib_qp *mlx5_ib_create_qp(struct ib_pd *pd, struct ib_qp_init_attr *attr,
 				struct ib_udata *udata)
-=======
-int mlx5_ib_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attr,
-		      struct ib_udata *udata)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mlx5_create_qp_params params = {};
-	struct mlx5_ib_dev *dev = to_mdev(ibqp->device);
-	struct mlx5_ib_qp *qp = to_mqp(ibqp);
-	struct ib_pd *pd = ibqp->pd;
+	struct mlx5_ib_dev *dev;
+	struct mlx5_ib_qp *qp;
 	enum ib_qp_type type;
 	int err;
 
+	dev = pd ? to_mdev(pd->device) :
+		   to_mdev(to_mxrcd(attr->xrcd)->ibxrcd.device);
+
 	err = check_qp_type(dev, attr, &type);
 	if (err)
-		return err;
+		return ERR_PTR(err);
 
 	err = check_valid_flow(dev, pd, attr, udata);
 	if (err)
-<<<<<<< HEAD
 		return ERR_PTR(err);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	params.udata = udata;
 	params.uidx = MLX5_IB_DEFAULT_UIDX;
@@ -3267,103 +3008,49 @@ int mlx5_ib_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attr,
 	if (udata) {
 		err = process_udata_size(dev, &params);
 		if (err)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return err;
-
-		err = check_ucmd_data(dev, &params);
-		if (err)
-			return err;
-
-		params.ucmd = kzalloc(params.ucmd_size, GFP_KERNEL);
-		if (!params.ucmd)
-			return -ENOMEM;
-=======
 			return ERR_PTR(err);
-=======
-			return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		err = check_ucmd_data(dev, &params);
 		if (err)
-			return err;
+			return ERR_PTR(err);
 
 		params.ucmd = kzalloc(params.ucmd_size, GFP_KERNEL);
 		if (!params.ucmd)
-<<<<<<< HEAD
 			return ERR_PTR(-ENOMEM);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return -ENOMEM;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		err = ib_copy_from_udata(params.ucmd, udata, params.inlen);
 		if (err)
 			goto free_ucmd;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	qp = kzalloc(sizeof(*qp), GFP_KERNEL);
 	if (!qp) {
 		err = -ENOMEM;
 		goto free_ucmd;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_init(&qp->mutex);
 	qp->type = type;
 	if (udata) {
 		err = process_vendor_flags(dev, qp, params.ucmd, attr);
 		if (err)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			goto free_ucmd;
-
-		err = get_qp_uidx(qp, &params);
-		if (err)
-			goto free_ucmd;
-	}
-	err = process_create_flags(dev, qp, attr);
-	if (err)
-		goto free_ucmd;
-
-	err = check_qp_attr(dev, qp, attr);
-	if (err)
-		goto free_ucmd;
-
-	err = create_qp(dev, pd, qp, &params);
-	if (err)
-		goto free_ucmd;
-=======
 			goto free_qp;
-=======
-			goto free_ucmd;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		err = get_qp_uidx(qp, &params);
 		if (err)
-			goto free_ucmd;
+			goto free_qp;
 	}
 	err = process_create_flags(dev, qp, attr);
 	if (err)
-		goto free_ucmd;
+		goto free_qp;
 
 	err = check_qp_attr(dev, qp, attr);
 	if (err)
-		goto free_ucmd;
+		goto free_qp;
 
 	err = create_qp(dev, pd, qp, &params);
 	if (err)
-<<<<<<< HEAD
 		goto free_qp;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto free_ucmd;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree(params.ucmd);
 	params.ucmd = NULL;
@@ -3378,15 +3065,7 @@ int mlx5_ib_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *attr,
 	if (err)
 		goto destroy_qp;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return 0;
-=======
 	return &qp->ibqp;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 destroy_qp:
 	switch (qp->type) {
@@ -3397,15 +3076,6 @@ destroy_qp:
 		mlx5_ib_destroy_gsi(qp);
 		break;
 	default:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		destroy_qp_common(dev, qp, udata);
-	}
-
-free_ucmd:
-	kfree(params.ucmd);
-	return err;
-=======
 		/*
 		 * These lines below are temp solution till QP allocation
 		 * will be moved to be under IB/core responsiblity.
@@ -3413,19 +3083,15 @@ free_ucmd:
 		qp->ibqp.send_cq = attr->send_cq;
 		qp->ibqp.recv_cq = attr->recv_cq;
 		qp->ibqp.pd = pd;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		destroy_qp_common(dev, qp, udata);
 	}
 
+	qp = NULL;
+free_qp:
+	kfree(qp);
 free_ucmd:
 	kfree(params.ucmd);
-<<<<<<< HEAD
 	return ERR_PTR(err);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int mlx5_ib_destroy_qp(struct ib_qp *qp, struct ib_udata *udata)
@@ -3440,15 +3106,9 @@ int mlx5_ib_destroy_qp(struct ib_qp *qp, struct ib_udata *udata)
 		return mlx5_ib_destroy_dct(mqp);
 
 	destroy_qp_common(dev, mqp, udata);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	kfree(mqp);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

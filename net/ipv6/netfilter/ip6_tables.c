@@ -273,14 +273,6 @@ ip6t_do_table(struct sk_buff *skb,
 	 * things we don't know, ie. tcp syn flag or ports).  If the
 	 * rule is also a fragment-specific rule, non-fragments won't
 	 * match it. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	acpar.fragoff = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	acpar.fragoff = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	acpar.hotdrop = false;
 	acpar.state   = state;
 

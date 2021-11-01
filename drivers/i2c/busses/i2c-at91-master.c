@@ -138,21 +138,9 @@ static void at91_twi_dma_cleanup(struct at91_twi_dev *dev)
 
 	if (dma->xfer_in_progress) {
 		if (dma->direction == DMA_FROM_DEVICE)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dmaengine_terminate_sync(dma->chan_rx);
-		else
-			dmaengine_terminate_sync(dma->chan_tx);
-=======
 			dmaengine_terminate_all(dma->chan_rx);
 		else
 			dmaengine_terminate_all(dma->chan_tx);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dmaengine_terminate_sync(dma->chan_rx);
-		else
-			dmaengine_terminate_sync(dma->chan_tx);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dma->xfer_in_progress = false;
 	}
 	if (dma->buf_mapped) {

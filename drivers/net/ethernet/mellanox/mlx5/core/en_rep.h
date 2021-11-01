@@ -60,14 +60,6 @@ struct mlx5e_neigh_update_table {
 struct mlx5_tc_ct_priv;
 struct mlx5e_rep_bond;
 struct mlx5e_tc_tun_encap;
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct mlx5e_post_act;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct mlx5e_post_act;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct mlx5_rep_uplink_priv {
 	/* Filters DB - instantiated by the uplink representor and shared by
@@ -96,20 +88,8 @@ struct mlx5_rep_uplink_priv {
 	/* maps tun_enc_opts to a unique id*/
 	struct mapping_ctx *tunnel_enc_opts_mapping;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct mlx5e_post_act *post_act;
-	struct mlx5_tc_ct_priv *ct_priv;
-	struct mlx5e_tc_psample *tc_psample;
-=======
 	struct mlx5_tc_ct_priv *ct_priv;
 	struct mlx5_esw_psample *esw_psample;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct mlx5e_post_act *post_act;
-	struct mlx5_tc_ct_priv *ct_priv;
-	struct mlx5e_tc_psample *tc_psample;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* support eswitch vports bonding */
 	struct mlx5e_rep_bond *bond;
@@ -166,15 +146,7 @@ struct mlx5e_neigh_hash_entry {
 	 */
 	refcount_t refcnt;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Save the last reported time offloaded traffic pass over one of the
-=======
 	/* Save the last reported time offloaded trafic pass over one of the
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Save the last reported time offloaded traffic pass over one of the
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * neigh hash entry flows. Use it to periodically update the neigh
 	 * 'used' value and avoid neigh deleting by the kernel.
 	 */
@@ -235,16 +207,6 @@ struct mlx5e_encap_entry {
 
 struct mlx5e_rep_sq {
 	struct mlx5_flow_handle	*send_to_vport_rule;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct mlx5_flow_handle *send_to_vport_rule_peer;
-	u32 sqn;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct mlx5_flow_handle *send_to_vport_rule_peer;
-	u32 sqn;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head	 list;
 };
 

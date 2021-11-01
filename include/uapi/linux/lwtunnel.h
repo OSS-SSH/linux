@@ -14,14 +14,6 @@ enum lwtunnel_encap_types {
 	LWTUNNEL_ENCAP_BPF,
 	LWTUNNEL_ENCAP_SEG6_LOCAL,
 	LWTUNNEL_ENCAP_RPL,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	LWTUNNEL_ENCAP_IOAM6,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	LWTUNNEL_ENCAP_IOAM6,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__LWTUNNEL_ENCAP_MAX,
 };
 

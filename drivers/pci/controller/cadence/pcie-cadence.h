@@ -8,14 +8,6 @@
 
 #include <linux/kernel.h>
 #include <linux/pci.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/pci-epf.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/pci-epf.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/phy/phy.h>
 
 /* Parameters for the waiting for link up routine */
@@ -54,35 +46,10 @@
 #define  CDNS_PCIE_LM_EP_ID_BUS_SHIFT	8
 
 /* Endpoint Function f BAR b Configuration Registers */
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define CDNS_PCIE_LM_EP_FUNC_BAR_CFG(bar, fn) \
-	(((bar) < BAR_4) ? CDNS_PCIE_LM_EP_FUNC_BAR_CFG0(fn) : CDNS_PCIE_LM_EP_FUNC_BAR_CFG1(fn))
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define CDNS_PCIE_LM_EP_FUNC_BAR_CFG(bar, fn) \
-	(((bar) < BAR_4) ? CDNS_PCIE_LM_EP_FUNC_BAR_CFG0(fn) : CDNS_PCIE_LM_EP_FUNC_BAR_CFG1(fn))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CDNS_PCIE_LM_EP_FUNC_BAR_CFG0(fn) \
 	(CDNS_PCIE_LM_BASE + 0x0240 + (fn) * 0x0008)
 #define CDNS_PCIE_LM_EP_FUNC_BAR_CFG1(fn) \
 	(CDNS_PCIE_LM_BASE + 0x0244 + (fn) * 0x0008)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define CDNS_PCIE_LM_EP_VFUNC_BAR_CFG(bar, fn) \
-	(((bar) < BAR_4) ? CDNS_PCIE_LM_EP_VFUNC_BAR_CFG0(fn) : CDNS_PCIE_LM_EP_VFUNC_BAR_CFG1(fn))
-#define CDNS_PCIE_LM_EP_VFUNC_BAR_CFG0(fn) \
-	(CDNS_PCIE_LM_BASE + 0x0280 + (fn) * 0x0008)
-#define CDNS_PCIE_LM_EP_VFUNC_BAR_CFG1(fn) \
-	(CDNS_PCIE_LM_BASE + 0x0284 + (fn) * 0x0008)
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define  CDNS_PCIE_LM_EP_FUNC_BAR_CFG_BAR_APERTURE_MASK(b) \
 	(GENMASK(4, 0) << ((b) * 8))
 #define  CDNS_PCIE_LM_EP_FUNC_BAR_CFG_BAR_APERTURE(b, a) \
@@ -147,14 +114,6 @@
 
 #define CDNS_PCIE_EP_FUNC_MSI_CAP_OFFSET	0x90
 #define CDNS_PCIE_EP_FUNC_MSIX_CAP_OFFSET	0xb0
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define CDNS_PCIE_EP_FUNC_SRIOV_CAP_OFFSET	0x200
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define CDNS_PCIE_EP_FUNC_SRIOV_CAP_OFFSET	0x200
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Root Port Registers (PCI configuration space for the root port function)
@@ -230,23 +189,6 @@
 /* AXI link down register */
 #define CDNS_PCIE_AT_LINKDOWN (CDNS_PCIE_AT_BASE + 0x0824)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* LTSSM Capabilities register */
-#define CDNS_PCIE_LTSSM_CONTROL_CAP             (CDNS_PCIE_LM_BASE + 0x0054)
-#define  CDNS_PCIE_DETECT_QUIET_MIN_DELAY_MASK  GENMASK(2, 1)
-#define  CDNS_PCIE_DETECT_QUIET_MIN_DELAY_SHIFT 1
-#define  CDNS_PCIE_DETECT_QUIET_MIN_DELAY(delay) \
-	 (((delay) << CDNS_PCIE_DETECT_QUIET_MIN_DELAY_SHIFT) & \
-	 CDNS_PCIE_DETECT_QUIET_MIN_DELAY_MASK)
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum cdns_pcie_rp_bar {
 	RP_BAR_UNDEFINED = -1,
 	RP_BAR0,
@@ -353,14 +295,6 @@ struct cdns_pcie {
  * @avail_ib_bar: Satus of RP_BAR0, RP_BAR1 and	RP_NO_BAR if it's free or
  *                available
  * @quirk_retrain_flag: Retrain link as quirk for PCIe Gen2
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @quirk_detect_quiet_flag: LTSSM Detect Quiet min delay set as quirk
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @quirk_detect_quiet_flag: LTSSM Detect Quiet min delay set as quirk
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct cdns_pcie_rc {
 	struct cdns_pcie	pcie;
@@ -369,38 +303,14 @@ struct cdns_pcie_rc {
 	u32			vendor_id;
 	u32			device_id;
 	bool			avail_ib_bar[CDNS_PCIE_RP_MAX_IB];
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int		quirk_retrain_flag:1;
-	unsigned int		quirk_detect_quiet_flag:1;
-=======
 	bool                    quirk_retrain_flag;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int		quirk_retrain_flag:1;
-	unsigned int		quirk_detect_quiet_flag:1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
  * struct cdns_pcie_epf - Structure to hold info about endpoint function
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * @epf: Info about virtual functions attached to the physical function
  * @epf_bar: reference to the pci_epf_bar for the six Base Address Registers
  */
 struct cdns_pcie_epf {
-	struct cdns_pcie_epf *epf;
-<<<<<<< HEAD
-=======
- * @epf_bar: reference to the pci_epf_bar for the six Base Address Registers
- */
-struct cdns_pcie_epf {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct pci_epf_bar *epf_bar[PCI_STD_NUM_BARS];
 };
 
@@ -424,14 +334,6 @@ struct cdns_pcie_epf {
  *        registers fields (RMW) accessible by both remote RC and EP to
  *        minimize time between read and write
  * @epf: Structure to hold info about endpoint function
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @quirk_detect_quiet_flag: LTSSM Detect Quiet min delay set as quirk
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @quirk_detect_quiet_flag: LTSSM Detect Quiet min delay set as quirk
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct cdns_pcie_ep {
 	struct cdns_pcie	pcie;
@@ -446,14 +348,6 @@ struct cdns_pcie_ep {
 	/* protect writing to PCI_STATUS while raising legacy interrupts */
 	spinlock_t		lock;
 	struct cdns_pcie_epf	*epf;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int		quirk_detect_quiet_flag:1;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int		quirk_detect_quiet_flag:1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 
@@ -614,18 +508,6 @@ static inline int cdns_pcie_ep_setup(struct cdns_pcie_ep *ep)
 	return 0;
 }
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-void cdns_pcie_detect_quiet_min_delay_set(struct cdns_pcie *pcie);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-void cdns_pcie_detect_quiet_min_delay_set(struct cdns_pcie *pcie);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void cdns_pcie_set_outbound_region(struct cdns_pcie *pcie, u8 busnr, u8 fn,
 				   u32 r, bool is_io,
 				   u64 cpu_addr, u64 pci_addr, size_t size);

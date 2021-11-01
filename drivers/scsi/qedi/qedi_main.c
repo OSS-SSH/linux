@@ -1621,15 +1621,7 @@ static int qedi_alloc_global_queues(struct qedi_ctx *qedi)
 {
 	u32 *list;
 	int i;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int status;
-=======
 	int status = 0, rc;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int status;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u32 *pbl;
 	dma_addr_t page;
 	int num_pages;
@@ -1640,30 +1632,14 @@ static int qedi_alloc_global_queues(struct qedi_ctx *qedi)
 	 */
 	if (!qedi->num_queues) {
 		QEDI_ERR(&qedi->dbg_ctx, "No MSI-X vectors available!\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -ENOMEM;
-=======
 		return 1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return -ENOMEM;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Make sure we allocated the PBL that will contain the physical
 	 * addresses of our queues
 	 */
 	if (!qedi->p_cpuq) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		status = -EINVAL;
-=======
 		status = 1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		status = -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto mem_alloc_failure;
 	}
 
@@ -1678,16 +1654,6 @@ static int qedi_alloc_global_queues(struct qedi_ctx *qedi)
 		  "qedi->global_queues=%p.\n", qedi->global_queues);
 
 	/* Allocate DMA coherent buffers for BDQ */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	status = qedi_alloc_bdq(qedi);
-	if (status)
-		goto mem_alloc_failure;
-
-	/* Allocate DMA coherent buffers for NVM_ISCSI_CFG */
-	status = qedi_alloc_nvm_iscsi_cfg(qedi);
-	if (status)
-=======
 	rc = qedi_alloc_bdq(qedi);
 	if (rc)
 		goto mem_alloc_failure;
@@ -1695,16 +1661,6 @@ static int qedi_alloc_global_queues(struct qedi_ctx *qedi)
 	/* Allocate DMA coherent buffers for NVM_ISCSI_CFG */
 	rc = qedi_alloc_nvm_iscsi_cfg(qedi);
 	if (rc)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	status = qedi_alloc_bdq(qedi);
-	if (status)
-		goto mem_alloc_failure;
-
-	/* Allocate DMA coherent buffers for NVM_ISCSI_CFG */
-	status = qedi_alloc_nvm_iscsi_cfg(qedi);
-	if (status)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto mem_alloc_failure;
 
 	/* Allocate a CQ and an associated PBL for each MSI-X

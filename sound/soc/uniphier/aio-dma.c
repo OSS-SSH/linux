@@ -198,15 +198,7 @@ static int uniphier_aiodma_mmap(struct snd_soc_component *component,
 	vma->vm_page_prot = pgprot_writecombine(vma->vm_page_prot);
 
 	return remap_pfn_range(vma, vma->vm_start,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			       substream->runtime->dma_addr >> PAGE_SHIFT,
-=======
 			       substream->dma_buffer.addr >> PAGE_SHIFT,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			       substream->runtime->dma_addr >> PAGE_SHIFT,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       vma->vm_end - vma->vm_start, vma->vm_page_prot);
 }
 

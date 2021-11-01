@@ -8,14 +8,6 @@
 #include <linux/clk.h>
 #include <linux/fpga/adi-axi-common.h>
 #include <linux/hwmon.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/hwmon-sysfs.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/hwmon-sysfs.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/interrupt.h>
 #include <linux/io.h>
 #include <linux/kernel.h>
@@ -31,23 +23,6 @@
 #define ADI_REG_PWM_PERIOD	0x00c0
 #define ADI_REG_TACH_MEASUR	0x00c4
 #define ADI_REG_TEMPERATURE	0x00c8
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define ADI_REG_TEMP_00_H	0x0100
-#define ADI_REG_TEMP_25_L	0x0104
-#define ADI_REG_TEMP_25_H	0x0108
-#define ADI_REG_TEMP_50_L	0x010c
-#define ADI_REG_TEMP_50_H	0x0110
-#define ADI_REG_TEMP_75_L	0x0114
-#define ADI_REG_TEMP_75_H	0x0118
-#define ADI_REG_TEMP_100_L	0x011c
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define ADI_REG_IRQ_MASK	0x0040
 #define ADI_REG_IRQ_PENDING	0x0044
@@ -87,48 +62,6 @@ static inline u32 axi_ioread(const u32 reg,
 	return ioread32(ctl->base + reg);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/*
- * The core calculates the temperature as:
- *	T = /raw * 509.3140064 / 65535) - 280.2308787
- */
-static ssize_t axi_fan_control_show(struct device *dev, struct device_attribute *da, char *buf)
-{
-	struct axi_fan_control_data *ctl = dev_get_drvdata(dev);
-	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
-	u32 temp = axi_ioread(attr->index, ctl);
-
-	temp = DIV_ROUND_CLOSEST_ULL(temp * 509314ULL, 65535) - 280230;
-
-	return sprintf(buf, "%u\n", temp);
-}
-
-static ssize_t axi_fan_control_store(struct device *dev, struct device_attribute *da,
-				     const char *buf, size_t count)
-{
-	struct axi_fan_control_data *ctl = dev_get_drvdata(dev);
-	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
-	u32 temp;
-	int ret;
-
-	ret = kstrtou32(buf, 10, &temp);
-	if (ret)
-		return ret;
-
-	temp = DIV_ROUND_CLOSEST_ULL((temp + 280230) * 65535ULL, 509314);
-	axi_iowrite(temp, attr->index, ctl);
-
-	return count;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static long axi_fan_control_get_pwm_duty(const struct axi_fan_control_data *ctl)
 {
 	u32 pwm_width = axi_ioread(ADI_REG_PWM_WIDTH, ctl);
@@ -350,12 +283,6 @@ static irqreturn_t axi_fan_control_irq_handler(int irq, void *data)
 	u32 irq_pending = axi_ioread(ADI_REG_IRQ_PENDING, ctl);
 	u32 clear_mask;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (irq_pending & ADI_IRQ_SRC_TEMP_INCREASE)
-		/* hardware requested a new pwm */
-		ctl->hw_pwm_req = true;
-=======
 	if (irq_pending & ADI_IRQ_SRC_NEW_MEASUR) {
 		if (ctl->update_tacho_params) {
 			u32 new_tach = axi_ioread(ADI_REG_TACH_MEASUR, ctl);
@@ -368,12 +295,6 @@ static irqreturn_t axi_fan_control_irq_handler(int irq, void *data)
 			ctl->update_tacho_params = false;
 		}
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (irq_pending & ADI_IRQ_SRC_TEMP_INCREASE)
-		/* hardware requested a new pwm */
-		ctl->hw_pwm_req = true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (irq_pending & ADI_IRQ_SRC_PWM_CHANGED) {
 		/*
@@ -389,30 +310,9 @@ static irqreturn_t axi_fan_control_irq_handler(int irq, void *data)
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (irq_pending & ADI_IRQ_SRC_NEW_MEASUR) {
-		if (ctl->update_tacho_params) {
-			u32 new_tach = axi_ioread(ADI_REG_TACH_MEASUR, ctl);
-			/* get 25% tolerance */
-			u32 tach_tol = DIV_ROUND_CLOSEST(new_tach * 25, 100);
-
-			/* set new tacho parameters */
-			axi_iowrite(new_tach, ADI_REG_TACH_PERIOD, ctl);
-			axi_iowrite(tach_tol, ADI_REG_TACH_TOLERANCE, ctl);
-			ctl->update_tacho_params = false;
-		}
-	}
-<<<<<<< HEAD
-=======
 	if (irq_pending & ADI_IRQ_SRC_TEMP_INCREASE)
 		/* hardware requested a new pwm */
 		ctl->hw_pwm_req = true;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (irq_pending & ADI_IRQ_SRC_TACH_ERR)
 		ctl->fan_fault = 1;
@@ -451,20 +351,6 @@ static int axi_fan_control_init(struct axi_fan_control_data *ctl,
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void axi_fan_control_clk_disable(void *clk)
-{
-	clk_disable_unprepare(clk);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct hwmon_channel_info *axi_fan_control_info[] = {
 	HWMON_CHANNEL_INFO(pwm, HWMON_PWM_INPUT),
 	HWMON_CHANNEL_INFO(fan, HWMON_F_INPUT | HWMON_F_FAULT | HWMON_F_LABEL),
@@ -484,45 +370,6 @@ static const struct hwmon_chip_info axi_chip_info = {
 	.info = axi_fan_control_info,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* temperature threshold below which PWM should be 0% */
-static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point1_temp_hyst, axi_fan_control, ADI_REG_TEMP_00_H);
-/* temperature threshold above which PWM should be 25% */
-static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point1_temp, axi_fan_control, ADI_REG_TEMP_25_L);
-/* temperature threshold below which PWM should be 25% */
-static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point2_temp_hyst, axi_fan_control, ADI_REG_TEMP_25_H);
-/* temperature threshold above which PWM should be 50% */
-static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point2_temp, axi_fan_control, ADI_REG_TEMP_50_L);
-/* temperature threshold below which PWM should be 50% */
-static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point3_temp_hyst, axi_fan_control, ADI_REG_TEMP_50_H);
-/* temperature threshold above which PWM should be 75% */
-static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point3_temp, axi_fan_control, ADI_REG_TEMP_75_L);
-/* temperature threshold below which PWM should be 75% */
-static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point4_temp_hyst, axi_fan_control, ADI_REG_TEMP_75_H);
-/* temperature threshold above which PWM should be 100% */
-static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point4_temp, axi_fan_control, ADI_REG_TEMP_100_L);
-
-static struct attribute *axi_fan_control_attrs[] = {
-	&sensor_dev_attr_pwm1_auto_point1_temp_hyst.dev_attr.attr,
-	&sensor_dev_attr_pwm1_auto_point1_temp.dev_attr.attr,
-	&sensor_dev_attr_pwm1_auto_point2_temp_hyst.dev_attr.attr,
-	&sensor_dev_attr_pwm1_auto_point2_temp.dev_attr.attr,
-	&sensor_dev_attr_pwm1_auto_point3_temp_hyst.dev_attr.attr,
-	&sensor_dev_attr_pwm1_auto_point3_temp.dev_attr.attr,
-	&sensor_dev_attr_pwm1_auto_point4_temp_hyst.dev_attr.attr,
-	&sensor_dev_attr_pwm1_auto_point4_temp.dev_attr.attr,
-	NULL,
-};
-ATTRIBUTE_GROUPS(axi_fan_control);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const u32 version_1_0_0 = ADI_AXI_PCORE_VER(1, 0, 'a');
 
 static const struct of_device_id axi_fan_control_of_match[] = {
@@ -559,23 +406,6 @@ static int axi_fan_control_probe(struct platform_device *pdev)
 		return PTR_ERR(clk);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ret = clk_prepare_enable(clk);
-	if (ret)
-		return ret;
-
-	ret = devm_add_action_or_reset(&pdev->dev, axi_fan_control_clk_disable, clk);
-	if (ret)
-		return ret;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ctl->clk_rate = clk_get_rate(clk);
 	if (!ctl->clk_rate)
 		return -EINVAL;
@@ -616,15 +446,7 @@ static int axi_fan_control_probe(struct platform_device *pdev)
 							 name,
 							 ctl,
 							 &axi_chip_info,
-<<<<<<< HEAD
-<<<<<<< HEAD
-							 axi_fan_control_groups);
-=======
 							 NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-							 axi_fan_control_groups);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return PTR_ERR_OR_ZERO(ctl->hdev);
 }

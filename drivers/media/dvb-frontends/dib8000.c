@@ -2107,118 +2107,32 @@ static void dib8000_load_ana_fe_coefs(struct dib8000_state *state, const s16 *an
 			dib8000_write_word(state, 117 + mode, ana_fe[mode]);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const u16 lut_prbs_2k[13] = {
-	0x423, 0x009, 0x5C7,
-	0x7A6, 0x3D8, 0x527,
-	0x7FF, 0x79B, 0x3D6,
-	0x3A2, 0x53B, 0x2F4,
-	0x213
-<<<<<<< HEAD
-};
-
-static const u16 lut_prbs_4k[13] = {
-	0x208, 0x0C3, 0x7B9,
-	0x423, 0x5C7, 0x3D8,
-	0x7FF, 0x3D6, 0x53B,
-	0x213, 0x029, 0x0D0,
-	0x48E
-};
-
-static const u16 lut_prbs_8k[13] = {
-	0x740, 0x069, 0x7DD,
-	0x208, 0x7B9, 0x5C7,
-	0x7FF, 0x53B, 0x029,
-	0x48E, 0x4C4, 0x367,
-	0x684
-=======
 static const u16 lut_prbs_2k[14] = {
 	0, 0x423, 0x009, 0x5C7, 0x7A6, 0x3D8, 0x527, 0x7FF, 0x79B, 0x3D6, 0x3A2, 0x53B, 0x2F4, 0x213
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
-
-static const u16 lut_prbs_4k[13] = {
-	0x208, 0x0C3, 0x7B9,
-	0x423, 0x5C7, 0x3D8,
-	0x7FF, 0x3D6, 0x53B,
-	0x213, 0x029, 0x0D0,
-	0x48E
+static const u16 lut_prbs_4k[14] = {
+	0, 0x208, 0x0C3, 0x7B9, 0x423, 0x5C7, 0x3D8, 0x7FF, 0x3D6, 0x53B, 0x213, 0x029, 0x0D0, 0x48E
 };
-<<<<<<< HEAD
 static const u16 lut_prbs_8k[14] = {
 	0, 0x740, 0x069, 0x7DD, 0x208, 0x7B9, 0x5C7, 0x7FF, 0x53B, 0x029, 0x48E, 0x4C4, 0x367, 0x684
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-static const u16 lut_prbs_8k[13] = {
-	0x740, 0x069, 0x7DD,
-	0x208, 0x7B9, 0x5C7,
-	0x7FF, 0x53B, 0x029,
-	0x48E, 0x4C4, 0x367,
-	0x684
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static u16 dib8000_get_init_prbs(struct dib8000_state *state, u16 subchannel)
 {
 	int sub_channel_prbs_group = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int prbs_group;
 
-	sub_channel_prbs_group = subchannel / 3;
-	if (sub_channel_prbs_group >= ARRAY_SIZE(lut_prbs_2k))
-		return 0;
+	sub_channel_prbs_group = (subchannel / 3) + 1;
+	dprintk("sub_channel_prbs_group = %d , subchannel =%d prbs = 0x%04x\n", sub_channel_prbs_group, subchannel, lut_prbs_8k[sub_channel_prbs_group]);
 
 	switch (state->fe[0]->dtv_property_cache.transmission_mode) {
 	case TRANSMISSION_MODE_2K:
-		prbs_group = lut_prbs_2k[sub_channel_prbs_group];
-		break;
+			return lut_prbs_2k[sub_channel_prbs_group];
 	case TRANSMISSION_MODE_4K:
-		prbs_group =  lut_prbs_4k[sub_channel_prbs_group];
-		break;
+			return lut_prbs_4k[sub_channel_prbs_group];
 	default:
 	case TRANSMISSION_MODE_8K:
-		prbs_group = lut_prbs_8k[sub_channel_prbs_group];
+			return lut_prbs_8k[sub_channel_prbs_group];
 	}
-
-	dprintk("sub_channel_prbs_group = %d , subchannel =%d prbs = 0x%04x\n",
-		sub_channel_prbs_group, subchannel, prbs_group);
-
-	return prbs_group;
-=======
-=======
-	int prbs_group;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	sub_channel_prbs_group = subchannel / 3;
-	if (sub_channel_prbs_group >= ARRAY_SIZE(lut_prbs_2k))
-		return 0;
-
-	switch (state->fe[0]->dtv_property_cache.transmission_mode) {
-	case TRANSMISSION_MODE_2K:
-		prbs_group = lut_prbs_2k[sub_channel_prbs_group];
-		break;
-	case TRANSMISSION_MODE_4K:
-		prbs_group =  lut_prbs_4k[sub_channel_prbs_group];
-		break;
-	default:
-	case TRANSMISSION_MODE_8K:
-		prbs_group = lut_prbs_8k[sub_channel_prbs_group];
-	}
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	dprintk("sub_channel_prbs_group = %d , subchannel =%d prbs = 0x%04x\n",
-		sub_channel_prbs_group, subchannel, prbs_group);
-
-	return prbs_group;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void dib8000_set_13seg_channel(struct dib8000_state *state)
@@ -2495,20 +2409,10 @@ static void dib8000_set_isdbt_common_channel(struct dib8000_state *state, u8 seq
 	/* TSB or ISDBT ? apply it now */
 	if (c->isdbt_sb_mode) {
 		dib8000_set_sb_channel(state);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		init_prbs = dib8000_get_init_prbs(state,
-						  c->isdbt_sb_subchannel);
-=======
 		if (c->isdbt_sb_subchannel < 14)
 			init_prbs = dib8000_get_init_prbs(state, c->isdbt_sb_subchannel);
 		else
 			init_prbs = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		init_prbs = dib8000_get_init_prbs(state,
-						  c->isdbt_sb_subchannel);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		dib8000_set_13seg_channel(state);
 		init_prbs = 0xfff;
@@ -3100,14 +3004,6 @@ static int dib8000_tune(struct dvb_frontend *fe)
 
 	unsigned long *timeout = &state->timeout;
 	unsigned long now = jiffies;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u16 init_prbs;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u16 init_prbs;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef DIB8000_AGC_FREEZE
 	u16 agc1, agc2;
 #endif
@@ -3406,21 +3302,8 @@ static int dib8000_tune(struct dvb_frontend *fe)
 		break;
 
 	case CT_DEMOD_STEP_11:  /* 41 : init prbs autosearch */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		init_prbs = dib8000_get_init_prbs(state, state->subchannel);
-
-		if (init_prbs) {
-			dib8000_set_subchannel_prbs(state, init_prbs);
-<<<<<<< HEAD
-=======
 		if (state->subchannel <= 41) {
 			dib8000_set_subchannel_prbs(state, dib8000_get_init_prbs(state, state->subchannel));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			*tune_state = CT_DEMOD_STEP_9;
 		} else {
 			*tune_state = CT_DEMOD_STOP;

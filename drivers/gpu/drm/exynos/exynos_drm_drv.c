@@ -300,9 +300,6 @@ static int exynos_drm_bind(struct device *dev)
 
 	drm_mode_config_reset(drm);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/*
 	 * enable drm irq mode.
 	 * - with irq_enabled = true, we can use the vblank feature.
@@ -313,9 +310,6 @@ static int exynos_drm_bind(struct device *dev)
 	 */
 	drm->irq_enabled = true;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* init kms poll for handling hpd */
 	drm_kms_helper_poll_init(drm);
 

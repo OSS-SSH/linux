@@ -13,14 +13,6 @@
 #include <linux/dmi.h>
 #include <linux/interrupt.h>
 #include <linux/io-64-nonatomic-lo-hi.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/iopoll.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/iopoll.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/module.h>
 #include <linux/slab.h>
 
@@ -39,29 +31,6 @@ static int sensor_mask_override = -1;
 module_param_named(sensor_mask, sensor_mask_override, int, 0444);
 MODULE_PARM_DESC(sensor_mask, "override the detected sensors mask");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int amd_sfh_wait_response_v2(struct amd_mp2_dev *mp2, u8 sid, u32 sensor_sts)
-{
-	union cmd_response cmd_resp;
-
-	/* Get response with status within a max of 800 ms timeout */
-	if (!readl_poll_timeout(mp2->mmio + AMD_P2C_MSG(0), cmd_resp.resp,
-				(cmd_resp.response_v2.response == sensor_sts &&
-				cmd_resp.response_v2.status == 0 && (sid == 0xff ||
-				cmd_resp.response_v2.sensor_id == sid)), 500, 800000))
-		return cmd_resp.response_v2.response;
-
-	return SENSOR_DISABLED;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void amd_start_sensor_v2(struct amd_mp2_dev *privdata, struct amd_mp2_sensor_info info)
 {
 	union sfh_cmd_base cmd_base;
@@ -89,15 +58,7 @@ static void amd_stop_sensor_v2(struct amd_mp2_dev *privdata, u16 sensor_idx)
 	cmd_base.cmd_v2.sensor_id = sensor_idx;
 	cmd_base.cmd_v2.length  = 16;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	writeq(0x0, privdata->mmio + AMD_C2P_MSG1);
-=======
 	writeq(0x0, privdata->mmio + AMD_C2P_MSG2);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	writeq(0x0, privdata->mmio + AMD_C2P_MSG1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	writel(cmd_base.ul, privdata->mmio + AMD_C2P_MSG0);
 }
 
@@ -222,14 +183,6 @@ static const struct amd_mp2_ops amd_sfh_ops_v2 = {
 	.start = amd_start_sensor_v2,
 	.stop = amd_stop_sensor_v2,
 	.stop_all = amd_stop_all_sensor_v2,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.response = amd_sfh_wait_response_v2,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.response = amd_sfh_wait_response_v2,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct amd_mp2_ops amd_sfh_ops = {
@@ -286,138 +239,15 @@ static int amd_mp2_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
 	if (!privdata->cl_data)
 		return -ENOMEM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mp2_select_ops(privdata);
-
-	rc = amd_sfh_hid_client_init(privdata);
-	if (rc)
-		return rc;
-
-	return devm_add_action_or_reset(&pdev->dev, amd_mp2_pci_remove, privdata);
-}
-
-static int __maybe_unused amd_mp2_pci_resume(struct device *dev)
-{
-	struct pci_dev *pdev = to_pci_dev(dev);
-	struct amd_mp2_dev *mp2 = pci_get_drvdata(pdev);
-	struct amdtp_cl_data *cl_data = mp2->cl_data;
-	struct amd_mp2_sensor_info info;
-	int i, status;
-
-	for (i = 0; i < cl_data->num_hid_devices; i++) {
-		if (cl_data->sensor_sts[i] == SENSOR_DISABLED) {
-			info.period = AMD_SFH_IDLE_LOOP;
-			info.sensor_idx = cl_data->sensor_idx[i];
-			info.dma_address = cl_data->sensor_dma_addr[i];
-			mp2->mp2_ops->start(mp2, info);
-			status = amd_sfh_wait_for_response
-					(mp2, cl_data->sensor_idx[i], SENSOR_ENABLED);
-			if (status == SENSOR_ENABLED)
-				cl_data->sensor_sts[i] = SENSOR_ENABLED;
-			dev_dbg(dev, "resume sid 0x%x status 0x%x\n",
-				cl_data->sensor_idx[i], cl_data->sensor_sts[i]);
-		}
-	}
-
-	return 0;
-}
-
-static int __maybe_unused amd_mp2_pci_suspend(struct device *dev)
-{
-	struct pci_dev *pdev = to_pci_dev(dev);
-	struct amd_mp2_dev *mp2 = pci_get_drvdata(pdev);
-	struct amdtp_cl_data *cl_data = mp2->cl_data;
-	int i, status;
-
-	for (i = 0; i < cl_data->num_hid_devices; i++) {
-		if (cl_data->sensor_idx[i] != HPD_IDX &&
-		    cl_data->sensor_sts[i] == SENSOR_ENABLED) {
-			mp2->mp2_ops->stop(mp2, cl_data->sensor_idx[i]);
-			status = amd_sfh_wait_for_response
-					(mp2, cl_data->sensor_idx[i], SENSOR_DISABLED);
-			if (status != SENSOR_ENABLED)
-				cl_data->sensor_sts[i] = SENSOR_DISABLED;
-			dev_dbg(dev, "suspend sid 0x%x status 0x%x\n",
-				cl_data->sensor_idx[i], cl_data->sensor_sts[i]);
-		}
-	}
-
-	return 0;
-}
-
-static SIMPLE_DEV_PM_OPS(amd_mp2_pm_ops, amd_mp2_pci_suspend,
-		amd_mp2_pci_resume);
-
-=======
 	rc = devm_add_action_or_reset(&pdev->dev, amd_mp2_pci_remove, privdata);
-=======
-	mp2_select_ops(privdata);
-
-	rc = amd_sfh_hid_client_init(privdata);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rc)
 		return rc;
 
-	return devm_add_action_or_reset(&pdev->dev, amd_mp2_pci_remove, privdata);
+	mp2_select_ops(privdata);
+
+	return amd_sfh_hid_client_init(privdata);
 }
 
-static int __maybe_unused amd_mp2_pci_resume(struct device *dev)
-{
-	struct pci_dev *pdev = to_pci_dev(dev);
-	struct amd_mp2_dev *mp2 = pci_get_drvdata(pdev);
-	struct amdtp_cl_data *cl_data = mp2->cl_data;
-	struct amd_mp2_sensor_info info;
-	int i, status;
-
-	for (i = 0; i < cl_data->num_hid_devices; i++) {
-		if (cl_data->sensor_sts[i] == SENSOR_DISABLED) {
-			info.period = AMD_SFH_IDLE_LOOP;
-			info.sensor_idx = cl_data->sensor_idx[i];
-			info.dma_address = cl_data->sensor_dma_addr[i];
-			mp2->mp2_ops->start(mp2, info);
-			status = amd_sfh_wait_for_response
-					(mp2, cl_data->sensor_idx[i], SENSOR_ENABLED);
-			if (status == SENSOR_ENABLED)
-				cl_data->sensor_sts[i] = SENSOR_ENABLED;
-			dev_dbg(dev, "resume sid 0x%x status 0x%x\n",
-				cl_data->sensor_idx[i], cl_data->sensor_sts[i]);
-		}
-	}
-
-	return 0;
-}
-
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int __maybe_unused amd_mp2_pci_suspend(struct device *dev)
-{
-	struct pci_dev *pdev = to_pci_dev(dev);
-	struct amd_mp2_dev *mp2 = pci_get_drvdata(pdev);
-	struct amdtp_cl_data *cl_data = mp2->cl_data;
-	int i, status;
-
-	for (i = 0; i < cl_data->num_hid_devices; i++) {
-		if (cl_data->sensor_idx[i] != HPD_IDX &&
-		    cl_data->sensor_sts[i] == SENSOR_ENABLED) {
-			mp2->mp2_ops->stop(mp2, cl_data->sensor_idx[i]);
-			status = amd_sfh_wait_for_response
-					(mp2, cl_data->sensor_idx[i], SENSOR_DISABLED);
-			if (status != SENSOR_ENABLED)
-				cl_data->sensor_sts[i] = SENSOR_DISABLED;
-			dev_dbg(dev, "suspend sid 0x%x status 0x%x\n",
-				cl_data->sensor_idx[i], cl_data->sensor_sts[i]);
-		}
-	}
-
-	return 0;
-}
-
-static SIMPLE_DEV_PM_OPS(amd_mp2_pm_ops, amd_mp2_pci_suspend,
-		amd_mp2_pci_resume);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct pci_device_id amd_mp2_pci_tbl[] = {
 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_MP2) },
 	{ }
@@ -428,14 +258,6 @@ static struct pci_driver amd_mp2_pci_driver = {
 	.name		= DRIVER_NAME,
 	.id_table	= amd_mp2_pci_tbl,
 	.probe		= amd_mp2_pci_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.driver.pm	= &amd_mp2_pm_ops,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.driver.pm	= &amd_mp2_pm_ops,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 module_pci_driver(amd_mp2_pci_driver);
 

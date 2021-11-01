@@ -22,21 +22,7 @@
  * XXX: This is wrong on {mips, parisc, powerpc, sparc}.
  */
 #undef	O_LARGEFILE
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#ifdef __aarch64__
-#define	O_LARGEFILE 0x20000
-#else
 #define	O_LARGEFILE 0x8000
-#endif
-<<<<<<< HEAD
-=======
-#define	O_LARGEFILE 0x8000
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct open_how_ext {
 	struct open_how inner;

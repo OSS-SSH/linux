@@ -47,15 +47,7 @@ static inline bool needs_unaligned_copy(const void *ptr)
 #ifdef CONFIG_HAVE_EFFICIENT_UNALIGNED_ACCESS
 	return false;
 #else
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return ((uintptr_t)ptr & 3) != 0;
-=======
 	return ((ptr - NULL) & 3) != 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return ((uintptr_t)ptr & 3) != 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 }
 

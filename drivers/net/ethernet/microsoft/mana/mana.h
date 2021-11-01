@@ -46,15 +46,7 @@ enum TRI_STATE {
 #define EQ_SIZE (8 * PAGE_SIZE)
 #define LOG2_EQ_THROTTLE 3
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define MAX_PORTS_IN_MANA_DEV 256
-=======
 #define MAX_PORTS_IN_MANA_DEV 16
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define MAX_PORTS_IN_MANA_DEV 256
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct mana_stats {
 	u64 packets;
@@ -233,16 +225,6 @@ struct mana_tx_comp_oob {
 
 struct mana_rxq;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define CQE_POLLING_BUFFER 512
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define CQE_POLLING_BUFFER 512
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct mana_cq {
 	struct gdma_queue *gdma_cq;
 
@@ -262,24 +244,8 @@ struct mana_cq {
 	 */
 	struct mana_txq *txq;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Buffer which the CQ handler can copy the CQE's into. */
-	struct gdma_comp gdma_comp_buf[CQE_POLLING_BUFFER];
-
-	/* NAPI data */
-	struct napi_struct napi;
-	int work_done;
-	int budget;
-<<<<<<< HEAD
-=======
 	/* Pointer to a buffer which the CQ handler can copy the CQE's into. */
 	struct gdma_comp *gdma_comp_buf;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define GDMA_MAX_RQE_SGES 15
@@ -349,16 +315,6 @@ struct mana_context {
 
 	u16 num_ports;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct mana_eq *eqs;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct mana_eq *eqs;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_device *ports[MAX_PORTS_IN_MANA_DEV];
 };
 
@@ -368,14 +324,8 @@ struct mana_port_context {
 
 	u8 mac_addr[ETH_ALEN];
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct mana_eq *eqs;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	enum TRI_STATE rss_state;
 
 	mana_handle_t default_rxobj;
@@ -445,25 +395,11 @@ enum mana_command_code {
 struct mana_query_device_cfg_req {
 	struct gdma_req_hdr hdr;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* MANA Nic Driver Capability flags */
-	u64 mn_drv_cap_flags1;
-	u64 mn_drv_cap_flags2;
-	u64 mn_drv_cap_flags3;
-	u64 mn_drv_cap_flags4;
-<<<<<<< HEAD
-=======
 	/* Driver Capability flags */
 	u64 drv_cap_flags1;
 	u64 drv_cap_flags2;
 	u64 drv_cap_flags3;
 	u64 drv_cap_flags4;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	u32 proto_major_ver;
 	u32 proto_minor_ver;
@@ -580,15 +516,7 @@ struct mana_cfg_rx_steer_resp {
 	struct gdma_resp_hdr hdr;
 }; /* HW DATA */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define MANA_MAX_NUM_QUEUES 64
-=======
 #define MANA_MAX_NUM_QUEUES 16
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define MANA_MAX_NUM_QUEUES 64
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define MANA_SHORT_VPORT_OFFSET_MAX ((1U << 8) - 1)
 

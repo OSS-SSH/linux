@@ -160,15 +160,7 @@ examples:
       #cooling-cells = <2>;
     };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    gpu_opp_table: opp-table {
-=======
     gpu_opp_table: opp_table0 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-    gpu_opp_table: opp-table {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
       compatible = "operating-points-v2";
 
       opp-533000000 {

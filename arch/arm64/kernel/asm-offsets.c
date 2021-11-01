@@ -52,15 +52,7 @@ int main(void)
   DEFINE(THREAD_KEYS_KERNEL,	offsetof(struct task_struct, thread.keys_kernel));
 #endif
 #ifdef CONFIG_ARM64_MTE
-<<<<<<< HEAD
-<<<<<<< HEAD
-  DEFINE(THREAD_MTE_CTRL,	offsetof(struct task_struct, thread.mte_ctrl));
-=======
   DEFINE(THREAD_GCR_EL1_USER,	offsetof(struct task_struct, thread.gcr_user_excl));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  DEFINE(THREAD_MTE_CTRL,	offsetof(struct task_struct, thread.mte_ctrl));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
   BLANK();
   DEFINE(S_X0,			offsetof(struct pt_regs, regs[0]));

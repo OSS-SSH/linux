@@ -77,28 +77,12 @@ EXPORT_SYMBOL(ccwgroup_set_online);
 /**
  * ccwgroup_set_offline() - disable a ccwgroup device
  * @gdev: target ccwgroup device
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @call_gdrv: Call the registered gdrv set_offline function
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @call_gdrv: Call the registered gdrv set_offline function
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * This function attempts to put the ccwgroup device into the offline state.
  * Returns:
  *  %0 on success and a negative error value on failure.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-int ccwgroup_set_offline(struct ccwgroup_device *gdev, bool call_gdrv)
-=======
 int ccwgroup_set_offline(struct ccwgroup_device *gdev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int ccwgroup_set_offline(struct ccwgroup_device *gdev, bool call_gdrv)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ccwgroup_driver *gdrv = to_ccwgroupdrv(gdev->dev.driver);
 	int ret = -EINVAL;
@@ -107,32 +91,11 @@ int ccwgroup_set_offline(struct ccwgroup_device *gdev, bool call_gdrv)
 		return -EAGAIN;
 	if (gdev->state == CCWGROUP_OFFLINE)
 		goto out;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!call_gdrv) {
-		ret = 0;
-		goto offline;
-	}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (gdrv->set_offline)
 		ret = gdrv->set_offline(gdev);
 	if (ret)
 		goto out;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-offline:
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-offline:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gdev->state = CCWGROUP_OFFLINE;
 out:
 	atomic_set(&gdev->onoff, 0);
@@ -161,15 +124,7 @@ static ssize_t ccwgroup_online_store(struct device *dev,
 	if (value == 1)
 		ret = ccwgroup_set_online(gdev);
 	else if (value == 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = ccwgroup_set_offline(gdev, true);
-=======
 		ret = ccwgroup_set_offline(gdev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = ccwgroup_set_offline(gdev, true);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		ret = -EINVAL;
 out:
@@ -484,35 +439,17 @@ module_exit(cleanup_ccwgroup);
 
 /************************** driver stuff ******************************/
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void ccwgroup_remove(struct device *dev)
-=======
 static int ccwgroup_remove(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void ccwgroup_remove(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ccwgroup_device *gdev = to_ccwgroupdev(dev);
 	struct ccwgroup_driver *gdrv = to_ccwgroupdrv(dev->driver);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (gdrv->remove)
-		gdrv->remove(gdev);
-=======
 	if (!dev->driver)
 		return 0;
 	if (gdrv->remove)
 		gdrv->remove(gdev);
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (gdrv->remove)
-		gdrv->remove(gdev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void ccwgroup_shutdown(struct device *dev)
@@ -567,9 +504,6 @@ void ccwgroup_driver_unregister(struct ccwgroup_driver *cdriver)
 EXPORT_SYMBOL(ccwgroup_driver_unregister);
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * get_ccwgroupdev_by_busid() - obtain device from a bus id
  * @gdrv: driver the device is owned by
  * @bus_id: bus id of the device to be searched
@@ -592,9 +526,6 @@ struct ccwgroup_device *get_ccwgroupdev_by_busid(struct ccwgroup_driver *gdrv,
 EXPORT_SYMBOL_GPL(get_ccwgroupdev_by_busid);
 
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ccwgroup_probe_ccwdev() - probe function for slave devices
  * @cdev: ccw device to be probed
  *

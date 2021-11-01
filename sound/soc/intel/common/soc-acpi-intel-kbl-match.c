@@ -87,15 +87,7 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_kbl_machines[] = {
 	},
 	{
 		.id = "DLGS7219",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.drv_name = "kbl_da7219_mx98357a",
-=======
 		.drv_name = "kbl_da7219_max98357a",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.drv_name = "kbl_da7219_mx98357a",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.fw_filename = "intel/dsp_fw_kbl.bin",
 		.machine_quirk = snd_soc_acpi_codec_list,
 		.quirk_data = &kbl_7219_98357_codecs,

@@ -7,16 +7,6 @@
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
 #include "am335x-boneblack-common.dtsi"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "am335x-boneblack-hdmi.dtsi"
-#include "am335x-sancloud-bbe-common.dtsi"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "am335x-boneblack-hdmi.dtsi"
-#include "am335x-sancloud-bbe-common.dtsi"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <dt-bindings/interrupt-controller/irq.h>
 
 / {
@@ -25,9 +15,6 @@
 };
 
 &am33xx_pinmux {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	pinctrl-names = "default";
 
 	cpsw_default: cpsw_default {
@@ -88,9 +75,6 @@
 		>;
 	};
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mpu6050_pins: pinmux_mpu6050_pins {
 		pinctrl-single,pins = <
 			AM33XX_PADCONF(AM335X_PIN_UART0_CTSN, PIN_INPUT, MUX_MODE7)    /* uart0_ctsn.gpio1_8 */
@@ -104,13 +88,6 @@
 	};
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-&i2c0 {
-	lps331ap: barometer@5c {
-		pinctrl-names = "default";
-		pinctrl-0 = <&lps3331ap_pins>;
-=======
 &mac {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&cpsw_default>;
@@ -136,13 +113,6 @@
 
 &i2c0 {
 	lps331ap: barometer@5c {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-&i2c0 {
-	lps331ap: barometer@5c {
-		pinctrl-names = "default";
-		pinctrl-0 = <&lps3331ap_pins>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		compatible = "st,lps331ap-press";
 		st,drdy-int-pin = <1>;
 		reg = <0x5c>;
@@ -151,25 +121,12 @@
 	};
 
 	mpu6050: accelerometer@68 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		pinctrl-names = "default";
-		pinctrl-0 = <&mpu6050_pins>;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		pinctrl-names = "default";
-		pinctrl-0 = <&mpu6050_pins>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		compatible = "invensense,mpu6050";
 		reg = <0x68>;
 		interrupt-parent = <&gpio0>;
 		interrupts = <2 IRQ_TYPE_EDGE_RISING>;
 		orientation = <0xff 0 0 0 1 0 0 0 0xff>;
 	};
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	usb2512b: usb-hub@2c {
 		compatible = "microchip,usb2512b";
@@ -177,7 +134,4 @@
 		reset-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;
 		/* wifi on port 4 */
 	};
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

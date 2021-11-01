@@ -682,13 +682,7 @@ int p4d_clear_huge(p4d_t *p4d)
 }
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #if CONFIG_PGTABLE_LEVELS > 3
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * pud_set_huge - setup kernel PUD mapping
  *
@@ -728,9 +722,6 @@ int pud_set_huge(pud_t *pud, phys_addr_t addr, pgprot_t prot)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * pud_clear_huge - clear kernel PUD mapping when it is set
  *
  * Returns 1 on success and 0 on failure (no PUD map is found).
@@ -748,9 +739,6 @@ int pud_clear_huge(pud_t *pud)
 
 #if CONFIG_PGTABLE_LEVELS > 2
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * pmd_set_huge - setup kernel PMD mapping
  *
  * See text over pud_set_huge() above.
@@ -781,30 +769,6 @@ int pmd_set_huge(pmd_t *pmd, phys_addr_t addr, pgprot_t prot)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * pud_clear_huge - clear kernel PUD mapping when it is set
- *
- * Returns 1 on success and 0 on failure (no PUD map is found).
- */
-int pud_clear_huge(pud_t *pud)
-{
-	if (pud_large(*pud)) {
-		pud_clear(pud);
-		return 1;
-	}
-
-	return 0;
-}
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * pmd_clear_huge - clear kernel PMD mapping when it is set
  *
  * Returns 1 on success and 0 on failure (no PMD map is found).
@@ -818,13 +782,7 @@ int pmd_clear_huge(pmd_t *pmd)
 
 	return 0;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_X86_64
 /**

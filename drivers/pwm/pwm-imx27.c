@@ -313,14 +313,8 @@ static int pwm_imx27_probe(struct platform_device *pdev)
 	if (imx == NULL)
 		return -ENOMEM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	platform_set_drvdata(pdev, imx);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	imx->clk_ipg = devm_clk_get(&pdev->dev, "ipg");
 	if (IS_ERR(imx->clk_ipg))
 		return dev_err_probe(&pdev->dev, PTR_ERR(imx->clk_ipg),
@@ -348,10 +342,6 @@ static int pwm_imx27_probe(struct platform_device *pdev)
 	if (!(pwmcr & MX3_PWMCR_EN))
 		pwm_imx27_clk_disable_unprepare(imx);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return devm_pwmchip_add(&pdev->dev, &imx->chip);
-=======
 	return pwmchip_add(&imx->chip);
 }
 
@@ -362,10 +352,6 @@ static int pwm_imx27_remove(struct platform_device *pdev)
 	imx = platform_get_drvdata(pdev);
 
 	return pwmchip_remove(&imx->chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return devm_pwmchip_add(&pdev->dev, &imx->chip);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct platform_driver imx_pwm_driver = {
@@ -374,13 +360,7 @@ static struct platform_driver imx_pwm_driver = {
 		.of_match_table = pwm_imx27_dt_ids,
 	},
 	.probe = pwm_imx27_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove = pwm_imx27_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 module_platform_driver(imx_pwm_driver);
 

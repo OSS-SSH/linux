@@ -101,27 +101,12 @@ in state.
 API for implementing a new FPGA Manager driver
 ----------------------------------------------
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-* ``fpga_mgr_states`` -  Values for :c:expr:`fpga_manager->state`.
-* struct fpga_manager -  the FPGA manager struct
-* struct fpga_manager_ops -  Low level FPGA manager driver ops
-* devm_fpga_mgr_create() -  Allocate and init a manager struct
-* fpga_mgr_register() -  Register an FPGA manager
-* fpga_mgr_unregister() -  Unregister an FPGA manager
-<<<<<<< HEAD
-=======
 * ``fpga_mgr_states`` —  Values for :c:expr:`fpga_manager->state`.
 * struct fpga_manager —  the FPGA manager struct
 * struct fpga_manager_ops —  Low level FPGA manager driver ops
 * devm_fpga_mgr_create() —  Allocate and init a manager struct
 * fpga_mgr_register() —  Register an FPGA manager
 * fpga_mgr_unregister() —  Unregister an FPGA manager
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 .. kernel-doc:: include/linux/fpga/fpga-mgr.h
    :functions: fpga_mgr_states

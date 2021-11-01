@@ -378,15 +378,7 @@ static void do_btree_node_write(struct btree *b)
 		struct bvec_iter_all iter_all;
 
 		bio_for_each_segment_all(bv, b->bio, iter_all) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			memcpy(bvec_virt(bv), addr, PAGE_SIZE);
-=======
 			memcpy(page_address(bv->bv_page), addr, PAGE_SIZE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			memcpy(bvec_virt(bv), addr, PAGE_SIZE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			addr += PAGE_SIZE;
 		}
 

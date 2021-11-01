@@ -16,15 +16,5 @@
 #define PDC_DISPLAY_SYNC_RESET	7
 #define PDC_COMPUTE_SYNC_RESET	8
 #define PDC_MODEM_SYNC_RESET	9
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define PDC_WLAN_RF_SYNC_RESET	10
-#define PDC_WPSS_SYNC_RESET	11
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define PDC_WLAN_RF_SYNC_RESET	10
-#define PDC_WPSS_SYNC_RESET	11
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

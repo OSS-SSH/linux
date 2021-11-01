@@ -45,13 +45,7 @@ nvkm_uvmm_search(struct nvkm_client *client, u64 handle)
 static int
 nvkm_uvmm_mthd_pfnclr(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct nvkm_client *client = uvmm->object.client;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	union {
 		struct nvif_vmm_pfnclr_v0 v0;
 	} *args = argv;
@@ -65,15 +59,9 @@ nvkm_uvmm_mthd_pfnclr(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 	} else
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (!client->super)
 		return -ENOENT;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (size) {
 		mutex_lock(&vmm->mutex);
 		ret = nvkm_vmm_pfn_unmap(vmm, addr, size);
@@ -86,13 +74,7 @@ nvkm_uvmm_mthd_pfnclr(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 static int
 nvkm_uvmm_mthd_pfnmap(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct nvkm_client *client = uvmm->object.client;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	union {
 		struct nvif_vmm_pfnmap_v0 v0;
 	} *args = argv;
@@ -111,15 +93,9 @@ nvkm_uvmm_mthd_pfnmap(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 	} else
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (!client->super)
 		return -ENOENT;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (size) {
 		mutex_lock(&vmm->mutex);
 		ret = nvkm_vmm_pfn_map(vmm, page, addr, size, phys);
@@ -132,13 +108,7 @@ nvkm_uvmm_mthd_pfnmap(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 static int
 nvkm_uvmm_mthd_unmap(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct nvkm_client *client = uvmm->object.client;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	union {
 		struct nvif_vmm_unmap_v0 v0;
 	} *args = argv;
@@ -160,19 +130,9 @@ nvkm_uvmm_mthd_unmap(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 		goto done;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ret = -ENOENT, vma->busy) {
-		VMM_DEBUG(vmm, "denied %016llx: %d", addr, vma->busy);
-=======
 	if (ret = -ENOENT, (!vma->user && !client->super) || vma->busy) {
 		VMM_DEBUG(vmm, "denied %016llx: %d %d %d", addr,
 			  vma->user, !client->super, vma->busy);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ret = -ENOENT, vma->busy) {
-		VMM_DEBUG(vmm, "denied %016llx: %d", addr, vma->busy);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto done;
 	}
 
@@ -221,19 +181,9 @@ nvkm_uvmm_mthd_map(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 		goto fail;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ret = -ENOENT, vma->busy) {
-		VMM_DEBUG(vmm, "denied %016llx: %d", addr, vma->busy);
-=======
 	if (ret = -ENOENT, (!vma->user && !client->super) || vma->busy) {
 		VMM_DEBUG(vmm, "denied %016llx: %d %d %d", addr,
 			  vma->user, !client->super, vma->busy);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ret = -ENOENT, vma->busy) {
-		VMM_DEBUG(vmm, "denied %016llx: %d", addr, vma->busy);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto fail;
 	}
 
@@ -280,13 +230,7 @@ fail:
 static int
 nvkm_uvmm_mthd_put(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct nvkm_client *client = uvmm->object.client;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	union {
 		struct nvif_vmm_put_v0 v0;
 	} *args = argv;
@@ -308,19 +252,9 @@ nvkm_uvmm_mthd_put(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 		goto done;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ret = -ENOENT, vma->busy) {
-		VMM_DEBUG(vmm, "denied %016llx: %d", addr, vma->busy);
-=======
 	if (ret = -ENOENT, (!vma->user && !client->super) || vma->busy) {
 		VMM_DEBUG(vmm, "denied %016llx: %d %d %d", addr,
 			  vma->user, !client->super, vma->busy);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ret = -ENOENT, vma->busy) {
-		VMM_DEBUG(vmm, "denied %016llx: %d", addr, vma->busy);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto done;
 	}
 
@@ -334,13 +268,7 @@ done:
 static int
 nvkm_uvmm_mthd_get(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct nvkm_client *client = uvmm->object.client;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	union {
 		struct nvif_vmm_get_v0 v0;
 	} *args = argv;
@@ -369,13 +297,7 @@ nvkm_uvmm_mthd_get(struct nvkm_uvmm *uvmm, void *argv, u32 argc)
 		return ret;
 
 	args->v0.addr = vma->addr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	vma->user = !client->super;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

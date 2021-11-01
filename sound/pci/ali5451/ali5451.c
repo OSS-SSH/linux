@@ -1914,34 +1914,22 @@ static SIMPLE_DEV_PM_OPS(ali_pm, ali_suspend, ali_resume);
 #define ALI_PM_OPS	NULL
 #endif /* CONFIG_PM_SLEEP */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void snd_ali_free(struct snd_card *card)
-{
-	struct snd_ali *codec = card->private_data;
-
-	if (codec->hw_initialized)
-		snd_ali_disable_address_interrupt(codec);
-	pci_dev_put(codec->pci_m1533);
-	pci_dev_put(codec->pci_m7101);
-=======
 static int snd_ali_free(struct snd_ali * codec)
-=======
-static void snd_ali_free(struct snd_card *card)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct snd_ali *codec = card->private_data;
-
 	if (codec->hw_initialized)
 		snd_ali_disable_address_interrupt(codec);
+	if (codec->irq >= 0)
+		free_irq(codec->irq, codec);
+	if (codec->port)
+		pci_release_regions(codec->pci);
+	pci_disable_device(codec->pci);
+#ifdef CONFIG_PM_SLEEP
+	kfree(codec->image);
+#endif
 	pci_dev_put(codec->pci_m1533);
 	pci_dev_put(codec->pci_m7101);
-<<<<<<< HEAD
 	kfree(codec);
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int snd_ali_chip_init(struct snd_ali *codec)
@@ -2029,20 +2017,8 @@ static int snd_ali_resources(struct snd_ali *codec)
 		return err;
 	codec->port = pci_resource_start(codec->pci, 0);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (devm_request_irq(&codec->pci->dev, codec->pci->irq,
-			     snd_ali_card_interrupt,
-			     IRQF_SHARED, KBUILD_MODNAME, codec)) {
-=======
 	if (request_irq(codec->pci->irq, snd_ali_card_interrupt,
 			IRQF_SHARED, KBUILD_MODNAME, codec)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (devm_request_irq(&codec->pci->dev, codec->pci->irq,
-			     snd_ali_card_interrupt,
-			     IRQF_SHARED, KBUILD_MODNAME, codec)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_err(codec->card->dev, "Unable to request irq.\n");
 		return -EBUSY;
 	}
@@ -2051,73 +2027,38 @@ static int snd_ali_resources(struct snd_ali *codec)
 	dev_dbg(codec->card->dev, "resources allocated.\n");
 	return 0;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int snd_ali_dev_free(struct snd_device *device)
 {
 	struct snd_ali *codec = device->device_data;
 	snd_ali_free(codec);
 	return 0;
 }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int snd_ali_create(struct snd_card *card,
 			  struct pci_dev *pci,
 			  int pcm_streams,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			  int spdif_support)
-{
-	struct snd_ali *codec = card->private_data;
-	int i, err;
-	unsigned short cmdw;
-=======
 			  int spdif_support,
 			  struct snd_ali **r_ali)
-=======
-			  int spdif_support)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct snd_ali *codec = card->private_data;
+	struct snd_ali *codec;
 	int i, err;
 	unsigned short cmdw;
-<<<<<<< HEAD
 	static const struct snd_device_ops ops = {
 		.dev_free = snd_ali_dev_free,
         };
 
 	*r_ali = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(card->dev, "creating ...\n");
 
 	/* enable PCI device */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = pcim_enable_device(pci);
-=======
 	err = pci_enable_device(pci);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = pcim_enable_device(pci);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 	/* check, if we can restrict PCI DMA transfers to 31 bits */
 	if (dma_set_mask_and_coherent(&pci->dev, DMA_BIT_MASK(31))) {
 		dev_err(card->dev,
 			"architecture does not support 31bit PCI busmaster DMA\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -ENXIO;
-	}
-
-=======
 		pci_disable_device(pci);
 		return -ENXIO;
 	}
@@ -2128,12 +2069,6 @@ static int snd_ali_create(struct snd_card *card,
 		return -ENOMEM;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return -ENXIO;
-	}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&codec->reg_lock);
 	spin_lock_init(&codec->voice_alloc);
 
@@ -2154,25 +2089,12 @@ static int snd_ali_create(struct snd_card *card,
 		cmdw |= PCI_COMMAND_IO;
 		pci_write_config_word(pci, PCI_COMMAND, cmdw);
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
-	if (snd_ali_resources(codec))
-		return -EBUSY;
-	card->private_free = snd_ali_free;
-=======
 	pci_set_master(pci);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	
-	if (snd_ali_resources(codec))
+	if (snd_ali_resources(codec)) {
+		snd_ali_free(codec);
 		return -EBUSY;
-<<<<<<< HEAD
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	card->private_free = snd_ali_free;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	codec->synth.chmap = 0;
 	codec->synth.chcnt = 0;
@@ -2199,25 +2121,13 @@ static int snd_ali_create(struct snd_card *card,
 	codec->pci_m1533 = pci_get_device(0x10b9, 0x1533, NULL);
 	if (!codec->pci_m1533) {
 		dev_err(card->dev, "cannot find ALi 1533 chip.\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		snd_ali_free(codec);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 	}
 	/* M7101: power management */
 	codec->pci_m7101 = pci_get_device(0x10b9, 0x7101, NULL);
 	if (!codec->pci_m7101 && codec->revision == ALI_5451_V02) {
 		dev_err(card->dev, "cannot find ALi 7101 chip.\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -ENODEV;
-	}
-
-=======
 		snd_ali_free(codec);
 		return -ENODEV;
 	}
@@ -2229,12 +2139,6 @@ static int snd_ali_create(struct snd_card *card,
 		return err;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return -ENODEV;
-	}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* initialise synth voices*/
 	for (i = 0; i < ALI_CHANNELS; i++)
 		codec->synth.voices[i].number = i;
@@ -2246,32 +2150,16 @@ static int snd_ali_create(struct snd_card *card,
 	}
 
 #ifdef CONFIG_PM_SLEEP
-<<<<<<< HEAD
-<<<<<<< HEAD
-	codec->image = devm_kmalloc(&pci->dev, sizeof(*codec->image),
-				    GFP_KERNEL);
-=======
 	codec->image = kmalloc(sizeof(*codec->image), GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	codec->image = devm_kmalloc(&pci->dev, sizeof(*codec->image),
-				    GFP_KERNEL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!codec->image)
 		dev_warn(card->dev, "can't allocate apm buffer\n");
 #endif
 
 	snd_ali_enable_address_interrupt(codec);
 	codec->hw_initialized = 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	*r_ali = codec;
 	dev_dbg(card->dev, "created.\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2284,62 +2172,24 @@ static int snd_ali_probe(struct pci_dev *pci,
 
 	dev_dbg(&pci->dev, "probe ...\n");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = snd_devm_card_new(&pci->dev, index, id, THIS_MODULE,
-				sizeof(*codec), &card);
-	if (err < 0)
-		return err;
-	codec = card->private_data;
-
-	err = snd_ali_create(card, pci, pcm_channels, spdif);
-	if (err < 0)
-		return err;
-=======
 	err = snd_card_new(&pci->dev, index, id, THIS_MODULE, 0, &card);
-=======
-	err = snd_devm_card_new(&pci->dev, index, id, THIS_MODULE,
-				sizeof(*codec), &card);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
-	codec = card->private_data;
 
-	err = snd_ali_create(card, pci, pcm_channels, spdif);
+	err = snd_ali_create(card, pci, pcm_channels, spdif, &codec);
 	if (err < 0)
-<<<<<<< HEAD
 		goto error;
 	card->private_data = codec;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(&pci->dev, "mixer building ...\n");
 	err = snd_ali_mixer(codec);
 	if (err < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return err;
-=======
 		goto error;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	
 	dev_dbg(&pci->dev, "pcm building ...\n");
 	err = snd_ali_build_pcms(codec);
 	if (err < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return err;
-=======
 		goto error;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snd_ali_proc_init(codec);
 
@@ -2352,13 +2202,6 @@ static int snd_ali_probe(struct pci_dev *pci,
 	dev_dbg(&pci->dev, "register card.\n");
 	err = snd_card_register(card);
 	if (err < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return err;
-
-	pci_set_drvdata(pci, card);
-	return 0;
-=======
 		goto error;
 
 	pci_set_drvdata(pci, card);
@@ -2372,26 +2215,13 @@ static int snd_ali_probe(struct pci_dev *pci,
 static void snd_ali_remove(struct pci_dev *pci)
 {
 	snd_card_free(pci_get_drvdata(pci));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return err;
-
-	pci_set_drvdata(pci, card);
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct pci_driver ali5451_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_ali_ids,
 	.probe = snd_ali_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove = snd_ali_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = ALI_PM_OPS,
 	},

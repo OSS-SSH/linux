@@ -126,14 +126,6 @@ extern const struct snd_motu_spec snd_motu_spec_828;
 extern const struct snd_motu_spec snd_motu_spec_896;
 
 extern const struct snd_motu_spec snd_motu_spec_828mk2;
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern const struct snd_motu_spec snd_motu_spec_896hd;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern const struct snd_motu_spec snd_motu_spec_896hd;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern const struct snd_motu_spec snd_motu_spec_traveler;
 extern const struct snd_motu_spec snd_motu_spec_ultralite;
 extern const struct snd_motu_spec snd_motu_spec_8pre;

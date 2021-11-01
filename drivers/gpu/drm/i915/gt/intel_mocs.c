@@ -352,15 +352,7 @@ static unsigned int get_mocs_settings(const struct drm_i915_private *i915,
 		table->size  = ARRAY_SIZE(icl_mocs_table);
 		table->table = icl_mocs_table;
 		table->n_entries = GEN9_NUM_MOCS_ENTRIES;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	} else if (IS_GEN9_BC(i915)) {
-=======
 	} else if (IS_GEN9_BC(i915) || IS_CANNONLAKE(i915)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} else if (IS_GEN9_BC(i915)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		table->size  = ARRAY_SIZE(skl_mocs_table);
 		table->n_entries = GEN9_NUM_MOCS_ENTRIES;
 		table->table = skl_mocs_table;

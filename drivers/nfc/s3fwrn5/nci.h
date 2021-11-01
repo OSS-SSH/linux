@@ -50,15 +50,7 @@ struct nci_prop_fw_cfg_rsp {
 	__u8 status;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern const struct nci_driver_ops s3fwrn5_nci_prop_ops[4];
-=======
 void s3fwrn5_nci_get_prop_ops(struct nci_driver_ops **ops, size_t *n);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern const struct nci_driver_ops s3fwrn5_nci_prop_ops[4];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int s3fwrn5_nci_rf_configure(struct s3fwrn5_info *info, const char *fw_name);
 
 #endif /* __LOCAL_S3FWRN5_NCI_H_ */

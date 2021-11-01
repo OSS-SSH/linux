@@ -59,14 +59,6 @@ int xfs_blockgc_free_dquots(struct xfs_mount *mp, struct xfs_dquot *udqp,
 		unsigned int iwalk_flags);
 int xfs_blockgc_free_quota(struct xfs_inode *ip, unsigned int iwalk_flags);
 int xfs_blockgc_free_space(struct xfs_mount *mp, struct xfs_icwalk *icm);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void xfs_blockgc_flush_all(struct xfs_mount *mp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void xfs_blockgc_flush_all(struct xfs_mount *mp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void xfs_inode_set_eofblocks_tag(struct xfs_inode *ip);
 void xfs_inode_clear_eofblocks_tag(struct xfs_inode *ip);
@@ -76,38 +68,16 @@ void xfs_inode_clear_cowblocks_tag(struct xfs_inode *ip);
 
 void xfs_blockgc_worker(struct work_struct *work);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_XFS_QUOTA
 int xfs_dqrele_all_inodes(struct xfs_mount *mp, unsigned int qflags);
 #else
 # define xfs_dqrele_all_inodes(mp, qflags)	(0)
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int xfs_icache_inode_is_allocated(struct xfs_mount *mp, struct xfs_trans *tp,
 				  xfs_ino_t ino, bool *inuse);
 
 void xfs_blockgc_stop(struct xfs_mount *mp);
 void xfs_blockgc_start(struct xfs_mount *mp);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-void xfs_inodegc_worker(struct work_struct *work);
-void xfs_inodegc_flush(struct xfs_mount *mp);
-void xfs_inodegc_stop(struct xfs_mount *mp);
-void xfs_inodegc_start(struct xfs_mount *mp);
-void xfs_inodegc_cpu_dead(struct xfs_mount *mp, unsigned int cpu);
-int xfs_inodegc_register_shrinker(struct xfs_mount *mp);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

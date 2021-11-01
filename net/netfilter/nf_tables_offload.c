@@ -353,14 +353,6 @@ static void nft_flow_block_offload_init(struct flow_block_offload *bo,
 	bo->command	= cmd;
 	bo->binder_type	= FLOW_BLOCK_BINDER_TYPE_CLSACT_INGRESS;
 	bo->extack	= extack;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bo->cb_list_head = &basechain->flow_block.cb_list;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bo->cb_list_head = &basechain->flow_block.cb_list;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_LIST_HEAD(&bo->cb_list);
 }
 

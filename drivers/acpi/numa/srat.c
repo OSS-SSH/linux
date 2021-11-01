@@ -206,15 +206,7 @@ int __init srat_disabled(void)
 	return acpi_numa < 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#if defined(CONFIG_X86) || defined(CONFIG_ARM64) || defined(CONFIG_LOONGARCH)
-=======
 #if defined(CONFIG_X86) || defined(CONFIG_ARM64)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#if defined(CONFIG_X86) || defined(CONFIG_ARM64) || defined(CONFIG_LOONGARCH)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Callback for SLIT parsing.  pxm_to_node() returns NUMA_NO_NODE for
  * I/O localities since SRAT does not list them.  I/O localities are

@@ -530,14 +530,6 @@ static int dspi_request_dma(struct fsl_dspi *dspi, phys_addr_t phy_addr)
 		goto err_rx_dma_buf;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	memset(&cfg, 0, sizeof(cfg));
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	memset(&cfg, 0, sizeof(cfg));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cfg.src_addr = phy_addr + SPI_POPR;
 	cfg.dst_addr = phy_addr + SPI_PUSHR;
 	cfg.src_addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;

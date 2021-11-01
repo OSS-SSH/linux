@@ -340,27 +340,6 @@ static ssize_t ceph_vxattrcb_caps(struct ceph_inode_info *ci, char *val,
 			      ceph_cap_string(issued), issued);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static ssize_t ceph_vxattrcb_auth_mds(struct ceph_inode_info *ci,
-				       char *val, size_t size)
-{
-	int ret;
-
-	spin_lock(&ci->i_ceph_lock);
-	ret = ceph_fmt_xattr(val, size, "%d",
-			     ci->i_auth_cap ? ci->i_auth_cap->session->s_mds : -1);
-	spin_unlock(&ci->i_ceph_lock);
-	return ret;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CEPH_XATTR_NAME(_type, _name)	XATTR_CEPH_PREFIX #_type "." #_name
 #define CEPH_XATTR_NAME2(_type, _name, _name2)	\
 	XATTR_CEPH_PREFIX #_type "." #_name "." #_name2
@@ -494,22 +473,6 @@ static struct ceph_vxattr ceph_common_vxattrs[] = {
 		.exists_cb = NULL,
 		.flags = VXATTR_FLAG_READONLY,
 	},
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	{
-		.name = "ceph.auth_mds",
-		.name_size = sizeof("ceph.auth_mds"),
-		.getxattr_cb = ceph_vxattrcb_auth_mds,
-		.exists_cb = NULL,
-		.flags = VXATTR_FLAG_READONLY,
-	},
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .name = NULL, 0 }	/* Required table terminator */
 };
 

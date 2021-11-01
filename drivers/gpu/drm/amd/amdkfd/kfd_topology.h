@@ -78,14 +78,6 @@ struct kfd_node_properties {
 	uint32_t simd_per_cu;
 	uint32_t max_slots_scratch_cu;
 	uint32_t engine_id;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	uint32_t gfx_target_version;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	uint32_t gfx_target_version;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint32_t vendor_id;
 	uint32_t device_id;
 	uint32_t location_id;

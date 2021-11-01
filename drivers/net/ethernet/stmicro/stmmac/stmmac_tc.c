@@ -711,52 +711,12 @@ static int tc_setup_cls(struct stmmac_priv *priv,
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct timespec64 stmmac_calc_tas_basetime(ktime_t old_base_time,
-					   ktime_t current_time,
-					   u64 cycle_time)
-{
-	struct timespec64 time;
-
-	if (ktime_after(old_base_time, current_time)) {
-		time = ktime_to_timespec64(old_base_time);
-	} else {
-		s64 n;
-		ktime_t base_time;
-
-		n = div64_s64(ktime_sub_ns(current_time, old_base_time),
-			      cycle_time);
-		base_time = ktime_add_ns(old_base_time,
-					 (n + 1) * cycle_time);
-
-		time = ktime_to_timespec64(base_time);
-	}
-
-	return time;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int tc_setup_taprio(struct stmmac_priv *priv,
 			   struct tc_taprio_qopt_offload *qopt)
 {
 	u32 size, wid = priv->dma_cap.estwid, dep = priv->dma_cap.estdep;
 	struct plat_stmmacenet_data *plat = priv->plat;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct timespec64 time, current_time, qopt_time;
-=======
 	struct timespec64 time, current_time;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct timespec64 time, current_time, qopt_time;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ktime_t current_time_ns;
 	bool fpe = false;
 	int i, ret = 0;
@@ -813,37 +773,14 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
 					 GFP_KERNEL);
 		if (!plat->est)
 			return -ENOMEM;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-		mutex_init(&priv->plat->est->lock);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-		mutex_init(&priv->plat->est->lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else {
 		memset(plat->est, 0, sizeof(*plat->est));
 	}
 
 	size = qopt->num_entries;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	mutex_lock(&priv->plat->est->lock);
 	priv->plat->est->gcl_size = size;
 	priv->plat->est->enable = qopt->enable;
-	mutex_unlock(&priv->plat->est->lock);
-<<<<<<< HEAD
-=======
-	priv->plat->est->gcl_size = size;
-	priv->plat->est->enable = qopt->enable;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (i = 0; i < size; i++) {
 		s64 delta_ns = qopt->entries[i].interval;
@@ -874,15 +811,6 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
 		priv->plat->est->gcl[i] = delta_ns | (gates << wid);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mutex_lock(&priv->plat->est->lock);
-	/* Adjust for real system time */
-	priv->ptp_clock_ops.gettime64(&priv->ptp_clock_ops, &current_time);
-	current_time_ns = timespec64_to_ktime(current_time);
-	time = stmmac_calc_tas_basetime(qopt->base_time, current_time_ns,
-					qopt->cycle_time);
-=======
 	/* Adjust for real system time */
 	priv->ptp_clock_ops.gettime64(&priv->ptp_clock_ops, &current_time);
 	current_time_ns = timespec64_to_ktime(current_time);
@@ -899,52 +827,16 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
 
 		time = ktime_to_timespec64(base_time);
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mutex_lock(&priv->plat->est->lock);
-	/* Adjust for real system time */
-	priv->ptp_clock_ops.gettime64(&priv->ptp_clock_ops, &current_time);
-	current_time_ns = timespec64_to_ktime(current_time);
-	time = stmmac_calc_tas_basetime(qopt->base_time, current_time_ns,
-					qopt->cycle_time);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	priv->plat->est->btr[0] = (u32)time.tv_nsec;
 	priv->plat->est->btr[1] = (u32)time.tv_sec;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	qopt_time = ktime_to_timespec64(qopt->base_time);
-	priv->plat->est->btr_reserve[0] = (u32)qopt_time.tv_nsec;
-	priv->plat->est->btr_reserve[1] = (u32)qopt_time.tv_sec;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ctr = qopt->cycle_time;
 	priv->plat->est->ctr[0] = do_div(ctr, NSEC_PER_SEC);
 	priv->plat->est->ctr[1] = (u32)ctr;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (fpe && !priv->dma_cap.fpesel) {
-		mutex_unlock(&priv->plat->est->lock);
-		return -EOPNOTSUPP;
-	}
-=======
 	if (fpe && !priv->dma_cap.fpesel)
 		return -EOPNOTSUPP;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (fpe && !priv->dma_cap.fpesel) {
-		mutex_unlock(&priv->plat->est->lock);
-		return -EOPNOTSUPP;
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Actual FPE register configuration will be done after FPE handshake
 	 * is success.
@@ -953,14 +845,6 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
 
 	ret = stmmac_est_configure(priv, priv->ioaddr, priv->plat->est,
 				   priv->plat->clk_ptp_rate);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mutex_unlock(&priv->plat->est->lock);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mutex_unlock(&priv->plat->est->lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		netdev_err(priv->dev, "failed to configure EST\n");
 		goto disable;
@@ -976,25 +860,9 @@ static int tc_setup_taprio(struct stmmac_priv *priv,
 	return 0;
 
 disable:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (priv->plat->est) {
-		mutex_lock(&priv->plat->est->lock);
-		priv->plat->est->enable = false;
-		stmmac_est_configure(priv, priv->ioaddr, priv->plat->est,
-				     priv->plat->clk_ptp_rate);
-		mutex_unlock(&priv->plat->est->lock);
-	}
-<<<<<<< HEAD
-=======
 	priv->plat->est->enable = false;
 	stmmac_est_configure(priv, priv->ioaddr, priv->plat->est,
 			     priv->plat->clk_ptp_rate);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	priv->plat->fpe_cfg->enable = false;
 	stmmac_fpe_configure(priv, priv->ioaddr,

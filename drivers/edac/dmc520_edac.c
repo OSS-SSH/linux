@@ -464,15 +464,7 @@ static void dmc520_init_csrow(struct mem_ctl_info *mci)
 			dimm->grain	= pvt->mem_width_in_bytes;
 			dimm->dtype	= dt;
 			dimm->mtype	= mt;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dimm->edac_mode	= EDAC_SECDED;
-=======
 			dimm->edac_mode	= EDAC_FLAG_SECDED;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dimm->edac_mode	= EDAC_SECDED;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dimm->nr_pages	= pages_per_rank / csi->nr_channels;
 		}
 	}

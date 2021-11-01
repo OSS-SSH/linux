@@ -33,16 +33,6 @@ properties:
           - ad,ad7414
             # ADM9240:  Complete System Hardware Monitor for uProcessor-Based Systems
           - ad,adm9240
-<<<<<<< HEAD
-<<<<<<< HEAD
-            # AD5110 - Nonvolatile Digital Potentiometer
-          - adi,ad5110
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-            # AD5110 - Nonvolatile Digital Potentiometer
-          - adi,ad5110
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             # Analog Devices ADP5585 Keypad Decoder and I/O Expansion
           - adi,adp5585
             # Analog Devices ADP5585 Keypad Decoder and I/O Expansion with support for Row5
@@ -71,16 +61,6 @@ properties:
           - capella,cm32181
             # CM3232: Ambient Light Sensor
           - capella,cm3232
-<<<<<<< HEAD
-<<<<<<< HEAD
-            # CM3323: Ambient Light Sensor
-          - capella,cm3323
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-            # CM3323: Ambient Light Sensor
-          - capella,cm3323
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             # High-Precision Digital Thermometer
           - dallas,ds1631
             # Total-Elapsed-Time Recorder with Alarm
@@ -163,16 +143,6 @@ properties:
           - maxim,ds1803-100
             # Low-Power, 4-/12-Channel, 2-Wire Serial, 12-Bit ADCs
           - maxim,max1237
-<<<<<<< HEAD
-<<<<<<< HEAD
-            # Temperature Sensor, I2C interface
-          - maxim,max1619
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-            # Temperature Sensor, I2C interface
-          - maxim,max1619
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             # 10-bit 10 kOhm linear programable voltage divider
           - maxim,max5481
             # 10-bit 50 kOhm linear programable voltage divider
@@ -299,16 +269,6 @@ properties:
           - sensirion,sgpc3
             # Sensirion multi-pixel gas sensor with I2C interface
           - sensirion,sgp30
-<<<<<<< HEAD
-<<<<<<< HEAD
-            # Sensirion gas sensor with I2C interface
-          - sensirion,sgp40
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-            # Sensirion gas sensor with I2C interface
-          - sensirion,sgp40
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             # Sensortek 3 axis accelerometer
           - sensortek,stk8312
             # Sensortek 3 axis accelerometer

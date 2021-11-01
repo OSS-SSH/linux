@@ -141,16 +141,8 @@ static const char *bcma_device_name(const struct bcma_device_id *id)
 	return "UNKNOWN";
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static u32 bcma_scan_read32(struct bcma_bus *bus, u16 offset)
-=======
 static u32 bcma_scan_read32(struct bcma_bus *bus, u8 current_coreidx,
 		       u16 offset)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static u32 bcma_scan_read32(struct bcma_bus *bus, u16 offset)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return readl(bus->mmio + offset);
 }
@@ -451,15 +443,7 @@ void bcma_detect_chip(struct bcma_bus *bus)
 
 	bcma_scan_switch_core(bus, BCMA_ADDR_BASE);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tmp = bcma_scan_read32(bus, BCMA_CC_ID);
-=======
 	tmp = bcma_scan_read32(bus, 0, BCMA_CC_ID);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tmp = bcma_scan_read32(bus, BCMA_CC_ID);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	chipinfo->id = (tmp & BCMA_CC_ID_ID) >> BCMA_CC_ID_ID_SHIFT;
 	chipinfo->rev = (tmp & BCMA_CC_ID_REV) >> BCMA_CC_ID_REV_SHIFT;
 	chipinfo->pkg = (tmp & BCMA_CC_ID_PKG) >> BCMA_CC_ID_PKG_SHIFT;
@@ -481,15 +465,7 @@ int bcma_bus_scan(struct bcma_bus *bus)
 	if (bus->nr_cores)
 		return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	erombase = bcma_scan_read32(bus, BCMA_CC_EROM);
-=======
 	erombase = bcma_scan_read32(bus, 0, BCMA_CC_EROM);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	erombase = bcma_scan_read32(bus, BCMA_CC_EROM);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (bus->hosttype == BCMA_HOSTTYPE_SOC) {
 		eromptr = ioremap(erombase, BCMA_CORE_SIZE);
 		if (!eromptr)

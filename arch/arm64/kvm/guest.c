@@ -31,14 +31,8 @@
 const struct _kvm_stats_desc kvm_vm_stats_desc[] = {
 	KVM_GENERIC_VM_STATS()
 };
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static_assert(ARRAY_SIZE(kvm_vm_stats_desc) ==
 		sizeof(struct kvm_vm_stat) / sizeof(u64));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 const struct kvm_stats_header kvm_vm_stats_header = {
 	.name_size = KVM_STATS_NAME_SIZE,
@@ -56,22 +50,10 @@ const struct _kvm_stats_desc kvm_vcpu_stats_desc[] = {
 	STATS_DESC_COUNTER(VCPU, wfi_exit_stat),
 	STATS_DESC_COUNTER(VCPU, mmio_exit_user),
 	STATS_DESC_COUNTER(VCPU, mmio_exit_kernel),
-<<<<<<< HEAD
-<<<<<<< HEAD
-	STATS_DESC_COUNTER(VCPU, signal_exits),
-	STATS_DESC_COUNTER(VCPU, exits)
-};
-=======
 	STATS_DESC_COUNTER(VCPU, exits)
 };
 static_assert(ARRAY_SIZE(kvm_vcpu_stats_desc) ==
 		sizeof(struct kvm_vcpu_stat) / sizeof(u64));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	STATS_DESC_COUNTER(VCPU, signal_exits),
-	STATS_DESC_COUNTER(VCPU, exits)
-};
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 const struct kvm_stats_header kvm_vcpu_stats_header = {
 	.name_size = KVM_STATS_NAME_SIZE,
@@ -860,15 +842,7 @@ int __kvm_arm_vcpu_set_events(struct kvm_vcpu *vcpu,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-u32 __attribute_const__ kvm_target_cpu(void)
-=======
 int __attribute_const__ kvm_target_cpu(void)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-u32 __attribute_const__ kvm_target_cpu(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long implementor = read_cpuid_implementor();
 	unsigned long part_number = read_cpuid_part_number();
@@ -900,15 +874,7 @@ u32 __attribute_const__ kvm_target_cpu(void)
 
 int kvm_vcpu_preferred_target(struct kvm_vcpu_init *init)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 target = kvm_target_cpu();
-=======
 	int target = kvm_target_cpu();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 target = kvm_target_cpu();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (target < 0)
 		return -ENODEV;

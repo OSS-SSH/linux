@@ -24,14 +24,6 @@
 #include "intel_reset_types.h"
 #include "intel_rc6_types.h"
 #include "intel_rps_types.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "intel_migrate_types.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "intel_migrate_types.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "intel_wakeref.h"
 
 struct drm_i915_private;
@@ -39,42 +31,6 @@ struct i915_ggtt;
 struct intel_engine_cs;
 struct intel_uncore;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct intel_mmio_range {
-	u32 start;
-	u32 end;
-};
-
-/*
- * The hardware has multiple kinds of multicast register ranges that need
- * special register steering (and future platforms are expected to add
- * additional types).
- *
- * During driver startup, we initialize the steering control register to
- * direct reads to a slice/subslice that are valid for the 'subslice' class
- * of multicast registers.  If another type of steering does not have any
- * overlap in valid steering targets with 'subslice' style registers, we will
- * need to explicitly re-steer reads of registers of the other type.
- *
- * Only the replication types that may need additional non-default steering
- * are listed here.
- */
-enum intel_steering_type {
-	L3BANK,
-	MSLICE,
-	LNCF,
-
-	NUM_STEERING_TYPES
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum intel_submission_method {
 	INTEL_SUBMISSION_RING,
 	INTEL_SUBMISSION_ELSP,
@@ -189,26 +145,8 @@ struct intel_gt {
 
 	struct i915_vma *scratch;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct intel_migrate migrate;
-
-	const struct intel_mmio_range *steering_table[NUM_STEERING_TYPES];
-
 	struct intel_gt_info {
 		intel_engine_mask_t engine_mask;
-
-		u32 l3bank_mask;
-
-<<<<<<< HEAD
-=======
-	struct intel_gt_info {
-		intel_engine_mask_t engine_mask;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u8 num_engines;
 
 		/* Media engine access to SFC per instance */
@@ -216,16 +154,6 @@ struct intel_gt {
 
 		/* Slice/subslice/EU info */
 		struct sseu_dev_info sseu;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-		unsigned long mslice_mask;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-		unsigned long mslice_mask;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} info;
 };
 

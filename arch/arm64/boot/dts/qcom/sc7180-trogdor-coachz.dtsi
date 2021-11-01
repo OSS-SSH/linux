@@ -23,15 +23,7 @@ ap_h1_spi: &spi0 {};
 	adau7002: audio-codec-1 {
 		compatible = "adi,adau7002";
 		IOVDD-supply = <&pp1800_l15a>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		wakeup-delay-ms = <80>;
-=======
 		wakeup-delay-ms = <15>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		wakeup-delay-ms = <80>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		#sound-dai-cells = <0>;
 	};
 

@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  *   fs/cifs/cifs_unicode.c
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   Copyright (c) International Business Machines  Corp., 2000,2009
  *   Modified by Steve French (sfrench@us.ibm.com)
@@ -364,12 +358,6 @@ cifs_strndup_from_utf16(const char *src, const int maxlen,
 		if (!dst)
 			return NULL;
 		cifs_from_utf16(dst, (__le16 *) src, len, maxlen, codepage,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				NO_MAP_UNI_RSVD);
-	} else {
-		dst = kstrndup(src, maxlen, GFP_KERNEL);
-=======
 			       NO_MAP_UNI_RSVD);
 	} else {
 		len = strnlen(src, maxlen);
@@ -378,12 +366,6 @@ cifs_strndup_from_utf16(const char *src, const int maxlen,
 		if (!dst)
 			return NULL;
 		strlcpy(dst, src, len);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				NO_MAP_UNI_RSVD);
-	} else {
-		dst = kstrndup(src, maxlen, GFP_KERNEL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return dst;

@@ -938,15 +938,7 @@ enum mvpp22_ptp_packet_format {
 #define MVPP2_BM_COOKIE_POOL_OFFS	8
 #define MVPP2_BM_COOKIE_CPU_OFFS	24
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define MVPP2_BM_SHORT_FRAME_SIZE	736	/* frame size 128 */
-=======
 #define MVPP2_BM_SHORT_FRAME_SIZE	704	/* frame size 128 */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define MVPP2_BM_SHORT_FRAME_SIZE	736	/* frame size 128 */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MVPP2_BM_LONG_FRAME_SIZE	2240	/* frame size 1664 */
 #define MVPP2_BM_JUMBO_FRAME_SIZE	10432	/* frame size 9856 */
 /* BM short pool packet size

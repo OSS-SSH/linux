@@ -1521,22 +1521,8 @@ static inline int snd_es1938_create_gameport(struct es1938 *chip) { return -ENOS
 static inline void snd_es1938_free_gameport(struct es1938 *chip) { }
 #endif /* SUPPORT_JOYSTICK */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void snd_es1938_free(struct snd_card *card)
-{
-	struct es1938 *chip = card->private_data;
-
-=======
 static int snd_es1938_free(struct es1938 *chip)
 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void snd_es1938_free(struct snd_card *card)
-{
-	struct es1938 *chip = card->private_data;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* disable irqs */
 	outb(0x00, SLIO_REG(chip, IRQCONTROL));
 	if (chip->rmidi)
@@ -1546,19 +1532,6 @@ static void snd_es1938_free(struct snd_card *card)
 
 	if (chip->irq >= 0)
 		free_irq(chip->irq, chip);
-<<<<<<< HEAD
-<<<<<<< HEAD
-}
-
-static int snd_es1938_create(struct snd_card *card,
-			     struct pci_dev *pci)
-{
-	struct es1938 *chip = card->private_data;
-	int err;
-
-	/* enable PCI device */
-	err = pcim_enable_device(pci);
-=======
 	pci_release_regions(chip->pci);
 	pci_disable_device(chip->pci);
 	kfree(chip);
@@ -1569,35 +1542,28 @@ static int snd_es1938_dev_free(struct snd_device *device)
 {
 	struct es1938 *chip = device->device_data;
 	return snd_es1938_free(chip);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int snd_es1938_create(struct snd_card *card,
-			     struct pci_dev *pci)
+			     struct pci_dev *pci,
+			     struct es1938 **rchip)
 {
-	struct es1938 *chip = card->private_data;
+	struct es1938 *chip;
 	int err;
+	static const struct snd_device_ops ops = {
+		.dev_free =	snd_es1938_dev_free,
+	};
+
+	*rchip = NULL;
 
 	/* enable PCI device */
-<<<<<<< HEAD
 	err = pci_enable_device(pci);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = pcim_enable_device(pci);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
         /* check, if we can restrict PCI DMA transfers to 24 bits */
 	if (dma_set_mask_and_coherent(&pci->dev, DMA_BIT_MASK(24))) {
 		dev_err(card->dev,
 			"architecture does not support 24bit PCI busmaster DMA\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-                return -ENXIO;
-        }
-
-=======
 		pci_disable_device(pci);
                 return -ENXIO;
         }
@@ -1607,68 +1573,30 @@ static int snd_es1938_create(struct snd_card *card,
 		pci_disable_device(pci);
 		return -ENOMEM;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-                return -ENXIO;
-        }
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_lock_init(&chip->reg_lock);
 	spin_lock_init(&chip->mixer_lock);
 	chip->card = card;
 	chip->pci = pci;
 	chip->irq = -1;
 	err = pci_request_regions(pci, "ESS Solo-1");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err < 0)
-		return err;
-=======
 	if (err < 0) {
 		kfree(chip);
 		pci_disable_device(pci);
 		return err;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err < 0)
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	chip->io_port = pci_resource_start(pci, 0);
 	chip->sb_port = pci_resource_start(pci, 1);
 	chip->vc_port = pci_resource_start(pci, 2);
 	chip->mpu_port = pci_resource_start(pci, 3);
 	chip->game_port = pci_resource_start(pci, 4);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* still use non-managed irq handler as it's re-acquired at PM resume */
-	if (request_irq(pci->irq, snd_es1938_interrupt, IRQF_SHARED,
-			KBUILD_MODNAME, chip)) {
-		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
-=======
 	if (request_irq(pci->irq, snd_es1938_interrupt, IRQF_SHARED,
 			KBUILD_MODNAME, chip)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
 		snd_es1938_free(chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* still use non-managed irq handler as it's re-acquired at PM resume */
-	if (request_irq(pci->irq, snd_es1938_interrupt, IRQF_SHARED,
-			KBUILD_MODNAME, chip)) {
-		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 	}
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	card->private_free = snd_es1938_free;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	card->private_free = snd_es1938_free;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_dbg(card->dev,
 		"create: io: 0x%lx, sb: 0x%lx, vc: 0x%lx, mpu: 0x%lx, game: 0x%lx\n",
 		   chip->io_port, chip->sb_port, chip->vc_port, chip->mpu_port, chip->game_port);
@@ -1676,9 +1604,6 @@ static int snd_es1938_create(struct snd_card *card,
 	chip->ddma_port = chip->vc_port + 0x00;		/* fix from Thomas Sailer */
 
 	snd_es1938_chip_init(chip);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
 	if (err < 0) {
@@ -1687,9 +1612,6 @@ static int snd_es1938_create(struct snd_card *card,
 	}
 
 	*rchip = chip;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1840,47 +1762,23 @@ static int snd_es1938_probe(struct pci_dev *pci,
 		return -ENOENT;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				sizeof(*chip), &card);
-	if (err < 0)
-		return err;
-	chip = card->private_data;
-
-	for (idx = 0; idx < 5; idx++)
-		if (pci_resource_start(pci, idx) == 0 ||
-		    !(pci_resource_flags(pci, idx) & IORESOURCE_IO))
-			return -ENODEV;
-
-	err = snd_es1938_create(card, pci);
-	if (err < 0)
-		return err;
-=======
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 			   0, &card);
-=======
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				sizeof(*chip), &card);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
-	chip = card->private_data;
-
-	for (idx = 0; idx < 5; idx++)
+	for (idx = 0; idx < 5; idx++) {
 		if (pci_resource_start(pci, idx) == 0 ||
-		    !(pci_resource_flags(pci, idx) & IORESOURCE_IO))
-			return -ENODEV;
-
-	err = snd_es1938_create(card, pci);
-	if (err < 0)
+		    !(pci_resource_flags(pci, idx) & IORESOURCE_IO)) {
+		    	snd_card_free(card);
+		    	return -ENODEV;
+		}
+	}
+	err = snd_es1938_create(card, pci, &chip);
+	if (err < 0) {
+		snd_card_free(card);
 		return err;
-<<<<<<< HEAD
 	}
 	card->private_data = chip;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	strcpy(card->driver, "ES1938");
 	strcpy(card->shortname, "ESS ES1938 (Solo-1)");
@@ -1890,28 +1788,15 @@ static int snd_es1938_probe(struct pci_dev *pci,
 		chip->irq);
 
 	err = snd_es1938_new_pcm(chip, 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err < 0)
-		return err;
-	err = snd_es1938_mixer(chip);
-	if (err < 0)
-		return err;
-=======
 	if (err < 0) {
 		snd_card_free(card);
-=======
-	if (err < 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
-	err = snd_es1938_mixer(chip);
-	if (err < 0)
-		return err;
-<<<<<<< HEAD
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	err = snd_es1938_mixer(chip);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
 	if (snd_opl3_create(card,
 			    SLSB_REG(chip, FMLOWADDR),
 			    SLSB_REG(chip, FMHIGHADDR),
@@ -1920,28 +1805,15 @@ static int snd_es1938_probe(struct pci_dev *pci,
 			   SLSB_REG(chip, FMLOWADDR));
 	} else {
 		err = snd_opl3_timer_new(opl3, 0, 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (err < 0)
-	                return err;
-		err = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
-		if (err < 0)
-	                return err;
-=======
 		if (err < 0) {
 	                snd_card_free(card);
-=======
-		if (err < 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	                return err;
-		err = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
-		if (err < 0)
-	                return err;
-<<<<<<< HEAD
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		err = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
+		if (err < 0) {
+	                snd_card_free(card);
+	                return err;
+		}
 	}
 	if (snd_mpu401_uart_new(card, 0, MPU401_HW_MPU401,
 				chip->mpu_port,
@@ -1957,48 +1829,26 @@ static int snd_es1938_probe(struct pci_dev *pci,
 	snd_es1938_create_gameport(chip);
 
 	err = snd_card_register(card);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err < 0)
-		return err;
-=======
 	if (err < 0) {
 		snd_card_free(card);
 		return err;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err < 0)
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void snd_es1938_remove(struct pci_dev *pci)
 {
 	snd_card_free(pci_get_drvdata(pci));
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct pci_driver es1938_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_es1938_ids,
 	.probe = snd_es1938_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove = snd_es1938_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = ES1938_PM_OPS,
 	},

@@ -3,17 +3,9 @@ config ATH5K
 	tristate "Atheros 5xxx wireless cards support"
 	depends on (PCI || ATH25) && MAC80211
 	select ATH_COMMON
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select MAC80211_LEDS if LEDS_CLASS=y || LEDS_CLASS=MAC80211
-=======
 	select MAC80211_LEDS
 	select LEDS_CLASS
 	select NEW_LEDS
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select MAC80211_LEDS if LEDS_CLASS=y || LEDS_CLASS=MAC80211
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select ATH5K_AHB if ATH25
 	select ATH5K_PCI if !ATH25
 	help

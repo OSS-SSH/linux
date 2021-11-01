@@ -86,15 +86,7 @@ extern struct list_head nubus_func_rsrcs;
 struct nubus_driver {
 	struct device_driver driver;
 	int (*probe)(struct nubus_board *board);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	void (*remove)(struct nubus_board *board);
-=======
 	int (*remove)(struct nubus_board *board);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	void (*remove)(struct nubus_board *board);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 extern struct bus_type nubus_bus_type;

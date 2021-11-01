@@ -30,14 +30,6 @@
 #include <drm/ttm/ttm_placement.h>
 
 #include "vmwgfx_drv.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "vmwgfx_devcaps.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "vmwgfx_devcaps.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 bool vmw_supports_3d(struct vmw_private *dev_priv)
 {
@@ -53,18 +45,10 @@ bool vmw_supports_3d(struct vmw_private *dev_priv)
 		if (!dev_priv->has_mob)
 			return false;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		result = vmw_devcap_get(dev_priv, SVGA3D_DEVCAP_3D);
-=======
 		spin_lock(&dev_priv->cap_lock);
 		vmw_write(dev_priv, SVGA_REG_DEV_CAP, SVGA3D_DEVCAP_3D);
 		result = vmw_read(dev_priv, SVGA_REG_DEV_CAP);
 		spin_unlock(&dev_priv->cap_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		result = vmw_devcap_get(dev_priv, SVGA3D_DEVCAP_3D);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		return (result != 0);
 	}
@@ -158,17 +142,7 @@ struct vmw_fifo_state *vmw_fifo_create(struct vmw_private *dev_priv)
 	min = vmw_fifo_mem_read(dev_priv, SVGA_FIFO_MIN);
 	fifo->capabilities = vmw_fifo_mem_read(dev_priv, SVGA_FIFO_CAPABILITIES);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	drm_info(&dev_priv->drm,
-		 "Fifo max 0x%08x min 0x%08x cap 0x%08x\n",
-=======
 	DRM_INFO("Fifo max 0x%08x min 0x%08x cap 0x%08x\n",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	drm_info(&dev_priv->drm,
-		 "Fifo max 0x%08x min 0x%08x cap 0x%08x\n",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 (unsigned int) max,
 		 (unsigned int) min,
 		 (unsigned int) fifo->capabilities);

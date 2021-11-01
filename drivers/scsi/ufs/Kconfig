@@ -183,28 +183,3 @@ config SCSI_UFS_CRYPTO
 	  Enabling this makes it possible for the kernel to use the crypto
 	  capabilities of the UFS device (if present) to perform crypto
 	  operations on data being transferred to/from the device.
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-config SCSI_UFS_HPB
-	bool "Support UFS Host Performance Booster"
-	depends on SCSI_UFSHCD
-	help
-	  The UFS HPB feature improves random read performance. It caches
-	  L2P (logical to physical) map of UFS to host DRAM. The driver uses HPB
-	  read command by piggybacking physical page number for bypassing FTL (flash
-	  translation layer)'s L2P address translation.
-
-config SCSI_UFS_FAULT_INJECTION
-	bool "UFS Fault Injection Support"
-	depends on SCSI_UFSHCD && FAULT_INJECTION
-	help
-	  Enable fault injection support in the UFS driver. This makes it easier
-	  to test the UFS error handler and abort handler.
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

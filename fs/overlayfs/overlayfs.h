@@ -34,14 +34,6 @@ enum ovl_xattr {
 	OVL_XATTR_NLINK,
 	OVL_XATTR_UPPER,
 	OVL_XATTR_METACOPY,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	OVL_XATTR_PROTATTR,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	OVL_XATTR_PROTATTR,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum ovl_inode_flag {
@@ -270,27 +262,6 @@ static inline bool ovl_open_flags_need_copy_up(int flags)
 	return ((OPEN_FMODE(flags) & FMODE_WRITE) || (flags & O_TRUNC));
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static inline bool ovl_allow_offline_changes(struct ovl_fs *ofs)
-{
-	/*
-	 * To avoid regressions in existing setups with overlay lower offline
-	 * changes, we allow lower changes only if none of the new features
-	 * are used.
-	 */
-	return (!ofs->config.index && !ofs->config.metacopy &&
-		!ofs->config.redirect_dir && ofs->config.xino != OVL_XINO_ON);
-}
-
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* util.c */
 int ovl_want_write(struct dentry *dentry);
 void ovl_drop_write(struct dentry *dentry);
@@ -349,15 +320,7 @@ bool ovl_already_copied_up(struct dentry *dentry, int flags);
 bool ovl_check_origin_xattr(struct ovl_fs *ofs, struct dentry *dentry);
 bool ovl_check_dir_xattr(struct super_block *sb, struct dentry *dentry,
 			 enum ovl_xattr ox);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int ovl_check_setxattr(struct ovl_fs *ofs, struct dentry *upperdentry,
-=======
 int ovl_check_setxattr(struct dentry *dentry, struct dentry *upperdentry,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int ovl_check_setxattr(struct ovl_fs *ofs, struct dentry *upperdentry,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		       enum ovl_xattr ox, const void *value, size_t size,
 		       int xerr);
 int ovl_set_impure(struct dentry *dentry, struct dentry *upperdentry);
@@ -522,15 +485,7 @@ int ovl_xattr_set(struct dentry *dentry, struct inode *inode, const char *name,
 int ovl_xattr_get(struct dentry *dentry, struct inode *inode, const char *name,
 		  void *value, size_t size);
 ssize_t ovl_listxattr(struct dentry *dentry, char *list, size_t size);
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct posix_acl *ovl_get_acl(struct inode *inode, int type, bool rcu);
-=======
 struct posix_acl *ovl_get_acl(struct inode *inode, int type);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct posix_acl *ovl_get_acl(struct inode *inode, int type, bool rcu);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int ovl_update_time(struct inode *inode, struct timespec64 *ts, int flags);
 bool ovl_is_private_xattr(struct super_block *sb, const char *name);
 
@@ -563,43 +518,9 @@ static inline void ovl_copyattr(struct inode *from, struct inode *to)
 	i_size_write(to, i_size_read(from));
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* vfs inode flags copied from real to ovl inode */
-#define OVL_COPY_I_FLAGS_MASK	(S_SYNC | S_NOATIME | S_APPEND | S_IMMUTABLE)
-/* vfs inode flags read from overlay.protattr xattr to ovl inode */
-#define OVL_PROT_I_FLAGS_MASK	(S_APPEND | S_IMMUTABLE)
-
-/*
- * fileattr flags copied from lower to upper inode on copy up.
- * We cannot copy up immutable/append-only flags, because that would prevent
- * linking temp inode to upper dir, so we store them in xattr instead.
- */
-#define OVL_COPY_FS_FLAGS_MASK	(FS_SYNC_FL | FS_NOATIME_FL)
-#define OVL_COPY_FSX_FLAGS_MASK	(FS_XFLAG_SYNC | FS_XFLAG_NOATIME)
-#define OVL_PROT_FS_FLAGS_MASK  (FS_APPEND_FL | FS_IMMUTABLE_FL)
-#define OVL_PROT_FSX_FLAGS_MASK (FS_XFLAG_APPEND | FS_XFLAG_IMMUTABLE)
-
-void ovl_check_protattr(struct inode *inode, struct dentry *upper);
-int ovl_set_protattr(struct inode *inode, struct dentry *upper,
-		      struct fileattr *fa);
-
-<<<<<<< HEAD
-static inline void ovl_copyflags(struct inode *from, struct inode *to)
-{
-	unsigned int mask = OVL_COPY_I_FLAGS_MASK;
-=======
 static inline void ovl_copyflags(struct inode *from, struct inode *to)
 {
 	unsigned int mask = S_SYNC | S_IMMUTABLE | S_APPEND | S_NOATIME;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline void ovl_copyflags(struct inode *from, struct inode *to)
-{
-	unsigned int mask = OVL_COPY_I_FLAGS_MASK;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	inode_set_flags(to, from->i_flags & mask, mask);
 }
@@ -627,16 +548,6 @@ struct dentry *ovl_create_temp(struct dentry *workdir, struct ovl_cattr *attr);
 extern const struct file_operations ovl_file_operations;
 int __init ovl_aio_request_cache_init(void);
 void ovl_aio_request_cache_destroy(void);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int ovl_real_fileattr_get(struct path *realpath, struct fileattr *fa);
-int ovl_real_fileattr_set(struct path *realpath, struct fileattr *fa);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int ovl_real_fileattr_get(struct path *realpath, struct fileattr *fa);
-int ovl_real_fileattr_set(struct path *realpath, struct fileattr *fa);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int ovl_fileattr_get(struct dentry *dentry, struct fileattr *fa);
 int ovl_fileattr_set(struct user_namespace *mnt_userns,
 		     struct dentry *dentry, struct fileattr *fa);
@@ -650,18 +561,8 @@ int ovl_copy_xattr(struct super_block *sb, struct dentry *old,
 int ovl_set_attr(struct dentry *upper, struct kstat *stat);
 struct ovl_fh *ovl_encode_real_fh(struct ovl_fs *ofs, struct dentry *real,
 				  bool is_upper);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int ovl_set_origin(struct ovl_fs *ofs, struct dentry *lower,
-		   struct dentry *upper);
-=======
 int ovl_set_origin(struct ovl_fs *ofs, struct dentry *dentry,
 		   struct dentry *lower, struct dentry *upper);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int ovl_set_origin(struct ovl_fs *ofs, struct dentry *lower,
-		   struct dentry *upper);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* export.c */
 extern const struct export_operations ovl_export_operations;

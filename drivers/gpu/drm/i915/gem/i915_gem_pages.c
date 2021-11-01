@@ -321,16 +321,8 @@ static void *i915_gem_object_map_pfn(struct drm_i915_gem_object *obj,
 	dma_addr_t addr;
 	void *vaddr;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	GEM_BUG_ON(type != I915_MAP_WC);
-=======
 	if (type != I915_MAP_WC)
 		return ERR_PTR(-ENODEV);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	GEM_BUG_ON(type != I915_MAP_WC);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (n_pfn > ARRAY_SIZE(stack)) {
 		/* Too big for stack -- allocate temporary array instead */
@@ -359,15 +351,7 @@ void *i915_gem_object_pin_map(struct drm_i915_gem_object *obj,
 	int err;
 
 	if (!i915_gem_object_has_struct_page(obj) &&
-<<<<<<< HEAD
-<<<<<<< HEAD
-	    !i915_gem_object_has_iomem(obj))
-=======
 	    !i915_gem_object_type_has(obj, I915_GEM_OBJECT_HAS_IOMEM))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	    !i915_gem_object_has_iomem(obj))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ERR_PTR(-ENXIO);
 
 	assert_object_held(obj);
@@ -390,43 +374,6 @@ void *i915_gem_object_pin_map(struct drm_i915_gem_object *obj,
 	}
 	GEM_BUG_ON(!i915_gem_object_has_pages(obj));
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * For discrete our CPU mappings needs to be consistent in order to
-	 * function correctly on !x86. When mapping things through TTM, we use
-	 * the same rules to determine the caching type.
-	 *
-	 * The caching rules, starting from DG1:
-	 *
-	 *	- If the object can be placed in device local-memory, then the
-	 *	  pages should be allocated and mapped as write-combined only.
-	 *
-	 *	- Everything else is always allocated and mapped as write-back,
-	 *	  with the guarantee that everything is also coherent with the
-	 *	  GPU.
-	 *
-	 * Internal users of lmem are already expected to get this right, so no
-	 * fudging needed there.
-	 */
-	if (i915_gem_object_placement_possible(obj, INTEL_MEMORY_LOCAL)) {
-		if (type != I915_MAP_WC && !obj->mm.n_placements) {
-			ptr = ERR_PTR(-ENODEV);
-			goto err_unpin;
-		}
-
-		type = I915_MAP_WC;
-	} else if (IS_DGFX(to_i915(obj->base.dev))) {
-		type = I915_MAP_WB;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ptr = page_unpack_bits(obj->mm.mapping, &has_type);
 	if (ptr && has_type != type) {
 		if (pinned) {
@@ -520,19 +467,9 @@ __i915_gem_object_get_sg(struct drm_i915_gem_object *obj,
 			 struct i915_gem_object_page_iter *iter,
 			 unsigned int n,
 			 unsigned int *offset,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			 bool dma)
-{
-=======
 			 bool allow_alloc)
 {
 	const bool dma = iter == &obj->mm.get_dma_page;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			 bool dma)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct scatterlist *sg;
 	unsigned int idx, count;
 
@@ -553,15 +490,9 @@ __i915_gem_object_get_sg(struct drm_i915_gem_object *obj,
 	if (n < READ_ONCE(iter->sg_idx))
 		goto lookup;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (!allow_alloc)
 		goto manual_lookup;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&iter->lock);
 
 	/* We prefer to reuse the last sg so that repeated lookup of this
@@ -611,10 +542,6 @@ scan:
 	if (unlikely(n < idx)) /* insertion completed by another thread */
 		goto lookup;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* In case we failed to insert the entry into the radixtree, we need
-=======
 	goto manual_walk;
 
 manual_lookup:
@@ -625,10 +552,6 @@ manual_lookup:
 manual_walk:
 	/*
 	 * In case we failed to insert the entry into the radixtree, we need
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* In case we failed to insert the entry into the radixtree, we need
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * to look beyond the current sg.
 	 */
 	while (idx + count <= n) {
@@ -675,15 +598,7 @@ i915_gem_object_get_page(struct drm_i915_gem_object *obj, unsigned int n)
 
 	GEM_BUG_ON(!i915_gem_object_has_struct_page(obj));
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sg = i915_gem_object_get_sg(obj, n, &offset);
-=======
 	sg = i915_gem_object_get_sg(obj, n, &offset, true);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	sg = i915_gem_object_get_sg(obj, n, &offset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return nth_page(sg_page(sg), offset);
 }
 
@@ -709,15 +624,7 @@ i915_gem_object_get_dma_address_len(struct drm_i915_gem_object *obj,
 	struct scatterlist *sg;
 	unsigned int offset;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sg = i915_gem_object_get_sg_dma(obj, n, &offset);
-=======
 	sg = i915_gem_object_get_sg_dma(obj, n, &offset, true);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	sg = i915_gem_object_get_sg_dma(obj, n, &offset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (len)
 		*len = sg_dma_len(sg) - (offset << PAGE_SHIFT);

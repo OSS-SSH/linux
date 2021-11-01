@@ -11,9 +11,6 @@
 #include <linux/rcupdate.h>
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * Why is there no list_empty_rcu()?  Because list_empty() serves this
  * purpose.  The list_empty() function fetches the RCU-protected pointer
  * and compares it to the address of the list head, but neither dereferences
@@ -23,9 +20,6 @@
  */
 
 /*
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * INIT_LIST_HEAD_RCU - Initialize a list_head visible to RCU readers
  * @list: list to be initialized
  *
@@ -324,54 +318,21 @@ static inline void list_splice_tail_init_rcu(struct list_head *list,
 /*
  * Where are list_empty_rcu() and list_first_entry_rcu()?
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * They do not exist because they would lead to subtle race conditions:
-=======
  * Implementing those functions following their counterparts list_empty() and
  * list_first_entry() is not advisable because they lead to subtle race
  * conditions as the following snippet shows:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * They do not exist because they would lead to subtle race conditions:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * if (!list_empty_rcu(mylist)) {
  *	struct foo *bar = list_first_entry_rcu(mylist, struct foo, list_member);
  *	do_something(bar);
  * }
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * The list might be non-empty when list_empty_rcu() checks it, but it
- * might have become empty by the time that list_first_entry_rcu() rereads
- * the ->next pointer, which would result in a SEGV.
- *
- * When not using RCU, it is OK for list_first_entry() to re-read that
- * pointer because both functions should be protected by some lock that
- * blocks writers.
- *
- * When using RCU, list_empty() uses READ_ONCE() to fetch the
- * RCU-protected ->next pointer and then compares it to the address of the
- * list head.  However, it neither dereferences this pointer nor provides
- * this pointer to its caller.  Thus, READ_ONCE() suffices (that is,
- * rcu_dereference() is not needed), which means that list_empty() can be
- * used anywhere you would want to use list_empty_rcu().  Just don't
- * expect anything useful to happen if you do a subsequent lockless
- * call to list_first_entry_rcu()!!!
-<<<<<<< HEAD
-=======
  * The list may not be empty when list_empty_rcu checks it, but it may be when
  * list_first_entry_rcu rereads the ->next pointer.
  *
  * Rereading the ->next pointer is not a problem for list_empty() and
  * list_first_entry() because they would be protected by a lock that blocks
  * writers.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * See list_first_or_null_rcu for an alternative.
  */

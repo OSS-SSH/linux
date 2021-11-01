@@ -409,42 +409,6 @@ static bool pwm_backlight_is_linear(struct platform_pwm_backlight_data *data)
 static int pwm_backlight_initial_power_state(const struct pwm_bl_data *pb)
 {
 	struct device_node *node = pb->dev->of_node;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	bool active = true;
-
-	/*
-	 * If the enable GPIO is present, observable (either as input
-	 * or output) and off then the backlight is not currently active.
-	 * */
-	if (pb->enable_gpio && gpiod_get_value_cansleep(pb->enable_gpio) == 0)
-		active = false;
-
-	if (!regulator_is_enabled(pb->power_supply))
-		active = false;
-
-	if (!pwm_is_enabled(pb->pwm))
-		active = false;
-
-	/*
-	 * Synchronize the enable_gpio with the observed state of the
-	 * hardware.
-	 */
-	if (pb->enable_gpio)
-		gpiod_direction_output(pb->enable_gpio, active);
-
-	/*
-	 * Do not change pb->enabled here! pb->enabled essentially
-	 * tells us if we own one of the regulator's use counts and
-	 * right now we do not.
-	 */
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Not booted with device tree or no phandle link to the node */
 	if (!node || !node->phandle)
@@ -456,10 +420,6 @@ static int pwm_backlight_initial_power_state(const struct pwm_bl_data *pb)
 	 * assume that another driver will enable the backlight at the
 	 * appropriate time. Therefore, if it is disabled, keep it so.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return active ? FB_BLANK_UNBLANK: FB_BLANK_POWERDOWN;
-=======
 
 	/* if the enable GPIO is disabled, do not enable the backlight */
 	if (pb->enable_gpio && gpiod_get_value_cansleep(pb->enable_gpio) == 0)
@@ -474,10 +434,6 @@ static int pwm_backlight_initial_power_state(const struct pwm_bl_data *pb)
 		return FB_BLANK_POWERDOWN;
 
 	return FB_BLANK_UNBLANK;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return active ? FB_BLANK_UNBLANK: FB_BLANK_POWERDOWN;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int pwm_backlight_probe(struct platform_device *pdev)
@@ -530,9 +486,6 @@ static int pwm_backlight_probe(struct platform_device *pdev)
 		goto err_alloc;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/*
 	 * If the GPIO is not known to be already configured as output, that
 	 * is, if gpiod_get_direction returns either 1 or -EINVAL, change the
@@ -545,9 +498,6 @@ static int pwm_backlight_probe(struct platform_device *pdev)
 	    gpiod_get_direction(pb->enable_gpio) != 0)
 		gpiod_direction_output(pb->enable_gpio, 1);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pb->power_supply = devm_regulator_get(&pdev->dev, "power");
 	if (IS_ERR(pb->power_supply)) {
 		ret = PTR_ERR(pb->power_supply);

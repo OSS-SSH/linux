@@ -1581,23 +1581,9 @@ ip6_tnl_parm_to_user(struct ip6_tnl_parm *u, const struct __ip6_tnl_parm *p)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * ip6_tnl_siocdevprivate - configure ipv6 tunnels from userspace
- *   @dev: virtual device associated with tunnel
- *   @ifr: unused
- *   @data: parameters passed from userspace
-=======
  * ip6_tnl_ioctl - configure ipv6 tunnels from userspace
  *   @dev: virtual device associated with tunnel
  *   @ifr: parameters passed from userspace
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * ip6_tnl_siocdevprivate - configure ipv6 tunnels from userspace
- *   @dev: virtual device associated with tunnel
- *   @ifr: unused
- *   @data: parameters passed from userspace
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *   @cmd: command to be performed
  *
  * Description:
@@ -1623,17 +1609,7 @@ ip6_tnl_parm_to_user(struct ip6_tnl_parm *u, const struct __ip6_tnl_parm *p)
  **/
 
 static int
-<<<<<<< HEAD
-<<<<<<< HEAD
-ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-		       void __user *data, int cmd)
-=======
 ip6_tnl_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-		       void __user *data, int cmd)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int err = 0;
 	struct ip6_tnl_parm p;
@@ -1647,15 +1623,7 @@ ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 	switch (cmd) {
 	case SIOCGETTUNNEL:
 		if (dev == ip6n->fb_tnl_dev) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (copy_from_user(&p, data, sizeof(p))) {
-=======
 			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p))) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (copy_from_user(&p, data, sizeof(p))) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				err = -EFAULT;
 				break;
 			}
@@ -1667,19 +1635,9 @@ ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 			memset(&p, 0, sizeof(p));
 		}
 		ip6_tnl_parm_to_user(&p, &t->parms);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (copy_to_user(data, &p, sizeof(p)))
-			err = -EFAULT;
-=======
 		if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p))) {
 			err = -EFAULT;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (copy_to_user(data, &p, sizeof(p)))
-			err = -EFAULT;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case SIOCADDTUNNEL:
 	case SIOCCHGTUNNEL:
@@ -1687,15 +1645,7 @@ ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 		if (!ns_capable(net->user_ns, CAP_NET_ADMIN))
 			break;
 		err = -EFAULT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (copy_from_user(&p, data, sizeof(p)))
-=======
 		if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (copy_from_user(&p, data, sizeof(p)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		err = -EINVAL;
 		if (p.proto != IPPROTO_IPV6 && p.proto != IPPROTO_IPIP &&
@@ -1719,15 +1669,7 @@ ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 		if (!IS_ERR(t)) {
 			err = 0;
 			ip6_tnl_parm_to_user(&p, &t->parms);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (copy_to_user(data, &p, sizeof(p)))
-=======
 			if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (copy_to_user(data, &p, sizeof(p)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				err = -EFAULT;
 
 		} else {
@@ -1741,15 +1683,7 @@ ip6_tnl_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 
 		if (dev == ip6n->fb_tnl_dev) {
 			err = -EFAULT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (copy_from_user(&p, data, sizeof(p)))
-=======
 			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (copy_from_user(&p, data, sizeof(p)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				break;
 			err = -ENOENT;
 			ip6_tnl_parm_from_user(&p1, &p);
@@ -1868,15 +1802,7 @@ static const struct net_device_ops ip6_tnl_netdev_ops = {
 	.ndo_init	= ip6_tnl_dev_init,
 	.ndo_uninit	= ip6_tnl_dev_uninit,
 	.ndo_start_xmit = ip6_tnl_start_xmit,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_siocdevprivate = ip6_tnl_siocdevprivate,
-=======
 	.ndo_do_ioctl	= ip6_tnl_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_siocdevprivate = ip6_tnl_siocdevprivate,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu = ip6_tnl_change_mtu,
 	.ndo_get_stats64 = dev_get_tstats64,
 	.ndo_get_iflink = ip6_tnl_get_iflink,

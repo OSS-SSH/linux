@@ -618,12 +618,6 @@ call_fpe:
 	W(b)	do_fpe				@ CP#1 (FPE)
 	W(b)	do_fpe				@ CP#2 (FPE)
 	ret.w	lr				@ CP#3
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret.w	lr				@ CP#4
-	ret.w	lr				@ CP#5
-	ret.w	lr				@ CP#6
-=======
 #ifdef CONFIG_CRUNCH
 	b	crunch_task_enable		@ CP#4 (MaverickCrunch)
 	b	crunch_task_enable		@ CP#5 (MaverickCrunch)
@@ -633,12 +627,6 @@ call_fpe:
 	ret.w	lr				@ CP#5
 	ret.w	lr				@ CP#6
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret.w	lr				@ CP#4
-	ret.w	lr				@ CP#5
-	ret.w	lr				@ CP#6
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret.w	lr				@ CP#7
 	ret.w	lr				@ CP#8
 	ret.w	lr				@ CP#9

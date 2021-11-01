@@ -220,35 +220,15 @@
 			cs42l51_tx_endpoint: endpoint@0 {
 				reg = <0>;
 				remote-endpoint = <&sai2a_endpoint>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-				frame-master = <&cs42l51_tx_endpoint>;
-				bitclock-master = <&cs42l51_tx_endpoint>;
-=======
 				frame-master;
 				bitclock-master;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				frame-master = <&cs42l51_tx_endpoint>;
-				bitclock-master = <&cs42l51_tx_endpoint>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 
 			cs42l51_rx_endpoint: endpoint@1 {
 				reg = <1>;
 				remote-endpoint = <&sai2b_endpoint>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-				frame-master = <&cs42l51_rx_endpoint>;
-				bitclock-master = <&cs42l51_rx_endpoint>;
-=======
 				frame-master;
 				bitclock-master;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				frame-master = <&cs42l51_rx_endpoint>;
-				bitclock-master = <&cs42l51_rx_endpoint>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 		};
 	};
@@ -490,18 +470,8 @@
 &m4_rproc {
 	memory-region = <&retram>, <&mcuram>, <&mcuram2>, <&vdev0vring0>,
 			<&vdev0vring1>, <&vdev0buffer>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mboxes = <&ipcc 0>, <&ipcc 1>, <&ipcc 2>, <&ipcc 3>;
-	mbox-names = "vq0", "vq1", "shutdown", "detach";
-=======
 	mboxes = <&ipcc 0>, <&ipcc 1>, <&ipcc 2>;
 	mbox-names = "vq0", "vq1", "shutdown";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mboxes = <&ipcc 0>, <&ipcc 1>, <&ipcc 2>, <&ipcc 3>;
-	mbox-names = "vq0", "vq1", "shutdown", "detach";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	interrupt-parent = <&exti>;
 	interrupts = <68 1>;
 	status = "okay";

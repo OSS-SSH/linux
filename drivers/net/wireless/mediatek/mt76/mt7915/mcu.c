@@ -111,15 +111,7 @@ mt7915_mcu_get_cipher(int cipher)
 	case WLAN_CIPHER_SUITE_SMS4:
 		return MCU_CIPHER_WAPI;
 	default:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return MCU_CIPHER_NONE;
-=======
 		return MT_CIPHER_NONE;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return MCU_CIPHER_NONE;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

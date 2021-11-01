@@ -488,10 +488,6 @@ static int ec_bhf_probe(struct pci_dev *dev, const struct pci_device_id *id)
 
 	pci_set_master(dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = dma_set_mask_and_coherent(&dev->dev, DMA_BIT_MASK(32));
-=======
 	err = pci_set_dma_mask(dev, DMA_BIT_MASK(32));
 	if (err) {
 		dev_err(&dev->dev,
@@ -501,10 +497,6 @@ static int ec_bhf_probe(struct pci_dev *dev, const struct pci_device_id *id)
 	}
 
 	err = pci_set_consistent_dma_mask(dev, DMA_BIT_MASK(32));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = dma_set_mask_and_coherent(&dev->dev, DMA_BIT_MASK(32));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		dev_err(&dev->dev,
 			"Required dma mask not supported, failed to initialize device\n");

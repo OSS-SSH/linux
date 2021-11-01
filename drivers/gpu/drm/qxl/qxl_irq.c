@@ -25,27 +25,11 @@
 
 #include <linux/pci.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <drm/drm_drv.h>
-
-#include "qxl_drv.h"
-
-static irqreturn_t qxl_irq_handler(int irq, void *arg)
-=======
 #include <drm/drm_irq.h>
 
 #include "qxl_drv.h"
 
 irqreturn_t qxl_irq_handler(int irq, void *arg)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <drm/drm_drv.h>
-
-#include "qxl_drv.h"
-
-static irqreturn_t qxl_irq_handler(int irq, void *arg)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct drm_device *dev = (struct drm_device *) arg;
 	struct qxl_device *qdev = to_qxl(dev);
@@ -97,17 +81,7 @@ static void qxl_client_monitors_config_work_func(struct work_struct *work)
 
 int qxl_irq_init(struct qxl_device *qdev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct drm_device *ddev = &qdev->ddev;
-	struct pci_dev *pdev = to_pci_dev(ddev->dev);
-=======
 	struct pci_dev *pdev = to_pci_dev(qdev->ddev.dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct drm_device *ddev = &qdev->ddev;
-	struct pci_dev *pdev = to_pci_dev(ddev->dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	init_waitqueue_head(&qdev->display_event);
@@ -121,15 +95,7 @@ int qxl_irq_init(struct qxl_device *qdev)
 	atomic_set(&qdev->irq_received_cursor, 0);
 	atomic_set(&qdev->irq_received_io_cmd, 0);
 	qdev->irq_received_error = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = request_irq(pdev->irq, qxl_irq_handler, IRQF_SHARED, ddev->driver->name, ddev);
-=======
 	ret = drm_irq_install(&qdev->ddev, pdev->irq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = request_irq(pdev->irq, qxl_irq_handler, IRQF_SHARED, ddev->driver->name, ddev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qdev->ram_header->int_mask = QXL_INTERRUPT_MASK;
 	if (unlikely(ret != 0)) {
 		DRM_ERROR("Failed installing irq: %d\n", ret);

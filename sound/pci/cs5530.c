@@ -65,9 +65,6 @@ static const struct pci_device_id snd_cs5530_ids[] = {
 
 MODULE_DEVICE_TABLE(pci, snd_cs5530_ids);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int snd_cs5530_free(struct snd_cs5530 *chip)
 {
 	pci_release_regions(chip->pci);
@@ -87,9 +84,6 @@ static void snd_cs5530_remove(struct pci_dev *pci)
 	snd_card_free(pci_get_drvdata(pci));
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static u8 snd_cs5530_mixer_read(unsigned long io, u8 reg)
 {
 	outb(reg, io + 4);
@@ -100,70 +94,50 @@ static u8 snd_cs5530_mixer_read(unsigned long io, u8 reg)
 }
 
 static int snd_cs5530_create(struct snd_card *card,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			     struct pci_dev *pci)
-{
-	struct snd_cs5530 *chip = card->private_data;
-=======
 			     struct pci_dev *pci,
 			     struct snd_cs5530 **rchip)
 {
 	struct snd_cs5530 *chip;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			     struct pci_dev *pci)
-{
-	struct snd_cs5530 *chip = card->private_data;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long sb_base;
 	u8 irq, dma8, dma16 = 0;
 	u16 map;
 	void __iomem *mem;
 	int err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = pcim_enable_device(pci);
- 	if (err < 0)
-		return err;
-
-	chip->card = card;
-	chip->pci = pci;
-
-	err = pcim_iomap_regions(pci, 1 << 0, "CS5530");
-	if (err < 0)
-		return err;
-	chip->pci_base = pci_resource_start(pci, 0);
-	mem = pcim_iomap_table(pci)[0];
-	map = readw(mem + 0x18);
-=======
 	static const struct snd_device_ops ops = {
 		.dev_free = snd_cs5530_dev_free,
 	};
 	*rchip = NULL;
 
 	err = pci_enable_device(pci);
-=======
-	err = pcim_enable_device(pci);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  	if (err < 0)
 		return err;
+
+	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
+	if (chip == NULL) {
+		pci_disable_device(pci);
+		return -ENOMEM;
+	}
 
 	chip->card = card;
 	chip->pci = pci;
 
-	err = pcim_iomap_regions(pci, 1 << 0, "CS5530");
-	if (err < 0)
+	err = pci_request_regions(pci, "CS5530");
+	if (err < 0) {
+		kfree(chip); 
+		pci_disable_device(pci);
 		return err;
+	}
 	chip->pci_base = pci_resource_start(pci, 0);
-	mem = pcim_iomap_table(pci)[0];
+
+	mem = pci_ioremap_bar(pci, 0);
+	if (mem == NULL) {
+		snd_cs5530_free(chip);
+		return -EBUSY;
+	}
+
 	map = readw(mem + 0x18);
-<<<<<<< HEAD
 	iounmap(mem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Map bits
 		0:1	* 0x20 + 0x200 = sb base
@@ -180,13 +154,7 @@ static int snd_cs5530_create(struct snd_card *card,
 		dev_info(card->dev, "XpressAudio at 0x%lx\n", sb_base);
 	else {
 		dev_err(card->dev, "Could not find XpressAudio!\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		snd_cs5530_free(chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 	}
 
@@ -206,13 +174,7 @@ static int snd_cs5530_create(struct snd_card *card,
 		dma16 = 7;
 	else {
 		dev_err(card->dev, "No 16bit DMA enabled\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		snd_cs5530_free(chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 	}
 
@@ -224,13 +186,7 @@ static int snd_cs5530_create(struct snd_card *card,
 		dma8 = 3;
 	else {
 		dev_err(card->dev, "No 8bit DMA enabled\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		snd_cs5530_free(chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 	}
 
@@ -244,13 +200,7 @@ static int snd_cs5530_create(struct snd_card *card,
 		irq = 10;
 	else {
 		dev_err(card->dev, "SoundBlaster IRQ not set\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		snd_cs5530_free(chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 	}
 
@@ -260,38 +210,20 @@ static int snd_cs5530_create(struct snd_card *card,
 						dma16, SB_HW_CS5530, &chip->sb);
 	if (err < 0) {
 		dev_err(card->dev, "Could not create SoundBlaster\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		snd_cs5530_free(chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
 	}
 
 	err = snd_sb16dsp_pcm(chip->sb, 0);
 	if (err < 0) {
 		dev_err(card->dev, "Could not create PCM\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		snd_cs5530_free(chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return err;
 	}
 
 	err = snd_sbmixer_new(chip->sb);
 	if (err < 0) {
 		dev_err(card->dev, "Could not create Mixer\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return err;
-	}
-
-=======
 		snd_cs5530_free(chip);
 		return err;
 	}
@@ -303,12 +235,6 @@ static int snd_cs5530_create(struct snd_card *card,
 	}
 
 	*rchip = chip;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return err;
-	}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -317,15 +243,7 @@ static int snd_cs5530_probe(struct pci_dev *pci,
 {
 	static int dev;
 	struct snd_card *card;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct snd_cs5530 *chip;
-=======
 	struct snd_cs5530 *chip = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct snd_cs5530 *chip;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (dev >= SNDRV_CARDS)
@@ -335,57 +253,27 @@ static int snd_cs5530_probe(struct pci_dev *pci,
 		return -ENOENT;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				sizeof(*chip), &card);
-	if (err < 0)
-		return err;
-	chip = card->private_data;
-
-	err = snd_cs5530_create(card, pci);
-	if (err < 0)
-		return err;
-=======
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 			   0, &card);
 
-=======
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				sizeof(*chip), &card);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
-	chip = card->private_data;
 
-	err = snd_cs5530_create(card, pci);
-	if (err < 0)
+	err = snd_cs5530_create(card, pci, &chip);
+	if (err < 0) {
+		snd_card_free(card);
 		return err;
-<<<<<<< HEAD
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	strcpy(card->driver, "CS5530");
 	strcpy(card->shortname, "CS5530 Audio");
 	sprintf(card->longname, "%s at 0x%lx", card->shortname, chip->pci_base);
 
 	err = snd_card_register(card);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (err < 0)
-		return err;
-=======
 	if (err < 0) {
 		snd_card_free(card);
 		return err;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (err < 0)
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
@@ -395,13 +283,7 @@ static struct pci_driver cs5530_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_cs5530_ids,
 	.probe = snd_cs5530_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove = snd_cs5530_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 module_pci_driver(cs5530_driver);

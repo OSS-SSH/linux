@@ -154,14 +154,6 @@ extern int iommu_tce_table_put(struct iommu_table *tbl);
  */
 extern struct iommu_table *iommu_init_table(struct iommu_table *tbl,
 		int nid, unsigned long res_start, unsigned long res_end);
-<<<<<<< HEAD
-<<<<<<< HEAD
-bool iommu_table_in_use(struct iommu_table *tbl);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-bool iommu_table_in_use(struct iommu_table *tbl);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define IOMMU_TABLE_GROUP_MAX_TABLES	2
 

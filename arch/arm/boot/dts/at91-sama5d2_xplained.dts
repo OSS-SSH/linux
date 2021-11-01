@@ -95,93 +95,37 @@
 					spi-rx-bus-width = <4>;
 					m25p,fast-read;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-					at91bootstrap@0 {
-=======
 					at91bootstrap@00000000 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					at91bootstrap@0 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						label = "at91bootstrap";
 						reg = <0x00000000 0x00040000>;
 					};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-					bootloader@40000 {
-=======
 					bootloader@00040000 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					bootloader@40000 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						label = "bootloader";
 						reg = <0x00040000 0x000c0000>;
 					};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-					bootloaderenvred@100000 {
-=======
 					bootloaderenvred@00100000 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					bootloaderenvred@100000 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						label = "bootloader env redundant";
 						reg = <0x00100000 0x00040000>;
 					};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-					bootloaderenv@140000 {
-=======
 					bootloaderenv@00140000 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					bootloaderenv@140000 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						label = "bootloader env";
 						reg = <0x00140000 0x00040000>;
 					};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-					dtb@180000 {
-=======
 					dtb@00180000 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					dtb@180000 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						label = "device tree";
 						reg = <0x00180000 0x00080000>;
 					};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-					kernel@200000 {
-=======
 					kernel@00200000 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					kernel@200000 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						label = "kernel";
 						reg = <0x00200000 0x00600000>;
 					};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-					misc@800000 {
-=======
 					misc@00800000 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					misc@800000 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						label = "misc";
 						reg = <0x00800000 0x00000000>;
 					};
@@ -403,15 +347,7 @@
 			};
 
 			shdwc@f8048010 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-				debounce-delay-us = <976>;
-=======
 				atmel,shdwc-debouncer = <976>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				debounce-delay-us = <976>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				atmel,wakeup-rtc-timer;
 
 				input@0 {

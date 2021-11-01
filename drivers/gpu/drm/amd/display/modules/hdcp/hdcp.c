@@ -39,23 +39,8 @@ static void push_error_status(struct mod_hdcp *hdcp,
 
 	if (is_hdcp1(hdcp)) {
 		hdcp->connection.hdcp1_retry_count++;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (hdcp->connection.hdcp1_retry_count == MAX_NUM_OF_ATTEMPTS)
-			hdcp->connection.link.adjust.hdcp1.disable = 1;
 	} else if (is_hdcp2(hdcp)) {
 		hdcp->connection.hdcp2_retry_count++;
-		if (hdcp->connection.hdcp2_retry_count == MAX_NUM_OF_ATTEMPTS)
-			hdcp->connection.link.adjust.hdcp2.disable = 1;
-<<<<<<< HEAD
-=======
-	} else if (is_hdcp2(hdcp)) {
-		hdcp->connection.hdcp2_retry_count++;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -74,16 +59,8 @@ static uint8_t is_cp_desired_hdcp1(struct mod_hdcp *hdcp)
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return is_auth_needed &&
-=======
 	return (hdcp->connection.hdcp1_retry_count < MAX_NUM_OF_ATTEMPTS) &&
 			is_auth_needed &&
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return is_auth_needed &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			!hdcp->connection.link.adjust.hdcp1.disable &&
 			!hdcp->connection.is_hdcp1_revoked;
 }
@@ -103,16 +80,8 @@ static uint8_t is_cp_desired_hdcp2(struct mod_hdcp *hdcp)
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return is_auth_needed &&
-=======
 	return (hdcp->connection.hdcp2_retry_count < MAX_NUM_OF_ATTEMPTS) &&
 			is_auth_needed &&
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return is_auth_needed &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			!hdcp->connection.link.adjust.hdcp2.disable &&
 			!hdcp->connection.is_hdcp2_revoked;
 }
@@ -174,14 +143,6 @@ static enum mod_hdcp_status transition(struct mod_hdcp *hdcp,
 			} else {
 				callback_in_ms(0, output);
 				set_state_id(hdcp, output, HDCP_CP_NOT_DESIRED);
-<<<<<<< HEAD
-<<<<<<< HEAD
-				set_auth_complete(hdcp, output);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				set_auth_complete(hdcp, output);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		else if (is_hdmi_dvi_sl_hdcp(hdcp))
 			if (is_cp_desired_hdcp2(hdcp)) {
@@ -193,26 +154,10 @@ static enum mod_hdcp_status transition(struct mod_hdcp *hdcp,
 			} else {
 				callback_in_ms(0, output);
 				set_state_id(hdcp, output, HDCP_CP_NOT_DESIRED);
-<<<<<<< HEAD
-<<<<<<< HEAD
-				set_auth_complete(hdcp, output);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				set_auth_complete(hdcp, output);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 		else {
 			callback_in_ms(0, output);
 			set_state_id(hdcp, output, HDCP_CP_NOT_DESIRED);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			set_auth_complete(hdcp, output);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			set_auth_complete(hdcp, output);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	} else if (is_in_cp_not_desired_state(hdcp)) {
 		increment_stay_counter(hdcp);
@@ -368,15 +313,9 @@ enum mod_hdcp_status mod_hdcp_add_display(struct mod_hdcp *hdcp,
 		goto out;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/* save current encryption states to restore after next authentication */
 	mod_hdcp_save_current_encryption_states(hdcp);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* reset existing authentication status */
 	status = reset_authentication(hdcp, output);
 	if (status != MOD_HDCP_STATUS_SUCCESS)
@@ -423,15 +362,9 @@ enum mod_hdcp_status mod_hdcp_remove_display(struct mod_hdcp *hdcp,
 		goto out;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/* save current encryption states to restore after next authentication */
 	mod_hdcp_save_current_encryption_states(hdcp);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* stop current authentication */
 	status = reset_authentication(hdcp, output);
 	if (status != MOD_HDCP_STATUS_SUCCESS)
@@ -459,69 +392,6 @@ out:
 	return status;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-enum mod_hdcp_status mod_hdcp_update_authentication(struct mod_hdcp *hdcp,
-		uint8_t index,
-		struct mod_hdcp_link_adjustment *link_adjust,
-		struct mod_hdcp_display_adjustment *display_adjust,
-		struct mod_hdcp_output *output)
-{
-	enum mod_hdcp_status status = MOD_HDCP_STATUS_SUCCESS;
-	struct mod_hdcp_display *display = NULL;
-
-	HDCP_TOP_INTERFACE_TRACE_WITH_INDEX(hdcp, index);
-	memset(output, 0, sizeof(struct mod_hdcp_output));
-
-	/* find display in connection */
-	display = get_active_display_at_index(hdcp, index);
-	if (!display) {
-		status = MOD_HDCP_STATUS_DISPLAY_NOT_FOUND;
-		goto out;
-	}
-
-	/* skip if no changes */
-	if (memcmp(link_adjust, &hdcp->connection.link.adjust,
-			sizeof(struct mod_hdcp_link_adjustment)) == 0 &&
-			memcmp(display_adjust, &display->adjust,
-					sizeof(struct mod_hdcp_display_adjustment)) == 0) {
-		status = MOD_HDCP_STATUS_SUCCESS;
-		goto out;
-	}
-
-	/* stop current authentication */
-	status = reset_authentication(hdcp, output);
-	if (status != MOD_HDCP_STATUS_SUCCESS)
-		goto out;
-
-	/* clear retry counters */
-	reset_retry_counts(hdcp);
-
-	/* reset error trace */
-	memset(&hdcp->connection.trace, 0, sizeof(hdcp->connection.trace));
-
-	/* set new adjustment */
-	hdcp->connection.link.adjust = *link_adjust;
-	display->adjust = *display_adjust;
-
-	/* request authentication when connection is not reset */
-	if (current_state(hdcp) != HDCP_UNINITIALIZED)
-		/* wait 100ms to debounce simultaneous updates for different indices */
-		callback_in_ms(100, output);
-
-out:
-	if (status != MOD_HDCP_STATUS_SUCCESS)
-		push_error_status(hdcp, status);
-	return status;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum mod_hdcp_status mod_hdcp_query_display(struct mod_hdcp *hdcp,
 		uint8_t index, struct mod_hdcp_display_query *query)
 {
@@ -600,15 +470,7 @@ enum mod_hdcp_status mod_hdcp_process_event(struct mod_hdcp *hdcp,
 
 	/* reset authentication if needed */
 	if (trans_status == MOD_HDCP_STATUS_RESET_NEEDED) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		mod_hdcp_log_ddc_trace(hdcp);
-=======
 		HDCP_FULL_DDC_TRACE(hdcp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		mod_hdcp_log_ddc_trace(hdcp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		reset_status = reset_authentication(hdcp, output);
 		if (reset_status != MOD_HDCP_STATUS_SUCCESS)
 			push_error_status(hdcp, reset_status);

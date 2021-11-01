@@ -417,38 +417,5 @@
         "teardown": [
             "$TC actions flush action skbmod"
         ]
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-    },
-    {
-        "id": "fe09",
-        "name": "Add skbmod action to mark ECN bits",
-        "category": [
-            "actions",
-            "skbmod"
-        ],
-        "setup": [
-            [
-                "$TC actions flush action skbmod",
-                0,
-                1,
-                255
-            ]
-        ],
-        "cmdUnderTest": "$TC actions add action skbmod ecn",
-        "expExitCode": "0",
-        "verifyCmd": "$TC actions get action skbmod index 1",
-        "matchPattern": "action order [0-9]*: skbmod pipe ecn",
-        "matchCount": "1",
-        "teardown": [
-            "$TC actions flush action skbmod"
-        ]
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     }
 ]

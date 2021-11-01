@@ -83,14 +83,6 @@ static ssize_t proc_bus_pci_read(struct file *file, char __user *buf,
 		buf += 4;
 		pos += 4;
 		cnt -= 4;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		cond_resched();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		cond_resched();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (cnt >= 2) {
@@ -238,18 +230,8 @@ static long proc_bus_pci_ioctl(struct file *file, unsigned int cmd,
 			break;
 		}
 		/* If arch decided it can't, fall through... */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		fallthrough;
-#endif /* HAVE_PCI_MMAP */
-=======
 #endif /* HAVE_PCI_MMAP */
 		fallthrough;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		fallthrough;
-#endif /* HAVE_PCI_MMAP */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		ret = -EINVAL;
 		break;

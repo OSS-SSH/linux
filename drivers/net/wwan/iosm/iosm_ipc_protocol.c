@@ -239,21 +239,9 @@ struct iosm_protocol *ipc_protocol_init(struct iosm_imem *ipc_imem)
 	ipc_protocol->old_msg_tail = 0;
 
 	ipc_protocol->p_ap_shm =
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dma_alloc_coherent(&ipc_protocol->pcie->pci->dev,
-				   sizeof(*ipc_protocol->p_ap_shm),
-				   &ipc_protocol->phy_ap_shm, GFP_KERNEL);
-=======
 		pci_alloc_consistent(ipc_protocol->pcie->pci,
 				     sizeof(*ipc_protocol->p_ap_shm),
 				     &ipc_protocol->phy_ap_shm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dma_alloc_coherent(&ipc_protocol->pcie->pci->dev,
-				   sizeof(*ipc_protocol->p_ap_shm),
-				   &ipc_protocol->phy_ap_shm, GFP_KERNEL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!ipc_protocol->p_ap_shm) {
 		dev_err(ipc_protocol->dev, "pci shm alloc error");
@@ -287,18 +275,8 @@ struct iosm_protocol *ipc_protocol_init(struct iosm_imem *ipc_imem)
 
 void ipc_protocol_deinit(struct iosm_protocol *proto)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dma_free_coherent(&proto->pcie->pci->dev, sizeof(*proto->p_ap_shm),
-			  proto->p_ap_shm, proto->phy_ap_shm);
-=======
 	pci_free_consistent(proto->pcie->pci, sizeof(*proto->p_ap_shm),
 			    proto->p_ap_shm, proto->phy_ap_shm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dma_free_coherent(&proto->pcie->pci->dev, sizeof(*proto->p_ap_shm),
-			  proto->p_ap_shm, proto->phy_ap_shm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ipc_pm_deinit(proto);
 	kfree(proto);

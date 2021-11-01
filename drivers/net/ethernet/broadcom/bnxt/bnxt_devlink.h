@@ -40,18 +40,8 @@ static inline void bnxt_link_bp_to_dl(struct bnxt *bp, struct devlink *dl)
 #define NVM_OFF_ENABLE_SRIOV		401
 #define NVM_OFF_NVM_CFG_VER		602
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define BNXT_NVM_CFG_VER_BITS		8
-#define BNXT_NVM_CFG_VER_BYTES		1
-=======
 #define BNXT_NVM_CFG_VER_BITS		24
 #define BNXT_NVM_CFG_VER_BYTES		4
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define BNXT_NVM_CFG_VER_BITS		8
-#define BNXT_NVM_CFG_VER_BYTES		1
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define BNXT_MSIX_VEC_MAX	512
 #define BNXT_MSIX_VEC_MIN_MAX	128

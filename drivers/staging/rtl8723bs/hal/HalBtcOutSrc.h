@@ -85,16 +85,10 @@ enum {
 #define WIFI_P2P_GO_CONNECTED			BIT3
 #define WIFI_P2P_GC_CONNECTED			BIT4
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /*  following is for command line utility */
 #define CL_SPRINTF	snprintf
 #define CL_PRINTF	DCMD_Printf
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct btc_board_info {
 	/*  The following is some board information */
 	u8 btChipType;
@@ -390,13 +384,7 @@ struct btc_coexist {
 	bool bInitilized;
 	bool bStopCoexDm;
 	bool bManualControl;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	u8 *cliBuf;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct btc_statistics statistics;
 	u8 pwrModeVal[10];
 
@@ -420,14 +408,8 @@ struct btc_coexist {
 
 	/*  fill h2c related */
 	BFP_BTC_FILL_H2C fBtcFillH2c;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/*  other */
 	BFP_BTC_DISP_DBG_MSG fBtcDispDbgMsg;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*  normal get/set related */
 	BFP_BTC_GET fBtcGet;
 	BFP_BTC_SET fBtcSet;
@@ -458,12 +440,6 @@ void EXhalbtcoutsrc_Periodical(struct btc_coexist *pBtCoexist);
 void EXhalbtcoutsrc_SetChipType(u8 chipType);
 void EXhalbtcoutsrc_SetAntNum(u8 type, u8 antNum);
 void EXhalbtcoutsrc_SetSingleAntPath(u8 singleAntPath);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void EXhalbtcoutsrc_DisplayBtCoexInfo(struct btc_coexist *pBtCoexist);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif

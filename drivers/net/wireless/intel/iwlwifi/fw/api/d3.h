@@ -6,14 +6,6 @@
  */
 #ifndef __iwl_fw_api_d3_h__
 #define __iwl_fw_api_d3_h__
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <iwl-trans.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <iwl-trans.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * enum iwl_d0i3_flags - d0i3 flags
@@ -397,31 +389,11 @@ struct iwl_wowlan_config_cmd {
 	u8 reserved;
 } __packed; /* WOWLAN_CONFIG_API_S_VER_5 */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define IWL_NUM_RSC	16
-#define WOWLAN_KEY_MAX_SIZE	32
-#define WOWLAN_GTK_KEYS_NUM     2
-#define WOWLAN_IGTK_KEYS_NUM	2
-
-<<<<<<< HEAD
-/*
- * WOWLAN_TSC_RSC_PARAMS
- */
-=======
 /*
  * WOWLAN_TSC_RSC_PARAMS
  */
 #define IWL_NUM_RSC	16
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
- * WOWLAN_TSC_RSC_PARAMS
- */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct tkip_sc {
 	__le16 iv16;
 	__le16 pad;
@@ -453,36 +425,11 @@ struct iwl_wowlan_rsc_tsc_params_cmd_ver_2 {
 	union iwl_all_tsc_rsc all_tsc_rsc;
 } __packed; /* ALL_TSC_RSC_API_S_VER_2 */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct iwl_wowlan_rsc_tsc_params_cmd_v4 {
-=======
 struct iwl_wowlan_rsc_tsc_params_cmd {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct iwl_wowlan_rsc_tsc_params_cmd_v4 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct iwl_wowlan_rsc_tsc_params_cmd_ver_2 params;
 	__le32 sta_id;
 } __packed; /* ALL_TSC_RSC_API_S_VER_4 */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct iwl_wowlan_rsc_tsc_params_cmd {
-	__le64 ucast_rsc[IWL_MAX_TID_COUNT];
-	__le64 mcast_rsc[WOWLAN_GTK_KEYS_NUM][IWL_MAX_TID_COUNT];
-	__le32 sta_id;
-#define IWL_MCAST_KEY_MAP_INVALID	0xff
-	u8 mcast_key_id_map[4];
-} __packed; /* ALL_TSC_RSC_API_S_VER_5 */
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IWL_MIC_KEY_SIZE	8
 struct iwl_mic_keys {
 	u8 tx[IWL_MIC_KEY_SIZE];
@@ -594,16 +541,10 @@ struct iwl_wowlan_gtk_status_v1 {
 	struct iwl_wowlan_rsc_tsc_params_cmd_ver_2 rsc;
 } __packed; /* WOWLAN_GTK_MATERIAL_VER_1 */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define WOWLAN_KEY_MAX_SIZE	32
 #define WOWLAN_GTK_KEYS_NUM     2
 #define WOWLAN_IGTK_KEYS_NUM	2
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * struct iwl_wowlan_gtk_status - GTK status
  * @key: GTK material

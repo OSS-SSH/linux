@@ -321,45 +321,9 @@ static int b53_spi_remove(struct spi_device *spi)
 	if (dev)
 		b53_switch_remove(dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spi_set_drvdata(spi, NULL);
-
 	return 0;
 }
 
-static void b53_spi_shutdown(struct spi_device *spi)
-{
-	struct b53_device *dev = spi_get_drvdata(spi);
-
-	if (dev)
-		b53_switch_shutdown(dev);
-
-	spi_set_drvdata(spi, NULL);
-}
-
-=======
-	return 0;
-}
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spi_set_drvdata(spi, NULL);
-
-	return 0;
-}
-
-static void b53_spi_shutdown(struct spi_device *spi)
-{
-	struct b53_device *dev = spi_get_drvdata(spi);
-
-	if (dev)
-		b53_switch_shutdown(dev);
-
-	spi_set_drvdata(spi, NULL);
-}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id b53_spi_of_match[] = {
 	{ .compatible = "brcm,bcm5325" },
 	{ .compatible = "brcm,bcm5365" },
@@ -380,14 +344,6 @@ static struct spi_driver b53_spi_driver = {
 	},
 	.probe	= b53_spi_probe,
 	.remove	= b53_spi_remove,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.shutdown = b53_spi_shutdown,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.shutdown = b53_spi_shutdown,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 module_spi_driver(b53_spi_driver);

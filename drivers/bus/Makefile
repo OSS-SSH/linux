@@ -16,14 +16,6 @@ obj-$(CONFIG_FSL_MC_BUS)	+= fsl-mc/
 obj-$(CONFIG_BT1_APB)		+= bt1-apb.o
 obj-$(CONFIG_BT1_AXI)		+= bt1-axi.o
 obj-$(CONFIG_IMX_WEIM)		+= imx-weim.o
-<<<<<<< HEAD
-<<<<<<< HEAD
-obj-$(CONFIG_INTEL_IXP4XX_EB)	+= intel-ixp4xx-eb.o
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-obj-$(CONFIG_INTEL_IXP4XX_EB)	+= intel-ixp4xx-eb.o
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_MIPS_CDMM)		+= mips_cdmm.o
 obj-$(CONFIG_MVEBU_MBUS) 	+= mvebu-mbus.o
 
@@ -34,15 +26,7 @@ obj-$(CONFIG_OMAP_OCP2SCP)	+= omap-ocp2scp.o
 obj-$(CONFIG_QCOM_EBI2)		+= qcom-ebi2.o
 obj-$(CONFIG_SUN50I_DE2_BUS)	+= sun50i-de2.o
 obj-$(CONFIG_SUNXI_RSB)		+= sunxi-rsb.o
-<<<<<<< HEAD
-<<<<<<< HEAD
-obj-$(CONFIG_OF)		+= simple-pm-bus.o
-=======
 obj-$(CONFIG_SIMPLE_PM_BUS)	+= simple-pm-bus.o
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-obj-$(CONFIG_OF)		+= simple-pm-bus.o
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 obj-$(CONFIG_TEGRA_ACONNECT)	+= tegra-aconnect.o
 obj-$(CONFIG_TEGRA_GMI)		+= tegra-gmi.o
 obj-$(CONFIG_TI_PWMSS)		+= ti-pwmss.o

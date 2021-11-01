@@ -209,17 +209,7 @@ void __init setup_cpuinfo(void)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * or1k_early_setup
- * @fdt: pointer to the start of the device tree in memory or NULL
-=======
  * or32_early_setup
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * or1k_early_setup
- * @fdt: pointer to the start of the device tree in memory or NULL
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Handles the pointer to the device tree that this kernel is to use
  * for establishing the available platform devices.
@@ -227,15 +217,7 @@ void __init setup_cpuinfo(void)
  * Falls back on built-in device tree in case null pointer is passed.
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void __init or1k_early_setup(void *fdt)
-=======
 void __init or32_early_setup(void *fdt)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void __init or1k_early_setup(void *fdt)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (fdt)
 		pr_info("FDT at %p\n", fdt);
@@ -261,9 +243,6 @@ static inline unsigned long extract_value(unsigned long reg, unsigned long mask)
 	return mask & reg;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void __init detect_unit_config(unsigned long upr, unsigned long mask,
 			       char *text, void (*func) (void))
 {
@@ -279,9 +258,6 @@ void __init detect_unit_config(unsigned long upr, unsigned long mask,
 		printk("not present\n");
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * calibrate_delay
  *

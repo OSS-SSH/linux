@@ -75,15 +75,7 @@ bool is_trap_insn(uprobe_opcode_t *insn)
 		case tlt_op:
 		case tltu_op:
 		case tne_op:
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return true;
-=======
 			return 1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 
@@ -95,28 +87,12 @@ bool is_trap_insn(uprobe_opcode_t *insn)
 		case tlti_op:
 		case tltiu_op:
 		case tnei_op:
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return true;
-=======
 			return 1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return false;
-=======
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #define UPROBE_TRAP_NR	ULONG_MAX
@@ -278,25 +254,9 @@ unsigned long uprobe_get_swbp_addr(struct pt_regs *regs)
  * See if the instruction can be emulated.
  * Returns true if instruction was emulated, false otherwise.
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * For now we always emulate so this function just returns false.
- */
-bool arch_uprobe_skip_sstep(struct arch_uprobe *auprobe, struct pt_regs *regs)
-{
-	return false;
-=======
  * For now we always emulate so this function just returns 0.
  */
 bool arch_uprobe_skip_sstep(struct arch_uprobe *auprobe, struct pt_regs *regs)
 {
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * For now we always emulate so this function just returns false.
- */
-bool arch_uprobe_skip_sstep(struct arch_uprobe *auprobe, struct pt_regs *regs)
-{
-	return false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

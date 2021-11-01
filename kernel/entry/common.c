@@ -171,20 +171,10 @@ static unsigned long exit_to_user_mode_loop(struct pt_regs *regs,
 		if (ti_work & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
 			handle_signal_work(regs, ti_work);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (ti_work & _TIF_NOTIFY_RESUME)
-			tracehook_notify_resume(regs);
-=======
 		if (ti_work & _TIF_NOTIFY_RESUME) {
 			tracehook_notify_resume(regs);
 			rseq_handle_notify_resume(NULL, regs);
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (ti_work & _TIF_NOTIFY_RESUME)
-			tracehook_notify_resume(regs);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Architecture specific TIF work */
 		arch_exit_to_user_mode_work(regs, ti_work);

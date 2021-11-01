@@ -285,15 +285,7 @@ split:
 	 * iopoll in direct IO routine. Given performance gain of iopoll for
 	 * big IO can be trival, disable iopoll when split needed.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bio_clear_hipri(bio);
-=======
 	bio->bi_opf &= ~REQ_HIPRI;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bio_clear_hipri(bio);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return bio_split(bio, sectors, GFP_NOIO, bs);
 }
@@ -356,16 +348,6 @@ void __blk_queue_split(struct bio **bio, unsigned int *nr_segs)
 		trace_block_split(split, (*bio)->bi_iter.bi_sector);
 		submit_bio_noacct(*bio);
 		*bio = split;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-		blk_throtl_charge_bio_split(*bio);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-		blk_throtl_charge_bio_split(*bio);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -723,9 +705,6 @@ static void blk_account_io_merge_request(struct request *req)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /*
  * Two cases of handling DISCARD merge:
  * If max_discard_segments > 1, the driver takes every bio
@@ -742,9 +721,6 @@ static inline bool blk_discard_mergable(struct request *req)
 	return false;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static enum elv_merge blk_try_req_merge(struct request *req,
 					struct request *next)
 {

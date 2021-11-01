@@ -6,24 +6,12 @@
 #include <linux/limits.h>
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
- * We need to compute the minimum and maximum values representable in a given
- * type. These macros may also be useful elsewhere. It would seem more obvious
- * to do something like:
-=======
  * In the fallback code below, we need to compute the minimum and
  * maximum values representable in a given type. These macros may also
  * be useful elsewhere, so we provide them outside the
  * COMPILER_HAS_GENERIC_BUILTIN_OVERFLOW block.
  *
  * It would seem more obvious to do something like
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * We need to compute the minimum and maximum values representable in a given
- * type. These macros may also be useful elsewhere. It would seem more obvious
- * to do something like:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * #define type_min(T) (T)(is_signed_type(T) ? (T)1 << (8*sizeof(T)-1) : 0)
  * #define type_max(T) (T)(is_signed_type(T) ? ((T)1 << (8*sizeof(T)-1)) - 1 : ~(T)0)
@@ -66,13 +54,7 @@ static inline bool __must_check __must_check_overflow(bool overflow)
 	return unlikely(overflow);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef COMPILER_HAS_GENERIC_BUILTIN_OVERFLOW
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * For simplicity and code hygiene, the fallback code below insists on
  * a, b and *d having the same type (similar to the min() and max()
@@ -108,9 +90,6 @@ static inline bool __must_check __must_check_overflow(bool overflow)
 	__builtin_mul_overflow(__a, __b, __d);	\
 }))
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #else
 
 
@@ -239,9 +218,6 @@ static inline bool __must_check __must_check_overflow(bool overflow)
 
 #endif /* COMPILER_HAS_GENERIC_BUILTIN_OVERFLOW */
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /** check_shl_overflow() - Calculate a left-shifted value and check overflow
  *
  * @a: Value to be shifted

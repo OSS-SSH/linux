@@ -6539,15 +6539,7 @@ static int si_fan_ctrl_stop_smc_fan_control(struct amdgpu_device *adev)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int si_dpm_get_fan_speed_pwm(void *handle,
-=======
 static int si_dpm_get_fan_speed_percent(void *handle,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int si_dpm_get_fan_speed_pwm(void *handle,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      u32 *speed)
 {
 	u32 duty, duty100;
@@ -6563,37 +6555,17 @@ static int si_dpm_get_fan_speed_pwm(void *handle,
 	if (duty100 == 0)
 		return -EINVAL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tmp64 = (u64)duty * 255;
-	do_div(tmp64, duty100);
-	*speed = MIN((u32)tmp64, 255);
-=======
 	tmp64 = (u64)duty * 100;
 	do_div(tmp64, duty100);
 	*speed = (u32)tmp64;
 
 	if (*speed > 100)
 		*speed = 100;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tmp64 = (u64)duty * 255;
-	do_div(tmp64, duty100);
-	*speed = MIN((u32)tmp64, 255);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int si_dpm_set_fan_speed_pwm(void *handle,
-=======
 static int si_dpm_set_fan_speed_percent(void *handle,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int si_dpm_set_fan_speed_pwm(void *handle,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				      u32 speed)
 {
 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
@@ -6608,15 +6580,7 @@ static int si_dpm_set_fan_speed_pwm(void *handle,
 	if (si_pi->fan_is_controlled_by_smc)
 		return -EINVAL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (speed > 255)
-=======
 	if (speed > 100)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (speed > 255)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	duty100 = (RREG32(CG_FDO_CTRL1) & FMAX_DUTY100_MASK) >> FMAX_DUTY100_SHIFT;
@@ -6625,15 +6589,7 @@ static int si_dpm_set_fan_speed_pwm(void *handle,
 		return -EINVAL;
 
 	tmp64 = (u64)speed * duty100;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	do_div(tmp64, 255);
-=======
 	do_div(tmp64, 100);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	do_div(tmp64, 255);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	duty = (u32)tmp64;
 
 	tmp = RREG32(CG_FDO_CTRL0) & ~FDO_STATIC_DUTY_MASK;
@@ -6914,16 +6870,6 @@ static int si_dpm_enable(struct amdgpu_device *adev)
 	si_enable_auto_throttle_source(adev, AMDGPU_DPM_AUTO_THROTTLE_SRC_THERMAL, true);
 	si_thermal_start_thermal_controller(adev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ni_update_current_ps(adev, boot_ps);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ni_update_current_ps(adev, boot_ps);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -8113,18 +8059,8 @@ static const struct amd_pm_funcs si_dpm_funcs = {
 	.vblank_too_short = &si_dpm_vblank_too_short,
 	.set_fan_control_mode = &si_dpm_set_fan_control_mode,
 	.get_fan_control_mode = &si_dpm_get_fan_control_mode,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.set_fan_speed_pwm = &si_dpm_set_fan_speed_pwm,
-	.get_fan_speed_pwm = &si_dpm_get_fan_speed_pwm,
-=======
 	.set_fan_speed_percent = &si_dpm_set_fan_speed_percent,
 	.get_fan_speed_percent = &si_dpm_get_fan_speed_percent,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.set_fan_speed_pwm = &si_dpm_set_fan_speed_pwm,
-	.get_fan_speed_pwm = &si_dpm_get_fan_speed_pwm,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.check_state_equal = &si_check_state_equal,
 	.get_vce_clock_state = amdgpu_get_vce_clock_state,
 	.read_sensor = &si_dpm_read_sensor,

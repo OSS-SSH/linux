@@ -40,15 +40,7 @@ static int test_stat_cpu(void)
 		.type	= PERF_TYPE_SOFTWARE,
 		.config	= PERF_COUNT_SW_TASK_CLOCK,
 	};
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int err, idx;
-=======
 	int err, cpu, tmp;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int err, idx;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cpus = perf_cpu_map__new(NULL);
 	__T("failed to create cpus", cpus);
@@ -78,24 +70,10 @@ static int test_stat_cpu(void)
 	perf_evlist__for_each_evsel(evlist, evsel) {
 		cpus = perf_evsel__cpus(evsel);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		for (idx = 0; idx < perf_cpu_map__nr(cpus); idx++) {
-			struct perf_counts_values counts = { .val = 0 };
-
-			perf_evsel__read(evsel, idx, 0, &counts);
-=======
 		perf_cpu_map__for_each_cpu(cpu, tmp, cpus) {
 			struct perf_counts_values counts = { .val = 0 };
 
 			perf_evsel__read(evsel, cpu, 0, &counts);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		for (idx = 0; idx < perf_cpu_map__nr(cpus); idx++) {
-			struct perf_counts_values counts = { .val = 0 };
-
-			perf_evsel__read(evsel, idx, 0, &counts);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__T("failed to read value for evsel", counts.val != 0);
 		}
 	}

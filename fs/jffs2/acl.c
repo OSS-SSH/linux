@@ -173,32 +173,12 @@ static void *jffs2_acl_to_medium(const struct posix_acl *acl, size_t *size)
 	return ERR_PTR(-EINVAL);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct posix_acl *jffs2_get_acl(struct inode *inode, int type, bool rcu)
-=======
 struct posix_acl *jffs2_get_acl(struct inode *inode, int type)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct posix_acl *jffs2_get_acl(struct inode *inode, int type, bool rcu)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct posix_acl *acl;
 	char *value = NULL;
 	int rc, xprefix;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (rcu)
-		return ERR_PTR(-ECHILD);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (rcu)
-		return ERR_PTR(-ECHILD);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (type) {
 	case ACL_TYPE_ACCESS:
 		xprefix = JFFS2_XPREFIX_ACL_ACCESS;

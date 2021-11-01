@@ -41,24 +41,10 @@
 extern int smu7_thermal_get_temperature(struct pp_hwmgr *hwmgr);
 extern int smu7_thermal_stop_thermal_controller(struct pp_hwmgr *hwmgr);
 extern int smu7_fan_ctrl_get_fan_speed_info(struct pp_hwmgr *hwmgr, struct phm_fan_speed_info *fan_speed_info);
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern int smu7_fan_ctrl_get_fan_speed_pwm(struct pp_hwmgr *hwmgr, uint32_t *speed);
-extern int smu7_fan_ctrl_set_default_mode(struct pp_hwmgr *hwmgr);
-extern int smu7_fan_ctrl_set_static_mode(struct pp_hwmgr *hwmgr, uint32_t mode);
-extern int smu7_fan_ctrl_set_fan_speed_pwm(struct pp_hwmgr *hwmgr, uint32_t speed);
-=======
 extern int smu7_fan_ctrl_get_fan_speed_percent(struct pp_hwmgr *hwmgr, uint32_t *speed);
 extern int smu7_fan_ctrl_set_default_mode(struct pp_hwmgr *hwmgr);
 extern int smu7_fan_ctrl_set_static_mode(struct pp_hwmgr *hwmgr, uint32_t mode);
 extern int smu7_fan_ctrl_set_fan_speed_percent(struct pp_hwmgr *hwmgr, uint32_t speed);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern int smu7_fan_ctrl_get_fan_speed_pwm(struct pp_hwmgr *hwmgr, uint32_t *speed);
-extern int smu7_fan_ctrl_set_default_mode(struct pp_hwmgr *hwmgr);
-extern int smu7_fan_ctrl_set_static_mode(struct pp_hwmgr *hwmgr, uint32_t mode);
-extern int smu7_fan_ctrl_set_fan_speed_pwm(struct pp_hwmgr *hwmgr, uint32_t speed);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern int smu7_fan_ctrl_reset_fan_speed_to_default(struct pp_hwmgr *hwmgr);
 extern int smu7_thermal_ctrl_uninitialize_thermal_controller(struct pp_hwmgr *hwmgr);
 extern int smu7_fan_ctrl_set_fan_speed_rpm(struct pp_hwmgr *hwmgr, uint32_t speed);

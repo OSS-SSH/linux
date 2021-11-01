@@ -514,15 +514,7 @@ static int cp_rx_poll(struct napi_struct *napi, int budget)
 		}
 
 		new_mapping = dma_map_single(&cp->pdev->dev, new_skb->data, buflen,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					 DMA_FROM_DEVICE);
-=======
 					 PCI_DMA_FROMDEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					 DMA_FROM_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (dma_mapping_error(&cp->pdev->dev, new_mapping)) {
 			dev->stats.rx_dropped++;
 			kfree_skb(new_skb);
@@ -530,15 +522,7 @@ static int cp_rx_poll(struct napi_struct *napi, int budget)
 		}
 
 		dma_unmap_single(&cp->pdev->dev, mapping,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				 buflen, DMA_FROM_DEVICE);
-=======
 				 buflen, PCI_DMA_FROMDEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				 buflen, DMA_FROM_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/* Handle checksum offloading for incoming packets. */
 		if (cp_rx_csum_ok(status))
@@ -682,15 +666,7 @@ static void cp_tx (struct cp_private *cp)
 
 		dma_unmap_single(&cp->pdev->dev, le64_to_cpu(txd->addr),
 				 cp->tx_opts[tx_tail] & 0xffff,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				 DMA_TO_DEVICE);
-=======
 				 PCI_DMA_TODEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				 DMA_TO_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (status & LastFrag) {
 			if (status & (TxError | TxFIFOUnder)) {
@@ -748,15 +724,7 @@ static void unwind_tx_frag_mapping(struct cp_private *cp, struct sk_buff *skb,
 		txd = &cp->tx_ring[index];
 		this_frag = &skb_shinfo(skb)->frags[frag];
 		dma_unmap_single(&cp->pdev->dev, le64_to_cpu(txd->addr),
-<<<<<<< HEAD
-<<<<<<< HEAD
-				 skb_frag_size(this_frag), DMA_TO_DEVICE);
-=======
 				 skb_frag_size(this_frag), PCI_DMA_TODEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				 skb_frag_size(this_frag), DMA_TO_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -813,15 +781,7 @@ static netdev_tx_t cp_start_xmit (struct sk_buff *skb,
 		dma_addr_t mapping;
 
 		len = skb->len;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		mapping = dma_map_single(&cp->pdev->dev, skb->data, len, DMA_TO_DEVICE);
-=======
 		mapping = dma_map_single(&cp->pdev->dev, skb->data, len, PCI_DMA_TODEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		mapping = dma_map_single(&cp->pdev->dev, skb->data, len, DMA_TO_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (dma_mapping_error(&cp->pdev->dev, mapping))
 			goto out_dma_error;
 
@@ -850,15 +810,7 @@ static netdev_tx_t cp_start_xmit (struct sk_buff *skb,
 		first_eor = eor;
 		first_len = skb_headlen(skb);
 		first_mapping = dma_map_single(&cp->pdev->dev, skb->data,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					       first_len, DMA_TO_DEVICE);
-=======
 					       first_len, PCI_DMA_TODEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					       first_len, DMA_TO_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (dma_mapping_error(&cp->pdev->dev, first_mapping))
 			goto out_dma_error;
 
@@ -874,15 +826,7 @@ static netdev_tx_t cp_start_xmit (struct sk_buff *skb,
 			len = skb_frag_size(this_frag);
 			mapping = dma_map_single(&cp->pdev->dev,
 						 skb_frag_address(this_frag),
-<<<<<<< HEAD
-<<<<<<< HEAD
-						 len, DMA_TO_DEVICE);
-=======
 						 len, PCI_DMA_TODEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-						 len, DMA_TO_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (dma_mapping_error(&cp->pdev->dev, mapping)) {
 				unwind_tx_frag_mapping(cp, skb, first_entry, entry);
 				goto out_dma_error;
@@ -1125,15 +1069,7 @@ static int cp_refill_rx(struct cp_private *cp)
 			goto err_out;
 
 		mapping = dma_map_single(&cp->pdev->dev, skb->data,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					 cp->rx_buf_sz, DMA_FROM_DEVICE);
-=======
 					 cp->rx_buf_sz, PCI_DMA_FROMDEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					 cp->rx_buf_sz, DMA_FROM_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (dma_mapping_error(&cp->pdev->dev, mapping)) {
 			kfree_skb(skb);
 			goto err_out;
@@ -1203,15 +1139,7 @@ static void cp_clean_rings (struct cp_private *cp)
 		if (cp->rx_skb[i]) {
 			desc = cp->rx_ring + i;
 			dma_unmap_single(&cp->pdev->dev,le64_to_cpu(desc->addr),
-<<<<<<< HEAD
-<<<<<<< HEAD
-					 cp->rx_buf_sz, DMA_FROM_DEVICE);
-=======
 					 cp->rx_buf_sz, PCI_DMA_FROMDEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					 cp->rx_buf_sz, DMA_FROM_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_kfree_skb_any(cp->rx_skb[i]);
 		}
 	}
@@ -1223,15 +1151,7 @@ static void cp_clean_rings (struct cp_private *cp)
 			desc = cp->tx_ring + i;
 			dma_unmap_single(&cp->pdev->dev,le64_to_cpu(desc->addr),
 					 le32_to_cpu(desc->opts1) & 0xffff,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					 DMA_TO_DEVICE);
-=======
 					 PCI_DMA_TODEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					 DMA_TO_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (le32_to_cpu(desc->opts1) & LastFrag)
 				dev_kfree_skb_any(skb);
 			cp->dev->stats.tx_dropped++;
@@ -1949,15 +1869,7 @@ static const struct net_device_ops cp_netdev_ops = {
 	.ndo_set_mac_address 	= cp_set_mac_address,
 	.ndo_set_rx_mode	= cp_set_rx_mode,
 	.ndo_get_stats		= cp_get_stats,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl		= cp_ioctl,
-=======
 	.ndo_do_ioctl		= cp_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl		= cp_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_start_xmit		= cp_start_xmit,
 	.ndo_tx_timeout		= cp_tx_timeout,
 	.ndo_set_features	= cp_set_features,
@@ -2033,46 +1945,24 @@ static int cp_init_one (struct pci_dev *pdev, const struct pci_device_id *ent)
 
 	/* Configure DMA attributes. */
 	if ((sizeof(dma_addr_t) > 4) &&
-<<<<<<< HEAD
-<<<<<<< HEAD
-	    !dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64))) {
-=======
 	    !pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64)) &&
 	    !pci_set_dma_mask(pdev, DMA_BIT_MASK(64))) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	    !dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64))) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pci_using_dac = 1;
 	} else {
 		pci_using_dac = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
-=======
 		rc = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (rc) {
 			dev_err(&pdev->dev,
 				"No usable DMA configuration, aborting\n");
 			goto err_out_res;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		rc = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
 		if (rc) {
 			dev_err(&pdev->dev,
 				"No usable consistent DMA configuration, aborting\n");
 			goto err_out_res;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	cp->cpcmd = (pci_using_dac ? PCIDAC : 0) |

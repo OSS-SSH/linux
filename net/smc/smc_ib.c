@@ -753,16 +753,8 @@ void smc_ib_ndev_change(struct net_device *ndev, unsigned long event)
 			if (!libdev->ops.get_netdev)
 				continue;
 			lndev = libdev->ops.get_netdev(libdev, i + 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dev_put(lndev);
-=======
 			if (lndev)
 				dev_put(lndev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dev_put(lndev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (lndev != ndev)
 				continue;
 			if (event == NETDEV_REGISTER)

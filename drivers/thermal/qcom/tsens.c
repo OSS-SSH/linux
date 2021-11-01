@@ -417,15 +417,7 @@ static irqreturn_t tsens_critical_irq_thread(int irq, void *data)
 		const struct tsens_sensor *s = &priv->sensor[i];
 		u32 hw_id = s->hw_id;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!s->tzd)
-=======
 		if (IS_ERR(s->tzd))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!s->tzd)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		if (!tsens_threshold_violated(priv, hw_id, &d))
 			continue;
@@ -475,15 +467,7 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
 		const struct tsens_sensor *s = &priv->sensor[i];
 		u32 hw_id = s->hw_id;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!s->tzd)
-=======
 		if (IS_ERR(s->tzd))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!s->tzd)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 		if (!tsens_threshold_violated(priv, hw_id, &d))
 			continue;

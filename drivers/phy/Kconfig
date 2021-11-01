@@ -37,15 +37,7 @@ config PHY_LPC18XX_USB_OTG
 
 config PHY_PISTACHIO_USB
 	tristate "IMG Pistachio USB2.0 PHY driver"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on MIPS || COMPILE_TEST
-=======
 	depends on MACH_PISTACHIO
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on MIPS || COMPILE_TEST
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select GENERIC_PHY
 	help
 	  Enable this to support the USB2.0 PHY on the IMG Pistachio SoC.

@@ -85,40 +85,11 @@ DECLARE_EVENT_CLASS(mlx5_esw_bridge_port_template,
 		    TP_ARGS(port),
 		    TP_STRUCT__entry(
 			    __field(u16, vport_num)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			    __field(u16, esw_owner_vhca_id)
-			    __field(u16, flags)
 			    ),
 		    TP_fast_assign(
 			    __entry->vport_num = port->vport_num;
-			    __entry->esw_owner_vhca_id = port->esw_owner_vhca_id;
-			    __entry->flags = port->flags;
 			    ),
-		    TP_printk("vport_num=%hu esw_owner_vhca_id=%hu flags=%hx",
-			      __entry->vport_num,
-			      __entry->esw_owner_vhca_id,
-			      __entry->flags)
-=======
-=======
-			    __field(u16, esw_owner_vhca_id)
-			    __field(u16, flags)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			    ),
-		    TP_fast_assign(
-			    __entry->vport_num = port->vport_num;
-			    __entry->esw_owner_vhca_id = port->esw_owner_vhca_id;
-			    __entry->flags = port->flags;
-			    ),
-<<<<<<< HEAD
 		    TP_printk("vport_num=%hu", __entry->vport_num)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		    TP_printk("vport_num=%hu esw_owner_vhca_id=%hu flags=%hx",
-			      __entry->vport_num,
-			      __entry->esw_owner_vhca_id,
-			      __entry->flags)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	);
 
 DEFINE_EVENT(mlx5_esw_bridge_port_template,

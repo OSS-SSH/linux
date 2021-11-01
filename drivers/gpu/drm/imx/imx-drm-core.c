@@ -208,9 +208,6 @@ static int imx_drm_bind(struct device *dev)
 		return PTR_ERR(drm);
 
 	/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	 * enable drm irq mode.
 	 * - with irq_enabled = true, we can use the vblank feature.
 	 *
@@ -222,9 +219,6 @@ static int imx_drm_bind(struct device *dev)
 	drm->irq_enabled = true;
 
 	/*
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * set max width and height as default value(4096x4096).
 	 * this value would be used to check framebuffer size limitation
 	 * at drm_mode_addfb().

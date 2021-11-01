@@ -343,28 +343,12 @@ static int wanxl_attach(struct net_device *dev, unsigned short encoding,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int wanxl_ioctl(struct net_device *dev, struct if_settings *ifs)
-=======
 static int wanxl_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int wanxl_ioctl(struct net_device *dev, struct if_settings *ifs)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const size_t size = sizeof(sync_serial_settings);
 	sync_serial_settings line;
 	struct port *port = dev_to_port(dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	switch (ifs->type) {
-	case IF_GET_IFACE:
-		ifs->type = IF_IFACE_SYNC_SERIAL;
-		if (ifs->size < size) {
-			ifs->size = size; /* data size wanted */
-=======
 	if (cmd != SIOCWANDEV)
 		return hdlc_ioctl(dev, ifr, cmd);
 
@@ -373,14 +357,6 @@ static int wanxl_ioctl(struct net_device *dev, struct if_settings *ifs)
 		ifr->ifr_settings.type = IF_IFACE_SYNC_SERIAL;
 		if (ifr->ifr_settings.size < size) {
 			ifr->ifr_settings.size = size; /* data size wanted */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	switch (ifs->type) {
-	case IF_GET_IFACE:
-		ifs->type = IF_IFACE_SYNC_SERIAL;
-		if (ifs->size < size) {
-			ifs->size = size; /* data size wanted */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENOBUFS;
 		}
 		memset(&line, 0, sizeof(line));
@@ -388,15 +364,7 @@ static int wanxl_ioctl(struct net_device *dev, struct if_settings *ifs)
 		line.clock_rate = 0;
 		line.loopback = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (copy_to_user(ifs->ifs_ifsu.sync, &line, size))
-=======
 		if (copy_to_user(ifr->ifr_settings.ifs_ifsu.sync, &line, size))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (copy_to_user(ifs->ifs_ifsu.sync, &line, size))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		return 0;
 
@@ -406,15 +374,7 @@ static int wanxl_ioctl(struct net_device *dev, struct if_settings *ifs)
 		if (dev->flags & IFF_UP)
 			return -EBUSY;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (copy_from_user(&line, ifs->ifs_ifsu.sync,
-=======
 		if (copy_from_user(&line, ifr->ifr_settings.ifs_ifsu.sync,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (copy_from_user(&line, ifs->ifs_ifsu.sync,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				   size))
 			return -EFAULT;
 
@@ -429,15 +389,7 @@ static int wanxl_ioctl(struct net_device *dev, struct if_settings *ifs)
 		return 0;
 
 	default:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return hdlc_ioctl(dev, ifs);
-=======
 		return hdlc_ioctl(dev, ifr, cmd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return hdlc_ioctl(dev, ifs);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -593,15 +545,7 @@ static const struct net_device_ops wanxl_ops = {
 	.ndo_open       = wanxl_open,
 	.ndo_stop       = wanxl_close,
 	.ndo_start_xmit = hdlc_start_xmit,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_siocwandev = wanxl_ioctl,
-=======
 	.ndo_do_ioctl   = wanxl_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_siocwandev = wanxl_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_get_stats  = wanxl_get_stats,
 };
 

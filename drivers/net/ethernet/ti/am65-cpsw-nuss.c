@@ -27,14 +27,6 @@
 #include <linux/sys_soc.h>
 #include <linux/dma/ti-cppi5.h>
 #include <linux/dma/k3-udma-glue.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <net/switchdev.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <net/switchdev.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "cpsw_ale.h"
 #include "cpsw_sl.h"
@@ -526,19 +518,6 @@ static int am65_cpsw_nuss_common_open(struct am65_cpsw_common *common,
 	}
 
 	napi_enable(&common->napi_rx);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (common->rx_irq_disabled) {
-		common->rx_irq_disabled = false;
-		enable_irq(common->rx_chns.irq);
-	}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_dbg(common->dev, "cpsw_nuss started\n");
 	return 0;
@@ -892,23 +871,8 @@ static int am65_cpsw_nuss_rx_poll(struct napi_struct *napi_rx, int budget)
 
 	dev_dbg(common->dev, "%s num_rx:%d %d\n", __func__, num_rx, budget);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (num_rx < budget && napi_complete_done(napi_rx, num_rx)) {
-		if (common->rx_irq_disabled) {
-			common->rx_irq_disabled = false;
-			enable_irq(common->rx_chns.irq);
-		}
-	}
-<<<<<<< HEAD
-=======
 	if (num_rx < budget && napi_complete_done(napi_rx, num_rx))
 		enable_irq(common->rx_chns.irq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return num_rx;
 }
@@ -1113,46 +1077,19 @@ static int am65_cpsw_nuss_tx_poll(struct napi_struct *napi_tx, int budget)
 	else
 		num_tx = am65_cpsw_nuss_tx_compl_packets(tx_chn->common, tx_chn->id, budget);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (num_tx >= budget)
-		return budget;
-
-	if (napi_complete_done(napi_tx, num_tx))
-<<<<<<< HEAD
-		enable_irq(tx_chn->irq);
-
-	return 0;
-=======
 	num_tx = min(num_tx, budget);
 	if (num_tx < budget) {
 		napi_complete(napi_tx);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		enable_irq(tx_chn->irq);
+	}
 
-<<<<<<< HEAD
 	return num_tx;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static irqreturn_t am65_cpsw_nuss_rx_irq(int irq, void *dev_id)
 {
 	struct am65_cpsw_common *common = dev_id;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	common->rx_irq_disabled = true;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	common->rx_irq_disabled = true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	disable_irq_nosync(irq);
 	napi_schedule(&common->napi_rx);
 
@@ -1542,15 +1479,7 @@ static const struct net_device_ops am65_cpsw_nuss_netdev_ops = {
 	.ndo_tx_timeout		= am65_cpsw_nuss_ndo_host_tx_timeout,
 	.ndo_vlan_rx_add_vid	= am65_cpsw_nuss_ndo_slave_add_vid,
 	.ndo_vlan_rx_kill_vid	= am65_cpsw_nuss_ndo_slave_kill_vid,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl		= am65_cpsw_nuss_ndo_slave_ioctl,
-=======
 	.ndo_do_ioctl		= am65_cpsw_nuss_ndo_slave_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl		= am65_cpsw_nuss_ndo_slave_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_setup_tc           = am65_cpsw_qos_ndo_setup_tc,
 	.ndo_get_devlink_port   = am65_cpsw_ndo_get_devlink_port,
 };
@@ -2131,25 +2060,8 @@ static void am65_cpsw_port_offload_fwd_mark_update(struct am65_cpsw_common *comm
 
 	for (i = 1; i <= common->port_num; i++) {
 		struct am65_cpsw_port *port = am65_common_get_port(common, i);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		struct am65_cpsw_ndev_priv *priv;
-
-		if (!port->ndev)
-			continue;
-<<<<<<< HEAD
-
-		priv = am65_ndev_to_priv(port->ndev);
-=======
 		struct am65_cpsw_ndev_priv *priv = am65_ndev_to_priv(port->ndev);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-		priv = am65_ndev_to_priv(port->ndev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		priv->offload_fwd_mark = set_val;
 	}
 }
@@ -2165,30 +2077,10 @@ bool am65_cpsw_port_dev_check(const struct net_device *ndev)
 	return false;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int am65_cpsw_netdevice_port_link(struct net_device *ndev,
-					 struct net_device *br_ndev,
-					 struct netlink_ext_ack *extack)
-{
-	struct am65_cpsw_common *common = am65_ndev_to_common(ndev);
-	struct am65_cpsw_ndev_priv *priv = am65_ndev_to_priv(ndev);
-	int err;
-=======
 static int am65_cpsw_netdevice_port_link(struct net_device *ndev, struct net_device *br_ndev)
 {
 	struct am65_cpsw_common *common = am65_ndev_to_common(ndev);
 	struct am65_cpsw_ndev_priv *priv = am65_ndev_to_priv(ndev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int am65_cpsw_netdevice_port_link(struct net_device *ndev,
-					 struct net_device *br_ndev,
-					 struct netlink_ext_ack *extack)
-{
-	struct am65_cpsw_common *common = am65_ndev_to_common(ndev);
-	struct am65_cpsw_ndev_priv *priv = am65_ndev_to_priv(ndev);
-	int err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!common->br_members) {
 		common->hw_bridge_dev = br_ndev;
@@ -2200,20 +2092,6 @@ static int am65_cpsw_netdevice_port_link(struct net_device *ndev,
 			return -EOPNOTSUPP;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	err = switchdev_bridge_port_offload(ndev, ndev, NULL, NULL, NULL,
-					    false, extack);
-	if (err)
-		return err;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	common->br_members |= BIT(priv->port->port_id);
 
 	am65_cpsw_port_offload_fwd_mark_update(common);
@@ -2226,16 +2104,6 @@ static void am65_cpsw_netdevice_port_unlink(struct net_device *ndev)
 	struct am65_cpsw_common *common = am65_ndev_to_common(ndev);
 	struct am65_cpsw_ndev_priv *priv = am65_ndev_to_priv(ndev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	switchdev_bridge_port_unoffload(ndev, NULL, NULL, NULL);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	switchdev_bridge_port_unoffload(ndev, NULL, NULL, NULL);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	common->br_members &= ~BIT(priv->port->port_id);
 
 	am65_cpsw_port_offload_fwd_mark_update(common);
@@ -2248,14 +2116,6 @@ static void am65_cpsw_netdevice_port_unlink(struct net_device *ndev)
 static int am65_cpsw_netdevice_event(struct notifier_block *unused,
 				     unsigned long event, void *ptr)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct netlink_ext_ack *extack = netdev_notifier_info_to_extack(ptr);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct netlink_ext_ack *extack = netdev_notifier_info_to_extack(ptr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct net_device *ndev = netdev_notifier_info_to_dev(ptr);
 	struct netdev_notifier_changeupper_info *info;
 	int ret = NOTIFY_DONE;
@@ -2269,19 +2129,7 @@ static int am65_cpsw_netdevice_event(struct notifier_block *unused,
 
 		if (netif_is_bridge_master(info->upper_dev)) {
 			if (info->linking)
-<<<<<<< HEAD
-<<<<<<< HEAD
-				ret = am65_cpsw_netdevice_port_link(ndev,
-								    info->upper_dev,
-								    extack);
-=======
 				ret = am65_cpsw_netdevice_port_link(ndev, info->upper_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				ret = am65_cpsw_netdevice_port_link(ndev,
-								    info->upper_dev,
-								    extack);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			else
 				am65_cpsw_netdevice_port_unlink(ndev);
 		}
@@ -2536,9 +2384,6 @@ static const struct devlink_param am65_cpsw_devlink_params[] = {
 			     am65_cpsw_dl_switch_mode_set, NULL),
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void am65_cpsw_unregister_devlink_ports(struct am65_cpsw_common *common)
 {
 	struct devlink_port *dl_port;
@@ -2554,9 +2399,6 @@ static void am65_cpsw_unregister_devlink_ports(struct am65_cpsw_common *common)
 	}
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int am65_cpsw_nuss_register_devlink(struct am65_cpsw_common *common)
 {
 	struct devlink_port_attrs attrs = {};
@@ -2568,30 +2410,14 @@ static int am65_cpsw_nuss_register_devlink(struct am65_cpsw_common *common)
 	int i;
 
 	common->devlink =
-<<<<<<< HEAD
-<<<<<<< HEAD
-		devlink_alloc(&am65_cpsw_devlink_ops, sizeof(*dl_priv), dev);
-=======
 		devlink_alloc(&am65_cpsw_devlink_ops, sizeof(*dl_priv));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		devlink_alloc(&am65_cpsw_devlink_ops, sizeof(*dl_priv), dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!common->devlink)
 		return -ENOMEM;
 
 	dl_priv = devlink_priv(common->devlink);
 	dl_priv->common = common;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = devlink_register(common->devlink);
-=======
 	ret = devlink_register(common->devlink, dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = devlink_register(common->devlink);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret) {
 		dev_err(dev, "devlink reg fail ret:%d\n", ret);
 		goto dl_free;
@@ -2634,22 +2460,7 @@ static int am65_cpsw_nuss_register_devlink(struct am65_cpsw_common *common)
 	return ret;
 
 dl_port_unreg:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	for (i = i - 1; i >= 1; i--) {
-		port = am65_common_get_port(common, i);
-		dl_port = &port->devlink_port;
-
-		devlink_port_unregister(dl_port);
-	}
-<<<<<<< HEAD
-=======
 	am65_cpsw_unregister_devlink_ports(common);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 dl_unreg:
 	devlink_unregister(common->devlink);
 dl_free:
@@ -2660,26 +2471,6 @@ dl_free:
 
 static void am65_cpsw_unregister_devlink(struct am65_cpsw_common *common)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct devlink_port *dl_port;
-	struct am65_cpsw_port *port;
-	int i;
-
-	for (i = 1; i <= common->port_num; i++) {
-		port = am65_common_get_port(common, i);
-		dl_port = &port->devlink_port;
-
-		devlink_port_unregister(dl_port);
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!AM65_CPSW_IS_CPSW2G(common) &&
 	    IS_ENABLED(CONFIG_TI_K3_AM65_CPSW_SWITCHDEV)) {
 		devlink_params_unpublish(common->devlink);
@@ -2687,13 +2478,7 @@ static void am65_cpsw_unregister_devlink(struct am65_cpsw_common *common)
 					  ARRAY_SIZE(am65_cpsw_devlink_params));
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	am65_cpsw_unregister_devlink_ports(common);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	devlink_unregister(common->devlink);
 	devlink_free(common->devlink);
 }

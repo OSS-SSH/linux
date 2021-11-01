@@ -35,16 +35,6 @@
 
 #define MAX_SUBFRAME_COUNT	64
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define LLC_HEADER_LENGTH	6
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define LLC_HEADER_LENGTH	6
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* for Rx reordering buffer control */
 struct recv_reorder_ctrl {
 	struct adapter	*padapter;

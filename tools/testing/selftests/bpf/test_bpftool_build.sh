@@ -22,15 +22,7 @@ KDIR_ROOT_DIR=$(realpath $PWD/$SCRIPT_REL_DIR/../../../../)
 cd $KDIR_ROOT_DIR
 if [ ! -e tools/bpf/bpftool/Makefile ]; then
 	echo -e "skip:    bpftool files not found!\n"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	exit 4 # KSFT_SKIP=4
-=======
 	exit 0
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	exit 4 # KSFT_SKIP=4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fi
 
 ERROR=0

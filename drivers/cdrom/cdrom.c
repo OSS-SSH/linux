@@ -629,15 +629,7 @@ int register_cdrom(struct gendisk *disk, struct cdrom_device_info *cdi)
 	if (CDROM_CAN(CDC_MRW_W))
 		cdi->exit = cdrom_mrw_exit;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (cdi->ops->read_cdda_bpc)
-=======
 	if (cdi->disk)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (cdi->ops->read_cdda_bpc)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		cdi->cdda_method = CDDA_BPC_FULL;
 	else
 		cdi->cdda_method = CDDA_OLD;
@@ -2167,62 +2159,81 @@ static int cdrom_read_cdda_old(struct cdrom_device_info *cdi, __u8 __user *ubuf,
 static int cdrom_read_cdda_bpc(struct cdrom_device_info *cdi, __u8 __user *ubuf,
 			       int lba, int nframes)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int max_frames = (queue_max_sectors(cdi->disk->queue) << 9) /
-			  CD_FRAMESIZE_RAW;
-	int nr, ret = 0;
-
-	cdi->last_sense = 0;
-
-	while (nframes) {
-		if (cdi->cdda_method == CDDA_BPC_SINGLE)
-			nr = 1;
-		else
-			nr = min(nframes, max_frames);
-
-		ret = cdi->ops->read_cdda_bpc(cdi, ubuf, lba, nr,
-					      &cdi->last_sense);
-=======
 	struct request_queue *q = cdi->disk->queue;
 	struct request *rq;
 	struct scsi_request *req;
 	struct bio *bio;
 	unsigned int len;
-=======
-	int max_frames = (queue_max_sectors(cdi->disk->queue) << 9) /
-			  CD_FRAMESIZE_RAW;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int nr, ret = 0;
+
+	if (!q)
+		return -ENXIO;
+
+	if (!blk_queue_scsi_passthrough(q)) {
+		WARN_ONCE(true,
+			  "Attempt read CDDA info through a non-SCSI queue\n");
+		return -EINVAL;
+	}
 
 	cdi->last_sense = 0;
 
 	while (nframes) {
+		nr = nframes;
 		if (cdi->cdda_method == CDDA_BPC_SINGLE)
 			nr = 1;
-		else
-			nr = min(nframes, max_frames);
+		if (nr * CD_FRAMESIZE_RAW > (queue_max_sectors(q) << 9))
+			nr = (queue_max_sectors(q) << 9) / CD_FRAMESIZE_RAW;
 
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = cdi->ops->read_cdda_bpc(cdi, ubuf, lba, nr,
-					      &cdi->last_sense);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+		len = nr * CD_FRAMESIZE_RAW;
+
+		rq = blk_get_request(q, REQ_OP_DRV_IN, 0);
+		if (IS_ERR(rq)) {
+			ret = PTR_ERR(rq);
+			break;
+		}
+		req = scsi_req(rq);
+
+		ret = blk_rq_map_user(q, rq, NULL, ubuf, len, GFP_KERNEL);
+		if (ret) {
+			blk_put_request(rq);
+			break;
+		}
+
+		req->cmd[0] = GPCMD_READ_CD;
+		req->cmd[1] = 1 << 2;
+		req->cmd[2] = (lba >> 24) & 0xff;
+		req->cmd[3] = (lba >> 16) & 0xff;
+		req->cmd[4] = (lba >>  8) & 0xff;
+		req->cmd[5] = lba & 0xff;
+		req->cmd[6] = (nr >> 16) & 0xff;
+		req->cmd[7] = (nr >>  8) & 0xff;
+		req->cmd[8] = nr & 0xff;
+		req->cmd[9] = 0xf8;
+
+		req->cmd_len = 12;
+		rq->timeout = 60 * HZ;
+		bio = rq->bio;
+
+		blk_execute_rq(cdi->disk, rq, 0);
+		if (scsi_req(rq)->result) {
+			struct scsi_sense_hdr sshdr;
+
+			ret = -EIO;
+			scsi_normalize_sense(req->sense, req->sense_len,
+					     &sshdr);
+			cdi->last_sense = sshdr.sense_key;
+		}
+
+		if (blk_rq_unmap_user(bio))
+			ret = -EFAULT;
+		blk_put_request(rq);
+
 		if (ret)
 			break;
 
 		nframes -= nr;
 		lba += nr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ubuf += (nr * CD_FRAMESIZE_RAW);
-=======
 		ubuf += len;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ubuf += (nr * CD_FRAMESIZE_RAW);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return ret;
@@ -3346,9 +3357,6 @@ int cdrom_ioctl(struct cdrom_device_info *cdi, struct block_device *bdev,
 	void __user *argp = (void __user *)arg;
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/*
 	 * Try the generic SCSI command ioctl's first.
 	 */
@@ -3356,9 +3364,6 @@ int cdrom_ioctl(struct cdrom_device_info *cdi, struct block_device *bdev,
 	if (ret != -ENOTTY)
 		return ret;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (cmd) {
 	case CDROMMULTISESSION:
 		return cdrom_ioctl_multisession(cdi, argp);

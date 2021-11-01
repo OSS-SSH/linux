@@ -448,14 +448,8 @@ static int mtk_cpufreq_init(struct cpufreq_policy *policy)
 	policy->driver_data = info;
 	policy->clk = info->cpu_clk;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	dev_pm_opp_of_register_em(info->cpu_dev, policy->cpus);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -477,14 +471,6 @@ static struct cpufreq_driver mtk_cpufreq_driver = {
 	.get = cpufreq_generic_get,
 	.init = mtk_cpufreq_init,
 	.exit = mtk_cpufreq_exit,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.register_em = cpufreq_register_em_with_opp,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.register_em = cpufreq_register_em_with_opp,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.name = "mtk-cpufreq",
 	.attr = cpufreq_generic_attr,
 };

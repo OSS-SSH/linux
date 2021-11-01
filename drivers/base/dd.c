@@ -580,17 +580,7 @@ re_probe:
 			goto probe_failed;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = driver_sysfs_add(dev);
-	if (ret) {
-=======
 	if (driver_sysfs_add(dev)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = driver_sysfs_add(dev);
-	if (ret) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_err("%s: driver_sysfs_add(%s) failed\n",
 		       __func__, dev_name(dev));
 		goto probe_failed;
@@ -612,40 +602,15 @@ re_probe:
 		goto probe_failed;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = device_add_groups(dev, drv->dev_groups);
-	if (ret) {
-=======
 	if (device_add_groups(dev, drv->dev_groups)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = device_add_groups(dev, drv->dev_groups);
-	if (ret) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_err(dev, "device_add_groups() failed\n");
 		goto dev_groups_failed;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (dev_has_sync_state(dev)) {
-		ret = device_create_file(dev, &dev_attr_state_synced);
-		if (ret) {
-			dev_err(dev, "state_synced sysfs add failed\n");
-			goto dev_sysfs_state_synced_failed;
-		}
-<<<<<<< HEAD
-=======
 	if (dev_has_sync_state(dev) &&
 	    device_create_file(dev, &dev_attr_state_synced)) {
 		dev_err(dev, "state_synced sysfs add failed\n");
 		goto dev_sysfs_state_synced_failed;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (test_remove) {
@@ -688,14 +653,8 @@ dev_groups_failed:
 	else if (drv->remove)
 		drv->remove(dev);
 probe_failed:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	kfree(dev->dma_range_map);
 	dev->dma_range_map = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (dev->bus)
 		blocking_notifier_call_chain(&dev->bus->p->bus_notifier,
 					     BUS_NOTIFY_DRIVER_NOT_BOUND, dev);
@@ -703,16 +662,6 @@ pinctrl_bind_failed:
 	device_links_no_driver(dev);
 	devres_release_all(dev);
 	arch_teardown_dma_ops(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	kfree(dev->dma_range_map);
-	dev->dma_range_map = NULL;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kfree(dev->dma_range_map);
-	dev->dma_range_map = NULL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	driver_sysfs_remove(dev);
 	dev->driver = NULL;
 	dev_set_drvdata(dev, NULL);

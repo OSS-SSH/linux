@@ -54,29 +54,11 @@ static netdev_tx_t ipddp_xmit(struct sk_buff *skb,
 static int ipddp_create(struct ipddp_route *new_rt);
 static int ipddp_delete(struct ipddp_route *rt);
 static struct ipddp_route* __ipddp_find_route(struct ipddp_route *rt);
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int ipddp_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-				void __user *data, int cmd);
-
-static const struct net_device_ops ipddp_netdev_ops = {
-	.ndo_start_xmit		= ipddp_xmit,
-	.ndo_siocdevprivate	= ipddp_siocdevprivate,
-=======
 static int ipddp_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
 
 static const struct net_device_ops ipddp_netdev_ops = {
 	.ndo_start_xmit		= ipddp_xmit,
 	.ndo_do_ioctl   	= ipddp_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int ipddp_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-				void __user *data, int cmd);
-
-static const struct net_device_ops ipddp_netdev_ops = {
-	.ndo_start_xmit		= ipddp_xmit,
-	.ndo_siocdevprivate	= ipddp_siocdevprivate,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_mac_address 	= eth_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
 };
@@ -286,41 +268,15 @@ static struct ipddp_route* __ipddp_find_route(struct ipddp_route *rt)
         return NULL;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int ipddp_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-				void __user *data, int cmd)
-{
-        struct ipddp_route rcp, rcp2, *rp;
-
-	if (in_compat_syscall())
-		return -EOPNOTSUPP;
-
-        if(!capable(CAP_NET_ADMIN))
-                return -EPERM;
-
-	if (copy_from_user(&rcp, data, sizeof(rcp)))
-=======
 static int ipddp_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
-=======
-static int ipddp_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-				void __user *data, int cmd)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+        struct ipddp_route __user *rt = ifr->ifr_data;
         struct ipddp_route rcp, rcp2, *rp;
-
-	if (in_compat_syscall())
-		return -EOPNOTSUPP;
 
         if(!capable(CAP_NET_ADMIN))
                 return -EPERM;
 
-<<<<<<< HEAD
 	if(copy_from_user(&rcp, rt, sizeof(rcp)))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (copy_from_user(&rcp, data, sizeof(rcp)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 
         switch(cmd)
@@ -340,15 +296,7 @@ static int ipddp_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 			spin_unlock_bh(&ipddp_route_lock);
 
 			if (rp) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-				if (copy_to_user(data, &rcp2,
-=======
 				if (copy_to_user(rt, &rcp2,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				if (copy_to_user(data, &rcp2,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						 sizeof(struct ipddp_route)))
 					return -EFAULT;
 				return 0;

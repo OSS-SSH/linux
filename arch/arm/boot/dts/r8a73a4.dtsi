@@ -72,9 +72,6 @@
 		power-domains = <&pd_a3bc>;
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	dmac: dma-multiplexer {
 		compatible = "renesas,shdma-mux";
 		#dma-cells = <1>;
@@ -119,9 +116,6 @@
 		};
 	};
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	i2c5: i2c@e60b0000 {
 		#address-cells = <1>;
 		#size-cells = <0>;

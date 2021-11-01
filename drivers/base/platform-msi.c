@@ -21,26 +21,11 @@
  * and the callback to write the MSI message.
  */
 struct platform_msi_priv_data {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct device			*dev;
-	void				*host_data;
-	const struct attribute_group    **msi_irq_groups;
-	msi_alloc_info_t		arg;
-	irq_write_msi_msg_t		write_msg;
-	int				devid;
-<<<<<<< HEAD
-=======
 	struct device		*dev;
 	void 			*host_data;
 	msi_alloc_info_t	arg;
 	irq_write_msi_msg_t	write_msg;
 	int			devid;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* The devid allocator */
@@ -287,31 +272,8 @@ int platform_msi_domain_alloc_irqs(struct device *dev, unsigned int nvec,
 	if (err)
 		goto out_free_desc;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	priv_data->msi_irq_groups = msi_populate_sysfs(dev);
-	if (IS_ERR(priv_data->msi_irq_groups)) {
-		err = PTR_ERR(priv_data->msi_irq_groups);
-		goto out_free_irqs;
-	}
-
-<<<<<<< HEAD
 	return 0;
 
-out_free_irqs:
-	msi_domain_free_irqs(dev->msi_domain, dev);
-=======
-	return 0;
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 0;
-
-out_free_irqs:
-	msi_domain_free_irqs(dev->msi_domain, dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_free_desc:
 	platform_msi_free_descs(dev, 0, nvec);
 out_free_priv_data:
@@ -331,14 +293,6 @@ void platform_msi_domain_free_irqs(struct device *dev)
 		struct msi_desc *desc;
 
 		desc = first_msi_entry(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		msi_destroy_sysfs(dev, desc->platform.msi_priv_data->msi_irq_groups);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		msi_destroy_sysfs(dev, desc->platform.msi_priv_data->msi_irq_groups);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		platform_msi_free_priv_data(desc->platform.msi_priv_data);
 	}
 

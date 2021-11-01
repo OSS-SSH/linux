@@ -1582,14 +1582,6 @@ static void myrs_mode_sense(struct myrs_hba *cs, struct scsi_cmnd *scmd,
 static int myrs_queuecommand(struct Scsi_Host *shost,
 		struct scsi_cmnd *scmd)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct request *rq = scsi_cmd_to_rq(scmd);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct request *rq = scsi_cmd_to_rq(scmd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct myrs_hba *cs = shost_priv(shost);
 	struct myrs_cmdblk *cmd_blk = scsi_cmd_priv(scmd);
 	union myrs_cmd_mbox *mbox = &cmd_blk->mbox;
@@ -1636,15 +1628,7 @@ static int myrs_queuecommand(struct Scsi_Host *shost,
 		return SCSI_MLQUEUE_HOST_BUSY;
 	cmd_blk->sense_addr = sense_addr;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	timeout = rq->timeout;
-=======
 	timeout = scmd->request->timeout;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	timeout = rq->timeout;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (scmd->cmd_len <= 10) {
 		if (scmd->device->channel >= cs->ctlr_info->physchan_present) {
 			struct myrs_ldev_info *ldev_info = sdev->hostdata;
@@ -1660,24 +1644,10 @@ static int myrs_queuecommand(struct Scsi_Host *shost,
 			mbox->SCSI_10.pdev.target = sdev->id;
 			mbox->SCSI_10.pdev.channel = sdev->channel;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		mbox->SCSI_10.id = rq->tag + 3;
-		mbox->SCSI_10.control.dma_ctrl_to_host =
-			(scmd->sc_data_direction == DMA_FROM_DEVICE);
-		if (rq->cmd_flags & REQ_FUA)
-=======
 		mbox->SCSI_10.id = scmd->request->tag + 3;
 		mbox->SCSI_10.control.dma_ctrl_to_host =
 			(scmd->sc_data_direction == DMA_FROM_DEVICE);
 		if (scmd->request->cmd_flags & REQ_FUA)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		mbox->SCSI_10.id = rq->tag + 3;
-		mbox->SCSI_10.control.dma_ctrl_to_host =
-			(scmd->sc_data_direction == DMA_FROM_DEVICE);
-		if (rq->cmd_flags & REQ_FUA)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			mbox->SCSI_10.control.fua = true;
 		mbox->SCSI_10.dma_size = scsi_bufflen(scmd);
 		mbox->SCSI_10.sense_addr = cmd_blk->sense_addr;
@@ -1720,24 +1690,10 @@ static int myrs_queuecommand(struct Scsi_Host *shost,
 			mbox->SCSI_255.pdev.target = sdev->id;
 			mbox->SCSI_255.pdev.channel = sdev->channel;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		mbox->SCSI_255.id = rq->tag + 3;
-		mbox->SCSI_255.control.dma_ctrl_to_host =
-			(scmd->sc_data_direction == DMA_FROM_DEVICE);
-		if (rq->cmd_flags & REQ_FUA)
-=======
 		mbox->SCSI_255.id = scmd->request->tag + 3;
 		mbox->SCSI_255.control.dma_ctrl_to_host =
 			(scmd->sc_data_direction == DMA_FROM_DEVICE);
 		if (scmd->request->cmd_flags & REQ_FUA)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		mbox->SCSI_255.id = rq->tag + 3;
-		mbox->SCSI_255.control.dma_ctrl_to_host =
-			(scmd->sc_data_direction == DMA_FROM_DEVICE);
-		if (rq->cmd_flags & REQ_FUA)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			mbox->SCSI_255.control.fua = true;
 		mbox->SCSI_255.dma_size = scsi_bufflen(scmd);
 		mbox->SCSI_255.sense_addr = cmd_blk->sense_addr;

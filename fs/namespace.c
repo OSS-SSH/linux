@@ -203,17 +203,7 @@ static struct mount *alloc_vfsmnt(const char *name)
 			goto out_free_cache;
 
 		if (name) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			mnt->mnt_devname = kstrdup_const(name,
-							 GFP_KERNEL_ACCOUNT);
-=======
 			mnt->mnt_devname = kstrdup_const(name, GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			mnt->mnt_devname = kstrdup_const(name,
-							 GFP_KERNEL_ACCOUNT);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!mnt->mnt_devname)
 				goto out_free_id;
 		}
@@ -1725,30 +1715,11 @@ static inline bool may_mount(void)
 	return ns_capable(current->nsproxy->mnt_ns->user_ns, CAP_SYS_ADMIN);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void warn_mandlock(void)
-{
-	pr_warn_once("=======================================================\n"
-		     "WARNING: The mand mount option has been deprecated and\n"
-		     "         and is ignored by this kernel. Remove the mand\n"
-		     "         option from the mount to silence this warning.\n"
-		     "=======================================================\n");
-}
-=======
 #ifdef	CONFIG_MANDATORY_FILE_LOCKING
 static inline bool may_mandlock(void)
-=======
-static void warn_mandlock(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	pr_warn_once("=======================================================\n"
-		     "WARNING: The mand mount option has been deprecated and\n"
-		     "         and is ignored by this kernel. Remove the mand\n"
-		     "         option from the mount to silence this warning.\n"
-		     "=======================================================\n");
+	return capable(CAP_SYS_ADMIN);
 }
-<<<<<<< HEAD
 #else
 static inline bool may_mandlock(void)
 {
@@ -1756,9 +1727,6 @@ static inline bool may_mandlock(void)
 	return false;
 }
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int can_umount(const struct path *path, int flags)
 {
@@ -1970,29 +1938,6 @@ void drop_collected_mounts(struct vfsmount *mnt)
 	namespace_unlock();
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static bool has_locked_children(struct mount *mnt, struct dentry *dentry)
-{
-	struct mount *child;
-
-	list_for_each_entry(child, &mnt->mnt_mounts, mnt_child) {
-		if (!is_subdir(child->mnt_mountpoint, dentry))
-			continue;
-
-		if (child->mnt.mnt_flags & MNT_LOCKED)
-			return true;
-	}
-	return false;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * clone_private_mount - create a private clone of a path
  * @path: path to clone
@@ -2008,41 +1953,10 @@ struct vfsmount *clone_private_mount(const struct path *path)
 	struct mount *old_mnt = real_mount(path->mnt);
 	struct mount *new_mnt;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	down_read(&namespace_sem);
 	if (IS_MNT_UNBINDABLE(old_mnt))
-		goto invalid;
-
-	if (!check_mnt(old_mnt))
-		goto invalid;
-
-	if (has_locked_children(old_mnt, path->dentry))
-		goto invalid;
+		return ERR_PTR(-EINVAL);
 
 	new_mnt = clone_mnt(old_mnt, path->dentry, CL_PRIVATE);
-	up_read(&namespace_sem);
-
-=======
-=======
-	down_read(&namespace_sem);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (IS_MNT_UNBINDABLE(old_mnt))
-		goto invalid;
-
-	if (!check_mnt(old_mnt))
-		goto invalid;
-
-	if (has_locked_children(old_mnt, path->dentry))
-		goto invalid;
-
-	new_mnt = clone_mnt(old_mnt, path->dentry, CL_PRIVATE);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	up_read(&namespace_sem);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(new_mnt))
 		return ERR_CAST(new_mnt);
 
@@ -2050,19 +1964,6 @@ struct vfsmount *clone_private_mount(const struct path *path)
 	new_mnt->mnt_ns = MNT_NS_INTERNAL;
 
 	return &new_mnt->mnt;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-invalid:
-	up_read(&namespace_sem);
-	return ERR_PTR(-EINVAL);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(clone_private_mount);
 
@@ -2414,9 +2315,6 @@ static int do_change_type(struct path *path, int ms_flags)
 	return err;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static bool has_locked_children(struct mount *mnt, struct dentry *dentry)
 {
 	struct mount *child;
@@ -2430,9 +2328,6 @@ static bool has_locked_children(struct mount *mnt, struct dentry *dentry)
 	return false;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct mount *__do_loopback(struct path *old_path, int recurse)
 {
 	struct mount *mnt = ERR_PTR(-EINVAL), *old = real_mount(old_path->mnt);
@@ -2789,87 +2684,6 @@ out:
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int do_set_group(struct path *from_path, struct path *to_path)
-{
-	struct mount *from, *to;
-	int err;
-
-	from = real_mount(from_path->mnt);
-	to = real_mount(to_path->mnt);
-
-	namespace_lock();
-
-	err = -EINVAL;
-	/* To and From must be mounted */
-	if (!is_mounted(&from->mnt))
-		goto out;
-	if (!is_mounted(&to->mnt))
-		goto out;
-
-	err = -EPERM;
-	/* We should be allowed to modify mount namespaces of both mounts */
-	if (!ns_capable(from->mnt_ns->user_ns, CAP_SYS_ADMIN))
-		goto out;
-	if (!ns_capable(to->mnt_ns->user_ns, CAP_SYS_ADMIN))
-		goto out;
-
-	err = -EINVAL;
-	/* To and From paths should be mount roots */
-	if (from_path->dentry != from_path->mnt->mnt_root)
-		goto out;
-	if (to_path->dentry != to_path->mnt->mnt_root)
-		goto out;
-
-	/* Setting sharing groups is only allowed across same superblock */
-	if (from->mnt.mnt_sb != to->mnt.mnt_sb)
-		goto out;
-
-	/* From mount root should be wider than To mount root */
-	if (!is_subdir(to->mnt.mnt_root, from->mnt.mnt_root))
-		goto out;
-
-	/* From mount should not have locked children in place of To's root */
-	if (has_locked_children(from, to->mnt.mnt_root))
-		goto out;
-
-	/* Setting sharing groups is only allowed on private mounts */
-	if (IS_MNT_SHARED(to) || IS_MNT_SLAVE(to))
-		goto out;
-
-	/* From should not be private */
-	if (!IS_MNT_SHARED(from) && !IS_MNT_SLAVE(from))
-		goto out;
-
-	if (IS_MNT_SLAVE(from)) {
-		struct mount *m = from->mnt_master;
-
-		list_add(&to->mnt_slave, &m->mnt_slave_list);
-		to->mnt_master = m;
-	}
-
-	if (IS_MNT_SHARED(from)) {
-		to->mnt_group_id = from->mnt_group_id;
-		list_add(&to->mnt_share, &from->mnt_share);
-		lock_mount_hash();
-		set_mnt_shared(to);
-		unlock_mount_hash();
-	}
-
-	err = 0;
-out:
-	namespace_unlock();
-	return err;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int do_move_mount(struct path *old_path, struct path *new_path)
 {
 	struct mnt_namespace *ns;
@@ -3365,18 +3179,8 @@ int path_mount(const char *dev_name, struct path *path,
 		return ret;
 	if (!may_mount())
 		return -EPERM;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (flags & SB_MANDLOCK)
-		warn_mandlock();
-=======
 	if ((flags & SB_MANDLOCK) && !may_mandlock())
 		return -EPERM;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (flags & SB_MANDLOCK)
-		warn_mandlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Default to relatime unless overriden */
 	if (!(flags & MS_NOATIME))
@@ -3484,15 +3288,7 @@ static struct mnt_namespace *alloc_mnt_ns(struct user_namespace *user_ns, bool a
 	if (!ucounts)
 		return ERR_PTR(-ENOSPC);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	new_ns = kzalloc(sizeof(struct mnt_namespace), GFP_KERNEL_ACCOUNT);
-=======
 	new_ns = kzalloc(sizeof(struct mnt_namespace), GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	new_ns = kzalloc(sizeof(struct mnt_namespace), GFP_KERNEL_ACCOUNT);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!new_ns) {
 		dec_mnt_namespaces(ucounts);
 		return ERR_PTR(-ENOMEM);
@@ -3767,19 +3563,9 @@ SYSCALL_DEFINE3(fsmount, int, fs_fd, unsigned int, flags,
 	if (fc->phase != FS_CONTEXT_AWAITING_MOUNT)
 		goto err_unlock;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (fc->sb_flags & SB_MANDLOCK)
-		warn_mandlock();
-=======
 	ret = -EPERM;
 	if ((fc->sb_flags & SB_MANDLOCK) && !may_mandlock())
 		goto err_unlock;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (fc->sb_flags & SB_MANDLOCK)
-		warn_mandlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	newmount.mnt = vfs_create_mount(fc);
 	if (IS_ERR(newmount.mnt)) {
@@ -3883,20 +3669,7 @@ SYSCALL_DEFINE5(move_mount,
 	if (ret < 0)
 		goto out_to;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (flags & MOVE_MOUNT_SET_GROUP)
-		ret = do_set_group(&from_path, &to_path);
-	else
-		ret = do_move_mount(&from_path, &to_path);
-<<<<<<< HEAD
-=======
 	ret = do_move_mount(&from_path, &to_path);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 out_to:
 	path_put(&to_path);
@@ -4449,15 +4222,7 @@ void __init mnt_init(void)
 	int err;
 
 	mnt_cache = kmem_cache_create("mnt_cache", sizeof(struct mount),
-<<<<<<< HEAD
-<<<<<<< HEAD
-			0, SLAB_HWCACHE_ALIGN|SLAB_PANIC|SLAB_ACCOUNT, NULL);
-=======
 			0, SLAB_HWCACHE_ALIGN | SLAB_PANIC, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			0, SLAB_HWCACHE_ALIGN|SLAB_PANIC|SLAB_ACCOUNT, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mount_hashtable = alloc_large_system_hash("Mount-cache",
 				sizeof(struct hlist_head),

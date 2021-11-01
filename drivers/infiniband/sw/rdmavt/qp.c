@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
-/*
- * Copyright(c) 2016 - 2020 Intel Corporation.
-=======
 /*
  * Copyright(c) 2016 - 2020 Intel Corporation.
  *
@@ -49,12 +43,6 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-// SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
-/*
- * Copyright(c) 2016 - 2020 Intel Corporation.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/hash.h>
@@ -1070,15 +1058,7 @@ static int alloc_ud_wq_attr(struct rvt_qp *qp, int node)
 
 /**
  * rvt_create_qp - create a queue pair for a device
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @ibqp: the queue pair
-=======
  * @ibpd: the protection domain who's device we create the queue pair for
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @ibqp: the queue pair
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @init_attr: the attributes of the queue pair
  * @udata: user data for libibverbs.so
  *
@@ -1086,106 +1066,47 @@ static int alloc_ud_wq_attr(struct rvt_qp *qp, int node)
  * unique idea of what queue pair numbers mean. For instance there is a reserved
  * range for PSM.
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Return: 0 on success, otherwise returns an errno.
- *
- * Called by the ib_create_qp() core verbs function.
- */
-int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
-		  struct ib_udata *udata)
-{
-	struct rvt_qp *qp = ibqp_to_rvtqp(ibqp);
-	int ret = -ENOMEM;
-	struct rvt_swqe *swq = NULL;
-	size_t sz;
-	size_t sg_list_sz = 0;
-	struct rvt_dev_info *rdi = ib_to_rvt(ibqp->device);
-=======
  * Return: the queue pair on success, otherwise returns an errno.
-=======
- * Return: 0 on success, otherwise returns an errno.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Called by the ib_create_qp() core verbs function.
  */
-int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
-		  struct ib_udata *udata)
+struct ib_qp *rvt_create_qp(struct ib_pd *ibpd,
+			    struct ib_qp_init_attr *init_attr,
+			    struct ib_udata *udata)
 {
-	struct rvt_qp *qp = ibqp_to_rvtqp(ibqp);
-	int ret = -ENOMEM;
+	struct rvt_qp *qp;
+	int err;
 	struct rvt_swqe *swq = NULL;
 	size_t sz;
-<<<<<<< HEAD
 	size_t sg_list_sz;
 	struct ib_qp *ret = ERR_PTR(-ENOMEM);
 	struct rvt_dev_info *rdi = ib_to_rvt(ibpd->device);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	size_t sg_list_sz = 0;
-	struct rvt_dev_info *rdi = ib_to_rvt(ibqp->device);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *priv = NULL;
 	size_t sqsize;
 	u8 exclude_prefix = 0;
 
 	if (!rdi)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -EINVAL;
+		return ERR_PTR(-EINVAL);
 
 	if (init_attr->create_flags & ~IB_QP_CREATE_NETDEV_USE)
-		return -EOPNOTSUPP;
+		return ERR_PTR(-EOPNOTSUPP);
 
 	if (init_attr->cap.max_send_sge > rdi->dparms.props.max_send_sge ||
 	    init_attr->cap.max_send_wr > rdi->dparms.props.max_qp_wr)
-		return -EINVAL;
-=======
 		return ERR_PTR(-EINVAL);
-=======
-		return -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (init_attr->create_flags & ~IB_QP_CREATE_NETDEV_USE)
-		return -EOPNOTSUPP;
-
-	if (init_attr->cap.max_send_sge > rdi->dparms.props.max_send_sge ||
-	    init_attr->cap.max_send_wr > rdi->dparms.props.max_qp_wr)
-<<<<<<< HEAD
-		return ERR_PTR(-EINVAL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Check receive queue parameters if no SRQ is specified. */
 	if (!init_attr->srq) {
 		if (init_attr->cap.max_recv_sge >
 		    rdi->dparms.props.max_recv_sge ||
 		    init_attr->cap.max_recv_wr > rdi->dparms.props.max_qp_wr)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return -EINVAL;
-=======
 			return ERR_PTR(-EINVAL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (init_attr->cap.max_send_sge +
 		    init_attr->cap.max_send_wr +
 		    init_attr->cap.max_recv_sge +
 		    init_attr->cap.max_recv_wr == 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return -EINVAL;
-=======
 			return ERR_PTR(-EINVAL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	sqsize =
 		init_attr->cap.max_send_wr + 1 +
@@ -1194,18 +1115,8 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 	case IB_QPT_SMI:
 	case IB_QPT_GSI:
 		if (init_attr->port_num == 0 ||
-<<<<<<< HEAD
-<<<<<<< HEAD
-		    init_attr->port_num > ibqp->device->phys_port_cnt)
-			return -EINVAL;
-=======
 		    init_attr->port_num > ibpd->device->phys_port_cnt)
 			return ERR_PTR(-EINVAL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		    init_attr->port_num > ibqp->device->phys_port_cnt)
-			return -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fallthrough;
 	case IB_QPT_UC:
 	case IB_QPT_RC:
@@ -1213,20 +1124,10 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 		sz = struct_size(swq, sg_list, init_attr->cap.max_send_sge);
 		swq = vzalloc_node(array_size(sz, sqsize), rdi->dparms.node);
 		if (!swq)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return -ENOMEM;
-
-=======
 			return ERR_PTR(-ENOMEM);
 
 		sz = sizeof(*qp);
 		sg_list_sz = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return -ENOMEM;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (init_attr->srq) {
 			struct rvt_srq *srq = ibsrq_to_rvtsrq(init_attr->srq);
 
@@ -1236,23 +1137,10 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 		} else if (init_attr->cap.max_recv_sge > 1)
 			sg_list_sz = sizeof(*qp->r_sg_list) *
 				(init_attr->cap.max_recv_sge - 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		qp->r_sg_list =
-			kzalloc_node(sg_list_sz, GFP_KERNEL, rdi->dparms.node);
-		if (!qp->r_sg_list)
-			goto bail_qp;
-<<<<<<< HEAD
-=======
 		qp = kzalloc_node(sz + sg_list_sz, GFP_KERNEL,
 				  rdi->dparms.node);
 		if (!qp)
 			goto bail_swq;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		qp->allowed_ops = get_allowed_ops(init_attr->qp_type);
 
 		RCU_INIT_POINTER(qp->next, NULL);
@@ -1277,15 +1165,7 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 		 */
 		priv = rdi->driver_f.qp_priv_alloc(rdi, qp);
 		if (IS_ERR(priv)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ret = PTR_ERR(priv);
-=======
 			ret = priv;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ret = PTR_ERR(priv);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto bail_qp;
 		}
 		qp->priv = priv;
@@ -1299,25 +1179,12 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 			qp->r_rq.max_sge = init_attr->cap.max_recv_sge;
 			sz = (sizeof(struct ib_sge) * qp->r_rq.max_sge) +
 				sizeof(struct rvt_rwqe);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ret = rvt_alloc_rq(&qp->r_rq, qp->r_rq.size * sz,
-					   rdi->dparms.node, udata);
-			if (ret)
-				goto bail_driver_priv;
-=======
 			err = rvt_alloc_rq(&qp->r_rq, qp->r_rq.size * sz,
-=======
-			ret = rvt_alloc_rq(&qp->r_rq, qp->r_rq.size * sz,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					   rdi->dparms.node, udata);
-			if (ret)
+			if (err) {
+				ret = ERR_PTR(err);
 				goto bail_driver_priv;
-<<<<<<< HEAD
 			}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		/*
@@ -1338,91 +1205,40 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 		qp->s_max_sge = init_attr->cap.max_send_sge;
 		if (init_attr->sq_sig_type == IB_SIGNAL_REQ_WR)
 			qp->s_flags = RVT_S_SIGNAL_REQ_WR;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = alloc_ud_wq_attr(qp, rdi->dparms.node);
-		if (ret)
-			goto bail_rq_rvt;
-=======
 		err = alloc_ud_wq_attr(qp, rdi->dparms.node);
 		if (err) {
 			ret = (ERR_PTR(err));
 			goto bail_rq_rvt;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = alloc_ud_wq_attr(qp, rdi->dparms.node);
-		if (ret)
-			goto bail_rq_rvt;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (init_attr->create_flags & IB_QP_CREATE_NETDEV_USE)
 			exclude_prefix = RVT_AIP_QP_PREFIX;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = alloc_qpn(rdi, &rdi->qp_dev->qpn_table,
-				init_attr->qp_type,
-				init_attr->port_num,
-				exclude_prefix);
-		if (ret < 0)
-			goto bail_rq_wq;
-
-		qp->ibqp.qp_num = ret;
-=======
 		err = alloc_qpn(rdi, &rdi->qp_dev->qpn_table,
-=======
-		ret = alloc_qpn(rdi, &rdi->qp_dev->qpn_table,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				init_attr->qp_type,
 				init_attr->port_num,
 				exclude_prefix);
-		if (ret < 0)
+		if (err < 0) {
+			ret = ERR_PTR(err);
 			goto bail_rq_wq;
-<<<<<<< HEAD
 		}
 		qp->ibqp.qp_num = err;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-		qp->ibqp.qp_num = ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (init_attr->create_flags & IB_QP_CREATE_NETDEV_USE)
 			qp->ibqp.qp_num |= RVT_AIP_QP_BASE;
 		qp->port_num = init_attr->port_num;
 		rvt_init_qp(rdi, qp, init_attr->qp_type);
 		if (rdi->driver_f.qp_priv_init) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ret = rdi->driver_f.qp_priv_init(rdi, qp, init_attr);
-			if (ret)
-				goto bail_rq_wq;
-=======
 			err = rdi->driver_f.qp_priv_init(rdi, qp, init_attr);
 			if (err) {
 				ret = ERR_PTR(err);
 				goto bail_rq_wq;
 			}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ret = rdi->driver_f.qp_priv_init(rdi, qp, init_attr);
-			if (ret)
-				goto bail_rq_wq;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		break;
 
 	default:
 		/* Don't support raw QPs */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -EOPNOTSUPP;
-=======
 		return ERR_PTR(-EOPNOTSUPP);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return -EOPNOTSUPP;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	init_attr->cap.max_inline_data = 0;
@@ -1435,58 +1251,28 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 		if (!qp->r_rq.wq) {
 			__u64 offset = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ret = ib_copy_to_udata(udata, &offset,
-					       sizeof(offset));
-			if (ret)
-				goto bail_qpn;
-=======
 			err = ib_copy_to_udata(udata, &offset,
-=======
-			ret = ib_copy_to_udata(udata, &offset,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					       sizeof(offset));
-			if (ret)
+			if (err) {
+				ret = ERR_PTR(err);
 				goto bail_qpn;
-<<<<<<< HEAD
 			}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			u32 s = sizeof(struct rvt_rwq) + qp->r_rq.size * sz;
 
 			qp->ip = rvt_create_mmap_info(rdi, s, udata,
 						      qp->r_rq.wq);
 			if (IS_ERR(qp->ip)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-				ret = PTR_ERR(qp->ip);
-				goto bail_qpn;
-			}
-
-			ret = ib_copy_to_udata(udata, &qp->ip->offset,
-					       sizeof(qp->ip->offset));
-			if (ret)
-				goto bail_ip;
-=======
 				ret = ERR_CAST(qp->ip);
-=======
-				ret = PTR_ERR(qp->ip);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				goto bail_qpn;
 			}
 
-			ret = ib_copy_to_udata(udata, &qp->ip->offset,
+			err = ib_copy_to_udata(udata, &qp->ip->offset,
 					       sizeof(qp->ip->offset));
-			if (ret)
+			if (err) {
+				ret = ERR_PTR(err);
 				goto bail_ip;
-<<<<<<< HEAD
 			}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		qp->pid = current->pid;
 	}
@@ -1494,15 +1280,7 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 	spin_lock(&rdi->n_qps_lock);
 	if (rdi->n_qps_allocated == rdi->dparms.props.max_qp) {
 		spin_unlock(&rdi->n_qps_lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = ENOMEM;
-=======
 		ret = ERR_PTR(-ENOMEM);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = ENOMEM;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto bail_ip;
 	}
 
@@ -1528,17 +1306,9 @@ int rvt_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 		spin_unlock_irq(&rdi->pending_lock);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return 0;
-=======
 	ret = &qp->ibqp;
 
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 bail_ip:
 	if (qp->ip)
@@ -1558,21 +1328,11 @@ bail_driver_priv:
 
 bail_qp:
 	kfree(qp->s_ack_queue);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	kfree(qp->r_sg_list);
-	vfree(swq);
-=======
 	kfree(qp);
 
 bail_swq:
 	vfree(swq);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kfree(qp->r_sg_list);
-	vfree(swq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -2002,25 +1762,11 @@ int rvt_destroy_qp(struct ib_qp *ibqp, struct ib_udata *udata)
 	kvfree(qp->r_rq.kwq);
 	rdi->driver_f.qp_priv_free(rdi, qp);
 	kfree(qp->s_ack_queue);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	kfree(qp->r_sg_list);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kfree(qp->r_sg_list);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rdma_destroy_ah_attr(&qp->remote_ah_attr);
 	rdma_destroy_ah_attr(&qp->alt_ah_attr);
 	free_ud_wq_attr(qp);
 	vfree(qp->s_wq);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	kfree(qp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

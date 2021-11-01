@@ -17,13 +17,7 @@
 #include <linux/irq.h>
 #include <linux/kexec.h>
 #include <linux/i8253.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <linux/panic_notifier.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/random.h>
 #include <asm/processor.h>
 #include <asm/hypervisor.h>
@@ -42,18 +36,10 @@
 
 /* Is Linux running as the root partition? */
 bool hv_root_partition;
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct ms_hyperv_info ms_hyperv;
-=======
 EXPORT_SYMBOL_GPL(hv_root_partition);
 
 struct ms_hyperv_info ms_hyperv;
 EXPORT_SYMBOL_GPL(ms_hyperv);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct ms_hyperv_info ms_hyperv;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #if IS_ENABLED(CONFIG_HYPERV)
 static void (*vmbus_handler)(void);
@@ -79,26 +65,14 @@ void hv_setup_vmbus_handler(void (*handler)(void))
 {
 	vmbus_handler = handler;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 EXPORT_SYMBOL_GPL(hv_setup_vmbus_handler);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void hv_remove_vmbus_handler(void)
 {
 	/* We have no way to deallocate the interrupt gate */
 	vmbus_handler = NULL;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 EXPORT_SYMBOL_GPL(hv_remove_vmbus_handler);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * Routines to do per-architecture handling of stimer0
@@ -133,49 +107,25 @@ void hv_setup_kexec_handler(void (*handler)(void))
 {
 	hv_kexec_handler = handler;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 EXPORT_SYMBOL_GPL(hv_setup_kexec_handler);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void hv_remove_kexec_handler(void)
 {
 	hv_kexec_handler = NULL;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 EXPORT_SYMBOL_GPL(hv_remove_kexec_handler);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void hv_setup_crash_handler(void (*handler)(struct pt_regs *regs))
 {
 	hv_crash_handler = handler;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 EXPORT_SYMBOL_GPL(hv_setup_crash_handler);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void hv_remove_crash_handler(void)
 {
 	hv_crash_handler = NULL;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 EXPORT_SYMBOL_GPL(hv_remove_crash_handler);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef CONFIG_KEXEC_CORE
 static void hv_machine_shutdown(void)
@@ -287,15 +237,7 @@ static void __init hv_smp_prepare_cpus(unsigned int max_cpus)
 	for_each_present_cpu(i) {
 		if (i == 0)
 			continue;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = hv_call_add_logical_proc(numa_cpu_node(i), i, cpu_physical_id(i));
-=======
 		ret = hv_call_add_logical_proc(numa_cpu_node(i), i, i);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = hv_call_add_logical_proc(numa_cpu_node(i), i, cpu_physical_id(i));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		BUG_ON(ret);
 	}
 
@@ -393,9 +335,6 @@ static void __init ms_hyperv_init_platform(void)
 			ms_hyperv.nested_features);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/*
 	 * Hyper-V expects to get crash register data or kmsg when
 	 * crash enlightment is available and system crashes. Set
@@ -406,9 +345,6 @@ static void __init ms_hyperv_init_platform(void)
 	if (ms_hyperv.misc_features & HV_FEATURE_GUEST_CRASH_MSR_AVAILABLE)
 		crash_kexec_post_notifiers = true;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_X86_LOCAL_APIC
 	if (ms_hyperv.features & HV_ACCESS_FREQUENCY_MSRS &&
 	    ms_hyperv.misc_features & HV_FEATURE_FREQUENCY_MSRS_AVAILABLE) {
@@ -437,32 +373,10 @@ static void __init ms_hyperv_init_platform(void)
 	machine_ops.crash_shutdown = hv_machine_crash_shutdown;
 #endif
 	if (ms_hyperv.features & HV_ACCESS_TSC_INVARIANT) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		/*
-		 * Writing to synthetic MSR 0x40000118 updates/changes the
-		 * guest visible CPUIDs. Setting bit 0 of this MSR  enables
-		 * guests to report invariant TSC feature through CPUID
-		 * instruction, CPUID 0x800000007/EDX, bit 8. See code in
-		 * early_init_intel() where this bit is examined. The
-		 * setting of this MSR bit should happen before init_intel()
-		 * is called.
-		 */
-<<<<<<< HEAD
-		wrmsrl(HV_X64_MSR_TSC_INVARIANT_CONTROL, 0x1);
-		setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
-=======
 		wrmsrl(HV_X64_MSR_TSC_INVARIANT_CONTROL, 0x1);
 		setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
 	} else {
 		mark_tsc_unstable("running on Hyper-V");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		wrmsrl(HV_X64_MSR_TSC_INVARIANT_CONTROL, 0x1);
-		setup_force_cpu_cap(X86_FEATURE_TSC_RELIABLE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/*
@@ -523,22 +437,6 @@ static void __init ms_hyperv_init_platform(void)
 	/* Register Hyper-V specific clocksource */
 	hv_init_clocksource();
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * TSC should be marked as unstable only after Hyper-V
-	 * clocksource has been initialized. This ensures that the
-	 * stability of the sched_clock is not altered.
-	 */
-	if (!(ms_hyperv.features & HV_ACCESS_TSC_INVARIANT))
-		mark_tsc_unstable("running on Hyper-V");
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static bool __init ms_hyperv_x2apic_available(void)

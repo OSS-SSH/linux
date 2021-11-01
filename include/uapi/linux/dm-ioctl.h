@@ -376,19 +376,4 @@ enum {
  */
 #define DM_INTERNAL_SUSPEND_FLAG	(1 << 18) /* Out */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/*
- * If set, returns in the in buffer passed by UM, the raw table information
- * that would be measured by IMA subsystem on device state change.
- */
-#define DM_IMA_MEASUREMENT_FLAG	(1 << 19) /* In */
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif				/* _LINUX_DM_IOCTL_H */

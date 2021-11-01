@@ -207,15 +207,7 @@ arch_atomic_try_cmpxchg_lock(atomic_t *v, int *old, int new)
 	int r, o = *old;
 
 	__asm__ __volatile__ (
-<<<<<<< HEAD
-<<<<<<< HEAD
-"1:	lwarx	%0,0,%2,%5	# atomic_try_cmpxchg_acquire		\n"
-=======
 "1:\t"	PPC_LWARX(%0,0,%2,1) "	# atomic_try_cmpxchg_acquire	\n"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-"1:	lwarx	%0,0,%2,%5	# atomic_try_cmpxchg_acquire		\n"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 "	cmpw	0,%0,%3							\n"
 "	bne-	2f							\n"
 "	stwcx.	%4,0,%2							\n"
@@ -223,15 +215,7 @@ arch_atomic_try_cmpxchg_lock(atomic_t *v, int *old, int new)
 "\t"	PPC_ACQUIRE_BARRIER "						\n"
 "2:									\n"
 	: "=&r" (r), "+m" (v->counter)
-<<<<<<< HEAD
-<<<<<<< HEAD
-	: "r" (&v->counter), "r" (o), "r" (new), "i" (IS_ENABLED(CONFIG_PPC64) ? 1 : 0)
-=======
 	: "r" (&v->counter), "r" (o), "r" (new)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	: "r" (&v->counter), "r" (o), "r" (new), "i" (IS_ENABLED(CONFIG_PPC64) ? 1 : 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	: "cr0", "memory");
 
 	if (unlikely(r != o))

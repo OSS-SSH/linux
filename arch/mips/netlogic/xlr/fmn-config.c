@@ -103,41 +103,18 @@ static void check_credit_distribution(void)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * setup_fmn_cc -  Configure bucket size and credits for a device.
-=======
  * Configure bucket size and credits for a device. 'size' is the size of
  * the buckets for the device. This size is distributed among all the CPUs
  * so that all of them can send messages to the device.
  *
  * The device is also given 'cpu_credits' to send messages to the CPUs
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * setup_fmn_cc -  Configure bucket size and credits for a device.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dev_info: FMN information structure for each devices
  * @start_stn_id: Starting station id of dev_info
  * @end_stn_id: End station id of dev_info
  * @num_buckets: Total number of buckets for den_info
  * @cpu_credits: Allowed credits to cpu for each devices pointing by dev_info
  * @size: Size of the each buckets in the device station
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- *
- * 'size' is the size of the buckets for the device. This size is
- * distributed among all the CPUs
- * so that all of them can send messages to the device.
- *
- * The device is also given 'cpu_credits' to send messages to the CPUs
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static void setup_fmn_cc(struct xlr_fmn_info *dev_info, int start_stn_id,
 		int end_stn_id, int num_buckets, int cpu_credits, int size)
@@ -197,16 +174,6 @@ static void setup_cpu_fmninfo(struct xlr_fmn_info *cpu, int num_core)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * xlr_board_info_setup - Setup FMN details
- *
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * xlr_board_info_setup - Setup FMN details
- *
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Setup the FMN details for each devices according to the device available
  * in each variant of XLR/XLS processor
  */

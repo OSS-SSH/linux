@@ -1310,17 +1310,7 @@ static u8 qos_oui[QOS_OUI_LEN] = { 0x00, 0x50, 0xF2 };
 static int ieee80211_verify_qos_info(struct ieee80211_qos_information_element
 				     *info_element, int sub_type)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (info_element->elementID != QOS_ELEMENT_ID)
-		return -1;
-=======
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (info_element->elementID != QOS_ELEMENT_ID)
-		return -1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (info_element->qui_subtype != sub_type)
 		return -1;
 	if (memcmp(info_element->qui, qos_oui, QOS_OUI_LEN))
@@ -1337,36 +1327,16 @@ static int ieee80211_verify_qos_info(struct ieee80211_qos_information_element
 /*
  * Parse a QoS parameter element
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int ieee80211_read_qos_param_element(
-		struct ieee80211_qos_parameter_info *element_param,
-		struct ieee80211_info_element *info_element)
-{
-	size_t size = sizeof(*element_param);
-
-	if (!element_param || !info_element || info_element->len != size - 2)
-		return -1;
-
-	memcpy(element_param, info_element, size);
-	return ieee80211_verify_qos_info(&element_param->info_element,
-					 QOS_OUI_PARAM_SUB_TYPE);
-=======
 static int ieee80211_read_qos_param_element(struct ieee80211_qos_parameter_info
 					    *element_param, struct ieee80211_info_element
 					    *info_element)
-=======
-static int ieee80211_read_qos_param_element(
-		struct ieee80211_qos_parameter_info *element_param,
-		struct ieee80211_info_element *info_element)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	size_t size = sizeof(*element_param);
+	int ret = 0;
+	u16 size = sizeof(struct ieee80211_qos_parameter_info) - 2;
 
-	if (!element_param || !info_element || info_element->len != size - 2)
+	if (!info_element || !element_param)
 		return -1;
 
-<<<<<<< HEAD
 	if (info_element->id == QOS_ELEMENT_ID && info_element->len == size) {
 		memcpy(element_param->info_element.qui, info_element->data,
 		       info_element->len);
@@ -1378,12 +1348,6 @@ static int ieee80211_read_qos_param_element(
 		ret = ieee80211_verify_qos_info(&element_param->info_element,
 						QOS_OUI_PARAM_SUB_TYPE);
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	memcpy(element_param, info_element, size);
-	return ieee80211_verify_qos_info(&element_param->info_element,
-					 QOS_OUI_PARAM_SUB_TYPE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -1393,35 +1357,26 @@ static int ieee80211_read_qos_info_element(
 		struct ieee80211_qos_information_element *element_info,
 		struct ieee80211_info_element *info_element)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	size_t size = sizeof(*element_info);
-
-	if (!element_info || !info_element || info_element->len != size - 2)
-		return -1;
-
-	memcpy(element_info, info_element, size);
-	return ieee80211_verify_qos_info(element_info, QOS_OUI_INFO_SUB_TYPE);
-=======
 	int ret = 0;
 	u16 size = sizeof(struct ieee80211_qos_information_element) - 2;
-=======
-	size_t size = sizeof(*element_info);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (!element_info || !info_element || info_element->len != size - 2)
+	if (!element_info)
+		return -1;
+	if (!info_element)
 		return -1;
 
-<<<<<<< HEAD
+	if ((info_element->id == QOS_ELEMENT_ID) && (info_element->len == size)) {
+		memcpy(element_info->qui, info_element->data,
+		       info_element->len);
+		element_info->elementID = info_element->id;
+		element_info->length = info_element->len;
+	} else
+		ret = -1;
+
 	if (ret == 0)
 		ret = ieee80211_verify_qos_info(element_info,
 						QOS_OUI_INFO_SUB_TYPE);
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	memcpy(element_info, info_element, size);
-	return ieee80211_verify_qos_info(element_info, QOS_OUI_INFO_SUB_TYPE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 

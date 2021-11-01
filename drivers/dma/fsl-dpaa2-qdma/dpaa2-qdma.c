@@ -291,19 +291,9 @@ static void dpaa2_qdma_issue_pending(struct dma_chan *chan)
 
 		err = dpaa2_io_service_enqueue_fq(NULL, dpaa2_chan->fqid, fd);
 		if (err) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			list_move_tail(&dpaa2_comp->list,
-				       &dpaa2_chan->comp_free);
-=======
 			list_del(&dpaa2_comp->list);
 			list_add_tail(&dpaa2_comp->list,
 				      &dpaa2_chan->comp_free);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			list_move_tail(&dpaa2_comp->list,
-				       &dpaa2_chan->comp_free);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 err_enqueue:
@@ -636,16 +626,8 @@ static void dpaa2_qdma_free_desc(struct virt_dma_desc *vdesc)
 	dpaa2_comp = to_fsl_qdma_comp(vdesc);
 	qchan = dpaa2_comp->qchan;
 	spin_lock_irqsave(&qchan->queue_lock, flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	list_move_tail(&dpaa2_comp->list, &qchan->comp_free);
-=======
 	list_del(&dpaa2_comp->list);
 	list_add_tail(&dpaa2_comp->list, &qchan->comp_free);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	list_move_tail(&dpaa2_comp->list, &qchan->comp_free);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_irqrestore(&qchan->queue_lock, flags);
 }
 
@@ -721,15 +703,7 @@ static int dpaa2_qdma_probe(struct fsl_mc_device *dpdmai_dev)
 	/* DPDMAI enable */
 	err = dpdmai_enable(priv->mc_io, 0, dpdmai_dev->mc_handle);
 	if (err) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev_err(dev, "dpdmai_enable() failed\n");
-=======
 		dev_err(dev, "dpdmai_enable() faile\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev_err(dev, "dpdmai_enable() failed\n");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto err_enable;
 	}
 

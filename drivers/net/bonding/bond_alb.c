@@ -17,13 +17,7 @@
 #include <linux/if_bonding.h>
 #include <linux/if_vlan.h>
 #include <linux/in.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <net/ipx.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <net/arp.h>
 #include <net/ipv6.h>
 #include <asm/byteorder.h>
@@ -1357,14 +1351,8 @@ struct slave *bond_xmit_tlb_slave_get(struct bonding *bond,
 	if (!is_multicast_ether_addr(eth_data->h_dest)) {
 		switch (skb->protocol) {
 		case htons(ETH_P_IP):
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		case htons(ETH_P_IPX):
 		    /* In case of IPX, it will falback to L2 hash */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		case htons(ETH_P_IPV6):
 			hash_index = bond_xmit_hash(bond, skb);
 			if (bond->params.tlb_dynamic_lb) {
@@ -1466,9 +1454,6 @@ struct slave *bond_xmit_alb_slave_get(struct bonding *bond,
 		hash_size = sizeof(ip6hdr->daddr);
 		break;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	case ETH_P_IPX: {
 		const struct ipxhdr *ipxhdr;
 
@@ -1498,9 +1483,6 @@ struct slave *bond_xmit_alb_slave_get(struct bonding *bond,
 		hash_size = ETH_ALEN;
 		break;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case ETH_P_ARP:
 		do_tx_balance = false;
 		if (bond_info->rlb_enabled)

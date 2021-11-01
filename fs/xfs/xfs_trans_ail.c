@@ -17,14 +17,6 @@
 #include "xfs_errortag.h"
 #include "xfs_error.h"
 #include "xfs_log.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "xfs_log_priv.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "xfs_log_priv.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef DEBUG
 /*
@@ -437,23 +429,8 @@ xfsaild_push(
 
 	/*
 	 * If we encountered pinned items or did not finish writing out all
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	 * buffers the last time we ran, force a background CIL push to get the
-	 * items unpinned in the near future. We do not wait on the CIL push as
-	 * that could stall us for seconds if there is enough background IO
-	 * load. Stalling for that long when the tail of the log is pinned and
-	 * needs flushing will hard stop the transaction subsystem when log
-	 * space runs out.
-<<<<<<< HEAD
-=======
 	 * buffers the last time we ran, force the log first and wait for it
 	 * before pushing again.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	if (ailp->ail_log_flush && ailp->ail_last_pushed_lsn == 0 &&
 	    (!list_empty_careful(&ailp->ail_buf_list) ||
@@ -461,15 +438,7 @@ xfsaild_push(
 		ailp->ail_log_flush = 0;
 
 		XFS_STATS_INC(mp, xs_push_ail_flush);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		xlog_cil_flush(mp->m_log);
-=======
 		xfs_log_force(mp, XFS_LOG_SYNC);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		xlog_cil_flush(mp->m_log);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	spin_lock(&ailp->ail_lock);
@@ -646,15 +615,7 @@ xfsaild(
 			 * opportunity to release such buffers from the queue.
 			 */
 			ASSERT(list_empty(&ailp->ail_buf_list) ||
-<<<<<<< HEAD
-<<<<<<< HEAD
-			       xfs_is_shutdown(ailp->ail_mount));
-=======
 			       XFS_FORCED_SHUTDOWN(ailp->ail_mount));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			       xfs_is_shutdown(ailp->ail_mount));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xfs_buf_delwri_cancel(&ailp->ail_buf_list);
 			break;
 		}
@@ -717,15 +678,7 @@ xfs_ail_push(
 	struct xfs_log_item	*lip;
 
 	lip = xfs_ail_min(ailp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!lip || xfs_is_shutdown(ailp->ail_mount) ||
-=======
 	if (!lip || XFS_FORCED_SHUTDOWN(ailp->ail_mount) ||
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!lip || xfs_is_shutdown(ailp->ail_mount) ||
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    XFS_LSN_CMP(threshold_lsn, ailp->ail_target) <= 0)
 		return;
 
@@ -790,15 +743,7 @@ xfs_ail_update_finish(
 		return;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!xfs_is_shutdown(mp))
-=======
 	if (!XFS_FORCED_SHUTDOWN(mp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!xfs_is_shutdown(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xlog_assign_tail_lsn_locked(mp);
 
 	if (list_empty(&ailp->ail_head))
@@ -918,15 +863,7 @@ xfs_trans_ail_delete(
 	spin_lock(&ailp->ail_lock);
 	if (!test_bit(XFS_LI_IN_AIL, &lip->li_flags)) {
 		spin_unlock(&ailp->ail_lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (shutdown_type && !xfs_is_shutdown(mp)) {
-=======
 		if (shutdown_type && !XFS_FORCED_SHUTDOWN(mp)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (shutdown_type && !xfs_is_shutdown(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xfs_alert_tag(mp, XFS_PTAG_AILDELETE,
 	"%s: attempting to delete a log item that is not in the AIL",
 					__func__);

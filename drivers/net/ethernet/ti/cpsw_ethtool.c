@@ -152,19 +152,7 @@ void cpsw_set_msglevel(struct net_device *ndev, u32 value)
 	priv->msg_enable = value;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int cpsw_get_coalesce(struct net_device *ndev, struct ethtool_coalesce *coal,
-		      struct kernel_ethtool_coalesce *kernel_coal,
-		      struct netlink_ext_ack *extack)
-=======
 int cpsw_get_coalesce(struct net_device *ndev, struct ethtool_coalesce *coal)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int cpsw_get_coalesce(struct net_device *ndev, struct ethtool_coalesce *coal,
-		      struct kernel_ethtool_coalesce *kernel_coal,
-		      struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpsw_common *cpsw = ndev_to_cpsw(ndev);
 
@@ -172,19 +160,7 @@ int cpsw_get_coalesce(struct net_device *ndev, struct ethtool_coalesce *coal,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int cpsw_set_coalesce(struct net_device *ndev, struct ethtool_coalesce *coal,
-		      struct kernel_ethtool_coalesce *kernel_coal,
-		      struct netlink_ext_ack *extack)
-=======
 int cpsw_set_coalesce(struct net_device *ndev, struct ethtool_coalesce *coal)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int cpsw_set_coalesce(struct net_device *ndev, struct ethtool_coalesce *coal,
-		      struct kernel_ethtool_coalesce *kernel_coal,
-		      struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cpsw_priv *priv = netdev_priv(ndev);
 	u32 int_ctrl;

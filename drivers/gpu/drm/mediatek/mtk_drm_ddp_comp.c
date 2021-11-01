@@ -32,15 +32,9 @@
 
 #define DISP_REG_UFO_START			0x0000
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define DISP_AAL_EN				0x0000
 #define DISP_AAL_SIZE				0x0030
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DISP_DITHER_EN				0x0000
 #define DITHER_EN				BIT(0)
 #define DISP_DITHER_CFG				0x0020
@@ -54,14 +48,8 @@
 
 #define UFO_BYPASS				BIT(2)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define AAL_EN					BIT(0)
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DISP_DITHERING				BIT(2)
 #define DITHER_LSB_ERR_SHIFT_R(x)		(((x) & 0x7) << 28)
 #define DITHER_OVFLW_BIT_R(x)			(((x) & 0x7) << 24)
@@ -202,9 +190,6 @@ static void mtk_ufoe_start(struct device *dev)
 	writel(UFO_BYPASS, priv->regs + DISP_REG_UFO_START);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void mtk_aal_config(struct device *dev, unsigned int w,
 			   unsigned int h, unsigned int vrefresh,
 			   unsigned int bpc, struct cmdq_pkt *cmdq_pkt)
@@ -235,9 +220,6 @@ static void mtk_aal_stop(struct device *dev)
 	writel_relaxed(0x0, priv->regs + DISP_AAL_EN);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void mtk_dither_config(struct device *dev, unsigned int w,
 			      unsigned int h, unsigned int vrefresh,
 			      unsigned int bpc, struct cmdq_pkt *cmdq_pkt)
@@ -265,18 +247,8 @@ static void mtk_dither_stop(struct device *dev)
 }
 
 static const struct mtk_ddp_comp_funcs ddp_aal = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.clk_enable = mtk_aal_clk_enable,
-	.clk_disable = mtk_aal_clk_disable,
-=======
 	.clk_enable = mtk_ddp_clk_enable,
 	.clk_disable = mtk_ddp_clk_disable,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.clk_enable = mtk_aal_clk_enable,
-	.clk_disable = mtk_aal_clk_disable,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.gamma_set = mtk_aal_gamma_set,
 	.config = mtk_aal_config,
 	.start = mtk_aal_start,
@@ -533,17 +505,7 @@ int mtk_ddp_comp_init(struct device_node *node, struct mtk_ddp_comp *comp,
 			return ret;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (type == MTK_DISP_AAL ||
-	    type == MTK_DISP_BLS ||
-=======
 	if (type == MTK_DISP_BLS ||
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (type == MTK_DISP_AAL ||
-	    type == MTK_DISP_BLS ||
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    type == MTK_DISP_CCORR ||
 	    type == MTK_DISP_COLOR ||
 	    type == MTK_DISP_GAMMA ||

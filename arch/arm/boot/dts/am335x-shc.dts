@@ -117,9 +117,6 @@
 	status = "okay";
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 &davinci_mdio {
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&davinci_mdio_default>;
@@ -132,9 +129,6 @@
 	};
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 &epwmss1 {
 	status = "okay";
 
@@ -199,52 +193,15 @@
 	};
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-&mac_sw {
-=======
 &mac {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-&mac_sw {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&cpsw_default>;
 	pinctrl-1 = <&cpsw_sleep>;
 	status = "okay";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-};
-
-&cpsw_port1 {
-	phy-mode = "mii";
-	phy-handle = <&ethernetphy0>;
-	ti,dual-emac-pvid = <1>;
-};
-
-&cpsw_port2 {
-	status = "disabled";
-};
-
-&davinci_mdio_sw {
-	pinctrl-names = "default", "sleep";
-	pinctrl-0 = <&davinci_mdio_default>;
-	pinctrl-1 = <&davinci_mdio_sleep>;
-
-	ethernetphy0: ethernet-phy@0 {
-		reg = <0>;
-		smsc,disable-energy-detect;
-<<<<<<< HEAD
-=======
 	slaves = <1>;
 	cpsw_emac0: slave@200 {
 		phy-mode = "mii";
 		phy-handle = <&ethernetphy0>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };
 

@@ -69,47 +69,6 @@ bool i2c_acpi_get_i2c_resource(struct acpi_resource *ares,
 }
 EXPORT_SYMBOL_GPL(i2c_acpi_get_i2c_resource);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int i2c_acpi_resource_count(struct acpi_resource *ares, void *data)
-{
-	struct acpi_resource_i2c_serialbus *sb;
-	int *count = data;
-
-	if (i2c_acpi_get_i2c_resource(ares, &sb))
-		*count = *count + 1;
-
-	return 1;
-}
-
-/**
- * i2c_acpi_client_count - Count the number of I2cSerialBus resources
- * @adev:	ACPI device
- *
- * Returns the number of I2cSerialBus resources in the ACPI-device's
- * resource-list; or a negative error code.
- */
-int i2c_acpi_client_count(struct acpi_device *adev)
-{
-	int ret, count = 0;
-	LIST_HEAD(r);
-
-	ret = acpi_dev_get_resources(adev, &r, i2c_acpi_resource_count, &count);
-	if (ret < 0)
-		return ret;
-
-	acpi_dev_free_resource_list(&r);
-	return count;
-}
-EXPORT_SYMBOL_GPL(i2c_acpi_client_count);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int i2c_acpi_fill_info(struct acpi_resource *ares, void *data)
 {
 	struct i2c_acpi_lookup *lookup = data;
@@ -463,14 +422,6 @@ static int i2c_acpi_notify(struct notifier_block *nb, unsigned long value,
 			break;
 
 		i2c_acpi_register_device(adapter, adev, &info);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		put_device(&adapter->dev);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		put_device(&adapter->dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case ACPI_RECONFIG_DEVICE_REMOVE:
 		if (!acpi_device_enumerated(adev))

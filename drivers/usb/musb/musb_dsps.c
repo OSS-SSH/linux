@@ -890,55 +890,23 @@ static int dsps_probe(struct platform_device *pdev)
 	if (!glue->usbss_base)
 		return -ENXIO;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (usb_get_dr_mode(&pdev->dev) == USB_DR_MODE_PERIPHERAL) {
 		ret = dsps_setup_optional_vbus_irq(pdev, glue);
 		if (ret)
 			goto err_iounmap;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	platform_set_drvdata(pdev, glue);
 	pm_runtime_enable(&pdev->dev);
 	ret = dsps_create_musb_pdev(glue, pdev);
 	if (ret)
 		goto err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (usb_get_dr_mode(&pdev->dev) == USB_DR_MODE_PERIPHERAL) {
-		ret = dsps_setup_optional_vbus_irq(pdev, glue);
-		if (ret)
-			goto unregister_pdev;
-	}
-
-<<<<<<< HEAD
 	return 0;
 
-unregister_pdev:
-	platform_device_unregister(glue->musb);
 err:
 	pm_runtime_disable(&pdev->dev);
-=======
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	return 0;
-
-unregister_pdev:
-	platform_device_unregister(glue->musb);
-err:
-	pm_runtime_disable(&pdev->dev);
-<<<<<<< HEAD
 err_iounmap:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	iounmap(glue->usbss_base);
 	return ret;
 }

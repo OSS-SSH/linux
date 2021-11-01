@@ -4079,29 +4079,10 @@ static irqreturn_t i40e_intr(int irq, void *data)
 	if (icr0 & I40E_PFINT_ICR0_TIMESYNC_MASK) {
 		u32 prttsyn_stat = rd32(hw, I40E_PRTTSYN_STAT_0);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (prttsyn_stat & I40E_PRTTSYN_STAT_0_EVENT0_MASK)
-			schedule_work(&pf->ptp_extts0_work);
-
-		if (prttsyn_stat & I40E_PRTTSYN_STAT_0_TXTIME_MASK)
-<<<<<<< HEAD
-			i40e_ptp_tx_hwtstamp(pf);
-
-		icr0 &= ~I40E_PFINT_ICR0_ENA_TIMESYNC_MASK;
-=======
 		if (prttsyn_stat & I40E_PRTTSYN_STAT_0_TXTIME_MASK) {
 			icr0 &= ~I40E_PFINT_ICR0_ENA_TIMESYNC_MASK;
 			i40e_ptp_tx_hwtstamp(pf);
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			i40e_ptp_tx_hwtstamp(pf);
-
-		icr0 &= ~I40E_PFINT_ICR0_ENA_TIMESYNC_MASK;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* If a critical error is pending we have no choice but to reset the
@@ -4473,25 +4454,11 @@ int i40e_control_wait_tx_q(int seid, struct i40e_pf *pf, int pf_q,
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * i40e_vsi_enable_tx - Start a VSI's rings
- * @vsi: the VSI being configured
- **/
-static int i40e_vsi_enable_tx(struct i40e_vsi *vsi)
-=======
  * i40e_vsi_control_tx - Start or stop a VSI's rings
-=======
- * i40e_vsi_enable_tx - Start a VSI's rings
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @vsi: the VSI being configured
+ * @enable: start or stop the rings
  **/
-<<<<<<< HEAD
 static int i40e_vsi_control_tx(struct i40e_vsi *vsi, bool enable)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int i40e_vsi_enable_tx(struct i40e_vsi *vsi)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct i40e_pf *pf = vsi->back;
 	int i, pf_q, ret = 0;
@@ -4500,15 +4467,7 @@ static int i40e_vsi_enable_tx(struct i40e_vsi *vsi)
 	for (i = 0; i < vsi->num_queue_pairs; i++, pf_q++) {
 		ret = i40e_control_wait_tx_q(vsi->seid, pf,
 					     pf_q,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					     false /*is xdp*/, true);
-=======
 					     false /*is xdp*/, enable);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					     false /*is xdp*/, true);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			break;
 
@@ -4517,15 +4476,7 @@ static int i40e_vsi_enable_tx(struct i40e_vsi *vsi)
 
 		ret = i40e_control_wait_tx_q(vsi->seid, pf,
 					     pf_q + vsi->alloc_queue_pairs,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					     true /*is xdp*/, true);
-=======
 					     true /*is xdp*/, enable);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					     true /*is xdp*/, true);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ret)
 			break;
 	}
@@ -4623,68 +4574,32 @@ int i40e_control_wait_rx_q(struct i40e_pf *pf, int pf_q, bool enable)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * i40e_vsi_enable_rx - Start a VSI's rings
- * @vsi: the VSI being configured
- **/
-static int i40e_vsi_enable_rx(struct i40e_vsi *vsi)
-=======
  * i40e_vsi_control_rx - Start or stop a VSI's rings
-=======
- * i40e_vsi_enable_rx - Start a VSI's rings
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @vsi: the VSI being configured
+ * @enable: start or stop the rings
  **/
-<<<<<<< HEAD
 static int i40e_vsi_control_rx(struct i40e_vsi *vsi, bool enable)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int i40e_vsi_enable_rx(struct i40e_vsi *vsi)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct i40e_pf *pf = vsi->back;
 	int i, pf_q, ret = 0;
 
 	pf_q = vsi->base_queue;
 	for (i = 0; i < vsi->num_queue_pairs; i++, pf_q++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = i40e_control_wait_rx_q(pf, pf_q, true);
-		if (ret) {
-			dev_info(&pf->pdev->dev,
-				 "VSI seid %d Rx ring %d enable timeout\n",
-				 vsi->seid, pf_q);
-=======
 		ret = i40e_control_wait_rx_q(pf, pf_q, enable);
 		if (ret) {
 			dev_info(&pf->pdev->dev,
 				 "VSI seid %d Rx ring %d %sable timeout\n",
 				 vsi->seid, pf_q, (enable ? "en" : "dis"));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = i40e_control_wait_rx_q(pf, pf_q, true);
-		if (ret) {
-			dev_info(&pf->pdev->dev,
-				 "VSI seid %d Rx ring %d enable timeout\n",
-				 vsi->seid, pf_q);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/* Due to HW errata, on Rx disable only, the register can indicate done
 	 * before it really is. Needs 50ms to be sure
 	 */
 	if (!enable)
 		mdelay(50);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -4697,92 +4612,29 @@ int i40e_vsi_start_rings(struct i40e_vsi *vsi)
 	int ret = 0;
 
 	/* do rx first for enable and last for disable */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = i40e_vsi_enable_rx(vsi);
-	if (ret)
-		return ret;
-	ret = i40e_vsi_enable_tx(vsi);
-=======
 	ret = i40e_vsi_control_rx(vsi, true);
 	if (ret)
 		return ret;
 	ret = i40e_vsi_control_tx(vsi, true);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = i40e_vsi_enable_rx(vsi);
-	if (ret)
-		return ret;
-	ret = i40e_vsi_enable_tx(vsi);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define I40E_DISABLE_TX_GAP_MSEC	50
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define I40E_DISABLE_TX_GAP_MSEC	50
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * i40e_vsi_stop_rings - Stop a VSI's rings
  * @vsi: the VSI being configured
  **/
 void i40e_vsi_stop_rings(struct i40e_vsi *vsi)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct i40e_pf *pf = vsi->back;
-	int pf_q, err, q_end;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct i40e_pf *pf = vsi->back;
-	int pf_q, err, q_end;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* When port TX is suspended, don't wait */
 	if (test_bit(__I40E_PORT_SUSPENDED, vsi->back->state))
 		return i40e_vsi_stop_rings_no_wait(vsi);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	q_end = vsi->base_queue + vsi->num_queue_pairs;
-	for (pf_q = vsi->base_queue; pf_q < q_end; pf_q++)
-		i40e_pre_tx_queue_cfg(&pf->hw, (u32)pf_q, false);
-
-	for (pf_q = vsi->base_queue; pf_q < q_end; pf_q++) {
-		err = i40e_control_wait_rx_q(pf, pf_q, false);
-		if (err)
-			dev_info(&pf->pdev->dev,
-				 "VSI seid %d Rx ring %d disable timeout\n",
-				 vsi->seid, pf_q);
-	}
-
-	msleep(I40E_DISABLE_TX_GAP_MSEC);
-	pf_q = vsi->base_queue;
-	for (pf_q = vsi->base_queue; pf_q < q_end; pf_q++)
-		wr32(&pf->hw, I40E_QTX_ENA(pf_q), 0);
-
-	i40e_vsi_wait_queues_disabled(vsi);
-<<<<<<< HEAD
-=======
 	/* do rx first for enable and last for disable
 	 * Ignore return value, we need to shutdown whatever we can
 	 */
 	i40e_vsi_control_tx(vsi, false);
 	i40e_vsi_control_rx(vsi, false);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -5006,17 +4858,7 @@ static void i40e_clear_interrupt_scheme(struct i40e_pf *pf)
 {
 	int i;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (test_bit(__I40E_MISC_IRQ_REQUESTED, pf->state))
-		i40e_free_misc_vector(pf);
-=======
 	i40e_free_misc_vector(pf);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (test_bit(__I40E_MISC_IRQ_REQUESTED, pf->state))
-		i40e_free_misc_vector(pf);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	i40e_put_lump(pf->irq_pile, pf->iwarp_base_vector,
 		      I40E_IWARP_IRQ_PILE_ID);
@@ -7438,16 +7280,6 @@ static int i40e_validate_mqprio_qopt(struct i40e_vsi *vsi,
 	}
 	if (vsi->num_queue_pairs <
 	    (mqprio_qopt->qopt.offset[i] + mqprio_qopt->qopt.count[i])) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev_err(&vsi->back->pdev->dev,
-			"Failed to create traffic channel, insufficient number of queues.\n");
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev_err(&vsi->back->pdev->dev,
-			"Failed to create traffic channel, insufficient number of queues.\n");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	}
 	if (sum_max_rate > i40e_get_link_speed(vsi)) {
@@ -10266,15 +10098,7 @@ static int i40e_get_capabilities(struct i40e_pf *pf,
 		if (pf->hw.aq.asq_last_status == I40E_AQ_RC_ENOMEM) {
 			/* retry with a larger buffer */
 			buf_len = data_size;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		} else if (pf->hw.aq.asq_last_status != I40E_AQ_RC_OK || err) {
-=======
 		} else if (pf->hw.aq.asq_last_status != I40E_AQ_RC_OK) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		} else if (pf->hw.aq.asq_last_status != I40E_AQ_RC_OK || err) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_info(&pf->pdev->dev,
 				 "capability discovery failed, err %s aq_err %s\n",
 				 i40e_stat_str(&pf->hw, err),
@@ -13429,15 +13253,7 @@ static const struct net_device_ops i40e_netdev_ops = {
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address	= i40e_set_mac,
 	.ndo_change_mtu		= i40e_change_mtu,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl		= i40e_ioctl,
-=======
 	.ndo_do_ioctl		= i40e_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl		= i40e_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout		= i40e_tx_timeout,
 	.ndo_vlan_rx_add_vid	= i40e_vlan_rx_add_vid,
 	.ndo_vlan_rx_kill_vid	= i40e_vlan_rx_kill_vid,
@@ -13445,14 +13261,6 @@ static const struct net_device_ops i40e_netdev_ops = {
 	.ndo_poll_controller	= i40e_netpoll,
 #endif
 	.ndo_setup_tc		= __i40e_setup_tc,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_select_queue	= i40e_lan_select_queue,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_select_queue	= i40e_lan_select_queue,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_features	= i40e_set_features,
 	.ndo_set_vf_mac		= i40e_ndo_set_vf_mac,
 	.ndo_set_vf_vlan	= i40e_ndo_set_vf_port_vlan,
@@ -15360,31 +15168,6 @@ err_switch_setup:
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * i40e_set_subsystem_device_id - set subsystem device id
- * @hw: pointer to the hardware info
- *
- * Set PCI subsystem device id either from a pci_dev structure or
- * a specific FW register.
- **/
-static inline void i40e_set_subsystem_device_id(struct i40e_hw *hw)
-{
-	struct pci_dev *pdev = ((struct i40e_pf *)hw->back)->pdev;
-
-	hw->subsystem_device_id = pdev->subsystem_device ?
-		pdev->subsystem_device :
-		(ushort)(rd32(hw, I40E_PFPCI_SUBSYSID) & USHRT_MAX);
-}
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * i40e_probe - Device initialization routine
  * @pdev: PCI device information struct
  * @ent: entry in i40e_pci_tbl
@@ -15479,15 +15262,7 @@ static int i40e_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	hw->device_id = pdev->device;
 	pci_read_config_byte(pdev, PCI_REVISION_ID, &hw->revision_id);
 	hw->subsystem_vendor_id = pdev->subsystem_vendor;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	i40e_set_subsystem_device_id(hw);
-=======
 	hw->subsystem_device_id = pdev->subsystem_device;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	i40e_set_subsystem_device_id(hw);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hw->bus.device = PCI_SLOT(pdev->devfn);
 	hw->bus.func = PCI_FUNC(pdev->devfn);
 	hw->bus.bus_id = pdev->bus->number;
@@ -15667,14 +15442,6 @@ static int i40e_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (is_valid_ether_addr(hw->mac.port_addr))
 		pf->hw_features |= I40E_HW_PORT_ID_VALID;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	i40e_ptp_alloc_pins(pf);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	i40e_ptp_alloc_pins(pf);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pci_set_drvdata(pdev, pf);
 	pci_save_state(pdev);
 

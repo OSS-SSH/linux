@@ -62,37 +62,9 @@ static inline int copy_to_bpfptr_offset(bpfptr_t dst, size_t offset,
 	return copy_to_sockptr_offset((sockptr_t) dst, offset, src, size);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline void *kvmemdup_bpfptr(bpfptr_t src, size_t len)
-{
-	void *p = kvmalloc(len, GFP_USER | __GFP_NOWARN);
-
-	if (!p)
-		return ERR_PTR(-ENOMEM);
-	if (copy_from_bpfptr(p, src, len)) {
-		kvfree(p);
-		return ERR_PTR(-EFAULT);
-	}
-	return p;
-=======
 static inline void *memdup_bpfptr(bpfptr_t src, size_t len)
 {
 	return memdup_sockptr((sockptr_t) src, len);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline void *kvmemdup_bpfptr(bpfptr_t src, size_t len)
-{
-	void *p = kvmalloc(len, GFP_USER | __GFP_NOWARN);
-
-	if (!p)
-		return ERR_PTR(-ENOMEM);
-	if (copy_from_bpfptr(p, src, len)) {
-		kvfree(p);
-		return ERR_PTR(-EFAULT);
-	}
-	return p;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static inline long strncpy_from_bpfptr(char *dst, bpfptr_t src, size_t count)

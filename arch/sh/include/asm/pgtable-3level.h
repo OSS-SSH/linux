@@ -34,15 +34,7 @@ typedef struct { unsigned long long pmd; } pmd_t;
 
 static inline pmd_t *pud_pgtable(pud_t pud)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return (pmd_t *)(unsigned long)pud_val(pud);
-=======
 	return (pmd_t *)pud_val(pud);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return (pmd_t *)(unsigned long)pud_val(pud);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* only used by the stubbed out hugetlb gup code, should never be called */

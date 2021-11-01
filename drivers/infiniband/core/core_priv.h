@@ -316,19 +316,6 @@ struct ib_device *ib_device_get_by_index(const struct net *net, u32 index);
 void nldev_init(void);
 void nldev_exit(void);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct ib_qp *ib_create_qp_user(struct ib_device *dev, struct ib_pd *pd,
-				struct ib_qp_init_attr *attr,
-				struct ib_udata *udata,
-				struct ib_uqp_object *uobj, const char *caller);
-
-void ib_qp_usecnt_inc(struct ib_qp *qp);
-void ib_qp_usecnt_dec(struct ib_qp *qp);
-<<<<<<< HEAD
-=======
 static inline struct ib_qp *
 _ib_create_qp(struct ib_device *dev, struct ib_pd *pd,
 	      struct ib_qp_init_attr *attr, struct ib_udata *udata,
@@ -368,9 +355,6 @@ _ib_create_qp(struct ib_device *dev, struct ib_pd *pd,
 	rdma_restrack_add(&qp->res);
 	return qp;
 }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct rdma_dev_addr;
 int rdma_resolve_ip_route(struct sockaddr *src_addr,

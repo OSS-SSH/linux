@@ -288,51 +288,10 @@ invalid_guid:
 
 void __init init_prmt(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct acpi_table_header *tbl;
 	acpi_status status;
-	int mc;
-
-	status = acpi_get_table(ACPI_SIG_PRMT, 0, &tbl);
-	if (ACPI_FAILURE(status))
-		return;
-
-	mc = acpi_table_parse_entries(ACPI_SIG_PRMT, sizeof(struct acpi_table_prmt) +
+	int mc = acpi_table_parse_entries(ACPI_SIG_PRMT, sizeof(struct acpi_table_prmt) +
 					  sizeof (struct acpi_table_prmt_header),
 					  0, acpi_parse_prmt, 0);
-	acpi_put_table(tbl);
-	/*
-	 * Return immediately if PRMT table is not present or no PRM module found.
-	 */
-	if (mc <= 0)
-		return;
-
-=======
-=======
-	struct acpi_table_header *tbl;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	acpi_status status;
-	int mc;
-
-	status = acpi_get_table(ACPI_SIG_PRMT, 0, &tbl);
-	if (ACPI_FAILURE(status))
-		return;
-
-	mc = acpi_table_parse_entries(ACPI_SIG_PRMT, sizeof(struct acpi_table_prmt) +
-					  sizeof (struct acpi_table_prmt_header),
-					  0, acpi_parse_prmt, 0);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	acpi_put_table(tbl);
-	/*
-	 * Return immediately if PRMT table is not present or no PRM module found.
-	 */
-	if (mc <= 0)
-		return;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pr_info("PRM: found %u modules\n", mc);
 
 	status = acpi_install_address_space_handler(ACPI_ROOT_OBJECT,

@@ -34,28 +34,12 @@ static void __tlb_switch_to_guest(struct kvm_s2_mmu *mmu,
 	}
 
 	/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * __load_stage2() includes an ISB only when the AT
-=======
 	 * __load_guest_stage2() includes an ISB only when the AT
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * __load_stage2() includes an ISB only when the AT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * workaround is applied. Take care of the opposite condition,
 	 * ensuring that we always have an ISB, but not two ISBs back
 	 * to back.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__load_stage2(mmu, kern_hyp_va(mmu->arch));
-=======
 	__load_guest_stage2(mmu);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__load_stage2(mmu, kern_hyp_va(mmu->arch));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	asm(ALTERNATIVE("isb", "nop", ARM64_WORKAROUND_SPECULATIVE_AT));
 }
 

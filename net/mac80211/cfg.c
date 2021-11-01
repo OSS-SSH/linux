@@ -152,16 +152,6 @@ static int ieee80211_change_iface(struct wiphy *wiphy,
 				  struct vif_params *params)
 {
 	struct ieee80211_sub_if_data *sdata = IEEE80211_DEV_TO_SUB_IF(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct ieee80211_local *local = sdata->local;
-	struct sta_info *sta;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct ieee80211_local *local = sdata->local;
-	struct sta_info *sta;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int ret;
 
 	ret = ieee80211_if_change_type(sdata, type);
@@ -172,34 +162,7 @@ static int ieee80211_change_iface(struct wiphy *wiphy,
 		RCU_INIT_POINTER(sdata->u.vlan.sta, NULL);
 		ieee80211_check_fast_rx_iface(sdata);
 	} else if (type == NL80211_IFTYPE_STATION && params->use_4addr >= 0) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		struct ieee80211_if_managed *ifmgd = &sdata->u.mgd;
-
-		if (params->use_4addr == ifmgd->use_4addr)
-			return 0;
-
 		sdata->u.mgd.use_4addr = params->use_4addr;
-		if (!ifmgd->associated)
-			return 0;
-
-		mutex_lock(&local->sta_mtx);
-		sta = sta_info_get(sdata, ifmgd->bssid);
-		if (sta)
-			drv_sta_set_4addr(local, sdata, &sta->sta,
-					  params->use_4addr);
-		mutex_unlock(&local->sta_mtx);
-
-		if (params->use_4addr)
-			ieee80211_send_4addr_nullfunc(local, sdata);
-<<<<<<< HEAD
-=======
-		sdata->u.mgd.use_4addr = params->use_4addr;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (sdata->vif.type == NL80211_IFTYPE_MONITOR) {
@@ -846,23 +809,9 @@ static int ieee80211_set_monitor_channel(struct wiphy *wiphy,
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int
-ieee80211_set_probe_resp(struct ieee80211_sub_if_data *sdata,
-			 const u8 *resp, size_t resp_len,
-			 const struct ieee80211_csa_settings *csa,
-			 const struct ieee80211_color_change_settings *cca)
-<<<<<<< HEAD
-=======
 static int ieee80211_set_probe_resp(struct ieee80211_sub_if_data *sdata,
 				    const u8 *resp, size_t resp_len,
 				    const struct ieee80211_csa_settings *csa)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct probe_resp *new, *old;
 
@@ -882,16 +831,6 @@ static int ieee80211_set_probe_resp(struct ieee80211_sub_if_data *sdata,
 		memcpy(new->cntdwn_counter_offsets, csa->counter_offsets_presp,
 		       csa->n_counter_offsets_presp *
 		       sizeof(new->cntdwn_counter_offsets[0]));
-<<<<<<< HEAD
-<<<<<<< HEAD
-	else if (cca)
-		new->cntdwn_counter_offsets[0] = cca->counter_offset_presp;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	else if (cca)
-		new->cntdwn_counter_offsets[0] = cca->counter_offset_presp;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rcu_assign_pointer(sdata->u.ap.probe_resp, new);
 	if (old)
@@ -997,17 +936,7 @@ static int ieee80211_set_ftm_responder_params(
 
 static int ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
 				   struct cfg80211_beacon_data *params,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				   const struct ieee80211_csa_settings *csa,
-				   const struct ieee80211_color_change_settings *cca)
-=======
 				   const struct ieee80211_csa_settings *csa)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				   const struct ieee80211_csa_settings *csa,
-				   const struct ieee80211_color_change_settings *cca)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct beacon_data *new, *old;
 	int new_head_len, new_tail_len;
@@ -1056,18 +985,6 @@ static int ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
 		memcpy(new->cntdwn_counter_offsets, csa->counter_offsets_beacon,
 		       csa->n_counter_offsets_beacon *
 		       sizeof(new->cntdwn_counter_offsets[0]));
-<<<<<<< HEAD
-<<<<<<< HEAD
-	} else if (cca) {
-		new->cntdwn_current_counter = cca->count;
-		new->cntdwn_counter_offsets[0] = cca->counter_offset_beacon;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} else if (cca) {
-		new->cntdwn_current_counter = cca->count;
-		new->cntdwn_counter_offsets[0] = cca->counter_offset_beacon;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* copy in head */
@@ -1084,15 +1001,7 @@ static int ieee80211_assign_beacon(struct ieee80211_sub_if_data *sdata,
 			memcpy(new->tail, old->tail, new_tail_len);
 
 	err = ieee80211_set_probe_resp(sdata, params->probe_resp,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				       params->probe_resp_len, csa, cca);
-=======
 				       params->probe_resp_len, csa);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				       params->probe_resp_len, csa, cca);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0) {
 		kfree(new);
 		return err;
@@ -1247,15 +1156,7 @@ static int ieee80211_start_ap(struct wiphy *wiphy, struct net_device *dev,
 	if (ieee80211_hw_check(&local->hw, HAS_RATE_CONTROL))
 		sdata->vif.bss_conf.beacon_tx_rate = params->beacon_rate;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ieee80211_assign_beacon(sdata, &params->beacon, NULL, NULL);
-=======
 	err = ieee80211_assign_beacon(sdata, &params->beacon, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ieee80211_assign_beacon(sdata, &params->beacon, NULL, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		goto error;
 	changed |= err;
@@ -1310,39 +1211,17 @@ static int ieee80211_change_beacon(struct wiphy *wiphy, struct net_device *dev,
 	sdata = IEEE80211_DEV_TO_SUB_IF(dev);
 	sdata_assert_lock(sdata);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* don't allow changing the beacon while a countdown is in place - offset
-	 * of channel switch counter may change
-	 */
-	if (sdata->vif.csa_active || sdata->vif.color_change_active)
-=======
 	/* don't allow changing the beacon while CSA is in place - offset
 	 * of channel switch counter may change
 	 */
 	if (sdata->vif.csa_active)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* don't allow changing the beacon while a countdown is in place - offset
-	 * of channel switch counter may change
-	 */
-	if (sdata->vif.csa_active || sdata->vif.color_change_active)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EBUSY;
 
 	old = sdata_dereference(sdata->u.ap.beacon, sdata);
 	if (!old)
 		return -ENOENT;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ieee80211_assign_beacon(sdata, params, NULL, NULL);
-=======
 	err = ieee80211_assign_beacon(sdata, params, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ieee80211_assign_beacon(sdata, params, NULL, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 	ieee80211_bss_info_change_notify(sdata, err);
@@ -3258,15 +3137,7 @@ static int ieee80211_set_after_csa_beacon(struct ieee80211_sub_if_data *sdata,
 	switch (sdata->vif.type) {
 	case NL80211_IFTYPE_AP:
 		err = ieee80211_assign_beacon(sdata, sdata->u.ap.next_beacon,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					      NULL, NULL);
-=======
 					      NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					      NULL, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(sdata->u.ap.next_beacon);
 		sdata->u.ap.next_beacon = NULL;
 
@@ -3432,15 +3303,7 @@ static int ieee80211_set_csa_beacon(struct ieee80211_sub_if_data *sdata,
 		csa.n_counter_offsets_presp = params->n_counter_offsets_presp;
 		csa.count = params->count;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = ieee80211_assign_beacon(sdata, &params->beacon_csa, &csa, NULL);
-=======
 		err = ieee80211_assign_beacon(sdata, &params->beacon_csa, &csa);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = ieee80211_assign_beacon(sdata, &params->beacon_csa, &csa, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err < 0) {
 			kfree(sdata->u.ap.next_beacon);
 			return err;
@@ -3529,24 +3392,6 @@ static int ieee80211_set_csa_beacon(struct ieee80211_sub_if_data *sdata,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void ieee80211_color_change_abort(struct ieee80211_sub_if_data  *sdata)
-{
-	sdata->vif.color_change_active = false;
-	kfree(sdata->u.ap.next_beacon);
-	sdata->u.ap.next_beacon = NULL;
-
-	cfg80211_color_change_aborted_notify(sdata->dev);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int
 __ieee80211_channel_switch(struct wiphy *wiphy, struct net_device *dev,
 			   struct cfg80211_csa_settings *params)
@@ -3615,19 +3460,6 @@ __ieee80211_channel_switch(struct wiphy *wiphy, struct net_device *dev,
 		goto out;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* if there is a color change in progress, abort it */
-	if (sdata->vif.color_change_active)
-		ieee80211_color_change_abort(sdata);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = ieee80211_set_csa_beacon(sdata, params, &changed);
 	if (err) {
 		ieee80211_vif_unreserve_chanctx(sdata);
@@ -4279,205 +4111,6 @@ static int ieee80211_set_sar_specs(struct wiphy *wiphy,
 	return local->ops->set_sar_specs(&local->hw, sar);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int
-ieee80211_set_after_color_change_beacon(struct ieee80211_sub_if_data *sdata,
-					u32 *changed)
-{
-	switch (sdata->vif.type) {
-	case NL80211_IFTYPE_AP: {
-		int ret;
-
-		ret = ieee80211_assign_beacon(sdata, sdata->u.ap.next_beacon,
-					      NULL, NULL);
-		kfree(sdata->u.ap.next_beacon);
-		sdata->u.ap.next_beacon = NULL;
-
-		if (ret < 0)
-			return ret;
-
-		*changed |= ret;
-		break;
-	}
-	default:
-		WARN_ON_ONCE(1);
-		return -EINVAL;
-	}
-
-	return 0;
-}
-
-static int
-ieee80211_set_color_change_beacon(struct ieee80211_sub_if_data *sdata,
-				  struct cfg80211_color_change_settings *params,
-				  u32 *changed)
-{
-	struct ieee80211_color_change_settings color_change = {};
-	int err;
-
-	switch (sdata->vif.type) {
-	case NL80211_IFTYPE_AP:
-		sdata->u.ap.next_beacon =
-			cfg80211_beacon_dup(&params->beacon_next);
-		if (!sdata->u.ap.next_beacon)
-			return -ENOMEM;
-
-		if (params->count <= 1)
-			break;
-
-		color_change.counter_offset_beacon =
-			params->counter_offset_beacon;
-		color_change.counter_offset_presp =
-			params->counter_offset_presp;
-		color_change.count = params->count;
-
-		err = ieee80211_assign_beacon(sdata, &params->beacon_color_change,
-					      NULL, &color_change);
-		if (err < 0) {
-			kfree(sdata->u.ap.next_beacon);
-			return err;
-		}
-		*changed |= err;
-		break;
-	default:
-		return -EOPNOTSUPP;
-	}
-
-	return 0;
-}
-
-static void
-ieee80211_color_change_bss_config_notify(struct ieee80211_sub_if_data *sdata,
-					 u8 color, int enable, u32 changed)
-{
-	sdata->vif.bss_conf.he_bss_color.color = color;
-	sdata->vif.bss_conf.he_bss_color.enabled = enable;
-	changed |= BSS_CHANGED_HE_BSS_COLOR;
-
-	ieee80211_bss_info_change_notify(sdata, changed);
-}
-
-static int ieee80211_color_change_finalize(struct ieee80211_sub_if_data *sdata)
-{
-	struct ieee80211_local *local = sdata->local;
-	u32 changed = 0;
-	int err;
-
-	sdata_assert_lock(sdata);
-	lockdep_assert_held(&local->mtx);
-
-	sdata->vif.color_change_active = false;
-
-	err = ieee80211_set_after_color_change_beacon(sdata, &changed);
-	if (err) {
-		cfg80211_color_change_aborted_notify(sdata->dev);
-		return err;
-	}
-
-	ieee80211_color_change_bss_config_notify(sdata,
-						 sdata->vif.color_change_color,
-						 1, changed);
-	cfg80211_color_change_notify(sdata->dev);
-
-	return 0;
-}
-
-void ieee80211_color_change_finalize_work(struct work_struct *work)
-{
-	struct ieee80211_sub_if_data *sdata =
-		container_of(work, struct ieee80211_sub_if_data,
-			     color_change_finalize_work);
-	struct ieee80211_local *local = sdata->local;
-
-	sdata_lock(sdata);
-	mutex_lock(&local->mtx);
-
-	/* AP might have been stopped while waiting for the lock. */
-	if (!sdata->vif.color_change_active)
-		goto unlock;
-
-	if (!ieee80211_sdata_running(sdata))
-		goto unlock;
-
-	ieee80211_color_change_finalize(sdata);
-
-unlock:
-	mutex_unlock(&local->mtx);
-	sdata_unlock(sdata);
-}
-
-void ieee80211_color_change_finish(struct ieee80211_vif *vif)
-{
-	struct ieee80211_sub_if_data *sdata = vif_to_sdata(vif);
-
-	ieee80211_queue_work(&sdata->local->hw,
-			     &sdata->color_change_finalize_work);
-}
-EXPORT_SYMBOL_GPL(ieee80211_color_change_finish);
-
-void
-ieeee80211_obss_color_collision_notify(struct ieee80211_vif *vif,
-				       u64 color_bitmap)
-{
-	struct ieee80211_sub_if_data *sdata = vif_to_sdata(vif);
-
-	if (sdata->vif.color_change_active || sdata->vif.csa_active)
-		return;
-
-	cfg80211_obss_color_collision_notify(sdata->dev, color_bitmap);
-}
-EXPORT_SYMBOL_GPL(ieeee80211_obss_color_collision_notify);
-
-static int
-ieee80211_color_change(struct wiphy *wiphy, struct net_device *dev,
-		       struct cfg80211_color_change_settings *params)
-{
-	struct ieee80211_sub_if_data *sdata = IEEE80211_DEV_TO_SUB_IF(dev);
-	struct ieee80211_local *local = sdata->local;
-	u32 changed = 0;
-	int err;
-
-	sdata_assert_lock(sdata);
-
-	mutex_lock(&local->mtx);
-
-	/* don't allow another color change if one is already active or if csa
-	 * is active
-	 */
-	if (sdata->vif.color_change_active || sdata->vif.csa_active) {
-		err = -EBUSY;
-		goto out;
-	}
-
-	err = ieee80211_set_color_change_beacon(sdata, params, &changed);
-	if (err)
-		goto out;
-
-	sdata->vif.color_change_active = true;
-	sdata->vif.color_change_color = params->color;
-
-	cfg80211_color_change_started_notify(sdata->dev, params->count);
-
-	if (changed)
-		ieee80211_color_change_bss_config_notify(sdata, 0, 0, changed);
-	else
-		/* if the beacon didn't change, we can finalize immediately */
-		ieee80211_color_change_finalize(sdata);
-
-out:
-	mutex_unlock(&local->mtx);
-
-	return err;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 const struct cfg80211_ops mac80211_config_ops = {
 	.add_virtual_intf = ieee80211_add_iface,
 	.del_virtual_intf = ieee80211_del_iface,
@@ -4581,12 +4214,4 @@ const struct cfg80211_ops mac80211_config_ops = {
 	.set_tid_config = ieee80211_set_tid_config,
 	.reset_tid_config = ieee80211_reset_tid_config,
 	.set_sar_specs = ieee80211_set_sar_specs,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.color_change = ieee80211_color_change,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.color_change = ieee80211_color_change,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

@@ -28,20 +28,8 @@ static void scsi_log_release_buffer(char *bufptr)
 
 static inline const char *scmd_name(const struct scsi_cmnd *scmd)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct request *rq = scsi_cmd_to_rq((struct scsi_cmnd *)scmd);
-
-	return rq->rq_disk ? rq->rq_disk->disk_name : NULL;
-=======
 	return scmd->request->rq_disk ?
 		scmd->request->rq_disk->disk_name : NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct request *rq = scsi_cmd_to_rq((struct scsi_cmnd *)scmd);
-
-	return rq->rq_disk ? rq->rq_disk->disk_name : NULL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static size_t sdev_format_header(char *logbuf, size_t logbuf_len,
@@ -103,15 +91,7 @@ void scmd_printk(const char *level, const struct scsi_cmnd *scmd,
 	if (!logbuf)
 		return;
 	off = sdev_format_header(logbuf, logbuf_len, scmd_name(scmd),
-<<<<<<< HEAD
-<<<<<<< HEAD
-				 scsi_cmd_to_rq((struct scsi_cmnd *)scmd)->tag);
-=======
 				 scmd->request->tag);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				 scsi_cmd_to_rq((struct scsi_cmnd *)scmd)->tag);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (off < logbuf_len) {
 		va_start(args, fmt);
 		off += vscnprintf(logbuf + off, logbuf_len - off, fmt, args);
@@ -208,15 +188,7 @@ void scsi_print_command(struct scsi_cmnd *cmd)
 		return;
 
 	off = sdev_format_header(logbuf, logbuf_len,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				 scmd_name(cmd), scsi_cmd_to_rq(cmd)->tag);
-=======
 				 scmd_name(cmd), cmd->request->tag);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				 scmd_name(cmd), scsi_cmd_to_rq(cmd)->tag);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (off >= logbuf_len)
 		goto out_printk;
 	off += scnprintf(logbuf + off, logbuf_len - off, "CDB: ");
@@ -238,15 +210,7 @@ void scsi_print_command(struct scsi_cmnd *cmd)
 
 			off = sdev_format_header(logbuf, logbuf_len,
 						 scmd_name(cmd),
-<<<<<<< HEAD
-<<<<<<< HEAD
-						 scsi_cmd_to_rq(cmd)->tag);
-=======
 						 cmd->request->tag);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-						 scsi_cmd_to_rq(cmd)->tag);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!WARN_ON(off > logbuf_len - 58)) {
 				off += scnprintf(logbuf + off, logbuf_len - off,
 						 "CDB[%02x]: ", k);
@@ -409,17 +373,7 @@ EXPORT_SYMBOL(__scsi_print_sense);
 /* Normalize and print sense buffer in SCSI command */
 void scsi_print_sense(const struct scsi_cmnd *cmd)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	scsi_log_print_sense(cmd->device, scmd_name(cmd),
-			     scsi_cmd_to_rq((struct scsi_cmnd *)cmd)->tag,
-=======
 	scsi_log_print_sense(cmd->device, scmd_name(cmd), cmd->request->tag,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	scsi_log_print_sense(cmd->device, scmd_name(cmd),
-			     scsi_cmd_to_rq((struct scsi_cmnd *)cmd)->tag,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			     cmd->sense_buffer, SCSI_SENSE_BUFFERSIZE);
 }
 EXPORT_SYMBOL(scsi_print_sense);
@@ -437,18 +391,8 @@ void scsi_print_result(const struct scsi_cmnd *cmd, const char *msg,
 	if (!logbuf)
 		return;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	off = sdev_format_header(logbuf, logbuf_len, scmd_name(cmd),
-				 scsi_cmd_to_rq((struct scsi_cmnd *)cmd)->tag);
-=======
 	off = sdev_format_header(logbuf, logbuf_len,
 				 scmd_name(cmd), cmd->request->tag);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	off = sdev_format_header(logbuf, logbuf_len, scmd_name(cmd),
-				 scsi_cmd_to_rq((struct scsi_cmnd *)cmd)->tag);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (off >= logbuf_len)
 		goto out_printk;

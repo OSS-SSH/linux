@@ -1095,18 +1095,8 @@ void ieee80211_send_nullfunc(struct ieee80211_local *local,
 	ieee80211_tx_skb(sdata, skb);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void ieee80211_send_4addr_nullfunc(struct ieee80211_local *local,
-				   struct ieee80211_sub_if_data *sdata)
-=======
 static void ieee80211_send_4addr_nullfunc(struct ieee80211_local *local,
 					  struct ieee80211_sub_if_data *sdata)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void ieee80211_send_4addr_nullfunc(struct ieee80211_local *local,
-				   struct ieee80211_sub_if_data *sdata)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct sk_buff *skb;
 	struct ieee80211_hdr *nullfunc;

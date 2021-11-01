@@ -28,15 +28,7 @@ find_cmd = find $(srctree)/$(src) \( -name '*.yaml' ! \
 
 quiet_cmd_yamllint = LINT    $(src)
       cmd_yamllint = ($(find_cmd) | \
-<<<<<<< HEAD
-<<<<<<< HEAD
-                     xargs $(DT_SCHEMA_LINT) -f parsable -c $(srctree)/$(src)/.yamllint >&2) || true
-=======
                      xargs $(DT_SCHEMA_LINT) -f parsable -c $(srctree)/$(src)/.yamllint) || true
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-                     xargs $(DT_SCHEMA_LINT) -f parsable -c $(srctree)/$(src)/.yamllint >&2) || true
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 quiet_cmd_chk_bindings = CHKDT   $@
       cmd_chk_bindings = ($(find_cmd) | \

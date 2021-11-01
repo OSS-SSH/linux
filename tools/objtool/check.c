@@ -292,15 +292,7 @@ static int decode_instructions(struct objtool_file *file)
 		    !strcmp(sec->name, ".entry.text"))
 			sec->noinstr = true;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		for (offset = 0; offset < sec->sh.sh_size; offset += insn->len) {
-=======
 		for (offset = 0; offset < sec->len; offset += insn->len) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		for (offset = 0; offset < sec->sh.sh_size; offset += insn->len) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			insn = malloc(sizeof(*insn));
 			if (!insn) {
 				WARN("malloc failed");
@@ -315,15 +307,7 @@ static int decode_instructions(struct objtool_file *file)
 			insn->offset = offset;
 
 			ret = arch_decode_instruction(file->elf, sec, offset,
-<<<<<<< HEAD
-<<<<<<< HEAD
-						      sec->sh.sh_size - offset,
-=======
 						      sec->len - offset,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-						      sec->sh.sh_size - offset,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						      &insn->len, &insn->type,
 						      &insn->immediate,
 						      &insn->stack_ops);
@@ -365,21 +349,9 @@ static struct instruction *find_last_insn(struct objtool_file *file,
 {
 	struct instruction *insn = NULL;
 	unsigned int offset;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int end = (sec->sh.sh_size > 10) ? sec->sh.sh_size - 10 : 0;
-
-	for (offset = sec->sh.sh_size - 1; offset >= end && !insn; offset--)
-=======
 	unsigned int end = (sec->len > 10) ? sec->len - 10 : 0;
 
 	for (offset = sec->len - 1; offset >= end && !insn; offset--)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int end = (sec->sh.sh_size > 10) ? sec->sh.sh_size - 10 : 0;
-
-	for (offset = sec->sh.sh_size - 1; offset >= end && !insn; offset--)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		insn = find_insn(file, sec, offset);
 
 	return insn;
@@ -417,15 +389,7 @@ static int add_dead_ends(struct objtool_file *file)
 		insn = find_insn(file, reloc->sym->sec, reloc->addend);
 		if (insn)
 			insn = list_prev_entry(insn, list);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		else if (reloc->addend == reloc->sym->sec->sh.sh_size) {
-=======
 		else if (reloc->addend == reloc->sym->sec->len) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		else if (reloc->addend == reloc->sym->sec->sh.sh_size) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			insn = find_last_insn(file, reloc->sym->sec);
 			if (!insn) {
 				WARN("can't find unreachable insn at %s+0x%x",
@@ -460,15 +424,7 @@ reachable:
 		insn = find_insn(file, reloc->sym->sec, reloc->addend);
 		if (insn)
 			insn = list_prev_entry(insn, list);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		else if (reloc->addend == reloc->sym->sec->sh.sh_size) {
-=======
 		else if (reloc->addend == reloc->sym->sec->len) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		else if (reloc->addend == reloc->sym->sec->sh.sh_size) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			insn = find_last_insn(file, reloc->sym->sec);
 			if (!insn) {
 				WARN("can't find reachable insn at %s+0x%x",
@@ -1605,30 +1561,14 @@ static int read_unwind_hints(struct objtool_file *file)
 		return -1;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (sec->sh.sh_size % sizeof(struct unwind_hint)) {
-=======
 	if (sec->len % sizeof(struct unwind_hint)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (sec->sh.sh_size % sizeof(struct unwind_hint)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		WARN("struct unwind_hint size mismatch");
 		return -1;
 	}
 
 	file->hints = true;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	for (i = 0; i < sec->sh.sh_size / sizeof(struct unwind_hint); i++) {
-=======
 	for (i = 0; i < sec->len / sizeof(struct unwind_hint); i++) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (i = 0; i < sec->sh.sh_size / sizeof(struct unwind_hint); i++) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		hint = (struct unwind_hint *)sec->data->d_buf + i;
 
 		reloc = find_reloc_by_dest(file->elf, sec, i * sizeof(*hint));

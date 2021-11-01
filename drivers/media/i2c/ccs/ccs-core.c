@@ -1943,60 +1943,6 @@ static int ccs_set_stream(struct v4l2_subdev *subdev, int enable)
 	return rval;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int ccs_pre_streamon(struct v4l2_subdev *subdev, u32 flags)
-{
-	struct ccs_sensor *sensor = to_ccs_sensor(subdev);
-	struct i2c_client *client = v4l2_get_subdevdata(&sensor->src->sd);
-	int rval;
-
-	if (flags & V4L2_SUBDEV_PRE_STREAMON_FL_MANUAL_LP) {
-		switch (sensor->hwcfg.csi_signalling_mode) {
-		case CCS_CSI_SIGNALING_MODE_CSI_2_DPHY:
-			if (!(CCS_LIM(sensor, PHY_CTRL_CAPABILITY_2) &
-			      CCS_PHY_CTRL_CAPABILITY_2_MANUAL_LP_DPHY))
-				return -EACCES;
-			break;
-		case CCS_CSI_SIGNALING_MODE_CSI_2_CPHY:
-			if (!(CCS_LIM(sensor, PHY_CTRL_CAPABILITY_2) &
-			      CCS_PHY_CTRL_CAPABILITY_2_MANUAL_LP_CPHY))
-				return -EACCES;
-			break;
-		default:
-			return -EACCES;
-		}
-	}
-
-	rval = ccs_pm_get_init(sensor);
-	if (rval)
-		return rval;
-
-	if (flags & V4L2_SUBDEV_PRE_STREAMON_FL_MANUAL_LP) {
-		rval = ccs_write(sensor, MANUAL_LP_CTRL,
-				 CCS_MANUAL_LP_CTRL_ENABLE);
-		if (rval)
-			pm_runtime_put(&client->dev);
-	}
-
-	return rval;
-}
-
-static int ccs_post_streamoff(struct v4l2_subdev *subdev)
-{
-	struct ccs_sensor *sensor = to_ccs_sensor(subdev);
-	struct i2c_client *client = v4l2_get_subdevdata(&sensor->src->sd);
-
-	return pm_runtime_put(&client->dev);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ccs_enum_mbus_code(struct v4l2_subdev *subdev,
 			      struct v4l2_subdev_state *sd_state,
 			      struct v4l2_subdev_mbus_code_enum *code)
@@ -2727,16 +2673,8 @@ static int ccs_get_skip_top_lines(struct v4l2_subdev *subdev, u32 *lines)
  */
 
 static ssize_t
-<<<<<<< HEAD
-<<<<<<< HEAD
-nvm_show(struct device *dev, struct device_attribute *attr, char *buf)
-=======
 ccs_sysfs_nvm_read(struct device *dev, struct device_attribute *attr,
 		   char *buf)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-nvm_show(struct device *dev, struct device_attribute *attr, char *buf)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct v4l2_subdev *subdev = i2c_get_clientdata(to_i2c_client(dev));
 	struct i2c_client *client = v4l2_get_subdevdata(subdev);
@@ -2766,25 +2704,11 @@ nvm_show(struct device *dev, struct device_attribute *attr, char *buf)
 	 */
 	return rval;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RO(nvm);
-
-static ssize_t
-ident_show(struct device *dev, struct device_attribute *attr, char *buf)
-=======
 static DEVICE_ATTR(nvm, S_IRUGO, ccs_sysfs_nvm_read, NULL);
 
 static ssize_t
 ccs_sysfs_ident_read(struct device *dev, struct device_attribute *attr,
 		     char *buf)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RO(nvm);
-
-static ssize_t
-ident_show(struct device *dev, struct device_attribute *attr, char *buf)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct v4l2_subdev *subdev = i2c_get_clientdata(to_i2c_client(dev));
 	struct ccs_sensor *sensor = to_ccs_sensor(subdev);
@@ -2799,16 +2723,8 @@ ident_show(struct device *dev, struct device_attribute *attr, char *buf)
 				minfo->smia_manufacturer_id, minfo->model_id,
 				minfo->revision_number) + 1;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RO(ident);
-=======
 
 static DEVICE_ATTR(ident, S_IRUGO, ccs_sysfs_ident_read, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RO(ident);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* -----------------------------------------------------------------------------
  * V4L2 subdev core operations
@@ -3142,16 +3058,6 @@ static int ccs_open(struct v4l2_subdev *sd, struct v4l2_subdev_fh *fh)
 
 static const struct v4l2_subdev_video_ops ccs_video_ops = {
 	.s_stream = ccs_set_stream,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.pre_streamon = ccs_pre_streamon,
-	.post_streamoff = ccs_post_streamoff,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.pre_streamon = ccs_pre_streamon,
-	.post_streamoff = ccs_post_streamoff,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static const struct v4l2_subdev_pad_ops ccs_pad_ops = {

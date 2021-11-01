@@ -9,65 +9,16 @@
 struct ipa;
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * ipa_uc_config() - Configure the IPA microcontroller subsystem
- * @ipa:	IPA pointer
- */
-void ipa_uc_config(struct ipa *ipa);
-
-/**
- * ipa_uc_deconfig() - Inverse of ipa_uc_config()
- * @ipa:	IPA pointer
- */
-void ipa_uc_deconfig(struct ipa *ipa);
-
-/**
- * ipa_uc_power() - Take a proxy power reference for the microcontroller
- * @ipa:	IPA pointer
- *
- * The first time the modem boots, it loads firmware for and starts the
- * IPA-resident microcontroller.  The microcontroller signals that it
- * has completed its initialization by sending an INIT_COMPLETED response
- * message to the AP.  The AP must ensure the IPA is powered until
- * it receives this message, and to do so we take a "proxy" clock
- * reference on its behalf here.  Once we receive the INIT_COMPLETED
- * message (in ipa_uc_response_hdlr()) we drop this power reference.
- */
-void ipa_uc_power(struct ipa *ipa);
-=======
  * ipa_uc_setup() - set up the IPA microcontroller subsystem
-=======
- * ipa_uc_config() - Configure the IPA microcontroller subsystem
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @ipa:	IPA pointer
  */
-void ipa_uc_config(struct ipa *ipa);
+void ipa_uc_setup(struct ipa *ipa);
 
 /**
- * ipa_uc_deconfig() - Inverse of ipa_uc_config()
+ * ipa_uc_teardown() - inverse of ipa_uc_setup()
  * @ipa:	IPA pointer
  */
-<<<<<<< HEAD
 void ipa_uc_teardown(struct ipa *ipa);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void ipa_uc_deconfig(struct ipa *ipa);
-
-/**
- * ipa_uc_power() - Take a proxy power reference for the microcontroller
- * @ipa:	IPA pointer
- *
- * The first time the modem boots, it loads firmware for and starts the
- * IPA-resident microcontroller.  The microcontroller signals that it
- * has completed its initialization by sending an INIT_COMPLETED response
- * message to the AP.  The AP must ensure the IPA is powered until
- * it receives this message, and to do so we take a "proxy" clock
- * reference on its behalf here.  Once we receive the INIT_COMPLETED
- * message (in ipa_uc_response_hdlr()) we drop this power reference.
- */
-void ipa_uc_power(struct ipa *ipa);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * ipa_uc_panic_notifier()

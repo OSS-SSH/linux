@@ -462,14 +462,6 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
 	sdata_unlock(sdata);
 
 	cancel_work_sync(&sdata->csa_finalize_work);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cancel_work_sync(&sdata->color_change_finalize_work);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cancel_work_sync(&sdata->color_change_finalize_work);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cancel_delayed_work_sync(&sdata->dfs_cac_timer_work);
 
@@ -559,14 +551,6 @@ static void ieee80211_do_stop(struct ieee80211_sub_if_data *sdata, bool going_do
 		 */
 		ieee80211_free_keys(sdata, true);
 		skb_queue_purge(&sdata->skb_queue);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		skb_queue_purge(&sdata->status_queue);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		skb_queue_purge(&sdata->status_queue);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	spin_lock_irqsave(&local->queue_stop_reason_lock, flags);
@@ -999,14 +983,6 @@ int ieee80211_add_virtual_monitor(struct ieee80211_local *local)
 	}
 
 	skb_queue_head_init(&sdata->skb_queue);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	skb_queue_head_init(&sdata->status_queue);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	skb_queue_head_init(&sdata->status_queue);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_WORK(&sdata->work, ieee80211_iface_work);
 
 	return 0;
@@ -1405,25 +1381,6 @@ static void ieee80211_iface_process_skb(struct ieee80211_local *local,
 			WARN_ON(1);
 			break;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	} else if (ieee80211_is_action(mgmt->frame_control) &&
-		   mgmt->u.action.category == WLAN_CATEGORY_S1G) {
-		switch (mgmt->u.action.u.s1g.action_code) {
-		case WLAN_S1G_TWT_TEARDOWN:
-		case WLAN_S1G_TWT_SETUP:
-			ieee80211_s1g_rx_twt_action(sdata, skb);
-			break;
-		default:
-			break;
-		}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else if (ieee80211_is_ext(mgmt->frame_control)) {
 		if (sdata->vif.type == NL80211_IFTYPE_STATION)
 			ieee80211_sta_rx_queued_ext(sdata, skb);
@@ -1479,33 +1436,6 @@ static void ieee80211_iface_process_skb(struct ieee80211_local *local,
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void ieee80211_iface_process_status(struct ieee80211_sub_if_data *sdata,
-					   struct sk_buff *skb)
-{
-	struct ieee80211_mgmt *mgmt = (void *)skb->data;
-
-	if (ieee80211_is_action(mgmt->frame_control) &&
-	    mgmt->u.action.category == WLAN_CATEGORY_S1G) {
-		switch (mgmt->u.action.u.s1g.action_code) {
-		case WLAN_S1G_TWT_TEARDOWN:
-		case WLAN_S1G_TWT_SETUP:
-			ieee80211_s1g_status_twt_action(sdata, skb);
-			break;
-		default:
-			break;
-		}
-	}
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ieee80211_iface_work(struct work_struct *work)
 {
 	struct ieee80211_sub_if_data *sdata =
@@ -1535,25 +1465,6 @@ static void ieee80211_iface_work(struct work_struct *work)
 		kcov_remote_stop();
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* process status queue */
-	while ((skb = skb_dequeue(&sdata->status_queue))) {
-		kcov_remote_start_common(skb_get_kcov_handle(skb));
-
-		ieee80211_iface_process_status(sdata, skb);
-		kfree_skb(skb);
-
-		kcov_remote_stop();
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* then other type-dependent work */
 	switch (sdata->vif.type) {
 	case NL80211_IFTYPE_STATION:
@@ -1617,25 +1528,9 @@ static void ieee80211_setup_sdata(struct ieee80211_sub_if_data *sdata,
 	}
 
 	skb_queue_head_init(&sdata->skb_queue);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	skb_queue_head_init(&sdata->status_queue);
 	INIT_WORK(&sdata->work, ieee80211_iface_work);
 	INIT_WORK(&sdata->recalc_smps, ieee80211_recalc_smps_work);
 	INIT_WORK(&sdata->csa_finalize_work, ieee80211_csa_finalize_work);
-	INIT_WORK(&sdata->color_change_finalize_work, ieee80211_color_change_finalize_work);
-=======
-	INIT_WORK(&sdata->work, ieee80211_iface_work);
-	INIT_WORK(&sdata->recalc_smps, ieee80211_recalc_smps_work);
-	INIT_WORK(&sdata->csa_finalize_work, ieee80211_csa_finalize_work);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	skb_queue_head_init(&sdata->status_queue);
-	INIT_WORK(&sdata->work, ieee80211_iface_work);
-	INIT_WORK(&sdata->recalc_smps, ieee80211_recalc_smps_work);
-	INIT_WORK(&sdata->csa_finalize_work, ieee80211_csa_finalize_work);
-	INIT_WORK(&sdata->color_change_finalize_work, ieee80211_color_change_finalize_work);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_LIST_HEAD(&sdata->assigned_chanctx_list);
 	INIT_LIST_HEAD(&sdata->reserved_chanctx_list);
 
@@ -2106,33 +2001,9 @@ int ieee80211_if_add(struct ieee80211_local *local, const char *name,
 
 		netdev_set_default_ethtool_ops(ndev, &ieee80211_ethtool_ops);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		/* MTU range is normally 256 - 2304, where the upper limit is
-		 * the maximum MSDU size. Monitor interfaces send and receive
-		 * MPDU and A-MSDU frames which may be much larger so we do
-		 * not impose an upper limit in that case.
-		 */
-<<<<<<< HEAD
-		ndev->min_mtu = 256;
-		if (type == NL80211_IFTYPE_MONITOR)
-			ndev->max_mtu = 0;
-		else
-			ndev->max_mtu = local->hw.max_mtu;
-=======
 		/* MTU range: 256 - 2304 */
 		ndev->min_mtu = 256;
 		ndev->max_mtu = local->hw.max_mtu;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ndev->min_mtu = 256;
-		if (type == NL80211_IFTYPE_MONITOR)
-			ndev->max_mtu = 0;
-		else
-			ndev->max_mtu = local->hw.max_mtu;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		ret = cfg80211_register_netdevice(ndev);
 		if (ret) {

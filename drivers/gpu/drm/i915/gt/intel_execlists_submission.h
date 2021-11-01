@@ -32,11 +32,6 @@ void intel_execlists_show_requests(struct intel_engine_cs *engine,
 							int indent),
 				   unsigned int max);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-bool
-intel_engine_in_execlists_submission_mode(const struct intel_engine_cs *engine);
-=======
 struct intel_context *
 intel_execlists_create_virtual(struct intel_engine_cs **siblings,
 			       unsigned int count);
@@ -47,10 +42,5 @@ intel_execlists_clone_virtual(struct intel_engine_cs *src);
 int intel_virtual_engine_attach_bond(struct intel_engine_cs *engine,
 				     const struct intel_engine_cs *master,
 				     const struct intel_engine_cs *sibling);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-bool
-intel_engine_in_execlists_submission_mode(const struct intel_engine_cs *engine);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* __INTEL_EXECLISTS_SUBMISSION_H__ */

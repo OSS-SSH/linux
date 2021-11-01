@@ -474,21 +474,6 @@ static irqreturn_t nfp_net_irq_rxtx(int irq, void *data)
 {
 	struct nfp_net_r_vector *r_vec = data;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Currently we cannot tell if it's a rx or tx interrupt,
-	 * since dim does not need accurate event_ctr to calculate,
-	 * we just use this counter for both rx and tx dim.
-	 */
-	r_vec->event_ctr++;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	napi_schedule_irqoff(&r_vec->napi);
 
 	/* The FW auto-masks any interrupt, either via the MASK bit in
@@ -1712,15 +1697,7 @@ nfp_net_parse_meta(struct net_device *netdev, struct nfp_meta_parsed *meta,
 		case NFP_NET_META_RESYNC_INFO:
 			if (nfp_net_tls_rx_resync_req(netdev, data, pkt,
 						      pkt_len))
-<<<<<<< HEAD
-<<<<<<< HEAD
-				return false;
-=======
 				return NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				return false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			data += sizeof(struct nfp_net_tls_resync_req);
 			break;
 		default:
@@ -2084,45 +2061,6 @@ static int nfp_net_poll(struct napi_struct *napi, int budget)
 		if (napi_complete_done(napi, pkts_polled))
 			nfp_net_irq_unmask(r_vec->nfp_net, r_vec->irq_entry);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (r_vec->nfp_net->rx_coalesce_adapt_on) {
-		struct dim_sample dim_sample = {};
-		unsigned int start;
-		u64 pkts, bytes;
-
-		do {
-			start = u64_stats_fetch_begin(&r_vec->rx_sync);
-			pkts = r_vec->rx_pkts;
-			bytes = r_vec->rx_bytes;
-		} while (u64_stats_fetch_retry(&r_vec->rx_sync, start));
-
-		dim_update_sample(r_vec->event_ctr, pkts, bytes, &dim_sample);
-		net_dim(&r_vec->rx_dim, dim_sample);
-	}
-
-	if (r_vec->nfp_net->tx_coalesce_adapt_on) {
-		struct dim_sample dim_sample = {};
-		unsigned int start;
-		u64 pkts, bytes;
-
-		do {
-			start = u64_stats_fetch_begin(&r_vec->tx_sync);
-			pkts = r_vec->tx_pkts;
-			bytes = r_vec->tx_bytes;
-		} while (u64_stats_fetch_retry(&r_vec->tx_sync, start));
-
-		dim_update_sample(r_vec->event_ctr, pkts, bytes, &dim_sample);
-		net_dim(&r_vec->tx_dim, dim_sample);
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return pkts_polled;
 }
 
@@ -2935,14 +2873,6 @@ static int nfp_net_set_config_and_enable(struct nfp_net *nn)
  */
 static void nfp_net_close_stack(struct nfp_net *nn)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct nfp_net_r_vector *r_vec;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct nfp_net_r_vector *r_vec;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int r;
 
 	disable_irq(nn->irq_entries[NFP_NET_IRQ_LSC_IDX].vector);
@@ -2950,27 +2880,8 @@ static void nfp_net_close_stack(struct nfp_net *nn)
 	nn->link_up = false;
 
 	for (r = 0; r < nn->dp.num_r_vecs; r++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		r_vec = &nn->r_vecs[r];
-
-		disable_irq(r_vec->irq_vector);
-		napi_disable(&r_vec->napi);
-
-		if (r_vec->rx_ring)
-			cancel_work_sync(&r_vec->rx_dim.work);
-
-		if (r_vec->tx_ring)
-			cancel_work_sync(&r_vec->tx_dim.work);
-<<<<<<< HEAD
-=======
 		disable_irq(nn->r_vecs[r].irq_vector);
 		napi_disable(&nn->r_vecs[r].napi);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	netif_tx_disable(nn->dp.netdev);
@@ -3037,130 +2948,17 @@ void nfp_ctrl_close(struct nfp_net *nn)
 	rtnl_unlock();
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void nfp_net_rx_dim_work(struct work_struct *work)
-{
-	struct nfp_net_r_vector *r_vec;
-	unsigned int factor, value;
-	struct dim_cq_moder moder;
-	struct nfp_net *nn;
-	struct dim *dim;
-
-	dim = container_of(work, struct dim, work);
-	moder = net_dim_get_rx_moderation(dim->mode, dim->profile_ix);
-	r_vec = container_of(dim, struct nfp_net_r_vector, rx_dim);
-	nn = r_vec->nfp_net;
-
-	/* Compute factor used to convert coalesce '_usecs' parameters to
-	 * ME timestamp ticks.  There are 16 ME clock cycles for each timestamp
-	 * count.
-	 */
-	factor = nn->tlv_caps.me_freq_mhz / 16;
-	if (nfp_net_coalesce_para_check(factor * moder.usec, moder.pkts))
-		return;
-
-	/* copy RX interrupt coalesce parameters */
-	value = (moder.pkts << 16) | (factor * moder.usec);
-	rtnl_lock();
-	nn_writel(nn, NFP_NET_CFG_RXR_IRQ_MOD(r_vec->rx_ring->idx), value);
-	(void)nfp_net_reconfig(nn, NFP_NET_CFG_UPDATE_IRQMOD);
-	rtnl_unlock();
-
-	dim->state = DIM_START_MEASURE;
-}
-
-static void nfp_net_tx_dim_work(struct work_struct *work)
-{
-	struct nfp_net_r_vector *r_vec;
-	unsigned int factor, value;
-	struct dim_cq_moder moder;
-	struct nfp_net *nn;
-	struct dim *dim;
-
-	dim = container_of(work, struct dim, work);
-	moder = net_dim_get_tx_moderation(dim->mode, dim->profile_ix);
-	r_vec = container_of(dim, struct nfp_net_r_vector, tx_dim);
-	nn = r_vec->nfp_net;
-
-	/* Compute factor used to convert coalesce '_usecs' parameters to
-	 * ME timestamp ticks.  There are 16 ME clock cycles for each timestamp
-	 * count.
-	 */
-	factor = nn->tlv_caps.me_freq_mhz / 16;
-	if (nfp_net_coalesce_para_check(factor * moder.usec, moder.pkts))
-		return;
-
-	/* copy TX interrupt coalesce parameters */
-	value = (moder.pkts << 16) | (factor * moder.usec);
-	rtnl_lock();
-	nn_writel(nn, NFP_NET_CFG_TXR_IRQ_MOD(r_vec->tx_ring->idx), value);
-	(void)nfp_net_reconfig(nn, NFP_NET_CFG_UPDATE_IRQMOD);
-	rtnl_unlock();
-
-	dim->state = DIM_START_MEASURE;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * nfp_net_open_stack() - Start the device from stack's perspective
  * @nn:      NFP Net device to reconfigure
  */
 static void nfp_net_open_stack(struct nfp_net *nn)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct nfp_net_r_vector *r_vec;
-	unsigned int r;
-
-	for (r = 0; r < nn->dp.num_r_vecs; r++) {
-		r_vec = &nn->r_vecs[r];
-
-		if (r_vec->rx_ring) {
-			INIT_WORK(&r_vec->rx_dim.work, nfp_net_rx_dim_work);
-			r_vec->rx_dim.mode = DIM_CQ_PERIOD_MODE_START_FROM_EQE;
-		}
-
-		if (r_vec->tx_ring) {
-			INIT_WORK(&r_vec->tx_dim.work, nfp_net_tx_dim_work);
-			r_vec->tx_dim.mode = DIM_CQ_PERIOD_MODE_START_FROM_EQE;
-		}
-
-		napi_enable(&r_vec->napi);
-		enable_irq(r_vec->irq_vector);
-=======
 	unsigned int r;
 
 	for (r = 0; r < nn->dp.num_r_vecs; r++) {
 		napi_enable(&nn->r_vecs[r].napi);
 		enable_irq(nn->r_vecs[r].irq_vector);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct nfp_net_r_vector *r_vec;
-	unsigned int r;
-
-	for (r = 0; r < nn->dp.num_r_vecs; r++) {
-		r_vec = &nn->r_vecs[r];
-
-		if (r_vec->rx_ring) {
-			INIT_WORK(&r_vec->rx_dim.work, nfp_net_rx_dim_work);
-			r_vec->rx_dim.mode = DIM_CQ_PERIOD_MODE_START_FROM_EQE;
-		}
-
-		if (r_vec->tx_ring) {
-			INIT_WORK(&r_vec->tx_dim.work, nfp_net_tx_dim_work);
-			r_vec->tx_dim.mode = DIM_CQ_PERIOD_MODE_START_FROM_EQE;
-		}
-
-		napi_enable(&r_vec->napi);
-		enable_irq(r_vec->irq_vector);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	netif_tx_wake_all_queues(nn->dp.netdev);
@@ -3363,15 +3161,6 @@ static int nfp_net_dp_swap_enable(struct nfp_net *nn, struct nfp_net_dp *dp)
 	for (r = 0; r <	nn->max_r_vecs; r++)
 		nfp_net_vector_assign_rings(&nn->dp, &nn->r_vecs[r], r);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = netif_set_real_num_queues(nn->dp.netdev,
-					nn->dp.num_stack_tx_rings,
-					nn->dp.num_rx_rings);
-	if (err)
-		return err;
-
-=======
 	err = netif_set_real_num_rx_queues(nn->dp.netdev, nn->dp.num_rx_rings);
 	if (err)
 		return err;
@@ -3383,15 +3172,6 @@ static int nfp_net_dp_swap_enable(struct nfp_net *nn, struct nfp_net_dp *dp)
 			return err;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = netif_set_real_num_queues(nn->dp.netdev,
-					nn->dp.num_stack_tx_rings,
-					nn->dp.num_rx_rings);
-	if (err)
-		return err;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return nfp_net_set_config_and_enable(nn);
 }
 
@@ -4113,18 +3893,6 @@ static void nfp_net_irqmod_init(struct nfp_net *nn)
 	nn->rx_coalesce_max_frames = 64;
 	nn->tx_coalesce_usecs      = 50;
 	nn->tx_coalesce_max_frames = 64;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	nn->rx_coalesce_adapt_on   = true;
-	nn->tx_coalesce_adapt_on   = true;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	nn->rx_coalesce_adapt_on   = true;
-	nn->tx_coalesce_adapt_on   = true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void nfp_net_netdev_init(struct nfp_net *nn)

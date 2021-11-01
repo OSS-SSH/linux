@@ -10,15 +10,7 @@ ext4-y	:= balloc.o bitmap.o block_validity.o dir.o ext4_jbd2.o extents.o \
 		indirect.o inline.o inode.o ioctl.o mballoc.o migrate.o \
 		mmp.o move_extent.o namei.o page-io.o readpage.o resize.o \
 		super.o symlink.o sysfs.o xattr.o xattr_hurd.o xattr_trusted.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-		xattr_user.o fast_commit.o orphan.o
-=======
 		xattr_user.o fast_commit.o
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		xattr_user.o fast_commit.o orphan.o
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 ext4-$(CONFIG_EXT4_FS_POSIX_ACL)	+= acl.o
 ext4-$(CONFIG_EXT4_FS_SECURITY)		+= xattr_security.o

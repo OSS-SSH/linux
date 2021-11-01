@@ -134,15 +134,7 @@ struct fw_sync_header {
 struct fw_data {
 	struct fw_header fw_hdr;
 	__le32 seq_num;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u8 data[];
-=======
 	u8 data[1];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u8 data[];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } __packed;
 
 #endif /*_MWIFIEX_USB_H */

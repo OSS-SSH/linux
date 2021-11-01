@@ -9,16 +9,6 @@ config MIPS
 	select ARCH_HAS_KCOV
 	select ARCH_HAS_NON_OVERLAPPING_ADDRESS_SPACE if !EVA
 	select ARCH_HAS_PTE_SPECIAL if !(32BIT && CPU_HAS_RIXI)
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select ARCH_HAS_STRNCPY_FROM_USER
-	select ARCH_HAS_STRNLEN_USER
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select ARCH_HAS_STRNCPY_FROM_USER
-	select ARCH_HAS_STRNLEN_USER
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select ARCH_HAS_TICK_BROADCAST if GENERIC_CLOCKEVENTS_BROADCAST
 	select ARCH_HAS_UBSAN_SANITIZE_ALL
 	select ARCH_HAS_GCOV_PROFILE_ALL
@@ -81,13 +71,7 @@ config MIPS
 	select HAVE_FUNCTION_TRACER
 	select HAVE_GCC_PLUGINS
 	select HAVE_GENERIC_VDSO
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	select HAVE_IDE
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select HAVE_IOREMAP_PROT
 	select HAVE_IRQ_EXIT_ON_IRQ_STACK
 	select HAVE_IRQ_TIME_ACCOUNTING
@@ -113,14 +97,6 @@ config MIPS
 	select PCI_MSI_ARCH_FALLBACKS if PCI_MSI
 	select RTC_LIB
 	select SYSCTL_EXCEPTION_TRACE
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select TRACE_IRQFLAGS_SUPPORT
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select TRACE_IRQFLAGS_SUPPORT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select VIRT_TO_BUS
 	select ARCH_HAS_ELFCORE_COMPAT
 
@@ -537,9 +513,6 @@ config MACH_LOONGSON64
 	  and Loongson-2F which will be removed), developed by the Institute
 	  of Computing Technology (ICT), Chinese Academy of Sciences (CAS).
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 config MACH_PISTACHIO
 	bool "IMG Pistachio SoC based boards"
 	select BOOT_ELF32
@@ -569,9 +542,6 @@ config MACH_PISTACHIO
 	help
 	  This enables support for the IMG Pistachio SoC platform.
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config MIPS_MALTA
 	bool "MIPS Malta board"
 	select ARCH_MAY_HAVE_PC_FDC
@@ -1118,13 +1088,7 @@ source "arch/mips/ingenic/Kconfig"
 source "arch/mips/jazz/Kconfig"
 source "arch/mips/lantiq/Kconfig"
 source "arch/mips/pic32/Kconfig"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 source "arch/mips/pistachio/Kconfig"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "arch/mips/ralink/Kconfig"
 source "arch/mips/sgi-ip27/Kconfig"
 source "arch/mips/sibyte/Kconfig"
@@ -3380,14 +3344,8 @@ source "drivers/cpuidle/Kconfig"
 
 endmenu
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 source "drivers/firmware/Kconfig"
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 source "arch/mips/kvm/Kconfig"
 
 source "arch/mips/vdso/Kconfig"

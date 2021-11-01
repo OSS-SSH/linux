@@ -230,13 +230,7 @@ int main(void)
 	DEFINE(TI_TASK, offsetof(struct thread_info, task));
 	DEFINE(TI_FLAGS, offsetof(struct thread_info, flags));
 	DEFINE(TI_CPU, offsetof(struct thread_info, cpu));
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	DEFINE(TI_SEGMENT, offsetof(struct thread_info, addr_limit));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DEFINE(TI_PRE_COUNT, offsetof(struct thread_info, preempt_count));
 	DEFINE(THREAD_SZ, sizeof(struct thread_info));
 	/* THREAD_SZ_ALGN includes space for a stack frame. */

@@ -30,22 +30,6 @@ struct apq8016_sbc_data {
 #define MIC_CTRL_QUA_WS_SLAVE_SEL_10	BIT(17)
 #define MIC_CTRL_TLMM_SCLK_EN		BIT(1)
 #define	SPKR_CTL_PRI_WS_SLAVE_SEL_11	(BIT(17) | BIT(16))
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define SPKR_CTL_TLMM_MCLK_EN		BIT(1)
-#define SPKR_CTL_TLMM_SCLK_EN		BIT(2)
-#define SPKR_CTL_TLMM_DATA1_EN		BIT(3)
-#define SPKR_CTL_TLMM_WS_OUT_SEL_MASK	GENMASK(7, 6)
-#define SPKR_CTL_TLMM_WS_OUT_SEL_SEC	BIT(6)
-#define SPKR_CTL_TLMM_WS_EN_SEL_MASK	GENMASK(19, 18)
-#define SPKR_CTL_TLMM_WS_EN_SEL_SEC	BIT(18)
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define DEFAULT_MCLK_RATE		9600000
 
 static int apq8016_sbc_dai_init(struct snd_soc_pcm_runtime *rtd)
@@ -56,14 +40,6 @@ static int apq8016_sbc_dai_init(struct snd_soc_pcm_runtime *rtd)
 	struct snd_soc_card *card = rtd->card;
 	struct apq8016_sbc_data *pdata = snd_soc_card_get_drvdata(card);
 	int i, rval;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 value;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 value;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (cpu_dai->id) {
 	case MI2S_PRIMARY:
@@ -77,24 +53,6 @@ static int apq8016_sbc_dai_init(struct snd_soc_pcm_runtime *rtd)
 			MIC_CTRL_TLMM_SCLK_EN,
 			pdata->mic_iomux);
 		break;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	case MI2S_SECONDARY:
-		/* Clear TLMM_WS_OUT_SEL and TLMM_WS_EN_SEL fields */
-		value = readl(pdata->spkr_iomux) &
-			~(SPKR_CTL_TLMM_WS_OUT_SEL_MASK | SPKR_CTL_TLMM_WS_EN_SEL_MASK);
-		/* Configure the Sec MI2S to TLMM */
-		writel(value | SPKR_CTL_TLMM_MCLK_EN | SPKR_CTL_TLMM_SCLK_EN |
-			SPKR_CTL_TLMM_DATA1_EN | SPKR_CTL_TLMM_WS_OUT_SEL_SEC |
-			SPKR_CTL_TLMM_WS_EN_SEL_SEC, pdata->spkr_iomux);
-		break;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case MI2S_TERTIARY:
 		writel(readl(pdata->mic_iomux) | MIC_CTRL_TER_WS_SLAVE_SEL |
 			MIC_CTRL_TLMM_SCLK_EN,

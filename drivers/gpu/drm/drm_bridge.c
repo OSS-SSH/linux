@@ -28,14 +28,6 @@
 #include <drm/drm_atomic_state_helper.h>
 #include <drm/drm_bridge.h>
 #include <drm/drm_encoder.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <drm/drm_print.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <drm/drm_print.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "drm_crtc_internal.h"
 
@@ -233,24 +225,6 @@ err_reset_bridge:
 	bridge->dev = NULL;
 	bridge->encoder = NULL;
 	list_del(&bridge->chain_node);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-#ifdef CONFIG_OF
-	DRM_ERROR("failed to attach bridge %pOF to encoder %s: %d\n",
-		  bridge->of_node, encoder->name, ret);
-#else
-	DRM_ERROR("failed to attach bridge to encoder %s: %d\n",
-		  encoder->name, ret);
-#endif
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 EXPORT_SYMBOL(drm_bridge_attach);
@@ -998,15 +972,7 @@ drm_atomic_bridge_propagate_bus_flags(struct drm_bridge *bridge,
 	bridge_state->output_bus_cfg.flags = output_flags;
 
 	/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * Propagate the output flags to the input end of the bridge. Again, it's
-=======
 	 * Propage the output flags to the input end of the bridge. Again, it's
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * Propagate the output flags to the input end of the bridge. Again, it's
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * not necessarily what all bridges want, but that's what most of them
 	 * do, and by doing that by default we avoid forcing drivers to
 	 * duplicate the "dummy propagation" logic.

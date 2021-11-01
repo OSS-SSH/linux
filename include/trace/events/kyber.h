@@ -13,27 +13,11 @@
 
 TRACE_EVENT(kyber_latency,
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	TP_PROTO(dev_t dev, const char *domain, const char *type,
-		 unsigned int percentile, unsigned int numerator,
-		 unsigned int denominator, unsigned int samples),
-
-	TP_ARGS(dev, domain, type, percentile, numerator, denominator, samples),
-=======
 	TP_PROTO(struct request_queue *q, const char *domain, const char *type,
 		 unsigned int percentile, unsigned int numerator,
 		 unsigned int denominator, unsigned int samples),
 
 	TP_ARGS(q, domain, type, percentile, numerator, denominator, samples),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	TP_PROTO(dev_t dev, const char *domain, const char *type,
-		 unsigned int percentile, unsigned int numerator,
-		 unsigned int denominator, unsigned int samples),
-
-	TP_ARGS(dev, domain, type, percentile, numerator, denominator, samples),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	TP_STRUCT__entry(
 		__field(	dev_t,	dev				)
@@ -46,15 +30,7 @@ TRACE_EVENT(kyber_latency,
 	),
 
 	TP_fast_assign(
-<<<<<<< HEAD
-<<<<<<< HEAD
-		__entry->dev		= dev;
-=======
 		__entry->dev		= disk_devt(queue_to_disk(q));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		__entry->dev		= dev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		strlcpy(__entry->domain, domain, sizeof(__entry->domain));
 		strlcpy(__entry->type, type, sizeof(__entry->type));
 		__entry->percentile	= percentile;
@@ -71,22 +47,10 @@ TRACE_EVENT(kyber_latency,
 
 TRACE_EVENT(kyber_adjust,
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	TP_PROTO(dev_t dev, const char *domain, unsigned int depth),
-
-	TP_ARGS(dev, domain, depth),
-=======
 	TP_PROTO(struct request_queue *q, const char *domain,
 		 unsigned int depth),
 
 	TP_ARGS(q, domain, depth),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	TP_PROTO(dev_t dev, const char *domain, unsigned int depth),
-
-	TP_ARGS(dev, domain, depth),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	TP_STRUCT__entry(
 		__field(	dev_t,	dev			)
@@ -95,15 +59,7 @@ TRACE_EVENT(kyber_adjust,
 	),
 
 	TP_fast_assign(
-<<<<<<< HEAD
-<<<<<<< HEAD
-		__entry->dev		= dev;
-=======
 		__entry->dev		= disk_devt(queue_to_disk(q));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		__entry->dev		= dev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		strlcpy(__entry->domain, domain, sizeof(__entry->domain));
 		__entry->depth		= depth;
 	),
@@ -115,21 +71,9 @@ TRACE_EVENT(kyber_adjust,
 
 TRACE_EVENT(kyber_throttled,
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	TP_PROTO(dev_t dev, const char *domain),
-
-	TP_ARGS(dev, domain),
-=======
 	TP_PROTO(struct request_queue *q, const char *domain),
 
 	TP_ARGS(q, domain),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	TP_PROTO(dev_t dev, const char *domain),
-
-	TP_ARGS(dev, domain),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	TP_STRUCT__entry(
 		__field(	dev_t,	dev			)
@@ -137,15 +81,7 @@ TRACE_EVENT(kyber_throttled,
 	),
 
 	TP_fast_assign(
-<<<<<<< HEAD
-<<<<<<< HEAD
-		__entry->dev		= dev;
-=======
 		__entry->dev		= disk_devt(queue_to_disk(q));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		__entry->dev		= dev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		strlcpy(__entry->domain, domain, sizeof(__entry->domain));
 	),
 

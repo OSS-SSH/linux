@@ -243,9 +243,6 @@ struct btrfsic_state {
 	u32 datablock_size;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void btrfsic_block_init(struct btrfsic_block *b);
 static struct btrfsic_block *btrfsic_block_alloc(void);
 static void btrfsic_block_free(struct btrfsic_block *b);
@@ -287,9 +284,6 @@ static struct btrfsic_stack_frame *btrfsic_stack_frame_alloc(void);
 static void btrfsic_stack_frame_free(struct btrfsic_stack_frame *sf);
 static int btrfsic_process_superblock(struct btrfsic_state *state,
 				      struct btrfs_fs_devices *fs_devices);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int btrfsic_process_metablock(struct btrfsic_state *state,
 				     struct btrfsic_block *block,
 				     struct btrfsic_block_data_ctx *block_ctx,
@@ -319,9 +313,6 @@ static int btrfsic_map_block(struct btrfsic_state *state, u64 bytenr, u32 len,
 static void btrfsic_release_block_ctx(struct btrfsic_block_data_ctx *block_ctx);
 static int btrfsic_read_block(struct btrfsic_state *state,
 			      struct btrfsic_block_data_ctx *block_ctx);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void btrfsic_dump_database(struct btrfsic_state *state);
 static int btrfsic_test_for_metadata(struct btrfsic_state *state,
 				     char **datav, unsigned int num_pages);
@@ -330,9 +321,6 @@ static void btrfsic_process_written_block(struct btrfsic_dev_state *dev_state,
 					  unsigned int num_pages,
 					  struct bio *bio, int *bio_is_patched,
 					  int submit_bio_bh_rw);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int btrfsic_process_written_superblock(
 		struct btrfsic_state *state,
 		struct btrfsic_block *const block,
@@ -1570,20 +1558,10 @@ static void btrfsic_release_block_ctx(struct btrfsic_block_data_ctx *block_ctx)
 		/* Pages must be unmapped in reverse order */
 		while (num_pages > 0) {
 			num_pages--;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (block_ctx->datav[num_pages])
-				block_ctx->datav[num_pages] = NULL;
-=======
 			if (block_ctx->datav[num_pages]) {
 				kunmap_local(block_ctx->datav[num_pages]);
 				block_ctx->datav[num_pages] = NULL;
 			}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (block_ctx->datav[num_pages])
-				block_ctx->datav[num_pages] = NULL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (block_ctx->pagev[num_pages]) {
 				__free_page(block_ctx->pagev[num_pages]);
 				block_ctx->pagev[num_pages] = NULL;
@@ -1660,15 +1638,7 @@ static int btrfsic_read_block(struct btrfsic_state *state,
 		i = j;
 	}
 	for (i = 0; i < num_pages; i++)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		block_ctx->datav[i] = page_address(block_ctx->pagev[i]);
-=======
 		block_ctx->datav[i] = kmap_local_page(block_ctx->pagev[i]);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		block_ctx->datav[i] = page_address(block_ctx->pagev[i]);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return block_ctx->len;
 }
@@ -2733,15 +2703,7 @@ static void __btrfsic_submit_bio(struct bio *bio)
 
 		bio_for_each_segment(bvec, bio, iter) {
 			BUG_ON(bvec.bv_len != PAGE_SIZE);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			mapped_datav[i] = page_address(bvec.bv_page);
-=======
 			mapped_datav[i] = kmap_local_page(bvec.bv_page);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			mapped_datav[i] = page_address(bvec.bv_page);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			i++;
 
 			if (dev_state->state->print_mask &
@@ -2754,15 +2716,9 @@ static void __btrfsic_submit_bio(struct bio *bio)
 					      mapped_datav, segs,
 					      bio, &bio_is_patched,
 					      bio->bi_opf);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		/* Unmap in reverse order */
 		for (--i; i >= 0; i--)
 			kunmap_local(mapped_datav[i]);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree(mapped_datav);
 	} else if (NULL != dev_state && (bio->bi_opf & REQ_PREFLUSH)) {
 		if (dev_state->state->print_mask &

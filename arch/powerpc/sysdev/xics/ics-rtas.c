@@ -24,9 +24,6 @@ static int ibm_set_xive;
 static int ibm_int_on;
 static int ibm_int_off;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int ics_rtas_map(struct ics *ics, unsigned int virq);
 static void ics_rtas_mask_unknown(struct ics *ics, unsigned long vec);
 static long ics_rtas_get_server(struct ics *ics, unsigned long vec);
@@ -40,9 +37,6 @@ static struct ics ics_rtas = {
 	.host_match	= ics_rtas_host_match,
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void ics_rtas_unmask_irq(struct irq_data *d)
 {
 	unsigned int hw_irq = (unsigned int)irqd_to_hwirq(d);
@@ -76,9 +70,6 @@ static void ics_rtas_unmask_irq(struct irq_data *d)
 
 static unsigned int ics_rtas_startup(struct irq_data *d)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_PCI_MSI
 	/*
 	 * The generic MSI code returns with the interrupt disabled on the
@@ -88,9 +79,6 @@ static unsigned int ics_rtas_startup(struct irq_data *d)
 	if (irq_data_get_msi_desc(d))
 		pci_msi_unmask_irq(d);
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* unmask it */
 	ics_rtas_unmask_irq(d);
 	return 0;
@@ -158,18 +146,6 @@ static int ics_rtas_set_affinity(struct irq_data *d,
 		return -1;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	pr_debug("%s: irq %d [hw 0x%x] server: 0x%x\n", __func__, d->irq,
-		 hw_irq, irq_server);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	pr_debug("%s: irq %d [hw 0x%x] server: 0x%x\n", __func__, d->irq,
-		 hw_irq, irq_server);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = rtas_call_reentrant(ibm_set_xive, 3, 1, NULL,
 				     hw_irq, irq_server, xics_status[1]);
 
@@ -193,19 +169,9 @@ static struct irq_chip ics_rtas_irq_chip = {
 	.irq_retrigger = xics_retrigger,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int ics_rtas_check(struct ics *ics, unsigned int hw_irq)
-{
-=======
 static int ics_rtas_map(struct ics *ics, unsigned int virq)
 {
 	unsigned int hw_irq = (unsigned int)virq_to_hw(virq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int ics_rtas_check(struct ics *ics, unsigned int hw_irq)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int status[2];
 	int rc;
 
@@ -217,15 +183,9 @@ static int ics_rtas_check(struct ics *ics, unsigned int hw_irq)
 	if (rc)
 		return -ENXIO;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	irq_set_chip_and_handler(virq, &ics_rtas_irq_chip, handle_fasteoi_irq);
 	irq_set_chip_data(virq, &ics_rtas);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -253,24 +213,6 @@ static int ics_rtas_host_match(struct ics *ics, struct device_node *node)
 	return !of_device_is_compatible(node, "chrp,iic");
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* Only one global & state struct ics */
-static struct ics ics_rtas = {
-	.check		= ics_rtas_check,
-	.mask_unknown	= ics_rtas_mask_unknown,
-	.get_server	= ics_rtas_get_server,
-	.host_match	= ics_rtas_host_match,
-	.chip = &ics_rtas_irq_chip,
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 __init int ics_rtas_init(void)
 {
 	ibm_get_xive = rtas_token("ibm,get-xive");

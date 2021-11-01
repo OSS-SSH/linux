@@ -26,14 +26,6 @@
 #include <linux/moduleparam.h>
 #include <linux/dma-mapping.h>
 #include <linux/debugfs.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/platform_device.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/platform_device.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/slab.h>
 
 #include <asm/byteorder.h>
@@ -711,65 +703,24 @@ EXPORT_SYMBOL_GPL(ehci_setup);
 static irqreturn_t ehci_irq (struct usb_hcd *hcd)
 {
 	struct ehci_hcd		*ehci = hcd_to_ehci (hcd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32			status, current_status, masked_status, pcd_status = 0;
-	u32			cmd;
-=======
 	u32			status, masked_status, pcd_status = 0, cmd;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32			status, current_status, masked_status, pcd_status = 0;
-	u32			cmd;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			bh;
 
 	spin_lock(&ehci->lock);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	status = 0;
-	current_status = ehci_readl(ehci, &ehci->regs->status);
-restart:
-
-	/* e.g. cardbus physical eject */
-	if (current_status == ~(u32) 0) {
-		ehci_dbg (ehci, "device removed\n");
-		goto dead;
-	}
-	status |= current_status;
-=======
 	status = ehci_readl(ehci, &ehci->regs->status);
-=======
-	status = 0;
-	current_status = ehci_readl(ehci, &ehci->regs->status);
-restart:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* e.g. cardbus physical eject */
-	if (current_status == ~(u32) 0) {
+	if (status == ~(u32) 0) {
 		ehci_dbg (ehci, "device removed\n");
 		goto dead;
 	}
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	status |= current_status;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * We don't use STS_FLR, but some controllers don't like it to
 	 * remain on, so mask it out along with the other status bits.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	masked_status = current_status & (INTR_MASK | STS_FLR);
-=======
 	masked_status = status & (INTR_MASK | STS_FLR);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	masked_status = current_status & (INTR_MASK | STS_FLR);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Shared IRQ? */
 	if (!masked_status || unlikely(ehci->rh_state == EHCI_RH_HALTED)) {
@@ -779,21 +730,6 @@ restart:
 
 	/* clear (just) interrupts */
 	ehci_writel(ehci, masked_status, &ehci->regs->status);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	/* For edge interrupts, don't race with an interrupt bit being raised */
-	current_status = ehci_readl(ehci, &ehci->regs->status);
-	if (current_status & INTR_MASK)
-		goto restart;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cmd = ehci_readl(ehci, &ehci->regs->command);
 	bh = 0;
 
@@ -1332,89 +1268,33 @@ MODULE_LICENSE ("GPL");
 
 #ifdef CONFIG_USB_EHCI_SH
 #include "ehci-sh.c"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define PLATFORM_DRIVER		ehci_hcd_sh_driver
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #ifdef CONFIG_PPC_PS3
 #include "ehci-ps3.c"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define	PS3_SYSTEM_BUS_DRIVER	ps3_ehci_driver
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #ifdef CONFIG_USB_EHCI_HCD_PPC_OF
 #include "ehci-ppc-of.c"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define OF_PLATFORM_DRIVER	ehci_hcd_ppc_of_driver
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #ifdef CONFIG_XPS_USB_HCD_XILINX
 #include "ehci-xilinx-of.c"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#endif
-
-#ifdef CONFIG_SPARC_LEON
-#include "ehci-grlib.c"
-#endif
-
-static struct platform_driver * const platform_drivers[] = {
-#ifdef CONFIG_USB_EHCI_SH
-	&ehci_hcd_sh_driver,
-#endif
-#ifdef CONFIG_USB_EHCI_HCD_PPC_OF
-	&ehci_hcd_ppc_of_driver,
-#endif
-#ifdef CONFIG_XPS_USB_HCD_XILINX
-	&ehci_hcd_xilinx_of_driver,
-#endif
-#ifdef CONFIG_SPARC_LEON
-	&ehci_grlib_driver,
-#endif
-};
-=======
 #define XILINX_OF_PLATFORM_DRIVER	ehci_hcd_xilinx_of_driver
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+#endif
+
+#ifdef CONFIG_USB_EHCI_HCD_PMC_MSP
+#include "ehci-pmcmsp.c"
+#define	PLATFORM_DRIVER		ehci_hcd_msp_driver
 #endif
 
 #ifdef CONFIG_SPARC_LEON
 #include "ehci-grlib.c"
+#define PLATFORM_DRIVER		ehci_grlib_driver
 #endif
-
-static struct platform_driver * const platform_drivers[] = {
-#ifdef CONFIG_USB_EHCI_SH
-	&ehci_hcd_sh_driver,
-#endif
-#ifdef CONFIG_USB_EHCI_HCD_PPC_OF
-	&ehci_hcd_ppc_of_driver,
-#endif
-#ifdef CONFIG_XPS_USB_HCD_XILINX
-	&ehci_hcd_xilinx_of_driver,
-#endif
-#ifdef CONFIG_SPARC_LEON
-	&ehci_grlib_driver,
-#endif
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-};
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int __init ehci_hcd_init(void)
 {
@@ -1439,52 +1319,47 @@ static int __init ehci_hcd_init(void)
 	ehci_debug_root = debugfs_create_dir("ehci", usb_debug_root);
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	retval = platform_register_drivers(platform_drivers, ARRAY_SIZE(platform_drivers));
-	if (retval < 0)
-		goto clean0;
-
-#ifdef CONFIG_PPC_PS3
-	retval = ps3_ehci_driver_register(&ps3_ehci_driver);
-	if (retval < 0)
-		goto clean1;
-#endif
-
-	return 0;
-
-#ifdef CONFIG_PPC_PS3
-clean1:
-#endif
-	platform_unregister_drivers(platform_drivers, ARRAY_SIZE(platform_drivers));
-clean0:
-=======
 #ifdef PLATFORM_DRIVER
 	retval = platform_driver_register(&PLATFORM_DRIVER);
-=======
-	retval = platform_register_drivers(platform_drivers, ARRAY_SIZE(platform_drivers));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (retval < 0)
 		goto clean0;
+#endif
 
-#ifdef CONFIG_PPC_PS3
-	retval = ps3_ehci_driver_register(&ps3_ehci_driver);
+#ifdef PS3_SYSTEM_BUS_DRIVER
+	retval = ps3_ehci_driver_register(&PS3_SYSTEM_BUS_DRIVER);
 	if (retval < 0)
-		goto clean1;
+		goto clean2;
 #endif
 
-	return 0;
-
-#ifdef CONFIG_PPC_PS3
-clean1:
+#ifdef OF_PLATFORM_DRIVER
+	retval = platform_driver_register(&OF_PLATFORM_DRIVER);
+	if (retval < 0)
+		goto clean3;
 #endif
-	platform_unregister_drivers(platform_drivers, ARRAY_SIZE(platform_drivers));
+
+#ifdef XILINX_OF_PLATFORM_DRIVER
+	retval = platform_driver_register(&XILINX_OF_PLATFORM_DRIVER);
+	if (retval < 0)
+		goto clean4;
+#endif
+	return retval;
+
+#ifdef XILINX_OF_PLATFORM_DRIVER
+	/* platform_driver_unregister(&XILINX_OF_PLATFORM_DRIVER); */
+clean4:
+#endif
+#ifdef OF_PLATFORM_DRIVER
+	platform_driver_unregister(&OF_PLATFORM_DRIVER);
+clean3:
+#endif
+#ifdef PS3_SYSTEM_BUS_DRIVER
+	ps3_ehci_driver_unregister(&PS3_SYSTEM_BUS_DRIVER);
+clean2:
+#endif
+#ifdef PLATFORM_DRIVER
+	platform_driver_unregister(&PLATFORM_DRIVER);
 clean0:
-<<<<<<< HEAD
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_DYNAMIC_DEBUG
 	debugfs_remove(ehci_debug_root);
 	ehci_debug_root = NULL;
@@ -1496,13 +1371,6 @@ module_init(ehci_hcd_init);
 
 static void __exit ehci_hcd_cleanup(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifdef CONFIG_PPC_PS3
-	ps3_ehci_driver_unregister(&ps3_ehci_driver);
-#endif
-	platform_unregister_drivers(platform_drivers, ARRAY_SIZE(platform_drivers));
-=======
 #ifdef XILINX_OF_PLATFORM_DRIVER
 	platform_driver_unregister(&XILINX_OF_PLATFORM_DRIVER);
 #endif
@@ -1515,13 +1383,6 @@ static void __exit ehci_hcd_cleanup(void)
 #ifdef PS3_SYSTEM_BUS_DRIVER
 	ps3_ehci_driver_unregister(&PS3_SYSTEM_BUS_DRIVER);
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifdef CONFIG_PPC_PS3
-	ps3_ehci_driver_unregister(&ps3_ehci_driver);
-#endif
-	platform_unregister_drivers(platform_drivers, ARRAY_SIZE(platform_drivers));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_DYNAMIC_DEBUG
 	debugfs_remove(ehci_debug_root);
 #endif

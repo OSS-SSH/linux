@@ -775,15 +775,6 @@ static bool ext4_fc_add_tlv(struct super_block *sb, u16 tag, u16 len, u8 *val,
 }
 
 /* Same as above, but adds dentry tlv. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static bool ext4_fc_add_dentry_tlv(struct super_block *sb, u32 *crc,
-				   struct ext4_fc_dentry_update *fc_dentry)
-{
-	struct ext4_fc_dentry_info fcd;
-	struct ext4_fc_tl tl;
-	int dlen = fc_dentry->fcd_name.len;
-=======
 static  bool ext4_fc_add_dentry_tlv(struct super_block *sb, u16 tag,
 					int parent_ino, int ino, int dlen,
 					const unsigned char *dname,
@@ -791,50 +782,21 @@ static  bool ext4_fc_add_dentry_tlv(struct super_block *sb, u16 tag,
 {
 	struct ext4_fc_dentry_info fcd;
 	struct ext4_fc_tl tl;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static bool ext4_fc_add_dentry_tlv(struct super_block *sb, u32 *crc,
-				   struct ext4_fc_dentry_update *fc_dentry)
-{
-	struct ext4_fc_dentry_info fcd;
-	struct ext4_fc_tl tl;
-	int dlen = fc_dentry->fcd_name.len;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 *dst = ext4_fc_reserve_space(sb, sizeof(tl) + sizeof(fcd) + dlen,
 					crc);
 
 	if (!dst)
 		return false;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	fcd.fc_parent_ino = cpu_to_le32(fc_dentry->fcd_parent);
-	fcd.fc_ino = cpu_to_le32(fc_dentry->fcd_ino);
-	tl.fc_tag = cpu_to_le16(fc_dentry->fcd_op);
-=======
 	fcd.fc_parent_ino = cpu_to_le32(parent_ino);
 	fcd.fc_ino = cpu_to_le32(ino);
 	tl.fc_tag = cpu_to_le16(tag);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	fcd.fc_parent_ino = cpu_to_le32(fc_dentry->fcd_parent);
-	fcd.fc_ino = cpu_to_le32(fc_dentry->fcd_ino);
-	tl.fc_tag = cpu_to_le16(fc_dentry->fcd_op);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tl.fc_len = cpu_to_le16(sizeof(fcd) + dlen);
 	ext4_fc_memcpy(sb, dst, &tl, sizeof(tl), crc);
 	dst += sizeof(tl);
 	ext4_fc_memcpy(sb, dst, &fcd, sizeof(fcd), crc);
 	dst += sizeof(fcd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ext4_fc_memcpy(sb, dst, fc_dentry->fcd_name.name, dlen, crc);
-=======
 	ext4_fc_memcpy(sb, dst, dname, dlen, crc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ext4_fc_memcpy(sb, dst, fc_dentry->fcd_name.name, dlen, crc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dst += dlen;
 
 	return true;
@@ -931,21 +893,6 @@ static int ext4_fc_write_inode_data(struct inode *inode, u32 *crc)
 					    sizeof(lrange), (u8 *)&lrange, crc))
 				return -ENOSPC;
 		} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			unsigned int max = (map.m_flags & EXT4_MAP_UNWRITTEN) ?
-				EXT_UNWRITTEN_MAX_LEN : EXT_INIT_MAX_LEN;
-
-			/* Limit the number of blocks in one extent */
-			map.m_len = min(max, map.m_len);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			fc_ext.fc_ino = cpu_to_le32(inode->i_ino);
 			ex = (struct ext4_extent *)&fc_ext.fc_ex;
 			ex->ee_block = cpu_to_le32(map.m_lblk);
@@ -1045,19 +992,11 @@ __releases(&sbi->s_fc_lock)
 				 &sbi->s_fc_dentry_q[FC_Q_MAIN], fcd_list) {
 		if (fc_dentry->fcd_op != EXT4_FC_TAG_CREAT) {
 			spin_unlock(&sbi->s_fc_lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (!ext4_fc_add_dentry_tlv(sb, crc, fc_dentry)) {
-=======
 			if (!ext4_fc_add_dentry_tlv(
 				sb, fc_dentry->fcd_op,
 				fc_dentry->fcd_parent, fc_dentry->fcd_ino,
 				fc_dentry->fcd_name.len,
 				fc_dentry->fcd_name.name, crc)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (!ext4_fc_add_dentry_tlv(sb, crc, fc_dentry)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ret = -ENOSPC;
 				goto lock_and_exit;
 			}
@@ -1096,19 +1035,11 @@ __releases(&sbi->s_fc_lock)
 		if (ret)
 			goto lock_and_exit;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!ext4_fc_add_dentry_tlv(sb, crc, fc_dentry)) {
-=======
 		if (!ext4_fc_add_dentry_tlv(
 			sb, fc_dentry->fcd_op,
 			fc_dentry->fcd_parent, fc_dentry->fcd_ino,
 			fc_dentry->fcd_name.len,
 			fc_dentry->fcd_name.name, crc)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (!ext4_fc_add_dentry_tlv(sb, crc, fc_dentry)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ret = -ENOSPC;
 			goto lock_and_exit;
 		}

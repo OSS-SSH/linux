@@ -10,15 +10,7 @@ Required properties:
 			  transition and not stable yet.
 	Please refer to Documentation/devicetree/bindings/clock/clock-bindings.txt for
 	generic clock consumer properties.
-<<<<<<< HEAD
-<<<<<<< HEAD
-- operating-points-v2: Please refer to Documentation/devicetree/bindings/opp/opp-v2.yaml
-=======
 - operating-points-v2: Please refer to Documentation/devicetree/bindings/opp/opp.txt
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-- operating-points-v2: Please refer to Documentation/devicetree/bindings/opp/opp-v2.yaml
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	for detail.
 - proc-supply: Regulator for Vproc of CPU cluster.
 

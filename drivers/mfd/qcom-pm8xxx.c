@@ -122,15 +122,7 @@ bail:
 
 static int pm8xxx_irq_block_handler(struct pm_irq_chip *chip, int block)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int pmirq, i, ret = 0;
-=======
 	int pmirq, irq, i, ret = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int pmirq, i, ret = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int bits;
 
 	ret = pm8xxx_read_block_irq(chip, block, &bits);
@@ -147,16 +139,8 @@ static int pm8xxx_irq_block_handler(struct pm_irq_chip *chip, int block)
 	for (i = 0; i < 8; i++) {
 		if (bits & (1 << i)) {
 			pmirq = block * 8 + i;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			generic_handle_domain_irq(chip->irqdomain, pmirq);
-=======
 			irq = irq_find_mapping(chip->irqdomain, pmirq);
 			generic_handle_irq(irq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			generic_handle_domain_irq(chip->irqdomain, pmirq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 	return 0;
@@ -215,15 +199,7 @@ static void pm8xxx_irq_handler(struct irq_desc *desc)
 static void pm8821_irq_block_handler(struct pm_irq_chip *chip,
 				     int master, int block)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int pmirq, i, ret;
-=======
 	int pmirq, irq, i, ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int pmirq, i, ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int bits;
 
 	ret = regmap_read(chip->regmap,
@@ -240,16 +216,8 @@ static void pm8821_irq_block_handler(struct pm_irq_chip *chip,
 	for (i = 0; i < 8; i++) {
 		if (bits & BIT(i)) {
 			pmirq = block * 8 + i;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			generic_handle_domain_irq(chip->irqdomain, pmirq);
-=======
 			irq = irq_find_mapping(chip->irqdomain, pmirq);
 			generic_handle_irq(irq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			generic_handle_domain_irq(chip->irqdomain, pmirq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }

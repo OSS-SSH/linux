@@ -1338,16 +1338,6 @@ static void rtw_init_ht_cap(struct rtw_dev *rtwdev,
 
 	if (rtw_chip_has_rx_ldpc(rtwdev))
 		ht_cap->cap |= IEEE80211_HT_CAP_LDPC_CODING;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (rtw_chip_has_tx_stbc(rtwdev))
-		ht_cap->cap |= IEEE80211_HT_CAP_TX_STBC;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (rtw_chip_has_tx_stbc(rtwdev))
-		ht_cap->cap |= IEEE80211_HT_CAP_TX_STBC;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (efuse->hw_cap.bw & BIT(RTW_CHANNEL_WIDTH_40))
 		ht_cap->cap |= IEEE80211_HT_CAP_SUP_WIDTH_20_40 |

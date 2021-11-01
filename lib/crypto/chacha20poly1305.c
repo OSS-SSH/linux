@@ -354,15 +354,7 @@ bool chacha20poly1305_decrypt_sg_inplace(struct scatterlist *src, size_t src_len
 }
 EXPORT_SYMBOL(chacha20poly1305_decrypt_sg_inplace);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int __init chacha20poly1305_init(void)
-=======
 static int __init mod_init(void)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int __init chacha20poly1305_init(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (!IS_ENABLED(CONFIG_CRYPTO_MANAGER_DISABLE_TESTS) &&
 	    WARN_ON(!chacha20poly1305_selftest()))
@@ -370,30 +362,12 @@ static int __init chacha20poly1305_init(void)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void __exit chacha20poly1305_exit(void)
-{
-}
-
-module_init(chacha20poly1305_init);
-module_exit(chacha20poly1305_exit);
-=======
 static void __exit mod_exit(void)
 {
 }
 
 module_init(mod_init);
 module_exit(mod_exit);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void __exit chacha20poly1305_exit(void)
-{
-}
-
-module_init(chacha20poly1305_init);
-module_exit(chacha20poly1305_exit);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_LICENSE("GPL v2");
 MODULE_DESCRIPTION("ChaCha20Poly1305 AEAD construction");
 MODULE_AUTHOR("Jason A. Donenfeld <Jason@zx2c4.com>");

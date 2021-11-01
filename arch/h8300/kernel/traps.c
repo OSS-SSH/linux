@@ -39,16 +39,10 @@ void __init base_trap_init(void)
 {
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void __init trap_init(void)
 {
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 asmlinkage void set_esp0(unsigned long ssp)
 {
 	current->thread.esp0 = ssp;

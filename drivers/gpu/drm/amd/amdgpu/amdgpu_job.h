@@ -46,17 +46,7 @@ struct amdgpu_job {
 	struct amdgpu_sync	sync;
 	struct amdgpu_sync	sched_sync;
 	struct amdgpu_ib	*ibs;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct dma_fence	hw_fence;
-	struct dma_fence	*external_hw_fence;
-=======
 	struct dma_fence	*fence; /* the hw fence */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct dma_fence	hw_fence;
-	struct dma_fence	*external_hw_fence;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uint32_t		preamble_status;
 	uint32_t                preemption_status;
 	uint32_t		num_ibs;
@@ -72,18 +62,6 @@ struct amdgpu_job {
 	/* user fence handling */
 	uint64_t		uf_addr;
 	uint64_t		uf_sequence;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	/* job_run_counter >= 1 means a resubmit job */
-	uint32_t		job_run_counter;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	/* job_run_counter >= 1 means a resubmit job */
-	uint32_t		job_run_counter;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 int amdgpu_job_alloc(struct amdgpu_device *adev, unsigned num_ibs,

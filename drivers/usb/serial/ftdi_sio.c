@@ -219,14 +219,6 @@ static const struct usb_device_id id_table_combined[] = {
 	{ USB_DEVICE(FTDI_VID, FTDI_MTXORB_6_PID) },
 	{ USB_DEVICE(FTDI_VID, FTDI_R2000KU_TRUE_RNG) },
 	{ USB_DEVICE(FTDI_VID, FTDI_VARDAAN_PID) },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ USB_DEVICE(FTDI_VID, FTDI_AUTO_M3_OP_COM_V2_PID) },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ USB_DEVICE(FTDI_VID, FTDI_AUTO_M3_OP_COM_V2_PID) },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ USB_DEVICE(MTXORB_VID, MTXORB_FTDI_RANGE_0100_PID) },
 	{ USB_DEVICE(MTXORB_VID, MTXORB_FTDI_RANGE_0101_PID) },
 	{ USB_DEVICE(MTXORB_VID, MTXORB_FTDI_RANGE_0102_PID) },
@@ -2945,13 +2937,5 @@ MODULE_AUTHOR(DRIVER_AUTHOR);
 MODULE_DESCRIPTION(DRIVER_DESC);
 MODULE_LICENSE("GPL");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-module_param(ndi_latency_timer, int, 0644);
-=======
 module_param(ndi_latency_timer, int, S_IRUGO | S_IWUSR);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-module_param(ndi_latency_timer, int, 0644);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_PARM_DESC(ndi_latency_timer, "NDI device latency timer override");

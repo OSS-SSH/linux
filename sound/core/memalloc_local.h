@@ -3,15 +3,7 @@
 #define __MEMALLOC_LOCAL_H
 
 struct snd_malloc_ops {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	void *(*alloc)(struct snd_dma_buffer *dmab, size_t size);
-=======
 	int (*alloc)(struct snd_dma_buffer *dmab, size_t size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	void *(*alloc)(struct snd_dma_buffer *dmab, size_t size);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*free)(struct snd_dma_buffer *dmab);
 	dma_addr_t (*get_addr)(struct snd_dma_buffer *dmab, size_t offset);
 	struct page *(*get_page)(struct snd_dma_buffer *dmab, size_t offset);

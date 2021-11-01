@@ -19,14 +19,6 @@
 
 #define CMDQ_OP_CODE_MASK		(0xff << CMDQ_OP_CODE_SHIFT)
 #define CMDQ_NUM_CMD(t)			(t->cmd_buf_size / CMDQ_INST_SIZE)
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define CMDQ_GCE_NUM_MAX		(2)
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define CMDQ_GCE_NUM_MAX		(2)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define CMDQ_CURR_IRQ_STATUS		0x10
 #define CMDQ_SYNC_TOKEN_UPDATE		0x68
@@ -44,16 +36,6 @@
 #define CMDQ_THR_WAIT_TOKEN		0x30
 #define CMDQ_THR_PRIORITY		0x40
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define GCE_GCTL_VALUE			0x48
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define GCE_GCTL_VALUE			0x48
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define CMDQ_THR_ACTIVE_SLOT_CYCLES	0x3200
 #define CMDQ_THR_ENABLED		0x1
 #define CMDQ_THR_DISABLED		0x0
@@ -91,40 +73,14 @@ struct cmdq {
 	u32			thread_nr;
 	u32			irq_mask;
 	struct cmdq_thread	*thread;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct clk_bulk_data	clocks[CMDQ_GCE_NUM_MAX];
-	bool			suspended;
-	u8			shift_pa;
-	bool			control_by_sw;
-	u32			gce_num;
-=======
 	struct clk		*clock;
 	bool			suspended;
 	u8			shift_pa;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct clk_bulk_data	clocks[CMDQ_GCE_NUM_MAX];
-	bool			suspended;
-	u8			shift_pa;
-	bool			control_by_sw;
-	u32			gce_num;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct gce_plat {
 	u32 thread_nr;
 	u8 shift;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool control_by_sw;
-	u32 gce_num;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool control_by_sw;
-	u32 gce_num;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 u8 cmdq_get_shift_pa(struct mbox_chan *chan)
@@ -164,31 +120,11 @@ static void cmdq_init(struct cmdq *cmdq)
 {
 	int i;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	WARN_ON(clk_bulk_enable(cmdq->gce_num, cmdq->clocks));
-	if (cmdq->control_by_sw)
-		writel(0x7, cmdq->base + GCE_GCTL_VALUE);
-	writel(CMDQ_THR_ACTIVE_SLOT_CYCLES, cmdq->base + CMDQ_THR_SLOT_CYCLES);
-	for (i = 0; i <= CMDQ_MAX_EVENT; i++)
-		writel(i, cmdq->base + CMDQ_SYNC_TOKEN_UPDATE);
-	clk_bulk_disable(cmdq->gce_num, cmdq->clocks);
-=======
 	WARN_ON(clk_enable(cmdq->clock) < 0);
 	writel(CMDQ_THR_ACTIVE_SLOT_CYCLES, cmdq->base + CMDQ_THR_SLOT_CYCLES);
 	for (i = 0; i <= CMDQ_MAX_EVENT; i++)
 		writel(i, cmdq->base + CMDQ_SYNC_TOKEN_UPDATE);
 	clk_disable(cmdq->clock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	WARN_ON(clk_bulk_enable(cmdq->gce_num, cmdq->clocks));
-	if (cmdq->control_by_sw)
-		writel(0x7, cmdq->base + GCE_GCTL_VALUE);
-	writel(CMDQ_THR_ACTIVE_SLOT_CYCLES, cmdq->base + CMDQ_THR_SLOT_CYCLES);
-	for (i = 0; i <= CMDQ_MAX_EVENT; i++)
-		writel(i, cmdq->base + CMDQ_SYNC_TOKEN_UPDATE);
-	clk_bulk_disable(cmdq->gce_num, cmdq->clocks);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int cmdq_thread_reset(struct cmdq *cmdq, struct cmdq_thread *thread)
@@ -232,17 +168,7 @@ static void cmdq_task_insert_into_thread(struct cmdq_task *task)
 	dma_sync_single_for_cpu(dev, prev_task->pa_base,
 				prev_task->pkt->cmd_buf_size, DMA_TO_DEVICE);
 	prev_task_base[CMDQ_NUM_CMD(prev_task->pkt) - 1] =
-<<<<<<< HEAD
-<<<<<<< HEAD
-		(u64)CMDQ_JUMP_BY_PA << 32 |
-		(task->pa_base >> task->cmdq->shift_pa);
-=======
 		(u64)CMDQ_JUMP_BY_PA << 32 | task->pa_base;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		(u64)CMDQ_JUMP_BY_PA << 32 |
-		(task->pa_base >> task->cmdq->shift_pa);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dma_sync_single_for_device(dev, prev_task->pa_base,
 				   prev_task->pkt->cmd_buf_size, DMA_TO_DEVICE);
 
@@ -336,15 +262,7 @@ static void cmdq_thread_irq_handler(struct cmdq *cmdq,
 
 	if (list_empty(&thread->task_busy_list)) {
 		cmdq_thread_disable(cmdq, thread);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		clk_bulk_disable(cmdq->gce_num, cmdq->clocks);
-=======
 		clk_disable(cmdq->clock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		clk_bulk_disable(cmdq->gce_num, cmdq->clocks);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -389,15 +307,7 @@ static int cmdq_suspend(struct device *dev)
 	if (task_running)
 		dev_warn(dev, "exist running task(s) in suspend\n");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clk_bulk_unprepare(cmdq->gce_num, cmdq->clocks);
-=======
 	clk_unprepare(cmdq->clock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clk_bulk_unprepare(cmdq->gce_num, cmdq->clocks);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -406,15 +316,7 @@ static int cmdq_resume(struct device *dev)
 {
 	struct cmdq *cmdq = dev_get_drvdata(dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	WARN_ON(clk_bulk_prepare(cmdq->gce_num, cmdq->clocks));
-=======
 	WARN_ON(clk_prepare(cmdq->clock) < 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	WARN_ON(clk_bulk_prepare(cmdq->gce_num, cmdq->clocks));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cmdq->suspended = false;
 	return 0;
 }
@@ -423,16 +325,8 @@ static int cmdq_remove(struct platform_device *pdev)
 {
 	struct cmdq *cmdq = platform_get_drvdata(pdev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clk_bulk_unprepare(cmdq->gce_num, cmdq->clocks);
-=======
 	clk_unprepare(cmdq->clock);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clk_bulk_unprepare(cmdq->gce_num, cmdq->clocks);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -458,17 +352,7 @@ static int cmdq_mbox_send_data(struct mbox_chan *chan, void *data)
 	task->pkt = pkt;
 
 	if (list_empty(&thread->task_busy_list)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		WARN_ON(clk_bulk_enable(cmdq->gce_num, cmdq->clocks));
-
-=======
 		WARN_ON(clk_enable(cmdq->clock) < 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		WARN_ON(clk_bulk_enable(cmdq->gce_num, cmdq->clocks));
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * The thread reset will clear thread related register to 0,
 		 * including pc, end, priority, irq, suspend and enable. Thus
@@ -540,17 +424,7 @@ static void cmdq_mbox_shutdown(struct mbox_chan *chan)
 	}
 
 	cmdq_thread_disable(cmdq, thread);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clk_bulk_disable(cmdq->gce_num, cmdq->clocks);
-
-=======
 	clk_disable(cmdq->clock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clk_bulk_disable(cmdq->gce_num, cmdq->clocks);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 done:
 	/*
 	 * The thread->task_busy_list empty means thread already disable. The
@@ -595,15 +469,7 @@ static int cmdq_mbox_flush(struct mbox_chan *chan, unsigned long timeout)
 
 	cmdq_thread_resume(thread);
 	cmdq_thread_disable(cmdq, thread);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clk_bulk_disable(cmdq->gce_num, cmdq->clocks);
-=======
 	clk_disable(cmdq->clock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clk_bulk_disable(cmdq->gce_num, cmdq->clocks);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 out:
 	spin_unlock_irqrestore(&thread->chan->lock, flags);
@@ -652,19 +518,6 @@ static int cmdq_probe(struct platform_device *pdev)
 	struct cmdq *cmdq;
 	int err, i;
 	struct gce_plat *plat_data;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct device_node *phandle = dev->of_node;
-	struct device_node *node;
-	int alias_id = 0;
-	char clk_name[4] = "gce";
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cmdq = devm_kzalloc(dev, sizeof(*cmdq), GFP_KERNEL);
 	if (!cmdq)
@@ -687,16 +540,6 @@ static int cmdq_probe(struct platform_device *pdev)
 
 	cmdq->thread_nr = plat_data->thread_nr;
 	cmdq->shift_pa = plat_data->shift;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cmdq->control_by_sw = plat_data->control_by_sw;
-	cmdq->gce_num = plat_data->gce_num;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cmdq->control_by_sw = plat_data->control_by_sw;
-	cmdq->gce_num = plat_data->gce_num;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cmdq->irq_mask = GENMASK(cmdq->thread_nr - 1, 0);
 	err = devm_request_irq(dev, cmdq->irq, cmdq_irq_handler, IRQF_SHARED,
 			       "mtk_cmdq", cmdq);
@@ -708,41 +551,10 @@ static int cmdq_probe(struct platform_device *pdev)
 	dev_dbg(dev, "cmdq device: addr:0x%p, va:0x%p, irq:%d\n",
 		dev, cmdq->base, cmdq->irq);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (cmdq->gce_num > 1) {
-		for_each_child_of_node(phandle->parent, node) {
-			char clk_id[8];
-
-			alias_id = of_alias_get_id(node, clk_name);
-			if (alias_id < cmdq->gce_num) {
-				snprintf(clk_id, sizeof(clk_id), "%s%d", clk_name, alias_id);
-				cmdq->clocks[alias_id].id = clk_id;
-				cmdq->clocks[alias_id].clk = of_clk_get(node, 0);
-				if (IS_ERR(cmdq->clocks[alias_id].clk)) {
-					dev_err(dev, "failed to get gce clk: %d\n", alias_id);
-					return PTR_ERR(cmdq->clocks[alias_id].clk);
-				}
-			}
-		}
-	} else {
-		cmdq->clocks[alias_id].id = clk_name;
-		cmdq->clocks[alias_id].clk = devm_clk_get(&pdev->dev, clk_name);
-		if (IS_ERR(cmdq->clocks[alias_id].clk)) {
-			dev_err(dev, "failed to get gce clk\n");
-			return PTR_ERR(cmdq->clocks[alias_id].clk);
-		}
-<<<<<<< HEAD
-=======
 	cmdq->clock = devm_clk_get(dev, "gce");
 	if (IS_ERR(cmdq->clock)) {
 		dev_err(dev, "failed to get gce clk\n");
 		return PTR_ERR(cmdq->clock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	cmdq->mbox.dev = dev;
@@ -778,17 +590,7 @@ static int cmdq_probe(struct platform_device *pdev)
 	}
 
 	platform_set_drvdata(pdev, cmdq);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	WARN_ON(clk_bulk_prepare(cmdq->gce_num, cmdq->clocks));
-=======
 	WARN_ON(clk_prepare(cmdq->clock) < 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	WARN_ON(clk_bulk_prepare(cmdq->gce_num, cmdq->clocks));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	cmdq_init(cmdq);
 
@@ -800,67 +602,14 @@ static const struct dev_pm_ops cmdq_pm_ops = {
 	.resume = cmdq_resume,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const struct gce_plat gce_plat_v2 = {
-	.thread_nr = 16,
-	.shift = 0,
-	.control_by_sw = false,
-	.gce_num = 1
-};
-
-static const struct gce_plat gce_plat_v3 = {
-	.thread_nr = 24,
-	.shift = 0,
-	.control_by_sw = false,
-	.gce_num = 1
-};
-
-static const struct gce_plat gce_plat_v4 = {
-	.thread_nr = 24,
-	.shift = 3,
-	.control_by_sw = false,
-	.gce_num = 1
-};
-
-static const struct gce_plat gce_plat_v5 = {
-	.thread_nr = 24,
-	.shift = 3,
-	.control_by_sw = true,
-	.gce_num = 2
-};
-
-static const struct gce_plat gce_plat_v6 = {
-	.thread_nr = 24,
-	.shift = 3,
-	.control_by_sw = false,
-	.gce_num = 2
-};
-<<<<<<< HEAD
-=======
 static const struct gce_plat gce_plat_v2 = {.thread_nr = 16};
 static const struct gce_plat gce_plat_v3 = {.thread_nr = 24};
 static const struct gce_plat gce_plat_v4 = {.thread_nr = 24, .shift = 3};
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct of_device_id cmdq_of_ids[] = {
 	{.compatible = "mediatek,mt8173-gce", .data = (void *)&gce_plat_v2},
 	{.compatible = "mediatek,mt8183-gce", .data = (void *)&gce_plat_v3},
 	{.compatible = "mediatek,mt6779-gce", .data = (void *)&gce_plat_v4},
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{.compatible = "mediatek,mt8192-gce", .data = (void *)&gce_plat_v5},
-	{.compatible = "mediatek,mt8195-gce", .data = (void *)&gce_plat_v6},
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{.compatible = "mediatek,mt8192-gce", .data = (void *)&gce_plat_v5},
-	{.compatible = "mediatek,mt8195-gce", .data = (void *)&gce_plat_v6},
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{}
 };
 

@@ -421,20 +421,8 @@ int snd_hdac_bus_reset_link(struct hdac_bus *bus, bool full_reset)
 	if (!full_reset)
 		goto skip_reset;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* clear STATESTS if not in reset */
-	if (snd_hdac_chip_readb(bus, GCTL) & AZX_GCTL_RESET)
-		snd_hdac_chip_writew(bus, STATESTS, STATESTS_INT_MASK);
-=======
 	/* clear STATESTS */
 	snd_hdac_chip_writew(bus, STATESTS, STATESTS_INT_MASK);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* clear STATESTS if not in reset */
-	if (snd_hdac_chip_readb(bus, GCTL) & AZX_GCTL_RESET)
-		snd_hdac_chip_writew(bus, STATESTS, STATESTS_INT_MASK);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* reset controller */
 	snd_hdac_bus_enter_link_reset(bus);

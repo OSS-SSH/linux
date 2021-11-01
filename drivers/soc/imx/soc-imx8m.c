@@ -5,14 +5,8 @@
 
 #include <linux/init.h>
 #include <linux/io.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <linux/module.h>
 #include <linux/nvmem-consumer.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/of_address.h>
 #include <linux/slab.h>
 #include <linux/sys_soc.h>
@@ -37,15 +31,7 @@
 
 struct imx8_soc_data {
 	char *name;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 (*soc_revision)(void);
-=======
 	u32 (*soc_revision)(struct device *dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 (*soc_revision)(void);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static u64 soc_uid;
@@ -66,15 +52,7 @@ static u32 imx8mq_soc_revision_from_atf(void)
 static inline u32 imx8mq_soc_revision_from_atf(void) { return 0; };
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static u32 __init imx8mq_soc_revision(void)
-=======
 static u32 __init imx8mq_soc_revision(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static u32 __init imx8mq_soc_revision(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct device_node *np;
 	void __iomem *ocotp_base;
@@ -99,12 +77,6 @@ static u32 __init imx8mq_soc_revision(void)
 			rev = REV_B1;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	soc_uid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH);
-	soc_uid <<= 32;
-	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
-=======
 	if (dev) {
 		int ret;
 
@@ -119,12 +91,6 @@ static u32 __init imx8mq_soc_revision(void)
 		soc_uid <<= 32;
 		soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	soc_uid = readl_relaxed(ocotp_base + OCOTP_UID_HIGH);
-	soc_uid <<= 32;
-	soc_uid |= readl_relaxed(ocotp_base + OCOTP_UID_LOW);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	iounmap(ocotp_base);
 	of_node_put(np);
@@ -154,15 +120,7 @@ static void __init imx8mm_soc_uid(void)
 	of_node_put(np);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static u32 __init imx8mm_soc_revision(void)
-=======
 static u32 __init imx8mm_soc_revision(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static u32 __init imx8mm_soc_revision(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct device_node *np;
 	void __iomem *anatop_base;
@@ -180,10 +138,6 @@ static u32 __init imx8mm_soc_revision(void)
 	iounmap(anatop_base);
 	of_node_put(np);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	imx8mm_soc_uid();
-=======
 	if (dev) {
 		int ret;
 
@@ -193,10 +147,6 @@ static u32 __init imx8mm_soc_revision(void)
 	} else {
 		imx8mm_soc_uid();
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	imx8mm_soc_uid();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return rev;
 }
@@ -221,15 +171,7 @@ static const struct imx8_soc_data imx8mp_soc_data = {
 	.soc_revision = imx8mm_soc_revision,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static __maybe_unused const struct of_device_id imx8_soc_match[] = {
-=======
 static __maybe_unused const struct of_device_id imx8_machine_match[] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static __maybe_unused const struct of_device_id imx8_soc_match[] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "fsl,imx8mq", .data = &imx8mq_soc_data, },
 	{ .compatible = "fsl,imx8mm", .data = &imx8mm_soc_data, },
 	{ .compatible = "fsl,imx8mn", .data = &imx8mn_soc_data, },
@@ -237,9 +179,6 @@ static __maybe_unused const struct of_device_id imx8_soc_match[] = {
 	{ }
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static __maybe_unused const struct of_device_id imx8_soc_match[] = {
 	{ .compatible = "fsl,imx8mq-soc", .data = &imx8mq_soc_data, },
 	{ .compatible = "fsl,imx8mm-soc", .data = &imx8mm_soc_data, },
@@ -248,23 +187,12 @@ static __maybe_unused const struct of_device_id imx8_soc_match[] = {
 	{ }
 };
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define imx8_revision(soc_rev) \
 	soc_rev ? \
 	kasprintf(GFP_KERNEL, "%d.%d", (soc_rev >> 4) & 0xf,  soc_rev & 0xf) : \
 	"unknown"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int __init imx8_soc_init(void)
-=======
 static int imx8_soc_info(struct platform_device *pdev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int __init imx8_soc_init(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct soc_device_attribute *soc_dev_attr;
 	struct soc_device *soc_dev;
@@ -283,18 +211,10 @@ static int __init imx8_soc_init(void)
 	if (ret)
 		goto free_soc;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	id = of_match_node(imx8_soc_match, of_root);
-=======
 	if (pdev)
 		id = of_match_node(imx8_soc_match, pdev->dev.of_node);
 	else
 		id = of_match_node(imx8_machine_match, of_root);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	id = of_match_node(imx8_soc_match, of_root);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!id) {
 		ret = -ENODEV;
 		goto free_soc;
@@ -303,11 +223,6 @@ static int __init imx8_soc_init(void)
 	data = id->data;
 	if (data) {
 		soc_dev_attr->soc_id = data->name;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (data->soc_revision)
-			soc_rev = data->soc_revision();
-=======
 		if (data->soc_revision) {
 			if (pdev) {
 				soc_rev = data->soc_revision(&pdev->dev);
@@ -318,11 +233,6 @@ static int __init imx8_soc_init(void)
 				soc_rev = data->soc_revision(NULL);
 			}
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (data->soc_revision)
-			soc_rev = data->soc_revision();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	soc_dev_attr->revision = imx8_revision(soc_rev);
@@ -360,10 +270,6 @@ free_soc:
 	kfree(soc_dev_attr);
 	return ret;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-device_initcall(imx8_soc_init);
-=======
 
 /* Retain device_initcall is for backward compatibility with DTS. */
 static int __init imx8_soc_init(void)
@@ -385,7 +291,3 @@ static struct platform_driver imx8_soc_info_driver = {
 
 module_platform_driver(imx8_soc_info_driver);
 MODULE_LICENSE("GPL v2");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-device_initcall(imx8_soc_init);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

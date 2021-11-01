@@ -56,20 +56,7 @@ static int ksz9477_i2c_remove(struct i2c_client *i2c)
 {
 	struct ksz_device *dev = i2c_get_clientdata(i2c);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (dev)
-		ksz_switch_remove(dev);
-
-	i2c_set_clientdata(i2c, NULL);
-<<<<<<< HEAD
-=======
 	ksz_switch_remove(dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -78,31 +65,8 @@ static void ksz9477_i2c_shutdown(struct i2c_client *i2c)
 {
 	struct ksz_device *dev = i2c_get_clientdata(i2c);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!dev)
-		return;
-
-	if (dev->dev_ops->shutdown)
-<<<<<<< HEAD
-		dev->dev_ops->shutdown(dev);
-
-	dsa_switch_shutdown(dev->ds);
-
-	i2c_set_clientdata(i2c, NULL);
-=======
 	if (dev && dev->dev_ops->shutdown)
 		dev->dev_ops->shutdown(dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev->dev_ops->shutdown(dev);
-
-	dsa_switch_shutdown(dev->ds);
-
-	i2c_set_clientdata(i2c, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct i2c_device_id ksz9477_i2c_id[] = {

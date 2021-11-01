@@ -862,19 +862,7 @@ static void igc_ethtool_get_stats(struct net_device *netdev,
 }
 
 static int igc_ethtool_get_coalesce(struct net_device *netdev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				    struct ethtool_coalesce *ec,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
-=======
 				    struct ethtool_coalesce *ec)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				    struct ethtool_coalesce *ec,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct igc_adapter *adapter = netdev_priv(netdev);
 
@@ -894,19 +882,7 @@ static int igc_ethtool_get_coalesce(struct net_device *netdev,
 }
 
 static int igc_ethtool_set_coalesce(struct net_device *netdev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				    struct ethtool_coalesce *ec,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
-=======
 				    struct ethtool_coalesce *ec)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				    struct ethtool_coalesce *ec,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct igc_adapter *adapter = netdev_priv(netdev);
 	int i;
@@ -1003,21 +979,6 @@ static int igc_ethtool_get_nfc_rule(struct igc_adapter *adapter,
 		eth_broadcast_addr(fsp->m_u.ether_spec.h_source);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (rule->filter.match_flags & IGC_FILTER_FLAG_USER_DATA) {
-		fsp->flow_type |= FLOW_EXT;
-		memcpy(fsp->h_ext.data, rule->filter.user_data, sizeof(fsp->h_ext.data));
-		memcpy(fsp->m_ext.data, rule->filter.user_mask, sizeof(fsp->m_ext.data));
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&adapter->nfc_rule_lock);
 	return 0;
 
@@ -1254,39 +1215,6 @@ static void igc_ethtool_init_nfc_rule(struct igc_nfc_rule *rule,
 		ether_addr_copy(rule->filter.dst_addr,
 				fsp->h_u.ether_spec.h_dest);
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	/* VLAN etype matching */
-	if ((fsp->flow_type & FLOW_EXT) && fsp->h_ext.vlan_etype) {
-		rule->filter.vlan_etype = fsp->h_ext.vlan_etype;
-		rule->filter.match_flags |= IGC_FILTER_FLAG_VLAN_ETYPE;
-	}
-
-	/* Check for user defined data */
-	if ((fsp->flow_type & FLOW_EXT) &&
-	    (fsp->h_ext.data[0] || fsp->h_ext.data[1])) {
-		rule->filter.match_flags |= IGC_FILTER_FLAG_USER_DATA;
-		memcpy(rule->filter.user_data, fsp->h_ext.data, sizeof(fsp->h_ext.data));
-		memcpy(rule->filter.user_mask, fsp->m_ext.data, sizeof(fsp->m_ext.data));
-	}
-
-	/* When multiple filter options or user data or vlan etype is set, use a
-	 * flex filter.
-	 */
-	if ((rule->filter.match_flags & IGC_FILTER_FLAG_USER_DATA) ||
-	    (rule->filter.match_flags & IGC_FILTER_FLAG_VLAN_ETYPE) ||
-	    (rule->filter.match_flags & (rule->filter.match_flags - 1)))
-		rule->flex = true;
-	else
-		rule->flex = false;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1316,17 +1244,11 @@ static int igc_ethtool_check_nfc_rule(struct igc_adapter *adapter,
 		return -EINVAL;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (flags & (flags - 1)) {
 		netdev_dbg(dev, "Rule with multiple matches not supported\n");
 		return -EOPNOTSUPP;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_for_each_entry(tmp, &adapter->nfc_rule_list, list) {
 		if (!memcmp(&rule->filter, &tmp->filter,
 			    sizeof(rule->filter)) &&
@@ -1358,18 +1280,12 @@ static int igc_ethtool_add_nfc_rule(struct igc_adapter *adapter,
 		return -EOPNOTSUPP;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if ((fsp->flow_type & FLOW_EXT) &&
 	    fsp->m_ext.vlan_tci != htons(VLAN_PRIO_MASK)) {
 		netdev_dbg(netdev, "VLAN mask not supported\n");
 		return -EOPNOTSUPP;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (fsp->ring_cookie >= adapter->num_rx_queues) {
 		netdev_dbg(netdev, "Invalid action\n");
 		return -EINVAL;

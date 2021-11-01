@@ -100,20 +100,6 @@ static enum da280_chipset da280_match_acpi_device(struct device *dev)
 	return (enum da280_chipset) id->driver_data;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void da280_disable(void *client)
-{
-	da280_enable(client, false);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int da280_probe(struct i2c_client *client,
 			const struct i2c_device_id *id)
 {
@@ -132,13 +118,7 @@ static int da280_probe(struct i2c_client *client,
 
 	data = iio_priv(indio_dev);
 	data->client = client;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	i2c_set_clientdata(client, indio_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	indio_dev->info = &da280_info;
 	indio_dev->modes = INDIO_DIRECT_MODE;
@@ -162,14 +142,6 @@ static int da280_probe(struct i2c_client *client,
 	if (ret < 0)
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = devm_add_action_or_reset(&client->dev, da280_disable, client);
-	if (ret)
-		return ret;
-
-	return devm_iio_device_register(&client->dev, indio_dev);
-=======
 	ret = iio_device_register(indio_dev);
 	if (ret < 0) {
 		dev_err(&client->dev, "device_register failed\n");
@@ -186,14 +158,6 @@ static int da280_remove(struct i2c_client *client)
 	iio_device_unregister(indio_dev);
 
 	return da280_enable(client, false);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = devm_add_action_or_reset(&client->dev, da280_disable, client);
-	if (ret)
-		return ret;
-
-	return devm_iio_device_register(&client->dev, indio_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP
@@ -230,13 +194,7 @@ static struct i2c_driver da280_driver = {
 		.pm = &da280_pm_ops,
 	},
 	.probe		= da280_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove		= da280_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table	= da280_i2c_id,
 };
 

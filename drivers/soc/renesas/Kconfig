@@ -208,14 +208,6 @@ config ARCH_R8A77951
 	help
 	  This enables support for the Renesas R-Car H3 SoC (revisions 2.0 and
 	  later).
-<<<<<<< HEAD
-<<<<<<< HEAD
-	  This includes different gradings like R-Car H3e-2G.
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	  This includes different gradings like R-Car H3e-2G.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config ARCH_R8A77965
 	bool "ARM64 Platform support for R-Car M3-N"
@@ -237,14 +229,6 @@ config ARCH_R8A77961
 	select SYSC_R8A77961
 	help
 	  This enables support for the Renesas R-Car M3-W+ SoC.
-<<<<<<< HEAD
-<<<<<<< HEAD
-	  This includes different gradings like R-Car M3e-2G.
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	  This includes different gradings like R-Car M3e-2G.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 config ARCH_R8A77980
 	bool "ARM64 Platform support for R-Car V3H"

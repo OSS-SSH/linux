@@ -217,21 +217,8 @@ static struct page *get_arg_page(struct linux_binprm *bprm, unsigned long pos,
 	 * We are doing an exec().  'current' is the process
 	 * doing the exec and bprm->mm is the new process's mm.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	mmap_read_lock(bprm->mm);
 	ret = get_user_pages_remote(bprm->mm, pos, 1, gup_flags,
 			&page, NULL, NULL);
-	mmap_read_unlock(bprm->mm);
-<<<<<<< HEAD
-=======
-	ret = get_user_pages_remote(bprm->mm, pos, 1, gup_flags,
-			&page, NULL, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret <= 0)
 		return NULL;
 
@@ -587,15 +574,7 @@ static int copy_strings(int argc, struct user_arg_ptr argv,
 				}
 
 				if (kmapped_page) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-					flush_dcache_page(kmapped_page);
-=======
 					flush_kernel_dcache_page(kmapped_page);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					flush_dcache_page(kmapped_page);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					kunmap(kmapped_page);
 					put_arg_page(kmapped_page);
 				}
@@ -613,15 +592,7 @@ static int copy_strings(int argc, struct user_arg_ptr argv,
 	ret = 0;
 out:
 	if (kmapped_page) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		flush_dcache_page(kmapped_page);
-=======
 		flush_kernel_dcache_page(kmapped_page);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		flush_dcache_page(kmapped_page);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kunmap(kmapped_page);
 		put_arg_page(kmapped_page);
 	}
@@ -663,15 +634,7 @@ int copy_string_kernel(const char *arg, struct linux_binprm *bprm)
 		kaddr = kmap_atomic(page);
 		flush_arg_page(bprm, pos & PAGE_MASK, page);
 		memcpy(kaddr + offset_in_page(pos), arg, bytes_to_copy);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		flush_dcache_page(page);
-=======
 		flush_kernel_dcache_page(page);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		flush_dcache_page(page);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kunmap_atomic(kaddr);
 		put_arg_page(page);
 	}
@@ -1307,19 +1270,7 @@ int begin_new_exec(struct linux_binprm * bprm)
 	 * not visibile until then. This also enables the update
 	 * to be lockless.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	retval = set_mm_exe_file(bprm->mm, bprm->file);
-	if (retval)
-		goto out;
-=======
 	set_mm_exe_file(bprm->mm, bprm->file);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	retval = set_mm_exe_file(bprm->mm, bprm->file);
-	if (retval)
-		goto out;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* If the binary is not readable then enforce mm->dumpable=0 */
 	would_dump(bprm, bprm->file);
@@ -2119,20 +2070,10 @@ SYSCALL_DEFINE5(execveat,
 		const char __user *const __user *, envp,
 		int, flags)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return do_execveat(fd,
-			   getname_uflags(filename, flags),
-=======
 	int lookup_flags = (flags & AT_EMPTY_PATH) ? LOOKUP_EMPTY : 0;
 
 	return do_execveat(fd,
 			   getname_flags(filename, lookup_flags, NULL),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return do_execveat(fd,
-			   getname_uflags(filename, flags),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			   argv, envp, flags);
 }
 
@@ -2150,20 +2091,10 @@ COMPAT_SYSCALL_DEFINE5(execveat, int, fd,
 		       const compat_uptr_t __user *, envp,
 		       int,  flags)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return compat_do_execveat(fd,
-				  getname_uflags(filename, flags),
-=======
 	int lookup_flags = (flags & AT_EMPTY_PATH) ? LOOKUP_EMPTY : 0;
 
 	return compat_do_execveat(fd,
 				  getname_flags(filename, lookup_flags, NULL),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return compat_do_execveat(fd,
-				  getname_uflags(filename, flags),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  argv, envp, flags);
 }
 #endif

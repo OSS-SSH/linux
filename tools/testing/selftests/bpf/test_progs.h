@@ -221,27 +221,6 @@ extern int test__join_cgroup(const char *path);
 	___ok;								\
 })
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define ASSERT_STRNEQ(actual, expected, len, name) ({			\
-	static int duration = 0;					\
-	const char *___act = actual;					\
-	const char *___exp = expected;					\
-	int ___len = len;						\
-	bool ___ok = strncmp(___act, ___exp, ___len) == 0;		\
-	CHECK(!___ok, (name),						\
-	      "unexpected %s: actual '%.*s' != expected '%.*s'\n",	\
-	      (name), ___len, ___act, ___len, ___exp);			\
-	___ok;								\
-})
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ASSERT_OK(res, name) ({						\
 	static int duration = 0;					\
 	long long ___res = (res);					\

@@ -577,19 +577,7 @@ static int ef4_ethtool_nway_reset(struct net_device *net_dev)
  */
 
 static int ef4_ethtool_get_coalesce(struct net_device *net_dev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				    struct ethtool_coalesce *coalesce,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
-=======
 				    struct ethtool_coalesce *coalesce)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				    struct ethtool_coalesce *coalesce,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ef4_nic *efx = netdev_priv(net_dev);
 	unsigned int tx_usecs, rx_usecs;
@@ -607,19 +595,7 @@ static int ef4_ethtool_get_coalesce(struct net_device *net_dev,
 }
 
 static int ef4_ethtool_set_coalesce(struct net_device *net_dev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				    struct ethtool_coalesce *coalesce,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
-=======
 				    struct ethtool_coalesce *coalesce)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				    struct ethtool_coalesce *coalesce,
-				    struct kernel_ethtool_coalesce *kernel_coal,
-				    struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ef4_nic *efx = netdev_priv(net_dev);
 	struct ef4_channel *channel;

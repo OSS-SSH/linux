@@ -5,45 +5,9 @@
 
 /dts-v1/;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "sdm630.dtsi"
-#include "sdm630-sony-xperia-nile.dtsi"
-=======
 #include "sdm630-sony-xperia-ganges.dtsi"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "sdm630.dtsi"
-#include "sdm630-sony-xperia-nile.dtsi"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 / {
 	model = "Sony Xperia 10";
 	compatible = "sony,kirin-row", "qcom,sdm630";
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	chosen {
-		framebuffer@9d400000 {
-			reg = <0 0x9d400000 0 (2520 * 1080 * 4)>;
-			height = <2520>;
-		};
-	};
-<<<<<<< HEAD
 };
-
-/* Ganges devices feature a Novatek touchscreen instead. */
-/delete-node/ &touchscreen;
-/delete-node/ &vreg_l18a_1v8;
-=======
-};
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-};
-
-/* Ganges devices feature a Novatek touchscreen instead. */
-/delete-node/ &touchscreen;
-/delete-node/ &vreg_l18a_1v8;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

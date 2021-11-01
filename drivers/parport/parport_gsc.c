@@ -378,15 +378,7 @@ static int __init parport_init_chip(struct parisc_device *dev)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void __exit parport_remove_chip(struct parisc_device *dev)
-=======
 static int __exit parport_remove_chip(struct parisc_device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void __exit parport_remove_chip(struct parisc_device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct parport *p = dev_get_drvdata(&dev->dev);
 	if (p) {
@@ -398,30 +390,14 @@ static void __exit parport_remove_chip(struct parisc_device *dev)
 		if (p->irq != PARPORT_IRQ_NONE)
 			free_irq(p->irq, p);
 		if (priv->dma_buf)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dma_free_coherent(&priv->dev->dev, PAGE_SIZE,
-					  priv->dma_buf, priv->dma_handle);
-=======
 			pci_free_consistent(priv->dev, PAGE_SIZE,
 					    priv->dma_buf,
 					    priv->dma_handle);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dma_free_coherent(&priv->dev->dev, PAGE_SIZE,
-					  priv->dma_buf, priv->dma_handle);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kfree (p->private_data);
 		parport_put_port(p);
 		kfree (ops); /* hope no-one cached it */
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct parisc_device_id parport_tbl[] __initconst = {

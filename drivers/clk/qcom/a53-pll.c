@@ -6,23 +6,9 @@
  * Author: Georgi Djakov <georgi.djakov@linaro.org>
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#include <linux/clk.h>
 #include <linux/clk-provider.h>
 #include <linux/kernel.h>
 #include <linux/platform_device.h>
-#include <linux/pm_opp.h>
-<<<<<<< HEAD
-=======
-#include <linux/clk-provider.h>
-#include <linux/kernel.h>
-#include <linux/platform_device.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/regmap.h>
 #include <linux/module.h>
 
@@ -48,71 +34,9 @@ static const struct regmap_config a53pll_regmap_config = {
 	.fast_io		= true,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static struct pll_freq_tbl *qcom_a53pll_get_freq_tbl(struct device *dev)
-{
-	struct pll_freq_tbl *freq_tbl;
-	unsigned long xo_freq;
-	unsigned long freq;
-	struct clk *xo_clk;
-	int count;
-	int ret;
-	int i;
-
-	xo_clk = devm_clk_get(dev, "xo");
-	if (IS_ERR(xo_clk))
-		return NULL;
-
-	xo_freq = clk_get_rate(xo_clk);
-
-	ret = devm_pm_opp_of_add_table(dev);
-	if (ret)
-		return NULL;
-
-	count = dev_pm_opp_get_opp_count(dev);
-	if (count <= 0)
-		return NULL;
-
-	freq_tbl = devm_kcalloc(dev, count + 1, sizeof(*freq_tbl), GFP_KERNEL);
-	if (!freq_tbl)
-		return NULL;
-
-	for (i = 0, freq = 0; i < count; i++, freq++) {
-		struct dev_pm_opp *opp;
-
-		opp = dev_pm_opp_find_freq_ceil(dev, &freq);
-		if (IS_ERR(opp))
-			return NULL;
-
-		/* Skip the freq that is not divisible */
-		if (freq % xo_freq)
-			continue;
-
-		freq_tbl[i].freq = freq;
-		freq_tbl[i].l = freq / xo_freq;
-		freq_tbl[i].n = 1;
-
-		dev_pm_opp_put(opp);
-	}
-
-	return freq_tbl;
-}
-
 static int qcom_a53pll_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
-	struct device_node *np = dev->of_node;
-<<<<<<< HEAD
-=======
-static int qcom_a53pll_probe(struct platform_device *pdev)
-{
-	struct device *dev = &pdev->dev;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct regmap *regmap;
 	struct resource *res;
 	struct clk_pll *pll;
@@ -140,49 +64,13 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
 	pll->mode_reg = 0x00;
 	pll->status_reg = 0x1c;
 	pll->status_bit = 16;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	pll->freq_tbl = qcom_a53pll_get_freq_tbl(dev);
-	if (!pll->freq_tbl) {
-		/* Fall on a53pll_freq if no freq_tbl is found from OPP */
-		pll->freq_tbl = a53pll_freq;
-	}
-
-	/* Use an unique name by appending @unit-address */
-	init.name = devm_kasprintf(dev, GFP_KERNEL, "a53pll%s",
-				   strchrnul(np->full_name, '@'));
-	if (!init.name)
-		return -ENOMEM;
-
-	init.parent_names = (const char *[]){ "xo" };
-	init.num_parents = 1;
-	init.ops = &clk_pll_sr2_ops;
-=======
 	pll->freq_tbl = a53pll_freq;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	pll->freq_tbl = qcom_a53pll_get_freq_tbl(dev);
-	if (!pll->freq_tbl) {
-		/* Fall on a53pll_freq if no freq_tbl is found from OPP */
-		pll->freq_tbl = a53pll_freq;
-	}
-
-	/* Use an unique name by appending @unit-address */
-	init.name = devm_kasprintf(dev, GFP_KERNEL, "a53pll%s",
-				   strchrnul(np->full_name, '@'));
-	if (!init.name)
-		return -ENOMEM;
-
+	init.name = "a53pll";
 	init.parent_names = (const char *[]){ "xo" };
 	init.num_parents = 1;
 	init.ops = &clk_pll_sr2_ops;
-<<<<<<< HEAD
 	init.flags = CLK_IS_CRITICAL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pll->clkr.hw.init = &init;
 
 	ret = devm_clk_register_regmap(dev, &pll->clkr);
@@ -203,14 +91,6 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
 
 static const struct of_device_id qcom_a53pll_match_table[] = {
 	{ .compatible = "qcom,msm8916-a53pll" },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "qcom,msm8939-a53pll" },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "qcom,msm8939-a53pll" },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ }
 };
 MODULE_DEVICE_TABLE(of, qcom_a53pll_match_table);

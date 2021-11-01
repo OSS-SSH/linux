@@ -85,39 +85,13 @@ int hns_roce_dealloc_pd(struct ib_pd *pd, struct ib_udata *udata)
 
 int hns_roce_uar_alloc(struct hns_roce_dev *hr_dev, struct hns_roce_uar *uar)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct hns_roce_ida *uar_ida = &hr_dev->uar_ida;
 	struct resource *res;
-	int id;
+	int ret;
 
 	/* Using bitmap to manager UAR index */
-	id = ida_alloc_range(&uar_ida->ida, uar_ida->min, uar_ida->max,
-			     GFP_KERNEL);
-	if (id < 0) {
-		ibdev_err(&hr_dev->ib_dev, "failed to alloc uar id(%d).\n", id);
+	ret = hns_roce_bitmap_alloc(&hr_dev->uar_table.bitmap, &uar->logic_idx);
+	if (ret)
 		return -ENOMEM;
-	}
-	uar->logic_idx = (unsigned long)id;
-=======
-=======
-	struct hns_roce_ida *uar_ida = &hr_dev->uar_ida;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct resource *res;
-	int id;
-
-	/* Using bitmap to manager UAR index */
-	id = ida_alloc_range(&uar_ida->ida, uar_ida->min, uar_ida->max,
-			     GFP_KERNEL);
-	if (id < 0) {
-		ibdev_err(&hr_dev->ib_dev, "failed to alloc uar id(%d).\n", id);
-		return -ENOMEM;
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	}
-	uar->logic_idx = (unsigned long)id;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (uar->logic_idx > 0 && hr_dev->caps.phy_num_uars > 1)
 		uar->index = (uar->logic_idx - 1) %
@@ -128,14 +102,6 @@ int hns_roce_uar_alloc(struct hns_roce_dev *hr_dev, struct hns_roce_uar *uar)
 	if (!dev_is_pci(hr_dev->dev)) {
 		res = platform_get_resource(hr_dev->pdev, IORESOURCE_MEM, 0);
 		if (!res) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ida_free(&uar_ida->ida, id);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ida_free(&uar_ida->ida, id);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_err(&hr_dev->pdev->dev, "memory resource not found!\n");
 			return -EINVAL;
 		}
@@ -148,24 +114,11 @@ int hns_roce_uar_alloc(struct hns_roce_dev *hr_dev, struct hns_roce_uar *uar)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void hns_roce_init_uar_table(struct hns_roce_dev *hr_dev)
-{
-	struct hns_roce_ida *uar_ida = &hr_dev->uar_ida;
-
-	ida_init(&uar_ida->ida);
-	uar_ida->max = hr_dev->caps.num_uars - 1;
-	uar_ida->min = hr_dev->caps.reserved_uars;
-=======
 void hns_roce_uar_free(struct hns_roce_dev *hr_dev, struct hns_roce_uar *uar)
-=======
-void hns_roce_init_uar_table(struct hns_roce_dev *hr_dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct hns_roce_ida *uar_ida = &hr_dev->uar_ida;
+	hns_roce_bitmap_free(&hr_dev->uar_table.bitmap, uar->logic_idx);
+}
 
-<<<<<<< HEAD
 int hns_roce_init_uar_table(struct hns_roce_dev *hr_dev)
 {
 	return hns_roce_bitmap_init(&hr_dev->uar_table.bitmap,
@@ -177,12 +130,6 @@ int hns_roce_init_uar_table(struct hns_roce_dev *hr_dev)
 void hns_roce_cleanup_uar_table(struct hns_roce_dev *hr_dev)
 {
 	hns_roce_bitmap_cleanup(&hr_dev->uar_table.bitmap);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ida_init(&uar_ida->ida);
-	uar_ida->max = hr_dev->caps.num_uars - 1;
-	uar_ida->min = hr_dev->caps.reserved_uars;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int hns_roce_xrcd_alloc(struct hns_roce_dev *hr_dev, u32 *xrcdn)

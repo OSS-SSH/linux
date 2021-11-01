@@ -778,15 +778,7 @@ static int qup_i2c_bam_schedule_desc(struct qup_i2c_dev *qup)
 			ret = -EINVAL;
 
 			/* abort TX descriptors */
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dmaengine_terminate_sync(qup->btx.dma);
-=======
 			dmaengine_terminate_all(qup->btx.dma);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dmaengine_terminate_sync(qup->btx.dma);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto desc_err;
 		}
 

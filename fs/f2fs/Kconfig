@@ -105,22 +105,6 @@ config F2FS_FS_LZO
 	help
 	  Support LZO compress algorithm, if unsure, say Y.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-config F2FS_FS_LZORLE
-	bool "LZO-RLE compression support"
-	depends on F2FS_FS_LZO
-	default y
-	help
-	  Support LZO-RLE compress algorithm, if unsure, say Y.
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config F2FS_FS_LZ4
 	bool "LZ4 compression support"
 	depends on F2FS_FS_COMPRESSION
@@ -130,13 +114,7 @@ config F2FS_FS_LZ4
 
 config F2FS_FS_LZ4HC
 	bool "LZ4HC compression support"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	depends on F2FS_FS_COMPRESSION
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	depends on F2FS_FS_LZ4
 	default y
 	help
@@ -150,17 +128,6 @@ config F2FS_FS_ZSTD
 	help
 	  Support ZSTD compress algorithm, if unsure, say Y.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-config F2FS_IOSTAT
-	bool "F2FS IO statistics information"
-	depends on F2FS_FS
-	default y
-	help
-	  Support getting IO statistics through sysfs and printing out periodic
-	  IO statistics tracepoint events. You have to turn on "iostat_enable"
-	  sysfs node to enable this feature.
-=======
 config F2FS_FS_LZORLE
 	bool "LZO-RLE compression support"
 	depends on F2FS_FS_COMPRESSION
@@ -168,14 +135,3 @@ config F2FS_FS_LZORLE
 	default y
 	help
 	  Support LZO-RLE compress algorithm, if unsure, say Y.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-config F2FS_IOSTAT
-	bool "F2FS IO statistics information"
-	depends on F2FS_FS
-	default y
-	help
-	  Support getting IO statistics through sysfs and printing out periodic
-	  IO statistics tracepoint events. You have to turn on "iostat_enable"
-	  sysfs node to enable this feature.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -11,14 +11,6 @@
 #include <linux/module.h>
 #include <linux/hrtimer.h>
 #include <linux/dma-mapping.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/spinlock.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/spinlock.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <xen/xen.h>
 
 #ifdef DEBUG
@@ -1763,19 +1755,7 @@ static struct virtqueue *vring_create_virtqueue_packed(
 			cpu_to_le16(vq->packed.event_flags_shadow);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock(&vdev->vqs_list_lock);
 	list_add_tail(&vq->vq.list, &vdev->vqs);
-	spin_unlock(&vdev->vqs_list_lock);
-=======
-	list_add_tail(&vq->vq.list, &vdev->vqs);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock(&vdev->vqs_list_lock);
-	list_add_tail(&vq->vq.list, &vdev->vqs);
-	spin_unlock(&vdev->vqs_list_lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return &vq->vq;
 
 err_desc_extra:
@@ -2249,19 +2229,7 @@ struct virtqueue *__vring_new_virtqueue(unsigned int index,
 	memset(vq->split.desc_state, 0, vring.num *
 			sizeof(struct vring_desc_state_split));
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock(&vdev->vqs_list_lock);
 	list_add_tail(&vq->vq.list, &vdev->vqs);
-	spin_unlock(&vdev->vqs_list_lock);
-=======
-	list_add_tail(&vq->vq.list, &vdev->vqs);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock(&vdev->vqs_list_lock);
-	list_add_tail(&vq->vq.list, &vdev->vqs);
-	spin_unlock(&vdev->vqs_list_lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return &vq->vq;
 
 err_extra:
@@ -2323,19 +2291,6 @@ void vring_del_virtqueue(struct virtqueue *_vq)
 {
 	struct vring_virtqueue *vq = to_vvq(_vq);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	spin_lock(&vq->vq.vdev->vqs_list_lock);
-	list_del(&_vq->list);
-	spin_unlock(&vq->vq.vdev->vqs_list_lock);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (vq->we_own_ring) {
 		if (vq->packed_ring) {
 			vring_free_queue(vq->vq.vdev,
@@ -2366,13 +2321,7 @@ void vring_del_virtqueue(struct virtqueue *_vq)
 		kfree(vq->split.desc_state);
 		kfree(vq->split.desc_extra);
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	list_del(&_vq->list);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(vq);
 }
 EXPORT_SYMBOL_GPL(vring_del_virtqueue);
@@ -2424,15 +2373,7 @@ bool virtqueue_is_broken(struct virtqueue *_vq)
 {
 	struct vring_virtqueue *vq = to_vvq(_vq);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return READ_ONCE(vq->broken);
-=======
 	return vq->broken;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return READ_ONCE(vq->broken);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(virtqueue_is_broken);
 
@@ -2444,31 +2385,10 @@ void virtio_break_device(struct virtio_device *dev)
 {
 	struct virtqueue *_vq;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock(&dev->vqs_list_lock);
 	list_for_each_entry(_vq, &dev->vqs, list) {
 		struct vring_virtqueue *vq = to_vvq(_vq);
-
-		/* Pairs with READ_ONCE() in virtqueue_is_broken(). */
-		WRITE_ONCE(vq->broken, true);
+		vq->broken = true;
 	}
-	spin_unlock(&dev->vqs_list_lock);
-=======
-=======
-	spin_lock(&dev->vqs_list_lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	list_for_each_entry(_vq, &dev->vqs, list) {
-		struct vring_virtqueue *vq = to_vvq(_vq);
-
-		/* Pairs with READ_ONCE() in virtqueue_is_broken(). */
-		WRITE_ONCE(vq->broken, true);
-	}
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_unlock(&dev->vqs_list_lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL_GPL(virtio_break_device);
 

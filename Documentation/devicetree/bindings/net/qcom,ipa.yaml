@@ -87,30 +87,6 @@ properties:
       - const: ipa-setup-ready
 
   interconnects:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-    oneOf:
-      - items:
-          - description: Path leading to system memory
-          - description: Path between the AP and IPA config space
-      - items:
-          - description: Path leading to system memory
-          - description: Path leading to internal memory
-          - description: Path between the AP and IPA config space
-<<<<<<< HEAD
-
-  interconnect-names:
-    oneOf:
-      - items:
-          - const: memory
-          - const: config
-      - items:
-          - const: memory
-          - const: imem
-          - const: config
-=======
     items:
       - description: Interconnect path between IPA and main memory
       - description: Interconnect path between IPA and internal memory
@@ -121,19 +97,6 @@ properties:
       - const: memory
       - const: imem
       - const: config
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-  interconnect-names:
-    oneOf:
-      - items:
-          - const: memory
-          - const: config
-      - items:
-          - const: memory
-          - const: imem
-          - const: config
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   qcom,smem-states:
     $ref: /schemas/types.yaml#/definitions/phandle-array

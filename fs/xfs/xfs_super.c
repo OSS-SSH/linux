@@ -49,37 +49,6 @@ static struct kset *xfs_kset;		/* top-level xfs sysfs dir */
 static struct xfs_kobj xfs_dbg_kobj;	/* global debug sysfs attrs */
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#ifdef CONFIG_HOTPLUG_CPU
-static LIST_HEAD(xfs_mount_list);
-static DEFINE_SPINLOCK(xfs_mount_list_lock);
-
-static inline void xfs_mount_list_add(struct xfs_mount *mp)
-{
-	spin_lock(&xfs_mount_list_lock);
-	list_add(&mp->m_mount_list, &xfs_mount_list);
-	spin_unlock(&xfs_mount_list_lock);
-}
-
-static inline void xfs_mount_list_del(struct xfs_mount *mp)
-{
-	spin_lock(&xfs_mount_list_lock);
-	list_del(&mp->m_mount_list);
-	spin_unlock(&xfs_mount_list_lock);
-}
-#else /* !CONFIG_HOTPLUG_CPU */
-static inline void xfs_mount_list_add(struct xfs_mount *mp) {}
-static inline void xfs_mount_list_del(struct xfs_mount *mp) {}
-#endif
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum xfs_dax_mode {
 	XFS_DAX_INODE = 0,
 	XFS_DAX_ALWAYS = 1,
@@ -93,36 +62,15 @@ xfs_mount_set_dax_mode(
 {
 	switch (mode) {
 	case XFS_DAX_INODE:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		mp->m_features &= ~(XFS_FEAT_DAX_ALWAYS | XFS_FEAT_DAX_NEVER);
-		break;
-	case XFS_DAX_ALWAYS:
-		mp->m_features |= XFS_FEAT_DAX_ALWAYS;
-		mp->m_features &= ~XFS_FEAT_DAX_NEVER;
-		break;
-	case XFS_DAX_NEVER:
-		mp->m_features |= XFS_FEAT_DAX_NEVER;
-		mp->m_features &= ~XFS_FEAT_DAX_ALWAYS;
-=======
 		mp->m_flags &= ~(XFS_MOUNT_DAX_ALWAYS | XFS_MOUNT_DAX_NEVER);
-=======
-		mp->m_features &= ~(XFS_FEAT_DAX_ALWAYS | XFS_FEAT_DAX_NEVER);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case XFS_DAX_ALWAYS:
-		mp->m_features |= XFS_FEAT_DAX_ALWAYS;
-		mp->m_features &= ~XFS_FEAT_DAX_NEVER;
+		mp->m_flags |= XFS_MOUNT_DAX_ALWAYS;
+		mp->m_flags &= ~XFS_MOUNT_DAX_NEVER;
 		break;
 	case XFS_DAX_NEVER:
-<<<<<<< HEAD
 		mp->m_flags |= XFS_MOUNT_DAX_NEVER;
 		mp->m_flags &= ~XFS_MOUNT_DAX_ALWAYS;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		mp->m_features |= XFS_FEAT_DAX_NEVER;
-		mp->m_features &= ~XFS_FEAT_DAX_ALWAYS;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	}
 }
@@ -206,25 +154,6 @@ xfs_fs_show_options(
 {
 	static struct proc_xfs_info xfs_info_set[] = {
 		/* the few simple ones we can get from the mount struct */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		{ XFS_FEAT_IKEEP,		",ikeep" },
-		{ XFS_FEAT_WSYNC,		",wsync" },
-		{ XFS_FEAT_NOALIGN,		",noalign" },
-		{ XFS_FEAT_SWALLOC,		",swalloc" },
-		{ XFS_FEAT_NOUUID,		",nouuid" },
-		{ XFS_FEAT_NORECOVERY,		",norecovery" },
-		{ XFS_FEAT_ATTR2,		",attr2" },
-		{ XFS_FEAT_FILESTREAMS,		",filestreams" },
-		{ XFS_FEAT_GRPID,		",grpid" },
-		{ XFS_FEAT_DISCARD,		",discard" },
-		{ XFS_FEAT_LARGE_IOSIZE,	",largeio" },
-		{ XFS_FEAT_DAX_ALWAYS,		",dax=always" },
-		{ XFS_FEAT_DAX_NEVER,		",dax=never" },
-<<<<<<< HEAD
-=======
 		{ XFS_MOUNT_IKEEP,		",ikeep" },
 		{ XFS_MOUNT_WSYNC,		",wsync" },
 		{ XFS_MOUNT_NOALIGN,		",noalign" },
@@ -238,40 +167,20 @@ xfs_fs_show_options(
 		{ XFS_MOUNT_LARGEIO,		",largeio" },
 		{ XFS_MOUNT_DAX_ALWAYS,		",dax=always" },
 		{ XFS_MOUNT_DAX_NEVER,		",dax=never" },
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		{ 0, NULL }
 	};
 	struct xfs_mount	*mp = XFS_M(root->d_sb);
 	struct proc_xfs_info	*xfs_infop;
 
 	for (xfs_infop = xfs_info_set; xfs_infop->flag; xfs_infop++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (mp->m_features & xfs_infop->flag)
-			seq_puts(m, xfs_infop->str);
-	}
-
-	seq_printf(m, ",inode%d", xfs_has_small_inums(mp) ? 32 : 64);
-
-	if (xfs_has_allocsize(mp))
-=======
 		if (mp->m_flags & xfs_infop->flag)
-=======
-		if (mp->m_features & xfs_infop->flag)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			seq_puts(m, xfs_infop->str);
 	}
 
-	seq_printf(m, ",inode%d", xfs_has_small_inums(mp) ? 32 : 64);
+	seq_printf(m, ",inode%d",
+		(mp->m_flags & XFS_MOUNT_SMALL_INUMS) ? 32 : 64);
 
-<<<<<<< HEAD
 	if (mp->m_flags & XFS_MOUNT_ALLOCSIZE)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_allocsize(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		seq_printf(m, ",allocsize=%dk",
 			   (1 << mp->m_allocsize_log) >> 10);
 
@@ -292,26 +201,6 @@ xfs_fs_show_options(
 		seq_printf(m, ",swidth=%d",
 				(int)XFS_FSB_TO_BB(mp, mp->m_swidth));
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (mp->m_qflags & XFS_UQUOTA_ENFD)
-		seq_puts(m, ",usrquota");
-	else if (mp->m_qflags & XFS_UQUOTA_ACCT)
-		seq_puts(m, ",uqnoenforce");
-<<<<<<< HEAD
-
-	if (mp->m_qflags & XFS_PQUOTA_ENFD)
-		seq_puts(m, ",prjquota");
-	else if (mp->m_qflags & XFS_PQUOTA_ACCT)
-		seq_puts(m, ",pqnoenforce");
-
-	if (mp->m_qflags & XFS_GQUOTA_ENFD)
-		seq_puts(m, ",grpquota");
-	else if (mp->m_qflags & XFS_GQUOTA_ACCT)
-		seq_puts(m, ",gqnoenforce");
-=======
 	if (mp->m_qflags & XFS_UQUOTA_ACCT) {
 		if (mp->m_qflags & XFS_UQUOTA_ENFD)
 			seq_puts(m, ",usrquota");
@@ -331,19 +220,6 @@ xfs_fs_show_options(
 		else
 			seq_puts(m, ",gqnoenforce");
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	if (mp->m_qflags & XFS_PQUOTA_ENFD)
-		seq_puts(m, ",prjquota");
-	else if (mp->m_qflags & XFS_PQUOTA_ACCT)
-		seq_puts(m, ",pqnoenforce");
-
-	if (mp->m_qflags & XFS_GQUOTA_ENFD)
-		seq_puts(m, ",grpquota");
-	else if (mp->m_qflags & XFS_GQUOTA_ACCT)
-		seq_puts(m, ",gqnoenforce");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!(mp->m_qflags & XFS_ALL_QUOTA_ACCT))
 		seq_puts(m, ",noquota");
@@ -354,27 +230,11 @@ xfs_fs_show_options(
 /*
  * Set parameters for inode allocation heuristics, taking into account
  * filesystem size and inode32/inode64 mount options; i.e. specifically
-<<<<<<< HEAD
-<<<<<<< HEAD
- * whether or not XFS_FEAT_SMALL_INUMS is set.
- *
- * Inode allocation patterns are altered only if inode32 is requested
- * (XFS_FEAT_SMALL_INUMS), and the filesystem is sufficiently large.
- * If altered, XFS_OPSTATE_INODE32 is set as well.
-=======
  * whether or not XFS_MOUNT_SMALL_INUMS is set.
  *
  * Inode allocation patterns are altered only if inode32 is requested
  * (XFS_MOUNT_SMALL_INUMS), and the filesystem is sufficiently large.
  * If altered, XFS_MOUNT_32BITINODES is set as well.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * whether or not XFS_FEAT_SMALL_INUMS is set.
- *
- * Inode allocation patterns are altered only if inode32 is requested
- * (XFS_FEAT_SMALL_INUMS), and the filesystem is sufficiently large.
- * If altered, XFS_OPSTATE_INODE32 is set as well.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * An agcount independent of that in the mount structure is provided
  * because in the growfs case, mp->m_sb.sb_agcount is not yet updated
@@ -416,31 +276,13 @@ xfs_set_inode_alloc(
 
 	/*
 	 * If user asked for no more than 32-bit inodes, and the fs is
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * sufficiently large, set XFS_OPSTATE_INODE32 if we must alter
-	 * the allocator to accommodate the request.
-	 */
-	if (xfs_has_small_inums(mp) && ino > XFS_MAXINUMBER_32)
-		set_bit(XFS_OPSTATE_INODE32, &mp->m_opstate);
-	else
-		clear_bit(XFS_OPSTATE_INODE32, &mp->m_opstate);
-=======
 	 * sufficiently large, set XFS_MOUNT_32BITINODES if we must alter
-=======
-	 * sufficiently large, set XFS_OPSTATE_INODE32 if we must alter
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * the allocator to accommodate the request.
 	 */
-	if (xfs_has_small_inums(mp) && ino > XFS_MAXINUMBER_32)
-		set_bit(XFS_OPSTATE_INODE32, &mp->m_opstate);
+	if ((mp->m_flags & XFS_MOUNT_SMALL_INUMS) && ino > XFS_MAXINUMBER_32)
+		mp->m_flags |= XFS_MOUNT_32BITINODES;
 	else
-<<<<<<< HEAD
 		mp->m_flags &= ~XFS_MOUNT_32BITINODES;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		clear_bit(XFS_OPSTATE_INODE32, &mp->m_opstate);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	for (index = 0; index < agcount; index++) {
 		struct xfs_perag	*pag;
@@ -449,15 +291,7 @@ xfs_set_inode_alloc(
 
 		pag = xfs_perag_get(mp, index);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (xfs_is_inode32(mp)) {
-=======
 		if (mp->m_flags & XFS_MOUNT_32BITINODES) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (xfs_is_inode32(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (ino > XFS_MAXINUMBER_32) {
 				pag->pagi_inodeok = 0;
 				pag->pagf_metadata = 0;
@@ -477,26 +311,7 @@ xfs_set_inode_alloc(
 		xfs_perag_put(pag);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	return xfs_is_inode32(mp) ? maxagi : agcount;
-}
-
-static bool
-xfs_buftarg_is_dax(
-	struct super_block	*sb,
-	struct xfs_buftarg	*bt)
-{
-	return dax_supported(bt->bt_daxdev, bt->bt_bdev, sb->s_blocksize, 0,
-			bdev_nr_sectors(bt->bt_bdev));
-<<<<<<< HEAD
-=======
 	return (mp->m_flags & XFS_MOUNT_32BITINODES) ? maxagi : agcount;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 STATIC int
@@ -653,15 +468,7 @@ xfs_setup_devices(
 	if (mp->m_logdev_targp && mp->m_logdev_targp != mp->m_ddev_targp) {
 		unsigned int	log_sector_size = BBSIZE;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (xfs_has_sector(mp))
-=======
 		if (xfs_sb_version_hassector(&mp->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (xfs_has_sector(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			log_sector_size = mp->m_sb.sb_logsectsize;
 		error = xfs_setsize_buftarg(mp->m_logdev_targp,
 					    log_sector_size);
@@ -694,88 +501,37 @@ xfs_init_mount_workqueues(
 	if (!mp->m_unwritten_workqueue)
 		goto out_destroy_buf;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	mp->m_cil_workqueue = alloc_workqueue("xfs-cil/%s",
 			XFS_WQFLAGS(WQ_FREEZABLE | WQ_MEM_RECLAIM | WQ_UNBOUND),
 			0, mp->m_super->s_id);
 	if (!mp->m_cil_workqueue)
 		goto out_destroy_unwritten;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mp->m_reclaim_workqueue = alloc_workqueue("xfs-reclaim/%s",
 			XFS_WQFLAGS(WQ_FREEZABLE | WQ_MEM_RECLAIM),
 			0, mp->m_super->s_id);
 	if (!mp->m_reclaim_workqueue)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto out_destroy_unwritten;
-
-	mp->m_blockgc_wq = alloc_workqueue("xfs-blockgc/%s",
-			XFS_WQFLAGS(WQ_UNBOUND | WQ_FREEZABLE | WQ_MEM_RECLAIM),
-			0, mp->m_super->s_id);
-	if (!mp->m_blockgc_wq)
-		goto out_destroy_reclaim;
-
-	mp->m_inodegc_wq = alloc_workqueue("xfs-inodegc/%s",
-			XFS_WQFLAGS(WQ_FREEZABLE | WQ_MEM_RECLAIM),
-			1, mp->m_super->s_id);
-	if (!mp->m_inodegc_wq)
-		goto out_destroy_blockgc;
-
-	mp->m_sync_workqueue = alloc_workqueue("xfs-sync/%s",
-			XFS_WQFLAGS(WQ_FREEZABLE), 0, mp->m_super->s_id);
-	if (!mp->m_sync_workqueue)
-		goto out_destroy_inodegc;
-
-	return 0;
-
-out_destroy_inodegc:
-	destroy_workqueue(mp->m_inodegc_wq);
-out_destroy_blockgc:
-	destroy_workqueue(mp->m_blockgc_wq);
-out_destroy_reclaim:
-	destroy_workqueue(mp->m_reclaim_workqueue);
-=======
 		goto out_destroy_cil;
-=======
-		goto out_destroy_unwritten;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	mp->m_blockgc_wq = alloc_workqueue("xfs-blockgc/%s",
-			XFS_WQFLAGS(WQ_UNBOUND | WQ_FREEZABLE | WQ_MEM_RECLAIM),
+	mp->m_gc_workqueue = alloc_workqueue("xfs-gc/%s",
+			WQ_SYSFS | WQ_UNBOUND | WQ_FREEZABLE | WQ_MEM_RECLAIM,
 			0, mp->m_super->s_id);
-	if (!mp->m_blockgc_wq)
+	if (!mp->m_gc_workqueue)
 		goto out_destroy_reclaim;
-
-	mp->m_inodegc_wq = alloc_workqueue("xfs-inodegc/%s",
-			XFS_WQFLAGS(WQ_FREEZABLE | WQ_MEM_RECLAIM),
-			1, mp->m_super->s_id);
-	if (!mp->m_inodegc_wq)
-		goto out_destroy_blockgc;
 
 	mp->m_sync_workqueue = alloc_workqueue("xfs-sync/%s",
 			XFS_WQFLAGS(WQ_FREEZABLE), 0, mp->m_super->s_id);
 	if (!mp->m_sync_workqueue)
-		goto out_destroy_inodegc;
+		goto out_destroy_eofb;
 
 	return 0;
 
-out_destroy_inodegc:
-	destroy_workqueue(mp->m_inodegc_wq);
-out_destroy_blockgc:
-	destroy_workqueue(mp->m_blockgc_wq);
+out_destroy_eofb:
+	destroy_workqueue(mp->m_gc_workqueue);
 out_destroy_reclaim:
 	destroy_workqueue(mp->m_reclaim_workqueue);
-<<<<<<< HEAD
 out_destroy_cil:
 	destroy_workqueue(mp->m_cil_workqueue);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out_destroy_unwritten:
 	destroy_workqueue(mp->m_unwritten_workqueue);
 out_destroy_buf:
@@ -789,21 +545,9 @@ xfs_destroy_mount_workqueues(
 	struct xfs_mount	*mp)
 {
 	destroy_workqueue(mp->m_sync_workqueue);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	destroy_workqueue(mp->m_blockgc_wq);
-	destroy_workqueue(mp->m_inodegc_wq);
-	destroy_workqueue(mp->m_reclaim_workqueue);
-=======
 	destroy_workqueue(mp->m_gc_workqueue);
 	destroy_workqueue(mp->m_reclaim_workqueue);
 	destroy_workqueue(mp->m_cil_workqueue);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	destroy_workqueue(mp->m_blockgc_wq);
-	destroy_workqueue(mp->m_inodegc_wq);
-	destroy_workqueue(mp->m_reclaim_workqueue);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	destroy_workqueue(mp->m_unwritten_workqueue);
 	destroy_workqueue(mp->m_buf_workqueue);
 }
@@ -852,9 +596,6 @@ xfs_fs_alloc_inode(
 	return NULL;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef DEBUG
 static void
 xfs_check_delalloc(
@@ -881,9 +622,6 @@ xfs_check_delalloc(
 #define xfs_check_delalloc(ip, whichfork)	do { } while (0)
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Now that the generic code is guaranteed not to be accessing
  * the linux inode, we can inactivate and reclaim the inode.
@@ -899,9 +637,6 @@ xfs_fs_destroy_inode(
 	ASSERT(!rwsem_is_locked(&inode->i_rwsem));
 	XFS_STATS_INC(ip->i_mount, vn_rele);
 	XFS_STATS_INC(ip->i_mount, vn_remove);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	xfs_inactive(ip);
 
@@ -926,9 +661,6 @@ xfs_fs_destroy_inode(
 	 * reclaim path handles this more efficiently than we can here, so
 	 * simply let background reclaim tear down all inodes.
 	 */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_inode_mark_reclaimable(ip);
 }
 
@@ -977,14 +709,8 @@ xfs_fs_inode_init_once(
 	atomic_set(&ip->i_pincount, 0);
 	spin_lock_init(&ip->i_flags_lock);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	mrlock_init(&ip->i_mmaplock, MRLOCK_ALLOW_EQUAL_PRI|MRLOCK_BARRIER,
 		     "xfsino", ip->i_ino);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mrlock_init(&ip->i_lock, MRLOCK_ALLOW_EQUAL_PRI|MRLOCK_BARRIER,
 		     "xfsino", ip->i_ino);
 }
@@ -1008,15 +734,7 @@ xfs_fs_drop_inode(
 	 * that.  See the comment for this inode flag.
 	 */
 	if (ip->i_flags & XFS_IRECOVERY) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ASSERT(xlog_recovery_needed(ip->i_mount->m_log));
-=======
 		ASSERT(ip->i_mount->m_log->l_flags & XLOG_RECOVERY_NEEDED);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ASSERT(xlog_recovery_needed(ip->i_mount->m_log));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	}
 
@@ -1039,16 +757,6 @@ xfs_fs_sync_fs(
 {
 	struct xfs_mount	*mp = XFS_M(sb);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	trace_xfs_fs_sync_fs(mp, __return_address);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	trace_xfs_fs_sync_fs(mp, __return_address);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Doing anything during the async pass would be counterproductive.
 	 */
@@ -1065,34 +773,6 @@ xfs_fs_sync_fs(
 		flush_delayed_work(&mp->m_log->l_work);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * If we are called with page faults frozen out, it means we are about
-	 * to freeze the transaction subsystem. Take the opportunity to shut
-	 * down inodegc because once SB_FREEZE_FS is set it's too late to
-	 * prevent inactivation races with freeze. The fs doesn't get called
-	 * again by the freezing process until after SB_FREEZE_FS has been set,
-	 * so it's now or never.  Same logic applies to speculative allocation
-	 * garbage collection.
-	 *
-	 * We don't care if this is a normal syncfs call that does this or
-	 * freeze that does this - we can run this multiple times without issue
-	 * and we won't race with a restart because a restart can only occur
-	 * when the state is either SB_FREEZE_FS or SB_FREEZE_COMPLETE.
-	 */
-	if (sb->s_writers.frozen == SB_FREEZE_PAGEFAULT) {
-		xfs_inodegc_stop(mp);
-		xfs_blockgc_stop(mp);
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1111,18 +791,6 @@ xfs_fs_statfs(
 	xfs_extlen_t		lsize;
 	int64_t			ffree;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Wait for whatever inactivations are in progress. */
-	xfs_inodegc_flush(mp);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Wait for whatever inactivations are in progress. */
-	xfs_inodegc_flush(mp);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	statp->f_type = XFS_SUPER_MAGIC;
 	statp->f_namelen = MAXNAMELEN - 1;
 
@@ -1218,48 +886,10 @@ xfs_fs_freeze(
 	 * set a GFP_NOFS context here to avoid recursion deadlocks.
 	 */
 	flags = memalloc_nofs_save();
-<<<<<<< HEAD
-<<<<<<< HEAD
-	xfs_save_resvblks(mp);
-	ret = xfs_log_quiesce(mp);
-	memalloc_nofs_restore(flags);
-
-	/*
-	 * For read-write filesystems, we need to restart the inodegc on error
-	 * because we stopped it at SB_FREEZE_PAGEFAULT level and a thaw is not
-	 * going to be run to restart it now.  We are at SB_FREEZE_FS level
-	 * here, so we can restart safely without racing with a stop in
-	 * xfs_fs_sync_fs().
-	 */
-	if (ret && !xfs_is_readonly(mp)) {
-		xfs_blockgc_start(mp);
-		xfs_inodegc_start(mp);
-	}
-
-=======
 	xfs_blockgc_stop(mp);
 	xfs_save_resvblks(mp);
 	ret = xfs_log_quiesce(mp);
 	memalloc_nofs_restore(flags);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xfs_save_resvblks(mp);
-	ret = xfs_log_quiesce(mp);
-	memalloc_nofs_restore(flags);
-
-	/*
-	 * For read-write filesystems, we need to restart the inodegc on error
-	 * because we stopped it at SB_FREEZE_PAGEFAULT level and a thaw is not
-	 * going to be run to restart it now.  We are at SB_FREEZE_FS level
-	 * here, so we can restart safely without racing with a stop in
-	 * xfs_fs_sync_fs().
-	 */
-	if (ret && !xfs_is_readonly(mp)) {
-		xfs_blockgc_start(mp);
-		xfs_inodegc_start(mp);
-	}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -1271,28 +901,7 @@ xfs_fs_unfreeze(
 
 	xfs_restore_resvblks(mp);
 	xfs_log_work_queue(mp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	/*
-	 * Don't reactivate the inodegc worker on a readonly filesystem because
-	 * inodes are sent directly to reclaim.  Don't reactivate the blockgc
-	 * worker because there are no speculative preallocations on a readonly
-	 * filesystem.
-	 */
-	if (!xfs_is_readonly(mp)) {
-		xfs_blockgc_start(mp);
-		xfs_inodegc_start(mp);
-	}
-
-<<<<<<< HEAD
-=======
 	xfs_blockgc_start(mp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1304,20 +913,10 @@ STATIC int
 xfs_finish_flags(
 	struct xfs_mount	*mp)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Fail a mount where the logbuf is smaller than the log stripe */
-	if (xfs_has_logv2(mp)) {
-=======
 	int			ronly = (mp->m_flags & XFS_MOUNT_RDONLY);
 
 	/* Fail a mount where the logbuf is smaller than the log stripe */
 	if (xfs_sb_version_haslogv2(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Fail a mount where the logbuf is smaller than the log stripe */
-	if (xfs_has_logv2(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (mp->m_logbsize <= 0 &&
 		    mp->m_sb.sb_logsunit > XLOG_BIG_RECORD_BSIZE) {
 			mp->m_logbsize = mp->m_sb.sb_logsunit;
@@ -1339,28 +938,14 @@ xfs_finish_flags(
 	/*
 	 * V5 filesystems always use attr2 format for attributes.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_crc(mp) && xfs_has_noattr2(mp)) {
-=======
 	if (xfs_sb_version_hascrc(&mp->m_sb) &&
 	    (mp->m_flags & XFS_MOUNT_NOATTR2)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_crc(mp) && xfs_has_noattr2(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_warn(mp, "Cannot mount a V5 filesystem as noattr2. "
 			     "attr2 is always enabled for V5 filesystems.");
 		return -EINVAL;
 	}
 
 	/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * prohibit r/w mounts of read-only filesystems
-	 */
-	if ((mp->m_sb.sb_flags & XFS_SBF_READONLY) && !xfs_is_readonly(mp)) {
-=======
 	 * mkfs'ed attr2 will turn on attr2 mount unless explicitly
 	 * told by noattr2 to turn it off
 	 */
@@ -1372,32 +957,14 @@ xfs_finish_flags(
 	 * prohibit r/w mounts of read-only filesystems
 	 */
 	if ((mp->m_sb.sb_flags & XFS_SBF_READONLY) && !ronly) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * prohibit r/w mounts of read-only filesystems
-	 */
-	if ((mp->m_sb.sb_flags & XFS_SBF_READONLY) && !xfs_is_readonly(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_warn(mp,
 			"cannot mount a read-only filesystem as read-write");
 		return -EROFS;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if ((mp->m_qflags & XFS_GQUOTA_ACCT) &&
-	    (mp->m_qflags & XFS_PQUOTA_ACCT) &&
-	    !xfs_has_pquotino(mp)) {
-=======
 	if ((mp->m_qflags & (XFS_GQUOTA_ACCT | XFS_GQUOTA_ACTIVE)) &&
 	    (mp->m_qflags & (XFS_PQUOTA_ACCT | XFS_PQUOTA_ACTIVE)) &&
 	    !xfs_sb_version_has_pquotino(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if ((mp->m_qflags & XFS_GQUOTA_ACCT) &&
-	    (mp->m_qflags & XFS_PQUOTA_ACCT) &&
-	    !xfs_has_pquotino(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_warn(mp,
 		  "Super block does not support project and group quota together");
 		return -EINVAL;
@@ -1455,57 +1022,11 @@ xfs_destroy_percpu_counters(
 	percpu_counter_destroy(&mp->m_icount);
 	percpu_counter_destroy(&mp->m_ifree);
 	percpu_counter_destroy(&mp->m_fdblocks);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ASSERT(xfs_is_shutdown(mp) ||
-=======
 	ASSERT(XFS_FORCED_SHUTDOWN(mp) ||
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ASSERT(xfs_is_shutdown(mp) ||
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	       percpu_counter_sum(&mp->m_delalloc_blks) == 0);
 	percpu_counter_destroy(&mp->m_delalloc_blks);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int
-xfs_inodegc_init_percpu(
-	struct xfs_mount	*mp)
-{
-	struct xfs_inodegc	*gc;
-	int			cpu;
-
-	mp->m_inodegc = alloc_percpu(struct xfs_inodegc);
-	if (!mp->m_inodegc)
-		return -ENOMEM;
-
-	for_each_possible_cpu(cpu) {
-		gc = per_cpu_ptr(mp->m_inodegc, cpu);
-		init_llist_head(&gc->list);
-		gc->items = 0;
-		INIT_WORK(&gc->work, xfs_inodegc_worker);
-	}
-	return 0;
-}
-
-static void
-xfs_inodegc_free_percpu(
-	struct xfs_mount	*mp)
-{
-	if (!mp->m_inodegc)
-		return;
-	free_percpu(mp->m_inodegc);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void
 xfs_fs_put_super(
 	struct super_block	*sb)
@@ -1522,16 +1043,6 @@ xfs_fs_put_super(
 
 	xfs_freesb(mp);
 	free_percpu(mp->m_stats.xs_stats);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	xfs_mount_list_del(mp);
-	xfs_inodegc_free_percpu(mp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xfs_mount_list_del(mp);
-	xfs_inodegc_free_percpu(mp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xfs_destroy_percpu_counters(mp);
 	xfs_destroy_mount_workqueues(mp);
 	xfs_close_devices(mp);
@@ -1620,15 +1131,7 @@ xfs_fs_warn_deprecated(
 	 * already had the flag set
 	 */
 	if ((fc->purpose & FS_CONTEXT_FOR_RECONFIGURE) &&
-<<<<<<< HEAD
-<<<<<<< HEAD
-            !!(XFS_M(fc->root->d_sb)->m_features & flag) == value)
-=======
 			!!(XFS_M(fc->root->d_sb)->m_flags & flag) == value)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-            !!(XFS_M(fc->root->d_sb)->m_features & flag) == value)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	xfs_warn(fc->s_fs_info, "%s mount option is deprecated.", param->key);
 }
@@ -1676,59 +1179,27 @@ xfs_fs_parse_param(
 		if (suffix_kstrtoint(param->string, 10, &size))
 			return -EINVAL;
 		parsing_mp->m_allocsize_log = ffs(size) - 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		parsing_mp->m_features |= XFS_FEAT_ALLOCSIZE;
-		return 0;
-	case Opt_grpid:
-	case Opt_bsdgroups:
-		parsing_mp->m_features |= XFS_FEAT_GRPID;
-		return 0;
-	case Opt_nogrpid:
-	case Opt_sysvgroups:
-		parsing_mp->m_features &= ~XFS_FEAT_GRPID;
-		return 0;
-	case Opt_wsync:
-		parsing_mp->m_features |= XFS_FEAT_WSYNC;
-		return 0;
-	case Opt_norecovery:
-		parsing_mp->m_features |= XFS_FEAT_NORECOVERY;
-		return 0;
-	case Opt_noalign:
-		parsing_mp->m_features |= XFS_FEAT_NOALIGN;
-		return 0;
-	case Opt_swalloc:
-		parsing_mp->m_features |= XFS_FEAT_SWALLOC;
-=======
 		parsing_mp->m_flags |= XFS_MOUNT_ALLOCSIZE;
-=======
-		parsing_mp->m_features |= XFS_FEAT_ALLOCSIZE;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	case Opt_grpid:
 	case Opt_bsdgroups:
-		parsing_mp->m_features |= XFS_FEAT_GRPID;
+		parsing_mp->m_flags |= XFS_MOUNT_GRPID;
 		return 0;
 	case Opt_nogrpid:
 	case Opt_sysvgroups:
-		parsing_mp->m_features &= ~XFS_FEAT_GRPID;
+		parsing_mp->m_flags &= ~XFS_MOUNT_GRPID;
 		return 0;
 	case Opt_wsync:
-		parsing_mp->m_features |= XFS_FEAT_WSYNC;
+		parsing_mp->m_flags |= XFS_MOUNT_WSYNC;
 		return 0;
 	case Opt_norecovery:
-		parsing_mp->m_features |= XFS_FEAT_NORECOVERY;
+		parsing_mp->m_flags |= XFS_MOUNT_NORECOVERY;
 		return 0;
 	case Opt_noalign:
-		parsing_mp->m_features |= XFS_FEAT_NOALIGN;
+		parsing_mp->m_flags |= XFS_MOUNT_NOALIGN;
 		return 0;
 	case Opt_swalloc:
-<<<<<<< HEAD
 		parsing_mp->m_flags |= XFS_MOUNT_SWALLOC;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		parsing_mp->m_features |= XFS_FEAT_SWALLOC;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	case Opt_sunit:
 		parsing_mp->m_dalign = result.uint_32;
@@ -1737,147 +1208,62 @@ xfs_fs_parse_param(
 		parsing_mp->m_swidth = result.uint_32;
 		return 0;
 	case Opt_inode32:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		parsing_mp->m_features |= XFS_FEAT_SMALL_INUMS;
-		return 0;
-	case Opt_inode64:
-		parsing_mp->m_features &= ~XFS_FEAT_SMALL_INUMS;
-		return 0;
-	case Opt_nouuid:
-		parsing_mp->m_features |= XFS_FEAT_NOUUID;
-		return 0;
-	case Opt_largeio:
-		parsing_mp->m_features |= XFS_FEAT_LARGE_IOSIZE;
-		return 0;
-	case Opt_nolargeio:
-		parsing_mp->m_features &= ~XFS_FEAT_LARGE_IOSIZE;
-		return 0;
-	case Opt_filestreams:
-		parsing_mp->m_features |= XFS_FEAT_FILESTREAMS;
-=======
 		parsing_mp->m_flags |= XFS_MOUNT_SMALL_INUMS;
-=======
-		parsing_mp->m_features |= XFS_FEAT_SMALL_INUMS;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	case Opt_inode64:
-		parsing_mp->m_features &= ~XFS_FEAT_SMALL_INUMS;
+		parsing_mp->m_flags &= ~XFS_MOUNT_SMALL_INUMS;
 		return 0;
 	case Opt_nouuid:
-		parsing_mp->m_features |= XFS_FEAT_NOUUID;
+		parsing_mp->m_flags |= XFS_MOUNT_NOUUID;
 		return 0;
 	case Opt_largeio:
-		parsing_mp->m_features |= XFS_FEAT_LARGE_IOSIZE;
+		parsing_mp->m_flags |= XFS_MOUNT_LARGEIO;
 		return 0;
 	case Opt_nolargeio:
-		parsing_mp->m_features &= ~XFS_FEAT_LARGE_IOSIZE;
+		parsing_mp->m_flags &= ~XFS_MOUNT_LARGEIO;
 		return 0;
 	case Opt_filestreams:
-<<<<<<< HEAD
 		parsing_mp->m_flags |= XFS_MOUNT_FILESTREAMS;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		parsing_mp->m_features |= XFS_FEAT_FILESTREAMS;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	case Opt_noquota:
 		parsing_mp->m_qflags &= ~XFS_ALL_QUOTA_ACCT;
 		parsing_mp->m_qflags &= ~XFS_ALL_QUOTA_ENFD;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		parsing_mp->m_qflags &= ~XFS_ALL_QUOTA_ACTIVE;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	case Opt_quota:
 	case Opt_uquota:
 	case Opt_usrquota:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		parsing_mp->m_qflags |= (XFS_UQUOTA_ACCT | XFS_UQUOTA_ENFD);
-		return 0;
-	case Opt_qnoenforce:
-	case Opt_uqnoenforce:
-		parsing_mp->m_qflags |= XFS_UQUOTA_ACCT;
-=======
 		parsing_mp->m_qflags |= (XFS_UQUOTA_ACCT | XFS_UQUOTA_ACTIVE |
 				 XFS_UQUOTA_ENFD);
 		return 0;
 	case Opt_qnoenforce:
 	case Opt_uqnoenforce:
 		parsing_mp->m_qflags |= (XFS_UQUOTA_ACCT | XFS_UQUOTA_ACTIVE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		parsing_mp->m_qflags |= (XFS_UQUOTA_ACCT | XFS_UQUOTA_ENFD);
-		return 0;
-	case Opt_qnoenforce:
-	case Opt_uqnoenforce:
-		parsing_mp->m_qflags |= XFS_UQUOTA_ACCT;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		parsing_mp->m_qflags &= ~XFS_UQUOTA_ENFD;
 		return 0;
 	case Opt_pquota:
 	case Opt_prjquota:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		parsing_mp->m_qflags |= (XFS_PQUOTA_ACCT | XFS_PQUOTA_ENFD);
-		return 0;
-	case Opt_pqnoenforce:
-		parsing_mp->m_qflags |= XFS_PQUOTA_ACCT;
-=======
 		parsing_mp->m_qflags |= (XFS_PQUOTA_ACCT | XFS_PQUOTA_ACTIVE |
 				 XFS_PQUOTA_ENFD);
 		return 0;
 	case Opt_pqnoenforce:
 		parsing_mp->m_qflags |= (XFS_PQUOTA_ACCT | XFS_PQUOTA_ACTIVE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		parsing_mp->m_qflags |= (XFS_PQUOTA_ACCT | XFS_PQUOTA_ENFD);
-		return 0;
-	case Opt_pqnoenforce:
-		parsing_mp->m_qflags |= XFS_PQUOTA_ACCT;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		parsing_mp->m_qflags &= ~XFS_PQUOTA_ENFD;
 		return 0;
 	case Opt_gquota:
 	case Opt_grpquota:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		parsing_mp->m_qflags |= (XFS_GQUOTA_ACCT | XFS_GQUOTA_ENFD);
-		return 0;
-	case Opt_gqnoenforce:
-		parsing_mp->m_qflags |= XFS_GQUOTA_ACCT;
-		parsing_mp->m_qflags &= ~XFS_GQUOTA_ENFD;
-		return 0;
-	case Opt_discard:
-		parsing_mp->m_features |= XFS_FEAT_DISCARD;
-		return 0;
-	case Opt_nodiscard:
-		parsing_mp->m_features &= ~XFS_FEAT_DISCARD;
-=======
 		parsing_mp->m_qflags |= (XFS_GQUOTA_ACCT | XFS_GQUOTA_ACTIVE |
 				 XFS_GQUOTA_ENFD);
-=======
-		parsing_mp->m_qflags |= (XFS_GQUOTA_ACCT | XFS_GQUOTA_ENFD);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	case Opt_gqnoenforce:
-		parsing_mp->m_qflags |= XFS_GQUOTA_ACCT;
+		parsing_mp->m_qflags |= (XFS_GQUOTA_ACCT | XFS_GQUOTA_ACTIVE);
 		parsing_mp->m_qflags &= ~XFS_GQUOTA_ENFD;
 		return 0;
 	case Opt_discard:
-		parsing_mp->m_features |= XFS_FEAT_DISCARD;
+		parsing_mp->m_flags |= XFS_MOUNT_DISCARD;
 		return 0;
 	case Opt_nodiscard:
-<<<<<<< HEAD
 		parsing_mp->m_flags &= ~XFS_MOUNT_DISCARD;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		parsing_mp->m_features &= ~XFS_FEAT_DISCARD;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 #ifdef CONFIG_FS_DAX
 	case Opt_dax:
@@ -1889,48 +1275,21 @@ xfs_fs_parse_param(
 #endif
 	/* Following mount options will be removed in September 2025 */
 	case Opt_ikeep:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_IKEEP, true);
-		parsing_mp->m_features |= XFS_FEAT_IKEEP;
-		return 0;
-	case Opt_noikeep:
-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_IKEEP, false);
-		parsing_mp->m_features &= ~XFS_FEAT_IKEEP;
-		return 0;
-	case Opt_attr2:
-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_ATTR2, true);
-		parsing_mp->m_features |= XFS_FEAT_ATTR2;
-		return 0;
-	case Opt_noattr2:
-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_NOATTR2, true);
-		parsing_mp->m_features |= XFS_FEAT_NOATTR2;
-=======
 		xfs_fs_warn_deprecated(fc, param, XFS_MOUNT_IKEEP, true);
 		parsing_mp->m_flags |= XFS_MOUNT_IKEEP;
-=======
-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_IKEEP, true);
-		parsing_mp->m_features |= XFS_FEAT_IKEEP;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	case Opt_noikeep:
-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_IKEEP, false);
-		parsing_mp->m_features &= ~XFS_FEAT_IKEEP;
+		xfs_fs_warn_deprecated(fc, param, XFS_MOUNT_IKEEP, false);
+		parsing_mp->m_flags &= ~XFS_MOUNT_IKEEP;
 		return 0;
 	case Opt_attr2:
-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_ATTR2, true);
-		parsing_mp->m_features |= XFS_FEAT_ATTR2;
+		xfs_fs_warn_deprecated(fc, param, XFS_MOUNT_ATTR2, true);
+		parsing_mp->m_flags |= XFS_MOUNT_ATTR2;
 		return 0;
 	case Opt_noattr2:
-<<<<<<< HEAD
 		xfs_fs_warn_deprecated(fc, param, XFS_MOUNT_NOATTR2, true);
 		parsing_mp->m_flags &= ~XFS_MOUNT_ATTR2;
 		parsing_mp->m_flags |= XFS_MOUNT_NOATTR2;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		xfs_fs_warn_deprecated(fc, param, XFS_FEAT_NOATTR2, true);
-		parsing_mp->m_features |= XFS_FEAT_NOATTR2;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	default:
 		xfs_warn(parsing_mp, "unknown mount option [%s].", param->key);
@@ -1944,48 +1303,17 @@ static int
 xfs_fs_validate_params(
 	struct xfs_mount	*mp)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* No recovery flag requires a read-only mount */
-	if (xfs_has_norecovery(mp) && !xfs_is_readonly(mp)) {
+	/*
+	 * no recovery flag requires a read-only mount
+	 */
+	if ((mp->m_flags & XFS_MOUNT_NORECOVERY) &&
+	    !(mp->m_flags & XFS_MOUNT_RDONLY)) {
 		xfs_warn(mp, "no-recovery mounts must be read-only.");
 		return -EINVAL;
 	}
 
-<<<<<<< HEAD
-	/*
-	 * We have not read the superblock at this point, so only the attr2
-	 * mount option can set the attr2 feature by this stage.
-	 */
-	if (xfs_has_attr2(mp) && xfs_has_noattr2(mp)) {
-		xfs_warn(mp, "attr2 and noattr2 cannot both be specified.");
-		return -EINVAL;
-	}
-
-
-	if (xfs_has_noalign(mp) && (mp->m_dalign || mp->m_swidth)) {
-=======
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * We have not read the superblock at this point, so only the attr2
-	 * mount option can set the attr2 feature by this stage.
-	 */
-	if (xfs_has_attr2(mp) && xfs_has_noattr2(mp)) {
-		xfs_warn(mp, "attr2 and noattr2 cannot both be specified.");
-		return -EINVAL;
-	}
-
-<<<<<<< HEAD
 	if ((mp->m_flags & XFS_MOUNT_NOALIGN) &&
 	    (mp->m_dalign || mp->m_swidth)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	if (xfs_has_noalign(mp) && (mp->m_dalign || mp->m_swidth)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_warn(mp,
 	"sunit and swidth options incompatible with the noalign option");
 		return -EINVAL;
@@ -2029,15 +1357,7 @@ xfs_fs_validate_params(
 		return -EINVAL;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_allocsize(mp) &&
-=======
 	if ((mp->m_flags & XFS_MOUNT_ALLOCSIZE) &&
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_allocsize(mp) &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    (mp->m_allocsize_log > XFS_MAX_IO_LOG ||
 	     mp->m_allocsize_log < XFS_MIN_IO_LOG)) {
 		xfs_warn(mp, "invalid log iosize: %d [not %d-%d]",
@@ -2098,39 +1418,11 @@ xfs_fs_fill_super(
 	if (error)
 		goto out_destroy_workqueues;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	error = xfs_inodegc_init_percpu(mp);
-	if (error)
-		goto out_destroy_counters;
-
-	/*
-	 * All percpu data structures requiring cleanup when a cpu goes offline
-	 * must be allocated before adding this @mp to the cpu-dead handler's
-	 * mount list.
-	 */
-	xfs_mount_list_add(mp);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Allocate stats memory before we do operations that might use it */
 	mp->m_stats.xs_stats = alloc_percpu(struct xfsstats);
 	if (!mp->m_stats.xs_stats) {
 		error = -ENOMEM;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto out_destroy_inodegc;
-=======
 		goto out_destroy_counters;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto out_destroy_inodegc;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	error = xfs_readsb(mp, flags);
@@ -2146,15 +1438,7 @@ xfs_fs_fill_super(
 		goto out_free_sb;
 
 	/* V4 support is undergoing deprecation. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!xfs_has_crc(mp)) {
-=======
 	if (!xfs_sb_version_hascrc(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!xfs_has_crc(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_XFS_SUPPORT_V4
 		xfs_warn_once(mp,
 	"Deprecated V4 format (crc=0) will not be supported after September 2030.");
@@ -2167,15 +1451,7 @@ xfs_fs_fill_super(
 	}
 
 	/* Filesystem claims it needs repair, so refuse the mount. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_needsrepair(mp)) {
-=======
 	if (xfs_sb_version_needsrepair(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_needsrepair(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_warn(mp, "Filesystem needs repair.  Please run xfs_repair.");
 		error = -EFSCORRUPTED;
 		goto out_free_sb;
@@ -2247,15 +1523,7 @@ xfs_fs_fill_super(
 	sb->s_maxbytes = MAX_LFS_FILESIZE;
 	sb->s_max_links = XFS_MAXLINK;
 	sb->s_time_gran = 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_bigtime(mp)) {
-=======
 	if (xfs_sb_version_hasbigtime(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_bigtime(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sb->s_time_min = xfs_bigtime_to_unix(XFS_BIGTIME_TIME_MIN);
 		sb->s_time_max = xfs_bigtime_to_unix(XFS_BIGTIME_TIME_MAX);
 	} else {
@@ -2268,13 +1536,6 @@ xfs_fs_fill_super(
 	set_posix_acl_flag(sb);
 
 	/* version 5 superblocks support inode version counters. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_crc(mp))
-		sb->s_flags |= SB_I_VERSION;
-
-	if (xfs_has_dax_always(mp)) {
-=======
 	if (XFS_SB_VERSION_NUM(&mp->m_sb) == XFS_SB_VERSION_5)
 		sb->s_flags |= SB_I_VERSION;
 
@@ -2283,51 +1544,22 @@ xfs_fs_fill_super(
  "EXPERIMENTAL big timestamp feature in use. Use at your own risk!");
 
 	if (mp->m_flags & XFS_MOUNT_DAX_ALWAYS) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_crc(mp))
-		sb->s_flags |= SB_I_VERSION;
-
-	if (xfs_has_dax_always(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		bool rtdev_is_dax = false, datadev_is_dax;
 
 		xfs_warn(mp,
 		"DAX enabled. Warning: EXPERIMENTAL, use at your own risk");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		datadev_is_dax = xfs_buftarg_is_dax(sb, mp->m_ddev_targp);
-		if (mp->m_rtdev_targp)
-			rtdev_is_dax = xfs_buftarg_is_dax(sb,
-						mp->m_rtdev_targp);
-=======
 		datadev_is_dax = bdev_dax_supported(mp->m_ddev_targp->bt_bdev,
 			sb->s_blocksize);
 		if (mp->m_rtdev_targp)
 			rtdev_is_dax = bdev_dax_supported(
 				mp->m_rtdev_targp->bt_bdev, sb->s_blocksize);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		datadev_is_dax = xfs_buftarg_is_dax(sb, mp->m_ddev_targp);
-		if (mp->m_rtdev_targp)
-			rtdev_is_dax = xfs_buftarg_is_dax(sb,
-						mp->m_rtdev_targp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!rtdev_is_dax && !datadev_is_dax) {
 			xfs_alert(mp,
 			"DAX unsupported by block device. Turning off DAX.");
 			xfs_mount_set_dax_mode(mp, XFS_DAX_NEVER);
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (xfs_has_reflink(mp)) {
-=======
 		if (xfs_sb_version_hasreflink(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (xfs_has_reflink(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			xfs_alert(mp,
 		"DAX and reflink cannot be used together!");
 			error = -EINVAL;
@@ -2335,41 +1567,17 @@ xfs_fs_fill_super(
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_discard(mp)) {
-=======
 	if (mp->m_flags & XFS_MOUNT_DISCARD) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_discard(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		struct request_queue *q = bdev_get_queue(sb->s_bdev);
 
 		if (!blk_queue_discard(q)) {
 			xfs_warn(mp, "mounting with \"discard\" option, but "
 					"the device does not support discard");
-<<<<<<< HEAD
-<<<<<<< HEAD
-			mp->m_features &= ~XFS_FEAT_DISCARD;
-		}
-	}
-
-	if (xfs_has_reflink(mp)) {
-=======
 			mp->m_flags &= ~XFS_MOUNT_DISCARD;
 		}
 	}
 
 	if (xfs_sb_version_hasreflink(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			mp->m_features &= ~XFS_FEAT_DISCARD;
-		}
-	}
-
-	if (xfs_has_reflink(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (mp->m_sb.sb_rblocks) {
 			xfs_alert(mp,
 	"reflink not compatible with realtime device!");
@@ -2383,31 +1591,17 @@ xfs_fs_fill_super(
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_rmapbt(mp) && mp->m_sb.sb_rblocks) {
-=======
 	if (xfs_sb_version_hasrmapbt(&mp->m_sb) && mp->m_sb.sb_rblocks) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_rmapbt(mp) && mp->m_sb.sb_rblocks) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_alert(mp,
 	"reverse mapping btree not compatible with realtime device!");
 		error = -EINVAL;
 		goto out_filestream_unmount;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (xfs_sb_version_hasinobtcounts(&mp->m_sb))
 		xfs_warn(mp,
  "EXPERIMENTAL inode btree counters feature in use. Use at your own risk!");
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	error = xfs_mountfs(mp);
 	if (error)
 		goto out_filestream_unmount;
@@ -2431,18 +1625,6 @@ xfs_fs_fill_super(
 	xfs_freesb(mp);
  out_free_stats:
 	free_percpu(mp->m_stats.xs_stats);
-<<<<<<< HEAD
-<<<<<<< HEAD
- out_destroy_inodegc:
-	xfs_mount_list_del(mp);
-	xfs_inodegc_free_percpu(mp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- out_destroy_inodegc:
-	xfs_mount_list_del(mp);
-	xfs_inodegc_free_percpu(mp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  out_destroy_counters:
 	xfs_destroy_percpu_counters(mp);
  out_destroy_workqueues:
@@ -2474,29 +1656,13 @@ xfs_remount_rw(
 	struct xfs_sb		*sbp = &mp->m_sb;
 	int error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_norecovery(mp)) {
-=======
 	if (mp->m_flags & XFS_MOUNT_NORECOVERY) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_norecovery(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xfs_warn(mp,
 			"ro->rw transition prohibited on norecovery mount");
 		return -EINVAL;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_sb_is_v5(sbp) &&
-=======
 	if (XFS_SB_VERSION_NUM(sbp) == XFS_SB_VERSION_5 &&
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_sb_is_v5(sbp) &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    xfs_sb_has_ro_compat_feature(sbp, XFS_SB_FEAT_RO_COMPAT_UNKNOWN)) {
 		xfs_warn(mp,
 	"ro->rw transition prohibited on unknown (0x%x) ro-compat filesystem",
@@ -2505,15 +1671,7 @@ xfs_remount_rw(
 		return -EINVAL;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clear_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
-=======
 	mp->m_flags &= ~XFS_MOUNT_RDONLY;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clear_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * If this is the first remount to writeable state we might have some
@@ -2550,18 +1708,6 @@ xfs_remount_rw(
 	if (error && error != -ENOSPC)
 		return error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Re-enable the background inode inactivation worker. */
-	xfs_inodegc_start(mp);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Re-enable the background inode inactivation worker. */
-	xfs_inodegc_start(mp);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -2584,24 +1730,6 @@ xfs_remount_ro(
 		return error;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Stop the inodegc background worker.  xfs_fs_reconfigure already
-	 * flushed all pending inodegc work when it sync'd the filesystem.
-	 * The VFS holds s_umount, so we know that inodes cannot enter
-	 * xfs_fs_destroy_inode during a remount operation.  In readonly mode
-	 * we send inodes straight to reclaim, so no inodes will be queued.
-	 */
-	xfs_inodegc_stop(mp);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Free the per-AG metadata reservation pool. */
 	error = xfs_fs_unreserve_ag_blocks(mp);
 	if (error) {
@@ -2619,15 +1747,7 @@ xfs_remount_ro(
 	xfs_save_resvblks(mp);
 
 	xfs_log_clean(mp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	set_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
-=======
 	mp->m_flags |= XFS_MOUNT_RDONLY;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	set_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }
@@ -2650,26 +1770,12 @@ xfs_fs_reconfigure(
 {
 	struct xfs_mount	*mp = XFS_M(fc->root->d_sb);
 	struct xfs_mount        *new_mp = fc->s_fs_info;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	xfs_sb_t		*sbp = &mp->m_sb;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int			flags = fc->sb_flags;
 	int			error;
 
 	/* version 5 superblocks always support version counters. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_crc(mp))
-=======
 	if (XFS_SB_VERSION_NUM(&mp->m_sb) == XFS_SB_VERSION_5)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_crc(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fc->sb_flags |= SB_I_VERSION;
 
 	error = xfs_fs_validate_params(new_mp);
@@ -2679,61 +1785,28 @@ xfs_fs_reconfigure(
 	sync_filesystem(mp->m_super);
 
 	/* inode32 -> inode64 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_small_inums(mp) && !xfs_has_small_inums(new_mp)) {
-		mp->m_features &= ~XFS_FEAT_SMALL_INUMS;
-		mp->m_maxagi = xfs_set_inode_alloc(mp, mp->m_sb.sb_agcount);
-	}
-
-	/* inode64 -> inode32 */
-	if (!xfs_has_small_inums(mp) && xfs_has_small_inums(new_mp)) {
-		mp->m_features |= XFS_FEAT_SMALL_INUMS;
-		mp->m_maxagi = xfs_set_inode_alloc(mp, mp->m_sb.sb_agcount);
-	}
-
-	/* ro -> rw */
-	if (xfs_is_readonly(mp) && !(flags & SB_RDONLY)) {
-=======
 	if ((mp->m_flags & XFS_MOUNT_SMALL_INUMS) &&
 	    !(new_mp->m_flags & XFS_MOUNT_SMALL_INUMS)) {
 		mp->m_flags &= ~XFS_MOUNT_SMALL_INUMS;
 		mp->m_maxagi = xfs_set_inode_alloc(mp, sbp->sb_agcount);
-=======
-	if (xfs_has_small_inums(mp) && !xfs_has_small_inums(new_mp)) {
-		mp->m_features &= ~XFS_FEAT_SMALL_INUMS;
-		mp->m_maxagi = xfs_set_inode_alloc(mp, mp->m_sb.sb_agcount);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* inode64 -> inode32 */
-	if (!xfs_has_small_inums(mp) && xfs_has_small_inums(new_mp)) {
-		mp->m_features |= XFS_FEAT_SMALL_INUMS;
-		mp->m_maxagi = xfs_set_inode_alloc(mp, mp->m_sb.sb_agcount);
+	if (!(mp->m_flags & XFS_MOUNT_SMALL_INUMS) &&
+	    (new_mp->m_flags & XFS_MOUNT_SMALL_INUMS)) {
+		mp->m_flags |= XFS_MOUNT_SMALL_INUMS;
+		mp->m_maxagi = xfs_set_inode_alloc(mp, sbp->sb_agcount);
 	}
 
 	/* ro -> rw */
-<<<<<<< HEAD
 	if ((mp->m_flags & XFS_MOUNT_RDONLY) && !(flags & SB_RDONLY)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_is_readonly(mp) && !(flags & SB_RDONLY)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = xfs_remount_rw(mp);
 		if (error)
 			return error;
 	}
 
 	/* rw -> ro */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!xfs_is_readonly(mp) && (flags & SB_RDONLY)) {
-=======
 	if (!(mp->m_flags & XFS_MOUNT_RDONLY) && (flags & SB_RDONLY)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!xfs_is_readonly(mp) && (flags & SB_RDONLY)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = xfs_remount_ro(mp);
 		if (error)
 			return error;
@@ -2800,27 +1873,11 @@ static int xfs_init_fs_context(
 	 * Copy binary VFS mount flags we are interested in.
 	 */
 	if (fc->sb_flags & SB_RDONLY)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		set_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
-	if (fc->sb_flags & SB_DIRSYNC)
-		mp->m_features |= XFS_FEAT_DIRSYNC;
-	if (fc->sb_flags & SB_SYNCHRONOUS)
-		mp->m_features |= XFS_FEAT_WSYNC;
-=======
 		mp->m_flags |= XFS_MOUNT_RDONLY;
-=======
-		set_bit(XFS_OPSTATE_READONLY, &mp->m_opstate);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (fc->sb_flags & SB_DIRSYNC)
-		mp->m_features |= XFS_FEAT_DIRSYNC;
+		mp->m_flags |= XFS_MOUNT_DIRSYNC;
 	if (fc->sb_flags & SB_SYNCHRONOUS)
-<<<<<<< HEAD
 		mp->m_flags |= XFS_MOUNT_WSYNC;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		mp->m_features |= XFS_FEAT_WSYNC;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	fc->s_fs_info = mp;
 	fc->ops = &xfs_context_ops;
@@ -3063,57 +2120,6 @@ xfs_destroy_workqueues(void)
 	destroy_workqueue(xfs_alloc_wq);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#ifdef CONFIG_HOTPLUG_CPU
-static int
-xfs_cpu_dead(
-	unsigned int		cpu)
-{
-	struct xfs_mount	*mp, *n;
-
-	spin_lock(&xfs_mount_list_lock);
-	list_for_each_entry_safe(mp, n, &xfs_mount_list, m_mount_list) {
-		spin_unlock(&xfs_mount_list_lock);
-		xfs_inodegc_cpu_dead(mp, cpu);
-		spin_lock(&xfs_mount_list_lock);
-	}
-	spin_unlock(&xfs_mount_list_lock);
-	return 0;
-}
-
-static int __init
-xfs_cpu_hotplug_init(void)
-{
-	int	error;
-
-	error = cpuhp_setup_state_nocalls(CPUHP_XFS_DEAD, "xfs:dead", NULL,
-			xfs_cpu_dead);
-	if (error < 0)
-		xfs_alert(NULL,
-"Failed to initialise CPU hotplug, error %d. XFS is non-functional.",
-			error);
-	return error;
-}
-
-static void
-xfs_cpu_hotplug_destroy(void)
-{
-	cpuhp_remove_state_nocalls(CPUHP_XFS_DEAD);
-}
-
-#else /* !CONFIG_HOTPLUG_CPU */
-static inline int xfs_cpu_hotplug_init(void) { return 0; }
-static inline void xfs_cpu_hotplug_destroy(void) {}
-#endif
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 STATIC int __init
 init_xfs_fs(void)
 {
@@ -3126,27 +2132,9 @@ init_xfs_fs(void)
 
 	xfs_dir_startup();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	error = xfs_cpu_hotplug_init();
+	error = xfs_init_zones();
 	if (error)
 		goto out;
-
-	error = xfs_init_zones();
-	if (error)
-		goto out_destroy_hp;
-=======
-	error = xfs_init_zones();
-=======
-	error = xfs_cpu_hotplug_init();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (error)
-		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-
-	error = xfs_init_zones();
-	if (error)
-		goto out_destroy_hp;
 
 	error = xfs_init_workqueues();
 	if (error)
@@ -3227,16 +2215,6 @@ init_xfs_fs(void)
 	xfs_destroy_workqueues();
  out_destroy_zones:
 	xfs_destroy_zones();
-<<<<<<< HEAD
-<<<<<<< HEAD
- out_destroy_hp:
-	xfs_cpu_hotplug_destroy();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- out_destroy_hp:
-	xfs_cpu_hotplug_destroy();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  out:
 	return error;
 }
@@ -3259,14 +2237,6 @@ exit_xfs_fs(void)
 	xfs_destroy_workqueues();
 	xfs_destroy_zones();
 	xfs_uuid_table_free();
-<<<<<<< HEAD
-<<<<<<< HEAD
-	xfs_cpu_hotplug_destroy();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xfs_cpu_hotplug_destroy();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 module_init(init_xfs_fs);

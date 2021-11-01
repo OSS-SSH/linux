@@ -419,29 +419,13 @@ static unsigned long deliverable_irqs(struct kvm_vcpu *vcpu)
 static void __set_cpu_idle(struct kvm_vcpu *vcpu)
 {
 	kvm_s390_set_cpuflags(vcpu, CPUSTAT_WAIT);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	set_bit(vcpu->vcpu_idx, vcpu->kvm->arch.idle_mask);
-=======
 	set_bit(vcpu->vcpu_id, vcpu->kvm->arch.idle_mask);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	set_bit(vcpu->vcpu_idx, vcpu->kvm->arch.idle_mask);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __unset_cpu_idle(struct kvm_vcpu *vcpu)
 {
 	kvm_s390_clear_cpuflags(vcpu, CPUSTAT_WAIT);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clear_bit(vcpu->vcpu_idx, vcpu->kvm->arch.idle_mask);
-=======
 	clear_bit(vcpu->vcpu_id, vcpu->kvm->arch.idle_mask);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clear_bit(vcpu->vcpu_idx, vcpu->kvm->arch.idle_mask);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __reset_intercept_indicators(struct kvm_vcpu *vcpu)
@@ -3066,44 +3050,18 @@ int kvm_s390_get_irq_state(struct kvm_vcpu *vcpu, __u8 __user *buf, int len)
 
 static void __airqs_kick_single_vcpu(struct kvm *kvm, u8 deliverable_mask)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int vcpu_idx, online_vcpus = atomic_read(&kvm->online_vcpus);
-	struct kvm_s390_gisa_interrupt *gi = &kvm->arch.gisa_int;
-	struct kvm_vcpu *vcpu;
-
-	for_each_set_bit(vcpu_idx, kvm->arch.idle_mask, online_vcpus) {
-		vcpu = kvm_get_vcpu(kvm, vcpu_idx);
-=======
 	int vcpu_id, online_vcpus = atomic_read(&kvm->online_vcpus);
 	struct kvm_s390_gisa_interrupt *gi = &kvm->arch.gisa_int;
 	struct kvm_vcpu *vcpu;
 
 	for_each_set_bit(vcpu_id, kvm->arch.idle_mask, online_vcpus) {
 		vcpu = kvm_get_vcpu(kvm, vcpu_id);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int vcpu_idx, online_vcpus = atomic_read(&kvm->online_vcpus);
-	struct kvm_s390_gisa_interrupt *gi = &kvm->arch.gisa_int;
-	struct kvm_vcpu *vcpu;
-
-	for_each_set_bit(vcpu_idx, kvm->arch.idle_mask, online_vcpus) {
-		vcpu = kvm_get_vcpu(kvm, vcpu_idx);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (psw_ioint_disabled(vcpu))
 			continue;
 		deliverable_mask &= (u8)(vcpu->arch.sie_block->gcr[6] >> 24);
 		if (deliverable_mask) {
 			/* lately kicked but not yet running */
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (test_and_set_bit(vcpu_idx, gi->kicked_mask))
-=======
 			if (test_and_set_bit(vcpu_id, gi->kicked_mask))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (test_and_set_bit(vcpu_idx, gi->kicked_mask))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return;
 			kvm_s390_vcpu_wakeup(vcpu);
 			return;

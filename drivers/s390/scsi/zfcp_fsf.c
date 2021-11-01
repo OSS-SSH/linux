@@ -2275,15 +2275,7 @@ static void zfcp_fsf_close_lun_handler(struct zfcp_fsf_req *req)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * zfcp_fsf_close_lun - close LUN
-=======
  * zfcp_fsf_close_LUN - close LUN
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * zfcp_fsf_close_lun - close LUN
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @erp_action: pointer to erp_action triggering the "close LUN"
  * Returns: 0 on success, error otherwise
  */
@@ -2385,15 +2377,7 @@ static void zfcp_fsf_req_trace(struct zfcp_fsf_req *req, struct scsi_cmnd *scsi)
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	blk_add_driver_data(scsi_cmd_to_rq(scsi), &blktrc, sizeof(blktrc));
-=======
 	blk_add_driver_data(scsi->request, &blktrc, sizeof(blktrc));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	blk_add_driver_data(scsi_cmd_to_rq(scsi), &blktrc, sizeof(blktrc));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -2615,18 +2599,8 @@ int zfcp_fsf_fcp_cmnd(struct scsi_cmnd *scsi_cmnd)
 	io->fcp_cmnd_length = FCP_CMND_LEN;
 
 	if (scsi_get_prot_op(scsi_cmnd) != SCSI_PROT_NORMAL) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		io->data_block_length = scsi_prot_interval(scsi_cmnd);
-		io->ref_tag_value = scsi_prot_ref_tag(scsi_cmnd);
-=======
 		io->data_block_length = scsi_cmnd->device->sector_size;
 		io->ref_tag_value = scsi_get_lba(scsi_cmnd) & 0xFFFFFFFF;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		io->data_block_length = scsi_prot_interval(scsi_cmnd);
-		io->ref_tag_value = scsi_prot_ref_tag(scsi_cmnd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (zfcp_fsf_set_data_dir(scsi_cmnd, &io->data_direction))

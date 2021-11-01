@@ -42,27 +42,13 @@
 
 #include "i915_active.h"
 #include "i915_drv.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include "i915_globals.h"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "i915_trace.h"
 #include "intel_pm.h"
 
 struct execute_cb {
 	struct irq_work work;
 	struct i915_sw_fence *fence;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct i915_request *signal;
-};
-
-static struct kmem_cache *slab_requests;
-static struct kmem_cache *slab_execute_cbs;
-=======
 	void (*hook)(struct i915_request *rq, struct dma_fence *signal);
 	struct i915_request *signal;
 };
@@ -72,14 +58,6 @@ static struct i915_global_request {
 	struct kmem_cache *slab_requests;
 	struct kmem_cache *slab_execute_cbs;
 } global;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct i915_request *signal;
-};
-
-static struct kmem_cache *slab_requests;
-static struct kmem_cache *slab_execute_cbs;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const char *i915_fence_get_driver_name(struct dma_fence *fence)
 {
@@ -130,33 +108,13 @@ static signed long i915_fence_wait(struct dma_fence *fence,
 
 struct kmem_cache *i915_request_slab_cache(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return slab_requests;
-=======
 	return global.slab_requests;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return slab_requests;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void i915_fence_release(struct dma_fence *fence)
 {
 	struct i915_request *rq = to_request(fence);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	GEM_BUG_ON(rq->guc_prio != GUC_PRIO_INIT &&
-		   rq->guc_prio != GUC_PRIO_FINI);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	GEM_BUG_ON(rq->guc_prio != GUC_PRIO_INIT &&
-		   rq->guc_prio != GUC_PRIO_FINI);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * The request is put onto a RCU freelist (i.e. the address
 	 * is immediately reused), mark the fences as being freed now.
@@ -168,22 +126,6 @@ static void i915_fence_release(struct dma_fence *fence)
 	i915_sw_fence_fini(&rq->semaphore);
 
 	/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * Keep one request on each engine for reserved use under mempressure,
-	 * do not use with virtual engines as this really is only needed for
-	 * kernel contexts.
-	 */
-	if (!intel_engine_is_virtual(rq->engine) &&
-	    !cmpxchg(&rq->engine->request_pool, NULL, rq)) {
-		intel_context_put(rq->context);
-		return;
-	}
-
-	intel_context_put(rq->context);
-
-	kmem_cache_free(slab_requests, rq);
-=======
 	 * Keep one request on each engine for reserved use under mempressure
 	 *
 	 * We do not hold a reference to the engine here and so have to be
@@ -213,26 +155,12 @@ static void i915_fence_release(struct dma_fence *fence)
 	 * after timeslicing away, see __unwind_incomplete_requests(). Thus we
 	 * know that if the rq->execution_mask is a single bit, rq->engine
 	 * can be a physical engine with the exact corresponding mask.
-=======
-	 * Keep one request on each engine for reserved use under mempressure,
-	 * do not use with virtual engines as this really is only needed for
-	 * kernel contexts.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
-	if (!intel_engine_is_virtual(rq->engine) &&
-	    !cmpxchg(&rq->engine->request_pool, NULL, rq)) {
-		intel_context_put(rq->context);
+	if (is_power_of_2(rq->execution_mask) &&
+	    !cmpxchg(&rq->engine->request_pool, NULL, rq))
 		return;
-	}
 
-<<<<<<< HEAD
 	kmem_cache_free(global.slab_requests, rq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	intel_context_put(rq->context);
-
-	kmem_cache_free(slab_requests, rq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 const struct dma_fence_ops i915_fence_ops = {
@@ -249,10 +177,6 @@ static void irq_execute_cb(struct irq_work *wrk)
 	struct execute_cb *cb = container_of(wrk, typeof(*cb), work);
 
 	i915_sw_fence_complete(cb->fence);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	kmem_cache_free(slab_execute_cbs, cb);
-=======
 	kmem_cache_free(global.slab_execute_cbs, cb);
 }
 
@@ -265,10 +189,6 @@ static void irq_execute_cb_hook(struct irq_work *wrk)
 	i915_request_put(cb->signal);
 
 	irq_execute_cb(wrk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kmem_cache_free(slab_execute_cbs, cb);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static __always_inline void
@@ -296,15 +216,7 @@ static bool irq_work_imm(struct irq_work *wrk)
 	return false;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void i915_request_notify_execute_cb_imm(struct i915_request *rq)
-=======
 static void __notify_execute_cb_imm(struct i915_request *rq)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void i915_request_notify_execute_cb_imm(struct i915_request *rq)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	__notify_execute_cb(rq, irq_work_imm);
 }
@@ -360,27 +272,11 @@ i915_request_active_engine(struct i915_request *rq,
 	 * check that we have acquired the lock on the final engine.
 	 */
 	locked = READ_ONCE(rq->engine);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock_irq(&locked->sched_engine->lock);
-	while (unlikely(locked != (engine = READ_ONCE(rq->engine)))) {
-		spin_unlock(&locked->sched_engine->lock);
-		locked = engine;
-		spin_lock(&locked->sched_engine->lock);
-=======
 	spin_lock_irq(&locked->active.lock);
-=======
-	spin_lock_irq(&locked->sched_engine->lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	while (unlikely(locked != (engine = READ_ONCE(rq->engine)))) {
-		spin_unlock(&locked->sched_engine->lock);
+		spin_unlock(&locked->active.lock);
 		locked = engine;
-<<<<<<< HEAD
 		spin_lock(&locked->active.lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		spin_lock(&locked->sched_engine->lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (i915_request_is_active(rq)) {
@@ -389,22 +285,11 @@ i915_request_active_engine(struct i915_request *rq,
 		ret = true;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_unlock_irq(&locked->sched_engine->lock);
-=======
 	spin_unlock_irq(&locked->active.lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_unlock_irq(&locked->sched_engine->lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 static void remove_from_engine(struct i915_request *rq)
 {
@@ -436,9 +321,6 @@ static void remove_from_engine(struct i915_request *rq)
 	__notify_execute_cb_imm(rq);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void __rq_init_watchdog(struct i915_request *rq)
 {
 	rq->watchdog.timer.function = NULL;
@@ -535,16 +417,8 @@ bool i915_request_retire(struct i915_request *rq)
 	 * after removing the breadcrumb and signaling it, so that we do not
 	 * inadvertently attach the breadcrumb to a completed request.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rq->engine->remove_active_request(rq);
-=======
 	if (!list_empty(&rq->sched.link))
 		remove_from_engine(rq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rq->engine->remove_active_request(rq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	GEM_BUG_ON(!llist_empty(&rq->execute_cb));
 
 	__list_del_entry(&rq->link); /* poison neither prev/next (RCU walks) */
@@ -569,14 +443,6 @@ void i915_request_retire_upto(struct i915_request *rq)
 
 	do {
 		tmp = list_first_entry(&tl->requests, typeof(*tmp), link);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		GEM_BUG_ON(!i915_request_completed(tmp));
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		GEM_BUG_ON(!i915_request_completed(tmp));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} while (i915_request_retire(tmp) && tmp != rq);
 }
 
@@ -651,39 +517,19 @@ static bool __request_in_flight(const struct i915_request *signal)
 static int
 __await_execution(struct i915_request *rq,
 		  struct i915_request *signal,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		  void (*hook)(struct i915_request *rq,
 			       struct dma_fence *signal),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		  gfp_t gfp)
 {
 	struct execute_cb *cb;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (i915_request_is_active(signal))
-		return 0;
-
-	cb = kmem_cache_alloc(slab_execute_cbs, gfp);
-=======
 	if (i915_request_is_active(signal)) {
 		if (hook)
 			hook(rq, &signal->fence);
-=======
-	if (i915_request_is_active(signal))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
+	}
 
-<<<<<<< HEAD
 	cb = kmem_cache_alloc(global.slab_execute_cbs, gfp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cb = kmem_cache_alloc(slab_execute_cbs, gfp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!cb)
 		return -ENOMEM;
 
@@ -691,18 +537,12 @@ __await_execution(struct i915_request *rq,
 	i915_sw_fence_await(cb->fence);
 	init_irq_work(&cb->work, irq_execute_cb);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (hook) {
 		cb->hook = hook;
 		cb->signal = i915_request_get(signal);
 		cb->work.func = irq_execute_cb_hook;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Register the callback first, then see if the signaler is already
 	 * active. This ensures that if we race with the
@@ -719,15 +559,7 @@ __await_execution(struct i915_request *rq,
 	if (llist_add(&cb->work.node.llist, &signal->execute_cb)) {
 		if (i915_request_is_active(signal) ||
 		    __request_in_flight(signal))
-<<<<<<< HEAD
-<<<<<<< HEAD
-			i915_request_notify_execute_cb_imm(signal);
-=======
 			__notify_execute_cb_imm(signal);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			i915_request_notify_execute_cb_imm(signal);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
@@ -805,15 +637,7 @@ bool __i915_request_submit(struct i915_request *request)
 	RQ_TRACE(request, "\n");
 
 	GEM_BUG_ON(!irqs_disabled());
-<<<<<<< HEAD
-<<<<<<< HEAD
-	lockdep_assert_held(&engine->sched_engine->lock);
-=======
 	lockdep_assert_held(&engine->active.lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	lockdep_assert_held(&engine->sched_engine->lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * With the advent of preempt-to-busy, we frequently encounter
@@ -825,15 +649,7 @@ bool __i915_request_submit(struct i915_request *request)
 	 *
 	 * We must remove the request from the caller's priority queue,
 	 * and the caller must only call us when the request is in their
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * priority queue, under the sched_engine->lock. This ensures that the
-=======
 	 * priority queue, under the active.lock. This ensures that the
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * priority queue, under the sched_engine->lock. This ensures that the
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * request has *not* yet been retired and we can safely move
 	 * the request into the engine->active.list where it will be
 	 * dropped upon retiring. (Otherwise if resubmit a *retired*
@@ -874,33 +690,11 @@ bool __i915_request_submit(struct i915_request *request)
 				     request->ring->vaddr + request->postfix);
 
 	trace_i915_request_execute(request);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (engine->bump_serial)
-		engine->bump_serial(engine);
-	else
-		engine->serial++;
-
-<<<<<<< HEAD
-	result = true;
-
-	GEM_BUG_ON(test_bit(I915_FENCE_FLAG_ACTIVE, &request->fence.flags));
-	engine->add_active_request(request);
-=======
 	engine->serial++;
 	result = true;
 
 	GEM_BUG_ON(test_bit(I915_FENCE_FLAG_ACTIVE, &request->fence.flags));
 	list_move_tail(&request->sched.link, &engine->active.requests);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	result = true;
-
-	GEM_BUG_ON(test_bit(I915_FENCE_FLAG_ACTIVE, &request->fence.flags));
-	engine->add_active_request(request);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 active:
 	clear_bit(I915_FENCE_FLAG_PQUEUE, &request->fence.flags);
 	set_bit(I915_FENCE_FLAG_ACTIVE, &request->fence.flags);
@@ -930,27 +724,11 @@ void i915_request_submit(struct i915_request *request)
 	unsigned long flags;
 
 	/* Will be called from irq-context when using foreign fences. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock_irqsave(&engine->sched_engine->lock, flags);
-
-	__i915_request_submit(request);
-
-	spin_unlock_irqrestore(&engine->sched_engine->lock, flags);
-=======
 	spin_lock_irqsave(&engine->active.lock, flags);
 
 	__i915_request_submit(request);
 
 	spin_unlock_irqrestore(&engine->active.lock, flags);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock_irqsave(&engine->sched_engine->lock, flags);
-
-	__i915_request_submit(request);
-
-	spin_unlock_irqrestore(&engine->sched_engine->lock, flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void __i915_request_unsubmit(struct i915_request *request)
@@ -964,15 +742,7 @@ void __i915_request_unsubmit(struct i915_request *request)
 	RQ_TRACE(request, "\n");
 
 	GEM_BUG_ON(!irqs_disabled());
-<<<<<<< HEAD
-<<<<<<< HEAD
-	lockdep_assert_held(&engine->sched_engine->lock);
-=======
 	lockdep_assert_held(&engine->active.lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	lockdep_assert_held(&engine->sched_engine->lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Before we remove this breadcrumb from the signal list, we have
@@ -1005,14 +775,6 @@ void i915_request_unsubmit(struct i915_request *request)
 	unsigned long flags;
 
 	/* Will be called from irq-context when using foreign fences. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock_irqsave(&engine->sched_engine->lock, flags);
-
-	__i915_request_unsubmit(request);
-
-	spin_unlock_irqrestore(&engine->sched_engine->lock, flags);
-=======
 	spin_lock_irqsave(&engine->active.lock, flags);
 
 	__i915_request_unsubmit(request);
@@ -1030,14 +792,6 @@ static void __cancel_request(struct i915_request *rq)
 		intel_gt_handle_error(engine->gt, engine->mask, 0,
 				      "request cancellation by %s",
 				      current->comm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock_irqsave(&engine->sched_engine->lock, flags);
-
-	__i915_request_unsubmit(request);
-
-	spin_unlock_irqrestore(&engine->sched_engine->lock, flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void i915_request_cancel(struct i915_request *rq, int error)
@@ -1047,15 +801,7 @@ void i915_request_cancel(struct i915_request *rq, int error)
 
 	set_bit(I915_FENCE_FLAG_SENTINEL, &rq->fence.flags);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	intel_context_cancel_request(rq->context, rq);
-=======
 	__cancel_request(rq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	intel_context_cancel_request(rq->context, rq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int __i915_sw_fence_call
@@ -1143,15 +889,7 @@ request_alloc_slow(struct intel_timeline *tl,
 	rq = list_first_entry(&tl->requests, typeof(*rq), link);
 	i915_request_retire(rq);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rq = kmem_cache_alloc(slab_requests,
-=======
 	rq = kmem_cache_alloc(global.slab_requests,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rq = kmem_cache_alloc(slab_requests,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			      gfp | __GFP_RETRY_MAYFAIL | __GFP_NOWARN);
 	if (rq)
 		return rq;
@@ -1164,15 +902,7 @@ request_alloc_slow(struct intel_timeline *tl,
 	retire_requests(tl);
 
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return kmem_cache_alloc(slab_requests, gfp);
-=======
 	return kmem_cache_alloc(global.slab_requests, gfp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return kmem_cache_alloc(slab_requests, gfp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void __i915_request_ctor(void *arg)
@@ -1184,14 +914,8 @@ static void __i915_request_ctor(void *arg)
 	i915_sw_fence_init(&rq->submit, submit_notify);
 	i915_sw_fence_init(&rq->semaphore, semaphore_notify);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	dma_fence_init(&rq->fence, &i915_fence_ops, &rq->lock, 0, 0);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rq->capture_list = NULL;
 
 	init_llist_head(&rq->execute_cb);
@@ -1239,15 +963,7 @@ __i915_request_create(struct intel_context *ce, gfp_t gfp)
 	 *
 	 * Do not use kmem_cache_zalloc() here!
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rq = kmem_cache_alloc(slab_requests,
-=======
 	rq = kmem_cache_alloc(global.slab_requests,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rq = kmem_cache_alloc(slab_requests,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			      gfp | __GFP_RETRY_MAYFAIL | __GFP_NOWARN);
 	if (unlikely(!rq)) {
 		rq = request_alloc_slow(tl, &ce->engine->request_pool, gfp);
@@ -1257,60 +973,22 @@ __i915_request_create(struct intel_context *ce, gfp_t gfp)
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Hold a reference to the intel_context over life of an i915_request.
-	 * Without this an i915_request can exist after the context has been
-	 * destroyed (e.g. request retired, context closed, but user space holds
-	 * a reference to the request from an out fence). In the case of GuC
-	 * submission + virtual engine, the engine that the request references
-	 * is also destroyed which can trigger bad pointer dref in fence ops
-	 * (e.g. i915_fence_get_driver_name). We could likely change these
-	 * functions to avoid touching the engine but let's just be safe and
-	 * hold the intel_context reference. In execlist mode the request always
-	 * eventually points to a physical engine so this isn't an issue.
-	 */
-	rq->context = intel_context_get(ce);
-<<<<<<< HEAD
-=======
 	rq->context = ce;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rq->engine = ce->engine;
 	rq->ring = ce->ring;
 	rq->execution_mask = ce->engine->mask;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	kref_init(&rq->fence.refcount);
 	rq->fence.flags = 0;
 	rq->fence.error = 0;
 	INIT_LIST_HEAD(&rq->fence.cb_list);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = intel_timeline_get_seqno(tl, rq, &seqno);
 	if (ret)
 		goto err_free;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dma_fence_init(&rq->fence, &i915_fence_ops, &rq->lock,
-		       tl->fence_context, seqno);
-=======
 	rq->fence.context = tl->fence_context;
 	rq->fence.seqno = seqno;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dma_fence_init(&rq->fence, &i915_fence_ops, &rq->lock,
-		       tl->fence_context, seqno);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	RCU_INIT_POINTER(rq->timeline, tl);
 	rq->hwsp_seqno = tl->hwsp_seqno;
@@ -1318,16 +996,6 @@ __i915_request_create(struct intel_context *ce, gfp_t gfp)
 
 	rq->rcustate = get_state_synchronize_rcu(); /* acts as smp_mb() */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rq->guc_prio = GUC_PRIO_INIT;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rq->guc_prio = GUC_PRIO_INIT;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* We bump the ref for the fence chain */
 	i915_sw_fence_reinit(&i915_request_get(rq)->submit);
 	i915_sw_fence_reinit(&i915_request_get(rq)->semaphore);
@@ -1382,17 +1050,7 @@ err_unwind:
 	GEM_BUG_ON(!list_empty(&rq->sched.waiters_list));
 
 err_free:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	intel_context_put(ce);
-	kmem_cache_free(slab_requests, rq);
-=======
 	kmem_cache_free(global.slab_requests, rq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	intel_context_put(ce);
-	kmem_cache_free(slab_requests, rq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 err_unreserve:
 	intel_context_unpin(ce);
 	return ERR_PTR(ret);
@@ -1595,15 +1253,7 @@ emit_semaphore_wait(struct i915_request *to,
 		goto await_fence;
 
 	/* Only submit our spinner after the signaler is running! */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (__await_execution(to, from, gfp))
-=======
 	if (__await_execution(to, from, NULL, gfp))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (__await_execution(to, from, gfp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto await_fence;
 
 	if (__emit_semaphore_wait(to, from, from->fence.seqno))
@@ -1634,32 +1284,16 @@ static int intel_timeline_sync_set_start(struct intel_timeline *tl,
 
 static int
 __i915_request_await_execution(struct i915_request *to,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			       struct i915_request *from)
-=======
 			       struct i915_request *from,
 			       void (*hook)(struct i915_request *rq,
 					    struct dma_fence *signal))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			       struct i915_request *from)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int err;
 
 	GEM_BUG_ON(intel_context_is_barrier(from->context));
 
 	/* Submit both requests at the same time */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = __await_execution(to, from, I915_FENCE_GFP);
-=======
 	err = __await_execution(to, from, hook, I915_FENCE_GFP);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = __await_execution(to, from, I915_FENCE_GFP);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		return err;
 
@@ -1709,15 +1343,7 @@ __i915_request_await_execution(struct i915_request *to,
 	}
 
 	/* Couple the dependency tree for PI on this exposed to->fence */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (to->engine->sched_engine->schedule) {
-=======
 	if (to->engine->schedule) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (to->engine->sched_engine->schedule) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		err = i915_sched_node_add_dependency(&to->sched,
 						     &from->sched,
 						     I915_DEPENDENCY_WEAK);
@@ -1780,17 +1406,9 @@ i915_request_await_external(struct i915_request *rq, struct dma_fence *fence)
 
 int
 i915_request_await_execution(struct i915_request *rq,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			     struct dma_fence *fence)
-=======
 			     struct dma_fence *fence,
 			     void (*hook)(struct i915_request *rq,
 					  struct dma_fence *signal))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			     struct dma_fence *fence)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct dma_fence **child = &fence;
 	unsigned int nchild = 1;
@@ -1808,20 +1426,10 @@ i915_request_await_execution(struct i915_request *rq,
 
 	do {
 		fence = *child++;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags))
-			continue;
-=======
 		if (test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags)) {
 			i915_sw_fence_set_error_once(&rq->submit, fence->error);
 			continue;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags))
-			continue;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (fence->context == rq->fence.context)
 			continue;
@@ -1833,16 +1441,8 @@ i915_request_await_execution(struct i915_request *rq,
 
 		if (dma_fence_is_i915(fence))
 			ret = __i915_request_await_execution(rq,
-<<<<<<< HEAD
-<<<<<<< HEAD
-							     to_request(fence));
-=======
 							     to_request(fence),
 							     hook);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-							     to_request(fence));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else
 			ret = i915_request_await_external(rq, fence);
 		if (ret < 0)
@@ -1868,15 +1468,7 @@ await_request_submit(struct i915_request *to, struct i915_request *from)
 							&from->submit,
 							I915_FENCE_GFP);
 	else
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return __i915_request_await_execution(to, from);
-=======
 		return __i915_request_await_execution(to, from, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return __i915_request_await_execution(to, from);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int
@@ -1892,15 +1484,7 @@ i915_request_await_request(struct i915_request *to, struct i915_request *from)
 		return 0;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (to->engine->sched_engine->schedule) {
-=======
 	if (to->engine->schedule) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (to->engine->sched_engine->schedule) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = i915_sched_node_add_dependency(&to->sched,
 						     &from->sched,
 						     I915_DEPENDENCY_EXTERNAL);
@@ -1908,17 +1492,7 @@ i915_request_await_request(struct i915_request *to, struct i915_request *from)
 			return ret;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!intel_engine_uses_guc(to->engine) &&
-	    is_power_of_2(to->execution_mask | READ_ONCE(from->execution_mask)))
-=======
 	if (is_power_of_2(to->execution_mask | READ_ONCE(from->execution_mask)))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!intel_engine_uses_guc(to->engine) &&
-	    is_power_of_2(to->execution_mask | READ_ONCE(from->execution_mask)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = await_request_submit(to, from);
 	else
 		ret = emit_semaphore_wait(to, from, I915_FENCE_GFP);
@@ -1953,20 +1527,10 @@ i915_request_await_dma_fence(struct i915_request *rq, struct dma_fence *fence)
 
 	do {
 		fence = *child++;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags))
-			continue;
-=======
 		if (test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags)) {
 			i915_sw_fence_set_error_once(&rq->submit, fence->error);
 			continue;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags))
-			continue;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Requests on the same timeline are explicitly ordered, along
@@ -2089,16 +1653,6 @@ __i915_request_add_to_timeline(struct i915_request *rq)
 	prev = to_request(__i915_active_fence_set(&timeline->last_request,
 						  &rq->fence));
 	if (prev && !__i915_request_is_complete(prev)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		bool uses_guc = intel_engine_uses_guc(rq->engine);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		bool uses_guc = intel_engine_uses_guc(rq->engine);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * The requests are supposed to be kept in order. However,
 		 * we need to be wary in case the timeline->last_request
@@ -2109,19 +1663,7 @@ __i915_request_add_to_timeline(struct i915_request *rq)
 			   i915_seqno_passed(prev->fence.seqno,
 					     rq->fence.seqno));
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if ((!uses_guc &&
-		     is_power_of_2(READ_ONCE(prev->engine)->mask | rq->engine->mask)) ||
-		    (uses_guc && prev->context == rq->context))
-=======
 		if (is_power_of_2(READ_ONCE(prev->engine)->mask | rq->engine->mask))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if ((!uses_guc &&
-		     is_power_of_2(READ_ONCE(prev->engine)->mask | rq->engine->mask)) ||
-		    (uses_guc && prev->context == rq->context))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			i915_sw_fence_await_sw_fence(&rq->submit,
 						     &prev->submit,
 						     &rq->submitq);
@@ -2129,15 +1671,7 @@ __i915_request_add_to_timeline(struct i915_request *rq)
 			__i915_sw_fence_await_dma_fence(&rq->submit,
 							&prev->fence,
 							&rq->dmaq);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (rq->engine->sched_engine->schedule)
-=======
 		if (rq->engine->schedule)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (rq->engine->sched_engine->schedule)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__i915_sched_node_add_dependency(&rq->sched,
 							 &prev->sched,
 							 &rq->dep,
@@ -2209,18 +1743,8 @@ void __i915_request_queue(struct i915_request *rq,
 	 * decide whether to preempt the entire chain so that it is ready to
 	 * run at the earliest possible convenience.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (attr && rq->engine->sched_engine->schedule)
-		rq->engine->sched_engine->schedule(rq, attr);
-=======
 	if (attr && rq->engine->schedule)
 		rq->engine->schedule(rq, attr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (attr && rq->engine->sched_engine->schedule)
-		rq->engine->sched_engine->schedule(rq, attr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	local_bh_disable();
 	__i915_request_queue_bh(rq);
@@ -2580,130 +2104,31 @@ void i915_request_show(struct drm_printer *m,
 		   name);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static bool engine_match_ring(struct intel_engine_cs *engine, struct i915_request *rq)
-{
-	u32 ring = ENGINE_READ(engine, RING_START);
-
-	return ring == i915_ggtt_offset(rq->ring->vma);
-}
-
-static bool match_ring(struct i915_request *rq)
-{
-	struct intel_engine_cs *engine;
-	bool found;
-	int i;
-
-	if (!intel_engine_is_virtual(rq->engine))
-		return engine_match_ring(rq->engine, rq);
-
-	found = false;
-	i = 0;
-	while ((engine = intel_engine_get_sibling(rq->engine, i++))) {
-		found = engine_match_ring(engine, rq);
-		if (found)
-			break;
-	}
-
-	return found;
-}
-
-enum i915_request_state i915_test_request_state(struct i915_request *rq)
-{
-	if (i915_request_completed(rq))
-		return I915_REQUEST_COMPLETE;
-
-	if (!i915_request_started(rq))
-		return I915_REQUEST_PENDING;
-
-	if (match_ring(rq))
-		return I915_REQUEST_ACTIVE;
-
-	return I915_REQUEST_QUEUED;
-}
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if IS_ENABLED(CONFIG_DRM_I915_SELFTEST)
 #include "selftests/mock_request.c"
 #include "selftests/i915_request.c"
 #endif
 
-<<<<<<< HEAD
-void i915_request_module_exit(void)
-{
-	kmem_cache_destroy(slab_execute_cbs);
-	kmem_cache_destroy(slab_requests);
-}
-
-int __init i915_request_module_init(void)
-{
-	slab_requests =
-=======
 static void i915_global_request_shrink(void)
-=======
-static bool engine_match_ring(struct intel_engine_cs *engine, struct i915_request *rq)
 {
-	u32 ring = ENGINE_READ(engine, RING_START);
-
-	return ring == i915_ggtt_offset(rq->ring->vma);
+	kmem_cache_shrink(global.slab_execute_cbs);
+	kmem_cache_shrink(global.slab_requests);
 }
 
-static bool match_ring(struct i915_request *rq)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+static void i915_global_request_exit(void)
 {
-	struct intel_engine_cs *engine;
-	bool found;
-	int i;
-
-	if (!intel_engine_is_virtual(rq->engine))
-		return engine_match_ring(rq->engine, rq);
-
-	found = false;
-	i = 0;
-	while ((engine = intel_engine_get_sibling(rq->engine, i++))) {
-		found = engine_match_ring(engine, rq);
-		if (found)
-			break;
-	}
-
-	return found;
+	kmem_cache_destroy(global.slab_execute_cbs);
+	kmem_cache_destroy(global.slab_requests);
 }
 
-enum i915_request_state i915_test_request_state(struct i915_request *rq)
+static struct i915_global_request global = { {
+	.shrink = i915_global_request_shrink,
+	.exit = i915_global_request_exit,
+} };
+
+int __init i915_global_request_init(void)
 {
-	if (i915_request_completed(rq))
-		return I915_REQUEST_COMPLETE;
-
-	if (!i915_request_started(rq))
-		return I915_REQUEST_PENDING;
-
-	if (match_ring(rq))
-		return I915_REQUEST_ACTIVE;
-
-	return I915_REQUEST_QUEUED;
-}
-
-#if IS_ENABLED(CONFIG_DRM_I915_SELFTEST)
-#include "selftests/mock_request.c"
-#include "selftests/i915_request.c"
-#endif
-
-void i915_request_module_exit(void)
-{
-	kmem_cache_destroy(slab_execute_cbs);
-	kmem_cache_destroy(slab_requests);
-}
-
-int __init i915_request_module_init(void)
-{
-<<<<<<< HEAD
 	global.slab_requests =
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	slab_requests =
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		kmem_cache_create("i915_request",
 				  sizeof(struct i915_request),
 				  __alignof__(struct i915_request),
@@ -2711,44 +2136,20 @@ int __init i915_request_module_init(void)
 				  SLAB_RECLAIM_ACCOUNT |
 				  SLAB_TYPESAFE_BY_RCU,
 				  __i915_request_ctor);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!slab_requests)
-		return -ENOMEM;
-
-	slab_execute_cbs = KMEM_CACHE(execute_cb,
-					     SLAB_HWCACHE_ALIGN |
-					     SLAB_RECLAIM_ACCOUNT |
-					     SLAB_TYPESAFE_BY_RCU);
-	if (!slab_execute_cbs)
-		goto err_requests;
-
-	return 0;
-
-err_requests:
-	kmem_cache_destroy(slab_requests);
-=======
 	if (!global.slab_requests)
-=======
-	if (!slab_requests)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOMEM;
 
-	slab_execute_cbs = KMEM_CACHE(execute_cb,
+	global.slab_execute_cbs = KMEM_CACHE(execute_cb,
 					     SLAB_HWCACHE_ALIGN |
 					     SLAB_RECLAIM_ACCOUNT |
 					     SLAB_TYPESAFE_BY_RCU);
-	if (!slab_execute_cbs)
+	if (!global.slab_execute_cbs)
 		goto err_requests;
 
+	i915_global_register(&global.base);
 	return 0;
 
 err_requests:
-<<<<<<< HEAD
 	kmem_cache_destroy(global.slab_requests);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kmem_cache_destroy(slab_requests);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return -ENOMEM;
 }

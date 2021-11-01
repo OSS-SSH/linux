@@ -213,18 +213,12 @@ static void davinci_spi_chipselect(struct spi_device *spi, int value)
 	 * line for the controller
 	 */
 	if (spi->cs_gpiod) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		/*
 		 * FIXME: is this code ever executed? This host does not
 		 * set SPI_MASTER_GPIO_SS so this chipselect callback should
 		 * not get called from the SPI core when we are using
 		 * GPIOs for chip select.
 		 */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (value == BITBANG_CS_ACTIVE)
 			gpiod_set_value(spi->cs_gpiod, 1);
 		else
@@ -951,15 +945,7 @@ static int davinci_spi_probe(struct platform_device *pdev)
 	master->bus_num = pdev->id;
 	master->num_chipselect = pdata->num_chipselect;
 	master->bits_per_word_mask = SPI_BPW_RANGE_MASK(2, 16);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	master->flags = SPI_MASTER_MUST_RX | SPI_MASTER_GPIO_SS;
-=======
 	master->flags = SPI_MASTER_MUST_RX;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	master->flags = SPI_MASTER_MUST_RX | SPI_MASTER_GPIO_SS;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	master->setup = davinci_spi_setup;
 	master->cleanup = davinci_spi_cleanup;
 	master->can_dma = davinci_spi_can_dma;

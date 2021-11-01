@@ -1,21 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* Marvell RVU Ethernet driver
- *
- * Copyright (C) 2021 Marvell.
- *
-=======
 /* Marvell OcteonTx2 RVU Physcial Function ethernet driver
  *
  * Copyright (C) 2020 Marvell.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* Marvell RVU Ethernet driver
- *
- * Copyright (C) 2021 Marvell.
- *
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include "cn10k.h"
@@ -36,129 +22,79 @@ static struct dev_hw_ops cn10k_hw_ops = {
 	.refill_pool_ptrs = cn10k_refill_pool_ptrs,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int cn10k_lmtst_init(struct otx2_nic *pfvf)
-{
-
-	struct lmtst_tbl_setup_req *req;
-	struct otx2_lmt_info *lmt_info;
-	int err, cpu;
-
-	if (!test_bit(CN10K_LMTST, &pfvf->hw.cap_flag)) {
-		pfvf->hw_ops = &otx2_hw_ops;
-		return 0;
-	}
-
-	pfvf->hw_ops = &cn10k_hw_ops;
-	/* Total LMTLINES = num_online_cpus() * 32 (For Burst flush).*/
-	pfvf->tot_lmt_lines = (num_online_cpus() * LMT_BURST_SIZE);
-	pfvf->hw.lmt_info = alloc_percpu(struct otx2_lmt_info);
-
-	mutex_lock(&pfvf->mbox.lock);
-	req = otx2_mbox_alloc_msg_lmtst_tbl_setup(&pfvf->mbox);
-	if (!req) {
-		mutex_unlock(&pfvf->mbox.lock);
-		return -ENOMEM;
-	}
-
-	req->use_local_lmt_region = true;
-
-	err = qmem_alloc(pfvf->dev, &pfvf->dync_lmt, pfvf->tot_lmt_lines,
-			 LMT_LINE_SIZE);
-	if (err) {
-		mutex_unlock(&pfvf->mbox.lock);
-		return err;
-	}
-	pfvf->hw.lmt_base = (u64 *)pfvf->dync_lmt->base;
-	req->lmt_iova = (u64)pfvf->dync_lmt->iova;
-
-	err = otx2_sync_mbox_msg(&pfvf->mbox);
-	mutex_unlock(&pfvf->mbox.lock);
-
-	for_each_possible_cpu(cpu) {
-		lmt_info = per_cpu_ptr(pfvf->hw.lmt_info, cpu);
-		lmt_info->lmt_addr = ((u64)pfvf->hw.lmt_base +
-				      (cpu * LMT_BURST_SIZE * LMT_LINE_SIZE));
-		lmt_info->lmt_id = cpu * LMT_BURST_SIZE;
-	}
-
-	return 0;
-}
-EXPORT_SYMBOL(cn10k_lmtst_init);
-=======
 int cn10k_pf_lmtst_init(struct otx2_nic *pf)
-=======
-int cn10k_lmtst_init(struct otx2_nic *pfvf)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
+	int size, num_lines;
+	u64 base;
 
-	struct lmtst_tbl_setup_req *req;
-	struct otx2_lmt_info *lmt_info;
-	int err, cpu;
-
-	if (!test_bit(CN10K_LMTST, &pfvf->hw.cap_flag)) {
-		pfvf->hw_ops = &otx2_hw_ops;
+	if (!test_bit(CN10K_LMTST, &pf->hw.cap_flag)) {
+		pf->hw_ops = &otx2_hw_ops;
 		return 0;
 	}
 
-	pfvf->hw_ops = &cn10k_hw_ops;
-	/* Total LMTLINES = num_online_cpus() * 32 (For Burst flush).*/
-	pfvf->tot_lmt_lines = (num_online_cpus() * LMT_BURST_SIZE);
-	pfvf->hw.lmt_info = alloc_percpu(struct otx2_lmt_info);
+	pf->hw_ops = &cn10k_hw_ops;
+	base = pci_resource_start(pf->pdev, PCI_MBOX_BAR_NUM) +
+		       (MBOX_SIZE * (pf->total_vfs + 1));
 
-	mutex_lock(&pfvf->mbox.lock);
-	req = otx2_mbox_alloc_msg_lmtst_tbl_setup(&pfvf->mbox);
-	if (!req) {
-		mutex_unlock(&pfvf->mbox.lock);
+	size = pci_resource_len(pf->pdev, PCI_MBOX_BAR_NUM) -
+	       (MBOX_SIZE * (pf->total_vfs + 1));
+
+	pf->hw.lmt_base = ioremap(base, size);
+
+	if (!pf->hw.lmt_base) {
+		dev_err(pf->dev, "Unable to map PF LMTST region\n");
 		return -ENOMEM;
 	}
 
-	req->use_local_lmt_region = true;
+	/* FIXME: Get the num of LMTST lines from LMT table */
+	pf->tot_lmt_lines = size / LMT_LINE_SIZE;
+	num_lines = (pf->tot_lmt_lines - NIX_LMTID_BASE) /
+			    pf->hw.tx_queues;
+	/* Number of LMT lines per SQ queues */
+	pf->nix_lmt_lines = num_lines > 32 ? 32 : num_lines;
 
-	err = qmem_alloc(pfvf->dev, &pfvf->dync_lmt, pfvf->tot_lmt_lines,
-			 LMT_LINE_SIZE);
-	if (err) {
-		mutex_unlock(&pfvf->mbox.lock);
-		return err;
-	}
-	pfvf->hw.lmt_base = (u64 *)pfvf->dync_lmt->base;
-	req->lmt_iova = (u64)pfvf->dync_lmt->iova;
-
-	err = otx2_sync_mbox_msg(&pfvf->mbox);
-	mutex_unlock(&pfvf->mbox.lock);
-
-	for_each_possible_cpu(cpu) {
-		lmt_info = per_cpu_ptr(pfvf->hw.lmt_info, cpu);
-		lmt_info->lmt_addr = ((u64)pfvf->hw.lmt_base +
-				      (cpu * LMT_BURST_SIZE * LMT_LINE_SIZE));
-		lmt_info->lmt_id = cpu * LMT_BURST_SIZE;
-	}
-
+	pf->nix_lmt_size = pf->nix_lmt_lines * LMT_LINE_SIZE;
 	return 0;
 }
-<<<<<<< HEAD
+
+int cn10k_vf_lmtst_init(struct otx2_nic *vf)
+{
+	int size, num_lines;
+
+	if (!test_bit(CN10K_LMTST, &vf->hw.cap_flag)) {
+		vf->hw_ops = &otx2_hw_ops;
+		return 0;
+	}
+
+	vf->hw_ops = &cn10k_hw_ops;
+	size = pci_resource_len(vf->pdev, PCI_MBOX_BAR_NUM);
+	vf->hw.lmt_base = ioremap_wc(pci_resource_start(vf->pdev,
+							PCI_MBOX_BAR_NUM),
+				     size);
+	if (!vf->hw.lmt_base) {
+		dev_err(vf->dev, "Unable to map VF LMTST region\n");
+		return -ENOMEM;
+	}
+
+	vf->tot_lmt_lines = size / LMT_LINE_SIZE;
+	/* LMTST lines per SQ */
+	num_lines = (vf->tot_lmt_lines - NIX_LMTID_BASE) /
+			    vf->hw.tx_queues;
+	vf->nix_lmt_lines = num_lines > 32 ? 32 : num_lines;
+	vf->nix_lmt_size = vf->nix_lmt_lines * LMT_LINE_SIZE;
+	return 0;
+}
 EXPORT_SYMBOL(cn10k_vf_lmtst_init);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-EXPORT_SYMBOL(cn10k_lmtst_init);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int cn10k_sq_aq_init(void *dev, u16 qidx, u16 sqb_aura)
 {
 	struct nix_cn10k_aq_enq_req *aq;
 	struct otx2_nic *pfvf = dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct otx2_snd_queue *sq;
 
 	sq = &pfvf->qset.sq[qidx];
 	sq->lmt_addr = (__force u64 *)((u64)pfvf->hw.nix_lmt_base +
 			       (qidx * pfvf->nix_lmt_size));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Get memory to put this msg */
 	aq = otx2_mbox_alloc_msg_nix_cn10k_aq_enq(&pfvf->mbox);
@@ -171,16 +107,8 @@ int cn10k_sq_aq_init(void *dev, u16 qidx, u16 sqb_aura)
 	aq->sq.ena = 1;
 	/* Only one SMQ is allocated, map all SQ's to that SMQ  */
 	aq->sq.smq = pfvf->hw.txschq_list[NIX_TXSCH_LVL_SMQ][0];
-<<<<<<< HEAD
-<<<<<<< HEAD
-	aq->sq.smq_rr_weight = mtu_to_dwrr_weight(pfvf, pfvf->max_frs);
-=======
 	/* FIXME: set based on NIX_AF_DWRR_RPM_MTU*/
 	aq->sq.smq_rr_weight = pfvf->netdev->mtu;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	aq->sq.smq_rr_weight = mtu_to_dwrr_weight(pfvf, pfvf->max_frs);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	aq->sq.default_chan = pfvf->hw.tx_chan_base;
 	aq->sq.sqe_stype = NIX_STYPE_STF; /* Cache SQB */
 	aq->sq.sqb_aura = sqb_aura;
@@ -212,16 +140,8 @@ void cn10k_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq)
 		if (otx2_alloc_buffer(pfvf, cq, &bufptr)) {
 			if (num_ptrs--)
 				__cn10k_aura_freeptr(pfvf, cq->cq_idx, ptrs,
-<<<<<<< HEAD
-<<<<<<< HEAD
-						     num_ptrs);
-=======
 						     num_ptrs,
 						     cq->rbpool->lmt_addr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-						     num_ptrs);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 		cq->pool_ptrs--;
@@ -229,16 +149,8 @@ void cn10k_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq)
 		num_ptrs++;
 		if (num_ptrs == NPA_MAX_BURST || cq->pool_ptrs == 0) {
 			__cn10k_aura_freeptr(pfvf, cq->cq_idx, ptrs,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					     num_ptrs);
-=======
 					     num_ptrs,
 					     cq->rbpool->lmt_addr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					     num_ptrs);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			num_ptrs = 1;
 		}
 	}
@@ -246,53 +158,22 @@ void cn10k_refill_pool_ptrs(void *dev, struct otx2_cq_queue *cq)
 
 void cn10k_sqe_flush(void *dev, struct otx2_snd_queue *sq, int size, int qidx)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct otx2_lmt_info *lmt_info;
 	struct otx2_nic *pfvf = dev;
+	int lmt_id = NIX_LMTID_BASE + (qidx * pfvf->nix_lmt_lines);
 	u64 val = 0, tar_addr = 0;
 
-	lmt_info = per_cpu_ptr(pfvf->hw.lmt_info, smp_processor_id());
-=======
-=======
-	struct otx2_lmt_info *lmt_info;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct otx2_nic *pfvf = dev;
-	u64 val = 0, tar_addr = 0;
-
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	lmt_info = per_cpu_ptr(pfvf->hw.lmt_info, smp_processor_id());
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* FIXME: val[0:10] LMT_ID.
 	 * [12:15] no of LMTST - 1 in the burst.
 	 * [19:63] data size of each LMTST in the burst except first.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	val = (lmt_info->lmt_id & 0x7FF);
-=======
 	val = (lmt_id & 0x7FF);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	val = (lmt_info->lmt_id & 0x7FF);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Target address for LMTST flush tells HW how many 128bit
 	 * words are present.
 	 * tar_addr[6:4] size of first LMTST - 1 in units of 128b.
 	 */
 	tar_addr |= sq->io_addr | (((size / 16) - 1) & 0x7) << 4;
 	dma_wmb();
-<<<<<<< HEAD
-<<<<<<< HEAD
-	memcpy((u64 *)lmt_info->lmt_addr, sq->sqe_base, size);
-=======
 	memcpy(sq->lmt_addr, sq->sqe_base, size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	memcpy((u64 *)lmt_info->lmt_addr, sq->sqe_base, size);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cn10k_lmt_flush(val, tar_addr);
 
 	sq->head++;

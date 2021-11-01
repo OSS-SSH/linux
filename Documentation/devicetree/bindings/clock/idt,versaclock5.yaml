@@ -30,29 +30,6 @@ description: |
     3 -- OUT3
     4 -- OUT4
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-  The idt,shutdown and idt,output-enable-active properties control the
-  SH (en_global_shutdown) and SP bits of the Primary Source and Shutdown
-  Register, respectively. Their behavior is summarized by the following
-  table:
-
-  SH SP Output when the SD/OE pin is Low/High
-  == == =====================================
-   0  0 Active/Inactive
-   0  1 Inactive/Active
-   1  0 Active/Shutdown
-   1  1 Inactive/Shutdown
-
-  The case where SH and SP are both 1 is likely not very interesting.
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 maintainers:
   - Luca Ceresoli <luca@lucaceresoli.net>
 
@@ -87,35 +64,6 @@ properties:
     maximum: 22760
     description: Optional load capacitor for XTAL1 and XTAL2
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-  idt,shutdown:
-    $ref: /schemas/types.yaml#/definitions/uint32
-    enum: [0, 1]
-    description: |
-      If 1, this enables the shutdown functionality: the chip will be
-      shut down if the SD/OE pin is driven high. If 0, this disables the
-      shutdown functionality: the chip will never be shut down based on
-      the value of the SD/OE pin. This property corresponds to the SH
-      bit of the Primary Source and Shutdown Register.
-
-  idt,output-enable-active:
-    $ref: /schemas/types.yaml#/definitions/uint32
-    enum: [0, 1]
-    description: |
-      If 1, this enables output when the SD/OE pin is high, and disables
-      output when the SD/OE pin is low. If 0, this disables output when
-      the SD/OE pin is high, and enables output when the SD/OE pin is
-      low. This corresponds to the SP bit of the Primary Source and
-      Shutdown Register.
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 patternProperties:
   "^OUT[1-4]$":
     type: object
@@ -142,16 +90,6 @@ required:
   - compatible
   - reg
   - '#clock-cells'
-<<<<<<< HEAD
-<<<<<<< HEAD
-  - idt,shutdown
-  - idt,output-enable-active
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  - idt,shutdown
-  - idt,output-enable-active
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 allOf:
   - if:
@@ -201,19 +139,6 @@ examples:
             clocks = <&ref25m>;
             clock-names = "xin";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-            /* Set the SD/OE pin's settings */
-            idt,shutdown = <0>;
-            idt,output-enable-active = <0>;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             OUT1 {
                 idt,mode = <VC5_CMOSD>;
                 idt,voltage-microvolt = <1800000>;

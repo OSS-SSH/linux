@@ -33,14 +33,8 @@ DECLARE_PER_CPU(unsigned long, nmi_count);
 
 asmlinkage void do_IRQ(int hwirq, struct pt_regs *regs)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	int irq = irq_find_mapping(NULL, hwirq);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_DEBUG_STACKOVERFLOW
 	/* Debugging check for stack overflow: is there less than 1KB free? */
 	{
@@ -54,15 +48,7 @@ asmlinkage void do_IRQ(int hwirq, struct pt_regs *regs)
 			       sp - sizeof(struct thread_info));
 	}
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-	generic_handle_domain_irq(NULL, hwirq);
-=======
 	generic_handle_irq(irq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	generic_handle_domain_irq(NULL, hwirq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int arch_show_interrupts(struct seq_file *p, int prec)
@@ -159,15 +145,7 @@ unsigned xtensa_get_ext_irq_no(unsigned irq)
 
 void __init init_IRQ(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifdef CONFIG_USE_OF
-=======
 #ifdef CONFIG_OF
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifdef CONFIG_USE_OF
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	irqchip_init();
 #else
 #ifdef CONFIG_HAVE_SMP

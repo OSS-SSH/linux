@@ -190,14 +190,6 @@ tusb_fifo_write_unaligned(void __iomem *fifo, const u8 *buf, u16 len)
 	}
 	if (len > 0) {
 		/* Write the rest 1 - 3 bytes to FIFO */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		val = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		val = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		memcpy(&val, buf, len);
 		musb_writel(fifo, 0, val);
 	}

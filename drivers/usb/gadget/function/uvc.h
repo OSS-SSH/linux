@@ -65,35 +65,13 @@ extern unsigned int uvc_gadget_trace_param;
  * Driver specific constants
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define UVC_NUM_REQUESTS			4
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define UVC_MAX_REQUEST_SIZE			64
 #define UVC_MAX_EVENTS				4
 
 /* ------------------------------------------------------------------------
  * Structures
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct uvc_request {
-	struct usb_request *req;
-	u8 *req_buffer;
-	struct uvc_video *video;
-	struct sg_table sgt;
-	u8 header[2];
-};
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct uvc_video {
 	struct uvc_device *uvc;
@@ -109,35 +87,13 @@ struct uvc_video {
 	unsigned int imagesize;
 	struct mutex mutex;	/* protects frame parameters */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int uvc_num_requests;
-
 	/* Requests */
 	unsigned int req_size;
-	struct uvc_request *ureq;
+	struct usb_request *req[UVC_NUM_REQUESTS];
+	__u8 *req_buffer[UVC_NUM_REQUESTS];
 	struct list_head req_free;
 	spinlock_t req_lock;
 
-	unsigned int req_int_count;
-
-=======
-=======
-	unsigned int uvc_num_requests;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Requests */
-	unsigned int req_size;
-	struct uvc_request *ureq;
-	struct list_head req_free;
-	spinlock_t req_lock;
-
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int req_int_count;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void (*encode) (struct usb_request *req, struct uvc_video *video,
 			struct uvc_buffer *buf);
 

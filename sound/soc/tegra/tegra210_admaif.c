@@ -612,24 +612,12 @@ static const struct snd_soc_component_driver tegra210_admaif_cmpnt = {
 	.controls		= tegra210_admaif_controls,
 	.num_controls		= ARRAY_SIZE(tegra210_admaif_controls),
 	.pcm_construct		= tegra_pcm_construct,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.open			= tegra_pcm_open,
-	.close			= tegra_pcm_close,
-	.hw_params		= tegra_pcm_hw_params,
-=======
 	.pcm_destruct		= tegra_pcm_destruct,
 	.open			= tegra_pcm_open,
 	.close			= tegra_pcm_close,
 	.hw_params		= tegra_pcm_hw_params,
 	.hw_free		= tegra_pcm_hw_free,
 	.mmap			= tegra_pcm_mmap,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.open			= tegra_pcm_open,
-	.close			= tegra_pcm_close,
-	.hw_params		= tegra_pcm_hw_params,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.pointer		= tegra_pcm_pointer,
 };
 
@@ -637,24 +625,12 @@ static const struct snd_soc_component_driver tegra186_admaif_cmpnt = {
 	.controls		= tegra186_admaif_controls,
 	.num_controls		= ARRAY_SIZE(tegra186_admaif_controls),
 	.pcm_construct		= tegra_pcm_construct,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.open			= tegra_pcm_open,
-	.close			= tegra_pcm_close,
-	.hw_params		= tegra_pcm_hw_params,
-=======
 	.pcm_destruct		= tegra_pcm_destruct,
 	.open			= tegra_pcm_open,
 	.close			= tegra_pcm_close,
 	.hw_params		= tegra_pcm_hw_params,
 	.hw_free		= tegra_pcm_hw_free,
 	.mmap			= tegra_pcm_mmap,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.open			= tegra_pcm_open,
-	.close			= tegra_pcm_close,
-	.hw_params		= tegra_pcm_hw_params,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.pointer		= tegra_pcm_pointer,
 };
 

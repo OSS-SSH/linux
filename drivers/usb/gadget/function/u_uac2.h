@@ -22,27 +22,8 @@
 #define UAC2_DEF_CSRATE 64000
 #define UAC2_DEF_CSSIZE 2
 #define UAC2_DEF_CSYNC		USB_ENDPOINT_SYNC_ASYNC
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-#define UAC2_DEF_MUTE_PRESENT	1
-#define UAC2_DEF_VOLUME_PRESENT 1
-#define UAC2_DEF_MIN_DB		(-100*256)	/* -100 dB */
-#define UAC2_DEF_MAX_DB		0		/* 0 dB */
-#define UAC2_DEF_RES_DB		(1*256)		/* 1 dB */
-
 #define UAC2_DEF_REQ_NUM 2
 #define UAC2_DEF_FB_MAX 5
-#define UAC2_DEF_INT_REQ_NUM	10
-<<<<<<< HEAD
-=======
-#define UAC2_DEF_REQ_NUM 2
-#define UAC2_DEF_FB_MAX 5
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct f_uac2_opts {
 	struct usb_function_instance	func_inst;
@@ -53,37 +34,9 @@ struct f_uac2_opts {
 	int				c_srate;
 	int				c_ssize;
 	int				c_sync;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	bool			p_mute_present;
-	bool			p_volume_present;
-	s16				p_volume_min;
-	s16				p_volume_max;
-	s16				p_volume_res;
-
-	bool			c_mute_present;
-	bool			c_volume_present;
-	s16				c_volume_min;
-	s16				c_volume_max;
-	s16				c_volume_res;
-
-<<<<<<< HEAD
-	int				req_number;
-	int				fb_max;
-	bool			bound;
-=======
 	int				req_number;
 	int				fb_max;
 	bool				bound;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int				req_number;
-	int				fb_max;
-	bool			bound;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct mutex			lock;
 	int				refcnt;

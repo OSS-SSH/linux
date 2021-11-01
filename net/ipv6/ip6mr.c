@@ -559,16 +559,8 @@ static int pim6_rcv(struct sk_buff *skb)
 	read_lock(&mrt_lock);
 	if (reg_vif_num >= 0)
 		reg_dev = mrt->vif_table[reg_vif_num].dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dev_hold(reg_dev);
-=======
 	if (reg_dev)
 		dev_hold(reg_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dev_hold(reg_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	read_unlock(&mrt_lock);
 
 	if (!reg_dev)

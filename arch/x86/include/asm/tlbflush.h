@@ -83,15 +83,7 @@ struct tlb_state {
 	/* Last user mm for optimizing IBPB */
 	union {
 		struct mm_struct	*last_user_mm;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		unsigned long		last_user_mm_spec;
-=======
 		unsigned long		last_user_mm_ibpb;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		unsigned long		last_user_mm_spec;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	u16 loaded_mm_asid;

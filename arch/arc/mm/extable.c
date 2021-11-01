@@ -32,9 +32,6 @@ unsigned long arc_clear_user_noinline(void __user *to,
 }
 EXPORT_SYMBOL(arc_clear_user_noinline);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 long arc_strncpy_from_user_noinline(char *dst, const char __user *src,
 		long count)
 {
@@ -47,7 +44,4 @@ long arc_strnlen_user_noinline(const char __user *src, long n)
 	return __arc_strnlen_user(src, n);
 }
 EXPORT_SYMBOL(arc_strnlen_user_noinline);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

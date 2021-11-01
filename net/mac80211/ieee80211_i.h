@@ -25,14 +25,6 @@
 #include <linux/leds.h>
 #include <linux/idr.h>
 #include <linux/rhashtable.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/rbtree.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/rbtree.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <net/ieee80211_radiotap.h>
 #include <net/cfg80211.h>
 #include <net/mac80211.h>
@@ -252,21 +244,6 @@ struct ieee80211_csa_settings {
 	u8 count;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct ieee80211_color_change_settings {
-	u16 counter_offset_beacon;
-	u16 counter_offset_presp;
-	u8 count;
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct beacon_data {
 	u8 *head, *tail;
 	int head_len, tail_len;
@@ -946,16 +923,6 @@ struct ieee80211_sub_if_data {
 	bool csa_block_tx; /* write-protected by sdata_lock and local->mtx */
 	struct cfg80211_chan_def csa_chandef;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct work_struct color_change_finalize_work;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct work_struct color_change_finalize_work;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct list_head assigned_chanctx_list; /* protected by chanctx_mtx */
 	struct list_head reserved_chanctx_list; /* protected by chanctx_mtx */
 
@@ -970,14 +937,6 @@ struct ieee80211_sub_if_data {
 
 	struct work_struct work;
 	struct sk_buff_head skb_queue;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct sk_buff_head status_queue;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct sk_buff_head status_queue;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	u8 needed_rx_chains;
 	enum ieee80211_smps_mode smps_mode;
@@ -1565,14 +1524,6 @@ struct ieee802_11_elems {
 	const struct ieee80211_he_spr *he_spr;
 	const struct ieee80211_mu_edca_param_set *mu_edca_param_set;
 	const struct ieee80211_he_6ghz_capa *he_6ghz_capa;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct ieee80211_tx_pwr_env *tx_pwr_env[IEEE80211_TPE_MAX_IE_COUNT];
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct ieee80211_tx_pwr_env *tx_pwr_env[IEEE80211_TPE_MAX_IE_COUNT];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const u8 *uora_element;
 	const u8 *mesh_id;
 	const u8 *peering;
@@ -1623,16 +1574,6 @@ struct ieee802_11_elems {
 	u8 perr_len;
 	u8 country_elem_len;
 	u8 bssid_index_len;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u8 tx_pwr_env_len[IEEE80211_TPE_MAX_IE_COUNT];
-	u8 tx_pwr_env_num;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u8 tx_pwr_env_len[IEEE80211_TPE_MAX_IE_COUNT];
-	u8 tx_pwr_env_num;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* whether a parse error occurred while retrieving these elements */
 	bool parse_error;
@@ -1946,18 +1887,6 @@ void ieee80211_csa_finalize_work(struct work_struct *work);
 int ieee80211_channel_switch(struct wiphy *wiphy, struct net_device *dev,
 			     struct cfg80211_csa_settings *params);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* color change handling */
-void ieee80211_color_change_finalize_work(struct work_struct *work);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* color change handling */
-void ieee80211_color_change_finalize_work(struct work_struct *work);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* interface handling */
 #define MAC80211_SUPPORTED_FEATURES_TX	(NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM | \
 					 NETIF_F_HW_CSUM | NETIF_F_SG | \
@@ -2139,20 +2068,6 @@ ieee80211_he_op_ie_to_bss_conf(struct ieee80211_vif *vif,
 
 /* S1G */
 void ieee80211_s1g_sta_rate_init(struct sta_info *sta);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-bool ieee80211_s1g_is_twt_setup(struct sk_buff *skb);
-void ieee80211_s1g_rx_twt_action(struct ieee80211_sub_if_data *sdata,
-				 struct sk_buff *skb);
-void ieee80211_s1g_status_twt_action(struct ieee80211_sub_if_data *sdata,
-				     struct sk_buff *skb);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /* Spectrum management */
 void ieee80211_process_measurement_req(struct ieee80211_sub_if_data *sdata,
@@ -2286,16 +2201,6 @@ void ieee80211_dynamic_ps_timer(struct timer_list *t);
 void ieee80211_send_nullfunc(struct ieee80211_local *local,
 			     struct ieee80211_sub_if_data *sdata,
 			     bool powersave);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void ieee80211_send_4addr_nullfunc(struct ieee80211_local *local,
-				   struct ieee80211_sub_if_data *sdata);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void ieee80211_send_4addr_nullfunc(struct ieee80211_local *local,
-				   struct ieee80211_sub_if_data *sdata);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void ieee80211_sta_tx_notify(struct ieee80211_sub_if_data *sdata,
 			     struct ieee80211_hdr *hdr, bool ack, u16 tx_time);
 

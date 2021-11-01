@@ -18,24 +18,10 @@
 
 	chosen { };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	memory@80000000 {
-		device_type = "memory";
-		/* We expect the bootloader to fill in the reg */
-		reg = <0x0 0x80000000 0x0 0x0>;
-=======
 	memory {
 		device_type = "memory";
 		/* We expect the bootloader to fill in the reg */
 		reg = <0 0 0 0>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	memory@80000000 {
-		device_type = "memory";
-		/* We expect the bootloader to fill in the reg */
-		reg = <0x0 0x80000000 0x0 0x0>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	reserved-memory {
@@ -1978,15 +1964,7 @@
 
 			resets = <&gcc GCC_USB_30_BCR>;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			usb3_dwc3: dwc3@a800000 {
-=======
 			usb3_dwc3: usb@a800000 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			usb3_dwc3: dwc3@a800000 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				compatible = "snps,dwc3";
 				reg = <0x0a800000 0xcd00>;
 				interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;

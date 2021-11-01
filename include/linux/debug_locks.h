@@ -3,16 +3,8 @@
 #define __LINUX_DEBUG_LOCKING_H
 
 #include <linux/atomic.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/cache.h>
-=======
 #include <linux/bug.h>
 #include <linux/printk.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/cache.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct task_struct;
 

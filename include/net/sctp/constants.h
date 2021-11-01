@@ -360,16 +360,8 @@ enum {
 #define SCTP_SCOPE_POLICY_MAX	SCTP_SCOPE_POLICY_LINK
 
 /* Based on IPv4 scoping <draft-stewart-tsvwg-sctp-ipv4-00.txt>,
-<<<<<<< HEAD
-<<<<<<< HEAD
- * SCTP IPv4 unusable addresses: 0.0.0.0/8, 224.0.0.0/4, 192.88.99.0/24.
-=======
  * SCTP IPv4 unusable addresses: 0.0.0.0/8, 224.0.0.0/4, 198.18.0.0/24,
  * 192.88.99.0/24.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * SCTP IPv4 unusable addresses: 0.0.0.0/8, 224.0.0.0/4, 192.88.99.0/24.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Also, RFC 8.4, non-unicast addresses are not considered valid SCTP
  * addresses.
  */
@@ -377,13 +369,7 @@ enum {
 	((htonl(INADDR_BROADCAST) == a) ||  \
 	 ipv4_is_multicast(a) ||	    \
 	 ipv4_is_zeronet(a) ||		    \
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	 ipv4_is_test_198(a) ||		    \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 ipv4_is_anycast_6to4(a))
 
 /* Flags used for the bind address copy functions.  */

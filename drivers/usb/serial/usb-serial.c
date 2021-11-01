@@ -1319,22 +1319,9 @@ static int __init usb_serial_init(void)
 {
 	int result;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	usb_serial_tty_driver = tty_alloc_driver(USB_SERIAL_TTY_MINORS,
-			TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV);
-	if (IS_ERR(usb_serial_tty_driver))
-		return PTR_ERR(usb_serial_tty_driver);
-<<<<<<< HEAD
-=======
 	usb_serial_tty_driver = alloc_tty_driver(USB_SERIAL_TTY_MINORS);
 	if (!usb_serial_tty_driver)
 		return -ENOMEM;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Initialize our global data */
 	result = bus_register(&usb_serial_bus_type);
@@ -1349,14 +1336,8 @@ static int __init usb_serial_init(void)
 	usb_serial_tty_driver->minor_start = 0;
 	usb_serial_tty_driver->type = TTY_DRIVER_TYPE_SERIAL;
 	usb_serial_tty_driver->subtype = SERIAL_TYPE_NORMAL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	usb_serial_tty_driver->flags = TTY_DRIVER_REAL_RAW |
 						TTY_DRIVER_DYNAMIC_DEV;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	usb_serial_tty_driver->init_termios = tty_std_termios;
 	usb_serial_tty_driver->init_termios.c_cflag = B9600 | CS8 | CREAD
 							| HUPCL | CLOCAL;
@@ -1386,15 +1367,7 @@ exit_reg_driver:
 
 exit_bus:
 	pr_err("%s - returning with error %d\n", __func__, result);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tty_driver_kref_put(usb_serial_tty_driver);
-=======
 	put_tty_driver(usb_serial_tty_driver);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tty_driver_kref_put(usb_serial_tty_driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return result;
 }
 
@@ -1406,15 +1379,7 @@ static void __exit usb_serial_exit(void)
 	usb_serial_generic_deregister();
 
 	tty_unregister_driver(usb_serial_tty_driver);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tty_driver_kref_put(usb_serial_tty_driver);
-=======
 	put_tty_driver(usb_serial_tty_driver);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tty_driver_kref_put(usb_serial_tty_driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bus_unregister(&usb_serial_bus_type);
 	idr_destroy(&serial_minors);
 }

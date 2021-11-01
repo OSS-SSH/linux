@@ -218,15 +218,7 @@ void show_stack(struct task_struct *tsk, unsigned long *sp, const char *loglvl)
 
 #ifdef CONFIG_STACKTRACE
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-noinline notrace void arch_stack_walk(stack_trace_consume_fn consume_entry,
-=======
 noinline void arch_stack_walk(stack_trace_consume_fn consume_entry,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-noinline notrace void arch_stack_walk(stack_trace_consume_fn consume_entry,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			      void *cookie, struct task_struct *task,
 			      struct pt_regs *regs)
 {

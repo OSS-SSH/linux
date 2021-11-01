@@ -58,49 +58,21 @@
 	dr_mode = "host";
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-&davinci_mdio_sw {
-=======
 &davinci_mdio {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-&davinci_mdio_sw {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy0: ethernet-phy@0 {
 		reg = <1>;
 	};
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-&cpsw_port1 {
-	phy-mode = "rmii";
-	ti,dual-emac-pvid = <1>;
-	phy-handle = <&phy0>;
-};
-
-&cpsw_port2 {
-	phy-mode = "rgmii-id";
-	ti,dual-emac-pvid = <2>;
-=======
 &cpsw_emac0 {
-=======
-&cpsw_port1 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy-mode = "rmii";
-	ti,dual-emac-pvid = <1>;
+	dual_emac_res_vlan = <1>;
 	phy-handle = <&phy0>;
 };
 
-&cpsw_port2 {
+&cpsw_emac1 {
 	phy-mode = "rgmii-id";
-<<<<<<< HEAD
 	dual_emac_res_vlan = <2>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ti,dual-emac-pvid = <2>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy-handle = <&phy1>;
 };
 

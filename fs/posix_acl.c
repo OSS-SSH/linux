@@ -22,14 +22,6 @@
 #include <linux/xattr.h>
 #include <linux/export.h>
 #include <linux/user_namespace.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/namei.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/namei.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct posix_acl **acl_by_type(struct inode *inode, int type)
 {
@@ -64,27 +56,7 @@ EXPORT_SYMBOL(get_cached_acl);
 
 struct posix_acl *get_cached_acl_rcu(struct inode *inode, int type)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct posix_acl *acl = rcu_dereference(*acl_by_type(inode, type));
-
-	if (acl == ACL_DONT_CACHE) {
-		struct posix_acl *ret;
-
-		ret = inode->i_op->get_acl(inode, type, LOOKUP_RCU);
-		if (!IS_ERR(ret))
-			acl = ret;
-	}
-
-	return acl;
-<<<<<<< HEAD
-=======
 	return rcu_dereference(*acl_by_type(inode, type));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(get_cached_acl_rcu);
 
@@ -166,15 +138,7 @@ struct posix_acl *get_acl(struct inode *inode, int type)
 		set_cached_acl(inode, type, NULL);
 		return NULL;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	acl = inode->i_op->get_acl(inode, type, false);
-=======
 	acl = inode->i_op->get_acl(inode, type);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	acl = inode->i_op->get_acl(inode, type, false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (IS_ERR(acl)) {
 		/*

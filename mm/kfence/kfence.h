@@ -36,16 +36,6 @@ enum kfence_object_state {
 /* Alloc/free tracking information. */
 struct kfence_track {
 	pid_t pid;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int cpu;
-	u64 ts_nsec;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int cpu;
-	u64 ts_nsec;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int num_stack_entries;
 	unsigned long stack_entries[KFENCE_STACK_DEPTH];
 };

@@ -54,14 +54,6 @@ radeonfb_open(struct fb_info *info, int user)
 	struct radeon_fbdev *rfbdev = info->par;
 	struct radeon_device *rdev = rfbdev->rdev;
 	int ret = pm_runtime_get_sync(rdev->ddev->dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0 && ret != -EACCES) {
 		pm_runtime_mark_last_busy(rdev->ddev->dev);
 		pm_runtime_put_autosuspend(rdev->ddev->dev);
@@ -175,14 +167,6 @@ static int radeonfb_create_pinned_object(struct radeon_fbdev *rfbdev,
 		break;
 	case 2:
 		tiling_flags |= RADEON_TILING_SWAP_16BIT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		break;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		break;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}
@@ -212,19 +196,9 @@ static int radeonfb_create_pinned_object(struct radeon_fbdev *rfbdev,
 		radeon_bo_check_tiling(rbo, 0, 0);
 	ret = radeon_bo_kmap(rbo, NULL);
 	radeon_bo_unreserve(rbo);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ret)
-		goto out_unref;
-=======
 	if (ret) {
 		goto out_unref;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ret)
-		goto out_unref;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*gobj_p = gobj;
 	return 0;
@@ -320,15 +294,9 @@ static int radeonfb_create(struct drm_fb_helper *helper,
 	return 0;
 
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (rbo) {
 
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (fb && ret) {
 		drm_gem_object_put(gobj);
 		drm_framebuffer_unregister_private(fb);

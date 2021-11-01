@@ -12,26 +12,11 @@
 #include <linux/init.h>
 #include <linux/cpu.h>
 #include <linux/cpumask.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/cpufeature.h>
-#include <linux/smp.h>
 
+#include <asm/cpufeature.h>
 #include <asm/perf_event.h>
 #include <asm/msr.h>
-=======
-=======
-#include <linux/cpufeature.h>
-#include <linux/smp.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-#include <asm/perf_event.h>
-#include <asm/msr.h>
-<<<<<<< HEAD
 #include <asm/smp.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define NUM_COUNTERS_NB		4
 #define NUM_COUNTERS_L2		4
@@ -362,14 +347,6 @@ static struct pmu amd_nb_pmu = {
 	.stop		= amd_uncore_stop,
 	.read		= amd_uncore_read,
 	.capabilities	= PERF_PMU_CAP_NO_EXCLUDE | PERF_PMU_CAP_NO_INTERRUPT,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.module		= THIS_MODULE,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.module		= THIS_MODULE,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static struct pmu amd_llc_pmu = {
@@ -383,14 +360,6 @@ static struct pmu amd_llc_pmu = {
 	.stop		= amd_uncore_stop,
 	.read		= amd_uncore_read,
 	.capabilities	= PERF_PMU_CAP_NO_EXCLUDE | PERF_PMU_CAP_NO_INTERRUPT,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.module		= THIS_MODULE,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.module		= THIS_MODULE,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static struct amd_uncore *amd_uncore_alloc(unsigned int cpu)
@@ -483,15 +452,7 @@ static int amd_uncore_cpu_starting(unsigned int cpu)
 
 	if (amd_uncore_llc) {
 		uncore = *per_cpu_ptr(amd_uncore_llc, cpu);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		uncore->id = get_llc_id(cpu);
-=======
 		uncore->id = per_cpu(cpu_llc_id, cpu);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		uncore->id = get_llc_id(cpu);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		uncore = amd_uncore_find_online_sibling(uncore, amd_uncore_llc);
 		*per_cpu_ptr(amd_uncore_llc, cpu) = uncore;
@@ -698,77 +659,12 @@ fail_prep:
 fail_llc:
 	if (boot_cpu_has(X86_FEATURE_PERFCTR_NB))
 		perf_pmu_unregister(&amd_nb_pmu);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	free_percpu(amd_uncore_llc);
-fail_nb:
-	free_percpu(amd_uncore_nb);
-
-	return ret;
-}
-
-static void __exit amd_uncore_exit(void)
-{
-	cpuhp_remove_state(CPUHP_AP_PERF_X86_AMD_UNCORE_ONLINE);
-	cpuhp_remove_state(CPUHP_AP_PERF_X86_AMD_UNCORE_STARTING);
-	cpuhp_remove_state(CPUHP_PERF_X86_AMD_UNCORE_PREP);
-
-	if (boot_cpu_has(X86_FEATURE_PERFCTR_LLC)) {
-		perf_pmu_unregister(&amd_llc_pmu);
-		free_percpu(amd_uncore_llc);
-		amd_uncore_llc = NULL;
-	}
-
-	if (boot_cpu_has(X86_FEATURE_PERFCTR_NB)) {
-		perf_pmu_unregister(&amd_nb_pmu);
-		free_percpu(amd_uncore_nb);
-		amd_uncore_nb = NULL;
-	}
-}
-
-module_init(amd_uncore_init);
-module_exit(amd_uncore_exit);
-
-MODULE_DESCRIPTION("AMD Uncore Driver");
-MODULE_LICENSE("GPL v2");
-=======
 	if (amd_uncore_llc)
 		free_percpu(amd_uncore_llc);
-=======
-	free_percpu(amd_uncore_llc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 fail_nb:
-	free_percpu(amd_uncore_nb);
+	if (amd_uncore_nb)
+		free_percpu(amd_uncore_nb);
 
 	return ret;
 }
-<<<<<<< HEAD
 device_initcall(amd_uncore_init);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-static void __exit amd_uncore_exit(void)
-{
-	cpuhp_remove_state(CPUHP_AP_PERF_X86_AMD_UNCORE_ONLINE);
-	cpuhp_remove_state(CPUHP_AP_PERF_X86_AMD_UNCORE_STARTING);
-	cpuhp_remove_state(CPUHP_PERF_X86_AMD_UNCORE_PREP);
-
-	if (boot_cpu_has(X86_FEATURE_PERFCTR_LLC)) {
-		perf_pmu_unregister(&amd_llc_pmu);
-		free_percpu(amd_uncore_llc);
-		amd_uncore_llc = NULL;
-	}
-
-	if (boot_cpu_has(X86_FEATURE_PERFCTR_NB)) {
-		perf_pmu_unregister(&amd_nb_pmu);
-		free_percpu(amd_uncore_nb);
-		amd_uncore_nb = NULL;
-	}
-}
-
-module_init(amd_uncore_init);
-module_exit(amd_uncore_exit);
-
-MODULE_DESCRIPTION("AMD Uncore Driver");
-MODULE_LICENSE("GPL v2");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -133,32 +133,14 @@ static int parisc_driver_probe(struct device *dev)
 	return rc;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void __exit parisc_driver_remove(struct device *dev)
-{
-	struct parisc_device *pa_dev = to_parisc_device(dev);
-	struct parisc_driver *pa_drv = to_parisc_driver(dev->driver);
-
-	if (pa_drv->remove)
-		pa_drv->remove(pa_dev);
-=======
 static int __exit parisc_driver_remove(struct device *dev)
-=======
-static void __exit parisc_driver_remove(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct parisc_device *pa_dev = to_parisc_device(dev);
 	struct parisc_driver *pa_drv = to_parisc_driver(dev->driver);
-
 	if (pa_drv->remove)
 		pa_drv->remove(pa_dev);
-<<<<<<< HEAD
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 	
 

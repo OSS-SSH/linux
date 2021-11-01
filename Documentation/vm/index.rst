@@ -32,14 +32,6 @@ descriptions of data structures and algorithms.
    arch_pgtable_helpers
    balance
    cleancache
-<<<<<<< HEAD
-<<<<<<< HEAD
-   damon/index
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-   damon/index
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    free_page_reporting
    frontswap
    highmem

@@ -3,14 +3,8 @@
  * Copyright (c) 1996, 2003 VIA Networking Technologies, Inc.
  * All rights reserved.
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * File: device.h
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Purpose: MAC Data structure
  *
  * Author: Tevin Chen
@@ -83,14 +77,8 @@
 #define FIRMWARE_NAME			"vntwusb.fw"
 #define FIRMWARE_CHUNK_SIZE		0x400
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define CONFIG_PATH			"/etc/vntconfiguration.dat"
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define MAX_UINTS			8
 #define OPTION_DEFAULT			{ [0 ... MAX_UINTS - 1] = -1}
 

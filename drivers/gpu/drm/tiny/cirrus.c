@@ -435,15 +435,7 @@ static void cirrus_pipe_enable(struct drm_simple_display_pipe *pipe,
 	struct drm_shadow_plane_state *shadow_plane_state = to_drm_shadow_plane_state(plane_state);
 
 	cirrus_mode_set(cirrus, &crtc_state->mode, plane_state->fb);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cirrus_fb_blit_fullscreen(plane_state->fb, &shadow_plane_state->data[0]);
-=======
 	cirrus_fb_blit_fullscreen(plane_state->fb, &shadow_plane_state->map[0]);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cirrus_fb_blit_fullscreen(plane_state->fb, &shadow_plane_state->data[0]);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void cirrus_pipe_update(struct drm_simple_display_pipe *pipe,
@@ -459,15 +451,7 @@ static void cirrus_pipe_update(struct drm_simple_display_pipe *pipe,
 		cirrus_mode_set(cirrus, &crtc->mode, state->fb);
 
 	if (drm_atomic_helper_damage_merged(old_state, state, &rect))
-<<<<<<< HEAD
-<<<<<<< HEAD
-		cirrus_fb_blit_rect(state->fb, &shadow_plane_state->data[0], &rect);
-=======
 		cirrus_fb_blit_rect(state->fb, &shadow_plane_state->map[0], &rect);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		cirrus_fb_blit_rect(state->fb, &shadow_plane_state->data[0], &rect);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct drm_simple_display_pipe_funcs cirrus_pipe_funcs = {
@@ -566,15 +550,7 @@ static int cirrus_pci_probe(struct pci_dev *pdev,
 	struct cirrus_device *cirrus;
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &cirrus_driver);
-=======
 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, "cirrusdrmfb");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &cirrus_driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 

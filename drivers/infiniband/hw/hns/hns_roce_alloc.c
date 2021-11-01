@@ -36,9 +36,6 @@
 #include "hns_roce_device.h"
 #include <rdma/ib_umem.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 int hns_roce_bitmap_alloc(struct hns_roce_bitmap *bitmap, unsigned long *obj)
 {
 	int ret = 0;
@@ -109,9 +106,6 @@ void hns_roce_bitmap_cleanup(struct hns_roce_bitmap *bitmap)
 	kfree(bitmap->table);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void hns_roce_buf_free(struct hns_roce_dev *hr_dev, struct hns_roce_buf *buf)
 {
 	struct hns_roce_buf_list *trunks;
@@ -254,26 +248,10 @@ void hns_roce_cleanup_bitmap(struct hns_roce_dev *hr_dev)
 		ida_destroy(&hr_dev->xrcd_ida.ida);
 
 	if (hr_dev->caps.flags & HNS_ROCE_CAP_FLAG_SRQ)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ida_destroy(&hr_dev->srq_table.srq_ida.ida);
-=======
 		hns_roce_cleanup_srq_table(hr_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ida_destroy(&hr_dev->srq_table.srq_ida.ida);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	hns_roce_cleanup_qp_table(hr_dev);
 	hns_roce_cleanup_cq_table(hr_dev);
 	ida_destroy(&hr_dev->mr_table.mtpt_ida.ida);
 	ida_destroy(&hr_dev->pd_ida.ida);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ida_destroy(&hr_dev->uar_ida.ida);
-=======
 	hns_roce_cleanup_uar_table(hr_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ida_destroy(&hr_dev->uar_ida.ida);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

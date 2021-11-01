@@ -166,15 +166,7 @@ typedef struct sg_device { /* holds the state of each scsi generic device */
 	bool exclude;		/* 1->open(O_EXCL) succeeded and is active */
 	int open_cnt;		/* count of opens (perhaps < num(sfds) ) */
 	char sgdebug;		/* 0->off, 1->sense, 9->dump dev, 10-> all devs */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	char name[DISK_NAME_LEN];
-=======
 	struct gendisk *disk;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	char name[DISK_NAME_LEN];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct cdev * cdev;	/* char_dev [sysfs: /sys/cdev/major/sg<n>] */
 	struct kref d_ref;
 } Sg_device;
@@ -210,16 +202,8 @@ static void sg_device_destroy(struct kref *kref);
 #define SZ_SG_REQ_INFO sizeof(sg_req_info_t)
 
 #define sg_printk(prefix, sdp, fmt, a...) \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sdev_prefix_printk(prefix, (sdp)->device, (sdp)->name, fmt, ##a)
-=======
 	sdev_prefix_printk(prefix, (sdp)->device,		\
 			   (sdp)->disk->disk_name, fmt, ##a)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	sdev_prefix_printk(prefix, (sdp)->device, (sdp)->name, fmt, ##a)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*
  * The SCSI interfaces that use read() and write() as an asynchronous variant of
@@ -254,20 +238,8 @@ static int sg_allow_access(struct file *filp, unsigned char *cmd)
 
 	if (sfp->parentdp->device->type == TYPE_SCANNER)
 		return 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!scsi_cmd_allowed(cmd, filp->f_mode))
-		return -EPERM;
-	return 0;
-=======
 
 	return blk_verify_command(cmd, filp->f_mode);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!scsi_cmd_allowed(cmd, filp->f_mode))
-		return -EPERM;
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int
@@ -860,15 +832,7 @@ sg_common_write(Sg_fd * sfp, Sg_request * srp,
 
 	srp->rq->timeout = timeout;
 	kref_get(&sfp->f_ref); /* sg_rq_end_io() does kref_put(). */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	blk_execute_rq_nowait(NULL, srp->rq, at_head, sg_rq_end_io);
-=======
 	blk_execute_rq_nowait(sdp->disk, srp->rq, at_head, sg_rq_end_io);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	blk_execute_rq_nowait(NULL, srp->rq, at_head, sg_rq_end_io);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -1144,15 +1108,7 @@ sg_ioctl_common(struct file *filp, Sg_device *sdp, Sg_fd *sfp,
 	case SCSI_IOCTL_SEND_COMMAND:
 		if (atomic_read(&sdp->detaching))
 			return -ENODEV;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return scsi_ioctl(sdp->device, NULL, filp->f_mode, cmd_in, p);
-=======
 		return sg_scsi_ioctl(sdp->device->request_queue, NULL, filp->f_mode, p);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return scsi_ioctl(sdp->device, NULL, filp->f_mode, cmd_in, p);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case SG_SET_DEBUG:
 		result = get_user(val, ip);
 		if (result)
@@ -1163,16 +1119,8 @@ sg_ioctl_common(struct file *filp, Sg_device *sdp, Sg_fd *sfp,
 		return put_user(max_sectors_bytes(sdp->device->request_queue),
 				ip);
 	case BLKTRACESETUP:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return blk_trace_setup(sdp->device->request_queue, sdp->name,
-=======
 		return blk_trace_setup(sdp->device->request_queue,
 				       sdp->disk->disk_name,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return blk_trace_setup(sdp->device->request_queue, sdp->name,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       MKDEV(SCSI_GENERIC_MAJOR, sdp->index),
 				       NULL, p);
 	case BLKTRACESTART:
@@ -1217,12 +1165,6 @@ sg_ioctl(struct file *filp, unsigned int cmd_in, unsigned long arg)
 	ret = sg_ioctl_common(filp, sdp, sfp, cmd_in, p);
 	if (ret != -ENOIOCTLCMD)
 		return ret;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return scsi_ioctl(sdp->device, NULL, filp->f_mode, cmd_in, p);
-}
-
-=======
 
 	return scsi_ioctl(sdp->device, cmd_in, p);
 }
@@ -1246,12 +1188,6 @@ static long sg_compat_ioctl(struct file *filp, unsigned int cmd_in, unsigned lon
 }
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return scsi_ioctl(sdp->device, NULL, filp->f_mode, cmd_in, p);
-}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static __poll_t
 sg_poll(struct file *filp, poll_table * wait)
 {
@@ -1505,17 +1441,9 @@ static const struct file_operations sg_fops = {
 	.write = sg_write,
 	.poll = sg_poll,
 	.unlocked_ioctl = sg_ioctl,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.compat_ioctl = compat_ptr_ioctl,
-=======
 #ifdef CONFIG_COMPAT
 	.compat_ioctl = sg_compat_ioctl,
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.compat_ioctl = compat_ptr_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.open = sg_open,
 	.mmap = sg_mmap,
 	.release = sg_release,
@@ -1528,15 +1456,7 @@ static struct class *sg_sysfs_class;
 static int sg_sysfs_valid = 0;
 
 static Sg_device *
-<<<<<<< HEAD
-<<<<<<< HEAD
-sg_alloc(struct scsi_device *scsidp)
-=======
 sg_alloc(struct gendisk *disk, struct scsi_device *scsidp)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-sg_alloc(struct scsi_device *scsidp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct request_queue *q = scsidp->request_queue;
 	Sg_device *sdp;
@@ -1572,17 +1492,9 @@ sg_alloc(struct scsi_device *scsidp)
 
 	SCSI_LOG_TIMEOUT(3, sdev_printk(KERN_INFO, scsidp,
 					"sg_alloc: dev=%d \n", k));
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sprintf(sdp->name, "sg%d", k);
-=======
 	sprintf(disk->disk_name, "sg%d", k);
 	disk->first_minor = k;
 	sdp->disk = disk;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	sprintf(sdp->name, "sg%d", k);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sdp->device = scsidp;
 	mutex_init(&sdp->open_rel_lock);
 	INIT_LIST_HEAD(&sdp->sfds);
@@ -1609,21 +1521,12 @@ static int
 sg_add_device(struct device *cl_dev, struct class_interface *cl_intf)
 {
 	struct scsi_device *scsidp = to_scsi_device(cl_dev->parent);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct gendisk *disk;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	Sg_device *sdp = NULL;
 	struct cdev * cdev = NULL;
 	int error;
 	unsigned long iflags;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	disk = alloc_disk(1);
 	if (!disk) {
 		pr_warn("%s: alloc_disk failed\n", __func__);
@@ -1631,9 +1534,6 @@ sg_add_device(struct device *cl_dev, struct class_interface *cl_intf)
 	}
 	disk->major = SCSI_GENERIC_MAJOR;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	error = -ENOMEM;
 	cdev = cdev_alloc();
 	if (!cdev) {
@@ -1643,15 +1543,7 @@ sg_add_device(struct device *cl_dev, struct class_interface *cl_intf)
 	cdev->owner = THIS_MODULE;
 	cdev->ops = &sg_fops;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sdp = sg_alloc(scsidp);
-=======
 	sdp = sg_alloc(disk, scsidp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	sdp = sg_alloc(scsidp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(sdp)) {
 		pr_warn("%s: sg_alloc failed\n", __func__);
 		error = PTR_ERR(sdp);
@@ -1669,15 +1561,7 @@ sg_add_device(struct device *cl_dev, struct class_interface *cl_intf)
 		sg_class_member = device_create(sg_sysfs_class, cl_dev->parent,
 						MKDEV(SCSI_GENERIC_MAJOR,
 						      sdp->index),
-<<<<<<< HEAD
-<<<<<<< HEAD
-						sdp, "%s", sdp->name);
-=======
 						sdp, "%s", disk->disk_name);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-						sdp, "%s", sdp->name);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (IS_ERR(sg_class_member)) {
 			pr_err("%s: device_create failed\n", __func__);
 			error = PTR_ERR(sg_class_member);
@@ -1705,13 +1589,7 @@ cdev_add_err:
 	kfree(sdp);
 
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	put_disk(disk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (cdev)
 		cdev_del(cdev);
 	return error;
@@ -1735,13 +1613,7 @@ sg_device_destroy(struct kref *kref)
 	SCSI_LOG_TIMEOUT(3,
 		sg_printk(KERN_INFO, sdp, "sg_device_destroy\n"));
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	put_disk(sdp->disk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kfree(sdp);
 }
 
@@ -2734,15 +2606,7 @@ static int sg_proc_seq_show_debug(struct seq_file *s, void *v)
 		goto skip;
 	read_lock(&sdp->sfd_lock);
 	if (!list_empty(&sdp->sfds)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		seq_printf(s, " >>> device=%s ", sdp->name);
-=======
 		seq_printf(s, " >>> device=%s ", sdp->disk->disk_name);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		seq_printf(s, " >>> device=%s ", sdp->name);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (atomic_read(&sdp->detaching))
 			seq_puts(s, "detaching pending close ");
 		else if (sdp->device) {

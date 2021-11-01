@@ -130,17 +130,7 @@ void intel_engine_fini_retire(struct intel_engine_cs *engine)
 	GEM_BUG_ON(engine->retire);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-long intel_gt_retire_requests_timeout(struct intel_gt *gt, long timeout,
-				      long *remaining_timeout)
-=======
 long intel_gt_retire_requests_timeout(struct intel_gt *gt, long timeout)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-long intel_gt_retire_requests_timeout(struct intel_gt *gt, long timeout,
-				      long *remaining_timeout)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct intel_gt_timelines *timelines = &gt->timelines;
 	struct intel_timeline *tl, *tn;
@@ -205,15 +195,6 @@ out_active:	spin_lock(&timelines->lock);
 	if (flush_submission(gt, timeout)) /* Wait, there's more! */
 		active_count++;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (remaining_timeout)
-		*remaining_timeout = timeout;
-
-	return active_count ? timeout : 0;
-}
-
-=======
 	return active_count ? timeout : 0;
 }
 
@@ -228,15 +209,10 @@ int intel_gt_wait_for_idle(struct intel_gt *gt, long timeout)
 		if (signal_pending(current))
 			return -EINTR;
 	}
-=======
-	if (remaining_timeout)
-		*remaining_timeout = timeout;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	return active_count ? timeout : 0;
+	return timeout;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void retire_work_handler(struct work_struct *work)
 {
 	struct intel_gt *gt =

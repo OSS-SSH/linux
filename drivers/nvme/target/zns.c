@@ -115,28 +115,14 @@ void nvmet_execute_identify_cns_cs_ns(struct nvmet_req *req)
 	}
 
 	status = nvmet_req_find_ns(req);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (status)
-		goto done;
-
-	if (!bdev_is_zoned(req->ns->bdev)) {
-		req->error_loc = offsetof(struct nvme_identify, nsid);
-=======
 	if (status) {
 		status = NVME_SC_INTERNAL;
-=======
-	if (status)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto done;
+	}
 
 	if (!bdev_is_zoned(req->ns->bdev)) {
 		req->error_loc = offsetof(struct nvme_identify, nsid);
-<<<<<<< HEAD
 		status = NVME_SC_INVALID_NS | NVME_SC_DNR;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto done;
 	}
 

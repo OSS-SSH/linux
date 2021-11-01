@@ -309,9 +309,6 @@ config INPUT_GPIO_VIBRA
 	  To compile this driver as a module, choose M here: the module will be
 	  called gpio-vibra.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 config INPUT_IXP4XX_BEEPER
 	tristate "IXP4XX Beeper support"
 	depends on ARCH_IXP4XX
@@ -324,9 +321,6 @@ config INPUT_IXP4XX_BEEPER
 	  To compile this driver as a module, choose M here: the
 	  module will be called ixp4xx-beeper.
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config INPUT_COBALT_BTNS
 	tristate "Cobalt button interface"
 	depends on MIPS_COBALT
@@ -817,9 +811,6 @@ config INPUT_XEN_KBDDEV_FRONTEND
 	  To compile this driver as a module, choose M here: the
 	  module will be called xen-kbdfront.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 config INPUT_SIRFSOC_ONKEY
 	tristate "CSR SiRFSoC power on/off/suspend key support"
 	depends on ARCH_SIRF && OF
@@ -830,9 +821,6 @@ config INPUT_SIRFSOC_ONKEY
 
 	  If unsure, say N.
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config INPUT_IDEAPAD_SLIDEBAR
 	tristate "IdeaPad Laptop Slidebar"
 	depends on INPUT

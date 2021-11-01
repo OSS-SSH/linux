@@ -72,15 +72,7 @@ On PowerPC
 
 On other
 	If you know of the key combos for other architectures, please
-<<<<<<< HEAD
-<<<<<<< HEAD
-	submit a patch to be included in this section.
-=======
         let me know so I can add them to this section.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	submit a patch to be included in this section.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 On all
 	Write a character to /proc/sysrq-trigger.  e.g.::
@@ -213,25 +205,10 @@ frozen (probably root) filesystem via the FIFREEZE ioctl.
 Sometimes SysRq seems to get 'stuck' after using it, what can I do?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-When this happens, try tapping shift, alt and control on both sides of the
-keyboard, and hitting an invalid sysrq sequence again. (i.e., something like
-:kbd:`alt-sysrq-z`).
-
-Switching to another virtual console (:kbd:`ALT+Fn`) and then back again
-should also help.
-<<<<<<< HEAD
-=======
 That happens to me, also. I've found that tapping shift, alt, and control
 on both sides of the keyboard, and hitting an invalid sysrq sequence again
 will fix the problem. (i.e., something like :kbd:`alt-sysrq-z`). Switching to
 another virtual console (:kbd:`ALT+Fn`) and then back again should also help.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 I hit SysRq, but nothing seems to happen, what's wrong?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

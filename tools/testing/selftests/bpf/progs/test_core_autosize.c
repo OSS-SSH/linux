@@ -125,25 +125,6 @@ int handle_downsize(void *ctx)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
-#define bpf_core_read_int bpf_core_read
-#else
-#define bpf_core_read_int(dst, sz, src) ({ \
-	/* Prevent "subtraction from stack pointer prohibited" */ \
-	volatile long __off = sizeof(*dst) - (sz); \
-	bpf_core_read((char *)(dst) + __off, sz, src); \
-})
-#endif
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 SEC("raw_tp/sys_enter")
 int handle_probed(void *ctx)
 {
@@ -151,51 +132,23 @@ int handle_probed(void *ctx)
 	__u64 tmp;
 
 	tmp = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bpf_core_read_int(&tmp, bpf_core_field_size(in->ptr), &in->ptr);
-	ptr_probed = tmp;
-
-	tmp = 0;
-	bpf_core_read_int(&tmp, bpf_core_field_size(in->val1), &in->val1);
-	val1_probed = tmp;
-
-	tmp = 0;
-	bpf_core_read_int(&tmp, bpf_core_field_size(in->val2), &in->val2);
-	val2_probed = tmp;
-
-	tmp = 0;
-	bpf_core_read_int(&tmp, bpf_core_field_size(in->val3), &in->val3);
-	val3_probed = tmp;
-
-	tmp = 0;
-	bpf_core_read_int(&tmp, bpf_core_field_size(in->val4), &in->val4);
-=======
 	bpf_core_read(&tmp, bpf_core_field_size(in->ptr), &in->ptr);
-=======
-	bpf_core_read_int(&tmp, bpf_core_field_size(in->ptr), &in->ptr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ptr_probed = tmp;
 
 	tmp = 0;
-	bpf_core_read_int(&tmp, bpf_core_field_size(in->val1), &in->val1);
+	bpf_core_read(&tmp, bpf_core_field_size(in->val1), &in->val1);
 	val1_probed = tmp;
 
 	tmp = 0;
-	bpf_core_read_int(&tmp, bpf_core_field_size(in->val2), &in->val2);
+	bpf_core_read(&tmp, bpf_core_field_size(in->val2), &in->val2);
 	val2_probed = tmp;
 
 	tmp = 0;
-	bpf_core_read_int(&tmp, bpf_core_field_size(in->val3), &in->val3);
+	bpf_core_read(&tmp, bpf_core_field_size(in->val3), &in->val3);
 	val3_probed = tmp;
 
 	tmp = 0;
-<<<<<<< HEAD
 	bpf_core_read(&tmp, bpf_core_field_size(in->val4), &in->val4);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bpf_core_read_int(&tmp, bpf_core_field_size(in->val4), &in->val4);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	val4_probed = tmp;
 
 	return 0;

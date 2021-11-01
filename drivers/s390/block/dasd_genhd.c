@@ -24,16 +24,6 @@
 
 #include "dasd_int.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static struct lock_class_key dasd_bio_compl_lkclass;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static struct lock_class_key dasd_bio_compl_lkclass;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Allocate and register gendisk structure for device.
  */
@@ -48,31 +38,13 @@ int dasd_gendisk_alloc(struct dasd_block *block)
 	if (base->devindex >= DASD_PER_MAJOR)
 		return -EBUSY;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	gdp = __alloc_disk_node(block->request_queue, NUMA_NO_NODE,
-				&dasd_bio_compl_lkclass);
-=======
 	gdp = alloc_disk(1 << DASD_PARTN_BITS);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	gdp = __alloc_disk_node(block->request_queue, NUMA_NO_NODE,
-				&dasd_bio_compl_lkclass);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!gdp)
 		return -ENOMEM;
 
 	/* Initialize gendisk structure. */
 	gdp->major = DASD_MAJOR;
 	gdp->first_minor = base->devindex << DASD_PARTN_BITS;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	gdp->minors = 1 << DASD_PARTN_BITS;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	gdp->minors = 1 << DASD_PARTN_BITS;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gdp->fops = &dasd_device_operations;
 
 	/*
@@ -101,13 +73,7 @@ int dasd_gendisk_alloc(struct dasd_block *block)
 	    test_bit(DASD_FLAG_DEVICE_RO, &base->flags))
 		set_disk_ro(gdp, 1);
 	dasd_add_link_to_gendisk(gdp, base);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	gdp->queue = block->request_queue;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	block->gdp = gdp;
 	set_capacity(block->gdp, 0);
 	device_add_disk(&base->cdev->dev, block->gdp, NULL);

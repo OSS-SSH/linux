@@ -352,17 +352,7 @@ static unsigned int pdc_data_xfer_vlb(struct ata_queued_cmd *qc,
 			iowrite32_rep(ap->ioaddr.data_addr, buf, buflen >> 2);
 
 		if (unlikely(slop)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			__le32 pad = 0;
-
-=======
 			__le32 pad;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			__le32 pad = 0;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (rw == READ) {
 				pad = cpu_to_le32(ioread32(ap->ioaddr.data_addr));
 				memcpy(buf + buflen - slop, &pad, slop);
@@ -752,17 +742,7 @@ static unsigned int vlb32_data_xfer(struct ata_queued_cmd *qc,
 			ioread32_rep(ap->ioaddr.data_addr, buf, buflen >> 2);
 
 		if (unlikely(slop)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			__le32 pad = 0;
-
-=======
 			__le32 pad;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			__le32 pad = 0;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (rw == WRITE) {
 				memcpy(&pad, buf + buflen - slop, slop);
 				iowrite32(le32_to_cpu(pad), ap->ioaddr.data_addr);

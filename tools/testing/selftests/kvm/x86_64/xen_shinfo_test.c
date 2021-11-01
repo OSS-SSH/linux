@@ -14,13 +14,7 @@
 #include <stdint.h>
 #include <time.h>
 #include <sched.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <sys/syscall.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define VCPU_ID		5
 
@@ -104,9 +98,6 @@ static void guest_code(void)
 	GUEST_DONE();
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static long get_run_delay(void)
 {
         char path[64];
@@ -121,9 +112,6 @@ static long get_run_delay(void)
         return val[1];
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int cmp_timespec(struct timespec *a, struct timespec *b)
 {
 	if (a->tv_sec > b->tv_sec)

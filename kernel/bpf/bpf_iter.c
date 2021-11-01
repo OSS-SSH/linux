@@ -360,37 +360,6 @@ bool bpf_iter_prog_supported(struct bpf_prog *prog)
 	return supported;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-const struct bpf_func_proto *
-bpf_iter_get_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
-{
-	const struct bpf_iter_target_info *tinfo;
-	const struct bpf_func_proto *fn = NULL;
-
-	mutex_lock(&targets_mutex);
-	list_for_each_entry(tinfo, &targets, list) {
-		if (tinfo->btf_id == prog->aux->attach_btf_id) {
-			const struct bpf_iter_reg *reg_info;
-
-			reg_info = tinfo->reg_info;
-			if (reg_info->get_func_proto)
-				fn = reg_info->get_func_proto(func_id, prog);
-			break;
-		}
-	}
-	mutex_unlock(&targets_mutex);
-
-	return fn;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void bpf_iter_link_release(struct bpf_link *link)
 {
 	struct bpf_iter_link *iter_link =
@@ -695,15 +664,7 @@ int bpf_iter_run_prog(struct bpf_prog *prog, void *ctx)
 
 	rcu_read_lock();
 	migrate_disable();
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = bpf_prog_run(prog, ctx);
-=======
 	ret = BPF_PROG_RUN(prog, ctx);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = bpf_prog_run(prog, ctx);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	migrate_enable();
 	rcu_read_unlock();
 

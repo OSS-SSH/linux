@@ -1,13 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
 config VFIO_PLATFORM_CALXEDAXGMAC_RESET
 	tristate "VFIO support for calxeda xgmac reset"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	depends on VFIO_PLATFORM
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Enables the VFIO platform driver to handle reset for Calxeda xgmac
 
@@ -15,13 +9,7 @@ config VFIO_PLATFORM_CALXEDAXGMAC_RESET
 
 config VFIO_PLATFORM_AMDXGBE_RESET
 	tristate "VFIO support for AMD XGBE reset"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	depends on VFIO_PLATFORM
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Enables the VFIO platform driver to handle reset for AMD XGBE
 
@@ -29,15 +17,7 @@ config VFIO_PLATFORM_AMDXGBE_RESET
 
 config VFIO_PLATFORM_BCMFLEXRM_RESET
 	tristate "VFIO support for Broadcom FlexRM reset"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on ARCH_BCM_IPROC || COMPILE_TEST
-=======
 	depends on VFIO_PLATFORM && (ARCH_BCM_IPROC || COMPILE_TEST)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on ARCH_BCM_IPROC || COMPILE_TEST
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default ARCH_BCM_IPROC
 	help
 	  Enables the VFIO platform driver to handle reset for Broadcom FlexRM

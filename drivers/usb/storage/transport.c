@@ -551,15 +551,7 @@ static void last_sector_hacks(struct us_data *us, struct scsi_cmnd *srb)
 	/* Did this command access the last sector? */
 	sector = (srb->cmnd[2] << 24) | (srb->cmnd[3] << 16) |
 			(srb->cmnd[4] << 8) | (srb->cmnd[5]);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	disk = scsi_cmd_to_rq(srb)->rq_disk;
-=======
 	disk = srb->request->rq_disk;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	disk = scsi_cmd_to_rq(srb)->rq_disk;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!disk)
 		goto done;
 	sdkp = scsi_disk(disk);

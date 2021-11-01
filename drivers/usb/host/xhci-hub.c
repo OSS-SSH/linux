@@ -1638,27 +1638,11 @@ int xhci_hub_status_data(struct usb_hcd *hcd, char *buf)
 	 * Inform the usbcore about resume-in-progress by returning
 	 * a non-zero value even if there are no status changes.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock_irqsave(&xhci->lock, flags);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock_irqsave(&xhci->lock, flags);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	status = bus_state->resuming_ports;
 
 	mask = PORT_CSC | PORT_PEC | PORT_OCC | PORT_PLC | PORT_WRC | PORT_CEC;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	spin_lock_irqsave(&xhci->lock, flags);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* For each port, did anything change?  If so, set that bit in buf. */
 	for (i = 0; i < max_ports; i++) {
 		temp = readl(ports[i]->addr);
@@ -1682,17 +1666,7 @@ int xhci_hub_status_data(struct usb_hcd *hcd, char *buf)
 			status = 1;
 	}
 	if (!status && !reset_change) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		xhci_dbg(xhci, "%s: stopping usb%d port polling\n",
-			 __func__, hcd->self.busnum);
-=======
 		xhci_dbg(xhci, "%s: stopping port polling.\n", __func__);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		xhci_dbg(xhci, "%s: stopping usb%d port polling\n",
-			 __func__, hcd->self.busnum);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		clear_bit(HCD_FLAG_POLL_RH, &hcd->flags);
 	}
 	spin_unlock_irqrestore(&xhci->lock, flags);
@@ -1724,17 +1698,7 @@ int xhci_bus_suspend(struct usb_hcd *hcd)
 		if (bus_state->resuming_ports ||	/* USB2 */
 		    bus_state->port_remote_wakeup) {	/* USB3 */
 			spin_unlock_irqrestore(&xhci->lock, flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			xhci_dbg(xhci, "usb%d bus suspend to fail because a port is resuming\n",
-				 hcd->self.busnum);
-=======
 			xhci_dbg(xhci, "suspend failed because a port is resuming\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			xhci_dbg(xhci, "usb%d bus suspend to fail because a port is resuming\n",
-				 hcd->self.busnum);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EBUSY;
 		}
 	}

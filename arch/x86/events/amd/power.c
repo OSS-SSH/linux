@@ -213,14 +213,6 @@ static struct pmu pmu_class = {
 	.stop		= pmu_event_stop,
 	.read		= pmu_event_read,
 	.capabilities	= PERF_PMU_CAP_NO_EXCLUDE,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.module		= THIS_MODULE,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.module		= THIS_MODULE,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int power_cpu_exit(unsigned int cpu)

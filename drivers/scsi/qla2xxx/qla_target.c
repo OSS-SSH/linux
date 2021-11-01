@@ -184,16 +184,8 @@ static inline int qlt_issue_marker(struct scsi_qla_host *vha, int vha_locked)
 	return QLA_SUCCESS;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct scsi_qla_host *qla_find_host_by_d_id(struct scsi_qla_host *vha,
-=======
 static inline
 struct scsi_qla_host *qlt_find_host_by_d_id(struct scsi_qla_host *vha,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct scsi_qla_host *qla_find_host_by_d_id(struct scsi_qla_host *vha,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    be_id_t d_id)
 {
 	struct scsi_qla_host *host;
@@ -206,15 +198,7 @@ struct scsi_qla_host *qla_find_host_by_d_id(struct scsi_qla_host *vha,
 
 	key = be_to_port_id(d_id).b24;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	host = btree_lookup32(&vha->hw->host_map, key);
-=======
 	host = btree_lookup32(&vha->hw->tgt.host_map, key);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	host = btree_lookup32(&vha->hw->host_map, key);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!host)
 		ql_dbg(ql_dbg_tgt_mgt + ql_dbg_verbose, vha, 0xf005,
 		    "Unable to find host %06x\n", key);
@@ -315,15 +299,7 @@ static void qlt_try_to_dequeue_unknown_atios(struct scsi_qla_host *vha,
 			goto abort;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		host = qla_find_host_by_d_id(vha, u->atio.u.isp24.fcp_hdr.d_id);
-=======
 		host = qlt_find_host_by_d_id(vha, u->atio.u.isp24.fcp_hdr.d_id);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		host = qla_find_host_by_d_id(vha, u->atio.u.isp24.fcp_hdr.d_id);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (host != NULL) {
 			ql_dbg(ql_dbg_async + ql_dbg_verbose, vha, 0x502f,
 			    "Requeuing unknown ATIO_TYPE7 %p\n", u);
@@ -372,15 +348,7 @@ static bool qlt_24xx_atio_pkt_all_vps(struct scsi_qla_host *vha,
 	switch (atio->u.raw.entry_type) {
 	case ATIO_TYPE7:
 	{
-<<<<<<< HEAD
-<<<<<<< HEAD
-		struct scsi_qla_host *host = qla_find_host_by_d_id(vha,
-=======
 		struct scsi_qla_host *host = qlt_find_host_by_d_id(vha,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		struct scsi_qla_host *host = qla_find_host_by_d_id(vha,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    atio->u.isp24.fcp_hdr.d_id);
 		if (unlikely(NULL == host)) {
 			ql_dbg(ql_dbg_tgt, vha, 0xe03e,
@@ -609,27 +577,6 @@ static void qla2x00_async_nack_sp_done(srb_t *sp, int res)
 		sp->fcport->logout_on_delete = 1;
 		sp->fcport->plogi_nack_done_deadline = jiffies + HZ;
 		sp->fcport->send_els_logo = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-		if (sp->fcport->flags & FCF_FCSP_DEVICE) {
-			ql_dbg(ql_dbg_edif, vha, 0x20ef,
-			    "%s %8phC edif: PLOGI- AUTH WAIT\n", __func__,
-			    sp->fcport->port_name);
-			qla2x00_set_fcport_disc_state(sp->fcport,
-			    DSC_LOGIN_AUTH_PEND);
-			qla2x00_post_aen_work(vha, FCH_EVT_PORT_ONLINE,
-			    sp->fcport->d_id.b24);
-			qla_edb_eventcreate(vha, VND_CMD_AUTH_STATE_NEEDED, sp->fcport->d_id.b24,
-			    0, sp->fcport);
-		}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 
 	case SRB_NACK_PRLI:
@@ -677,18 +624,6 @@ int qla24xx_async_notify_ack(scsi_qla_host_t *vha, fc_port_t *fcport,
 	case SRB_NACK_PLOGI:
 		fcport->fw_login_state = DSC_LS_PLOGI_PEND;
 		c = "PLOGI";
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (vha->hw->flags.edif_enabled &&
-		    (le16_to_cpu(ntfy->u.isp24.flags) & NOTIFY24XX_FLAGS_FCSP))
-			fcport->flags |= FCF_FCSP_DEVICE;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (vha->hw->flags.edif_enabled &&
-		    (le16_to_cpu(ntfy->u.isp24.flags) & NOTIFY24XX_FLAGS_FCSP))
-			fcport->flags |= FCF_FCSP_DEVICE;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case SRB_NACK_PRLI:
 		fcport->fw_login_state = DSC_LS_PRLI_PEND;
@@ -758,22 +693,7 @@ void qla24xx_do_nack_work(struct scsi_qla_host *vha, struct qla_work_evt *e)
 void qla24xx_delete_sess_fn(struct work_struct *work)
 {
 	fc_port_t *fcport = container_of(work, struct fc_port, del_work);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct qla_hw_data *ha = NULL;
-
-	if (!fcport || !fcport->vha || !fcport->vha->hw)
-		return;
-
-	ha = fcport->vha->hw;
-<<<<<<< HEAD
-=======
 	struct qla_hw_data *ha = fcport->vha->hw;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (fcport->se_sess) {
 		ha->tgt.tgt_ops->shutdown_sess(fcport);
@@ -997,20 +917,6 @@ qlt_send_first_logo(struct scsi_qla_host *vha, qlt_port_logo_t *logo)
 	qlt_port_logo_t *tmp;
 	int res;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (test_bit(PFLG_DRIVER_REMOVING, &vha->pci_flags)) {
-		res = 0;
-		goto out;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_lock(&vha->vha_tgt.tgt_mutex);
 
 	list_for_each_entry(tmp, &vha->logo_list, list) {
@@ -1031,14 +937,6 @@ qlt_send_first_logo(struct scsi_qla_host *vha, qlt_port_logo_t *logo)
 	list_del(&logo->list);
 	mutex_unlock(&vha->vha_tgt.tgt_mutex);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-out:
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-out:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ql_dbg(ql_dbg_tgt_mgt, vha, 0xf098,
 	    "Finished LOGO to %02x:%02x:%02x, dropped %d cmds, res = %#x\n",
 	    logo->id.b.domain, logo->id.b.area, logo->id.b.al_pa,
@@ -1067,30 +965,6 @@ void qlt_free_session_done(struct work_struct *work)
 		sess->send_els_logo);
 
 	if (!IS_SW_RESV_ADDR(sess->d_id)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (ha->flags.edif_enabled &&
-		    (!own || own->iocb.u.isp24.status_subcode == ELS_PLOGI)) {
-			sess->edif.authok = 0;
-			if (!ha->flags.host_shutting_down) {
-				ql_dbg(ql_dbg_edif, vha, 0x911e,
-					"%s wwpn %8phC calling qla2x00_release_all_sadb\n",
-					__func__, sess->port_name);
-				qla2x00_release_all_sadb(vha, sess);
-			} else {
-				ql_dbg(ql_dbg_edif, vha, 0x911e,
-					"%s bypassing release_all_sadb\n",
-					__func__);
-			}
-			qla_edif_sess_down(vha, sess);
-		}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		qla2x00_mark_device_lost(vha, sess, 0);
 
 		if (sess->send_els_logo) {
@@ -1098,14 +972,6 @@ void qlt_free_session_done(struct work_struct *work)
 
 			logo.id = sess->d_id;
 			logo.cmd_count = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			INIT_LIST_HEAD(&logo.list);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			INIT_LIST_HEAD(&logo.list);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!own)
 				qlt_send_first_logo(vha, &logo);
 			sess->send_els_logo = 0;
@@ -1116,14 +982,6 @@ void qlt_free_session_done(struct work_struct *work)
 
 			if (!own ||
 			     (own->iocb.u.isp24.status_subcode == ELS_PLOGI)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-				sess->logout_completed = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				sess->logout_completed = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				rc = qla2x00_post_async_logout_work(vha, sess,
 				    NULL);
 				if (rc != QLA_SUCCESS)
@@ -1420,18 +1278,8 @@ void qlt_schedule_sess_for_deletion(struct fc_port *sess)
 	qla24xx_chk_fcp_state(sess);
 
 	ql_dbg(ql_log_warn, sess->vha, 0xe001,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	    "Scheduling sess %p for deletion %8phC fc4_type %x\n",
-	    sess, sess->port_name, sess->fc4_type);
-=======
 	    "Scheduling sess %p for deletion %8phC\n",
 	    sess, sess->port_name);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	    "Scheduling sess %p for deletion %8phC fc4_type %x\n",
-	    sess, sess->port_name, sess->fc4_type);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	WARN_ON(!queue_work(sess->vha->hw->wq, &sess->del_work));
 }
@@ -1872,21 +1720,6 @@ static void qlt_send_notify_ack(struct qla_qpair *qpair,
 	nack->u.isp24.srr_reject_code_expl = srr_explan;
 	nack->u.isp24.vp_index = ntfy->u.isp24.vp_index;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* TODO qualify this with EDIF enable */
-	if (ntfy->u.isp24.status_subcode == ELS_PLOGI &&
-	    (le16_to_cpu(ntfy->u.isp24.flags) & NOTIFY24XX_FLAGS_FCSP)) {
-		nack->u.isp24.flags |= cpu_to_le16(NOTIFY_ACK_FLAGS_FCSP);
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ql_dbg(ql_dbg_tgt, vha, 0xe005,
 	    "qla_target(%d): Sending 24xx Notify Ack %d\n",
 	    vha->vp_idx, nack->u.isp24.status);
@@ -2738,14 +2571,6 @@ static int qlt_24xx_build_ctio_pkt(struct qla_qpair *qpair,
 	struct ctio7_to_24xx *pkt;
 	struct atio_from_isp *atio = &prm->cmd->atio;
 	uint16_t temp;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct qla_tgt_cmd      *cmd = prm->cmd;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct qla_tgt_cmd      *cmd = prm->cmd;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pkt = (struct ctio7_to_24xx *)qpair->req->ring_ptr;
 	prm->pkt = pkt;
@@ -2778,24 +2603,6 @@ static int qlt_24xx_build_ctio_pkt(struct qla_qpair *qpair,
 	pkt->u.status0.ox_id = cpu_to_le16(temp);
 	pkt->u.status0.relative_offset = cpu_to_le32(prm->cmd->offset);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (cmd->edif) {
-		if (cmd->dma_data_direction == DMA_TO_DEVICE)
-			prm->cmd->sess->edif.rx_bytes += cmd->bufflen;
-		if (cmd->dma_data_direction == DMA_FROM_DEVICE)
-			prm->cmd->sess->edif.tx_bytes += cmd->bufflen;
-
-		pkt->u.status0.edif_flags |= EF_EN_EDIF;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 
@@ -3486,21 +3293,8 @@ int qlt_xmit_response(struct qla_tgt_cmd *cmd, int xmit_type,
 			if (xmit_type & QLA_TGT_XMIT_STATUS) {
 				pkt->u.status0.scsi_status =
 				    cpu_to_le16(prm.rq_result);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-				if (!cmd->edif)
-					pkt->u.status0.residual =
-						cpu_to_le32(prm.residual);
-
-<<<<<<< HEAD
-=======
 				pkt->u.status0.residual =
 				    cpu_to_le32(prm.residual);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				pkt->u.status0.flags |= cpu_to_le16(
 				    CTIO7_FLAGS_SEND_STATUS);
 				if (qlt_need_explicit_conf(cmd, 0)) {
@@ -4147,21 +3941,6 @@ static void qlt_do_ctio_completion(struct scsi_qla_host *vha,
 	if (cmd == NULL)
 		return;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if ((le16_to_cpu(((struct ctio7_from_24xx *)ctio)->flags) & CTIO7_FLAGS_DATA_OUT) &&
-	    cmd->sess) {
-		qlt_chk_edif_rx_sa_delete_pending(vha, cmd->sess,
-		    (struct ctio7_from_24xx *)ctio);
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	se_cmd = &cmd->se_cmd;
 	cmd->cmd_sent_to_fw = 0;
 
@@ -4232,25 +4011,6 @@ static void qlt_do_ctio_completion(struct scsi_qla_host *vha,
 			qlt_handle_dif_error(qpair, cmd, ctio);
 			return;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-		case CTIO_FAST_AUTH_ERR:
-		case CTIO_FAST_INCOMP_PAD_LEN:
-		case CTIO_FAST_INVALID_REQ:
-		case CTIO_FAST_SPI_ERR:
-			ql_dbg(ql_dbg_tgt_mgt, vha, 0xf05b,
-			    "qla_target(%d): CTIO with EDIF error status 0x%x received (state %x, se_cmd %p\n",
-			    vha->vp_idx, status, cmd->state, se_cmd);
-			break;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		default:
 			ql_dbg(ql_dbg_tgt_mgt, vha, 0xf05b,
 			    "qla_target(%d): CTIO with error status 0x%x received (state %x, se_cmd %p\n",
@@ -4552,14 +4312,6 @@ static struct qla_tgt_cmd *qlt_get_tag(scsi_qla_host_t *vha,
 	qlt_assign_qpair(vha, cmd);
 	cmd->reset_count = vha->hw->base_qpair->chip_reset;
 	cmd->vp_idx = vha->vp_idx;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cmd->edif = sess->edif.enable;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cmd->edif = sess->edif.enable;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return cmd;
 }
@@ -4975,43 +4727,6 @@ static int qlt_handle_login(struct scsi_qla_host *vha,
 		goto out;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (vha->hw->flags.edif_enabled &&
-	    !(vha->e_dbell.db_flags & EDB_ACTIVE) &&
-	    iocb->u.isp24.status_subcode == ELS_PLOGI &&
-	    !(le16_to_cpu(iocb->u.isp24.flags) & NOTIFY24XX_FLAGS_FCSP)) {
-		ql_dbg(ql_dbg_disc, vha, 0xffff,
-			"%s %d Term INOT due to app not available lid=%d, NportID %06X ",
-			__func__, __LINE__, loop_id, port_id.b24);
-		qlt_send_term_imm_notif(vha, iocb, 1);
-		goto out;
-	}
-
-	if (vha->hw->flags.edif_enabled) {
-		if (!(vha->e_dbell.db_flags & EDB_ACTIVE)) {
-			ql_dbg(ql_dbg_disc, vha, 0xffff,
-			       "%s %d Term INOT due to app not started lid=%d, NportID %06X ",
-			       __func__, __LINE__, loop_id, port_id.b24);
-			qlt_send_term_imm_notif(vha, iocb, 1);
-			goto out;
-		} else if (iocb->u.isp24.status_subcode == ELS_PLOGI &&
-			   !(le16_to_cpu(iocb->u.isp24.flags) & NOTIFY24XX_FLAGS_FCSP)) {
-			ql_dbg(ql_dbg_disc, vha, 0xffff,
-			       "%s %d Term INOT due to unsecure lid=%d, NportID %06X ",
-			       __func__, __LINE__, loop_id, port_id.b24);
-			qlt_send_term_imm_notif(vha, iocb, 1);
-			goto out;
-		}
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pla = qlt_plogi_ack_find_add(vha, &port_id, iocb);
 	if (!pla) {
 		ql_dbg(ql_dbg_disc + ql_dbg_verbose, vha, 0xffff,
@@ -5077,29 +4792,6 @@ static int qlt_handle_login(struct scsi_qla_host *vha,
 	qlt_plogi_ack_link(vha, pla, sess, QLT_PLOGI_LINK_SAME_WWN);
 	sess->d_id = port_id;
 	sess->login_gen++;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	sess->loop_id = loop_id;
-
-	if (iocb->u.isp24.status_subcode == ELS_PLOGI) {
-		/* remote port has assigned Port ID */
-		if (N2N_TOPO(vha->hw) && fcport_is_bigger(sess))
-			vha->d_id = sess->d_id;
-
-		ql_dbg(ql_dbg_disc, vha, 0xffff,
-		    "%s %8phC - send port online\n",
-		    __func__, sess->port_name);
-
-		qla2x00_post_aen_work(vha, FCH_EVT_PORT_ONLINE,
-		    sess->d_id.b24);
-	}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (iocb->u.isp24.status_subcode == ELS_PRLI) {
 		sess->fw_login_state = DSC_LS_PRLI_PEND;
@@ -5212,25 +4904,6 @@ static int qlt_24xx_handle_els(struct scsi_qla_host *vha,
 			sess = qla2x00_find_fcport_by_wwpn(vha,
 			    iocb->u.isp24.port_name, 1);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			if (vha->hw->flags.edif_enabled && sess &&
-			    (!(sess->flags & FCF_FCSP_DEVICE) ||
-			     !sess->edif.authok)) {
-				ql_dbg(ql_dbg_disc, vha, 0xffff,
-				       "%s %d %8phC Term PRLI due to unauthorize PRLI\n",
-				       __func__, __LINE__, iocb->u.isp24.port_name);
-				qlt_send_term_imm_notif(vha, iocb, 1);
-				break;
-			}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (sess && sess->plogi_link[QLT_PLOGI_LINK_SAME_WWN]) {
 				ql_dbg(ql_dbg_disc, vha, 0xffff,
 				    "%s %d %8phC Term PRLI due to PLOGI ACK not completed\n",
@@ -5279,25 +4952,6 @@ static int qlt_24xx_handle_els(struct scsi_qla_host *vha,
 			bool delete = false;
 			int sec;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			if (vha->hw->flags.edif_enabled && sess &&
-			    (!(sess->flags & FCF_FCSP_DEVICE) ||
-			     !sess->edif.authok)) {
-				ql_dbg(ql_dbg_disc, vha, 0xffff,
-				       "%s %d %8phC Term PRLI due to unauthorize prli\n",
-				       __func__, __LINE__, iocb->u.isp24.port_name);
-				qlt_send_term_imm_notif(vha, iocb, 1);
-				break;
-			}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			spin_lock_irqsave(&tgt->ha->tgt.sess_lock, flags);
 			switch (sess->fw_login_state) {
 			case DSC_LS_PLOGI_PEND:
@@ -5487,17 +5141,7 @@ static int qlt_24xx_handle_els(struct scsi_qla_host *vha,
 }
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
- * ha->hardware_lock supposed to be held on entry.
- * Might drop it, then reacquire.
-=======
  * ha->hardware_lock supposed to be held on entry. Might drop it, then reaquire
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * ha->hardware_lock supposed to be held on entry.
- * Might drop it, then reacquire.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static void qlt_handle_imm_notify(struct scsi_qla_host *vha,
 	struct imm_ntfy_from_isp *iocb)
@@ -6800,37 +6444,15 @@ int qlt_remove_target(struct qla_hw_data *ha, struct scsi_qla_host *vha)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void qla_remove_hostmap(struct qla_hw_data *ha)
-=======
 void qlt_remove_target_resources(struct qla_hw_data *ha)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void qla_remove_hostmap(struct qla_hw_data *ha)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct scsi_qla_host *node;
 	u32 key = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	btree_for_each_safe32(&ha->host_map, key, node)
-		btree_remove32(&ha->host_map, key);
-
-	btree_destroy32(&ha->host_map);
-=======
 	btree_for_each_safe32(&ha->tgt.host_map, key, node)
 		btree_remove32(&ha->tgt.host_map, key);
 
 	btree_destroy32(&ha->tgt.host_map);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	btree_for_each_safe32(&ha->host_map, key, node)
-		btree_remove32(&ha->host_map, key);
-
-	btree_destroy32(&ha->host_map);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void qlt_lport_dump(struct scsi_qla_host *vha, u64 wwpn,
@@ -7458,16 +7080,8 @@ qlt_modify_vp_config(struct scsi_qla_host *vha,
 void
 qlt_probe_one_stage1(struct scsi_qla_host *base_vha, struct qla_hw_data *ha)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mutex_init(&base_vha->vha_tgt.tgt_mutex);
-=======
 	int rc;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mutex_init(&base_vha->vha_tgt.tgt_mutex);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!QLA_TGT_MODE_ENABLED())
 		return;
 
@@ -7480,13 +7094,7 @@ qlt_probe_one_stage1(struct scsi_qla_host *base_vha, struct qla_hw_data *ha)
 		ISP_ATIO_Q_OUT(base_vha) = &ha->iobase->isp24.atio_q_out;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	mutex_init(&base_vha->vha_tgt.tgt_mutex);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_init(&base_vha->vha_tgt.tgt_host_action_mutex);
 
 	INIT_LIST_HEAD(&base_vha->unknown_atio_list);
@@ -7495,17 +7103,11 @@ qlt_probe_one_stage1(struct scsi_qla_host *base_vha, struct qla_hw_data *ha)
 
 	qlt_clear_mode(base_vha);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	rc = btree_init32(&ha->tgt.host_map);
 	if (rc)
 		ql_log(ql_log_info, base_vha, 0xd03d,
 		    "Unable to initialize ha->host_map btree\n");
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	qlt_update_vp_map(base_vha, SET_VP_IDX);
 }
 
@@ -7626,49 +7228,21 @@ qlt_update_vp_map(struct scsi_qla_host *vha, int cmd)
 	u32 key;
 	int rc;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (!QLA_TGT_MODE_ENABLED())
 		return;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	key = vha->d_id.b24;
 
 	switch (cmd) {
 	case SET_VP_IDX:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (!QLA_TGT_MODE_ENABLED())
-			return;
 		vha->hw->tgt.tgt_vp_map[vha->vp_idx].vha = vha;
 		break;
 	case SET_AL_PA:
-		slot = btree_lookup32(&vha->hw->host_map, key);
+		slot = btree_lookup32(&vha->hw->tgt.host_map, key);
 		if (!slot) {
 			ql_dbg(ql_dbg_tgt_mgt, vha, 0xf018,
 			    "Save vha in host_map %p %06x\n", vha, key);
-			rc = btree_insert32(&vha->hw->host_map,
-=======
-=======
-		if (!QLA_TGT_MODE_ENABLED())
-			return;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		vha->hw->tgt.tgt_vp_map[vha->vp_idx].vha = vha;
-		break;
-	case SET_AL_PA:
-		slot = btree_lookup32(&vha->hw->host_map, key);
-		if (!slot) {
-			ql_dbg(ql_dbg_tgt_mgt, vha, 0xf018,
-			    "Save vha in host_map %p %06x\n", vha, key);
-<<<<<<< HEAD
 			rc = btree_insert32(&vha->hw->tgt.host_map,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			rc = btree_insert32(&vha->hw->host_map,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				key, vha, GFP_ATOMIC);
 			if (rc)
 				ql_log(ql_log_info, vha, 0xd03e,
@@ -7678,45 +7252,17 @@ qlt_update_vp_map(struct scsi_qla_host *vha, int cmd)
 		}
 		ql_dbg(ql_dbg_tgt_mgt, vha, 0xf019,
 		    "replace existing vha in host_map %p %06x\n", vha, key);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		btree_update32(&vha->hw->host_map, key, vha);
-		break;
-	case RESET_VP_IDX:
-		if (!QLA_TGT_MODE_ENABLED())
-			return;
-=======
 		btree_update32(&vha->hw->tgt.host_map, key, vha);
 		break;
 	case RESET_VP_IDX:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		btree_update32(&vha->hw->host_map, key, vha);
-		break;
-	case RESET_VP_IDX:
-		if (!QLA_TGT_MODE_ENABLED())
-			return;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		vha->hw->tgt.tgt_vp_map[vha->vp_idx].vha = NULL;
 		break;
 	case RESET_AL_PA:
 		ql_dbg(ql_dbg_tgt_mgt, vha, 0xf01a,
 		   "clear vha in host_map %p %06x\n", vha, key);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		slot = btree_lookup32(&vha->hw->host_map, key);
-		if (slot)
-			btree_remove32(&vha->hw->host_map, key);
-=======
 		slot = btree_lookup32(&vha->hw->tgt.host_map, key);
 		if (slot)
 			btree_remove32(&vha->hw->tgt.host_map, key);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		slot = btree_lookup32(&vha->hw->host_map, key);
-		if (slot)
-			btree_remove32(&vha->hw->host_map, key);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		vha->d_id.b24 = 0;
 		break;
 	}

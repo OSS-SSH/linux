@@ -3,28 +3,12 @@
  * Copyright (C) 2012 Regents of the University of California
  */
 #include <asm/page.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <asm/vdso.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <asm/vdso.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 OUTPUT_ARCH(riscv)
 
 SECTIONS
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	PROVIDE(_vdso_data = . - __VVAR_PAGES * PAGE_SIZE);
-=======
 	PROVIDE(_vdso_data = . + PAGE_SIZE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	PROVIDE(_vdso_data = . - __VVAR_PAGES * PAGE_SIZE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	. = SIZEOF_HEADERS;
 
 	.hash		: { *(.hash) }			:text

@@ -1927,17 +1927,7 @@ __mlxsw_core_bus_device_register(const struct mlxsw_bus_info *mlxsw_bus_info,
 
 	if (!reload) {
 		alloc_size = sizeof(*mlxsw_core) + mlxsw_driver->priv_size;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		devlink = devlink_alloc(&mlxsw_devlink_ops, alloc_size,
-					mlxsw_bus_info->dev);
-=======
 		devlink = devlink_alloc(&mlxsw_devlink_ops, alloc_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		devlink = devlink_alloc(&mlxsw_devlink_ops, alloc_size,
-					mlxsw_bus_info->dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!devlink) {
 			err = -ENOMEM;
 			goto err_devlink_alloc;
@@ -1984,15 +1974,7 @@ __mlxsw_core_bus_device_register(const struct mlxsw_bus_info *mlxsw_bus_info,
 		goto err_emad_init;
 
 	if (!reload) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = devlink_register(devlink);
-=======
 		err = devlink_register(devlink, mlxsw_bus_info->dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = devlink_register(devlink);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err)
 			goto err_devlink_register;
 	}

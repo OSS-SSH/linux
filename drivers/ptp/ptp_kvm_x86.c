@@ -15,14 +15,8 @@
 #include <linux/ptp_clock_kernel.h>
 #include <linux/ptp_kvm.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 struct pvclock_vsyscall_time_info *hv_clock;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static phys_addr_t clock_pair_gpa;
 static struct kvm_clock_pairing clock_pair;
 
@@ -34,16 +28,8 @@ int kvm_arch_ptp_init(void)
 		return -ENODEV;
 
 	clock_pair_gpa = slow_virt_to_phys(&clock_pair);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!pvclock_get_pvti_cpu0_va())
-=======
 	hv_clock = pvclock_get_pvti_cpu0_va();
 	if (!hv_clock)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!pvclock_get_pvti_cpu0_va())
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENODEV;
 
 	ret = kvm_hypercall2(KVM_HC_CLOCK_PAIRING, clock_pair_gpa,
@@ -78,20 +64,10 @@ int kvm_arch_ptp_get_crosststamp(u64 *cycle, struct timespec64 *tspec,
 	struct pvclock_vcpu_time_info *src;
 	unsigned int version;
 	long ret;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	src = this_cpu_pvti();
-=======
 	int cpu;
 
 	cpu = smp_processor_id();
 	src = &hv_clock[cpu].pvti;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	src = this_cpu_pvti();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	do {
 		/*

@@ -980,20 +980,8 @@
 			clocks = <&gcc GMAC_CORE1_CLK>;
 			clock-names = "stmmaceth";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			resets = <&gcc GMAC_CORE1_RESET>,
-				 <&gcc GMAC_AHB_RESET>;
-			reset-names = "stmmaceth", "ahb";
-=======
 			resets = <&gcc GMAC_CORE1_RESET>;
 			reset-names = "stmmaceth";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			resets = <&gcc GMAC_CORE1_RESET>,
-				 <&gcc GMAC_AHB_RESET>;
-			reset-names = "stmmaceth", "ahb";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			status = "disabled";
 		};
@@ -1015,20 +1003,8 @@
 			clocks = <&gcc GMAC_CORE2_CLK>;
 			clock-names = "stmmaceth";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			resets = <&gcc GMAC_CORE2_RESET>,
-				 <&gcc GMAC_AHB_RESET>;
-			reset-names = "stmmaceth", "ahb";
-=======
 			resets = <&gcc GMAC_CORE2_RESET>;
 			reset-names = "stmmaceth";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			resets = <&gcc GMAC_CORE2_RESET>,
-				 <&gcc GMAC_AHB_RESET>;
-			reset-names = "stmmaceth", "ahb";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			status = "disabled";
 		};
@@ -1050,20 +1026,8 @@
 			clocks = <&gcc GMAC_CORE3_CLK>;
 			clock-names = "stmmaceth";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			resets = <&gcc GMAC_CORE3_RESET>,
-				 <&gcc GMAC_AHB_RESET>;
-			reset-names = "stmmaceth", "ahb";
-=======
 			resets = <&gcc GMAC_CORE3_RESET>;
 			reset-names = "stmmaceth";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			resets = <&gcc GMAC_CORE3_RESET>,
-				 <&gcc GMAC_AHB_RESET>;
-			reset-names = "stmmaceth", "ahb";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			status = "disabled";
 		};
@@ -1085,20 +1049,8 @@
 			clocks = <&gcc GMAC_CORE4_CLK>;
 			clock-names = "stmmaceth";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			resets = <&gcc GMAC_CORE4_RESET>,
-				 <&gcc GMAC_AHB_RESET>;
-			reset-names = "stmmaceth", "ahb";
-=======
 			resets = <&gcc GMAC_CORE4_RESET>;
 			reset-names = "stmmaceth";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			resets = <&gcc GMAC_CORE4_RESET>,
-				 <&gcc GMAC_AHB_RESET>;
-			reset-names = "stmmaceth", "ahb";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			status = "disabled";
 		};

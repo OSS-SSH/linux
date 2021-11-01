@@ -97,15 +97,7 @@ void sm750_hw_cursor_setData(struct lynx_cursor *cursor, u16 rop,
 	count = pitch * cursor->h;
 
 	/* in byte */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	offset = cursor->max_w * 2 / 8;
-=======
 	offset = cursor->maxW * 2 / 8;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	offset = cursor->max_w * 2 / 8;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	data = 0;
 	pstart = cursor->vstart;
@@ -155,15 +147,7 @@ void sm750_hw_cursor_setData2(struct lynx_cursor *cursor, u16 rop,
 	count = pitch * cursor->h;
 
 	/* in byte */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	offset = cursor->max_w * 2 / 8;
-=======
 	offset = cursor->maxW * 2 / 8;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	offset = cursor->max_w * 2 / 8;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	data = 0;
 	pstart = cursor->vstart;

@@ -377,43 +377,6 @@
 				#interrupt-cells = <2>;
 			};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			sgpiom0: sgpiom@1e780500 {
-				#gpio-cells = <2>;
-				gpio-controller;
-				compatible = "aspeed,ast2600-sgpiom";
-				reg = <0x1e780500 0x100>;
-				interrupts = <GIC_SPI 51 IRQ_TYPE_LEVEL_HIGH>;
-				clocks = <&syscon ASPEED_CLK_APB2>;
-				interrupt-controller;
-				bus-frequency = <12000000>;
-				pinctrl-names = "default";
-				pinctrl-0 = <&pinctrl_sgpm1_default>;
-				status = "disabled";
-			};
-
-			sgpiom1: sgpiom@1e780600 {
-				#gpio-cells = <2>;
-				gpio-controller;
-				compatible = "aspeed,ast2600-sgpiom";
-				reg = <0x1e780600 0x100>;
-				interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
-				clocks = <&syscon ASPEED_CLK_APB2>;
-				interrupt-controller;
-				bus-frequency = <12000000>;
-				pinctrl-names = "default";
-				pinctrl-0 = <&pinctrl_sgpm2_default>;
-				status = "disabled";
-			};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			gpio1: gpio@1e780800 {
 				#gpio-cells = <2>;
 				gpio-controller;

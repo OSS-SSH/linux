@@ -121,15 +121,7 @@ static const char *bad_inode_get_link(struct dentry *dentry,
 	return ERR_PTR(-EIO);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static struct posix_acl *bad_inode_get_acl(struct inode *inode, int type, bool rcu)
-=======
 static struct posix_acl *bad_inode_get_acl(struct inode *inode, int type)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static struct posix_acl *bad_inode_get_acl(struct inode *inode, int type, bool rcu)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return ERR_PTR(-EIO);
 }

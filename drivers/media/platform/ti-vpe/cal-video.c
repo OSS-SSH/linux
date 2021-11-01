@@ -102,18 +102,8 @@ static const struct cal_format_info *find_format_by_code(struct cal_ctx *ctx,
 	return NULL;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int cal_legacy_enum_fmt_vid_cap(struct file *file, void *priv,
-				       struct v4l2_fmtdesc *f)
-=======
 static int cal_enum_fmt_vid_cap(struct file *file, void  *priv,
 				struct v4l2_fmtdesc *f)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int cal_legacy_enum_fmt_vid_cap(struct file *file, void *priv,
-				       struct v4l2_fmtdesc *f)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cal_ctx *ctx = video_drvdata(file);
 	const struct cal_format_info *fmtinfo;
@@ -138,15 +128,7 @@ static int __subdev_get_format(struct cal_ctx *ctx,
 	sd_fmt.which = V4L2_SUBDEV_FORMAT_ACTIVE;
 	sd_fmt.pad = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = v4l2_subdev_call(ctx->phy->source, pad, get_fmt, NULL, &sd_fmt);
-=======
 	ret = v4l2_subdev_call(ctx->phy->sensor, pad, get_fmt, NULL, &sd_fmt);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = v4l2_subdev_call(ctx->phy->source, pad, get_fmt, NULL, &sd_fmt);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -169,15 +151,7 @@ static int __subdev_set_format(struct cal_ctx *ctx,
 	sd_fmt.pad = 0;
 	*mbus_fmt = *fmt;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = v4l2_subdev_call(ctx->phy->source, pad, set_fmt, NULL, &sd_fmt);
-=======
 	ret = v4l2_subdev_call(ctx->phy->sensor, pad, set_fmt, NULL, &sd_fmt);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = v4l2_subdev_call(ctx->phy->source, pad, set_fmt, NULL, &sd_fmt);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		return ret;
 
@@ -215,18 +189,8 @@ static void cal_calc_format_size(struct cal_ctx *ctx,
 		f->fmt.pix.bytesperline, f->fmt.pix.sizeimage);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int cal_legacy_try_fmt_vid_cap(struct file *file, void *priv,
-				      struct v4l2_format *f)
-=======
 static int cal_try_fmt_vid_cap(struct file *file, void *priv,
 			       struct v4l2_format *f)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int cal_legacy_try_fmt_vid_cap(struct file *file, void *priv,
-				      struct v4l2_format *f)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cal_ctx *ctx = video_drvdata(file);
 	const struct cal_format_info *fmtinfo;
@@ -252,15 +216,7 @@ static int cal_legacy_try_fmt_vid_cap(struct file *file, void *priv,
 	fse.code = fmtinfo->code;
 	fse.which = V4L2_SUBDEV_FORMAT_ACTIVE;
 	for (fse.index = 0; ; fse.index++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = v4l2_subdev_call(ctx->phy->source, pad, enum_frame_size,
-=======
 		ret = v4l2_subdev_call(ctx->phy->sensor, pad, enum_frame_size,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = v4l2_subdev_call(ctx->phy->source, pad, enum_frame_size,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       NULL, &fse);
 		if (ret)
 			break;
@@ -293,18 +249,8 @@ static int cal_legacy_try_fmt_vid_cap(struct file *file, void *priv,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int cal_legacy_s_fmt_vid_cap(struct file *file, void *priv,
-				    struct v4l2_format *f)
-=======
 static int cal_s_fmt_vid_cap(struct file *file, void *priv,
 			     struct v4l2_format *f)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int cal_legacy_s_fmt_vid_cap(struct file *file, void *priv,
-				    struct v4l2_format *f)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cal_ctx *ctx = video_drvdata(file);
 	struct vb2_queue *q = &ctx->vb_vidq;
@@ -320,15 +266,7 @@ static int cal_legacy_s_fmt_vid_cap(struct file *file, void *priv,
 		return -EBUSY;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = cal_legacy_try_fmt_vid_cap(file, priv, f);
-=======
 	ret = cal_try_fmt_vid_cap(file, priv, f);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = cal_legacy_try_fmt_vid_cap(file, priv, f);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 
@@ -362,18 +300,8 @@ static int cal_legacy_s_fmt_vid_cap(struct file *file, void *priv,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int cal_legacy_enum_framesizes(struct file *file, void *fh,
-				      struct v4l2_frmsizeenum *fsize)
-=======
 static int cal_enum_framesizes(struct file *file, void *fh,
 			       struct v4l2_frmsizeenum *fsize)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int cal_legacy_enum_framesizes(struct file *file, void *fh,
-				      struct v4l2_frmsizeenum *fsize)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cal_ctx *ctx = video_drvdata(file);
 	const struct cal_format_info *fmtinfo;
@@ -393,15 +321,7 @@ static int cal_legacy_enum_framesizes(struct file *file, void *fh,
 	fse.code = fmtinfo->code;
 	fse.which = V4L2_SUBDEV_FORMAT_ACTIVE;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = v4l2_subdev_call(ctx->phy->source, pad, enum_frame_size, NULL,
-=======
 	ret = v4l2_subdev_call(ctx->phy->sensor, pad, enum_frame_size, NULL,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = v4l2_subdev_call(ctx->phy->source, pad, enum_frame_size, NULL,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       &fse);
 	if (ret)
 		return ret;
@@ -417,18 +337,8 @@ static int cal_legacy_enum_framesizes(struct file *file, void *fh,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int cal_legacy_enum_input(struct file *file, void *priv,
-				 struct v4l2_input *inp)
-=======
 static int cal_enum_input(struct file *file, void *priv,
 			  struct v4l2_input *inp)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int cal_legacy_enum_input(struct file *file, void *priv,
-				 struct v4l2_input *inp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (inp->index > 0)
 		return -EINVAL;
@@ -438,46 +348,20 @@ static int cal_legacy_enum_input(struct file *file, void *priv,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int cal_legacy_g_input(struct file *file, void *priv, unsigned int *i)
-=======
 static int cal_g_input(struct file *file, void *priv, unsigned int *i)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int cal_legacy_g_input(struct file *file, void *priv, unsigned int *i)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	*i = 0;
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int cal_legacy_s_input(struct file *file, void *priv, unsigned int i)
-=======
 static int cal_s_input(struct file *file, void *priv, unsigned int i)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int cal_legacy_s_input(struct file *file, void *priv, unsigned int i)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return i > 0 ? -EINVAL : 0;
 }
 
 /* timeperframe is arbitrary and continuous */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int cal_legacy_enum_frameintervals(struct file *file, void *priv,
-					  struct v4l2_frmivalenum *fival)
-=======
 static int cal_enum_frameintervals(struct file *file, void *priv,
 				   struct v4l2_frmivalenum *fival)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int cal_legacy_enum_frameintervals(struct file *file, void *priv,
-					  struct v4l2_frmivalenum *fival)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct cal_ctx *ctx = video_drvdata(file);
 	const struct cal_format_info *fmtinfo;
@@ -494,15 +378,7 @@ static int cal_legacy_enum_frameintervals(struct file *file, void *priv,
 		return -EINVAL;
 
 	fie.code = fmtinfo->code;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = v4l2_subdev_call(ctx->phy->source, pad, enum_frame_interval,
-=======
 	ret = v4l2_subdev_call(ctx->phy->sensor, pad, enum_frame_interval,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = v4l2_subdev_call(ctx->phy->source, pad, enum_frame_interval,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       NULL, &fie);
 	if (ret)
 		return ret;
@@ -512,49 +388,13 @@ static int cal_legacy_enum_frameintervals(struct file *file, void *priv,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int cal_legacy_g_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
-{
-	struct cal_ctx *ctx = video_drvdata(file);
-
-	return v4l2_g_parm_cap(video_devdata(file), ctx->phy->source, a);
-}
-
-static int cal_legacy_s_parm(struct file *file, void *fh, struct v4l2_streamparm *a)
-{
-	struct cal_ctx *ctx = video_drvdata(file);
-
-	return v4l2_s_parm_cap(video_devdata(file), ctx->phy->source, a);
-}
-
-static const struct v4l2_ioctl_ops cal_ioctl_legacy_ops = {
-<<<<<<< HEAD
-	.vidioc_querycap      = cal_querycap,
-	.vidioc_enum_fmt_vid_cap  = cal_legacy_enum_fmt_vid_cap,
-	.vidioc_g_fmt_vid_cap     = cal_g_fmt_vid_cap,
-	.vidioc_try_fmt_vid_cap   = cal_legacy_try_fmt_vid_cap,
-	.vidioc_s_fmt_vid_cap     = cal_legacy_s_fmt_vid_cap,
-	.vidioc_enum_framesizes   = cal_legacy_enum_framesizes,
-=======
 static const struct v4l2_ioctl_ops cal_ioctl_video_ops = {
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.vidioc_querycap      = cal_querycap,
-	.vidioc_enum_fmt_vid_cap  = cal_legacy_enum_fmt_vid_cap,
+	.vidioc_enum_fmt_vid_cap  = cal_enum_fmt_vid_cap,
 	.vidioc_g_fmt_vid_cap     = cal_g_fmt_vid_cap,
-<<<<<<< HEAD
 	.vidioc_try_fmt_vid_cap   = cal_try_fmt_vid_cap,
 	.vidioc_s_fmt_vid_cap     = cal_s_fmt_vid_cap,
 	.vidioc_enum_framesizes   = cal_enum_framesizes,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.vidioc_try_fmt_vid_cap   = cal_legacy_try_fmt_vid_cap,
-	.vidioc_s_fmt_vid_cap     = cal_legacy_s_fmt_vid_cap,
-	.vidioc_enum_framesizes   = cal_legacy_enum_framesizes,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.vidioc_reqbufs       = vb2_ioctl_reqbufs,
 	.vidioc_create_bufs   = vb2_ioctl_create_bufs,
 	.vidioc_prepare_buf   = vb2_ioctl_prepare_buf,
@@ -562,38 +402,15 @@ static const struct v4l2_ioctl_ops cal_ioctl_video_ops = {
 	.vidioc_qbuf          = vb2_ioctl_qbuf,
 	.vidioc_dqbuf         = vb2_ioctl_dqbuf,
 	.vidioc_expbuf        = vb2_ioctl_expbuf,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	.vidioc_enum_input    = cal_legacy_enum_input,
-	.vidioc_g_input       = cal_legacy_g_input,
-	.vidioc_s_input       = cal_legacy_s_input,
-	.vidioc_enum_frameintervals = cal_legacy_enum_frameintervals,
-<<<<<<< HEAD
-=======
 	.vidioc_enum_input    = cal_enum_input,
 	.vidioc_g_input       = cal_g_input,
 	.vidioc_s_input       = cal_s_input,
 	.vidioc_enum_frameintervals = cal_enum_frameintervals,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.vidioc_streamon      = vb2_ioctl_streamon,
 	.vidioc_streamoff     = vb2_ioctl_streamoff,
 	.vidioc_log_status    = v4l2_ctrl_log_status,
 	.vidioc_subscribe_event = v4l2_ctrl_subscribe_event,
 	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.vidioc_g_parm		= cal_legacy_g_parm,
-	.vidioc_s_parm		= cal_legacy_s_parm,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.vidioc_g_parm		= cal_legacy_g_parm,
-	.vidioc_s_parm		= cal_legacy_s_parm,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* ------------------------------------------------------------------
@@ -604,60 +421,13 @@ static const struct v4l2_ioctl_ops cal_ioctl_video_ops = {
 static int cal_mc_enum_fmt_vid_cap(struct file *file, void  *priv,
 				   struct v4l2_fmtdesc *f)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int i;
-	unsigned int idx;
-
 	if (f->index >= cal_num_formats)
 		return -EINVAL;
 
-	idx = 0;
+	f->pixelformat = cal_formats[f->index].fourcc;
+	f->type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
-	for (i = 0; i < cal_num_formats; ++i) {
-		if (f->mbus_code && cal_formats[i].code != f->mbus_code)
-			continue;
-
-		if (idx == f->index) {
-			f->pixelformat = cal_formats[i].fourcc;
-			f->type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-			return 0;
-		}
-
-		idx++;
-	}
-
-	return -EINVAL;
-=======
-=======
-	unsigned int i;
-	unsigned int idx;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (f->index >= cal_num_formats)
-		return -EINVAL;
-
-	idx = 0;
-
-<<<<<<< HEAD
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (i = 0; i < cal_num_formats; ++i) {
-		if (f->mbus_code && cal_formats[i].code != f->mbus_code)
-			continue;
-
-		if (idx == f->index) {
-			f->pixelformat = cal_formats[i].fourcc;
-			f->type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-			return 0;
-		}
-
-		idx++;
-	}
-
-	return -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void cal_mc_try_fmt(struct cal_ctx *ctx, struct v4l2_format *f,
@@ -886,26 +656,8 @@ static void cal_release_buffers(struct cal_ctx *ctx,
 static int cal_video_check_format(struct cal_ctx *ctx)
 {
 	const struct v4l2_mbus_framefmt *format;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct media_pad *remote_pad;
-
-	remote_pad = media_entity_remote_pad(&ctx->pad);
-	if (!remote_pad)
-		return -ENODEV;
-<<<<<<< HEAD
-
-	format = &ctx->phy->formats[remote_pad->index];
-=======
 
 	format = &ctx->phy->formats[CAL_CAMERARX_PAD_SOURCE];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	format = &ctx->phy->formats[remote_pad->index];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ctx->fmtinfo->code != format->code ||
 	    ctx->v_fmt.fmt.pix.height != format->height ||
@@ -940,30 +692,9 @@ static int cal_start_streaming(struct vb2_queue *vq, unsigned int count)
 		goto error_pipeline;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ret = cal_ctx_prepare(ctx);
-	if (ret) {
-		ctx_err(ctx, "Failed to prepare context: %d\n", ret);
-		goto error_pipeline;
-	}
-
-<<<<<<< HEAD
-	spin_lock_irq(&ctx->dma.lock);
-	buf = list_first_entry(&ctx->dma.queue, struct cal_buffer, list);
-	ctx->dma.active = buf;
-=======
 	spin_lock_irq(&ctx->dma.lock);
 	buf = list_first_entry(&ctx->dma.queue, struct cal_buffer, list);
 	ctx->dma.pending = buf;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock_irq(&ctx->dma.lock);
-	buf = list_first_entry(&ctx->dma.queue, struct cal_buffer, list);
-	ctx->dma.active = buf;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	list_del(&buf->list);
 	spin_unlock_irq(&ctx->dma.lock);
 
@@ -988,14 +719,6 @@ static int cal_start_streaming(struct vb2_queue *vq, unsigned int count)
 error_stop:
 	cal_ctx_stop(ctx);
 	pm_runtime_put_sync(ctx->cal->dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cal_ctx_unprepare(ctx);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cal_ctx_unprepare(ctx);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 error_pipeline:
 	media_pipeline_stop(&ctx->vdev.entity);
@@ -1015,16 +738,6 @@ static void cal_stop_streaming(struct vb2_queue *vq)
 
 	pm_runtime_put_sync(ctx->cal->dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cal_ctx_unprepare(ctx);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cal_ctx_unprepare(ctx);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cal_release_buffers(ctx, VB2_BUF_STATE_ERROR);
 
 	media_pipeline_stop(&ctx->vdev.entity);
@@ -1072,44 +785,20 @@ static int cal_ctx_v4l2_init_formats(struct cal_ctx *ctx)
 		memset(&mbus_code, 0, sizeof(mbus_code));
 		mbus_code.index = j;
 		mbus_code.which = V4L2_SUBDEV_FORMAT_ACTIVE;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ret = v4l2_subdev_call(ctx->phy->source, pad, enum_mbus_code,
-=======
 		ret = v4l2_subdev_call(ctx->phy->sensor, pad, enum_mbus_code,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ret = v4l2_subdev_call(ctx->phy->source, pad, enum_mbus_code,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       NULL, &mbus_code);
 		if (ret == -EINVAL)
 			break;
 
 		if (ret) {
 			ctx_err(ctx, "Error enumerating mbus codes in subdev %s: %d\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-				ctx->phy->source->name, ret);
-=======
 				ctx->phy->sensor->name, ret);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				ctx->phy->source->name, ret);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return ret;
 		}
 
 		ctx_dbg(2, ctx,
 			"subdev %s: code: %04x idx: %u\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ctx->phy->source->name, mbus_code.code, j);
-=======
 			ctx->phy->sensor->name, mbus_code.code, j);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ctx->phy->source->name, mbus_code.code, j);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		for (k = 0; k < cal_num_formats; k++) {
 			fmtinfo = &cal_formats[k];
@@ -1127,15 +816,7 @@ static int cal_ctx_v4l2_init_formats(struct cal_ctx *ctx)
 
 	if (i == 0) {
 		ctx_err(ctx, "No suitable format reported by subdev %s\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ctx->phy->source->name);
-=======
 			ctx->phy->sensor->name);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ctx->phy->source->name);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	}
 
@@ -1160,99 +841,22 @@ static int cal_ctx_v4l2_init_formats(struct cal_ctx *ctx)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int cal_ctx_v4l2_init_mc_format(struct cal_ctx *ctx)
-{
-	const struct cal_format_info *fmtinfo;
-	struct v4l2_pix_format *pix_fmt = &ctx->v_fmt.fmt.pix;
-
-	fmtinfo = cal_format_by_code(MEDIA_BUS_FMT_UYVY8_2X8);
-	if (!fmtinfo)
-		return -EINVAL;
-
-	pix_fmt->width = 640;
-	pix_fmt->height = 480;
-	pix_fmt->field = V4L2_FIELD_NONE;
-	pix_fmt->colorspace = V4L2_COLORSPACE_SRGB;
-	pix_fmt->ycbcr_enc = V4L2_YCBCR_ENC_601;
-	pix_fmt->quantization = V4L2_QUANTIZATION_LIM_RANGE;
-	pix_fmt->xfer_func = V4L2_XFER_FUNC_SRGB;
-	pix_fmt->pixelformat = fmtinfo->fourcc;
-
-	ctx->v_fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-
-	/* Save current format */
-	cal_calc_format_size(ctx, fmtinfo, &ctx->v_fmt);
-	ctx->fmtinfo = fmtinfo;
-
-	return 0;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int cal_ctx_v4l2_register(struct cal_ctx *ctx)
 {
 	struct video_device *vfd = &ctx->vdev;
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!cal_mc_api) {
-		struct v4l2_ctrl_handler *hdl = &ctx->ctrl_handler;
-
-		ret = cal_ctx_v4l2_init_formats(ctx);
-		if (ret) {
-			ctx_err(ctx, "Failed to init formats: %d\n", ret);
-			return ret;
-		}
-
-		ret = v4l2_ctrl_add_handler(hdl, ctx->phy->source->ctrl_handler,
-					    NULL, true);
-		if (ret < 0) {
-			ctx_err(ctx, "Failed to add source ctrl handler\n");
-			return ret;
-		}
-	} else {
-		ret = cal_ctx_v4l2_init_mc_format(ctx);
-		if (ret) {
-			ctx_err(ctx, "Failed to init format: %d\n", ret);
-=======
 	ret = cal_ctx_v4l2_init_formats(ctx);
 	if (ret)
 		return ret;
 
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!cal_mc_api) {
 		struct v4l2_ctrl_handler *hdl = &ctx->ctrl_handler;
 
-		ret = cal_ctx_v4l2_init_formats(ctx);
-		if (ret) {
-			ctx_err(ctx, "Failed to init formats: %d\n", ret);
-			return ret;
-		}
-
-		ret = v4l2_ctrl_add_handler(hdl, ctx->phy->source->ctrl_handler,
+		ret = v4l2_ctrl_add_handler(hdl, ctx->phy->sensor->ctrl_handler,
 					    NULL, true);
 		if (ret < 0) {
-<<<<<<< HEAD
 			ctx_err(ctx, "Failed to add sensor ctrl handler\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ctx_err(ctx, "Failed to add source ctrl handler\n");
-			return ret;
-		}
-	} else {
-		ret = cal_ctx_v4l2_init_mc_format(ctx);
-		if (ret) {
-			ctx_err(ctx, "Failed to init format: %d\n", ret);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return ret;
 		}
 	}
@@ -1264,29 +868,13 @@ int cal_ctx_v4l2_register(struct cal_ctx *ctx)
 	}
 
 	ret = media_create_pad_link(&ctx->phy->subdev.entity,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				    CAL_CAMERARX_PAD_FIRST_SOURCE,
-=======
 				    CAL_CAMERARX_PAD_SOURCE,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				    CAL_CAMERARX_PAD_FIRST_SOURCE,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    &vfd->entity, 0,
 				    MEDIA_LNK_FL_IMMUTABLE |
 				    MEDIA_LNK_FL_ENABLED);
 	if (ret) {
 		ctx_err(ctx, "Failed to create media link for context %u\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ctx->dma_ctx);
-=======
 			ctx->index);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ctx->dma_ctx);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		video_unregister_device(vfd);
 		return ret;
 	}
@@ -1338,21 +926,9 @@ int cal_ctx_v4l2_init(struct cal_ctx *ctx)
 			 | (cal_mc_api ? V4L2_CAP_IO_MC : 0);
 	vfd->v4l2_dev = &ctx->cal->v4l2_dev;
 	vfd->queue = q;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	snprintf(vfd->name, sizeof(vfd->name), "CAL output %u", ctx->dma_ctx);
-	vfd->release = video_device_release_empty;
-	vfd->ioctl_ops = cal_mc_api ? &cal_ioctl_mc_ops : &cal_ioctl_legacy_ops;
-=======
 	snprintf(vfd->name, sizeof(vfd->name), "CAL output %u", ctx->index);
 	vfd->release = video_device_release_empty;
 	vfd->ioctl_ops = cal_mc_api ? &cal_ioctl_mc_ops : &cal_ioctl_video_ops;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	snprintf(vfd->name, sizeof(vfd->name), "CAL output %u", ctx->dma_ctx);
-	vfd->release = video_device_release_empty;
-	vfd->ioctl_ops = cal_mc_api ? &cal_ioctl_mc_ops : &cal_ioctl_legacy_ops;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vfd->lock = &ctx->mutex;
 	video_set_drvdata(vfd, ctx);
 

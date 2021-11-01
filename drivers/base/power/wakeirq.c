@@ -12,28 +12,14 @@
 /**
  * dev_pm_attach_wake_irq - Attach device interrupt as a wake IRQ
  * @dev: Device entry
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @wirq: Wake irq specific data
- *
- * Internal function to attach a dedicated wake-up interrupt as a wake IRQ.
- */
-static int dev_pm_attach_wake_irq(struct device *dev, struct wake_irq *wirq)
-=======
  * @irq: Device wake-up capable interrupt
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @wirq: Wake irq specific data
  *
- * Internal function to attach a dedicated wake-up interrupt as a wake IRQ.
+ * Internal function to attach either a device IO interrupt or a
+ * dedicated wake-up interrupt as a wake IRQ.
  */
-<<<<<<< HEAD
 static int dev_pm_attach_wake_irq(struct device *dev, int irq,
 				  struct wake_irq *wirq)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int dev_pm_attach_wake_irq(struct device *dev, struct wake_irq *wirq)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned long flags;
 
@@ -79,15 +65,7 @@ int dev_pm_set_wake_irq(struct device *dev, int irq)
 	wirq->dev = dev;
 	wirq->irq = irq;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = dev_pm_attach_wake_irq(dev, wirq);
-=======
 	err = dev_pm_attach_wake_irq(dev, irq, wirq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = dev_pm_attach_wake_irq(dev, wirq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		kfree(wirq);
 
@@ -218,15 +196,7 @@ int dev_pm_set_dedicated_wake_irq(struct device *dev, int irq)
 	if (err)
 		goto err_free_name;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = dev_pm_attach_wake_irq(dev, wirq);
-=======
 	err = dev_pm_attach_wake_irq(dev, irq, wirq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = dev_pm_attach_wake_irq(dev, wirq);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto err_free_irq;
 

@@ -191,27 +191,6 @@ static void ksz8863_smi_remove(struct mdio_device *mdiodev)
 
 	if (dev)
 		ksz_switch_remove(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	dev_set_drvdata(&mdiodev->dev, NULL);
-}
-
-static void ksz8863_smi_shutdown(struct mdio_device *mdiodev)
-{
-	struct ksz_device *dev = dev_get_drvdata(&mdiodev->dev);
-
-	if (dev)
-		dsa_switch_shutdown(dev->ds);
-
-	dev_set_drvdata(&mdiodev->dev, NULL);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct of_device_id ksz8863_dt_ids[] = {
@@ -224,14 +203,6 @@ MODULE_DEVICE_TABLE(of, ksz8863_dt_ids);
 static struct mdio_driver ksz8863_driver = {
 	.probe	= ksz8863_smi_probe,
 	.remove	= ksz8863_smi_remove,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.shutdown = ksz8863_smi_shutdown,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.shutdown = ksz8863_smi_shutdown,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.mdiodrv.driver = {
 		.name	= "ksz8863-switch",
 		.of_match_table = ksz8863_dt_ids,

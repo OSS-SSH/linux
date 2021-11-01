@@ -1712,20 +1712,10 @@ static void gpio_irq_handler(struct irq_desc *desc)
 			continue;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		for_each_set_bit(n, &isr, BITS_PER_LONG)
-			generic_handle_domain_irq(gpio_chip->irq.domain, n);
-=======
 		for_each_set_bit(n, &isr, BITS_PER_LONG) {
 			generic_handle_irq(irq_find_mapping(
 					   gpio_chip->irq.domain, n));
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		for_each_set_bit(n, &isr, BITS_PER_LONG)
-			generic_handle_domain_irq(gpio_chip->irq.domain, n);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	chained_irq_exit(chip, desc);
 	/* now it may re-trigger */

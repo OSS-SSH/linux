@@ -176,14 +176,6 @@ const char *vm_guest_mode_string(uint32_t i)
 		[VM_MODE_P40V48_64K]	= "PA-bits:40,  VA-bits:48, 64K pages",
 		[VM_MODE_PXXV48_4K]	= "PA-bits:ANY, VA-bits:48,  4K pages",
 		[VM_MODE_P47V64_4K]	= "PA-bits:47,  VA-bits:64,  4K pages",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		[VM_MODE_P44V64_4K]	= "PA-bits:44,  VA-bits:64,  4K pages",
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		[VM_MODE_P44V64_4K]	= "PA-bits:44,  VA-bits:64,  4K pages",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 	_Static_assert(sizeof(strings)/sizeof(char *) == NUM_VM_MODES,
 		       "Missing new mode strings?");
@@ -202,14 +194,6 @@ const struct vm_guest_mode_params vm_guest_mode_params[] = {
 	{ 40, 48, 0x10000, 16 },
 	{  0,  0,  0x1000, 12 },
 	{ 47, 64,  0x1000, 12 },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ 44, 64,  0x1000, 12 },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ 44, 64,  0x1000, 12 },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 _Static_assert(sizeof(vm_guest_mode_params)/sizeof(struct vm_guest_mode_params) == NUM_VM_MODES,
 	       "Missing new mode params?");
@@ -298,18 +282,6 @@ struct kvm_vm *vm_create(enum vm_guest_mode mode, uint64_t phy_pages, int perm)
 	case VM_MODE_P47V64_4K:
 		vm->pgtable_levels = 5;
 		break;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	case VM_MODE_P44V64_4K:
-		vm->pgtable_levels = 5;
-		break;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	case VM_MODE_P44V64_4K:
-		vm->pgtable_levels = 5;
-		break;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		TEST_FAIL("Unknown guest mode, mode: 0x%x", mode);
 	}

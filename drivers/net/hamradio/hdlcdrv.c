@@ -483,61 +483,23 @@ static int hdlcdrv_close(struct net_device *dev)
 
 /* --------------------------------------------------------------------- */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int hdlcdrv_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-				  void __user *data, int cmd)
-=======
 static int hdlcdrv_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int hdlcdrv_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
-				  void __user *data, int cmd)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct hdlcdrv_state *s = netdev_priv(dev);
 	struct hdlcdrv_ioctl bi;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (cmd != SIOCDEVPRIVATE)
-		return -ENOIOCTLCMD;
-
-	if (in_compat_syscall()) /* to be implemented */
-		return -ENOIOCTLCMD;
-
-	if (copy_from_user(&bi, data, sizeof(bi)))
-=======
 	if (cmd != SIOCDEVPRIVATE) {
 		if (s->ops && s->ops->ioctl)
 			return s->ops->ioctl(dev, ifr, &bi, cmd);
 		return -ENOIOCTLCMD;
 	}
 	if (copy_from_user(&bi, ifr->ifr_data, sizeof(bi)))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (cmd != SIOCDEVPRIVATE)
-		return -ENOIOCTLCMD;
-
-	if (in_compat_syscall()) /* to be implemented */
-		return -ENOIOCTLCMD;
-
-	if (copy_from_user(&bi, data, sizeof(bi)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 
 	switch (bi.cmd) {
 	default:
 		if (s->ops && s->ops->ioctl)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return s->ops->ioctl(dev, data, &bi, cmd);
-=======
 			return s->ops->ioctl(dev, ifr, &bi, cmd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return s->ops->ioctl(dev, data, &bi, cmd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -ENOIOCTLCMD;
 
 	case HDLCDRVCTL_GETCHANNELPAR:
@@ -643,15 +605,7 @@ static int hdlcdrv_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 		break;
 		
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (copy_to_user(data, &bi, sizeof(bi)))
-=======
 	if (copy_to_user(ifr->ifr_data, &bi, sizeof(bi)))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (copy_to_user(data, &bi, sizeof(bi)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EFAULT;
 	return 0;
 
@@ -663,15 +617,7 @@ static const struct net_device_ops hdlcdrv_netdev = {
 	.ndo_open	= hdlcdrv_open,
 	.ndo_stop	= hdlcdrv_close,
 	.ndo_start_xmit = hdlcdrv_send_packet,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_siocdevprivate  = hdlcdrv_siocdevprivate,
-=======
 	.ndo_do_ioctl	= hdlcdrv_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_siocdevprivate  = hdlcdrv_siocdevprivate,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_mac_address = hdlcdrv_set_mac_address,
 };
 

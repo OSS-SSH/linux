@@ -131,16 +131,8 @@ static int copy_file(struct io_uring *ring, off_t insize)
 	writes = reads = offset = 0;
 
 	while (insize || write_left) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		int had_reads, got_comp;
-=======
 		unsigned long had_reads;
 		int got_comp;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		int had_reads, got_comp;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/*
 		 * Queue up as many reads as we can
@@ -182,28 +174,8 @@ static int copy_file(struct io_uring *ring, off_t insize)
 			if (!got_comp) {
 				ret = io_uring_wait_cqe(ring, &cqe);
 				got_comp = 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			} else {
-				ret = io_uring_peek_cqe(ring, &cqe);
-				if (ret == -EAGAIN) {
-					cqe = NULL;
-					ret = 0;
-				}
-			}
-=======
 			} else
 				ret = io_uring_peek_cqe(ring, &cqe);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			} else {
-				ret = io_uring_peek_cqe(ring, &cqe);
-				if (ret == -EAGAIN) {
-					cqe = NULL;
-					ret = 0;
-				}
-			}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (ret < 0) {
 				fprintf(stderr, "io_uring_peek_cqe: %s\n",
 							strerror(-ret));
@@ -222,15 +194,7 @@ static int copy_file(struct io_uring *ring, off_t insize)
 				fprintf(stderr, "cqe failed: %s\n",
 						strerror(-cqe->res));
 				return 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			} else if (cqe->res != data->iov.iov_len) {
-=======
 			} else if ((size_t) cqe->res != data->iov.iov_len) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			} else if (cqe->res != data->iov.iov_len) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				/* Short read/write, adjust and requeue */
 				data->iov.iov_base += cqe->res;
 				data->iov.iov_len -= cqe->res;
@@ -257,34 +221,6 @@ static int copy_file(struct io_uring *ring, off_t insize)
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* wait out pending writes */
-	while (writes) {
-		struct io_data *data;
-
-		ret = io_uring_wait_cqe(ring, &cqe);
-		if (ret) {
-			fprintf(stderr, "wait_cqe=%d\n", ret);
-			return 1;
-		}
-		if (cqe->res < 0) {
-			fprintf(stderr, "write res=%d\n", cqe->res);
-			return 1;
-		}
-		data = io_uring_cqe_get_data(cqe);
-		free(data);
-		writes--;
-		io_uring_cqe_seen(ring, cqe);
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

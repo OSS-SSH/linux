@@ -20,19 +20,11 @@
 
 #define INJ_TIMEOUT_NS 50000
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void sparx5_xtr_flush(struct sparx5 *sparx5, u8 grp)
-=======
 struct frame_info {
 	int src_port;
 };
 
 static void sparx5_xtr_flush(struct sparx5 *sparx5, u8 grp)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void sparx5_xtr_flush(struct sparx5 *sparx5, u8 grp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	/* Start flush */
 	spx5_wr(QS_XTR_FLUSH_FLUSH_SET(BIT(grp)), sparx5, QS_XTR_FLUSH);
@@ -44,15 +36,7 @@ void sparx5_xtr_flush(struct sparx5 *sparx5, u8 grp)
 	spx5_wr(0, sparx5, QS_XTR_FLUSH);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void sparx5_ifh_parse(u32 *ifh, struct frame_info *info)
-=======
 static void sparx5_ifh_parse(u32 *ifh, struct frame_info *info)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void sparx5_ifh_parse(u32 *ifh, struct frame_info *info)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u8 *xtr_hdr = (u8 *)ifh;
 
@@ -240,20 +224,7 @@ int sparx5_port_xmit_impl(struct sk_buff *skb, struct net_device *dev)
 	struct sparx5 *sparx5 = port->sparx5;
 	int ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (sparx5->fdma_irq > 0)
-		ret = sparx5_fdma_xmit(sparx5, port->ifh, skb);
-	else
-		ret = sparx5_inject(sparx5, port->ifh, skb, dev);
-<<<<<<< HEAD
-=======
 	ret = sparx5_inject(sparx5, port->ifh, skb, dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ret == NETDEV_TX_OK) {
 		stats->tx_bytes += skb->len;

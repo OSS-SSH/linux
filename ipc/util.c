@@ -788,16 +788,6 @@ struct pid_namespace *ipc_seq_pid_ns(struct seq_file *s)
 static struct kern_ipc_perm *sysvipc_find_ipc(struct ipc_ids *ids, loff_t pos,
 					      loff_t *new_pos)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct kern_ipc_perm *ipc = NULL;
-	int max_idx = ipc_get_maxidx(ids);
-
-	if (max_idx == -1 || pos > max_idx)
-		goto out;
-
-	for (; pos <= max_idx; pos++) {
-=======
 	struct kern_ipc_perm *ipc;
 	int total, id;
 
@@ -807,20 +797,12 @@ static struct kern_ipc_perm *sysvipc_find_ipc(struct ipc_ids *ids, loff_t pos,
 		if (ipc != NULL)
 			total++;
 	}
-=======
-	struct kern_ipc_perm *ipc = NULL;
-	int max_idx = ipc_get_maxidx(ids);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	if (max_idx == -1 || pos > max_idx)
+	ipc = NULL;
+	if (total >= ids->in_use)
 		goto out;
 
-<<<<<<< HEAD
 	for (; pos < ipc_mni; pos++) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (; pos <= max_idx; pos++) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ipc = idr_find(&ids->ipcs_idr, pos);
 		if (ipc != NULL) {
 			rcu_read_lock();

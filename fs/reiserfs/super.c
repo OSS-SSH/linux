@@ -2082,23 +2082,6 @@ static int reiserfs_fill_super(struct super_block *s, void *data, int silent)
 		unlock_new_inode(root_inode);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!S_ISDIR(root_inode->i_mode) || !inode_get_bytes(root_inode) ||
-	    !root_inode->i_size) {
-		SWARN(silent, s, "", "corrupt root inode, run fsck");
-		iput(root_inode);
-		errval = -EUCLEAN;
-		goto error;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	s->s_root = d_make_root(root_inode);
 	if (!s->s_root)
 		goto error;

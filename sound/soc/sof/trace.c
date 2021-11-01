@@ -530,13 +530,7 @@ void snd_sof_trace_notify_for_error(struct snd_sof_dev *sdev)
 		return;
 
 	if (sdev->dtrace_is_enabled) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		dev_err(sdev->dev, "error: waking up any trace sleepers\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sdev->dtrace_error = true;
 		wake_up(&sdev->trace_sleep);
 	}

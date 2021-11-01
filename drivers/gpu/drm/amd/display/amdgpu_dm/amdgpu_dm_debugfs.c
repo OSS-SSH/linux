@@ -197,69 +197,29 @@ static ssize_t dp_link_settings_read(struct file *f, char __user *buf,
 
 	rd_buf_ptr = rd_buf;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	str_len = strlen("Current:  %d  0x%x  %d  ");
-	snprintf(rd_buf_ptr, str_len, "Current:  %d  0x%x  %d  ",
-=======
 	str_len = strlen("Current:  %d  %d  %d  ");
 	snprintf(rd_buf_ptr, str_len, "Current:  %d  %d  %d  ",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	str_len = strlen("Current:  %d  0x%x  %d  ");
-	snprintf(rd_buf_ptr, str_len, "Current:  %d  0x%x  %d  ",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			link->cur_link_settings.lane_count,
 			link->cur_link_settings.link_rate,
 			link->cur_link_settings.link_spread);
 	rd_buf_ptr += str_len;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	str_len = strlen("Verified:  %d  0x%x  %d  ");
-	snprintf(rd_buf_ptr, str_len, "Verified:  %d  0x%x  %d  ",
-=======
 	str_len = strlen("Verified:  %d  %d  %d  ");
 	snprintf(rd_buf_ptr, str_len, "Verified:  %d  %d  %d  ",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	str_len = strlen("Verified:  %d  0x%x  %d  ");
-	snprintf(rd_buf_ptr, str_len, "Verified:  %d  0x%x  %d  ",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			link->verified_link_cap.lane_count,
 			link->verified_link_cap.link_rate,
 			link->verified_link_cap.link_spread);
 	rd_buf_ptr += str_len;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	str_len = strlen("Reported:  %d  0x%x  %d  ");
-	snprintf(rd_buf_ptr, str_len, "Reported:  %d  0x%x  %d  ",
-=======
 	str_len = strlen("Reported:  %d  %d  %d  ");
 	snprintf(rd_buf_ptr, str_len, "Reported:  %d  %d  %d  ",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	str_len = strlen("Reported:  %d  0x%x  %d  ");
-	snprintf(rd_buf_ptr, str_len, "Reported:  %d  0x%x  %d  ",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			link->reported_link_cap.lane_count,
 			link->reported_link_cap.link_rate,
 			link->reported_link_cap.link_spread);
 	rd_buf_ptr += str_len;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	str_len = strlen("Preferred:  %d  0x%x  %d  ");
-	snprintf(rd_buf_ptr, str_len, "Preferred:  %d  0x%x  %d\n",
-=======
 	str_len = strlen("Preferred:  %d  %d  %d  ");
 	snprintf(rd_buf_ptr, str_len, "Preferred:  %d  %d  %d\n",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	str_len = strlen("Preferred:  %d  0x%x  %d  ");
-	snprintf(rd_buf_ptr, str_len, "Preferred:  %d  0x%x  %d\n",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			link->preferred_link_setting.lane_count,
 			link->preferred_link_setting.link_rate,
 			link->preferred_link_setting.link_spread);
@@ -303,11 +263,7 @@ static ssize_t dp_link_settings_write(struct file *f, const char __user *buf,
 	if (!wr_buf)
 		return -ENOSPC;
 
-<<<<<<< HEAD
-	if (parse_write_buffer_into_params(wr_buf, size,
-=======
 	if (parse_write_buffer_into_params(wr_buf, wr_buf_size,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					   (long *)param, buf,
 					   max_param_num,
 					   &param_nums)) {
@@ -421,15 +377,7 @@ static ssize_t dp_phy_settings_read(struct file *f, char __user *buf,
 	if (!rd_buf)
 		return -EINVAL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	snprintf(rd_buf, rd_buf_size, "  %d  %d  %d\n",
-=======
 	snprintf(rd_buf, rd_buf_size, "  %d  %d  %d  ",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	snprintf(rd_buf, rd_buf_size, "  %d  %d  %d\n",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			link->cur_lane_setting.VOLTAGE_SWING,
 			link->cur_lane_setting.PRE_EMPHASIS,
 			link->cur_lane_setting.POST_CURSOR2);

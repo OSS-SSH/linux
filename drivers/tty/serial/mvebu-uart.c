@@ -163,15 +163,7 @@ static unsigned int mvebu_uart_tx_empty(struct uart_port *port)
 	st = readl(port->membase + UART_STAT);
 	spin_unlock_irqrestore(&port->lock, flags);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return (st & STAT_TX_EMP) ? TIOCSER_TEMT : 0;
-=======
 	return (st & STAT_TX_FIFO_EMP) ? TIOCSER_TEMT : 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return (st & STAT_TX_EMP) ? TIOCSER_TEMT : 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static unsigned int mvebu_uart_get_mctrl(struct uart_port *port)

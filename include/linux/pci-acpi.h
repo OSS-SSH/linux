@@ -122,18 +122,6 @@ static inline void pci_acpi_add_edr_notifier(struct pci_dev *pdev) { }
 static inline void pci_acpi_remove_edr_notifier(struct pci_dev *pdev) { }
 #endif /* CONFIG_PCIE_EDR */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int pci_acpi_set_companion_lookup_hook(struct acpi_device *(*func)(struct pci_dev *));
-void pci_acpi_clear_companion_lookup_hook(void);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int pci_acpi_set_companion_lookup_hook(struct acpi_device *(*func)(struct pci_dev *));
-void pci_acpi_clear_companion_lookup_hook(void);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else	/* CONFIG_ACPI */
 static inline void acpi_pci_add_bus(struct pci_bus *bus) { }
 static inline void acpi_pci_remove_bus(struct pci_bus *bus) { }

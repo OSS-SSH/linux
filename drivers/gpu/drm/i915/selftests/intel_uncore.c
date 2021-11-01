@@ -68,14 +68,6 @@ static int intel_shadow_table_check(void)
 		{ gen8_shadowed_regs, ARRAY_SIZE(gen8_shadowed_regs) },
 		{ gen11_shadowed_regs, ARRAY_SIZE(gen11_shadowed_regs) },
 		{ gen12_shadowed_regs, ARRAY_SIZE(gen12_shadowed_regs) },
-<<<<<<< HEAD
-<<<<<<< HEAD
-		{ xehp_shadowed_regs, ARRAY_SIZE(xehp_shadowed_regs) },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		{ xehp_shadowed_regs, ARRAY_SIZE(xehp_shadowed_regs) },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 	const i915_reg_t *reg;
 	unsigned int i, j;
@@ -111,14 +103,6 @@ int intel_uncore_mock_selftests(void)
 		{ __gen9_fw_ranges, ARRAY_SIZE(__gen9_fw_ranges), true },
 		{ __gen11_fw_ranges, ARRAY_SIZE(__gen11_fw_ranges), true },
 		{ __gen12_fw_ranges, ARRAY_SIZE(__gen12_fw_ranges), true },
-<<<<<<< HEAD
-<<<<<<< HEAD
-		{ __xehp_fw_ranges, ARRAY_SIZE(__xehp_fw_ranges), true },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		{ __xehp_fw_ranges, ARRAY_SIZE(__xehp_fw_ranges), true },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 	int err, i;
 

@@ -5,14 +5,6 @@
 #include "tests.h"
 #include "debug.h"
 #include "pmu.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "pmu-hybrid.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "pmu-hybrid.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <errno.h>
 #include <linux/kernel.h>
 
@@ -110,15 +102,7 @@ int test__perf_evsel__roundtrip_name_test(struct test *test __maybe_unused, int 
 {
 	int err = 0, ret = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (perf_pmu__has_hybrid() && perf_pmu__hybrid_mounted("cpu_atom"))
-=======
 	if (perf_pmu__has_hybrid())
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (perf_pmu__has_hybrid() && perf_pmu__hybrid_mounted("cpu_atom"))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return perf_evsel__name_array_test(evsel__hw_names, 2);
 
 	err = perf_evsel__name_array_test(evsel__hw_names, 1);

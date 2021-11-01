@@ -128,15 +128,7 @@ static void nfc_hci_msg_rx_work(struct work_struct *work)
 	struct nfc_hci_dev *hdev = container_of(work, struct nfc_hci_dev,
 						msg_rx_work);
 	struct sk_buff *skb;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct hcp_message *message;
-=======
 	struct hcp_message *message;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct hcp_message *message;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 pipe;
 	u8 type;
 	u8 instruction;
@@ -190,21 +182,9 @@ void nfc_hci_cmd_received(struct nfc_hci_dev *hdev, u8 pipe, u8 cmd,
 			  struct sk_buff *skb)
 {
 	u8 status = NFC_HCI_ANY_OK;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct hci_create_pipe_resp *create_info;
-	const struct hci_delete_pipe_noti *delete_info;
-	const struct hci_all_pipe_cleared_noti *cleared_info;
-=======
 	struct hci_create_pipe_resp *create_info;
 	struct hci_delete_pipe_noti *delete_info;
 	struct hci_all_pipe_cleared_noti *cleared_info;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct hci_create_pipe_resp *create_info;
-	const struct hci_delete_pipe_noti *delete_info;
-	const struct hci_all_pipe_cleared_noti *cleared_info;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 gate;
 
 	pr_debug("from pipe %x cmd %x\n", pipe, cmd);
@@ -467,15 +447,7 @@ static void nfc_hci_cmd_timeout(struct timer_list *t)
 }
 
 static int hci_dev_connect_gates(struct nfc_hci_dev *hdev, u8 gate_count,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				 const struct nfc_hci_gate *gates)
-=======
 				 struct nfc_hci_gate *gates)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				 const struct nfc_hci_gate *gates)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int r;
 	while (gate_count--) {
@@ -956,15 +928,7 @@ static int hci_fw_download(struct nfc_dev *nfc_dev, const char *firmware_name)
 	return hdev->ops->fw_download(hdev, firmware_name);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const struct nfc_ops hci_nfc_ops = {
-=======
 static struct nfc_ops hci_nfc_ops = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct nfc_ops hci_nfc_ops = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.dev_up = hci_dev_up,
 	.dev_down = hci_dev_down,
 	.start_poll = hci_start_poll,
@@ -983,15 +947,7 @@ static const struct nfc_ops hci_nfc_ops = {
 	.se_io = hci_se_io,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct nfc_hci_dev *nfc_hci_allocate_device(const struct nfc_hci_ops *ops,
-=======
 struct nfc_hci_dev *nfc_hci_allocate_device(struct nfc_hci_ops *ops,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct nfc_hci_dev *nfc_hci_allocate_device(const struct nfc_hci_ops *ops,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    struct nfc_hci_init_data *init_data,
 					    unsigned long quirks,
 					    u32 protocols,

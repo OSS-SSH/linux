@@ -144,15 +144,7 @@ static int rt6245_init_device_properties(struct device *dev)
 static int rt6245_reg_write(void *context, unsigned int reg, unsigned int val)
 {
 	struct i2c_client *i2c = context;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static const u8 func_base[] = { 0x6F, 0x73, 0x78, 0x61, 0x7C, 0 };
-=======
 	const u8 func_base[] = { 0x6F, 0x73, 0x78, 0x61, 0x7C, 0 };
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static const u8 func_base[] = { 0x6F, 0x73, 0x78, 0x61, 0x7C, 0 };
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int code, bit_count;
 
 	code = func_base[reg];

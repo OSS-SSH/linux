@@ -7,19 +7,7 @@
 #define _INTEL_UC_H_
 
 #include "intel_guc.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "intel_guc_rc.h"
 #include "intel_guc_submission.h"
-#include "intel_guc_slpc.h"
-=======
-#include "intel_guc_submission.h"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "intel_guc_rc.h"
-#include "intel_guc_submission.h"
-#include "intel_guc_slpc.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "intel_huc.h"
 #include "i915_params.h"
 
@@ -42,40 +30,13 @@ struct intel_uc {
 
 	/* Snapshot of GuC log from last failed load */
 	struct drm_i915_gem_object *load_err_log;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	bool reset_in_progress;
 };
 
 void intel_uc_init_early(struct intel_uc *uc);
-void intel_uc_init_late(struct intel_uc *uc);
-<<<<<<< HEAD
-=======
-};
-
-void intel_uc_init_early(struct intel_uc *uc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_uc_driver_late_release(struct intel_uc *uc);
 void intel_uc_driver_remove(struct intel_uc *uc);
 void intel_uc_init_mmio(struct intel_uc *uc);
 void intel_uc_reset_prepare(struct intel_uc *uc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void intel_uc_reset(struct intel_uc *uc, bool stalled);
-void intel_uc_reset_finish(struct intel_uc *uc);
-void intel_uc_cancel_requests(struct intel_uc *uc);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void intel_uc_reset(struct intel_uc *uc, bool stalled);
-void intel_uc_reset_finish(struct intel_uc *uc);
-void intel_uc_cancel_requests(struct intel_uc *uc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void intel_uc_suspend(struct intel_uc *uc);
 void intel_uc_runtime_suspend(struct intel_uc *uc);
 int intel_uc_resume(struct intel_uc *uc);
@@ -116,34 +77,10 @@ __uc_state_checker(x, func, uses, used)
 uc_state_checkers(guc, guc);
 uc_state_checkers(huc, huc);
 uc_state_checkers(guc, guc_submission);
-<<<<<<< HEAD
-<<<<<<< HEAD
-uc_state_checkers(guc, guc_slpc);
-uc_state_checkers(guc, guc_rc);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-uc_state_checkers(guc, guc_slpc);
-uc_state_checkers(guc, guc_rc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #undef uc_state_checkers
 #undef __uc_state_checker
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static inline int intel_uc_wait_for_idle(struct intel_uc *uc, long timeout)
-{
-	return intel_guc_wait_for_idle(&uc->guc, timeout);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define intel_uc_ops_function(_NAME, _OPS, _TYPE, _RET) \
 static inline _TYPE intel_uc_##_NAME(struct intel_uc *uc) \
 { \

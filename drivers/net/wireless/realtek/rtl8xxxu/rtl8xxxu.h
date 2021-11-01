@@ -1378,16 +1378,6 @@ struct rtl8xxxu_priv {
 	u8 no_pape:1;
 	u8 int_buf[USB_INTR_CONTENT_LENGTH];
 	u8 rssi_level;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	DECLARE_BITMAP(tx_aggr_started, IEEE80211_NUM_TIDS);
-	DECLARE_BITMAP(tid_tx_operational, IEEE80211_NUM_TIDS);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	DECLARE_BITMAP(tx_aggr_started, IEEE80211_NUM_TIDS);
-	DECLARE_BITMAP(tid_tx_operational, IEEE80211_NUM_TIDS);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Only one virtual interface permitted because only STA mode
 	 * is supported and no iface_combinations are provided.

@@ -285,62 +285,29 @@ int acpi_unbind_one(struct device *dev)
 }
 EXPORT_SYMBOL_GPL(acpi_unbind_one);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void acpi_device_notify(struct device *dev)
-=======
 static int acpi_device_notify(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void acpi_device_notify(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct acpi_bus_type *type = acpi_get_bus_type(dev);
 	struct acpi_device *adev;
 	int ret;
 
 	ret = acpi_bind_one(dev, NULL);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ret) {
-		if (!type)
-			goto err;
-
-		adev = type->find_companion(dev);
-		if (!adev) {
-			dev_dbg(dev, "ACPI companion not found\n");
-			goto err;
-		}
-		ret = acpi_bind_one(dev, adev);
-		if (ret)
-			goto err;
-	}
-	adev = ACPI_COMPANION(dev);
-=======
 	if (ret && type) {
 		struct acpi_device *adev;
-=======
-	if (ret) {
-		if (!type)
-			goto err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		adev = type->find_companion(dev);
 		if (!adev) {
-			dev_dbg(dev, "ACPI companion not found\n");
-			goto err;
+			pr_debug("Unable to get handle for %s\n", dev_name(dev));
+			ret = -ENODEV;
+			goto out;
 		}
 		ret = acpi_bind_one(dev, adev);
 		if (ret)
-			goto err;
+			goto out;
 	}
 	adev = ACPI_COMPANION(dev);
-<<<<<<< HEAD
 	if (!adev)
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (dev_is_platform(dev))
 		acpi_configure_pmsi_domain(dev);
@@ -350,53 +317,27 @@ void acpi_device_notify(struct device *dev)
 	else if (adev->handler && adev->handler->bind)
 		adev->handler->bind(dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	acpi_handle_debug(ACPI_HANDLE(dev), "Bound to device %s\n",
-			  dev_name(dev));
-
-	return;
-
-err:
-	dev_dbg(dev, "No ACPI support\n");
-}
-
-void acpi_device_notify_remove(struct device *dev)
-=======
  out:
 	if (!ret) {
 		struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
-=======
-	acpi_handle_debug(ACPI_HANDLE(dev), "Bound to device %s\n",
-			  dev_name(dev));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	return;
+		acpi_get_name(ACPI_HANDLE(dev), ACPI_FULL_PATHNAME, &buffer);
+		pr_debug("Device %s -> %s\n", dev_name(dev), (char *)buffer.pointer);
+		kfree(buffer.pointer);
+	} else {
+		pr_debug("Device %s -> No ACPI support\n", dev_name(dev));
+	}
 
-err:
-	dev_dbg(dev, "No ACPI support\n");
+	return ret;
 }
 
-<<<<<<< HEAD
 static int acpi_device_notify_remove(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void acpi_device_notify_remove(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct acpi_device *adev = ACPI_COMPANION(dev);
 	struct acpi_bus_type *type;
 
 	if (!adev)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return;
-=======
 		return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	type = acpi_get_bus_type(dev);
 	if (type && type->cleanup)
@@ -405,9 +346,6 @@ void acpi_device_notify_remove(struct device *dev)
 		adev->handler->unbind(dev);
 
 	acpi_unbind_one(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	return 0;
 }
 
@@ -424,7 +362,4 @@ int acpi_platform_notify(struct device *dev, enum kobject_action action)
 		break;
 	}
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }

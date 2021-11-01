@@ -275,15 +275,7 @@ int adfspart_check_ADFS(struct parsed_partitions *state)
 	/*
 	 * Work out start of non-adfs partition.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	nr_sects = get_capacity(state->disk) - start_sect;
-=======
 	nr_sects = (state->bdev->bd_inode->i_size >> 9) - start_sect;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	nr_sects = get_capacity(state->disk) - start_sect;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (start_sect) {
 		switch (id) {
@@ -548,15 +540,7 @@ int adfspart_check_EESOX(struct parsed_partitions *state)
 	if (i != 0) {
 		sector_t size;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		size = get_capacity(state->disk);
-=======
 		size = get_capacity(state->bdev->bd_disk);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		size = get_capacity(state->disk);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		put_partition(state, slot++, start, size - start);
 		strlcat(state->pp_buf, "\n", PAGE_SIZE);
 	}

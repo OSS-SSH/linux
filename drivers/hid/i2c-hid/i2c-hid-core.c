@@ -171,14 +171,8 @@ static const struct i2c_hid_quirks {
 		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
 	{ I2C_VENDOR_ID_RAYDIUM, I2C_PRODUCT_ID_RAYDIUM_3118,
 		I2C_HID_QUIRK_NO_IRQ_AFTER_RESET },
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	{ USB_VENDOR_ID_ELAN, HID_ANY_ID,
 		 I2C_HID_QUIRK_BOGUS_IRQ },
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ USB_VENDOR_ID_ALPS_JP, HID_ANY_ID,
 		 I2C_HID_QUIRK_RESET_ON_RESUME },
 	{ I2C_VENDOR_ID_SYNAPTICS, I2C_PRODUCT_ID_SYNAPTICS_SYNA2393,
@@ -189,17 +183,7 @@ static const struct i2c_hid_quirks {
 	 * Sending the wakeup after reset actually break ELAN touchscreen controller
 	 */
 	{ USB_VENDOR_ID_ELAN, HID_ANY_ID,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		 I2C_HID_QUIRK_NO_WAKEUP_AFTER_RESET |
-		 I2C_HID_QUIRK_BOGUS_IRQ },
-=======
 		 I2C_HID_QUIRK_NO_WAKEUP_AFTER_RESET },
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		 I2C_HID_QUIRK_NO_WAKEUP_AFTER_RESET |
-		 I2C_HID_QUIRK_BOGUS_IRQ },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ 0, 0 }
 };
 

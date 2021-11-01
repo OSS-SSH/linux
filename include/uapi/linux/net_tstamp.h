@@ -13,15 +13,7 @@
 #include <linux/types.h>
 #include <linux/socket.h>   /* for SO_TIMESTAMPING */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* SO_TIMESTAMPING flags */
-=======
 /* SO_TIMESTAMPING gets an integer bit field comprised of these values */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* SO_TIMESTAMPING flags */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum {
 	SOF_TIMESTAMPING_TX_HARDWARE = (1<<0),
 	SOF_TIMESTAMPING_TX_SOFTWARE = (1<<1),
@@ -38,20 +30,8 @@ enum {
 	SOF_TIMESTAMPING_OPT_STATS = (1<<12),
 	SOF_TIMESTAMPING_OPT_PKTINFO = (1<<13),
 	SOF_TIMESTAMPING_OPT_TX_SWHW = (1<<14),
-<<<<<<< HEAD
-<<<<<<< HEAD
-	SOF_TIMESTAMPING_BIND_PHC = (1 << 15),
-
-	SOF_TIMESTAMPING_LAST = SOF_TIMESTAMPING_BIND_PHC,
-=======
 
 	SOF_TIMESTAMPING_LAST = SOF_TIMESTAMPING_OPT_TX_SWHW,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	SOF_TIMESTAMPING_BIND_PHC = (1 << 15),
-
-	SOF_TIMESTAMPING_LAST = SOF_TIMESTAMPING_BIND_PHC,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SOF_TIMESTAMPING_MASK = (SOF_TIMESTAMPING_LAST - 1) |
 				 SOF_TIMESTAMPING_LAST
 };
@@ -67,27 +47,6 @@ enum {
 					 SOF_TIMESTAMPING_TX_ACK)
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * struct so_timestamping - SO_TIMESTAMPING parameter
- *
- * @flags:	SO_TIMESTAMPING flags
- * @bind_phc:	Index of PTP virtual clock bound to sock. This is available
- *		if flag SOF_TIMESTAMPING_BIND_PHC is set.
- */
-struct so_timestamping {
-	int flags;
-	int bind_phc;
-};
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct hwtstamp_config - %SIOCGHWTSTAMP and %SIOCSHWTSTAMP parameter
  *
  * @flags:	no flags defined right now, must be zero for %SIOCSHWTSTAMP

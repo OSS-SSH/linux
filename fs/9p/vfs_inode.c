@@ -218,15 +218,7 @@ v9fs_blank_wstat(struct p9_wstat *wstat)
 
 /**
  * v9fs_alloc_inode - helper function to allocate an inode
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @sb: The superblock to allocate the inode from
-=======
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @sb: The superblock to allocate the inode from
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct inode *v9fs_alloc_inode(struct super_block *sb)
 {
@@ -246,15 +238,7 @@ struct inode *v9fs_alloc_inode(struct super_block *sb)
 
 /**
  * v9fs_free_inode - destroy an inode
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @inode: The inode to be freed
-=======
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @inode: The inode to be freed
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 void v9fs_free_inode(struct inode *inode)
@@ -359,15 +343,7 @@ error:
  * v9fs_get_inode - helper function to setup an inode
  * @sb: superblock
  * @mode: mode to setup inode with
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @rdev: The device numbers to set
-=======
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @rdev: The device numbers to set
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 struct inode *v9fs_get_inode(struct super_block *sb, umode_t mode, dev_t rdev)
@@ -393,15 +369,7 @@ struct inode *v9fs_get_inode(struct super_block *sb, umode_t mode, dev_t rdev)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * v9fs_evict_inode - Remove an inode from the inode cache
-=======
  * v9fs_clear_inode - release an inode
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * v9fs_evict_inode - Remove an inode from the inode cache
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @inode: inode to release
  *
  */
@@ -697,34 +665,14 @@ error:
 
 /**
  * v9fs_vfs_create - VFS hook to create a regular file
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * @mnt_userns: The user namespace of the mount
- * @dir: The parent directory
- * @dentry: The name of file to be created
- * @mode: The UNIX file mode to set
- * @excl: True if the file must not yet exist
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * open(.., O_CREAT) is handled in v9fs_vfs_atomic_open().  This is only called
  * for mknod(2).
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * @dir: directory inode that is being created
  * @dentry:  dentry that is being deleted
  * @mode: create permissions
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 static int
@@ -748,14 +696,6 @@ v9fs_vfs_create(struct user_namespace *mnt_userns, struct inode *dir,
 
 /**
  * v9fs_vfs_mkdir - VFS mkdir hook to create a directory
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @mnt_userns: The user namespace of the mount
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @mnt_userns: The user namespace of the mount
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dir:  inode that is being unlinked
  * @dentry: dentry that is being unlinked
  * @mode: mode for new directory
@@ -960,26 +900,10 @@ int v9fs_vfs_rmdir(struct inode *i, struct dentry *d)
 
 /**
  * v9fs_vfs_rename - VFS hook to rename an inode
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @mnt_userns: The user namespace of the mount
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @mnt_userns: The user namespace of the mount
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @old_dir:  old dir inode
  * @old_dentry: old dentry
  * @new_dir: new dir inode
  * @new_dentry: new dentry
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @flags: RENAME_* flags
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @flags: RENAME_* flags
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  */
 
@@ -1085,14 +1009,6 @@ done:
 
 /**
  * v9fs_vfs_getattr - retrieve file metadata
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @mnt_userns: The user namespace of the mount
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @mnt_userns: The user namespace of the mount
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @path: Object to query
  * @stat: metadata structure to populate
  * @request_mask: Mask of STATX_xxx flags indicating the caller's interests
@@ -1134,14 +1050,6 @@ v9fs_vfs_getattr(struct user_namespace *mnt_userns, const struct path *path,
 
 /**
  * v9fs_vfs_setattr - set file metadata
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @mnt_userns: The user namespace of the mount
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @mnt_userns: The user namespace of the mount
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dentry: file whose metadata to set
  * @iattr: metadata assignment structure
  *
@@ -1377,14 +1285,6 @@ static int v9fs_vfs_mkspecial(struct inode *dir, struct dentry *dentry,
 
 /**
  * v9fs_vfs_symlink - helper function to create symlinks
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @mnt_userns: The user namespace of the mount
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @mnt_userns: The user namespace of the mount
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dir: directory inode containing symlink
  * @dentry: dentry for symlink
  * @symname: symlink data
@@ -1440,14 +1340,6 @@ v9fs_vfs_link(struct dentry *old_dentry, struct inode *dir,
 
 /**
  * v9fs_vfs_mknod - create a special file
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @mnt_userns: The user namespace of the mount
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @mnt_userns: The user namespace of the mount
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @dir: inode destination for new link
  * @dentry: dentry for file
  * @mode: mode for creation

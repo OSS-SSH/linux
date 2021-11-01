@@ -154,17 +154,7 @@ int __init ima_init(void)
 	ima_init_key_queue();
 
 	ima_measure_critical_data("kernel_info", "kernel_version",
-<<<<<<< HEAD
-<<<<<<< HEAD
-				  UTS_RELEASE, strlen(UTS_RELEASE), false,
-				  NULL, 0);
-=======
 				  UTS_RELEASE, strlen(UTS_RELEASE), false);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				  UTS_RELEASE, strlen(UTS_RELEASE), false,
-				  NULL, 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return rc;
 }

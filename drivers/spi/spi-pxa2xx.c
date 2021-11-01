@@ -594,60 +594,24 @@ static int u32_reader(struct driver_data *drv_data)
 
 static void reset_sccr1(struct driver_data *drv_data)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	u32 mask = drv_data->int_cr1 | drv_data->dma_cr1, threshold;
-	struct chip_data *chip;
-
-	if (drv_data->controller->cur_msg) {
-		chip = spi_get_ctldata(drv_data->controller->cur_msg->spi);
-		threshold = chip->threshold;
-	} else {
-		threshold = 0;
-	}
-<<<<<<< HEAD
-
-	switch (drv_data->ssp_type) {
-	case QUARK_X1000_SSP:
-		mask |= QUARK_X1000_SSCR1_RFT;
-		break;
-	case CE4100_SSP:
-		mask |= CE4100_SSCR1_RFT;
-		break;
-	default:
-		mask |= SSCR1_RFT;
-		break;
-	}
-
-	pxa2xx_spi_update(drv_data, SSCR1, mask, threshold);
-=======
 	struct chip_data *chip =
 		spi_get_ctldata(drv_data->controller->cur_msg->spi);
 	u32 sccr1_reg;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+	sccr1_reg = pxa2xx_spi_read(drv_data, SSCR1) & ~drv_data->int_cr1;
 	switch (drv_data->ssp_type) {
 	case QUARK_X1000_SSP:
-		mask |= QUARK_X1000_SSCR1_RFT;
+		sccr1_reg &= ~QUARK_X1000_SSCR1_RFT;
 		break;
 	case CE4100_SSP:
-		mask |= CE4100_SSCR1_RFT;
+		sccr1_reg &= ~CE4100_SSCR1_RFT;
 		break;
 	default:
-		mask |= SSCR1_RFT;
+		sccr1_reg &= ~SSCR1_RFT;
 		break;
 	}
-<<<<<<< HEAD
 	sccr1_reg |= chip->threshold;
 	pxa2xx_spi_write(drv_data, SSCR1, sccr1_reg);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	pxa2xx_spi_update(drv_data, SSCR1, mask, threshold);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void int_stop_and_reset(struct driver_data *drv_data)
@@ -760,21 +724,11 @@ static irqreturn_t interrupt_transfer(struct driver_data *drv_data)
 
 static void handle_bad_msg(struct driver_data *drv_data)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int_stop_and_reset(drv_data);
-	pxa2xx_spi_off(drv_data);
-=======
 	pxa2xx_spi_off(drv_data);
 	clear_SSCR1_bits(drv_data, drv_data->int_cr1);
 	if (!pxa25x_ssp_comp(drv_data))
 		pxa2xx_spi_write(drv_data, SSTO, 0);
 	write_SSSR_CS(drv_data, drv_data->clear_sr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int_stop_and_reset(drv_data);
-	pxa2xx_spi_off(drv_data);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev_err(drv_data->ssp->dev, "bad message state in interrupt handler\n");
 }
@@ -1202,13 +1156,6 @@ static void pxa2xx_spi_handle_err(struct spi_controller *controller,
 {
 	struct driver_data *drv_data = spi_controller_get_devdata(controller);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int_stop_and_reset(drv_data);
-
-	/* Disable the SSP */
-	pxa2xx_spi_off(drv_data);
-=======
 	/* Disable the SSP */
 	pxa2xx_spi_off(drv_data);
 	/* Clear and disable interrupts and service requests */
@@ -1216,13 +1163,6 @@ static void pxa2xx_spi_handle_err(struct spi_controller *controller,
 	clear_SSCR1_bits(drv_data, drv_data->int_cr1 | drv_data->dma_cr1);
 	if (!pxa25x_ssp_comp(drv_data))
 		pxa2xx_spi_write(drv_data, SSTO, 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int_stop_and_reset(drv_data);
-
-	/* Disable the SSP */
-	pxa2xx_spi_off(drv_data);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Stop the DMA if running. Note DMA callback handler may have unset

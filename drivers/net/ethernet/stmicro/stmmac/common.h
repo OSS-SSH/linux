@@ -58,25 +58,6 @@
 #undef FRAME_FILTER_DEBUG
 /* #define FRAME_FILTER_DEBUG */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct stmmac_txq_stats {
-	unsigned long tx_pkt_n;
-	unsigned long tx_normal_irq_n;
-};
-
-struct stmmac_rxq_stats {
-	unsigned long rx_pkt_n;
-	unsigned long rx_normal_irq_n;
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Extra statistic and debug information exposed by ethtool */
 struct stmmac_extra_stats {
 	/* Transmit errors */
@@ -208,18 +189,6 @@ struct stmmac_extra_stats {
 	unsigned long mtl_est_hlbf;
 	unsigned long mtl_est_btre;
 	unsigned long mtl_est_btrlm;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* per queue statistics */
-	struct stmmac_txq_stats txq_stats[MTL_MAX_TX_QUEUES];
-	struct stmmac_rxq_stats rxq_stats[MTL_MAX_RX_QUEUES];
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* per queue statistics */
-	struct stmmac_txq_stats txq_stats[MTL_MAX_TX_QUEUES];
-	struct stmmac_rxq_stats rxq_stats[MTL_MAX_RX_QUEUES];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* Safety Feature statistics exposed by ethtool */

@@ -127,15 +127,7 @@ static struct bus_type ap_bus_type;
 /* Adapter interrupt definitions */
 static void ap_interrupt_handler(struct airq_struct *airq, bool floating);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static bool ap_irq_flag;
-=======
 static int ap_airq_flag;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static bool ap_irq_flag;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct airq_struct ap_airq = {
 	.handler = ap_interrupt_handler,
@@ -143,9 +135,6 @@ static struct airq_struct ap_airq = {
 };
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * ap_using_interrupts() - Returns non-zero if interrupt support is
  * available.
  */
@@ -155,9 +144,6 @@ static inline int ap_using_interrupts(void)
 }
 
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * ap_airq_ptr() - Get the address of the adapter interrupt indicator
  *
  * Returns the address of the local-summary-indicator of the adapter
@@ -166,15 +152,7 @@ static inline int ap_using_interrupts(void)
  */
 void *ap_airq_ptr(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ap_irq_flag)
-=======
 	if (ap_using_interrupts())
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ap_irq_flag)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ap_airq.lsi_ptr;
 	return NULL;
 }
@@ -244,13 +222,7 @@ static inline int ap_fetch_qci_info(struct ap_config_info *info)
  * ap_init_qci_info(): Allocate and query qci config info.
  * Does also update the static variables ap_max_domain_id
  * and ap_max_adapter_id if this info is available.
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static void __init ap_init_qci_info(void)
 {
@@ -424,15 +396,7 @@ void ap_wait(enum ap_sm_wait wait)
 	switch (wait) {
 	case AP_SM_WAIT_AGAIN:
 	case AP_SM_WAIT_INTERRUPT:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (ap_irq_flag)
-=======
 		if (ap_using_interrupts())
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (ap_irq_flag)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		if (ap_poll_kthread) {
 			wake_up(&ap_poll_wait);
@@ -484,14 +448,6 @@ static enum hrtimer_restart ap_poll_timeout(struct hrtimer *unused)
 /**
  * ap_interrupt_handler() - Schedule ap_tasklet on interrupt
  * @airq: pointer to adapter interrupt descriptor
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @floating: ignored
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @floating: ignored
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static void ap_interrupt_handler(struct airq_struct *airq, bool floating)
 {
@@ -515,15 +471,7 @@ static void ap_tasklet_fn(unsigned long dummy)
 	 * be received. Doing it in the beginning of the tasklet is therefor
 	 * important that no requests on any AP get lost.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ap_irq_flag)
-=======
 	if (ap_using_interrupts())
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ap_irq_flag)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xchg(ap_airq.lsi_ptr, 0);
 
 	spin_lock_bh(&ap_queues_lock);
@@ -593,15 +541,7 @@ static int ap_poll_thread_start(void)
 {
 	int rc;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ap_irq_flag || ap_poll_kthread)
-=======
 	if (ap_using_interrupts() || ap_poll_kthread)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ap_irq_flag || ap_poll_kthread)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 	mutex_lock(&ap_poll_thread_mutex);
 	ap_poll_kthread = kthread_run(ap_poll_thread, NULL, "appoll");
@@ -763,15 +703,7 @@ static int __ap_calc_helper(struct device *dev, void *arg)
 
 	if (is_queue_dev(dev)) {
 		pctrs->apqns++;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (dev->driver)
-=======
 		if ((to_ap_dev(dev))->drv)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (dev->driver)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pctrs->bound++;
 	}
 
@@ -951,13 +883,7 @@ static int ap_device_probe(struct device *dev)
 			 to_ap_queue(dev)->qid);
 	spin_unlock_bh(&ap_queues_lock);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	ap_dev->drv = ap_drv;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = ap_drv->probe ? ap_drv->probe(ap_dev) : -ENODEV;
 
 	if (rc) {
@@ -965,13 +891,7 @@ static int ap_device_probe(struct device *dev)
 		if (is_queue_dev(dev))
 			hash_del(&to_ap_queue(dev)->hnode);
 		spin_unlock_bh(&ap_queues_lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		ap_dev->drv = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	} else
 		ap_check_bindings_complete();
 
@@ -981,24 +901,10 @@ out:
 	return rc;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void ap_device_remove(struct device *dev)
-{
-	struct ap_device *ap_dev = to_ap_dev(dev);
-	struct ap_driver *ap_drv = to_ap_drv(dev->driver);
-=======
 static int ap_device_remove(struct device *dev)
 {
 	struct ap_device *ap_dev = to_ap_dev(dev);
 	struct ap_driver *ap_drv = ap_dev->drv;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void ap_device_remove(struct device *dev)
-{
-	struct ap_device *ap_dev = to_ap_dev(dev);
-	struct ap_driver *ap_drv = to_ap_drv(dev->driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* prepare ap queue device removal */
 	if (is_queue_dev(dev))
@@ -1017,21 +923,11 @@ static void ap_device_remove(struct device *dev)
 	if (is_queue_dev(dev))
 		hash_del(&to_ap_queue(dev)->hnode);
 	spin_unlock_bh(&ap_queues_lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	put_device(dev);
-=======
 	ap_dev->drv = NULL;
 
 	put_device(dev);
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	put_device(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct ap_queue *ap_get_qdev(ap_qid_t qid)
@@ -1291,15 +1187,7 @@ static BUS_ATTR_RO(ap_adapter_mask);
 static ssize_t ap_interrupts_show(struct bus_type *bus, char *buf)
 {
 	return scnprintf(buf, PAGE_SIZE, "%d\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			 ap_irq_flag ? 1 : 0);
-=======
 			 ap_using_interrupts() ? 1 : 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			 ap_irq_flag ? 1 : 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static BUS_ATTR_RO(ap_interrupts);
@@ -1912,14 +1800,6 @@ static inline void ap_scan_adapter(int ap)
 /**
  * ap_scan_bus(): Scan the AP bus for new devices
  * Runs periodically, workqueue timer (ap_config_time)
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @unused: Unused pointer.
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @unused: Unused pointer.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static void ap_scan_bus(struct work_struct *unused)
 {
@@ -2032,15 +1912,7 @@ static int __init ap_module_init(void)
 	/* enable interrupts if available */
 	if (ap_interrupts_available()) {
 		rc = register_adapter_interrupt(&ap_airq);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ap_irq_flag = (rc == 0);
-=======
 		ap_airq_flag = (rc == 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ap_irq_flag = (rc == 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Create /sys/bus/ap. */
@@ -2084,15 +1956,7 @@ out_work:
 out_bus:
 	bus_unregister(&ap_bus_type);
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ap_irq_flag)
-=======
 	if (ap_using_interrupts())
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ap_irq_flag)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		unregister_adapter_interrupt(&ap_airq);
 	kfree(ap_qci_info);
 	return rc;

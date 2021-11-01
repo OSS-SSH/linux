@@ -3,18 +3,8 @@ config RTL8723BS
 	tristate "Realtek RTL8723BS SDIO Wireless LAN NIC driver"
 	depends on WLAN && MMC && CFG80211
 	depends on m
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select CFG80211_WEXT
-	select CRYPTO_LIB_ARC4
-=======
 	select WIRELESS_EXT
 	select WEXT_PRIV
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select CFG80211_WEXT
-	select CRYPTO_LIB_ARC4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	This option enables support for RTL8723BS SDIO drivers, such as
 	the wifi found on the 1st gen Intel Compute Stick, the CHIP

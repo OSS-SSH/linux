@@ -599,15 +599,7 @@ flush_tlb:
 	l.jal	_flush_tlb
 	 l.nop
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* The MMU needs to be enabled before or1k_early_setup is called */
-=======
 /* The MMU needs to be enabled before or32_early_setup is called */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* The MMU needs to be enabled before or1k_early_setup is called */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enable_mmu:
 	/*
@@ -649,21 +641,9 @@ enable_mmu:
 	/* magic number mismatch, set fdt pointer to null */
 	l.or	r25,r0,r0
 _fdt_found:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* pass fdt pointer to or1k_early_setup in r3 */
-	l.or	r3,r0,r25
-	LOAD_SYMBOL_2_GPR(r24, or1k_early_setup)
-=======
 	/* pass fdt pointer to or32_early_setup in r3 */
 	l.or	r3,r0,r25
 	LOAD_SYMBOL_2_GPR(r24, or32_early_setup)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* pass fdt pointer to or1k_early_setup in r3 */
-	l.or	r3,r0,r25
-	LOAD_SYMBOL_2_GPR(r24, or1k_early_setup)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	l.jalr r24
 	 l.nop
 

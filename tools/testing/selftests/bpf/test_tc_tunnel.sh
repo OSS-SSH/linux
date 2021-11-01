@@ -69,15 +69,7 @@ cleanup() {
 }
 
 server_listen() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ip netns exec "${ns2}" nc "${netcat_opt}" -l "${port}" > "${outfile}" &
-=======
 	ip netns exec "${ns2}" nc "${netcat_opt}" -l -p "${port}" > "${outfile}" &
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ip netns exec "${ns2}" nc "${netcat_opt}" -l "${port}" > "${outfile}" &
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	server_pid=$!
 	sleep 0.2
 }

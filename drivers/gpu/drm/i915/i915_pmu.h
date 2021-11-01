@@ -147,30 +147,14 @@ struct i915_pmu {
 };
 
 #ifdef CONFIG_PERF_EVENTS
-<<<<<<< HEAD
-<<<<<<< HEAD
-int i915_pmu_init(void);
-=======
 void i915_pmu_init(void);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int i915_pmu_init(void);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void i915_pmu_exit(void);
 void i915_pmu_register(struct drm_i915_private *i915);
 void i915_pmu_unregister(struct drm_i915_private *i915);
 void i915_pmu_gt_parked(struct drm_i915_private *i915);
 void i915_pmu_gt_unparked(struct drm_i915_private *i915);
 #else
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline int i915_pmu_init(void) { return 0; }
-=======
 static inline void i915_pmu_init(void) {}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline int i915_pmu_init(void) { return 0; }
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void i915_pmu_exit(void) {}
 static inline void i915_pmu_register(struct drm_i915_private *i915) {}
 static inline void i915_pmu_unregister(struct drm_i915_private *i915) {}

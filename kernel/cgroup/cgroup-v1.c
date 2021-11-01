@@ -50,16 +50,6 @@ bool cgroup1_ssid_disabled(int ssid)
  * cgroup_attach_task_all - attach task 'tsk' to all cgroups of task 'from'
  * @from: attach to all cgroups of a given task
  * @tsk: the task to be attached
-<<<<<<< HEAD
-<<<<<<< HEAD
- *
- * Return: %0 on success or a negative errno code on failure
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *
- * Return: %0 on success or a negative errno code on failure
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int cgroup_attach_task_all(struct task_struct *from, struct task_struct *tsk)
 {
@@ -90,15 +80,7 @@ int cgroup_attach_task_all(struct task_struct *from, struct task_struct *tsk)
 EXPORT_SYMBOL_GPL(cgroup_attach_task_all);
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * cgroup_transfer_tasks - move tasks from one cgroup to another
-=======
  * cgroup_trasnsfer_tasks - move tasks from one cgroup to another
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * cgroup_transfer_tasks - move tasks from one cgroup to another
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @to: cgroup to which the tasks will be moved
  * @from: cgroup in which the tasks currently reside
  *
@@ -107,16 +89,6 @@ EXPORT_SYMBOL_GPL(cgroup_attach_task_all);
  * is guaranteed to be either visible in the source cgroup after the
  * parent's migration is complete or put into the target cgroup.  No task
  * can slip out of migration through forking.
-<<<<<<< HEAD
-<<<<<<< HEAD
- *
- * Return: %0 on success or a negative errno code on failure
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *
- * Return: %0 on success or a negative errno code on failure
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int cgroup_transfer_tasks(struct cgroup *to, struct cgroup *from)
 {
@@ -710,16 +682,6 @@ int proc_cgroupstats_show(struct seq_file *m, void *v)
  *
  * Build and fill cgroupstats so that taskstats can export it to user
  * space.
-<<<<<<< HEAD
-<<<<<<< HEAD
- *
- * Return: %0 on success or a negative errno code on failure
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *
- * Return: %0 on success or a negative errno code on failure
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int cgroupstats_build(struct cgroupstats *stats, struct dentry *dentry)
 {
@@ -949,17 +911,6 @@ int cgroup1_parse_param(struct fs_context *fc, struct fs_parameter *param)
 
 	opt = fs_parse(fc, cgroup1_fs_parameters, param, &result);
 	if (opt == -ENOPARAM) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		int ret;
-
-		ret = vfs_parse_fs_param_source(fc, param);
-		if (ret != -ENOPARAM)
-			return ret;
-<<<<<<< HEAD
-=======
 		if (strcmp(param->key, "source") == 0) {
 			if (fc->source)
 				return invalf(fc, "Multiple sources not supported");
@@ -967,9 +918,6 @@ int cgroup1_parse_param(struct fs_context *fc, struct fs_parameter *param)
 			param->string = NULL;
 			return 0;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for_each_subsys(ss, i) {
 			if (strcmp(param->key, ss->legacy_name))
 				continue;
@@ -1275,17 +1223,9 @@ int cgroup1_get_tree(struct fs_context *fc)
 		ret = cgroup_do_get_tree(fc);
 
 	if (!ret && percpu_ref_is_dying(&ctx->root->cgrp.self.refcnt)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		fc_drop_locked(fc);
-=======
 		struct super_block *sb = fc->root->d_sb;
 		dput(fc->root);
 		deactivate_locked_super(sb);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		fc_drop_locked(fc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = 1;
 	}
 

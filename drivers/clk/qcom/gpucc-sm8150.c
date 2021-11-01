@@ -82,23 +82,6 @@ static const struct freq_tbl ftbl_gpu_cc_gmu_clk_src[] = {
 	{ }
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const struct freq_tbl ftbl_gpu_cc_gmu_clk_src_sc8180x[] = {
-	F(19200000, P_BI_TCXO, 1, 0, 0),
-	F(200000000, P_GPLL0_OUT_MAIN_DIV, 1.5, 0, 0),
-	F(400000000, P_GPLL0_OUT_MAIN, 1.5, 0, 0),
-	F(500000000, P_GPU_CC_PLL1_OUT_MAIN, 1, 0, 0),
-	{ }
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct clk_rcg2 gpu_cc_gmu_clk_src = {
 	.cmd_rcgr = 0x1120,
 	.mnd_width = 0,
@@ -294,14 +277,6 @@ static const struct qcom_cc_desc gpu_cc_sm8150_desc = {
 };
 
 static const struct of_device_id gpu_cc_sm8150_match_table[] = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "qcom,sc8180x-gpucc" },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "qcom,sc8180x-gpucc" },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "qcom,sm8150-gpucc" },
 	{ }
 };
@@ -315,18 +290,6 @@ static int gpu_cc_sm8150_probe(struct platform_device *pdev)
 	if (IS_ERR(regmap))
 		return PTR_ERR(regmap);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (of_device_is_compatible(pdev->dev.of_node, "qcom,sc8180x-gpucc"))
-		gpu_cc_gmu_clk_src.freq_tbl = ftbl_gpu_cc_gmu_clk_src_sc8180x;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (of_device_is_compatible(pdev->dev.of_node, "qcom,sc8180x-gpucc"))
-		gpu_cc_gmu_clk_src.freq_tbl = ftbl_gpu_cc_gmu_clk_src_sc8180x;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clk_trion_pll_configure(&gpu_cc_pll1, regmap, &gpu_cc_pll1_config);
 
 	return qcom_cc_really_probe(pdev, &gpu_cc_sm8150_desc, regmap);

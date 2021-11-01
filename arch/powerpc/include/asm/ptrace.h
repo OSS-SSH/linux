@@ -22,14 +22,6 @@
 #include <linux/err.h>
 #include <uapi/asm/ptrace.h>
 #include <asm/asm-const.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <asm/reg.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <asm/reg.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifndef __ASSEMBLY__
 struct pt_regs
@@ -51,25 +43,8 @@ struct pt_regs
 			unsigned long mq;
 #endif
 			unsigned long trap;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			union {
-				unsigned long dar;
-				unsigned long dear;
-			};
-			union {
-				unsigned long dsisr;
-				unsigned long esr;
-			};
-<<<<<<< HEAD
-=======
 			unsigned long dar;
 			unsigned long dsisr;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			unsigned long result;
 		};
 	};
@@ -95,31 +70,6 @@ struct pt_regs
 		unsigned long __pad[4];	/* Maintain 16 byte interrupt stack alignment */
 	};
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#if defined(CONFIG_PPC32) && defined(CONFIG_BOOKE)
-	struct { /* Must be a multiple of 16 bytes */
-		unsigned long mas0;
-		unsigned long mas1;
-		unsigned long mas2;
-		unsigned long mas3;
-		unsigned long mas6;
-		unsigned long mas7;
-		unsigned long srr0;
-		unsigned long srr1;
-		unsigned long csrr0;
-		unsigned long csrr1;
-		unsigned long dsrr0;
-		unsigned long dsrr1;
-	};
-#endif
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 #endif
 
@@ -231,19 +181,11 @@ static inline unsigned long frame_pointer(struct pt_regs *regs)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define user_mode(regs) (((regs)->msr & MSR_PR) != 0)
-=======
 #ifdef __powerpc64__
 #define user_mode(regs) ((((regs)->msr) >> MSR_PR_LG) & 0x1)
 #else
 #define user_mode(regs) (((regs)->msr & MSR_PR) != 0)
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define user_mode(regs) (((regs)->msr & MSR_PR) != 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define force_successful_syscall_return()   \
 	do { \
@@ -328,37 +270,6 @@ static inline void regs_set_return_value(struct pt_regs *regs, unsigned long rc)
 	regs->gpr[3] = rc;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static inline bool cpu_has_msr_ri(void)
-{
-	return !IS_ENABLED(CONFIG_BOOKE) && !IS_ENABLED(CONFIG_40x);
-}
-
-static inline bool regs_is_unrecoverable(struct pt_regs *regs)
-{
-	return unlikely(cpu_has_msr_ri() && !(regs->msr & MSR_RI));
-}
-
-static inline void regs_set_recoverable(struct pt_regs *regs)
-{
-	if (cpu_has_msr_ri())
-		regs_set_return_msr(regs, regs->msr | MSR_RI);
-}
-
-static inline void regs_set_unrecoverable(struct pt_regs *regs)
-{
-	if (cpu_has_msr_ri())
-		regs_set_return_msr(regs, regs->msr & ~MSR_RI);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define arch_has_single_step()	(1)
 #define arch_has_block_step()	(true)
 #define ARCH_HAS_USER_SINGLE_STEP_REPORT

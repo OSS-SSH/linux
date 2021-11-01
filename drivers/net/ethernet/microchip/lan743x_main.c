@@ -1934,12 +1934,8 @@ static void lan743x_rx_update_tail(struct lan743x_rx *rx, int index)
 				  index);
 }
 
-<<<<<<< HEAD
-static int lan743x_rx_init_ring_element(struct lan743x_rx *rx, int index)
-=======
 static int lan743x_rx_init_ring_element(struct lan743x_rx *rx, int index,
 					gfp_t gfp)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_device *netdev = rx->adapter->netdev;
 	struct device *dev = &rx->adapter->pdev->dev;
@@ -1953,11 +1949,7 @@ static int lan743x_rx_init_ring_element(struct lan743x_rx *rx, int index,
 
 	descriptor = &rx->ring_cpu_ptr[index];
 	buffer_info = &rx->buffer_info[index];
-<<<<<<< HEAD
-	skb = __netdev_alloc_skb(netdev, buffer_length, GFP_ATOMIC | GFP_DMA);
-=======
 	skb = __netdev_alloc_skb(netdev, buffer_length, gfp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!skb)
 		return -ENOMEM;
 	dma_ptr = dma_map_single(dev, skb->data, buffer_length, DMA_FROM_DEVICE);
@@ -2119,12 +2111,8 @@ static int lan743x_rx_process_buffer(struct lan743x_rx *rx)
 
 	/* save existing skb, allocate new skb and map to dma */
 	skb = buffer_info->skb;
-<<<<<<< HEAD
-	if (lan743x_rx_init_ring_element(rx, rx->last_head)) {
-=======
 	if (lan743x_rx_init_ring_element(rx, rx->last_head,
 					 GFP_ATOMIC | GFP_DMA)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* failed to allocate next skb.
 		 * Memory is very low.
 		 * Drop this packet and reuse buffer.
@@ -2329,23 +2317,16 @@ static int lan743x_rx_ring_init(struct lan743x_rx *rx)
 
 	rx->last_head = 0;
 	for (index = 0; index < rx->ring_size; index++) {
-<<<<<<< HEAD
-		ret = lan743x_rx_init_ring_element(rx, index);
-=======
 		ret = lan743x_rx_init_ring_element(rx, index, GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret)
 			goto cleanup;
 	}
 	return 0;
 
 cleanup:
-<<<<<<< HEAD
-=======
 	netif_warn(rx->adapter, ifup, rx->adapter->netdev,
 		   "Error allocating memory for LAN743x\n");
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	lan743x_rx_ring_cleanup(rx);
 	return ret;
 }
@@ -2679,15 +2660,7 @@ static const struct net_device_ops lan743x_netdev_ops = {
 	.ndo_open		= lan743x_netdev_open,
 	.ndo_stop		= lan743x_netdev_close,
 	.ndo_start_xmit		= lan743x_netdev_xmit_frame,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl		= lan743x_netdev_ioctl,
-=======
 	.ndo_do_ioctl		= lan743x_netdev_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl		= lan743x_netdev_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_set_rx_mode	= lan743x_netdev_set_multicast,
 	.ndo_change_mtu		= lan743x_netdev_change_mtu,
 	.ndo_get_stats64	= lan743x_netdev_get_stats64,

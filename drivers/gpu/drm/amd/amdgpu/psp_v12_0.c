@@ -67,15 +67,7 @@ static int psp_v12_0_init_microcode(struct psp_context *psp)
 
 	err = psp_init_asd_microcode(psp, chip_name);
 	if (err)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return err;
-=======
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snprintf(fw_name, sizeof(fw_name), "amdgpu/%s_ta.bin", chip_name);
 	err = request_firmware(&adev->psp.ta_fw, fw_name, adev->dev);
@@ -88,18 +80,6 @@ static int psp_v12_0_init_microcode(struct psp_context *psp)
 	} else {
 		err = amdgpu_ucode_validate(adev->psp.ta_fw);
 		if (err)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			goto out;
-
-		ta_hdr = (const struct ta_firmware_header_v1_0 *)
-				 adev->psp.ta_fw->data;
-		adev->psp.hdcp.feature_version =
-			le32_to_cpu(ta_hdr->hdcp.fw_version);
-		adev->psp.hdcp.size_bytes =
-			le32_to_cpu(ta_hdr->hdcp.size_bytes);
-		adev->psp.hdcp.start_addr =
-=======
 			goto out2;
 
 		ta_hdr = (const struct ta_firmware_header_v1_0 *)
@@ -109,36 +89,11 @@ static int psp_v12_0_init_microcode(struct psp_context *psp)
 		adev->psp.ta_hdcp_ucode_size =
 			le32_to_cpu(ta_hdr->ta_hdcp_size_bytes);
 		adev->psp.ta_hdcp_start_addr =
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			goto out;
-
-		ta_hdr = (const struct ta_firmware_header_v1_0 *)
-				 adev->psp.ta_fw->data;
-		adev->psp.hdcp.feature_version =
-			le32_to_cpu(ta_hdr->hdcp.fw_version);
-		adev->psp.hdcp.size_bytes =
-			le32_to_cpu(ta_hdr->hdcp.size_bytes);
-		adev->psp.hdcp.start_addr =
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			(uint8_t *)ta_hdr +
 			le32_to_cpu(ta_hdr->header.ucode_array_offset_bytes);
 
 		adev->psp.ta_fw_version = le32_to_cpu(ta_hdr->header.ucode_version);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		adev->psp.dtm.feature_version =
-			le32_to_cpu(ta_hdr->dtm.fw_version);
-		adev->psp.dtm.size_bytes =
-			le32_to_cpu(ta_hdr->dtm.size_bytes);
-		adev->psp.dtm.start_addr =
-			(uint8_t *)adev->psp.hdcp.start_addr +
-			le32_to_cpu(ta_hdr->dtm.offset_bytes);
-<<<<<<< HEAD
-=======
 		adev->psp.ta_dtm_ucode_version =
 			le32_to_cpu(ta_hdr->ta_dtm_ucode_version);
 		adev->psp.ta_dtm_ucode_size =
@@ -146,29 +101,14 @@ static int psp_v12_0_init_microcode(struct psp_context *psp)
 		adev->psp.ta_dtm_start_addr =
 			(uint8_t *)adev->psp.ta_hdcp_start_addr +
 			le32_to_cpu(ta_hdr->ta_dtm_offset_bytes);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-out:
-	release_firmware(adev->psp.ta_fw);
-	adev->psp.ta_fw = NULL;
-=======
 out2:
 	release_firmware(adev->psp.ta_fw);
 	adev->psp.ta_fw = NULL;
 out:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-out:
-	release_firmware(adev->psp.ta_fw);
-	adev->psp.ta_fw = NULL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err) {
 		dev_err(adev->dev,
 			"psp v12.0: Failed to load firmware \"%s\"\n",
@@ -199,15 +139,7 @@ static int psp_v12_0_bootloader_load_sysdrv(struct psp_context *psp)
 		return ret;
 
 	/* Copy PSP System Driver binary to memory */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
-=======
 	psp_copy_fw(psp, psp->sys_start_addr, psp->sys_bin_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Provide the sys driver to bootloader */
 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
@@ -246,15 +178,7 @@ static int psp_v12_0_bootloader_load_sos(struct psp_context *psp)
 		return ret;
 
 	/* Copy Secure OS binary to PSP memory */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
-=======
 	psp_copy_fw(psp, psp->sos_start_addr, psp->sos_bin_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Provide the PSP secure OS to bootloader */
 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,

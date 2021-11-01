@@ -118,15 +118,7 @@ struct nfc_hci_dev {
 
 	struct sk_buff_head msg_rx_queue;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct nfc_hci_ops *ops;
-=======
 	struct nfc_hci_ops *ops;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct nfc_hci_ops *ops;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	struct nfc_llc *llc;
 
@@ -159,15 +151,7 @@ struct nfc_hci_dev {
 };
 
 /* hci device allocation */
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct nfc_hci_dev *nfc_hci_allocate_device(const struct nfc_hci_ops *ops,
-=======
 struct nfc_hci_dev *nfc_hci_allocate_device(struct nfc_hci_ops *ops,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct nfc_hci_dev *nfc_hci_allocate_device(const struct nfc_hci_ops *ops,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					    struct nfc_hci_init_data *init_data,
 					    unsigned long quirks,
 					    u32 protocols,
@@ -184,15 +168,7 @@ void nfc_hci_set_clientdata(struct nfc_hci_dev *hdev, void *clientdata);
 void *nfc_hci_get_clientdata(struct nfc_hci_dev *hdev);
 
 static inline int nfc_hci_set_vendor_cmds(struct nfc_hci_dev *hdev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					  const struct nfc_vendor_cmd *cmds,
-=======
 					  struct nfc_vendor_cmd *cmds,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					  const struct nfc_vendor_cmd *cmds,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					  int n_cmds)
 {
 	return nfc_set_vendor_cmds(hdev->ndev, cmds, n_cmds);

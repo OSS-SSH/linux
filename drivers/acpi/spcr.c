@@ -136,14 +136,6 @@ int __init acpi_parse_spcr(bool enable_earlycon, bool enable_console)
 		break;
 	case ACPI_DBG2_16550_COMPATIBLE:
 	case ACPI_DBG2_16550_SUBSET:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	case ACPI_DBG2_16550_WITH_GAS:
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	case ACPI_DBG2_16550_WITH_GAS:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		uart = "uart";
 		break;
 	default:

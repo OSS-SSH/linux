@@ -27,11 +27,3 @@ struct vsc73xx_ops {
 int vsc73xx_is_addr_valid(u8 block, u8 subblock);
 int vsc73xx_probe(struct vsc73xx *vsc);
 int vsc73xx_remove(struct vsc73xx *vsc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void vsc73xx_shutdown(struct vsc73xx *vsc);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void vsc73xx_shutdown(struct vsc73xx *vsc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

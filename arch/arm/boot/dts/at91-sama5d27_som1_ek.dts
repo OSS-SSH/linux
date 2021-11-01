@@ -71,13 +71,7 @@
 			isc: isc@f0008000 {
 				pinctrl-names = "default";
 				pinctrl-0 = <&pinctrl_isc_base &pinctrl_isc_data_8bit &pinctrl_isc_data_9_10 &pinctrl_isc_data_11_12>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 				status = "okay";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 
 			qspi1: spi@f0024000 {
@@ -144,15 +138,7 @@
 			};
 
 			shdwc@f8048010 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-				debounce-delay-us = <976>;
-=======
 				atmel,shdwc-debouncer = <976>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				debounce-delay-us = <976>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				atmel,wakeup-rtc-timer;
 
 				input@0 {
@@ -238,22 +224,8 @@
 			adc: adc@fc030000 {
 				vddana-supply = <&vddana>;
 				vref-supply = <&advref>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-				pinctrl-names = "default";
-				pinctrl-0 = <&pinctrl_mikrobus1_an &pinctrl_mikrobus2_an>;
-
-				status = "okay";
-=======
 
 				status = "disabled";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				pinctrl-names = "default";
-				pinctrl-0 = <&pinctrl_mikrobus1_an &pinctrl_mikrobus2_an>;
-
-				status = "okay";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			};
 
 			pinctrl@fc038000 {

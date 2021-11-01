@@ -11,14 +11,6 @@
 #include "pmu-events/pmu-events.h"
 
 struct evsel_config_term;
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct perf_cpu_map;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct perf_cpu_map;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enum {
 	PERF_PMU_FORMAT_VALUE_CONFIG,
@@ -29,14 +21,6 @@ enum {
 #define PERF_PMU_FORMAT_BITS 64
 #define EVENT_SOURCE_DEVICE_PATH "/bus/event_source/devices/"
 #define CPUS_TEMPLATE_CPU	"%s/bus/event_source/devices/%s/cpus"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define MAX_PMU_NAME_LEN 128
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define MAX_PMU_NAME_LEN 128
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct perf_event_attr;
 
@@ -48,14 +32,6 @@ struct perf_pmu_caps {
 
 struct perf_pmu {
 	char *name;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	char *alias_name;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	char *alias_name;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	char *id;
 	__u32 type;
 	bool selectable;
@@ -105,14 +81,6 @@ struct perf_pmu_alias {
 
 struct perf_pmu *perf_pmu__find(const char *name);
 struct perf_pmu *perf_pmu__find_by_type(unsigned int type);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void pmu_add_sys_aliases(struct list_head *head, struct perf_pmu *pmu);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void pmu_add_sys_aliases(struct list_head *head, struct perf_pmu *pmu);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int perf_pmu__config(struct perf_pmu *pmu, struct perf_event_attr *attr,
 		     struct list_head *head_terms,
 		     struct parse_events_error *error);
@@ -167,19 +135,4 @@ void perf_pmu__warn_invalid_config(struct perf_pmu *pmu, __u64 config,
 bool perf_pmu__has_hybrid(void);
 int perf_pmu__match(char *pattern, char *name, char *tok);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-int perf_pmu__cpus_match(struct perf_pmu *pmu, struct perf_cpu_map *cpus,
-			 struct perf_cpu_map **mcpus_ptr,
-			 struct perf_cpu_map **ucpus_ptr);
-
-char *pmu_find_real_name(const char *name);
-char *pmu_find_alias_name(const char *name);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __PMU_H */

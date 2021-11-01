@@ -535,30 +535,12 @@ sh_css_copy_frame_to_spframe(struct ia_css_frame_sp *sp_frame_out,
 }
 
 static int
-<<<<<<< HEAD
-<<<<<<< HEAD
-set_input_frame_buffer(const struct ia_css_frame *frame)
-{
-	if (!frame)
-		return -EINVAL;
-
-	switch (frame->info.format) {
-=======
 set_input_frame_buffer(const struct ia_css_frame *frame) {
 	if (!frame)
 		return -EINVAL;
 
 	switch (frame->info.format)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-set_input_frame_buffer(const struct ia_css_frame *frame)
-{
-	if (!frame)
-		return -EINVAL;
-
-	switch (frame->info.format) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case IA_CSS_FRAME_FORMAT_QPLANE6:
 	case IA_CSS_FRAME_FORMAT_YUV420_16:
 	case IA_CSS_FRAME_FORMAT_RAW_PACKED:
@@ -584,30 +566,12 @@ set_input_frame_buffer(const struct ia_css_frame *frame)
 
 static int
 set_output_frame_buffer(const struct ia_css_frame *frame,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			unsigned int idx)
-{
-	if (!frame)
-		return -EINVAL;
-
-	switch (frame->info.format) {
-=======
 			unsigned int idx) {
 	if (!frame)
 		return -EINVAL;
 
 	switch (frame->info.format)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			unsigned int idx)
-{
-	if (!frame)
-		return -EINVAL;
-
-	switch (frame->info.format) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case IA_CSS_FRAME_FORMAT_YUV420:
 	case IA_CSS_FRAME_FORMAT_YUV422:
 	case IA_CSS_FRAME_FORMAT_YUV444:
@@ -643,30 +607,12 @@ set_output_frame_buffer(const struct ia_css_frame *frame,
 }
 
 static int
-<<<<<<< HEAD
-<<<<<<< HEAD
-set_view_finder_buffer(const struct ia_css_frame *frame)
-{
-	if (!frame)
-		return -EINVAL;
-
-	switch (frame->info.format) {
-=======
 set_view_finder_buffer(const struct ia_css_frame *frame) {
 	if (!frame)
 		return -EINVAL;
 
 	switch (frame->info.format)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-set_view_finder_buffer(const struct ia_css_frame *frame)
-{
-	if (!frame)
-		return -EINVAL;
-
-	switch (frame->info.format) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* the dual output pin */
 	case IA_CSS_FRAME_FORMAT_NV12:
 	case IA_CSS_FRAME_FORMAT_NV12_16:
@@ -786,17 +732,7 @@ sh_css_sp_set_disable_continuous_viewfinder(bool flag)
 }
 
 static int
-<<<<<<< HEAD
-<<<<<<< HEAD
-sh_css_sp_write_frame_pointers(const struct sh_css_binary_args *args)
-{
-=======
 sh_css_sp_write_frame_pointers(const struct sh_css_binary_args *args) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-sh_css_sp_write_frame_pointers(const struct sh_css_binary_args *args)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err = 0;
 	int i;
 
@@ -806,16 +742,8 @@ sh_css_sp_write_frame_pointers(const struct sh_css_binary_args *args)
 		err = set_input_frame_buffer(args->in_frame);
 	if (!err && args->out_vf_frame)
 		err = set_view_finder_buffer(args->out_vf_frame);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	for (i = 0; i < IA_CSS_BINARY_MAX_OUTPUT_PORTS; i++) {
-=======
 	for (i = 0; i < IA_CSS_BINARY_MAX_OUTPUT_PORTS; i++)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (i = 0; i < IA_CSS_BINARY_MAX_OUTPUT_PORTS; i++) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!err && args->out_frame[i])
 			err = set_output_frame_buffer(args->out_frame[i], i);
 	}
@@ -858,17 +786,7 @@ sh_css_stage_write_binary_info(struct ia_css_binary_info *info)
 }
 
 static int
-<<<<<<< HEAD
-<<<<<<< HEAD
-copy_isp_mem_if_to_ddr(struct ia_css_binary *binary)
-{
-=======
 copy_isp_mem_if_to_ddr(struct ia_css_binary *binary) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-copy_isp_mem_if_to_ddr(struct ia_css_binary *binary)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	err = ia_css_isp_param_copy_isp_mem_if_to_ddr(
@@ -899,17 +817,7 @@ configure_isp_from_args(
     const struct ia_css_binary      *binary,
     const struct sh_css_binary_args *args,
     bool two_ppc,
-<<<<<<< HEAD
-<<<<<<< HEAD
-    bool deinterleaved)
-{
-=======
     bool deinterleaved) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-    bool deinterleaved)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ia_css_fpn_configure(binary,  &binary->in_frame_info);
 	ia_css_crop_configure(binary, &args->delay_frames[0]->info);
 	ia_css_qplane_configure(pipeline, binary, &binary->in_frame_info);
@@ -988,17 +896,7 @@ sh_css_sp_init_stage(struct ia_css_binary *binary,
 		     bool xnr,
 		     const struct ia_css_isp_param_css_segments *isp_mem_if,
 		     unsigned int if_config_index,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		     bool two_ppc)
-{
-=======
 		     bool two_ppc) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		     bool two_ppc)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct ia_css_binary_xinfo *xinfo;
 	const struct ia_css_binary_info  *info;
 	int err = 0;
@@ -1030,16 +928,8 @@ sh_css_sp_init_stage(struct ia_css_binary *binary,
 
 	ia_css_pipeline_get_sp_thread_id(pipe_num, &thread_id);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!info) {
-=======
 	if (!info)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!info) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sh_css_sp_group.pipe[thread_id].sp_stage_addr[stage] = mmgr_NULL;
 		return 0;
 	}
@@ -1071,16 +961,8 @@ sh_css_sp_init_stage(struct ia_css_binary *binary,
 
 	ia_css_frame_info_to_frame_sp_info(&sh_css_sp_stage.frames.in.info,
 					   &binary->in_frame_info);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	for (i = 0; i < IA_CSS_BINARY_MAX_OUTPUT_PORTS; i++) {
-=======
 	for (i = 0; i < IA_CSS_BINARY_MAX_OUTPUT_PORTS; i++)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (i = 0; i < IA_CSS_BINARY_MAX_OUTPUT_PORTS; i++) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ia_css_frame_info_to_frame_sp_info(&sh_css_sp_stage.frames.out[i].info,
 						   &binary->out_frame_info[i]);
 	}
@@ -1114,32 +996,16 @@ sh_css_sp_init_stage(struct ia_css_binary *binary,
 
 	err = sh_css_sp_write_frame_pointers(args);
 	/* TODO: move it to a better place */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (binary->info->sp.enable.s3a) {
-=======
 	if (binary->info->sp.enable.s3a)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (binary->info->sp.enable.s3a) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ia_css_query_internal_queue_id(IA_CSS_BUFFER_TYPE_3A_STATISTICS, thread_id,
 					       &queue_id);
 		sh_css_copy_buffer_attr_to_spbuffer(&sh_css_sp_stage.frames.s3a_buf, queue_id,
 						    mmgr_EXCEPTION,
 						    IA_CSS_BUFFER_TYPE_3A_STATISTICS);
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (binary->info->sp.enable.dis) {
-=======
 	if (binary->info->sp.enable.dis)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (binary->info->sp.enable.dis) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ia_css_query_internal_queue_id(IA_CSS_BUFFER_TYPE_DIS_STATISTICS, thread_id,
 					       &queue_id);
 		sh_css_copy_buffer_attr_to_spbuffer(&sh_css_sp_stage.frames.dvs_buf, queue_id,
@@ -1180,16 +1046,8 @@ sh_css_sp_init_stage(struct ia_css_binary *binary,
 	 * the original out res. for video pipe, it has two output pins --- out and
 	 * vf_out, so it can keep these two resolutions already. */
 	if (binary->info->sp.pipeline.mode == IA_CSS_BINARY_MODE_PREVIEW &&
-<<<<<<< HEAD
-<<<<<<< HEAD
-	    (binary->vf_downscale_log2 > 0)) {
-=======
 	    (binary->vf_downscale_log2 > 0))
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	    (binary->vf_downscale_log2 > 0)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* TODO: Remove this after preview output decimation is fixed
 		 * by configuring out&vf info fiels properly */
 		sh_css_sp_stage.frames.out[0].info.padded_width
@@ -1211,17 +1069,7 @@ sp_init_stage(struct ia_css_pipeline_stage *stage,
 	      unsigned int pipe_num,
 	      bool xnr,
 	      unsigned int if_config_index,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	      bool two_ppc)
-{
-=======
 	      bool two_ppc) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	      bool two_ppc)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct ia_css_binary *binary;
 	const struct ia_css_fw_info *firmware;
 	const struct sh_css_binary_args *args;
@@ -1257,30 +1105,14 @@ sp_init_stage(struct ia_css_pipeline_stage *stage,
 	args = &stage->args;
 	stage_num = stage->stage_num;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (binary) {
-=======
 	if (binary)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (binary) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		info = binary->info;
 		binary_name = (const char *)(info->blob->name);
 		blob_info = &info->blob->header.blob;
 		ia_css_init_memory_interface(mem_if, &binary->mem_params, &binary->css_params);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	} else if (firmware) {
-=======
 	} else if (firmware)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} else if (firmware) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		const struct ia_css_frame_info *out_infos[IA_CSS_BINARY_MAX_OUTPUT_PORTS] = {NULL};
 
 		if (args->out_frame[0])
@@ -1301,16 +1133,8 @@ sp_init_stage(struct ia_css_pipeline_stage *stage,
 		binary_name = IA_CSS_EXT_ISP_PROG_NAME(firmware);
 		blob_info = &firmware->blob;
 		mem_if = (struct ia_css_isp_param_css_segments *)&firmware->mem_initializers;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	} else {
-=======
 	} else
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} else {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* SP stage */
 		assert(stage->sp_func != IA_CSS_PIPELINE_NO_FUNC);
 		/* binary and blob_info are now NULL.
@@ -1381,17 +1205,7 @@ sh_css_sp_init_pipeline(struct ia_css_pipeline *me,
 			*internal_frame_origin_bqs_on_sctbl, /* Origin of internal frame
 							positioned on shading table at shading correction in ISP. */
 			const struct ia_css_isp_parameters *params
-<<<<<<< HEAD
-<<<<<<< HEAD
-		       )
-{
-=======
 		       ) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		       )
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Get first stage */
 	struct ia_css_pipeline_stage *stage        = NULL;
 	struct ia_css_binary	     *first_binary = NULL;
@@ -1409,37 +1223,17 @@ sh_css_sp_init_pipeline(struct ia_css_pipeline *me,
 	first_binary = me->stages->binary;
 
 	if (input_mode == IA_CSS_INPUT_MODE_SENSOR ||
-<<<<<<< HEAD
-<<<<<<< HEAD
-	    input_mode == IA_CSS_INPUT_MODE_BUFFERED_SENSOR) {
-=======
 	    input_mode == IA_CSS_INPUT_MODE_BUFFERED_SENSOR)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	    input_mode == IA_CSS_INPUT_MODE_BUFFERED_SENSOR) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		assert(port_id < N_MIPI_PORT_ID);
 		if (port_id >= N_MIPI_PORT_ID) /* should not happen but KW does not know */
 			return; /* we should be able to return an error */
 		if_config_index  = (uint8_t)(port_id - MIPI_PORT0_ID);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	} else if (input_mode == IA_CSS_INPUT_MODE_MEMORY) {
-		if_config_index = SH_CSS_IF_CONFIG_NOT_NEEDED;
-	} else {
-=======
 	} else if (input_mode == IA_CSS_INPUT_MODE_MEMORY)
 	{
 		if_config_index = SH_CSS_IF_CONFIG_NOT_NEEDED;
 	} else
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	} else if (input_mode == IA_CSS_INPUT_MODE_MEMORY) {
-		if_config_index = SH_CSS_IF_CONFIG_NOT_NEEDED;
-	} else {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if_config_index = 0x0;
 	}
 
@@ -1447,31 +1241,15 @@ sh_css_sp_init_pipeline(struct ia_css_pipeline *me,
 	memset(&sh_css_sp_group.pipe[thread_id], 0, sizeof(struct sh_css_sp_pipeline));
 
 	/* Count stages */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	for (stage = me->stages, num = 0; stage; stage = stage->next, num++) {
-=======
 	for (stage = me->stages, num = 0; stage; stage = stage->next, num++)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (stage = me->stages, num = 0; stage; stage = stage->next, num++) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		stage->stage_num = num;
 		ia_css_debug_pipe_graph_dump_stage(stage, id);
 	}
 	me->num_stages = num;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (first_binary) {
-=======
 	if (first_binary)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (first_binary) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* Init pipeline data */
 		sh_css_sp_init_group(two_ppc, first_binary->input_format,
 				     offline, if_config_index);
@@ -1499,16 +1277,8 @@ sh_css_sp_init_pipeline(struct ia_css_pipeline *me,
 
 	/* TODO: next indicates from which queues parameters need to be
 		 sampled, needs checking/improvement */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (ia_css_pipeline_uses_params(me)) {
-=======
 	if (ia_css_pipeline_uses_params(me))
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (ia_css_pipeline_uses_params(me)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sh_css_sp_group.pipe[thread_id].pipe_config =
 		SH_CSS_PIPE_CONFIG_SAMPLE_PARAMS << thread_id;
 	}
@@ -1522,31 +1292,15 @@ sh_css_sp_init_pipeline(struct ia_css_pipeline *me,
 
 	pipe = find_pipe_by_num(pipe_num);
 	assert(pipe);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!pipe) {
-=======
 	if (!pipe)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!pipe) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 	sh_css_sp_group.pipe[thread_id].scaler_pp_lut = sh_css_pipe_get_pp_gdc_lut(pipe);
 
 #if defined(SH_CSS_ENABLE_METADATA)
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (md_info && md_info->size > 0) {
-=======
 	if (md_info && md_info->size > 0)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (md_info && md_info->size > 0) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sh_css_sp_group.pipe[thread_id].metadata.width  = md_info->resolution.width;
 		sh_css_sp_group.pipe[thread_id].metadata.height = md_info->resolution.height;
 		sh_css_sp_group.pipe[thread_id].metadata.stride = md_info->stride;
@@ -1562,16 +1316,8 @@ sh_css_sp_init_pipeline(struct ia_css_pipeline *me,
 
 #if defined(SH_CSS_ENABLE_PER_FRAME_PARAMS)
 	sh_css_sp_group.pipe[thread_id].output_frame_queue_id = (uint32_t)SH_CSS_INVALID_QUEUE_ID;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (pipe_id != IA_CSS_PIPE_ID_COPY) {
-=======
 	if (pipe_id != IA_CSS_PIPE_ID_COPY)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (pipe_id != IA_CSS_PIPE_ID_COPY) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ia_css_query_internal_queue_id(IA_CSS_BUFFER_TYPE_OUTPUT_FRAME, thread_id,
 					       (enum sh_css_queue_id *)(
 						   &sh_css_sp_group.pipe[thread_id].output_frame_queue_id));
@@ -1583,30 +1329,14 @@ sh_css_sp_init_pipeline(struct ia_css_pipeline *me,
 		* the parameters are passed to the isp for the shading table centering.
 		*/
 		if (internal_frame_origin_bqs_on_sctbl &&
-<<<<<<< HEAD
-<<<<<<< HEAD
-		    params && params->shading_settings.enable_shading_table_conversion == 0) {
-=======
 		    params && params->shading_settings.enable_shading_table_conversion == 0)
 		{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		    params && params->shading_settings.enable_shading_table_conversion == 0) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sh_css_sp_group.pipe[thread_id].shading.internal_frame_origin_x_bqs_on_sctbl
 			= (uint32_t)internal_frame_origin_bqs_on_sctbl->x;
 			sh_css_sp_group.pipe[thread_id].shading.internal_frame_origin_y_bqs_on_sctbl
 			= (uint32_t)internal_frame_origin_bqs_on_sctbl->y;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		} else {
-=======
 		} else
 		{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		} else {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sh_css_sp_group.pipe[thread_id].shading.internal_frame_origin_x_bqs_on_sctbl =
 			0;
 			sh_css_sp_group.pipe[thread_id].shading.internal_frame_origin_y_bqs_on_sctbl =
@@ -1617,16 +1347,8 @@ sh_css_sp_init_pipeline(struct ia_css_pipeline *me,
 	IA_CSS_LOG("pipe_id %d port_config %08x",
 		   pipe_id, sh_css_sp_group.pipe[thread_id].inout_port_config);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	for (stage = me->stages, num = 0; stage; stage = stage->next, num++) {
-=======
 	for (stage = me->stages, num = 0; stage; stage = stage->next, num++)
 	{
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (stage = me->stages, num = 0; stage; stage = stage->next, num++) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sh_css_sp_group.pipe[thread_id].num_stages++;
 		if (is_sp_stage(stage)) {
 			sp_init_sp_stage(stage, pipe_num, two_ppc,
@@ -1678,17 +1400,7 @@ bool sh_css_write_host2sp_command(enum host2sp_commands host2sp_command)
 }
 
 enum host2sp_commands
-<<<<<<< HEAD
-<<<<<<< HEAD
-sh_css_read_host2sp_command(void)
-{
-=======
 sh_css_read_host2sp_command(void) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-sh_css_read_host2sp_command(void)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int HIVE_ADDR_host_sp_com = sh_css_sp_fw.info.sp.host_sp_com;
 	unsigned int offset = (unsigned int)offsetof(struct host_sp_communication, host2sp_command)
 	/ sizeof(int);
@@ -1874,17 +1586,7 @@ sh_css_event_init_irq_mask(void)
 int
 ia_css_pipe_set_irq_mask(struct ia_css_pipe *pipe,
 			 unsigned int or_mask,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			 unsigned int and_mask)
-{
-=======
 			 unsigned int and_mask) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			 unsigned int and_mask)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int HIVE_ADDR_host_sp_com = sh_css_sp_fw.info.sp.host_sp_com;
 	unsigned int offset;
 	struct sh_css_event_irq_mask event_irq_mask;
@@ -1923,17 +1625,7 @@ ia_css_pipe_set_irq_mask(struct ia_css_pipe *pipe,
 int
 ia_css_event_get_irq_mask(const struct ia_css_pipe *pipe,
 			  unsigned int *or_mask,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			  unsigned int *and_mask)
-{
-=======
 			  unsigned int *and_mask) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			  unsigned int *and_mask)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int HIVE_ADDR_host_sp_com = sh_css_sp_fw.info.sp.host_sp_com;
 	unsigned int offset;
 	struct sh_css_event_irq_mask event_irq_mask;

@@ -147,15 +147,7 @@ static void config_acp3x_dma(struct i2s_stream_instance *rtd, int direction)
 		high |= BIT(31);
 		rv_writel(high, rtd->acp3x_base + mmACP_SCRATCH_REG_0 + val
 				+ 4);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		/* Move to next physically contiguous page */
-=======
 		/* Move to next physically contiguos page */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		/* Move to next physically contiguous page */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		val += 8;
 		addr += PAGE_SIZE;
 	}
@@ -294,15 +286,7 @@ static int acp3x_dma_hw_params(struct snd_soc_component *component,
 		pr_err("pinfo failed\n");
 	}
 	size = params_buffer_bytes(params);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rtd->dma_addr = substream->runtime->dma_addr;
-=======
 	rtd->dma_addr = substream->dma_buffer.addr;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rtd->dma_addr = substream->runtime->dma_addr;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rtd->num_pages = (PAGE_ALIGN(size) >> PAGE_SHIFT);
 	config_acp3x_dma(rtd, substream->stream);
 	return 0;
@@ -336,9 +320,6 @@ static int acp3x_dma_new(struct snd_soc_component *component,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int acp3x_dma_mmap(struct snd_soc_component *component,
 			  struct snd_pcm_substream *substream,
 			  struct vm_area_struct *vma)
@@ -346,9 +327,6 @@ static int acp3x_dma_mmap(struct snd_soc_component *component,
 	return snd_pcm_lib_default_mmap(substream, vma);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int acp3x_dma_close(struct snd_soc_component *component,
 			   struct snd_pcm_substream *substream)
 {
@@ -392,13 +370,7 @@ static const struct snd_soc_component_driver acp3x_i2s_component = {
 	.close		= acp3x_dma_close,
 	.hw_params	= acp3x_dma_hw_params,
 	.pointer	= acp3x_dma_pointer,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.mmap		= acp3x_dma_mmap,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.pcm_construct	= acp3x_dma_new,
 };
 

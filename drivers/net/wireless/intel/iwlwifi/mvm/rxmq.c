@@ -69,18 +69,8 @@ static inline int iwl_mvm_check_pn(struct iwl_mvm *mvm, struct sk_buff *skb,
 
 	/* if we are here - this for sure is either CCMP or GCMP */
 	if (IS_ERR_OR_NULL(sta)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		IWL_DEBUG_DROP(mvm,
-			       "expected hw-decrypted unicast frame for station\n");
-=======
 		IWL_ERR(mvm,
 			"expected hw-decrypted unicast frame for station\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		IWL_DEBUG_DROP(mvm,
-			       "expected hw-decrypted unicast frame for station\n");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -1;
 	}
 
@@ -289,13 +279,7 @@ static int iwl_mvm_rx_mgmt_prot(struct ieee80211_sta *sta,
 {
 	struct iwl_mvm_sta *mvmsta;
 	struct iwl_mvm_vif *mvmvif;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	u8 fwkeyid = u32_get_bits(status, IWL_RX_MPDU_STATUS_KEY);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 keyid;
 	struct ieee80211_key_conf *key;
 	u32 len = le16_to_cpu(desc->mpdu_len);
@@ -315,19 +299,6 @@ static int iwl_mvm_rx_mgmt_prot(struct ieee80211_sta *sta,
 	if (!ieee80211_is_beacon(hdr->frame_control))
 		return 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* key mismatch - will also report !MIC_OK but we shouldn't count it */
-	if (!(status & IWL_RX_MPDU_STATUS_KEY_VALID))
-		return -1;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* good cases */
 	if (likely(status & IWL_RX_MPDU_STATUS_MIC_OK &&
 		   !(status & IWL_RX_MPDU_STATUS_REPLAY_ERROR)))
@@ -338,21 +309,6 @@ static int iwl_mvm_rx_mgmt_prot(struct ieee80211_sta *sta,
 
 	mvmsta = iwl_mvm_sta_from_mac80211(sta);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mvmvif = iwl_mvm_vif_from_mac80211(mvmsta->vif);
-
-	/*
-	 * both keys will have the same cipher and MIC length, use
-	 * whichever one is available
-	 */
-	key = rcu_dereference(mvmvif->bcn_prot.keys[0]);
-	if (!key) {
-		key = rcu_dereference(mvmvif->bcn_prot.keys[1]);
-		if (!key)
-			return -1;
-	}
-=======
 	/* what? */
 	if (fwkeyid != 6 && fwkeyid != 7)
 		return -1;
@@ -362,42 +318,10 @@ static int iwl_mvm_rx_mgmt_prot(struct ieee80211_sta *sta,
 	key = rcu_dereference(mvmvif->bcn_prot.keys[fwkeyid - 6]);
 	if (!key)
 		return -1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mvmvif = iwl_mvm_vif_from_mac80211(mvmsta->vif);
-
-	/*
-	 * both keys will have the same cipher and MIC length, use
-	 * whichever one is available
-	 */
-	key = rcu_dereference(mvmvif->bcn_prot.keys[0]);
-	if (!key) {
-		key = rcu_dereference(mvmvif->bcn_prot.keys[1]);
-		if (!key)
-			return -1;
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (len < key->icv_len + IEEE80211_GMAC_PN_LEN + 2)
 		return -1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* get the real key ID */
-	keyid = frame[len - key->icv_len - IEEE80211_GMAC_PN_LEN - 2];
-	/* and if that's the other key, look it up */
-	if (keyid != key->keyidx) {
-		/*
-		 * shouldn't happen since firmware checked, but be safe
-		 * in case the MIC length is wrong too, for example
-		 */
-		if (keyid != 6 && keyid != 7)
-			return -1;
-		key = rcu_dereference(mvmvif->bcn_prot.keys[keyid - 6]);
-		if (!key)
-			return -1;
-	}
-=======
 	/*
 	 * See if the key ID matches - if not this may be due to a
 	 * switch and the firmware may erroneously report !MIC_OK.
@@ -405,23 +329,6 @@ static int iwl_mvm_rx_mgmt_prot(struct ieee80211_sta *sta,
 	keyid = frame[len - key->icv_len - IEEE80211_GMAC_PN_LEN - 2];
 	if (keyid != fwkeyid)
 		return -1;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* get the real key ID */
-	keyid = frame[len - key->icv_len - IEEE80211_GMAC_PN_LEN - 2];
-	/* and if that's the other key, look it up */
-	if (keyid != key->keyidx) {
-		/*
-		 * shouldn't happen since firmware checked, but be safe
-		 * in case the MIC length is wrong too, for example
-		 */
-		if (keyid != 6 && keyid != 7)
-			return -1;
-		key = rcu_dereference(mvmvif->bcn_prot.keys[keyid - 6]);
-		if (!key)
-			return -1;
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Report status to mac80211 */
 	if (!(status & IWL_RX_MPDU_STATUS_MIC_OK))

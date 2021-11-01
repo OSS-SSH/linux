@@ -347,15 +347,7 @@ static const struct net_device_ops ipip_netdev_ops = {
 	.ndo_init       = ipip_tunnel_init,
 	.ndo_uninit     = ip_tunnel_uninit,
 	.ndo_start_xmit	= ipip_tunnel_xmit,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_siocdevprivate = ip_tunnel_siocdevprivate,
-=======
 	.ndo_do_ioctl	= ip_tunnel_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_siocdevprivate = ip_tunnel_siocdevprivate,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu = ip_tunnel_change_mtu,
 	.ndo_get_stats64 = dev_get_tstats64,
 	.ndo_get_iflink = ip_tunnel_get_iflink,

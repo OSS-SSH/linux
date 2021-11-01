@@ -766,15 +766,7 @@ static void zfcp_dbf_unregister(struct zfcp_dbf *dbf)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * zfcp_dbf_adapter_register - registers debug feature for an adapter
-=======
  * zfcp_adapter_debug_register - registers debug feature for an adapter
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * zfcp_dbf_adapter_register - registers debug feature for an adapter
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @adapter: pointer to adapter for which debug features should be registered
  * return: -ENOMEM on error, 0 otherwise
  */
@@ -832,15 +824,7 @@ err_out:
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * zfcp_dbf_adapter_unregister - unregisters debug feature for an adapter
-=======
  * zfcp_adapter_debug_unregister - unregisters debug feature for an adapter
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * zfcp_dbf_adapter_unregister - unregisters debug feature for an adapter
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @adapter: pointer to adapter for which debug features should be unregistered
  */
 void zfcp_dbf_adapter_unregister(struct zfcp_adapter *adapter)

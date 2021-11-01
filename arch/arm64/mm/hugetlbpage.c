@@ -43,15 +43,7 @@ void __init arm64_hugetlb_cma_reserve(void)
 #ifdef CONFIG_ARM64_4K_PAGES
 	order = PUD_SHIFT - PAGE_SHIFT;
 #else
-<<<<<<< HEAD
-<<<<<<< HEAD
-	order = CONT_PMD_SHIFT - PAGE_SHIFT;
-=======
 	order = CONT_PMD_SHIFT + PMD_SHIFT - PAGE_SHIFT;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	order = CONT_PMD_SHIFT - PAGE_SHIFT;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	/*
 	 * HugeTLB CMA reservation is required for gigantic

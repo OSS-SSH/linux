@@ -33,15 +33,7 @@ int pnv_cxl_alloc_hwirqs(struct pci_dev *dev, int num);
 void pnv_cxl_release_hwirqs(struct pci_dev *dev, int hwirq, int num);
 int pnv_cxl_get_irq_count(struct pci_dev *dev);
 struct device_node *pnv_pci_get_phb_node(struct pci_dev *dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int64_t pnv_opal_pci_msi_eoi(struct irq_data *d);
-=======
 int64_t pnv_opal_pci_msi_eoi(struct irq_chip *chip, unsigned int hw_irq);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int64_t pnv_opal_pci_msi_eoi(struct irq_data *d);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 bool is_pnv_opal_msi(struct irq_chip *chip);
 
 #ifdef CONFIG_CXL_BASE

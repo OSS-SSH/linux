@@ -68,23 +68,9 @@ static int pid[SNDRV_CARDS] = { [0 ... (SNDRV_CARDS-1)] = -1 };
 static int device_setup[SNDRV_CARDS]; /* device parameter for this card */
 static bool ignore_ctl_error;
 static bool autoclock = true;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static bool lowlatency = true;
 static char *quirk_alias[SNDRV_CARDS];
 static char *delayed_register[SNDRV_CARDS];
 static bool implicit_fb[SNDRV_CARDS];
-static unsigned int quirk_flags[SNDRV_CARDS];
-<<<<<<< HEAD
-=======
-static char *quirk_alias[SNDRV_CARDS];
-static char *delayed_register[SNDRV_CARDS];
-static bool implicit_fb[SNDRV_CARDS];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 bool snd_usb_use_vmalloc = true;
 bool snd_usb_skip_validation;
@@ -106,32 +92,12 @@ MODULE_PARM_DESC(ignore_ctl_error,
 		 "Ignore errors from USB controller for mixer interfaces.");
 module_param(autoclock, bool, 0444);
 MODULE_PARM_DESC(autoclock, "Enable auto-clock selection for UAC2 devices (default: yes).");
-<<<<<<< HEAD
-<<<<<<< HEAD
-module_param(lowlatency, bool, 0444);
-MODULE_PARM_DESC(lowlatency, "Enable low latency playback (default: yes).");
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-module_param(lowlatency, bool, 0444);
-MODULE_PARM_DESC(lowlatency, "Enable low latency playback (default: yes).");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 module_param_array(quirk_alias, charp, NULL, 0444);
 MODULE_PARM_DESC(quirk_alias, "Quirk aliases, e.g. 0123abcd:5678beef.");
 module_param_array(delayed_register, charp, NULL, 0444);
 MODULE_PARM_DESC(delayed_register, "Quirk for delayed registration, given by id:iface, e.g. 0123abcd:4.");
 module_param_array(implicit_fb, bool, NULL, 0444);
 MODULE_PARM_DESC(implicit_fb, "Apply generic implicit feedback sync mode.");
-<<<<<<< HEAD
-<<<<<<< HEAD
-module_param_array(quirk_flags, uint, NULL, 0444);
-MODULE_PARM_DESC(quirk_flags, "Driver quirk bit flags.");
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-module_param_array(quirk_flags, uint, NULL, 0444);
-MODULE_PARM_DESC(quirk_flags, "Driver quirk bit flags.");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 module_param_named(use_vmalloc, snd_usb_use_vmalloc, bool, 0444);
 MODULE_PARM_DESC(use_vmalloc, "Use vmalloc for PCM intermediate buffers (default: yes).");
 module_param_named(skip_validation, snd_usb_skip_validation, bool, 0444);
@@ -412,18 +378,6 @@ static const struct usb_audio_device_name usb_audio_names[] = {
 
 	DEVICE_NAME(0x046d, 0x0990, "Logitech, Inc.", "QuickCam Pro 9000"),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	DEVICE_NAME(0x05e1, 0x0408, "Syntek", "STK1160"),
-	DEVICE_NAME(0x05e1, 0x0480, "Hauppauge", "Woodbury"),
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	DEVICE_NAME(0x05e1, 0x0408, "Syntek", "STK1160"),
-	DEVICE_NAME(0x05e1, 0x0480, "Hauppauge", "Woodbury"),
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* ASUS ROG Strix */
 	PROFILE_NAME(0x0b05, 0x1917,
 		     "Realtek", "ALC1220-VB-DT", "Realtek-ALC1220-VB-Desktop"),
@@ -452,16 +406,6 @@ static const struct usb_audio_device_name usb_audio_names[] = {
 	PROFILE_NAME(0x0db0, 0x543d,
 		     "Realtek", "ALC1220-VB-DT", "Realtek-ALC1220-VB-Desktop"),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	DEVICE_NAME(0x0fd9, 0x0008, "Hauppauge", "HVR-950Q"),
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	DEVICE_NAME(0x0fd9, 0x0008, "Hauppauge", "HVR-950Q"),
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* Stanton/N2IT Final Scratch v1 device ('Scratchamp') */
 	DEVICE_NAME(0x103d, 0x0100, "Stanton", "ScratchAmp"),
 	DEVICE_NAME(0x103d, 0x0101, "Stanton", "ScratchAmp"),
@@ -480,31 +424,6 @@ static const struct usb_audio_device_name usb_audio_names[] = {
 	PROFILE_NAME(0x26ce, 0x0a01,
 		     "Realtek", "ALC1220-VB-DT", "Realtek-ALC1220-VB-Desktop"),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	DEVICE_NAME(0x2040, 0x7200, "Hauppauge", "HVR-950Q"),
-	DEVICE_NAME(0x2040, 0x7201, "Hauppauge", "HVR-950Q-MXL"),
-	DEVICE_NAME(0x2040, 0x7210, "Hauppauge", "HVR-950Q"),
-	DEVICE_NAME(0x2040, 0x7211, "Hauppauge", "HVR-950Q-MXL"),
-	DEVICE_NAME(0x2040, 0x7213, "Hauppauge", "HVR-950Q"),
-	DEVICE_NAME(0x2040, 0x7217, "Hauppauge", "HVR-950Q"),
-	DEVICE_NAME(0x2040, 0x721b, "Hauppauge", "HVR-950Q"),
-	DEVICE_NAME(0x2040, 0x721e, "Hauppauge", "HVR-950Q"),
-	DEVICE_NAME(0x2040, 0x721f, "Hauppauge", "HVR-950Q"),
-	DEVICE_NAME(0x2040, 0x7240, "Hauppauge", "HVR-850"),
-	DEVICE_NAME(0x2040, 0x7260, "Hauppauge", "HVR-950Q"),
-	DEVICE_NAME(0x2040, 0x7270, "Hauppauge", "HVR-950Q"),
-	DEVICE_NAME(0x2040, 0x7280, "Hauppauge", "HVR-950Q"),
-	DEVICE_NAME(0x2040, 0x7281, "Hauppauge", "HVR-950Q-MXL"),
-	DEVICE_NAME(0x2040, 0x8200, "Hauppauge", "Woodbury"),
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ } /* terminator */
 };
 
@@ -680,14 +599,6 @@ static int snd_usb_audio_create(struct usb_interface *intf,
 	chip->setup = device_setup[idx];
 	chip->generic_implicit_fb = implicit_fb[idx];
 	chip->autoclock = autoclock;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	chip->lowlatency = lowlatency;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	chip->lowlatency = lowlatency;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	atomic_set(&chip->active, 1); /* avoid autopm during probing */
 	atomic_set(&chip->usage_count, 0);
 	atomic_set(&chip->shutdown, 0);
@@ -699,20 +610,6 @@ static int snd_usb_audio_create(struct usb_interface *intf,
 	INIT_LIST_HEAD(&chip->midi_list);
 	INIT_LIST_HEAD(&chip->mixer_list);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (quirk_flags[idx])
-		chip->quirk_flags = quirk_flags[idx];
-	else
-		snd_usb_init_quirk_flags(chip);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	card->private_free = snd_usb_audio_free;
 
 	strcpy(card->driver, "USB-Audio");
@@ -884,21 +781,6 @@ static int usb_audio_probe(struct usb_interface *intf,
 
 	dev_set_drvdata(&dev->dev, chip);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (ignore_ctl_error)
-		chip->quirk_flags |= QUIRK_FLAG_IGNORE_CTL_ERROR;
-
-	if (chip->quirk_flags & QUIRK_FLAG_DISABLE_AUTOSUSPEND)
-		usb_disable_autosuspend(interface_to_usbdev(intf));
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * For devices with more than one control interface, we assume the
 	 * first contains the audio controls. We might need a more specific
@@ -907,13 +789,7 @@ static int usb_audio_probe(struct usb_interface *intf,
 	if (!chip->ctrl_intf)
 		chip->ctrl_intf = alts;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	chip->txfr_quirk = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = 1; /* continue */
 	if (quirk && quirk->ifnum != QUIRK_NO_INTERFACE) {
 		/* need some special handlings */
@@ -927,15 +803,7 @@ static int usb_audio_probe(struct usb_interface *intf,
 		err = snd_usb_create_streams(chip, ifnum);
 		if (err < 0)
 			goto __error;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = snd_usb_create_mixer(chip, ifnum);
-=======
 		err = snd_usb_create_mixer(chip, ifnum, ignore_ctl_error);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = snd_usb_create_mixer(chip, ifnum);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err < 0)
 			goto __error;
 	}
@@ -957,15 +825,7 @@ static int usb_audio_probe(struct usb_interface *intf,
 			goto __error;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (chip->quirk_flags & QUIRK_FLAG_SHARE_MEDIA_DEVICE) {
-=======
 	if (quirk && quirk->shares_media_device) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (chip->quirk_flags & QUIRK_FLAG_SHARE_MEDIA_DEVICE) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/* don't want to fail when snd_media_device_create() fails */
 		snd_media_device_create(chip, intf);
 	}
@@ -1047,15 +907,7 @@ static void usb_audio_disconnect(struct usb_interface *intf)
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (chip->quirk_flags & QUIRK_FLAG_DISABLE_AUTOSUSPEND)
-=======
 	if (chip->quirk_type & QUIRK_SETUP_DISABLE_AUTOSUSPEND)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (chip->quirk_flags & QUIRK_FLAG_DISABLE_AUTOSUSPEND)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		usb_enable_autosuspend(interface_to_usbdev(intf));
 
 	chip->num_interfaces--;
@@ -1164,15 +1016,7 @@ static int usb_audio_suspend(struct usb_interface *intf, pm_message_t message)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int usb_audio_resume(struct usb_interface *intf)
-=======
 static int __usb_audio_resume(struct usb_interface *intf, bool reset_resume)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int usb_audio_resume(struct usb_interface *intf)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct snd_usb_audio *chip = usb_get_intfdata(intf);
 	struct snd_usb_stream *as;
@@ -1198,15 +1042,7 @@ static int usb_audio_resume(struct usb_interface *intf)
 	 * we just notify and restart the mixers
 	 */
 	list_for_each_entry(mixer, &chip->mixer_list, list) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = snd_usb_mixer_resume(mixer);
-=======
 		err = snd_usb_mixer_resume(mixer, reset_resume);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = snd_usb_mixer_resume(mixer);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err < 0)
 			goto err_out;
 	}
@@ -1226,13 +1062,6 @@ err_out:
 	atomic_dec(&chip->active); /* allow autopm after this point */
 	return err;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-#else
-#define usb_audio_suspend	NULL
-#define usb_audio_resume	NULL
-#define usb_audio_resume	NULL
-=======
 
 static int usb_audio_resume(struct usb_interface *intf)
 {
@@ -1247,13 +1076,6 @@ static int usb_audio_reset_resume(struct usb_interface *intf)
 #define usb_audio_suspend	NULL
 #define usb_audio_resume	NULL
 #define usb_audio_reset_resume	NULL
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#else
-#define usb_audio_suspend	NULL
-#define usb_audio_resume	NULL
-#define usb_audio_resume	NULL
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif		/* CONFIG_PM */
 
 static const struct usb_device_id usb_audio_ids [] = {
@@ -1275,15 +1097,7 @@ static struct usb_driver usb_audio_driver = {
 	.disconnect =	usb_audio_disconnect,
 	.suspend =	usb_audio_suspend,
 	.resume =	usb_audio_resume,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.reset_resume =	usb_audio_resume,
-=======
 	.reset_resume =	usb_audio_reset_resume,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.reset_resume =	usb_audio_resume,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table =	usb_audio_ids,
 	.supports_autosuspend = 1,
 };

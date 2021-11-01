@@ -92,26 +92,12 @@ void __init kvm_hyp_reserve(void)
 	 * this is unmapped from the host stage-2, and fallback to PAGE_SIZE.
 	 */
 	hyp_mem_size = hyp_mem_pages << PAGE_SHIFT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	hyp_mem_base = memblock_phys_alloc(ALIGN(hyp_mem_size, PMD_SIZE),
-					   PMD_SIZE);
-	if (!hyp_mem_base)
-		hyp_mem_base = memblock_phys_alloc(hyp_mem_size, PAGE_SIZE);
-=======
 	hyp_mem_base = memblock_find_in_range(0, memblock_end_of_DRAM(),
 					      ALIGN(hyp_mem_size, PMD_SIZE),
 					      PMD_SIZE);
 	if (!hyp_mem_base)
 		hyp_mem_base = memblock_find_in_range(0, memblock_end_of_DRAM(),
 						      hyp_mem_size, PAGE_SIZE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	hyp_mem_base = memblock_phys_alloc(ALIGN(hyp_mem_size, PMD_SIZE),
-					   PMD_SIZE);
-	if (!hyp_mem_base)
-		hyp_mem_base = memblock_phys_alloc(hyp_mem_size, PAGE_SIZE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		hyp_mem_size = ALIGN(hyp_mem_size, PMD_SIZE);
 
@@ -119,13 +105,7 @@ void __init kvm_hyp_reserve(void)
 		kvm_err("Failed to reserve hyp memory\n");
 		return;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	memblock_reserve(hyp_mem_base, hyp_mem_size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kvm_info("Reserved %lld MiB at 0x%llx\n", hyp_mem_size >> 20,
 		 hyp_mem_base);

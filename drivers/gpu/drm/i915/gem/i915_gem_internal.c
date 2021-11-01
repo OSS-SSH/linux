@@ -42,15 +42,7 @@ static int i915_gem_object_get_pages_internal(struct drm_i915_gem_object *obj)
 
 	max_order = MAX_ORDER;
 #ifdef CONFIG_SWIOTLB
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (is_swiotlb_active(obj->base.dev->dev)) {
-=======
 	if (is_swiotlb_active()) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (is_swiotlb_active(obj->base.dev->dev)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		unsigned int max_segment;
 
 		max_segment = swiotlb_max_segment();
@@ -185,18 +177,8 @@ i915_gem_object_create_internal(struct drm_i915_private *i915,
 		return ERR_PTR(-ENOMEM);
 
 	drm_gem_private_object_init(&i915->drm, &obj->base, size);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	i915_gem_object_init(obj, &i915_gem_object_internal_ops, &lock_class, 0);
-	obj->mem_flags |= I915_BO_FLAG_STRUCT_PAGE;
-=======
 	i915_gem_object_init(obj, &i915_gem_object_internal_ops, &lock_class,
 			     I915_BO_ALLOC_STRUCT_PAGE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	i915_gem_object_init(obj, &i915_gem_object_internal_ops, &lock_class, 0);
-	obj->mem_flags |= I915_BO_FLAG_STRUCT_PAGE;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Mark the object as volatile, such that the pages are marked as

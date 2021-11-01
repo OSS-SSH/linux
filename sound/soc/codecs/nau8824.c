@@ -828,9 +828,6 @@ static void nau8824_int_status_clear_all(struct regmap *regmap)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void nau8824_dapm_disable_pin(struct nau8824 *nau8824, const char *pin)
 {
 	struct snd_soc_dapm_context *dapm = nau8824->dapm;
@@ -861,9 +858,6 @@ static void nau8824_dapm_enable_pin(struct nau8824 *nau8824, const char *pin)
 	}
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void nau8824_eject_jack(struct nau8824 *nau8824)
 {
 	struct snd_soc_dapm_context *dapm = nau8824->dapm;
@@ -872,18 +866,8 @@ static void nau8824_eject_jack(struct nau8824 *nau8824)
 	/* Clear all interruption status */
 	nau8824_int_status_clear_all(regmap);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	snd_soc_dapm_disable_pin(dapm, "SAR");
-	snd_soc_dapm_disable_pin(dapm, "MICBIAS");
-=======
 	nau8824_dapm_disable_pin(nau8824, "SAR");
 	nau8824_dapm_disable_pin(nau8824, "MICBIAS");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	snd_soc_dapm_disable_pin(dapm, "SAR");
-	snd_soc_dapm_disable_pin(dapm, "MICBIAS");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_soc_dapm_sync(dapm);
 
 	/* Enable the insertion interruption, disable the ejection
@@ -913,18 +897,8 @@ static void nau8824_jdet_work(struct work_struct *work)
 	struct regmap *regmap = nau8824->regmap;
 	int adc_value, event = 0, event_mask = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	snd_soc_dapm_enable_pin(dapm, "MICBIAS");
-	snd_soc_dapm_enable_pin(dapm, "SAR");
-=======
 	nau8824_dapm_enable_pin(nau8824, "MICBIAS");
 	nau8824_dapm_enable_pin(nau8824, "SAR");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	snd_soc_dapm_enable_pin(dapm, "MICBIAS");
-	snd_soc_dapm_enable_pin(dapm, "SAR");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	snd_soc_dapm_sync(dapm);
 
 	msleep(100);
@@ -935,18 +909,8 @@ static void nau8824_jdet_work(struct work_struct *work)
 	if (adc_value < HEADSET_SARADC_THD) {
 		event |= SND_JACK_HEADPHONE;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		snd_soc_dapm_disable_pin(dapm, "SAR");
-		snd_soc_dapm_disable_pin(dapm, "MICBIAS");
-=======
 		nau8824_dapm_disable_pin(nau8824, "SAR");
 		nau8824_dapm_disable_pin(nau8824, "MICBIAS");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		snd_soc_dapm_disable_pin(dapm, "SAR");
-		snd_soc_dapm_disable_pin(dapm, "MICBIAS");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		snd_soc_dapm_sync(dapm);
 	} else {
 		event |= SND_JACK_HEADSET;

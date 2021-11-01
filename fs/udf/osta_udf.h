@@ -111,15 +111,7 @@ struct logicalVolIntegrityDescImpUse {
 	__le16		minUDFReadRev;
 	__le16		minUDFWriteRev;
 	__le16		maxUDFWriteRev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	uint8_t		impUse[];
-=======
 	uint8_t		impUse[0];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	uint8_t		impUse[];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } __packed;
 
 /* Implementation Use Volume Descriptor (UDF 2.60 2.2.7) */
@@ -186,9 +178,6 @@ struct metadataPartitionMap {
 	uint8_t		reserved2[5];
 } __packed;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /* Virtual Allocation Table (UDF 1.5 2.2.10) */
 struct virtualAllocationTable15 {
 	__le32		vatEntry[0];
@@ -198,9 +187,6 @@ struct virtualAllocationTable15 {
 
 #define ICBTAG_FILE_TYPE_VAT15		0x00U
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Virtual Allocation Table (UDF 2.60 2.2.11) */
 struct virtualAllocationTable20 {
 	__le16		lengthHeader;
@@ -213,18 +199,8 @@ struct virtualAllocationTable20 {
 	__le16		minUDFWriteRev;
 	__le16		maxUDFWriteRev;
 	__le16		reserved;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	uint8_t		impUse[];
-	/* __le32	vatEntry[]; */
-=======
 	uint8_t		impUse[0];
 	__le32		vatEntry[0];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	uint8_t		impUse[];
-	/* __le32	vatEntry[]; */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } __packed;
 
 #define ICBTAG_FILE_TYPE_VAT20		0xF8U
@@ -241,16 +217,8 @@ struct sparingTable {
 	__le16		reallocationTableLen;
 	__le16		reserved;
 	__le32		sequenceNum;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct sparingEntry mapEntry[];
-=======
 	struct sparingEntry
 			mapEntry[0];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct sparingEntry mapEntry[];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } __packed;
 
 /* Metadata File (and Metadata Mirror File) (UDF 2.60 2.2.13.1) */
@@ -273,15 +241,7 @@ struct allocDescImpUse {
 /* FreeEASpace (UDF 2.60 3.3.4.5.1.1) */
 struct freeEaSpace {
 	__le16		headerChecksum;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	uint8_t		freeEASpace[];
-=======
 	uint8_t		freeEASpace[0];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	uint8_t		freeEASpace[];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } __packed;
 
 /* DVD Copyright Management Information (UDF 2.60 3.3.4.5.1.2) */
@@ -305,15 +265,7 @@ struct LVExtensionEA {
 /* FreeAppEASpace (UDF 2.60 3.3.4.6.1) */
 struct freeAppEASpace {
 	__le16		headerChecksum;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	uint8_t		freeEASpace[];
-=======
 	uint8_t		freeEASpace[0];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	uint8_t		freeEASpace[];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 } __packed;
 
 /* UDF Defined System Stream (UDF 2.60 3.3.7) */

@@ -379,9 +379,6 @@ acpi_ns_repair_CID(struct acpi_evaluate_info *info,
 
 			(*element_ptr)->common.reference_count =
 			    original_ref_count;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 			/*
 			 * The original_element holds a reference from the package object
@@ -389,9 +386,6 @@ acpi_ns_repair_CID(struct acpi_evaluate_info *info,
 			 * remove the reference from the _CID package.
 			 */
 			acpi_ut_remove_reference(original_element);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		element_ptr++;

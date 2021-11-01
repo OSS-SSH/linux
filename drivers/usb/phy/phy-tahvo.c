@@ -393,19 +393,7 @@ static int tahvo_usb_probe(struct platform_device *pdev)
 
 	dev_set_drvdata(&pdev->dev, tu);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tu->irq = ret = platform_get_irq(pdev, 0);
-	if (ret < 0)
-		return ret;
-=======
 	tu->irq = platform_get_irq(pdev, 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tu->irq = ret = platform_get_irq(pdev, 0);
-	if (ret < 0)
-		return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = request_threaded_irq(tu->irq, NULL, tahvo_usb_vbus_interrupt,
 				   IRQF_ONESHOT,
 				   "tahvo-vbus", tu);

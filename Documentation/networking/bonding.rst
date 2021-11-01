@@ -501,27 +501,6 @@ fail_over_mac
 	This option was added in bonding version 3.2.0.  The "follow"
 	policy was added in bonding version 3.3.0.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-lacp_active
-	Option specifying whether to send LACPDU frames periodically.
-
-	off or 0
-		LACPDU frames acts as "speak when spoken to".
-
-	on or 1
-		LACPDU frames are sent along the configured links
-		periodically. See lacp_rate for more details.
-
-	The default is on.
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 lacp_rate
 
 	Option specifying the rate in which we'll ask our link partner

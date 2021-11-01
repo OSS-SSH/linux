@@ -51,18 +51,6 @@ struct lwtunnel_encap_ops {
 };
 
 #ifdef CONFIG_LWTUNNEL
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-DECLARE_STATIC_KEY_FALSE(nf_hooks_lwtunnel_enabled);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-DECLARE_STATIC_KEY_FALSE(nf_hooks_lwtunnel_enabled);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void lwtstate_free(struct lwtunnel_state *lws);
 
 static inline struct lwtunnel_state *

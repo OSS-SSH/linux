@@ -100,15 +100,7 @@ static int chsc_subchannel_probe(struct subchannel *sch)
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void chsc_subchannel_remove(struct subchannel *sch)
-=======
 static int chsc_subchannel_remove(struct subchannel *sch)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void chsc_subchannel_remove(struct subchannel *sch)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct chsc_private *private;
 
@@ -120,13 +112,7 @@ static void chsc_subchannel_remove(struct subchannel *sch)
 		put_device(&sch->dev);
 	}
 	kfree(private);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void chsc_subchannel_shutdown(struct subchannel *sch)

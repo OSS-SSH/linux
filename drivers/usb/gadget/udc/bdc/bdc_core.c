@@ -488,20 +488,11 @@ static int bdc_probe(struct platform_device *pdev)
 	int irq;
 	u32 temp;
 	struct device *dev = &pdev->dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct clk *clk;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int phy_num;
 
 	dev_dbg(dev, "%s()\n", __func__);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	clk = devm_clk_get_optional(dev, "sw_usbd");
 	if (IS_ERR(clk))
 		return PTR_ERR(clk);
@@ -512,21 +503,12 @@ static int bdc_probe(struct platform_device *pdev)
 		return ret;
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bdc = devm_kzalloc(dev, sizeof(*bdc), GFP_KERNEL);
 	if (!bdc)
 		return -ENOMEM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	bdc->clk = clk;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bdc->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(bdc->regs))
 		return PTR_ERR(bdc->regs);
@@ -563,37 +545,10 @@ static int bdc_probe(struct platform_device *pdev)
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	bdc->clk = devm_clk_get_optional(dev, "sw_usbd");
-	if (IS_ERR(bdc->clk))
-		return PTR_ERR(bdc->clk);
-
-	ret = clk_prepare_enable(bdc->clk);
-	if (ret) {
-		dev_err(dev, "could not enable clock\n");
-		return ret;
-	}
-
-<<<<<<< HEAD
-	ret = bdc_phy_init(bdc);
-	if (ret) {
-		dev_err(bdc->dev, "BDC phy init failure:%d\n", ret);
-		goto disable_clk;
-=======
 	ret = bdc_phy_init(bdc);
 	if (ret) {
 		dev_err(bdc->dev, "BDC phy init failure:%d\n", ret);
 		return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = bdc_phy_init(bdc);
-	if (ret) {
-		dev_err(bdc->dev, "BDC phy init failure:%d\n", ret);
-		goto disable_clk;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	temp = bdc_readl(bdc->regs, BDC_BDCCAP1);
@@ -605,17 +560,7 @@ static int bdc_probe(struct platform_device *pdev)
 		if (ret) {
 			dev_err(dev,
 				"No suitable DMA config available, abort\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ret = -ENOTSUPP;
-			goto phycleanup;
-=======
 			return -ENOTSUPP;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ret = -ENOTSUPP;
-			goto phycleanup;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		dev_dbg(dev, "Using 32-bit address\n");
 	}
@@ -635,16 +580,6 @@ cleanup:
 	bdc_hw_exit(bdc);
 phycleanup:
 	bdc_phy_exit(bdc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-disable_clk:
-	clk_disable_unprepare(bdc->clk);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-disable_clk:
-	clk_disable_unprepare(bdc->clk);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

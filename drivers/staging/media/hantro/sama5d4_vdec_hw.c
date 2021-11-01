@@ -64,17 +64,11 @@ static const struct hantro_fmt sama5d4_vdec_fmts[] = {
 	},
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int sama5d4_hw_init(struct hantro_dev *vpu)
 {
 	return 0;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Supported codec ops.
  */
@@ -115,13 +109,7 @@ const struct hantro_variant sama5d4_vdec_variant = {
 	.codec = HANTRO_MPEG2_DECODER | HANTRO_VP8_DECODER |
 		 HANTRO_H264_DECODER,
 	.codec_ops = sama5d4_vdec_codec_ops,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.init = sama5d4_hw_init,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.irqs = sama5d4_irqs,
 	.num_irqs = ARRAY_SIZE(sama5d4_irqs),
 	.clk_names = sama5d4_clk_names,

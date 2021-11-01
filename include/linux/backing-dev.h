@@ -143,15 +143,7 @@ static inline struct backing_dev_info *inode_to_bdi(struct inode *inode)
 	sb = inode->i_sb;
 #ifdef CONFIG_BLOCK
 	if (sb_is_blkdev_sb(sb))
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return I_BDEV(inode)->bd_disk->bdi;
-=======
 		return I_BDEV(inode)->bd_bdi;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return I_BDEV(inode)->bd_disk->bdi;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 	return sb->s_bdi;
 }
@@ -296,26 +288,6 @@ static inline struct bdi_writeback *inode_to_wb(const struct inode *inode)
 	return inode->i_wb;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static inline struct bdi_writeback *inode_to_wb_wbc(
-				struct inode *inode,
-				struct writeback_control *wbc)
-{
-	/*
-	 * If wbc does not have inode attached, it means cgroup writeback was
-	 * disabled when wbc started. Just use the default wb in that case.
-	 */
-	return wbc->wb ? wbc->wb : &inode_to_bdi(inode)->wb;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * unlocked_inode_to_wb_begin - begin unlocked inode wb access transaction
  * @inode: target inode
@@ -394,23 +366,6 @@ static inline struct bdi_writeback *inode_to_wb(struct inode *inode)
 	return &inode_to_bdi(inode)->wb;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static inline struct bdi_writeback *inode_to_wb_wbc(
-				struct inode *inode,
-				struct writeback_control *wbc)
-{
-	return inode_to_wb(inode);
-}
-
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline struct bdi_writeback *
 unlocked_inode_to_wb_begin(struct inode *inode, struct wb_lock_cookie *cookie)
 {

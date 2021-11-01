@@ -468,10 +468,6 @@ static const struct drm_ioctl_desc etnaviv_ioctls[] = {
 	ETNA_IOCTL(PM_QUERY_SIG, pm_query_sig, DRM_RENDER_ALLOW),
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-DEFINE_DRM_GEM_FOPS(fops);
-=======
 static const struct file_operations fops = {
 	.owner              = THIS_MODULE,
 	.open               = drm_open,
@@ -483,10 +479,6 @@ static const struct file_operations fops = {
 	.llseek             = no_llseek,
 	.mmap               = etnaviv_gem_mmap,
 };
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-DEFINE_DRM_GEM_FOPS(fops);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static const struct drm_driver etnaviv_drm_driver = {
 	.driver_features    = DRIVER_GEM | DRIVER_RENDER,
@@ -495,15 +487,7 @@ static const struct drm_driver etnaviv_drm_driver = {
 	.prime_handle_to_fd = drm_gem_prime_handle_to_fd,
 	.prime_fd_to_handle = drm_gem_prime_fd_to_handle,
 	.gem_prime_import_sg_table = etnaviv_gem_prime_import_sg_table,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.gem_prime_mmap     = drm_gem_prime_mmap,
-=======
 	.gem_prime_mmap     = etnaviv_gem_prime_mmap,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.gem_prime_mmap     = drm_gem_prime_mmap,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_DEBUG_FS
 	.debugfs_init       = etnaviv_debugfs_init,
 #endif

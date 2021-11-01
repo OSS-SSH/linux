@@ -378,18 +378,8 @@ static void __init map_pages(unsigned long start_vaddr,
 
 #if CONFIG_PGTABLE_LEVELS == 3
 		if (pud_none(*pud)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			pmd = memblock_alloc(PAGE_SIZE << PMD_TABLE_ORDER,
-					     PAGE_SIZE << PMD_TABLE_ORDER);
-=======
 			pmd = memblock_alloc(PAGE_SIZE << PMD_ORDER,
 					     PAGE_SIZE << PMD_ORDER);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			pmd = memblock_alloc(PAGE_SIZE << PMD_TABLE_ORDER,
-					     PAGE_SIZE << PMD_TABLE_ORDER);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!pmd)
 				panic("pmd allocation failed.\n");
 			pud_populate(NULL, pud, pmd);

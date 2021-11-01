@@ -25,20 +25,6 @@
 #include <linux/types.h>
 #include <uapi/drm/drm_fourcc.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/**
- * DRM_FORMAT_MAX_PLANES - maximum number of planes a DRM format can have
- */
-#define DRM_FORMAT_MAX_PLANES	4u
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * DRM formats are little endian.  Define host endian variants for the
  * most common formats here, to reduce the #ifdefs needed in drivers.
@@ -92,15 +78,7 @@ struct drm_format_info {
 		 * triplet @char_per_block, @block_w, @block_h for better
 		 * describing the pixel format.
 		 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		u8 cpp[DRM_FORMAT_MAX_PLANES];
-=======
 		u8 cpp[4];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		u8 cpp[DRM_FORMAT_MAX_PLANES];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		/**
 		 * @char_per_block:
@@ -126,15 +104,7 @@ struct drm_format_info {
 		 * information from their drm_mode_config.get_format_info hook
 		 * if they want the core to be validating the pitch.
 		 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		u8 char_per_block[DRM_FORMAT_MAX_PLANES];
-=======
 		u8 char_per_block[4];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		u8 char_per_block[DRM_FORMAT_MAX_PLANES];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	/**
@@ -143,15 +113,7 @@ struct drm_format_info {
 	 * Block width in pixels, this is intended to be accessed through
 	 * drm_format_info_block_width()
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u8 block_w[DRM_FORMAT_MAX_PLANES];
-=======
 	u8 block_w[4];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u8 block_w[DRM_FORMAT_MAX_PLANES];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/**
 	 * @block_h:
@@ -159,15 +121,7 @@ struct drm_format_info {
 	 * Block height in pixels, this is intended to be accessed through
 	 * drm_format_info_block_height()
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u8 block_h[DRM_FORMAT_MAX_PLANES];
-=======
 	u8 block_h[4];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u8 block_h[DRM_FORMAT_MAX_PLANES];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/** @hsub: Horizontal chroma subsampling factor */
 	u8 hsub;

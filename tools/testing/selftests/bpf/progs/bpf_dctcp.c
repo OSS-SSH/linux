@@ -17,20 +17,6 @@
 
 char _license[] SEC("license") = "GPL";
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-volatile const char fallback[TCP_CA_NAME_MAX];
-const char bpf_dctcp[] = "bpf_dctcp";
-const char tcp_cdg[] = "cdg";
-char cc_res[TCP_CA_NAME_MAX];
-int tcp_cdg_res = 0;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int stg_result = 0;
 
 struct {
@@ -71,35 +57,6 @@ void BPF_PROG(dctcp_init, struct sock *sk)
 	struct dctcp *ca = inet_csk_ca(sk);
 	int *stg;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!(tp->ecn_flags & TCP_ECN_OK) && fallback[0]) {
-		/* Switch to fallback */
-		bpf_setsockopt(sk, SOL_TCP, TCP_CONGESTION,
-			       (void *)fallback, sizeof(fallback));
-		/* Switch back to myself which the bpf trampoline
-		 * stopped calling dctcp_init recursively.
-		 */
-		bpf_setsockopt(sk, SOL_TCP, TCP_CONGESTION,
-			       (void *)bpf_dctcp, sizeof(bpf_dctcp));
-		/* Switch back to fallback */
-		bpf_setsockopt(sk, SOL_TCP, TCP_CONGESTION,
-			       (void *)fallback, sizeof(fallback));
-		/* Expecting -ENOTSUPP for tcp_cdg_res */
-		tcp_cdg_res = bpf_setsockopt(sk, SOL_TCP, TCP_CONGESTION,
-					     (void *)tcp_cdg, sizeof(tcp_cdg));
-		bpf_getsockopt(sk, SOL_TCP, TCP_CONGESTION,
-			       (void *)cc_res, sizeof(cc_res));
-		return;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ca->prior_rcv_nxt = tp->rcv_nxt;
 	ca->dctcp_alpha = min(dctcp_alpha_on_init, DCTCP_MAX_ALPHA);
 	ca->loss_cwnd = 0;

@@ -322,9 +322,6 @@ static int dev_map_hash_get_next_key(struct bpf_map *map, void *key,
 	return -ENOENT;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 bool dev_map_can_have_prog(struct bpf_map *map)
 {
 	if ((map->map_type == BPF_MAP_TYPE_DEVMAP ||
@@ -335,9 +332,6 @@ bool dev_map_can_have_prog(struct bpf_map *map)
 	return false;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int dev_map_bpf_prog_run(struct bpf_prog *xdp_prog,
 				struct xdp_frame **frames, int n,
 				struct net_device *dev)
@@ -505,46 +499,6 @@ static inline int __xdp_enqueue(struct net_device *dev, struct xdp_buff *xdp,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static u32 dev_map_bpf_prog_run_skb(struct sk_buff *skb, struct bpf_dtab_netdev *dst)
-{
-	struct xdp_txq_info txq = { .dev = dst->dev };
-	struct xdp_buff xdp;
-	u32 act;
-
-	if (!dst->xdp_prog)
-		return XDP_PASS;
-
-	__skb_pull(skb, skb->mac_len);
-	xdp.txq = &txq;
-
-	act = bpf_prog_run_generic_xdp(skb, &xdp, dst->xdp_prog);
-	switch (act) {
-	case XDP_PASS:
-		__skb_push(skb, skb->mac_len);
-		break;
-	default:
-		bpf_warn_invalid_xdp_action(act);
-		fallthrough;
-	case XDP_ABORTED:
-		trace_xdp_exception(dst->dev, dst->xdp_prog, act);
-		fallthrough;
-	case XDP_DROP:
-		kfree_skb(skb);
-		break;
-	}
-
-	return act;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int dev_xdp_enqueue(struct net_device *dev, struct xdp_buff *xdp,
 		    struct net_device *dev_rx)
 {
@@ -559,22 +513,10 @@ int dev_map_enqueue(struct bpf_dtab_netdev *dst, struct xdp_buff *xdp,
 	return __xdp_enqueue(dev, xdp, dev_rx, dst->xdp_prog);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static bool is_valid_dst(struct bpf_dtab_netdev *obj, struct xdp_buff *xdp)
-{
-	if (!obj ||
-=======
 static bool is_valid_dst(struct bpf_dtab_netdev *obj, struct xdp_buff *xdp,
 			 int exclude_ifindex)
 {
 	if (!obj || obj->dev->ifindex == exclude_ifindex ||
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static bool is_valid_dst(struct bpf_dtab_netdev *obj, struct xdp_buff *xdp)
-{
-	if (!obj ||
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    !obj->dev->netdev_ops->ndo_xdp_xmit)
 		return false;
 
@@ -599,103 +541,25 @@ static int dev_map_enqueue_clone(struct bpf_dtab_netdev *obj,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static inline bool is_ifindex_excluded(int *excluded, int num_excluded, int ifindex)
-{
-	while (num_excluded--) {
-		if (ifindex == excluded[num_excluded])
-			return true;
-	}
-	return false;
-}
-
-/* Get ifindex of each upper device. 'indexes' must be able to hold at
- * least MAX_NEST_DEV elements.
- * Returns the number of ifindexes added.
- */
-static int get_upper_ifindexes(struct net_device *dev, int *indexes)
-{
-	struct net_device *upper;
-	struct list_head *iter;
-	int n = 0;
-
-	netdev_for_each_upper_dev_rcu(dev, upper, iter) {
-		indexes[n++] = upper->ifindex;
-	}
-	return n;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int dev_map_enqueue_multi(struct xdp_buff *xdp, struct net_device *dev_rx,
 			  struct bpf_map *map, bool exclude_ingress)
 {
 	struct bpf_dtab *dtab = container_of(map, struct bpf_dtab, map);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct bpf_dtab_netdev *dst, *last_dst = NULL;
-	int excluded_devices[1+MAX_NEST_DEV];
-	struct hlist_head *head;
-	struct xdp_frame *xdpf;
-	int num_excluded = 0;
-	unsigned int i;
-	int err;
-
-	if (exclude_ingress) {
-		num_excluded = get_upper_ifindexes(dev_rx, excluded_devices);
-		excluded_devices[num_excluded++] = dev_rx->ifindex;
-	}
-
-=======
 	int exclude_ifindex = exclude_ingress ? dev_rx->ifindex : 0;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bpf_dtab_netdev *dst, *last_dst = NULL;
-	int excluded_devices[1+MAX_NEST_DEV];
 	struct hlist_head *head;
 	struct xdp_frame *xdpf;
-	int num_excluded = 0;
 	unsigned int i;
 	int err;
 
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (exclude_ingress) {
-		num_excluded = get_upper_ifindexes(dev_rx, excluded_devices);
-		excluded_devices[num_excluded++] = dev_rx->ifindex;
-	}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	xdpf = xdp_convert_buff_to_frame(xdp);
 	if (unlikely(!xdpf))
 		return -EOVERFLOW;
 
 	if (map->map_type == BPF_MAP_TYPE_DEVMAP) {
 		for (i = 0; i < map->max_entries; i++) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			dst = rcu_dereference_check(dtab->netdev_map[i],
-						    rcu_read_lock_bh_held());
-			if (!is_valid_dst(dst, xdp))
-				continue;
-
-			if (is_ifindex_excluded(excluded_devices, num_excluded, dst->dev->ifindex))
-<<<<<<< HEAD
-=======
 			dst = READ_ONCE(dtab->netdev_map[i]);
 			if (!is_valid_dst(dst, xdp, exclude_ifindex))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				continue;
 
 			/* we only need n-1 clones; last_dst enqueued below */
@@ -715,21 +579,7 @@ int dev_map_enqueue_multi(struct xdp_buff *xdp, struct net_device *dev_rx,
 			head = dev_map_index_hash(dtab, i);
 			hlist_for_each_entry_rcu(dst, head, index_hlist,
 						 lockdep_is_held(&dtab->index_lock)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-				if (!is_valid_dst(dst, xdp))
-					continue;
-
-				if (is_ifindex_excluded(excluded_devices, num_excluded,
-							dst->dev->ifindex))
-<<<<<<< HEAD
-=======
 				if (!is_valid_dst(dst, xdp, exclude_ifindex))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					continue;
 
 				/* we only need n-1 clones; last_dst enqueued below */
@@ -764,23 +614,6 @@ int dev_map_generic_redirect(struct bpf_dtab_netdev *dst, struct sk_buff *skb,
 	err = xdp_ok_fwd_dev(dst->dev, skb->len);
 	if (unlikely(err))
 		return err;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	/* Redirect has already succeeded semantically at this point, so we just
-	 * return 0 even if packet is dropped. Helper below takes care of
-	 * freeing skb.
-	 */
-	if (dev_map_bpf_prog_run_skb(skb, dst) != XDP_PASS)
-		return 0;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	skb->dev = dst->dev;
 	generic_xdp_tx(skb, xdp_prog);
 
@@ -812,60 +645,17 @@ int dev_map_redirect_multi(struct net_device *dev, struct sk_buff *skb,
 			   bool exclude_ingress)
 {
 	struct bpf_dtab *dtab = container_of(map, struct bpf_dtab, map);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct bpf_dtab_netdev *dst, *last_dst = NULL;
-	int excluded_devices[1+MAX_NEST_DEV];
-	struct hlist_head *head;
-	struct hlist_node *next;
-	int num_excluded = 0;
-	unsigned int i;
-	int err;
-
-	if (exclude_ingress) {
-		num_excluded = get_upper_ifindexes(dev, excluded_devices);
-		excluded_devices[num_excluded++] = dev->ifindex;
-	}
-
-	if (map->map_type == BPF_MAP_TYPE_DEVMAP) {
-		for (i = 0; i < map->max_entries; i++) {
-			dst = rcu_dereference_check(dtab->netdev_map[i],
-						    rcu_read_lock_bh_held());
-			if (!dst)
-				continue;
-
-			if (is_ifindex_excluded(excluded_devices, num_excluded, dst->dev->ifindex))
-=======
 	int exclude_ifindex = exclude_ingress ? dev->ifindex : 0;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct bpf_dtab_netdev *dst, *last_dst = NULL;
-	int excluded_devices[1+MAX_NEST_DEV];
 	struct hlist_head *head;
 	struct hlist_node *next;
-	int num_excluded = 0;
 	unsigned int i;
 	int err;
 
-	if (exclude_ingress) {
-		num_excluded = get_upper_ifindexes(dev, excluded_devices);
-		excluded_devices[num_excluded++] = dev->ifindex;
-	}
-
 	if (map->map_type == BPF_MAP_TYPE_DEVMAP) {
 		for (i = 0; i < map->max_entries; i++) {
-<<<<<<< HEAD
 			dst = READ_ONCE(dtab->netdev_map[i]);
 			if (!dst || dst->dev->ifindex == exclude_ifindex)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dst = rcu_dereference_check(dtab->netdev_map[i],
-						    rcu_read_lock_bh_held());
-			if (!dst)
-				continue;
-
-			if (is_ifindex_excluded(excluded_devices, num_excluded, dst->dev->ifindex))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				continue;
 
 			/* we only need n-1 clones; last_dst enqueued below */
@@ -879,34 +669,12 @@ int dev_map_redirect_multi(struct net_device *dev, struct sk_buff *skb,
 				return err;
 
 			last_dst = dst;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	} else { /* BPF_MAP_TYPE_DEVMAP_HASH */
 		for (i = 0; i < dtab->n_buckets; i++) {
 			head = dev_map_index_hash(dtab, i);
 			hlist_for_each_entry_safe(dst, next, head, index_hlist) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-				if (!dst)
-					continue;
-
-				if (is_ifindex_excluded(excluded_devices, num_excluded,
-							dst->dev->ifindex))
-<<<<<<< HEAD
-=======
 				if (!dst || dst->dev->ifindex == exclude_ifindex)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					continue;
 
 				/* we only need n-1 clones; last_dst enqueued below */

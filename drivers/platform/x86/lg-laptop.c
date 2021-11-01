@@ -8,14 +8,6 @@
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
 #include <linux/acpi.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/dmi.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/dmi.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/input.h>
 #include <linux/input/sparse-keymap.h>
 #include <linux/kernel.h>
@@ -24,27 +16,11 @@
 #include <linux/platform_device.h>
 #include <linux/types.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define LED_DEVICE(_name, max, flag) struct led_classdev _name = { \
-=======
 #define LED_DEVICE(_name, max) struct led_classdev _name = { \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define LED_DEVICE(_name, max, flag) struct led_classdev _name = { \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.name           = __stringify(_name),   \
 	.max_brightness = max,                  \
 	.brightness_set = _name##_set,          \
 	.brightness_get = _name##_get,          \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.flags = flag,                          \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.flags = flag,                          \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 MODULE_AUTHOR("Matan Ziv-Av");
@@ -93,28 +69,9 @@ static u32 inited;
 #define INIT_INPUT_ACPI         0x04
 #define INIT_SPARSE_KEYMAP      0x80
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int battery_limit_use_wmbb;
-static struct led_classdev kbd_backlight;
-static enum led_brightness get_kbd_backlight_level(void);
-
-<<<<<<< HEAD
-static const struct key_entry wmi_keymap[] = {
-	{KE_KEY, 0x70, {KEY_F15} },	 /* LG control panel (F1) */
-	{KE_KEY, 0x74, {KEY_F21} },	 /* Touchpad toggle (F5) */
-=======
 static const struct key_entry wmi_keymap[] = {
 	{KE_KEY, 0x70, {KEY_F15} },	 /* LG control panel (F1) */
 	{KE_KEY, 0x74, {KEY_F13} },	 /* Touchpad toggle (F5) */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct key_entry wmi_keymap[] = {
-	{KE_KEY, 0x70, {KEY_F15} },	 /* LG control panel (F1) */
-	{KE_KEY, 0x74, {KEY_F21} },	 /* Touchpad toggle (F5) */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{KE_KEY, 0xf020000, {KEY_F14} }, /* Read mode (F9) */
 	{KE_KEY, 0x10000000, {KEY_F16} },/* Keyboard backlight (F8) - pressing
 					  * this key both sends an event and
@@ -257,29 +214,10 @@ static void wmi_notify(u32 value, void *context)
 		int eventcode = obj->integer.value;
 		struct key_entry *key;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (eventcode == 0x10000000) {
-			led_classdev_notify_brightness_hw_changed(
-				&kbd_backlight, get_kbd_backlight_level());
-		} else {
-			key = sparse_keymap_entry_from_scancode(
-				wmi_input_dev, eventcode);
-			if (key && key->type == KE_KEY)
-				sparse_keymap_report_entry(wmi_input_dev,
-							   key, 1, true);
-		}
-<<<<<<< HEAD
-=======
 		key =
 		    sparse_keymap_entry_from_scancode(wmi_input_dev, eventcode);
 		if (key && key->type == KE_KEY)
 			sparse_keymap_report_entry(wmi_input_dev, key, 1, true);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	pr_debug("Type: %i    Eventcode: 0x%llx\n", obj->type,
@@ -523,20 +461,7 @@ static ssize_t battery_care_limit_store(struct device *dev,
 	if (value == 100 || value == 80) {
 		union acpi_object *r;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (battery_limit_use_wmbb)
-			r = lg_wmbb(WMBB_BATT_LIMIT, WM_SET, value);
-		else
-			r = lg_wmab(WM_BATT_LIMIT, WM_SET, value);
-<<<<<<< HEAD
-=======
 		r = lg_wmab(WM_BATT_LIMIT, WM_SET, value);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!r)
 			return -EIO;
 
@@ -554,64 +479,16 @@ static ssize_t battery_care_limit_show(struct device *dev,
 	unsigned int status;
 	union acpi_object *r;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (battery_limit_use_wmbb) {
-		r = lg_wmbb(WMBB_BATT_LIMIT, WM_GET, 0);
-		if (!r)
-			return -EIO;
-<<<<<<< HEAD
-
-		if (r->type != ACPI_TYPE_BUFFER) {
-			kfree(r);
-			return -EIO;
-		}
-
-		status = r->buffer.pointer[0x10];
-	} else {
-		r = lg_wmab(WM_BATT_LIMIT, WM_GET, 0);
-		if (!r)
-			return -EIO;
-
-		if (r->type != ACPI_TYPE_INTEGER) {
-			kfree(r);
-			return -EIO;
-		}
-
-		status = r->integer.value;
-	}
-=======
 	r = lg_wmab(WM_BATT_LIMIT, WM_GET, 0);
 	if (!r)
 		return -EIO;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		if (r->type != ACPI_TYPE_BUFFER) {
-			kfree(r);
-			return -EIO;
-		}
-
-<<<<<<< HEAD
-	status = r->integer.value;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		status = r->buffer.pointer[0x10];
-	} else {
-		r = lg_wmab(WM_BATT_LIMIT, WM_GET, 0);
-		if (!r)
-			return -EIO;
-
-		if (r->type != ACPI_TYPE_INTEGER) {
-			kfree(r);
-			return -EIO;
-		}
-
-		status = r->integer.value;
+	if (r->type != ACPI_TYPE_INTEGER) {
+		kfree(r);
+		return -EIO;
 	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+
+	status = r->integer.value;
 	kfree(r);
 	if (status != 80 && status != 100)
 		status = 0;
@@ -652,15 +529,7 @@ static enum led_brightness tpad_led_get(struct led_classdev *cdev)
 	return ggov(GOV_TLED) > 0 ? LED_ON : LED_OFF;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static LED_DEVICE(tpad_led, 1, 0);
-=======
 static LED_DEVICE(tpad_led, 1);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static LED_DEVICE(tpad_led, 1, 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void kbd_backlight_set(struct led_classdev *cdev,
 			      enum led_brightness brightness)
@@ -677,15 +546,7 @@ static void kbd_backlight_set(struct led_classdev *cdev,
 	kfree(r);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static enum led_brightness get_kbd_backlight_level(void)
-=======
 static enum led_brightness kbd_backlight_get(struct led_classdev *cdev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static enum led_brightness get_kbd_backlight_level(void)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	union acpi_object *r;
 	int val;
@@ -716,22 +577,7 @@ static enum led_brightness get_kbd_backlight_level(void)
 	return val;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static enum led_brightness kbd_backlight_get(struct led_classdev *cdev)
-{
-	return get_kbd_backlight_level();
-}
-
-static LED_DEVICE(kbd_backlight, 255, LED_BRIGHT_HW_CHANGED);
-<<<<<<< HEAD
-=======
 static LED_DEVICE(kbd_backlight, 255);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void wmi_input_destroy(void)
 {
@@ -756,16 +602,6 @@ static struct platform_driver pf_driver = {
 static int acpi_add(struct acpi_device *device)
 {
 	int ret;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const char *product;
-	int year = 2017;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const char *product;
-	int year = 2017;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (pf_device)
 		return 0;
@@ -783,51 +619,6 @@ static int acpi_add(struct acpi_device *device)
 		pr_err("unable to register platform device\n");
 		goto out_platform_registered;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	product = dmi_get_system_info(DMI_PRODUCT_NAME);
-	if (product && strlen(product) > 4)
-		switch (product[4]) {
-		case '5':
-		case '6':
-			year = 2016;
-			break;
-		case '7':
-			year = 2017;
-			break;
-		case '8':
-			year = 2018;
-			break;
-		case '9':
-			year = 2019;
-			break;
-		case '0':
-			if (strlen(product) > 5)
-				switch (product[5]) {
-				case 'N':
-					year = 2020;
-					break;
-				case 'P':
-					year = 2021;
-					break;
-				default:
-					year = 2022;
-				}
-			break;
-		default:
-			year = 2019;
-		}
-	pr_info("product: %s  year: %d\n", product, year);
-
-	if (year >= 2019)
-		battery_limit_use_wmbb = 1;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = sysfs_create_group(&pf_device->dev.kobj, &dev_attribute_group);
 	if (ret)

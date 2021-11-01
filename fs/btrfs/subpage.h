@@ -126,16 +126,4 @@ DECLARE_BTRFS_SUBPAGE_OPS(ordered);
 bool btrfs_subpage_clear_and_test_dirty(const struct btrfs_fs_info *fs_info,
 		struct page *page, u64 start, u32 len);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void btrfs_page_assert_not_dirty(const struct btrfs_fs_info *fs_info,
-				 struct page *page);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void btrfs_page_assert_not_dirty(const struct btrfs_fs_info *fs_info,
-				 struct page *page);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

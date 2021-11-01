@@ -99,15 +99,7 @@ enum rtw_beacon_filter_offload_mode {
 	BCN_FILTER_OFFLOAD_MODE_2,
 	BCN_FILTER_OFFLOAD_MODE_3,
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	BCN_FILTER_OFFLOAD_MODE_DEFAULT = BCN_FILTER_OFFLOAD_MODE_0,
-=======
 	BCN_FILTER_OFFLOAD_MODE_DEFAULT = BCN_FILTER_OFFLOAD_MODE_1,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	BCN_FILTER_OFFLOAD_MODE_DEFAULT = BCN_FILTER_OFFLOAD_MODE_0,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct rtw_coex_info_req {
@@ -155,14 +147,6 @@ struct rtw_rsvd_page {
 	u8 page;
 	bool add_txdesc;
 	struct cfg80211_ssid *ssid;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u16 probe_req_size;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u16 probe_req_size;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 enum rtw_keep_alive_pkt_type {

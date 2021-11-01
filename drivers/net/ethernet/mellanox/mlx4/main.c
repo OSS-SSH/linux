@@ -3535,14 +3535,6 @@ slave_start:
 
 		if (!SRIOV_VALID_STATE(dev->flags)) {
 			mlx4_err(dev, "Invalid SRIOV state\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-			err = -EINVAL;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			err = -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto err_close;
 		}
 	}
@@ -3813,32 +3805,15 @@ static int __mlx4_init_one(struct pci_dev *pdev, int pci_dev_data,
 
 	pci_set_master(pdev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
-	if (err) {
-		dev_warn(&pdev->dev, "Warning: couldn't set 64-bit PCI DMA mask\n");
-		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
-=======
 	err = pci_set_dma_mask(pdev, DMA_BIT_MASK(64));
 	if (err) {
 		dev_warn(&pdev->dev, "Warning: couldn't set 64-bit PCI DMA mask\n");
 		err = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
-	if (err) {
-		dev_warn(&pdev->dev, "Warning: couldn't set 64-bit PCI DMA mask\n");
-		err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err) {
 			dev_err(&pdev->dev, "Can't set PCI DMA mask, aborting\n");
 			goto err_release_regions;
 		}
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
 	if (err) {
 		dev_warn(&pdev->dev, "Warning: couldn't set 64-bit consistent PCI DMA mask\n");
@@ -3848,9 +3823,6 @@ static int __mlx4_init_one(struct pci_dev *pdev, int pci_dev_data,
 			goto err_release_regions;
 		}
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Allow large DMA segments, up to the firmware limit of 1 GB */
 	dma_set_max_seg_size(&pdev->dev, 1024 * 1024 * 1024);
@@ -4032,15 +4004,7 @@ static int mlx4_init_one(struct pci_dev *pdev, const struct pci_device_id *id)
 
 	printk_once(KERN_INFO "%s", mlx4_version);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	devlink = devlink_alloc(&mlx4_devlink_ops, sizeof(*priv), &pdev->dev);
-=======
 	devlink = devlink_alloc(&mlx4_devlink_ops, sizeof(*priv));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	devlink = devlink_alloc(&mlx4_devlink_ops, sizeof(*priv), &pdev->dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!devlink)
 		return -ENOMEM;
 	priv = devlink_priv(devlink);
@@ -4059,15 +4023,7 @@ static int mlx4_init_one(struct pci_dev *pdev, const struct pci_device_id *id)
 	mutex_init(&dev->persist->interface_state_mutex);
 	mutex_init(&dev->persist->pci_status_mutex);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = devlink_register(devlink);
-=======
 	ret = devlink_register(devlink, &pdev->dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = devlink_register(devlink);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto err_persist_free;
 	ret = devlink_params_register(devlink, mlx4_devlink_params,

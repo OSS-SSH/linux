@@ -167,15 +167,7 @@ static int rpc_clnt_skip_event(struct rpc_clnt *clnt, unsigned long event)
 	case RPC_PIPEFS_MOUNT:
 		if (clnt->cl_pipedir_objects.pdh_dentry != NULL)
 			return 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (refcount_read(&clnt->cl_count) == 0)
-=======
 		if (atomic_read(&clnt->cl_count) == 0)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (refcount_read(&clnt->cl_count) == 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return 1;
 		break;
 	case RPC_PIPEFS_UMOUNT:
@@ -427,15 +419,7 @@ static struct rpc_clnt * rpc_new_client(const struct rpc_create_args *args,
 	clnt->cl_rtt = &clnt->cl_rtt_default;
 	rpc_init_rtt(&clnt->cl_rtt_default, clnt->cl_timeout->to_initval);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	refcount_set(&clnt->cl_count, 1);
-=======
 	atomic_set(&clnt->cl_count, 1);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	refcount_set(&clnt->cl_count, 1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (nodename == NULL)
 		nodename = utsname()->nodename;
@@ -447,15 +431,7 @@ static struct rpc_clnt * rpc_new_client(const struct rpc_create_args *args,
 	if (err)
 		goto out_no_path;
 	if (parent)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		refcount_inc(&parent->cl_count);
-=======
 		atomic_inc(&parent->cl_count);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		refcount_inc(&parent->cl_count);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	trace_rpc_clnt_new(clnt, xprt, program->name, args->servername);
 	return clnt;
@@ -942,38 +918,18 @@ rpc_free_client(struct rpc_clnt *clnt)
 static struct rpc_clnt *
 rpc_free_auth(struct rpc_clnt *clnt)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (clnt->cl_auth == NULL)
 		return rpc_free_client(clnt);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Note: RPCSEC_GSS may need to send NULL RPC calls in order to
 	 *       release remaining GSS contexts. This mechanism ensures
 	 *       that it can do so safely.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (clnt->cl_auth != NULL) {
-		rpcauth_release(clnt->cl_auth);
-		clnt->cl_auth = NULL;
-	}
-	if (refcount_dec_and_test(&clnt->cl_count))
-<<<<<<< HEAD
-=======
 	atomic_inc(&clnt->cl_count);
 	rpcauth_release(clnt->cl_auth);
 	clnt->cl_auth = NULL;
 	if (atomic_dec_and_test(&clnt->cl_count))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return rpc_free_client(clnt);
 	return NULL;
 }
@@ -987,15 +943,7 @@ rpc_release_client(struct rpc_clnt *clnt)
 	do {
 		if (list_empty(&clnt->cl_tasks))
 			wake_up(&destroy_wait);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (refcount_dec_not_one(&clnt->cl_count))
-=======
 		if (!atomic_dec_and_test(&clnt->cl_count))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (refcount_dec_not_one(&clnt->cl_count))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		clnt = rpc_free_auth(clnt);
 	} while (clnt != NULL);
@@ -1134,15 +1082,7 @@ void rpc_task_set_client(struct rpc_task *task, struct rpc_clnt *clnt)
 	if (clnt != NULL) {
 		rpc_task_set_transport(task, clnt);
 		task->tk_client = clnt;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		refcount_inc(&clnt->cl_count);
-=======
 		atomic_inc(&clnt->cl_count);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		refcount_inc(&clnt->cl_count);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (clnt->cl_softrtry)
 			task->tk_flags |= RPC_TASK_SOFT;
 		if (clnt->cl_softerr)
@@ -2754,40 +2694,17 @@ static const struct rpc_procinfo rpcproc_null = {
 	.p_decode = rpcproc_decode_null,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void
-rpc_null_call_prepare(struct rpc_task *task, void *data)
-{
-	task->tk_flags &= ~RPC_TASK_NO_RETRANS_TIMEOUT;
-	rpc_call_start(task);
-}
-
-static const struct rpc_call_ops rpc_null_ops = {
-	.rpc_call_prepare = rpc_null_call_prepare,
-	.rpc_call_done = rpc_default_callback,
-};
-
-=======
 static int rpc_ping(struct rpc_clnt *clnt)
-=======
-static void
-rpc_null_call_prepare(struct rpc_task *task, void *data)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	task->tk_flags &= ~RPC_TASK_NO_RETRANS_TIMEOUT;
-	rpc_call_start(task);
+	struct rpc_message msg = {
+		.rpc_proc = &rpcproc_null,
+	};
+	int err;
+	err = rpc_call_sync(clnt, &msg, RPC_TASK_SOFT | RPC_TASK_SOFTCONN |
+			    RPC_TASK_NULLCREDS);
+	return err;
 }
 
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct rpc_call_ops rpc_null_ops = {
-	.rpc_call_prepare = rpc_null_call_prepare,
-	.rpc_call_done = rpc_default_callback,
-};
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static
 struct rpc_task *rpc_call_null_helper(struct rpc_clnt *clnt,
 		struct rpc_xprt *xprt, struct rpc_cred *cred, int flags,
@@ -2801,15 +2718,7 @@ struct rpc_task *rpc_call_null_helper(struct rpc_clnt *clnt,
 		.rpc_xprt = xprt,
 		.rpc_message = &msg,
 		.rpc_op_cred = cred,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.callback_ops = ops ?: &rpc_null_ops,
-=======
 		.callback_ops = (ops != NULL) ? ops : &rpc_default_ops,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.callback_ops = ops ?: &rpc_null_ops,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.callback_data = data,
 		.flags = flags | RPC_TASK_SOFT | RPC_TASK_SOFTCONN |
 			 RPC_TASK_NULLCREDS,
@@ -2824,28 +2733,6 @@ struct rpc_task *rpc_call_null(struct rpc_clnt *clnt, struct rpc_cred *cred, int
 }
 EXPORT_SYMBOL_GPL(rpc_call_null);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int rpc_ping(struct rpc_clnt *clnt)
-{
-	struct rpc_task	*task;
-	int status;
-
-	task = rpc_call_null_helper(clnt, NULL, NULL, 0, NULL, NULL);
-	if (IS_ERR(task))
-		return PTR_ERR(task);
-	status = task->tk_status;
-	rpc_put_task(task);
-	return status;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct rpc_cb_add_xprt_calldata {
 	struct rpc_xprt_switch *xps;
 	struct rpc_xprt *xprt;
@@ -2869,14 +2756,6 @@ static void rpc_cb_add_xprt_release(void *calldata)
 }
 
 static const struct rpc_call_ops rpc_cb_add_xprt_call_ops = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.rpc_call_prepare = rpc_null_call_prepare,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.rpc_call_prepare = rpc_null_call_prepare,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.rpc_call_done = rpc_cb_add_xprt_done,
 	.rpc_release = rpc_cb_add_xprt_release,
 };
@@ -2895,24 +2774,6 @@ int rpc_clnt_test_and_add_xprt(struct rpc_clnt *clnt,
 	struct rpc_cb_add_xprt_calldata *data;
 	struct rpc_task *task;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (xps->xps_nunique_destaddr_xprts + 1 > clnt->cl_max_connect) {
-		rcu_read_lock();
-		pr_warn("SUNRPC: reached max allowed number (%d) did not add "
-			"transport to server: %s\n", clnt->cl_max_connect,
-			rpc_peeraddr2str(clnt, RPC_DISPLAY_ADDR));
-		rcu_read_unlock();
-		return -EINVAL;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	data = kmalloc(sizeof(*data), GFP_NOFS);
 	if (!data)
 		return -ENOMEM;
@@ -2925,15 +2786,7 @@ int rpc_clnt_test_and_add_xprt(struct rpc_clnt *clnt,
 
 	task = rpc_call_null_helper(clnt, xprt, NULL, RPC_TASK_ASYNC,
 			&rpc_cb_add_xprt_call_ops, data);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	data->xps->xps_nunique_destaddr_xprts++;
-=======
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	data->xps->xps_nunique_destaddr_xprts++;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rpc_put_task(task);
 success:
 	return 1;

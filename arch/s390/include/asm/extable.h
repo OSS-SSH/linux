@@ -28,18 +28,8 @@ struct exception_table_entry
 	long handler;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern struct exception_table_entry *__start_amode31_ex_table;
-extern struct exception_table_entry *__stop_amode31_ex_table;
-=======
 extern struct exception_table_entry *__start_dma_ex_table;
 extern struct exception_table_entry *__stop_dma_ex_table;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern struct exception_table_entry *__start_amode31_ex_table;
-extern struct exception_table_entry *__stop_amode31_ex_table;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 const struct exception_table_entry *s390_search_extables(unsigned long addr);
 

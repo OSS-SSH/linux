@@ -15,32 +15,14 @@ mlx5_core-y :=	main.o cmd.o debugfs.o fw.o eq.o uar.o pagealloc.o \
 		health.o mcg.o cq.o alloc.o port.o mr.o pd.o \
 		transobj.o vport.o sriov.o fs_cmd.o fs_core.o pci_irq.o \
 		fs_counters.o fs_ft_pool.o rl.o lag.o dev.o events.o wq.o lib/gid.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-		lib/devcom.o lib/pci_vsc.o lib/dm.o lib/fs_ttc.o diag/fs_tracepoint.o \
-=======
 		lib/devcom.o lib/pci_vsc.o lib/dm.o diag/fs_tracepoint.o \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		lib/devcom.o lib/pci_vsc.o lib/dm.o lib/fs_ttc.o diag/fs_tracepoint.o \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		diag/fw_tracer.o diag/crdump.o devlink.o diag/rsc_dump.o \
 		fw_reset.o qos.o
 
 #
 # Netdev basic
 #
-<<<<<<< HEAD
-<<<<<<< HEAD
-mlx5_core-$(CONFIG_MLX5_CORE_EN) += en/rqt.o en/tir.o en/rss.o en/rx_res.o \
-		en/channels.o en_main.o en_common.o en_fs.o en_ethtool.o \
-=======
 mlx5_core-$(CONFIG_MLX5_CORE_EN) += en_main.o en_common.o en_fs.o en_ethtool.o \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-mlx5_core-$(CONFIG_MLX5_CORE_EN) += en/rqt.o en/tir.o en/rss.o en/rx_res.o \
-		en/channels.o en_main.o en_common.o en_fs.o en_ethtool.o \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		en_tx.o en_rx.o en_dim.o en_txrx.o en/xdp.o en_stats.o \
 		en_selftest.o en/port.o en/monitor_stats.o en/health.o \
 		en/reporter_tx.o en/reporter_rx.o en/params.o en/xsk/pool.o \
@@ -61,53 +43,19 @@ mlx5_core-$(CONFIG_MLX5_CLS_ACT)     += en_tc.o en/rep/tc.o en/rep/neigh.o \
 					lib/fs_chains.o en/tc_tun.o \
 					esw/indir_table.o en/tc_tun_encap.o \
 					en/tc_tun_vxlan.o en/tc_tun_gre.o en/tc_tun_geneve.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-					en/tc_tun_mplsoudp.o diag/en_tc_tracepoint.o \
-					en/tc/post_act.o
-mlx5_core-$(CONFIG_MLX5_TC_CT)	     += en/tc_ct.o
-mlx5_core-$(CONFIG_MLX5_TC_SAMPLE)   += en/tc/sample.o
-=======
 					en/tc_tun_mplsoudp.o diag/en_tc_tracepoint.o
 mlx5_core-$(CONFIG_MLX5_TC_CT)	     += en/tc_ct.o
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					en/tc_tun_mplsoudp.o diag/en_tc_tracepoint.o \
-					en/tc/post_act.o
-mlx5_core-$(CONFIG_MLX5_TC_CT)	     += en/tc_ct.o
-mlx5_core-$(CONFIG_MLX5_TC_SAMPLE)   += en/tc/sample.o
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #
 # Core extra
 #
 mlx5_core-$(CONFIG_MLX5_ESWITCH)   += eswitch.o eswitch_offloads.o eswitch_offloads_termtbl.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
-				      ecpf.o rdma.o esw/legacy.o \
-				      esw/devlink_port.o esw/vporttbl.o esw/qos.o
-
-mlx5_core-$(CONFIG_MLX5_ESWITCH)   += esw/acl/helper.o \
-				      esw/acl/egress_lgcy.o esw/acl/egress_ofld.o \
-				      esw/acl/ingress_lgcy.o esw/acl/ingress_ofld.o
-
-=======
 				      ecpf.o rdma.o esw/legacy.o
 mlx5_core-$(CONFIG_MLX5_ESWITCH)   += esw/acl/helper.o \
 				      esw/acl/egress_lgcy.o esw/acl/egress_ofld.o \
 				      esw/acl/ingress_lgcy.o esw/acl/ingress_ofld.o \
 				      esw/devlink_port.o esw/vporttbl.o
 mlx5_core-$(CONFIG_MLX5_TC_SAMPLE) += esw/sample.o
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				      ecpf.o rdma.o esw/legacy.o \
-				      esw/devlink_port.o esw/vporttbl.o esw/qos.o
-
-mlx5_core-$(CONFIG_MLX5_ESWITCH)   += esw/acl/helper.o \
-				      esw/acl/egress_lgcy.o esw/acl/egress_ofld.o \
-				      esw/acl/ingress_lgcy.o esw/acl/ingress_ofld.o
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 mlx5_core-$(CONFIG_MLX5_BRIDGE)    += esw/bridge.o en/rep/bridge.o
 
 mlx5_core-$(CONFIG_MLX5_MPFS)      += lib/mpfs.o

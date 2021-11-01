@@ -14,15 +14,7 @@
 /* we cannot use FORTIFY as it brings in new symbols */
 #define __NO_FORTIFY
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/stdarg.h>
-=======
 #include <stdarg.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/stdarg.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/kernel.h>
 #include <linux/string.h>
 #include <linux/init.h>
@@ -1104,17 +1096,7 @@ static const struct ibm_arch_vec ibm_architecture_vec_template __initconst = {
 #else
 		0,
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.associativity = OV5_FEAT(OV5_FORM1_AFFINITY) | OV5_FEAT(OV5_PRRN) |
-		OV5_FEAT(OV5_FORM2_AFFINITY),
-=======
 		.associativity = OV5_FEAT(OV5_TYPE1_AFFINITY) | OV5_FEAT(OV5_PRRN),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.associativity = OV5_FEAT(OV5_FORM1_AFFINITY) | OV5_FEAT(OV5_PRRN) |
-		OV5_FEAT(OV5_FORM2_AFFINITY),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.bin_opts = OV5_FEAT(OV5_RESIZE_HPT) | OV5_FEAT(OV5_HP_EVT),
 		.micro_checkpoint = 0,
 		.reserved0 = 0,

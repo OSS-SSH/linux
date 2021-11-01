@@ -12,16 +12,6 @@
 	aliases {
 		ethernet0 = &ethernet0;
 		ethernet1 = &ksz8851;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		rtc0 = &hwrtc;
-		rtc1 = &rtc;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		rtc0 = &hwrtc;
-		rtc1 = &rtc;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	memory@c0000000 {
@@ -148,14 +138,6 @@
 			reset-gpios = <&gpioh 3 GPIO_ACTIVE_LOW>;
 			reset-assert-us = <500>;
 			reset-deassert-us = <500>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			smsc,disable-energy-detect;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			smsc,disable-energy-detect;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			interrupt-parent = <&gpioi>;
 			interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
 		};
@@ -266,15 +248,7 @@
 	/delete-property/dmas;
 	/delete-property/dma-names;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	hwrtc: rtc@32 {
-=======
 	rtc@32 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	hwrtc: rtc@32 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		compatible = "microcrystal,rv8803";
 		reg = <0x32>;
 	};

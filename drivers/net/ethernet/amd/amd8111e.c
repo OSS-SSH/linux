@@ -1729,15 +1729,7 @@ static const struct net_device_ops amd8111e_netdev_ops = {
 	.ndo_set_rx_mode	= amd8111e_set_multicast_list,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address	= amd8111e_set_mac_address,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl		= amd8111e_ioctl,
-=======
 	.ndo_do_ioctl		= amd8111e_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl		= amd8111e_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu		= amd8111e_change_mtu,
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_poll_controller	 = amd8111e_poll,

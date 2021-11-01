@@ -154,23 +154,10 @@ enum network_type {
 
 #define SUPPORTED_24G_NETTYPE_MSK (WIRELESS_11B | WIRELESS_11G | WIRELESS_11_24N)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define is_legacy_only(net_type)  ((net_type) == ((net_type) & (WIRELESS_11BG)))
-
-#define is_supported_24g(net_type) ((net_type) & SUPPORTED_24G_NETTYPE_MSK ? true : false)
-
-#define is_supported_tx_cck(net_type) (((net_type) & (WIRELESS_11B)) ? true : false)
-#define is_supported_ht(net_type) (((net_type) & (WIRELESS_11_24N)) ? true : false)
-=======
 #define IsLegacyOnly(NetType)  ((NetType) == ((NetType) & (WIRELESS_11BG)))
-=======
-#define is_legacy_only(net_type)  ((net_type) == ((net_type) & (WIRELESS_11BG)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-#define is_supported_24g(net_type) ((net_type) & SUPPORTED_24G_NETTYPE_MSK ? true : false)
+#define IsSupported24G(NetType) ((NetType) & SUPPORTED_24G_NETTYPE_MSK ? true : false)
 
-<<<<<<< HEAD
 #define IsEnableHWCCK(NetType) IsSupported24G(NetType)
 #define IsEnableHWOFDM(NetType) (((NetType) & (WIRELESS_11G|WIRELESS_11_24N)) ? true : false)
 
@@ -181,11 +168,6 @@ enum network_type {
 #define IsSupportedTxCCK(NetType) (((NetType) & (WIRELESS_11B)) ? true : false)
 #define IsSupportedTxOFDM(NetType) (((NetType) & (WIRELESS_11G) ? true : false)
 #define IsSupportedHT(NetType) (((NetType) & (WIRELESS_11_24N)) ? true : false)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define is_supported_tx_cck(net_type) (((net_type) & (WIRELESS_11B)) ? true : false)
-#define is_supported_ht(net_type) (((net_type) & (WIRELESS_11_24N)) ? true : false)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct ieee_param {
 	u32 cmd;
@@ -415,9 +397,6 @@ enum {
 	MGN_MCS5,
 	MGN_MCS6,
 	MGN_MCS7,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	MGN_MCS8,
 	MGN_MCS9,
 	MGN_MCS10,
@@ -442,9 +421,6 @@ enum {
 	MGN_MCS29,
 	MGN_MCS30,
 	MGN_MCS31,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	MGN_UNKNOWN
 };
 
@@ -835,15 +811,7 @@ void rtw_get_bcn_info(struct wlan_network *pnetwork);
 
 void rtw_macaddr_cfg(struct device *dev, u8 *mac_addr);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-u16 rtw_mcs_rate(u8 bw_40MHz, u8 short_GI, unsigned char *MCS_rate);
-=======
 u16 rtw_mcs_rate(u8 rf_type, u8 bw_40MHz, u8 short_GI, unsigned char *MCS_rate);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-u16 rtw_mcs_rate(u8 bw_40MHz, u8 short_GI, unsigned char *MCS_rate);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 int rtw_action_frame_parse(const u8 *frame, u32 frame_len, u8 *category, u8 *action);
 const char *action_public_str(u8 action);

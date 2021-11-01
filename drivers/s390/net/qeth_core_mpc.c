@@ -232,15 +232,9 @@ static const struct ipa_cmd_names qeth_ipa_cmd_names[] = {
 	{IPA_CMD_DELVLAN,	"delvlan"},
 	{IPA_CMD_VNICC,		"vnic_characteristics"},
 	{IPA_CMD_SETBRIDGEPORT_OSA,	"set_bridge_port(osa)"},
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	{IPA_CMD_SETCCID,	"setccid"},
 	{IPA_CMD_DELCCID,	"delccid"},
 	{IPA_CMD_MODCCID,	"modccid"},
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{IPA_CMD_SETIP,		"setip"},
 	{IPA_CMD_QIPASSIST,	"qipassist"},
 	{IPA_CMD_SETASSPARMS,	"setassparms"},

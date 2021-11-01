@@ -63,15 +63,7 @@ static const unsigned long guest_offloads[] = {
 	VIRTIO_NET_F_GUEST_CSUM
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define GUEST_OFFLOAD_GRO_HW_MASK ((1ULL << VIRTIO_NET_F_GUEST_TSO4) | \
-=======
 #define GUEST_OFFLOAD_LRO_MASK ((1ULL << VIRTIO_NET_F_GUEST_TSO4) | \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define GUEST_OFFLOAD_GRO_HW_MASK ((1ULL << VIRTIO_NET_F_GUEST_TSO4) | \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				(1ULL << VIRTIO_NET_F_GUEST_TSO6) | \
 				(1ULL << VIRTIO_NET_F_GUEST_ECN)  | \
 				(1ULL << VIRTIO_NET_F_GUEST_UFO))
@@ -388,15 +380,7 @@ static struct sk_buff *page_to_skb(struct virtnet_info *vi,
 				   struct page *page, unsigned int offset,
 				   unsigned int len, unsigned int truesize,
 				   bool hdr_valid, unsigned int metasize,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				   unsigned int headroom)
-=======
 				   bool whole_page)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				   unsigned int headroom)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct sk_buff *skb;
 	struct virtio_net_hdr_mrg_rxbuf *hdr;
@@ -414,27 +398,13 @@ static struct sk_buff *page_to_skb(struct virtnet_info *vi,
 	else
 		hdr_padded_len = sizeof(struct padded_vnet_hdr);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* If headroom is not 0, there is an offset between the beginning of the
-=======
 	/* If whole_page, there is an offset between the beginning of the
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* If headroom is not 0, there is an offset between the beginning of the
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * data and the allocated space, otherwise the data and the allocated
 	 * space are aligned.
 	 *
 	 * Buffers with headroom use PAGE_SIZE as alloc size, see
 	 * add_recvbuf_mergeable() + get_mergeable_buf_len()
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	truesize = headroom ? PAGE_SIZE : truesize;
-	tailroom = truesize - len - headroom - (hdr_padded_len - hdr_len);
-	buf = p - headroom;
-=======
 	if (whole_page) {
 		/* Buffers with whole_page use PAGE_SIZE as alloc size,
 		 * see add_recvbuf_mergeable() + get_mergeable_buf_len()
@@ -450,12 +420,6 @@ static struct sk_buff *page_to_skb(struct virtnet_info *vi,
 		tailroom = truesize - len;
 		buf = p;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	truesize = headroom ? PAGE_SIZE : truesize;
-	tailroom = truesize - len - headroom - (hdr_padded_len - hdr_len);
-	buf = p - headroom;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	len -= hdr_len;
 	offset += hdr_padded_len;
@@ -471,19 +435,6 @@ static struct sk_buff *page_to_skb(struct virtnet_info *vi,
 
 		skb_reserve(skb, p - buf);
 		skb_put(skb, len);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-		page = (struct page *)page->private;
-		if (page)
-			give_pages(rq, page);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto ok;
 	}
 
@@ -589,45 +540,19 @@ static int __virtnet_xdp_xmit_one(struct virtnet_info *vi,
  * functions to perfectly solve these three problems at the same time.
  */
 #define virtnet_xdp_get_sq(vi) ({                                       \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int cpu = smp_processor_id();                                   \
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int cpu = smp_processor_id();                                   \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct netdev_queue *txq;                                       \
 	typeof(vi) v = (vi);                                            \
 	unsigned int qp;                                                \
 									\
 	if (v->curr_queue_pairs > nr_cpu_ids) {                         \
 		qp = v->curr_queue_pairs - v->xdp_queue_pairs;          \
-<<<<<<< HEAD
-<<<<<<< HEAD
-		qp += cpu;                                              \
-		txq = netdev_get_tx_queue(v->dev, qp);                  \
-		__netif_tx_acquire(txq);                                \
-	} else {                                                        \
-		qp = cpu % v->curr_queue_pairs;                         \
-		txq = netdev_get_tx_queue(v->dev, qp);                  \
-		__netif_tx_lock(txq, cpu);                              \
-=======
 		qp += smp_processor_id();                               \
-=======
-		qp += cpu;                                              \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		txq = netdev_get_tx_queue(v->dev, qp);                  \
 		__netif_tx_acquire(txq);                                \
 	} else {                                                        \
-		qp = cpu % v->curr_queue_pairs;                         \
+		qp = smp_processor_id() % v->curr_queue_pairs;          \
 		txq = netdev_get_tx_queue(v->dev, qp);                  \
-<<<<<<< HEAD
 		__netif_tx_lock(txq, raw_smp_processor_id());           \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		__netif_tx_lock(txq, cpu);                              \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}                                                               \
 	v->sq + qp;                                                     \
 })
@@ -1053,17 +978,7 @@ static struct sk_buff *receive_mergeable(struct net_device *dev,
 				put_page(page);
 				head_skb = page_to_skb(vi, rq, xdp_page, offset,
 						       len, PAGE_SIZE, false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-						       metasize,
-						       VIRTIO_XDP_HEADROOM);
-=======
 						       metasize, true);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-						       metasize,
-						       VIRTIO_XDP_HEADROOM);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				return head_skb;
 			}
 			break;
@@ -1114,15 +1029,7 @@ static struct sk_buff *receive_mergeable(struct net_device *dev,
 	rcu_read_unlock();
 
 	head_skb = page_to_skb(vi, rq, page, offset, len, truesize, !xdp_prog,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			       metasize, headroom);
-=======
 			       metasize, !!headroom);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			       metasize, headroom);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	curr_skb = head_skb;
 
 	if (unlikely(!curr_skb))
@@ -1864,14 +1771,6 @@ static bool virtnet_send_command(struct virtnet_info *vi, u8 class, u8 cmd,
 {
 	struct scatterlist *sgs[4], hdr, stat;
 	unsigned out_num = 0, tmp;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Caller should know better */
 	BUG_ON(!virtio_has_feature(vi->vdev, VIRTIO_NET_F_CTRL_VQ));
@@ -1891,22 +1790,7 @@ static bool virtnet_send_command(struct virtnet_info *vi, u8 class, u8 cmd,
 	sgs[out_num] = &stat;
 
 	BUG_ON(out_num + 1 > ARRAY_SIZE(sgs));
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ret = virtqueue_add_sgs(vi->cvq, sgs, out_num, 1, vi, GFP_ATOMIC);
-	if (ret < 0) {
-		dev_warn(&vi->vdev->dev,
-			 "Failed to add sgs for command vq: %d\n.", ret);
-		return false;
-	}
-<<<<<<< HEAD
-=======
 	virtqueue_add_sgs(vi->cvq, sgs, out_num, 1, vi, GFP_ATOMIC);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (unlikely(!virtqueue_kick(vi->cvq)))
 		return vi->ctrl->status == VIRTIO_NET_OK;
@@ -2318,33 +2202,14 @@ static int virtnet_set_channels(struct net_device *dev,
 	if (vi->rq[0].xdp_prog)
 		return -EINVAL;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_lock();
-	err = _virtnet_set_queues(vi, queue_pairs);
-	if (err) {
-		cpus_read_unlock();
-		goto err;
-	}
-	virtnet_set_affinity(vi);
-	cpus_read_unlock();
-=======
 	get_online_cpus();
-=======
-	cpus_read_lock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = _virtnet_set_queues(vi, queue_pairs);
 	if (err) {
-		cpus_read_unlock();
+		put_online_cpus();
 		goto err;
 	}
 	virtnet_set_affinity(vi);
-<<<<<<< HEAD
 	put_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	netif_set_real_num_tx_queues(dev, queue_pairs);
 	netif_set_real_num_rx_queues(dev, queue_pairs);
@@ -2460,19 +2325,7 @@ static int virtnet_get_link_ksettings(struct net_device *dev,
 }
 
 static int virtnet_set_coalesce(struct net_device *dev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				struct ethtool_coalesce *ec,
-				struct kernel_ethtool_coalesce *kernel_coal,
-				struct netlink_ext_ack *extack)
-=======
 				struct ethtool_coalesce *ec)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				struct ethtool_coalesce *ec,
-				struct kernel_ethtool_coalesce *kernel_coal,
-				struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct virtnet_info *vi = netdev_priv(dev);
 	int i, napi_weight;
@@ -2493,19 +2346,7 @@ static int virtnet_set_coalesce(struct net_device *dev,
 }
 
 static int virtnet_get_coalesce(struct net_device *dev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				struct ethtool_coalesce *ec,
-				struct kernel_ethtool_coalesce *kernel_coal,
-				struct netlink_ext_ack *extack)
-=======
 				struct ethtool_coalesce *ec)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				struct ethtool_coalesce *ec,
-				struct kernel_ethtool_coalesce *kernel_coal,
-				struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct ethtool_coalesce ec_default = {
 		.cmd = ETHTOOL_GCOALESCE,
@@ -2668,15 +2509,7 @@ static int virtnet_xdp_set(struct net_device *dev, struct bpf_prog *prog,
 	        virtio_has_feature(vi->vdev, VIRTIO_NET_F_GUEST_ECN) ||
 		virtio_has_feature(vi->vdev, VIRTIO_NET_F_GUEST_UFO) ||
 		virtio_has_feature(vi->vdev, VIRTIO_NET_F_GUEST_CSUM))) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		NL_SET_ERR_MSG_MOD(extack, "Can't set XDP while host is implementing GRO_HW/CSUM, disable GRO_HW/CSUM first");
-=======
 		NL_SET_ERR_MSG_MOD(extack, "Can't set XDP while host is implementing LRO/CSUM, disable LRO/CSUM first");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		NL_SET_ERR_MSG_MOD(extack, "Can't set XDP while host is implementing GRO_HW/CSUM, disable GRO_HW/CSUM first");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EOPNOTSUPP;
 	}
 
@@ -2807,35 +2640,15 @@ static int virtnet_set_features(struct net_device *dev,
 	u64 offloads;
 	int err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if ((dev->features ^ features) & NETIF_F_GRO_HW) {
-		if (vi->xdp_enabled)
-			return -EBUSY;
-
-		if (features & NETIF_F_GRO_HW)
-			offloads = vi->guest_offloads_capable;
-		else
-			offloads = vi->guest_offloads_capable &
-				   ~GUEST_OFFLOAD_GRO_HW_MASK;
-=======
 	if ((dev->features ^ features) & NETIF_F_LRO) {
-=======
-	if ((dev->features ^ features) & NETIF_F_GRO_HW) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (vi->xdp_enabled)
 			return -EBUSY;
 
-		if (features & NETIF_F_GRO_HW)
+		if (features & NETIF_F_LRO)
 			offloads = vi->guest_offloads_capable;
 		else
 			offloads = vi->guest_offloads_capable &
-<<<<<<< HEAD
 				   ~GUEST_OFFLOAD_LRO_MASK;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				   ~GUEST_OFFLOAD_GRO_HW_MASK;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		err = virtnet_set_guest_offloads(vi, offloads);
 		if (err)
@@ -3151,21 +2964,9 @@ static int init_vqs(struct virtnet_info *vi)
 	if (ret)
 		goto err_free;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_read_lock();
-	virtnet_set_affinity(vi);
-	cpus_read_unlock();
-=======
 	get_online_cpus();
 	virtnet_set_affinity(vi);
 	put_online_cpus();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_read_lock();
-	virtnet_set_affinity(vi);
-	cpus_read_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 
@@ -3327,21 +3128,9 @@ static int virtnet_probe(struct virtio_device *vdev)
 		dev->features |= NETIF_F_RXCSUM;
 	if (virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_TSO4) ||
 	    virtio_has_feature(vdev, VIRTIO_NET_F_GUEST_TSO6))
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev->features |= NETIF_F_GRO_HW;
-	if (virtio_has_feature(vdev, VIRTIO_NET_F_CTRL_GUEST_OFFLOADS))
-		dev->hw_features |= NETIF_F_GRO_HW;
-=======
 		dev->features |= NETIF_F_LRO;
 	if (virtio_has_feature(vdev, VIRTIO_NET_F_CTRL_GUEST_OFFLOADS))
 		dev->hw_features |= NETIF_F_LRO;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev->features |= NETIF_F_GRO_HW;
-	if (virtio_has_feature(vdev, VIRTIO_NET_F_CTRL_GUEST_OFFLOADS))
-		dev->hw_features |= NETIF_F_GRO_HW;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dev->vlan_features = dev->features;
 

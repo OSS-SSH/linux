@@ -15,13 +15,7 @@
 #include <asm/unistd.h>
 #include <asm/errno.h>
 #include <asm/setup.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <asm/segment.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/traps.h>
 #include <asm/asm-offsets.h>
 #include <asm/entry.h>
@@ -31,13 +25,7 @@
 .globl system_call
 .globl resume
 .globl ret_from_exception
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 .globl ret_from_signal
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 .globl sys_call_table
 .globl bad_interrupt
 .globl inthandler1
@@ -71,14 +59,8 @@ do_trace:
 	subql	#4,%sp			/* dummy return address */
 	SAVE_SWITCH_STACK
 	jbsr	syscall_trace_leave
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 ret_from_signal:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	RESTORE_SWITCH_STACK
 	addql	#4,%sp
 	jra	ret_from_exception

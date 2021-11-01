@@ -285,64 +285,11 @@ static inline struct sk_psock *sk_psock(const struct sock *sk)
 	return rcu_dereference_sk_user_data(sk);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static inline void sk_psock_set_state(struct sk_psock *psock,
-				      enum sk_psock_state_bits bit)
-{
-	set_bit(bit, &psock->state);
-}
-
-static inline void sk_psock_clear_state(struct sk_psock *psock,
-					enum sk_psock_state_bits bit)
-{
-	clear_bit(bit, &psock->state);
-}
-
-static inline bool sk_psock_test_state(const struct sk_psock *psock,
-				       enum sk_psock_state_bits bit)
-{
-	return test_bit(bit, &psock->state);
-}
-
-static inline void sock_drop(struct sock *sk, struct sk_buff *skb)
-{
-	sk_drops_add(sk, skb);
-	kfree_skb(skb);
-}
-
-static inline void drop_sk_msg(struct sk_psock *psock, struct sk_msg *msg)
-{
-	if (msg->skb)
-		sock_drop(psock->sk, msg->skb);
-	kfree(msg);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline void sk_psock_queue_msg(struct sk_psock *psock,
 				      struct sk_msg *msg)
 {
 	spin_lock_bh(&psock->ingress_lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED))
-		list_add_tail(&msg->list, &psock->ingress_msg);
-	else
-		drop_sk_msg(psock, msg);
-<<<<<<< HEAD
-=======
 	list_add_tail(&msg->list, &psock->ingress_msg);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spin_unlock_bh(&psock->ingress_lock);
 }
 
@@ -459,9 +406,6 @@ static inline void sk_psock_restore_proto(struct sock *sk,
 		psock->psock_update_sk_prot(sk, psock, true);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline void sk_psock_set_state(struct sk_psock *psock,
 				      enum sk_psock_state_bits bit)
 {
@@ -480,9 +424,6 @@ static inline bool sk_psock_test_state(const struct sk_psock *psock,
 	return test_bit(bit, &psock->state);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline struct sk_psock *sk_psock_get(struct sock *sk)
 {
 	struct sk_psock *psock;

@@ -14,13 +14,7 @@
 
 #include <linux/module.h>
 #include <linux/skbuff.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <linux/crc32.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <rdma/ib_verbs.h>
 #include <rdma/ib_user_verbs.h>
@@ -48,9 +42,6 @@
 
 extern bool rxe_initialized;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline u32 rxe_crc32(struct rxe_dev *rxe,
 			    u32 crc, void *next, size_t len)
 {
@@ -72,9 +63,6 @@ static inline u32 rxe_crc32(struct rxe_dev *rxe,
 	return retval;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void rxe_set_mtu(struct rxe_dev *rxe, unsigned int dev_mtu);
 
 int rxe_add(struct rxe_dev *rxe, unsigned int mtu, const char *ibdev_name);

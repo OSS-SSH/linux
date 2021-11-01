@@ -67,27 +67,11 @@ static bool i915_gem_userptr_invalidate(struct mmu_interval_notifier *mni,
 	if (!mmu_notifier_range_blockable(range))
 		return false;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	write_lock(&i915->mm.notifier_lock);
-
-	mmu_interval_set_seq(mni, cur_seq);
-
-	write_unlock(&i915->mm.notifier_lock);
-=======
 	spin_lock(&i915->mm.notifier_lock);
 
 	mmu_interval_set_seq(mni, cur_seq);
 
 	spin_unlock(&i915->mm.notifier_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	write_lock(&i915->mm.notifier_lock);
-
-	mmu_interval_set_seq(mni, cur_seq);
-
-	write_unlock(&i915->mm.notifier_lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * We don't wait when the process is exiting. This is valid
@@ -123,36 +107,16 @@ i915_gem_userptr_init__mmu_notifier(struct drm_i915_gem_object *obj)
 
 static void i915_gem_object_userptr_drop_ref(struct drm_i915_gem_object *obj)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct page **pvec = NULL;
-
-	assert_object_held_shared(obj);
-
-=======
 	struct drm_i915_private *i915 = to_i915(obj->base.dev);
 	struct page **pvec = NULL;
 
 	spin_lock(&i915->mm.notifier_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct page **pvec = NULL;
-
-	assert_object_held_shared(obj);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!--obj->userptr.page_ref) {
 		pvec = obj->userptr.pvec;
 		obj->userptr.pvec = NULL;
 	}
 	GEM_BUG_ON(obj->userptr.page_ref < 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	spin_unlock(&i915->mm.notifier_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (pvec) {
 		const unsigned long num_pages = obj->base.size >> PAGE_SHIFT;
@@ -164,24 +128,12 @@ static void i915_gem_object_userptr_drop_ref(struct drm_i915_gem_object *obj)
 
 static int i915_gem_userptr_get_pages(struct drm_i915_gem_object *obj)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct drm_i915_private *i915 = to_i915(obj->base.dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const unsigned long num_pages = obj->base.size >> PAGE_SHIFT;
 	unsigned int max_segment = i915_sg_segment_size();
 	struct sg_table *st;
 	unsigned int sg_page_sizes;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct scatterlist *sg;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct page **pvec;
 	int ret;
 
@@ -189,50 +141,25 @@ static int i915_gem_userptr_get_pages(struct drm_i915_gem_object *obj)
 	if (!st)
 		return -ENOMEM;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!obj->userptr.page_ref) {
-		ret = -EAGAIN;
-=======
 	spin_lock(&i915->mm.notifier_lock);
 	if (GEM_WARN_ON(!obj->userptr.page_ref)) {
 		spin_unlock(&i915->mm.notifier_lock);
 		ret = -EFAULT;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!obj->userptr.page_ref) {
-		ret = -EAGAIN;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto err_free;
 	}
 
 	obj->userptr.page_ref++;
 	pvec = obj->userptr.pvec;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-alloc_table:
-	ret = sg_alloc_table_from_pages_segment(st, pvec, num_pages, 0,
-						num_pages << PAGE_SHIFT,
-						max_segment, GFP_KERNEL);
-	if (ret)
-		goto err;
-=======
 	spin_unlock(&i915->mm.notifier_lock);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 alloc_table:
-	ret = sg_alloc_table_from_pages_segment(st, pvec, num_pages, 0,
-						num_pages << PAGE_SHIFT,
-						max_segment, GFP_KERNEL);
-	if (ret)
+	sg = __sg_alloc_table_from_pages(st, pvec, num_pages, 0,
+					 num_pages << PAGE_SHIFT, max_segment,
+					 NULL, 0, GFP_KERNEL);
+	if (IS_ERR(sg)) {
+		ret = PTR_ERR(sg);
 		goto err;
-<<<<<<< HEAD
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = i915_gem_gtt_prepare_pages(obj, st);
 	if (ret) {
@@ -314,15 +241,7 @@ i915_gem_userptr_put_pages(struct drm_i915_gem_object *obj,
 	i915_gem_object_userptr_drop_ref(obj);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int i915_gem_object_userptr_unbind(struct drm_i915_gem_object *obj)
-=======
 static int i915_gem_object_userptr_unbind(struct drm_i915_gem_object *obj, bool get_pages)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int i915_gem_object_userptr_unbind(struct drm_i915_gem_object *obj)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct sg_table *pages;
 	int err;
@@ -340,27 +259,15 @@ static int i915_gem_object_userptr_unbind(struct drm_i915_gem_object *obj)
 	if (!IS_ERR_OR_NULL(pages))
 		i915_gem_userptr_put_pages(obj, pages);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (get_pages)
 		err = ____i915_gem_object_get_pages(obj);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
 int i915_gem_object_userptr_submit_init(struct drm_i915_gem_object *obj)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct drm_i915_private *i915 = to_i915(obj->base.dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const unsigned long num_pages = obj->base.size >> PAGE_SHIFT;
 	struct page **pvec;
 	unsigned int gup_flags = 0;
@@ -370,33 +277,10 @@ int i915_gem_object_userptr_submit_init(struct drm_i915_gem_object *obj)
 	if (obj->userptr.notifier.mm != current->mm)
 		return -EFAULT;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	notifier_seq = mmu_interval_read_begin(&obj->userptr.notifier);
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	notifier_seq = mmu_interval_read_begin(&obj->userptr.notifier);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	ret = i915_gem_object_lock_interruptible(obj, NULL);
 	if (ret)
 		return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (notifier_seq == obj->userptr.notifier_seq && obj->userptr.pvec) {
-		i915_gem_object_unlock(obj);
-		return 0;
-	}
-
-	ret = i915_gem_object_userptr_unbind(obj);
-	i915_gem_object_unlock(obj);
-	if (ret)
-		return ret;
-
-=======
 	/* optimistically try to preserve current pages while unlocked */
 	if (i915_gem_object_has_pages(obj) &&
 	    !mmu_interval_check_retry(&obj->userptr.notifier,
@@ -411,27 +295,21 @@ int i915_gem_object_userptr_submit_init(struct drm_i915_gem_object *obj)
 			ret = 1;
 		}
 		spin_unlock(&i915->mm.notifier_lock);
-=======
-	if (notifier_seq == obj->userptr.notifier_seq && obj->userptr.pvec) {
-		i915_gem_object_unlock(obj);
-		return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
-	ret = i915_gem_object_userptr_unbind(obj);
+	if (!ret) {
+		/* Make sure userptr is unbound for next attempt, so we don't use stale pages. */
+		ret = i915_gem_object_userptr_unbind(obj, false);
+	}
 	i915_gem_object_unlock(obj);
-	if (ret)
+	if (ret < 0)
 		return ret;
 
-<<<<<<< HEAD
 	if (ret > 0)
 		return 0;
 
 	notifier_seq = mmu_interval_read_begin(&obj->userptr.notifier);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pvec = kvmalloc_array(num_pages, sizeof(struct page *), GFP_KERNEL);
 	if (!pvec)
 		return -ENOMEM;
@@ -451,19 +329,7 @@ int i915_gem_object_userptr_submit_init(struct drm_i915_gem_object *obj)
 	}
 	ret = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = i915_gem_object_lock_interruptible(obj, NULL);
-	if (ret)
-		goto out;
-=======
 	spin_lock(&i915->mm.notifier_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = i915_gem_object_lock_interruptible(obj, NULL);
-	if (ret)
-		goto out;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (mmu_interval_read_retry(&obj->userptr.notifier,
 		!obj->userptr.page_ref ? notifier_seq :
@@ -475,33 +341,12 @@ int i915_gem_object_userptr_submit_init(struct drm_i915_gem_object *obj)
 	if (!obj->userptr.page_ref++) {
 		obj->userptr.pvec = pvec;
 		obj->userptr.notifier_seq = notifier_seq;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 		pvec = NULL;
-		ret = ____i915_gem_object_get_pages(obj);
 	}
 
-	obj->userptr.page_ref--;
-
 out_unlock:
-	i915_gem_object_unlock(obj);
-=======
-
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		pvec = NULL;
-		ret = ____i915_gem_object_get_pages(obj);
-	}
-
-	obj->userptr.page_ref--;
-
-out_unlock:
-<<<<<<< HEAD
 	spin_unlock(&i915->mm.notifier_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	i915_gem_object_unlock(obj);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 out:
 	if (pvec) {
@@ -524,17 +369,11 @@ int i915_gem_object_userptr_submit_done(struct drm_i915_gem_object *obj)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void i915_gem_object_userptr_submit_fini(struct drm_i915_gem_object *obj)
 {
 	i915_gem_object_userptr_drop_ref(obj);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int i915_gem_object_userptr_validate(struct drm_i915_gem_object *obj)
 {
 	int err;
@@ -557,13 +396,7 @@ int i915_gem_object_userptr_validate(struct drm_i915_gem_object *obj)
 		i915_gem_object_unlock(obj);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	i915_gem_object_userptr_submit_fini(obj);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return err;
 }
 
@@ -617,43 +450,6 @@ static const struct drm_i915_gem_object_ops i915_gem_userptr_ops = {
 
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int
-probe_range(struct mm_struct *mm, unsigned long addr, unsigned long len)
-{
-	const unsigned long end = addr + len;
-	struct vm_area_struct *vma;
-	int ret = -EFAULT;
-
-	mmap_read_lock(mm);
-	for (vma = find_vma(mm, addr); vma; vma = vma->vm_next) {
-		/* Check for holes, note that we also update the addr below */
-		if (vma->vm_start > addr)
-			break;
-
-		if (vma->vm_flags & (VM_PFNMAP | VM_MIXEDMAP))
-			break;
-
-		if (vma->vm_end >= end) {
-			ret = 0;
-			break;
-		}
-
-		addr = vma->vm_end;
-	}
-	mmap_read_unlock(mm);
-
-	return ret;
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Creates a new mm object that wraps some normal memory from the process
  * context - user memory.
@@ -709,17 +505,7 @@ i915_gem_userptr_ioctl(struct drm_device *dev,
 	}
 
 	if (args->flags & ~(I915_USERPTR_READ_ONLY |
-<<<<<<< HEAD
-<<<<<<< HEAD
-			    I915_USERPTR_UNSYNCHRONIZED |
-			    I915_USERPTR_PROBE))
-=======
 			    I915_USERPTR_UNSYNCHRONIZED))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			    I915_USERPTR_UNSYNCHRONIZED |
-			    I915_USERPTR_PROBE))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 
 	if (i915_gem_object_size_2big(args->user_size))
@@ -746,43 +532,14 @@ i915_gem_userptr_ioctl(struct drm_device *dev,
 			return -ENODEV;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (args->flags & I915_USERPTR_PROBE) {
-		/*
-		 * Check that the range pointed to represents real struct
-		 * pages and not iomappings (at this moment in time!)
-		 */
-		ret = probe_range(current->mm, args->user_ptr, args->user_size);
-		if (ret)
-			return ret;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_MMU_NOTIFIER
 	obj = i915_gem_object_alloc();
 	if (obj == NULL)
 		return -ENOMEM;
 
 	drm_gem_private_object_init(dev, &obj->base, args->user_size);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	i915_gem_object_init(obj, &i915_gem_userptr_ops, &lock_class, 0);
-	obj->mem_flags = I915_BO_FLAG_STRUCT_PAGE;
-=======
 	i915_gem_object_init(obj, &i915_gem_userptr_ops, &lock_class,
 			     I915_BO_ALLOC_STRUCT_PAGE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	i915_gem_object_init(obj, &i915_gem_userptr_ops, &lock_class, 0);
-	obj->mem_flags = I915_BO_FLAG_STRUCT_PAGE;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	obj->read_domains = I915_GEM_DOMAIN_CPU;
 	obj->write_domain = I915_GEM_DOMAIN_CPU;
 	i915_gem_object_set_cache_coherency(obj, I915_CACHE_LLC);
@@ -815,15 +572,7 @@ i915_gem_userptr_ioctl(struct drm_device *dev,
 int i915_gem_init_userptr(struct drm_i915_private *dev_priv)
 {
 #ifdef CONFIG_MMU_NOTIFIER
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rwlock_init(&dev_priv->mm.notifier_lock);
-=======
 	spin_lock_init(&dev_priv->mm.notifier_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rwlock_init(&dev_priv->mm.notifier_lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	return 0;

@@ -969,29 +969,6 @@ void phy_device_remove(struct phy_device *phydev)
 EXPORT_SYMBOL(phy_device_remove);
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * phy_get_c45_ids - Read 802.3-c45 IDs for phy device.
- * @phydev: phy_device structure to read 802.3-c45 IDs
- *
- * Returns zero on success, %-EIO on bus access error, or %-ENODEV if
- * the "devices in package" is invalid.
- */
-int phy_get_c45_ids(struct phy_device *phydev)
-{
-	return get_phy_c45_ids(phydev->mdio.bus, phydev->mdio.addr,
-			       &phydev->c45_ids);
-}
-EXPORT_SYMBOL(phy_get_c45_ids);
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * phy_find_first - finds the first PHY device on the bus
  * @bus: the target MII bus
  */
@@ -1830,25 +1807,11 @@ EXPORT_SYMBOL(phy_resume);
 
 int phy_loopback(struct phy_device *phydev, bool enable)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret = 0;
-
-	if (!phydev->drv)
-		return -EIO;
-=======
 	struct phy_driver *phydrv = to_phy_driver(phydev->mdio.dev.driver);
 	int ret = 0;
 
 	if (!phydrv)
 		return -ENODEV;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret = 0;
-
-	if (!phydev->drv)
-		return -EIO;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&phydev->lock);
 
@@ -1862,18 +1825,8 @@ int phy_loopback(struct phy_device *phydev, bool enable)
 		goto out;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (phydev->drv->set_loopback)
-		ret = phydev->drv->set_loopback(phydev, enable);
-=======
 	if (phydrv->set_loopback)
 		ret = phydrv->set_loopback(phydev, enable);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (phydev->drv->set_loopback)
-		ret = phydev->drv->set_loopback(phydev, enable);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		ret = genphy_loopback(phydev, enable);
 
@@ -3159,18 +3112,6 @@ static void phy_shutdown(struct device *dev)
 {
 	struct phy_device *phydev = to_phy_device(dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (phydev->state == PHY_READY || !phydev->attached_dev)
-		return;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (phydev->state == PHY_READY || !phydev->attached_dev)
-		return;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy_disable_interrupts(phydev);
 }
 

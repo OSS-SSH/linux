@@ -106,15 +106,7 @@ void xs_request_exit(struct xb_req_data *req);
 
 int xenbus_match(struct device *_dev, struct device_driver *_drv);
 int xenbus_dev_probe(struct device *_dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void xenbus_dev_remove(struct device *_dev);
-=======
 int xenbus_dev_remove(struct device *_dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void xenbus_dev_remove(struct device *_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int xenbus_register_driver_common(struct xenbus_driver *drv,
 				  struct xen_bus_type *bus,
 				  struct module *owner,

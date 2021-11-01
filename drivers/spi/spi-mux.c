@@ -137,22 +137,6 @@ static int spi_mux_probe(struct spi_device *spi)
 	priv = spi_controller_get_devdata(ctlr);
 	priv->spi = spi;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Increase lockdep class as these lock are taken while the parent bus
-	 * already holds their instance's lock.
-	 */
-	lockdep_set_subclass(&ctlr->io_mutex, 1);
-	lockdep_set_subclass(&ctlr->add_lock, 1);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	priv->mux = devm_mux_control_get(&spi->dev, NULL);
 	if (IS_ERR(priv->mux)) {
 		ret = dev_err_probe(&spi->dev, PTR_ERR(priv->mux),
@@ -183,33 +167,10 @@ err_put_ctlr:
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const struct spi_device_id spi_mux_id[] = {
-	{ "spi-mux" },
-	{ }
-};
-MODULE_DEVICE_TABLE(spi, spi_mux_id);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id spi_mux_of_match[] = {
 	{ .compatible = "spi-mux" },
 	{ }
 };
-<<<<<<< HEAD
-<<<<<<< HEAD
-MODULE_DEVICE_TABLE(of, spi_mux_of_match);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-MODULE_DEVICE_TABLE(of, spi_mux_of_match);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct spi_driver spi_mux_driver = {
 	.probe  = spi_mux_probe,
@@ -217,14 +178,6 @@ static struct spi_driver spi_mux_driver = {
 		.name   = "spi-mux",
 		.of_match_table = spi_mux_of_match,
 	},
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.id_table = spi_mux_id,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.id_table = spi_mux_id,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 module_spi_driver(spi_mux_driver);

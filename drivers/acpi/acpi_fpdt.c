@@ -220,18 +220,8 @@ static int fpdt_process_subtable(u64 address, u32 subtable_type)
 			break;
 
 		default:
-<<<<<<< HEAD
-<<<<<<< HEAD
-			/* Other types are reserved in ACPI 6.4 spec. */
-			break;
-=======
 			pr_err(FW_BUG "Invalid record %d found.\n", record_header->type);
 			return -EINVAL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			/* Other types are reserved in ACPI 6.4 spec. */
-			break;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 	return 0;
@@ -264,16 +254,8 @@ static int __init acpi_init_fpdt(void)
 					      subtable->type);
 			break;
 		default:
-<<<<<<< HEAD
-<<<<<<< HEAD
-			/* Other types are reserved in ACPI 6.4 spec. */
-=======
 			pr_info(FW_BUG "Invalid subtable type %d found.\n",
 			       subtable->type);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			/* Other types are reserved in ACPI 6.4 spec. */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 		offset += sizeof(*subtable);

@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-=======
 /* SPDX-License-Identifier: GPL-2.0-only */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Copyright (c) 2011-2014 PLUMgrid, http://plumgrid.com
  * Copyright (c) 2016 Facebook
  */

@@ -769,12 +769,6 @@ static int dsi_bridge_init(struct drm_device *dev, struct dw_dsi *dsi)
 {
 	struct drm_encoder *encoder = &dsi->encoder;
 	struct drm_bridge *bridge = dsi->bridge;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	/* associate the bridge to dsi encoder */
-	return drm_bridge_attach(encoder, bridge, NULL, 0);
-=======
 	int ret;
 
 	/* associate the bridge to dsi encoder */
@@ -785,12 +779,6 @@ static int dsi_bridge_init(struct drm_device *dev, struct dw_dsi *dsi)
 	}
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	/* associate the bridge to dsi encoder */
-	return drm_bridge_attach(encoder, bridge, NULL, 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int dsi_bind(struct device *dev, struct device *master, void *data)

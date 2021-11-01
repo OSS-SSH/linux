@@ -5,14 +5,6 @@
 
 #include <linux/dma-buf-map.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <drm/drm_fourcc.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <drm/drm_fourcc.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <drm/drm_plane.h>
 
 struct drm_simple_display_pipe;
@@ -48,25 +40,7 @@ struct drm_shadow_plane_state {
 	 * The memory mappings stored in map should be established in the plane's
 	 * prepare_fb callback and removed in the cleanup_fb callback.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct dma_buf_map map[DRM_FORMAT_MAX_PLANES];
-
-	/**
-	 * @data: Address of each framebuffer BO's data
-	 *
-	 * The address of the data stored in each mapping. This is different
-	 * for framebuffers with non-zero offset fields.
-	 */
-	struct dma_buf_map data[DRM_FORMAT_MAX_PLANES];
-<<<<<<< HEAD
-=======
 	struct dma_buf_map map[4];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -79,21 +53,6 @@ to_drm_shadow_plane_state(struct drm_plane_state *state)
 	return container_of(state, struct drm_shadow_plane_state, base);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-void __drm_gem_duplicate_shadow_plane_state(struct drm_plane *plane,
-					    struct drm_shadow_plane_state *new_shadow_plane_state);
-void __drm_gem_destroy_shadow_plane_state(struct drm_shadow_plane_state *shadow_plane_state);
-void __drm_gem_reset_shadow_plane(struct drm_plane *plane,
-				  struct drm_shadow_plane_state *shadow_plane_state);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void drm_gem_reset_shadow_plane(struct drm_plane *plane);
 struct drm_plane_state *drm_gem_duplicate_shadow_plane_state(struct drm_plane *plane);
 void drm_gem_destroy_shadow_plane_state(struct drm_plane *plane,

@@ -1886,17 +1886,7 @@ brcmf_pcie_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 
 	devinfo->pdev = pdev;
 	pcie_bus_dev = NULL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	devinfo->ci = brcmf_chip_attach(devinfo, pdev->device,
-					&brcmf_pcie_buscore_ops);
-=======
 	devinfo->ci = brcmf_chip_attach(devinfo, &brcmf_pcie_buscore_ops);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	devinfo->ci = brcmf_chip_attach(devinfo, pdev->device,
-					&brcmf_pcie_buscore_ops);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(devinfo->ci)) {
 		ret = PTR_ERR(devinfo->ci);
 		devinfo->ci = NULL;
@@ -2085,15 +2075,7 @@ cleanup:
 
 	err = brcmf_pcie_probe(pdev, NULL);
 	if (err)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		__brcmf_err(NULL, __func__, "probe after resume failed, err=%d\n", err);
-=======
 		brcmf_err(bus, "probe after resume failed, err=%d\n", err);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		__brcmf_err(NULL, __func__, "probe after resume failed, err=%d\n", err);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return err;
 }

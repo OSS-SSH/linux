@@ -116,23 +116,6 @@ MODULE_PARM_DESC(perf_mode,
 	"\t\tdefault - default perf_mode is 'balanced'"
 	);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int poll_queues;
-module_param(poll_queues, int, 0444);
-MODULE_PARM_DESC(poll_queues, "Number of queues to be use for io_uring poll mode.\n\t\t"
-	"This parameter is effective only if host_tagset_enable=1. &\n\t\t"
-	"when poll_queues are enabled then &\n\t\t"
-	"perf_mode is set to latency mode. &\n\t\t"
-	);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 enum mpt3sas_perf_mode {
 	MPT_PERF_MODE_DEFAULT	= -1,
 	MPT_PERF_MODE_BALANCED	= 0,
@@ -726,14 +709,6 @@ _base_fault_reset_work(struct work_struct *work)
 		 * and this call is safe since dead ioc will never return any
 		 * command back from HW.
 		 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		mpt3sas_base_pause_mq_polling(ioc);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		mpt3sas_base_pause_mq_polling(ioc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ioc->schedule_dead_ioc_flush_running_cmds(ioc);
 		/*
 		 * Set remove_host flag early since kernel thread will
@@ -769,14 +744,6 @@ _base_fault_reset_work(struct work_struct *work)
 			spin_unlock_irqrestore(
 			    &ioc->ioc_reset_in_progress_lock, flags);
 			mpt3sas_base_mask_interrupts(ioc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			mpt3sas_base_pause_mq_polling(ioc);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			mpt3sas_base_pause_mq_polling(ioc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			_base_clear_outstanding_commands(ioc);
 		}
 
@@ -1581,64 +1548,6 @@ _base_get_cb_idx(struct MPT3SAS_ADAPTER *ioc, u16 smid)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * mpt3sas_base_pause_mq_polling - pause polling on the mq poll queues
- *				when driver is flushing out the IOs.
- * @ioc: per adapter object
- *
- * Pause polling on the mq poll (io uring) queues when driver is flushing
- * out the IOs. Otherwise we may see the race condition of completing the same
- * IO from two paths.
- *
- * Returns nothing.
- */
-void
-mpt3sas_base_pause_mq_polling(struct MPT3SAS_ADAPTER *ioc)
-{
-	int iopoll_q_count =
-	    ioc->reply_queue_count - ioc->iopoll_q_start_index;
-	int qid;
-
-	for (qid = 0; qid < iopoll_q_count; qid++)
-		atomic_set(&ioc->io_uring_poll_queues[qid].pause, 1);
-
-	/*
-	 * wait for current poll to complete.
-	 */
-	for (qid = 0; qid < iopoll_q_count; qid++) {
-		while (atomic_read(&ioc->io_uring_poll_queues[qid].busy)) {
-			cpu_relax();
-			udelay(500);
-		}
-	}
-}
-
-/**
- * mpt3sas_base_resume_mq_polling - Resume polling on mq poll queues.
- * @ioc: per adapter object
- *
- * Returns nothing.
- */
-void
-mpt3sas_base_resume_mq_polling(struct MPT3SAS_ADAPTER *ioc)
-{
-	int iopoll_q_count =
-	    ioc->reply_queue_count - ioc->iopoll_q_start_index;
-	int qid;
-
-	for (qid = 0; qid < iopoll_q_count; qid++)
-		atomic_set(&ioc->io_uring_poll_queues[qid].pause, 0);
-}
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * mpt3sas_base_mask_interrupts - disable interrupts
  * @ioc: per adapter object
  *
@@ -1813,17 +1722,7 @@ _base_process_reply_queue(struct adapter_reply_queue *reply_q)
 						 MPI2_RPHI_MSIX_INDEX_SHIFT),
 						&ioc->chip->ReplyPostHostIndex);
 			}
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (!reply_q->is_iouring_poll_q &&
-			    !reply_q->irq_poll_scheduled) {
-=======
 			if (!reply_q->irq_poll_scheduled) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (!reply_q->is_iouring_poll_q &&
-			    !reply_q->irq_poll_scheduled) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				reply_q->irq_poll_scheduled = true;
 				irq_poll_sched(&reply_q->irqpoll);
 			}
@@ -1880,42 +1779,6 @@ _base_process_reply_queue(struct adapter_reply_queue *reply_q)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * mpt3sas_blk_mq_poll - poll the blk mq poll queue
- * @shost: Scsi_Host object
- * @queue_num: hw ctx queue number
- *
- * Return number of entries that has been processed from poll queue.
- */
-int mpt3sas_blk_mq_poll(struct Scsi_Host *shost, unsigned int queue_num)
-{
-	struct MPT3SAS_ADAPTER *ioc =
-	    (struct MPT3SAS_ADAPTER *)shost->hostdata;
-	struct adapter_reply_queue *reply_q;
-	int num_entries = 0;
-	int qid = queue_num - ioc->iopoll_q_start_index;
-
-	if (atomic_read(&ioc->io_uring_poll_queues[qid].pause) ||
-	    !atomic_add_unless(&ioc->io_uring_poll_queues[qid].busy, 1, 1))
-		return 0;
-
-	reply_q = ioc->io_uring_poll_queues[qid].reply_q;
-
-	num_entries = _base_process_reply_queue(reply_q);
-	atomic_dec(&ioc->io_uring_poll_queues[qid].busy);
-
-	return num_entries;
-}
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * _base_interrupt - MPT adapter (IOC) specific interrupt handler.
  * @irq: irq number (not used)
  * @bus_id: bus identifier cookie == pointer to MPT_ADAPTER structure
@@ -1988,16 +1851,6 @@ _base_init_irqpolls(struct MPT3SAS_ADAPTER *ioc)
 		return;
 
 	list_for_each_entry_safe(reply_q, next, &ioc->reply_queue_list, list) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (reply_q->is_iouring_poll_q)
-			continue;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (reply_q->is_iouring_poll_q)
-			continue;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		irq_poll_init(&reply_q->irqpoll,
 			ioc->hba_queue_depth/4, _base_irqpoll);
 		reply_q->irq_poll_scheduled = false;
@@ -2047,21 +1900,6 @@ mpt3sas_base_sync_reply_irqs(struct MPT3SAS_ADAPTER *ioc, u8 poll)
 		/* TMs are on msix_index == 0 */
 		if (reply_q->msix_index == 0)
 			continue;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-		if (reply_q->is_iouring_poll_q) {
-			_base_process_reply_queue(reply_q);
-			continue;
-		}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		synchronize_irq(pci_irq_vector(ioc->pdev, reply_q->msix_index));
 		if (reply_q->irq_poll_scheduled) {
 			/* Calling irq_poll_disable will wait for any pending
@@ -3145,31 +2983,13 @@ _base_check_enable_msix(struct MPT3SAS_ADAPTER *ioc)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * mpt3sas_base_free_irq - free irq
-=======
  * _base_free_irq - free irq
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * mpt3sas_base_free_irq - free irq
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @ioc: per adapter object
  *
  * Freeing respective reply_queue from the list.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-void
-mpt3sas_base_free_irq(struct MPT3SAS_ADAPTER *ioc)
-=======
 static void
 _base_free_irq(struct MPT3SAS_ADAPTER *ioc)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void
-mpt3sas_base_free_irq(struct MPT3SAS_ADAPTER *ioc)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct adapter_reply_queue *reply_q, *next;
 
@@ -3178,20 +2998,6 @@ mpt3sas_base_free_irq(struct MPT3SAS_ADAPTER *ioc)
 
 	list_for_each_entry_safe(reply_q, next, &ioc->reply_queue_list, list) {
 		list_del(&reply_q->list);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (reply_q->is_iouring_poll_q) {
-			kfree(reply_q);
-			continue;
-		}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (ioc->smp_affinity_enable)
 			irq_set_affinity_hint(pci_irq_vector(ioc->pdev,
 			    reply_q->msix_index), NULL);
@@ -3213,15 +3019,7 @@ _base_request_irq(struct MPT3SAS_ADAPTER *ioc, u8 index)
 {
 	struct pci_dev *pdev = ioc->pdev;
 	struct adapter_reply_queue *reply_q;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int r, qid;
-=======
 	int r;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int r, qid;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	reply_q =  kzalloc(sizeof(struct adapter_reply_queue), GFP_KERNEL);
 	if (!reply_q) {
@@ -3233,26 +3031,6 @@ _base_request_irq(struct MPT3SAS_ADAPTER *ioc, u8 index)
 	reply_q->msix_index = index;
 
 	atomic_set(&reply_q->busy, 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (index >= ioc->iopoll_q_start_index) {
-		qid = index - ioc->iopoll_q_start_index;
-		snprintf(reply_q->name, MPT_NAME_LENGTH, "%s%d-mq-poll%d",
-		    ioc->driver_name, ioc->id, qid);
-		reply_q->is_iouring_poll_q = 1;
-		ioc->io_uring_poll_queues[qid].reply_q = reply_q;
-		goto out;
-	}
-
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ioc->msix_enable)
 		snprintf(reply_q->name, MPT_NAME_LENGTH, "%s%d-msix%d",
 		    ioc->driver_name, ioc->id, index);
@@ -3267,15 +3045,7 @@ _base_request_irq(struct MPT3SAS_ADAPTER *ioc, u8 index)
 		kfree(reply_q);
 		return -EBUSY;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-out:
-=======
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-out:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	INIT_LIST_HEAD(&reply_q->list);
 	list_add_tail(&reply_q->list, &ioc->reply_queue_list);
 	return 0;
@@ -3296,16 +3066,6 @@ _base_assign_reply_queues(struct MPT3SAS_ADAPTER *ioc)
 	unsigned int cpu, nr_cpus, nr_msix, index = 0;
 	struct adapter_reply_queue *reply_q;
 	int local_numa_node;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int iopoll_q_count = ioc->reply_queue_count -
-	    ioc->iopoll_q_start_index;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int iopoll_q_count = ioc->reply_queue_count -
-	    ioc->iopoll_q_start_index;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!_base_is_controller_msix_enabled(ioc))
 		return;
@@ -3339,17 +3099,7 @@ _base_assign_reply_queues(struct MPT3SAS_ADAPTER *ioc)
 		list_for_each_entry(reply_q, &ioc->reply_queue_list, list) {
 			const cpumask_t *mask;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			if (reply_q->msix_index < ioc->high_iops_queues ||
-			    reply_q->msix_index >= ioc->iopoll_q_start_index)
-=======
 			if (reply_q->msix_index < ioc->high_iops_queues)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			if (reply_q->msix_index < ioc->high_iops_queues ||
-			    reply_q->msix_index >= ioc->iopoll_q_start_index)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				continue;
 
 			mask = pci_irq_get_affinity(ioc->pdev,
@@ -3371,31 +3121,13 @@ _base_assign_reply_queues(struct MPT3SAS_ADAPTER *ioc)
 
 fall_back:
 	cpu = cpumask_first(cpu_online_mask);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	nr_msix -= (ioc->high_iops_queues - iopoll_q_count);
-=======
 	nr_msix -= ioc->high_iops_queues;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	nr_msix -= (ioc->high_iops_queues - iopoll_q_count);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	index = 0;
 
 	list_for_each_entry(reply_q, &ioc->reply_queue_list, list) {
 		unsigned int i, group = nr_cpus / nr_msix;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (reply_q->msix_index < ioc->high_iops_queues ||
-		    reply_q->msix_index >= ioc->iopoll_q_start_index)
-=======
 		if (reply_q->msix_index < ioc->high_iops_queues)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (reply_q->msix_index < ioc->high_iops_queues ||
-		    reply_q->msix_index >= ioc->iopoll_q_start_index)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			continue;
 
 		if (cpu >= nr_cpus)
@@ -3432,26 +3164,8 @@ _base_check_and_enable_high_iops_queues(struct MPT3SAS_ADAPTER *ioc,
 {
 	u16 lnksta, speed;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/*
-	 * Disable high iops queues if io uring poll queues are enabled.
-	 */
-	if (perf_mode == MPT_PERF_MODE_IOPS ||
-	    perf_mode == MPT_PERF_MODE_LATENCY ||
-	    ioc->io_uring_poll_queues) {
-=======
 	if (perf_mode == MPT_PERF_MODE_IOPS ||
 	    perf_mode == MPT_PERF_MODE_LATENCY) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/*
-	 * Disable high iops queues if io uring poll queues are enabled.
-	 */
-	if (perf_mode == MPT_PERF_MODE_IOPS ||
-	    perf_mode == MPT_PERF_MODE_LATENCY ||
-	    ioc->io_uring_poll_queues) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ioc->high_iops_queues = 0;
 		return;
 	}
@@ -3477,43 +3191,17 @@ _base_check_and_enable_high_iops_queues(struct MPT3SAS_ADAPTER *ioc,
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * mpt3sas_base_disable_msix - disables msix
- * @ioc: per adapter object
- *
- */
-void
-mpt3sas_base_disable_msix(struct MPT3SAS_ADAPTER *ioc)
-=======
  * _base_disable_msix - disables msix
  * @ioc: per adapter object
  *
  */
 static void
 _base_disable_msix(struct MPT3SAS_ADAPTER *ioc)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * mpt3sas_base_disable_msix - disables msix
- * @ioc: per adapter object
- *
- */
-void
-mpt3sas_base_disable_msix(struct MPT3SAS_ADAPTER *ioc)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	if (!ioc->msix_enable)
 		return;
 	pci_free_irq_vectors(ioc->pdev);
 	ioc->msix_enable = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	kfree(ioc->io_uring_poll_queues);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	kfree(ioc->io_uring_poll_queues);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -3527,49 +3215,18 @@ _base_alloc_irq_vectors(struct MPT3SAS_ADAPTER *ioc)
 	int i, irq_flags = PCI_IRQ_MSIX;
 	struct irq_affinity desc = { .pre_vectors = ioc->high_iops_queues };
 	struct irq_affinity *descp = &desc;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Don't allocate msix vectors for poll_queues.
-	 * msix_vectors is always within a range of FW supported reply queue.
-	 */
-	int nr_msix_vectors = ioc->iopoll_q_start_index;
-
-<<<<<<< HEAD
 
 	if (ioc->smp_affinity_enable)
-		irq_flags |= PCI_IRQ_AFFINITY | PCI_IRQ_ALL_TYPES;
+		irq_flags |= PCI_IRQ_AFFINITY;
 	else
 		descp = NULL;
 
-	ioc_info(ioc, " %d %d %d\n", ioc->high_iops_queues,
-	    ioc->reply_queue_count, nr_msix_vectors);
+	ioc_info(ioc, " %d %d\n", ioc->high_iops_queues,
+	    ioc->reply_queue_count);
 
 	i = pci_alloc_irq_vectors_affinity(ioc->pdev,
 	    ioc->high_iops_queues,
-	    nr_msix_vectors, irq_flags, descp);
-=======
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (ioc->smp_affinity_enable)
-		irq_flags |= PCI_IRQ_AFFINITY | PCI_IRQ_ALL_TYPES;
-	else
-		descp = NULL;
-
-	ioc_info(ioc, " %d %d %d\n", ioc->high_iops_queues,
-	    ioc->reply_queue_count, nr_msix_vectors);
-
-	i = pci_alloc_irq_vectors_affinity(ioc->pdev,
-	    ioc->high_iops_queues,
-<<<<<<< HEAD
 	    ioc->reply_queue_count, irq_flags, descp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	    nr_msix_vectors, irq_flags, descp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return i;
 }
@@ -3585,14 +3242,6 @@ _base_enable_msix(struct MPT3SAS_ADAPTER *ioc)
 	int r;
 	int i, local_max_msix_vectors;
 	u8 try_msix = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int iopoll_q_count = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int iopoll_q_count = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ioc->msix_load_balance = false;
 
@@ -3608,42 +3257,22 @@ _base_enable_msix(struct MPT3SAS_ADAPTER *ioc)
 	ioc_info(ioc, "MSI-X vectors supported: %d\n", ioc->msix_vector_count);
 	pr_info("\t no of cores: %d, max_msix_vectors: %d\n",
 		ioc->cpu_count, max_msix_vectors);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	ioc->reply_queue_count =
-		min_t(int, ioc->cpu_count, ioc->msix_vector_count);
-=======
 	if (ioc->is_aero_ioc)
 		_base_check_and_enable_high_iops_queues(ioc,
 			ioc->msix_vector_count);
 	ioc->reply_queue_count =
 		min_t(int, ioc->cpu_count + ioc->high_iops_queues,
 		ioc->msix_vector_count);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	ioc->reply_queue_count =
-		min_t(int, ioc->cpu_count, ioc->msix_vector_count);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!ioc->rdpq_array_enable && max_msix_vectors == -1)
 		local_max_msix_vectors = (reset_devices) ? 1 : 8;
 	else
 		local_max_msix_vectors = max_msix_vectors;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (local_max_msix_vectors == 0)
-=======
 	if (local_max_msix_vectors > 0)
 		ioc->reply_queue_count = min_t(int, local_max_msix_vectors,
 			ioc->reply_queue_count);
 	else if (local_max_msix_vectors == 0)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (local_max_msix_vectors == 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto try_ioapic;
 
 	/*
@@ -3664,111 +3293,19 @@ _base_enable_msix(struct MPT3SAS_ADAPTER *ioc)
 	if (ioc->msix_load_balance)
 		ioc->smp_affinity_enable = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!ioc->smp_affinity_enable || ioc->reply_queue_count <= 1)
-		ioc->shost->host_tagset = 0;
-
-	/*
-	 * Enable io uring poll queues only if host_tagset is enabled.
-	 */
-	if (ioc->shost->host_tagset)
-		iopoll_q_count = poll_queues;
-
-	if (iopoll_q_count) {
-		ioc->io_uring_poll_queues = kcalloc(iopoll_q_count,
-		    sizeof(struct io_uring_poll_queue), GFP_KERNEL);
-		if (!ioc->io_uring_poll_queues)
-			iopoll_q_count = 0;
-	}
-
-	if (ioc->is_aero_ioc)
-		_base_check_and_enable_high_iops_queues(ioc,
-		    ioc->msix_vector_count);
-
-	/*
-	 * Add high iops queues count to reply queue count if high iops queues
-	 * are enabled.
-	 */
-	ioc->reply_queue_count = min_t(int,
-	    ioc->reply_queue_count + ioc->high_iops_queues,
-	    ioc->msix_vector_count);
-
-	/*
-	 * Adjust the reply queue count incase reply queue count
-	 * exceeds the user provided MSIx vectors count.
-	 */
-	if (local_max_msix_vectors > 0)
-		ioc->reply_queue_count = min_t(int, local_max_msix_vectors,
-		    ioc->reply_queue_count);
-	/*
-	 * Add io uring poll queues count to reply queues count
-	 * if io uring is enabled in driver.
-	 */
-	if (iopoll_q_count) {
-		if (ioc->reply_queue_count < (iopoll_q_count + MPT3_MIN_IRQS))
-			iopoll_q_count = 0;
-		ioc->reply_queue_count = min_t(int,
-		    ioc->reply_queue_count + iopoll_q_count,
-		    ioc->msix_vector_count);
-	}
-
-	/*
-	 * Starting index of io uring poll queues in reply queue list.
-	 */
-	ioc->iopoll_q_start_index =
-	    ioc->reply_queue_count - iopoll_q_count;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	r = _base_alloc_irq_vectors(ioc);
 	if (r < 0) {
 		ioc_info(ioc, "pci_alloc_irq_vectors failed (r=%d) !!!\n", r);
 		goto try_ioapic;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Adjust the reply queue count if the allocated
-	 * MSIx vectors is less then the requested number
-	 * of MSIx vectors.
-	 */
-	if (r < ioc->iopoll_q_start_index) {
-		ioc->reply_queue_count = r + iopoll_q_count;
-		ioc->iopoll_q_start_index =
-		    ioc->reply_queue_count - iopoll_q_count;
-	}
-
-<<<<<<< HEAD
 	ioc->msix_enable = 1;
+	ioc->reply_queue_count = r;
 	for (i = 0; i < ioc->reply_queue_count; i++) {
 		r = _base_request_irq(ioc, i);
 		if (r) {
-			mpt3sas_base_free_irq(ioc);
-			mpt3sas_base_disable_msix(ioc);
-=======
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ioc->msix_enable = 1;
-	for (i = 0; i < ioc->reply_queue_count; i++) {
-		r = _base_request_irq(ioc, i);
-		if (r) {
-<<<<<<< HEAD
 			_base_free_irq(ioc);
 			_base_disable_msix(ioc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			mpt3sas_base_free_irq(ioc);
-			mpt3sas_base_disable_msix(ioc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto try_ioapic;
 		}
 	}
@@ -3783,14 +3320,6 @@ _base_enable_msix(struct MPT3SAS_ADAPTER *ioc)
 	ioc->high_iops_queues = 0;
 	ioc_info(ioc, "High IOPs queues : disabled\n");
 	ioc->reply_queue_count = 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ioc->iopoll_q_start_index = ioc->reply_queue_count - 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ioc->iopoll_q_start_index = ioc->reply_queue_count - 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	r = pci_alloc_irq_vectors(ioc->pdev, 1, 1, PCI_IRQ_LEGACY);
 	if (r < 0) {
 		dfailprintk(ioc,
@@ -3813,18 +3342,8 @@ mpt3sas_base_unmap_resources(struct MPT3SAS_ADAPTER *ioc)
 
 	dexitprintk(ioc, ioc_info(ioc, "%s\n", __func__));
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mpt3sas_base_free_irq(ioc);
-	mpt3sas_base_disable_msix(ioc);
-=======
 	_base_free_irq(ioc);
 	_base_disable_msix(ioc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mpt3sas_base_free_irq(ioc);
-	mpt3sas_base_disable_msix(ioc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	kfree(ioc->replyPostRegisterIndex);
 	ioc->replyPostRegisterIndex = NULL;
@@ -3897,14 +3416,6 @@ mpt3sas_base_map_resources(struct MPT3SAS_ADAPTER *ioc)
 	u64 pio_chip = 0;
 	phys_addr_t chip_phys = 0;
 	struct adapter_reply_queue *reply_q;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int iopoll_q_count = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int iopoll_q_count = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	dinitprintk(ioc, ioc_info(ioc, "%s\n", __func__));
 
@@ -3978,21 +3489,6 @@ mpt3sas_base_map_resources(struct MPT3SAS_ADAPTER *ioc)
 	if (r)
 		goto out_fail;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	iopoll_q_count = ioc->reply_queue_count - ioc->iopoll_q_start_index;
-	for (i = 0; i < iopoll_q_count; i++) {
-		atomic_set(&ioc->io_uring_poll_queues[i].busy, 0);
-		atomic_set(&ioc->io_uring_poll_queues[i].pause, 0);
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!ioc->is_driver_loading)
 		_base_init_irqpolls(ioc);
 	/* Use the Combined reply queue feature only for SAS3 C0 & higher
@@ -4034,35 +3530,11 @@ mpt3sas_base_map_resources(struct MPT3SAS_ADAPTER *ioc)
 			* 4)));
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	list_for_each_entry(reply_q, &ioc->reply_queue_list, list) {
-		if (reply_q->msix_index >= ioc->iopoll_q_start_index) {
-			pr_info("%s: enabled: index: %d\n",
-			    reply_q->name, reply_q->msix_index);
-			continue;
-		}
-
-<<<<<<< HEAD
-=======
 	list_for_each_entry(reply_q, &ioc->reply_queue_list, list)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_info("%s: %s enabled: IRQ %d\n",
 			reply_q->name,
 			ioc->msix_enable ? "PCI-MSI-X" : "IO-APIC",
 			pci_irq_vector(ioc->pdev, reply_q->msix_index));
-<<<<<<< HEAD
-<<<<<<< HEAD
-	}
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ioc_info(ioc, "iomem(%pap), mapped(0x%p), size(%d)\n",
 		 &chip_phys, ioc->chip, memap_sz);
@@ -4179,15 +3651,7 @@ _base_get_msix_index(struct MPT3SAS_ADAPTER *ioc,
 		    &ioc->total_io_cnt), ioc->reply_queue_count) : 0;
 
 	if (scmd && ioc->shost->nr_hw_queues > 1) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		u32 tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmd));
-=======
 		u32 tag = blk_mq_unique_tag(scmd->request);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		u32 tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmd));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		return blk_mq_unique_tag_to_hwq(tag) +
 			ioc->high_iops_queues;
@@ -4271,15 +3735,7 @@ mpt3sas_base_get_smid_scsiio(struct MPT3SAS_ADAPTER *ioc, u8 cb_idx,
 	u16 smid;
 	u32 tag, unique_tag;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unique_tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmd));
-=======
 	unique_tag = blk_mq_unique_tag(scmd->request);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unique_tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmd));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tag = blk_mq_unique_tag_to_tag(unique_tag);
 
 	/*
@@ -5713,82 +5169,6 @@ _base_update_diag_trigger_pages(struct MPT3SAS_ADAPTER *ioc)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * _base_assign_fw_reported_qd	- Get FW reported QD for SAS/SATA devices.
- *				- On failure set default QD values.
- * @ioc : per adapter object
- *
- * Returns 0 for success, non-zero for failure.
- *
- */
-static int _base_assign_fw_reported_qd(struct MPT3SAS_ADAPTER *ioc)
-{
-	Mpi2ConfigReply_t mpi_reply;
-	Mpi2SasIOUnitPage1_t *sas_iounit_pg1 = NULL;
-	Mpi26PCIeIOUnitPage1_t pcie_iounit_pg1;
-	int sz;
-	int rc = 0;
-
-	ioc->max_wideport_qd = MPT3SAS_SAS_QUEUE_DEPTH;
-	ioc->max_narrowport_qd = MPT3SAS_SAS_QUEUE_DEPTH;
-	ioc->max_sata_qd = MPT3SAS_SATA_QUEUE_DEPTH;
-	ioc->max_nvme_qd = MPT3SAS_NVME_QUEUE_DEPTH;
-	if (!ioc->is_gen35_ioc)
-		goto out;
-	/* sas iounit page 1 */
-	sz = offsetof(Mpi2SasIOUnitPage1_t, PhyData);
-	sas_iounit_pg1 = kzalloc(sz, GFP_KERNEL);
-	if (!sas_iounit_pg1) {
-		pr_err("%s: failure at %s:%d/%s()!\n",
-		    ioc->name, __FILE__, __LINE__, __func__);
-		return rc;
-	}
-	rc = mpt3sas_config_get_sas_iounit_pg1(ioc, &mpi_reply,
-	    sas_iounit_pg1, sz);
-	if (rc) {
-		pr_err("%s: failure at %s:%d/%s()!\n",
-		    ioc->name, __FILE__, __LINE__, __func__);
-		goto out;
-	}
-	ioc->max_wideport_qd =
-	    (le16_to_cpu(sas_iounit_pg1->SASWideMaxQueueDepth)) ?
-	    le16_to_cpu(sas_iounit_pg1->SASWideMaxQueueDepth) :
-	    MPT3SAS_SAS_QUEUE_DEPTH;
-	ioc->max_narrowport_qd =
-	    (le16_to_cpu(sas_iounit_pg1->SASNarrowMaxQueueDepth)) ?
-	    le16_to_cpu(sas_iounit_pg1->SASNarrowMaxQueueDepth) :
-	    MPT3SAS_SAS_QUEUE_DEPTH;
-	ioc->max_sata_qd = (sas_iounit_pg1->SATAMaxQDepth) ?
-	    sas_iounit_pg1->SATAMaxQDepth : MPT3SAS_SATA_QUEUE_DEPTH;
-	/* pcie iounit page 1 */
-	rc = mpt3sas_config_get_pcie_iounit_pg1(ioc, &mpi_reply,
-	    &pcie_iounit_pg1, sizeof(Mpi26PCIeIOUnitPage1_t));
-	if (rc) {
-		pr_err("%s: failure at %s:%d/%s()!\n",
-		    ioc->name, __FILE__, __LINE__, __func__);
-		goto out;
-	}
-	ioc->max_nvme_qd = (le16_to_cpu(pcie_iounit_pg1.NVMeMaxQueueDepth)) ?
-	    (le16_to_cpu(pcie_iounit_pg1.NVMeMaxQueueDepth)) :
-	    MPT3SAS_NVME_QUEUE_DEPTH;
-out:
-	dinitprintk(ioc, pr_err(
-	    "MaxWidePortQD: 0x%x MaxNarrowPortQD: 0x%x MaxSataQD: 0x%x MaxNvmeQD: 0x%x\n",
-	    ioc->max_wideport_qd, ioc->max_narrowport_qd,
-	    ioc->max_sata_qd, ioc->max_nvme_qd));
-	kfree(sas_iounit_pg1);
-	return rc;
-}
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * _base_static_config_pages - static start of day config pages
  * @ioc: per adapter object
  */
@@ -5857,18 +5237,6 @@ _base_static_config_pages(struct MPT3SAS_ADAPTER *ioc)
 			ioc_warn(ioc,
 			    "TimeSync Interval in Manuf page-11 is not enabled. Periodic Time-Sync will be disabled\n");
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rc = _base_assign_fw_reported_qd(ioc);
-	if (rc)
-		return rc;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rc = _base_assign_fw_reported_qd(ioc);
-	if (rc)
-		return rc;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rc = mpt3sas_config_get_bios_pg2(ioc, &mpi_reply, &ioc->bios_pg2);
 	if (rc)
 		return rc;
@@ -8245,32 +7613,14 @@ _base_diag_reset(struct MPT3SAS_ADAPTER *ioc)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
- * mpt3sas_base_make_ioc_ready - put controller in READY state
-=======
  * _base_make_ioc_ready - put controller in READY state
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * mpt3sas_base_make_ioc_ready - put controller in READY state
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @ioc: per adapter object
  * @type: FORCE_BIG_HAMMER or SOFT_RESET
  *
  * Return: 0 for success, non-zero for failure.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-int
-mpt3sas_base_make_ioc_ready(struct MPT3SAS_ADAPTER *ioc, enum reset_type type)
-=======
 static int
 _base_make_ioc_ready(struct MPT3SAS_ADAPTER *ioc, enum reset_type type)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int
-mpt3sas_base_make_ioc_ready(struct MPT3SAS_ADAPTER *ioc, enum reset_type type)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	u32 ioc_state;
 	int rc;
@@ -8501,15 +7851,7 @@ _base_make_ioc_operational(struct MPT3SAS_ADAPTER *ioc)
 			return r;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	r = _base_static_config_pages(ioc);
-=======
 	rc = _base_static_config_pages(ioc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	r = _base_static_config_pages(ioc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (r)
 		return r;
 
@@ -8555,15 +7897,7 @@ mpt3sas_base_free_resources(struct MPT3SAS_ADAPTER *ioc)
 	if (ioc->chip_phys && ioc->chip) {
 		mpt3sas_base_mask_interrupts(ioc);
 		ioc->shost_recovery = 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		mpt3sas_base_make_ioc_ready(ioc, SOFT_RESET);
-=======
 		_base_make_ioc_ready(ioc, SOFT_RESET);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		mpt3sas_base_make_ioc_ready(ioc, SOFT_RESET);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ioc->shost_recovery = 0;
 	}
 
@@ -8683,15 +8017,7 @@ mpt3sas_base_attach(struct MPT3SAS_ADAPTER *ioc)
 	ioc->build_sg_mpi = &_base_build_sg;
 	ioc->build_zero_len_sge_mpi = &_base_build_zero_len_sge;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	r = mpt3sas_base_make_ioc_ready(ioc, SOFT_RESET);
-=======
 	r = _base_make_ioc_ready(ioc, SOFT_RESET);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	r = mpt3sas_base_make_ioc_ready(ioc, SOFT_RESET);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (r)
 		goto out_free_resources;
 
@@ -9145,17 +8471,7 @@ mpt3sas_base_hard_reset_handler(struct MPT3SAS_ADAPTER *ioc,
 	_base_pre_reset_handler(ioc);
 	mpt3sas_wait_for_commands_to_complete(ioc);
 	mpt3sas_base_mask_interrupts(ioc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mpt3sas_base_pause_mq_polling(ioc);
-	r = mpt3sas_base_make_ioc_ready(ioc, type);
-=======
 	r = _base_make_ioc_ready(ioc, type);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mpt3sas_base_pause_mq_polling(ioc);
-	r = mpt3sas_base_make_ioc_ready(ioc, type);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (r)
 		goto out;
 	_base_clear_outstanding_commands(ioc);
@@ -9196,14 +8512,6 @@ mpt3sas_base_hard_reset_handler(struct MPT3SAS_ADAPTER *ioc,
 	spin_unlock_irqrestore(&ioc->ioc_reset_in_progress_lock, flags);
 	ioc->ioc_reset_count++;
 	mutex_unlock(&ioc->reset_in_progress_mutex);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mpt3sas_base_resume_mq_polling(ioc);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mpt3sas_base_resume_mq_polling(ioc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
  out_unlocked:
 	if ((r == 0) && is_trigger) {

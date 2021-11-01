@@ -5,17 +5,11 @@
  * hub.c - virtual hub handling
  *
  * Copyright 2017 IBM Corporation
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 
 #include <linux/kernel.h>

@@ -564,15 +564,7 @@ static struct sk_buff *taprio_dequeue_soft(struct Qdisc *sch)
 	/* if there's no entry, it means that the schedule didn't
 	 * start yet, so force all gates to be open, this is in
 	 * accordance to IEEE 802.1Qbv-2015 Section 8.6.9.4.5
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * "AdminGateStates"
-=======
 	 * "AdminGateSates"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	 * "AdminGateStates"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 */
 	gate_mask = entry ? entry->gate_mask : TAPRIO_ALL_GATES_OPEN;
 
@@ -1521,19 +1513,7 @@ static int taprio_change(struct Qdisc *sch, struct nlattr *opt,
 	taprio_set_picos_per_byte(dev, q);
 
 	if (mqprio) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = netdev_set_num_tc(dev, mqprio->num_tc);
-		if (err)
-			goto free_sched;
-=======
 		netdev_set_num_tc(dev, mqprio->num_tc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = netdev_set_num_tc(dev, mqprio->num_tc);
-		if (err)
-			goto free_sched;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		for (i = 0; i < mqprio->num_tc; i++)
 			netdev_set_tc_queue(dev, i,
 					    mqprio->count[i],
@@ -1659,19 +1639,6 @@ static void taprio_destroy(struct Qdisc *sch)
 	list_del(&q->taprio_list);
 	spin_unlock(&taprio_list_lock);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* Note that taprio_reset() might not be called if an error
-	 * happens in qdisc_create(), after taprio_init() has been called.
-	 */
-	hrtimer_cancel(&q->advance_timer);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	taprio_disable_offload(dev, q, NULL);
 
@@ -1772,14 +1739,8 @@ static void taprio_attach(struct Qdisc *sch)
 		if (FULL_OFFLOAD_IS_ENABLED(q->flags)) {
 			qdisc->flags |= TCQ_F_ONETXQUEUE | TCQ_F_NOPARENT;
 			old = dev_graft_qdisc(qdisc->dev_queue, qdisc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			if (ntx < dev->real_num_tx_queues)
 				qdisc_hash_add(qdisc, false);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			old = dev_graft_qdisc(qdisc->dev_queue, sch);
 			qdisc_refcount_inc(sch);

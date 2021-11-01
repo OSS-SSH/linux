@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* SPDX-License-Identifier: LGPL-2.1 WITH Linux-syscall-note */
-=======
 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* SPDX-License-Identifier: LGPL-2.1 WITH Linux-syscall-note */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Copyright(c) 2019 Intel Corporation. All rights rsvd. */
 #ifndef _USR_IDXD_H_
 #define _USR_IDXD_H_
@@ -17,39 +9,6 @@
 #include <stdint.h>
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-/* Driver command error status */
-enum idxd_scmd_stat {
-	IDXD_SCMD_DEV_ENABLED = 0x80000010,
-	IDXD_SCMD_DEV_NOT_ENABLED = 0x80000020,
-	IDXD_SCMD_WQ_ENABLED = 0x80000021,
-	IDXD_SCMD_DEV_DMA_ERR = 0x80020000,
-	IDXD_SCMD_WQ_NO_GRP = 0x80030000,
-	IDXD_SCMD_WQ_NO_NAME = 0x80040000,
-	IDXD_SCMD_WQ_NO_SVM = 0x80050000,
-	IDXD_SCMD_WQ_NO_THRESH = 0x80060000,
-	IDXD_SCMD_WQ_PORTAL_ERR = 0x80070000,
-	IDXD_SCMD_WQ_RES_ALLOC_ERR = 0x80080000,
-	IDXD_SCMD_PERCPU_ERR = 0x80090000,
-	IDXD_SCMD_DMA_CHAN_ERR = 0x800a0000,
-	IDXD_SCMD_CDEV_ERR = 0x800b0000,
-	IDXD_SCMD_WQ_NO_SWQ_SUPPORT = 0x800c0000,
-	IDXD_SCMD_WQ_NONE_CONFIGURED = 0x800d0000,
-	IDXD_SCMD_WQ_NO_SIZE = 0x800e0000,
-	IDXD_SCMD_WQ_NO_PRIV = 0x800f0000,
-};
-
-#define IDXD_SCMD_SOFTERR_MASK	0x80000000
-#define IDXD_SCMD_SOFTERR_SHIFT	16
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Descriptor flags */
 #define IDXD_OP_FLAG_FENCE	0x0001
 #define IDXD_OP_FLAG_BOF	0x0002

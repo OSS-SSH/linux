@@ -72,9 +72,6 @@ pgprot_t ttm_prot_from_caching(enum ttm_caching caching, pgprot_t tmp)
 	return tmp;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 struct dentry *ttm_debugfs_root;
 
 static int __init ttm_init(void)
@@ -91,9 +88,6 @@ static void __exit ttm_exit(void)
 module_init(ttm_init);
 module_exit(ttm_exit);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_AUTHOR("Thomas Hellstrom, Jerome Glisse");
 MODULE_DESCRIPTION("TTM memory manager subsystem (for DRM device)");
 MODULE_LICENSE("GPL and additional rights");

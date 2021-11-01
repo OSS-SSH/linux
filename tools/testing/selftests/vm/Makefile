@@ -45,14 +45,6 @@ TEST_GEN_FILES += thuge-gen
 TEST_GEN_FILES += transhuge-stress
 TEST_GEN_FILES += userfaultfd
 TEST_GEN_FILES += split_huge_page_test
-<<<<<<< HEAD
-<<<<<<< HEAD
-TEST_GEN_FILES += ksm_tests
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-TEST_GEN_FILES += ksm_tests
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 ifeq ($(MACHINE),x86_64)
 CAN_BUILD_I386 := $(shell ./../x86/check_cc.sh $(CC) ../x86/trivial_32bit_program.c -m32)
@@ -153,16 +145,6 @@ $(OUTPUT)/hmm-tests: local_config.h
 # HMM_EXTRA_LIBS may get set in local_config.mk, or it may be left empty.
 $(OUTPUT)/hmm-tests: LDLIBS += $(HMM_EXTRA_LIBS)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-$(OUTPUT)/ksm_tests: LDLIBS += -lnuma
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-$(OUTPUT)/ksm_tests: LDLIBS += -lnuma
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 local_config.mk local_config.h: check_config.sh
 	/bin/sh ./check_config.sh $(CC)
 

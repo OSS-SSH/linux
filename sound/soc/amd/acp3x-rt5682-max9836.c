@@ -512,14 +512,6 @@ static int acp3x_probe(struct platform_device *pdev)
 
 	ret = devm_snd_soc_register_card(&pdev->dev, card);
 	if (ret) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return dev_err_probe(&pdev->dev, ret,
-				"devm_snd_soc_register_card(%s) failed\n",
-				card->name);
-	}
-	return 0;
-=======
 		if (ret != -EPROBE_DEFER)
 			dev_err(&pdev->dev,
 				"devm_snd_soc_register_card(%s) failed: %d\n",
@@ -531,14 +523,6 @@ static int acp3x_probe(struct platform_device *pdev)
 	}
 
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return dev_err_probe(&pdev->dev, ret,
-				"devm_snd_soc_register_card(%s) failed\n",
-				card->name);
-	}
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct acpi_device_id acp3x_audio_acpi_match[] = {

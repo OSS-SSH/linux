@@ -46,16 +46,6 @@
  *					Copyright (C) 2011, <lokec@ccs.neu.edu>
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/ethtool.h>
 #include <linux/types.h>
 #include <linux/mm.h>
@@ -260,16 +250,8 @@ static struct net_device *packet_cached_dev_get(struct packet_sock *po)
 
 	rcu_read_lock();
 	dev = rcu_dereference(po->cached_dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dev_hold(dev);
-=======
 	if (likely(dev))
 		dev_hold(dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dev_hold(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rcu_read_unlock();
 
 	return dev;
@@ -3042,16 +3024,8 @@ static int packet_snd(struct socket *sock, struct msghdr *msg, size_t len)
 out_free:
 	kfree_skb(skb);
 out_unlock:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dev_put(dev);
-=======
 	if (dev)
 		dev_put(dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dev_put(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
 	return err;
 }
@@ -3184,16 +3158,8 @@ static int packet_do_bind(struct sock *sk, const char *name, int ifindex,
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dev_hold(dev);
-=======
 	if (dev)
 		dev_hold(dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dev_hold(dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	proto_curr = po->prot_hook.type;
 	dev_curr = po->prot_hook.dev;
@@ -3230,16 +3196,8 @@ static int packet_do_bind(struct sock *sk, const char *name, int ifindex,
 			packet_cached_dev_assign(po, dev);
 		}
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dev_put(dev_curr);
-=======
 	if (dev_curr)
 		dev_put(dev_curr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dev_put(dev_curr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (proto == 0 || !need_rehook)
 		goto out_unlock;
@@ -4151,16 +4109,8 @@ static int packet_notifier(struct notifier_block *this,
 				if (msg == NETDEV_UNREGISTER) {
 					packet_cached_dev_reset(po);
 					WRITE_ONCE(po->ifindex, -1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-					dev_put(po->prot_hook.dev);
-=======
 					if (po->prot_hook.dev)
 						dev_put(po->prot_hook.dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					dev_put(po->prot_hook.dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					po->prot_hook.dev = NULL;
 				}
 				spin_unlock(&po->bind_lock);

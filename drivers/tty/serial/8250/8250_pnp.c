@@ -13,14 +13,6 @@
 #include <linux/pnp.h>
 #include <linux/string.h>
 #include <linux/kernel.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/property.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/property.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/serial_core.h>
 #include <linux/bitops.h>
 
@@ -483,14 +475,6 @@ serial_pnp_probe(struct pnp_dev *dev, const struct pnp_device_id *dev_id)
 	if (pnp_irq_flags(dev, 0) & IORESOURCE_IRQ_SHAREABLE)
 		uart.port.flags |= UPF_SHARE_IRQ;
 	uart.port.uartclk = 1843200;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	device_property_read_u32(&dev->dev, "clock-frequency", &uart.port.uartclk);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	device_property_read_u32(&dev->dev, "clock-frequency", &uart.port.uartclk);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	uart.port.dev = &dev->dev;
 
 	line = serial8250_register_8250_port(&uart);

@@ -30,16 +30,8 @@ enum {
 enum rf_path {
 	RF_PATH_A = 0,
 	RF_PATH_B,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	RF_PATH_MAX
-=======
 	RF_PATH_C,
 	RF_PATH_D
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	RF_PATH_MAX
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define	TX_1S			0

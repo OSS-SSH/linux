@@ -25,18 +25,8 @@ check_compressed_stats() {
 
 check_compressed_output() {
 	$perf_tool inject -i $trace_file -o $trace_file.decomp &&
-<<<<<<< HEAD
-<<<<<<< HEAD
-	$perf_tool report -i $trace_file --stdio -F comm,dso,sym | head -n -3 > $trace_file.comp.output &&
-	$perf_tool report -i $trace_file.decomp --stdio -F comm,dso,sym | head -n -3 > $trace_file.decomp.output &&
-=======
 	$perf_tool report -i $trace_file --stdio | head -n -3 > $trace_file.comp.output &&
 	$perf_tool report -i $trace_file.decomp --stdio | head -n -3 > $trace_file.decomp.output &&
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	$perf_tool report -i $trace_file --stdio -F comm,dso,sym | head -n -3 > $trace_file.comp.output &&
-	$perf_tool report -i $trace_file.decomp --stdio -F comm,dso,sym | head -n -3 > $trace_file.decomp.output &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	diff $trace_file.comp.output $trace_file.decomp.output
 }
 

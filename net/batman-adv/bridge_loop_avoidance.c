@@ -162,18 +162,6 @@ static void batadv_backbone_gw_release(struct kref *ref)
  */
 static void batadv_backbone_gw_put(struct batadv_bla_backbone_gw *backbone_gw)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!backbone_gw)
-		return;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!backbone_gw)
-		return;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kref_put(&backbone_gw->refcount, batadv_backbone_gw_release);
 }
 
@@ -209,18 +197,6 @@ static void batadv_claim_release(struct kref *ref)
  */
 static void batadv_claim_put(struct batadv_bla_claim *claim)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!claim)
-		return;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!claim)
-		return;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	kref_put(&claim->refcount, batadv_claim_release);
 }
 
@@ -463,16 +439,8 @@ static void batadv_bla_send_claim(struct batadv_priv *bat_priv, u8 *mac,
 
 	netif_rx_any_context(skb);
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	batadv_hardif_put(primary_if);
-=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	batadv_hardif_put(primary_if);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -1530,16 +1498,8 @@ static void batadv_bla_periodic_work(struct work_struct *work)
 		rcu_read_unlock();
 	}
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	batadv_hardif_put(primary_if);
-=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	batadv_hardif_put(primary_if);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	queue_delayed_work(batadv_event_workqueue, &bat_priv->bla.work,
 			   msecs_to_jiffies(BATADV_BLA_PERIOD_LENGTH));
@@ -1848,16 +1808,8 @@ void batadv_bla_free(struct batadv_priv *bat_priv)
 		batadv_hash_destroy(bat_priv->bla.backbone_hash);
 		bat_priv->bla.backbone_hash = NULL;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	batadv_hardif_put(primary_if);
-=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	batadv_hardif_put(primary_if);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -2044,20 +1996,10 @@ handled:
 	ret = true;
 
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	batadv_hardif_put(primary_if);
-	batadv_claim_put(claim);
-=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 	if (claim)
 		batadv_claim_put(claim);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	batadv_hardif_put(primary_if);
-	batadv_claim_put(claim);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -2161,20 +2103,10 @@ allow:
 handled:
 	ret = true;
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	batadv_hardif_put(primary_if);
-	batadv_claim_put(claim);
-=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 	if (claim)
 		batadv_claim_put(claim);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	batadv_hardif_put(primary_if);
-	batadv_claim_put(claim);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -2339,23 +2271,11 @@ int batadv_bla_claim_dump(struct sk_buff *msg, struct netlink_callback *cb)
 	ret = msg->len;
 
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	batadv_hardif_put(primary_if);
-
-	dev_put(soft_iface);
-=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 
 	if (soft_iface)
 		dev_put(soft_iface);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	batadv_hardif_put(primary_if);
-
-	dev_put(soft_iface);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -2523,23 +2443,11 @@ int batadv_bla_backbone_dump(struct sk_buff *msg, struct netlink_callback *cb)
 	ret = msg->len;
 
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	batadv_hardif_put(primary_if);
-
-	dev_put(soft_iface);
-=======
 	if (primary_if)
 		batadv_hardif_put(primary_if);
 
 	if (soft_iface)
 		dev_put(soft_iface);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	batadv_hardif_put(primary_if);
-
-	dev_put(soft_iface);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }

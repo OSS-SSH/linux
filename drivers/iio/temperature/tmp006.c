@@ -193,34 +193,6 @@ static bool tmp006_check_identification(struct i2c_client *client)
 	return mid == TMP006_MANUFACTURER_MAGIC && did == TMP006_DEVICE_MAGIC;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static int tmp006_power(struct device *dev, bool up)
-{
-	struct iio_dev *indio_dev = i2c_get_clientdata(to_i2c_client(dev));
-	struct tmp006_data *data = iio_priv(indio_dev);
-
-	if (up)
-		data->config |= TMP006_CONFIG_MOD_MASK;
-	else
-		data->config &= ~TMP006_CONFIG_MOD_MASK;
-
-	return i2c_smbus_write_word_swapped(data->client, TMP006_CONFIG,
-		data->config);
-}
-
-static void tmp006_powerdown_cleanup(void *dev)
-{
-	tmp006_power(dev, false);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int tmp006_probe(struct i2c_client *client,
 			 const struct i2c_device_id *id)
 {
@@ -256,24 +228,6 @@ static int tmp006_probe(struct i2c_client *client,
 		return ret;
 	data->config = ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if ((ret & TMP006_CONFIG_MOD_MASK) != TMP006_CONFIG_MOD_MASK) {
-		ret = tmp006_power(&client->dev, true);
-		if (ret < 0)
-			return ret;
-	}
-<<<<<<< HEAD
-
-	ret = devm_add_action_or_reset(&client->dev, tmp006_powerdown_cleanup,
-				       &client->dev);
-	if (ret < 0)
-		return ret;
-
-	return devm_iio_device_register(&client->dev, indio_dev);
-=======
 	return iio_device_register(indio_dev);
 }
 
@@ -286,51 +240,26 @@ static int tmp006_powerdown(struct tmp006_data *data)
 static int tmp006_remove(struct i2c_client *client)
 {
 	struct iio_dev *indio_dev = i2c_get_clientdata(client);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	ret = devm_add_action_or_reset(&client->dev, tmp006_powerdown_cleanup,
-				       &client->dev);
-	if (ret < 0)
-		return ret;
+	iio_device_unregister(indio_dev);
+	tmp006_powerdown(iio_priv(indio_dev));
 
-<<<<<<< HEAD
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return devm_iio_device_register(&client->dev, indio_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PM_SLEEP
 static int tmp006_suspend(struct device *dev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return tmp006_power(dev, false);
-=======
 	struct iio_dev *indio_dev = i2c_get_clientdata(to_i2c_client(dev));
 	return tmp006_powerdown(iio_priv(indio_dev));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return tmp006_power(dev, false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int tmp006_resume(struct device *dev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return tmp006_power(dev, true);
-=======
 	struct tmp006_data *data = iio_priv(i2c_get_clientdata(
 		to_i2c_client(dev)));
 	return i2c_smbus_write_word_swapped(data->client, TMP006_CONFIG,
 		data->config | TMP006_CONFIG_MOD_MASK);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return tmp006_power(dev, true);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 #endif
 
@@ -348,13 +277,7 @@ static struct i2c_driver tmp006_driver = {
 		.pm	= &tmp006_pm_ops,
 	},
 	.probe = tmp006_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove = tmp006_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.id_table = tmp006_id,
 };
 module_i2c_driver(tmp006_driver);

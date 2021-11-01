@@ -101,16 +101,8 @@ subsystems which use EM might rely on this flag to check if all EM devices use
 the same scale. If there are different scales, these subsystems might decide
 to: return warning/error, stop working or panic.
 See Section 3. for an example of driver implementing this
-<<<<<<< HEAD
-<<<<<<< HEAD
-callback, or Section 2.4 for further documentation on this API
-=======
 callback, and kernel/power/energy_model.c for further documentation on this
 API.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-callback, or Section 2.4 for further documentation on this API
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 2.3 Accessing performance domains
@@ -131,27 +123,7 @@ em_cpu_energy() API. The estimation is performed assuming that the schedutil
 CPUfreq governor is in use in case of CPU device. Currently this calculation is
 not provided for other type of devices.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-More details about the above APIs can be found in ``<linux/energy_model.h>``
-or in Section 2.4
-
-
-2.4 Description details of this API
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-.. kernel-doc:: include/linux/energy_model.h
-   :internal:
-
-.. kernel-doc:: kernel/power/energy_model.c
-   :export:
-<<<<<<< HEAD
-=======
 More details about the above APIs can be found in include/linux/energy_model.h.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 
 3. Example driver

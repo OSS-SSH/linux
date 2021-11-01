@@ -169,15 +169,7 @@ static int gbphy_dev_probe(struct device *dev)
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void gbphy_dev_remove(struct device *dev)
-=======
 static int gbphy_dev_remove(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void gbphy_dev_remove(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct gbphy_driver *gbphy_drv = to_gbphy_driver(dev->driver);
 	struct gbphy_device *gbphy_dev = to_gbphy_dev(dev);
@@ -188,14 +180,8 @@ static void gbphy_dev_remove(struct device *dev)
 	pm_runtime_set_suspended(dev);
 	pm_runtime_put_noidle(dev);
 	pm_runtime_dont_use_autosuspend(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct bus_type gbphy_bus_type = {

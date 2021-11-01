@@ -149,19 +149,6 @@ struct inv_mpu6050_hw {
 		int offset;
 		int scale;
 	} temp;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct {
-		unsigned int accel;
-		unsigned int gyro;
-	} startup_time;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /*
@@ -333,47 +320,11 @@ struct inv_mpu6050_state {
 /* delay time in milliseconds */
 #define INV_MPU6050_POWER_UP_TIME            100
 #define INV_MPU6050_TEMP_UP_TIME             100
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define INV_MPU6050_ACCEL_STARTUP_TIME       20
-#define INV_MPU6050_GYRO_STARTUP_TIME        60
-#define INV_MPU6050_GYRO_DOWN_TIME           150
-#define INV_MPU6050_SUSPEND_DELAY_MS         2000
-
-#define INV_MPU6500_GYRO_STARTUP_TIME        70
-#define INV_MPU6500_ACCEL_STARTUP_TIME       30
-
-#define INV_ICM20602_GYRO_STARTUP_TIME       100
-#define INV_ICM20602_ACCEL_STARTUP_TIME      20
-
-#define INV_ICM20690_GYRO_STARTUP_TIME       80
-#define INV_ICM20690_ACCEL_STARTUP_TIME      10
-
-
-=======
 #define INV_MPU6050_ACCEL_UP_TIME            20
 #define INV_MPU6050_GYRO_UP_TIME             35
 #define INV_MPU6050_GYRO_DOWN_TIME           150
 #define INV_MPU6050_SUSPEND_DELAY_MS         2000
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define INV_MPU6050_ACCEL_STARTUP_TIME       20
-#define INV_MPU6050_GYRO_STARTUP_TIME        60
-#define INV_MPU6050_GYRO_DOWN_TIME           150
-#define INV_MPU6050_SUSPEND_DELAY_MS         2000
-
-#define INV_MPU6500_GYRO_STARTUP_TIME        70
-#define INV_MPU6500_ACCEL_STARTUP_TIME       30
-
-#define INV_ICM20602_GYRO_STARTUP_TIME       100
-#define INV_ICM20602_ACCEL_STARTUP_TIME      20
-
-#define INV_ICM20690_GYRO_STARTUP_TIME       80
-#define INV_ICM20690_ACCEL_STARTUP_TIME      10
-
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* delay time in microseconds */
 #define INV_MPU6050_REG_UP_TIME_MIN          5000
 #define INV_MPU6050_REG_UP_TIME_MAX          10000

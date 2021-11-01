@@ -371,14 +371,8 @@ __tapechar_ioctl(struct tape_device *device,
 			case MTSEEK:
 				if (device->required_tapemarks)
 					tape_std_terminate_write(device);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			default:
 				;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 		rc = tape_mtop(device, op.mt_op, op.mt_count);
 

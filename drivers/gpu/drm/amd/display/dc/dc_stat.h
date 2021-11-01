@@ -38,13 +38,5 @@
 #include "dmub/dmub_srv.h"
 
 void dc_stat_get_dmub_notification(const struct dc *dc, struct dmub_notification *notify);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void dc_stat_get_dmub_dataout(const struct dc *dc, uint32_t *dataout);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void dc_stat_get_dmub_dataout(const struct dc *dc, uint32_t *dataout);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _DC_STAT_H_ */

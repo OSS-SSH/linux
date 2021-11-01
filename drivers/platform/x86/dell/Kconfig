@@ -140,15 +140,7 @@ config DELL_SMBIOS_SMM
 config DELL_SMO8800
 	tristate "Dell Latitude freefall driver (ACPI SMO88XX)"
 	default m
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on ACPI || COMPILE_TEST
-=======
 	depends on ACPI
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on ACPI || COMPILE_TEST
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  Say Y here if you want to support SMO88XX freefall devices
 	  on Dell Latitude laptops.
@@ -174,18 +166,8 @@ config DELL_WMI
 
 config DELL_WMI_PRIVACY
 	bool "Dell WMI Hardware Privacy Support"
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on LEDS_TRIGGER_AUDIO = y || DELL_WMI = LEDS_TRIGGER_AUDIO
-	depends on DELL_WMI
-=======
 	depends on DELL_WMI
 	depends on LEDS_TRIGGER_AUDIO
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on LEDS_TRIGGER_AUDIO = y || DELL_WMI = LEDS_TRIGGER_AUDIO
-	depends on DELL_WMI
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This option adds integration with the "Dell Hardware Privacy"
 	  feature of Dell laptops to the dell-wmi driver.

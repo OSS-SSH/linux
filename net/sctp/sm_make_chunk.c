@@ -1163,15 +1163,7 @@ struct sctp_chunk *sctp_make_heartbeat(const struct sctp_association *asoc,
 				       const struct sctp_transport *transport,
 				       __u32 probe_size)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct sctp_sender_hb_info hbinfo = {};
-=======
 	struct sctp_sender_hb_info hbinfo;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct sctp_sender_hb_info hbinfo = {};
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct sctp_chunk *retval;
 
 	retval = sctp_make_control(asoc, SCTP_CID_HEARTBEAT, 0,
@@ -3705,15 +3697,7 @@ struct sctp_chunk *sctp_make_strreset_req(
 	outlen = (sizeof(outreq) + stream_len) * out;
 	inlen = (sizeof(inreq) + stream_len) * in;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	retval = sctp_make_reconf(asoc, SCTP_PAD4(outlen) + SCTP_PAD4(inlen));
-=======
 	retval = sctp_make_reconf(asoc, outlen + inlen);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	retval = sctp_make_reconf(asoc, SCTP_PAD4(outlen) + SCTP_PAD4(inlen));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!retval)
 		return NULL;
 

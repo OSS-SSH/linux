@@ -47,14 +47,8 @@
  *	driver should be able to register multiple nodes
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static DEFINE_MUTEX(device_mutex);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct snd_compr_file {
 	unsigned long caps;
 	struct snd_compr_stream stream;
@@ -1185,14 +1179,6 @@ int snd_compress_new(struct snd_card *card, int device,
 	compr->card = card;
 	compr->device = device;
 	compr->direction = dirn;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	mutex_init(&compr->lock);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	mutex_init(&compr->lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	snd_compress_set_id(compr, id);
 
@@ -1207,9 +1193,6 @@ int snd_compress_new(struct snd_card *card, int device,
 }
 EXPORT_SYMBOL_GPL(snd_compress_new);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int snd_compress_add_device(struct snd_compr *device)
 {
 	int ret;
@@ -1276,9 +1259,6 @@ int snd_compress_deregister(struct snd_compr *device)
 }
 EXPORT_SYMBOL_GPL(snd_compress_deregister);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 MODULE_DESCRIPTION("ALSA Compressed offload framework");
 MODULE_AUTHOR("Vinod Koul <vinod.koul@linux.intel.com>");
 MODULE_LICENSE("GPL v2");

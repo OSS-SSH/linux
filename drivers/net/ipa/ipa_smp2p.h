@@ -39,15 +39,7 @@ void ipa_smp2p_disable(struct ipa *ipa);
  * ipa_smp2p_notify_reset() - Reset modem notification state
  * @ipa:	IPA pointer
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * If the modem crashes it queries the IPA power state.  In cleaning
-=======
  * If the modem crashes it queries the IPA clock state.  In cleaning
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * If the modem crashes it queries the IPA power state.  In cleaning
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * up after such a crash this is used to reset some state maintained
  * for managing this notification.
  */

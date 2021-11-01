@@ -207,30 +207,10 @@ Before jumping into the kernel, the following conditions must be met:
   software at a higher exception level to prevent execution in an UNKNOWN
   state.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-  For all systems:
-  - If EL3 is present:
-
-    - SCR_EL3.FIQ must have the same value across all CPUs the kernel is
-      executing on.
-    - The value of SCR_EL3.FIQ must be the same as the one present at boot
-      time whenever the kernel is executing.
-
-  - If EL3 is present and the kernel is entered at EL2:
-
-    - SCR_EL3.HCE (bit 8) must be initialised to 0b1.
-<<<<<<< HEAD
-=======
   - SCR_EL3.FIQ must have the same value across all CPUs the kernel is
     executing on.
   - The value of SCR_EL3.FIQ must be the same as the one present at boot
     time whenever the kernel is executing.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
   For systems with a GICv3 interrupt controller to be used in v3 mode:
   - If EL3 is present:
@@ -331,37 +311,6 @@ Before jumping into the kernel, the following conditions must be met:
     - ZCR_EL2.LEN must be initialised to the same value for all CPUs the
       kernel will execute on.
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-  For CPUs with the Scalable Matrix Extension (FEAT_SME):
-
-  - If EL3 is present:
-
-    - CPTR_EL3.ESM (bit 12) must be initialised to 0b1.
-
-    - SCR_EL3.EnTP2 (bit 41) must be initialised to 0b1.
-
-    - SMCR_EL3.LEN must be initialised to the same value for all CPUs the
-      kernel will execute on.
-
- - If the kernel is entered at EL1 and EL2 is present:
-
-    - CPTR_EL2.TSM (bit 12) must be initialised to 0b0.
-
-    - CPTR_EL2.SMEN (bits 25:24) must be initialised to 0b11.
-
-    - SCTLR_EL2.EnTP2 (bit 60) must be initialised to 0b1.
-
-    - SMCR_EL2.LEN must be initialised to the same value for all CPUs the
-      kernel will execute on.
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 The requirements described above for CPU mode, caches, MMUs, architected
 timers, coherency and system registers apply to all CPUs.  All CPUs must
 enter the kernel in the same exception level.  Where the values documented

@@ -1440,9 +1440,6 @@ vm_fault_t do_huge_pmd_numa_page(struct vm_fault *vmf)
 		goto out;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/*
 	 * Since we took the NUMA fault, we must have observed the !accessible
 	 * bit. Make sure all other CPUs agree with that, to avoid them
@@ -1469,9 +1466,6 @@ vm_fault_t do_huge_pmd_numa_page(struct vm_fault *vmf)
 					      haddr + HPAGE_PMD_SIZE);
 	}
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pmd = pmd_modify(oldpmd, vma->vm_page_prot);
 	page = vm_normal_page_pmd(vma, haddr, pmd);
 	if (!page)
@@ -2460,27 +2454,11 @@ static void __split_huge_page(struct page *page, struct list_head *list,
 
 	for (i = nr - 1; i >= 1; i--) {
 		__split_huge_page_tail(head, i, lruvec, list);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		/* Some pages can be beyond EOF: drop them from page cache */
-		if (head[i].index >= end) {
-			ClearPageDirty(head + i);
-			__delete_from_page_cache(head + i, NULL);
-			if (shmem_mapping(head->mapping))
-=======
 		/* Some pages can be beyond i_size: drop them from page cache */
 		if (head[i].index >= end) {
 			ClearPageDirty(head + i);
 			__delete_from_page_cache(head + i, NULL);
 			if (IS_ENABLED(CONFIG_SHMEM) && PageSwapBacked(head))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		/* Some pages can be beyond EOF: drop them from page cache */
-		if (head[i].index >= end) {
-			ClearPageDirty(head + i);
-			__delete_from_page_cache(head + i, NULL);
-			if (shmem_mapping(head->mapping))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				shmem_uncharge(head->mapping->host, 1);
 			put_page(head + i);
 		} else if (!PageAnon(page)) {
@@ -2708,16 +2686,6 @@ int split_huge_page_to_list(struct page *page, struct list_head *list)
 		 * head page lock is good enough to serialize the trimming.
 		 */
 		end = DIV_ROUND_UP(i_size_read(mapping->host), PAGE_SIZE);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (shmem_mapping(mapping))
-			end = shmem_fallocend(mapping->host, end);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (shmem_mapping(mapping))
-			end = shmem_fallocend(mapping->host, end);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/*

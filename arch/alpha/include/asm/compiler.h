@@ -4,9 +4,6 @@
 
 #include <uapi/asm/compiler.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /* Some idiots over in <linux/compiler.h> thought inline should imply
    always_inline.  This breaks stuff.  We'll include this file whenever
    we run into such problems.  */
@@ -18,7 +15,4 @@
 #undef __always_inline
 #define __always_inline		inline __attribute__((always_inline))
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __ALPHA_COMPILER_H */

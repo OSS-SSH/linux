@@ -11,11 +11,6 @@
 #define ADF_DH895XCC_ERRMSK5	(ADF_DH895XCC_EP_OFFSET + 0xDC)
 #define ADF_DH895XCC_ERRMSK5_VF2PF_U_MASK(vf_mask) (vf_mask >> 16)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void __adf_enable_vf2pf_interrupts(struct adf_accel_dev *accel_dev,
-					  u32 vf_mask)
-=======
 void adf_enable_pf2vf_interrupts(struct adf_accel_dev *accel_dev)
 {
 	struct adf_accel_pci *pci_info = &accel_dev->accel_pci_dev;
@@ -38,11 +33,6 @@ void adf_disable_pf2vf_interrupts(struct adf_accel_dev *accel_dev)
 
 void adf_enable_vf2pf_interrupts(struct adf_accel_dev *accel_dev,
 				 u32 vf_mask)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void __adf_enable_vf2pf_interrupts(struct adf_accel_dev *accel_dev,
-					  u32 vf_mask)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct adf_hw_device_data *hw_data = accel_dev->hw_device;
 	struct adf_bar *pmisc =
@@ -65,27 +55,7 @@ static void __adf_enable_vf2pf_interrupts(struct adf_accel_dev *accel_dev,
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-void adf_enable_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 vf_mask)
-{
-	unsigned long flags;
-
-	spin_lock_irqsave(&accel_dev->pf.vf2pf_ints_lock, flags);
-	__adf_enable_vf2pf_interrupts(accel_dev, vf_mask);
-	spin_unlock_irqrestore(&accel_dev->pf.vf2pf_ints_lock, flags);
-}
-
-static void __adf_disable_vf2pf_interrupts(struct adf_accel_dev *accel_dev,
-					   u32 vf_mask)
-<<<<<<< HEAD
-=======
 void adf_disable_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 vf_mask)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct adf_hw_device_data *hw_data = accel_dev->hw_device;
 	struct adf_bar *pmisc =
@@ -108,31 +78,6 @@ void adf_disable_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 vf_mask)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-void adf_disable_vf2pf_interrupts(struct adf_accel_dev *accel_dev, u32 vf_mask)
-{
-	unsigned long flags;
-
-	spin_lock_irqsave(&accel_dev->pf.vf2pf_ints_lock, flags);
-	__adf_disable_vf2pf_interrupts(accel_dev, vf_mask);
-	spin_unlock_irqrestore(&accel_dev->pf.vf2pf_ints_lock, flags);
-}
-
-void adf_disable_vf2pf_interrupts_irq(struct adf_accel_dev *accel_dev, u32 vf_mask)
-{
-	spin_lock(&accel_dev->pf.vf2pf_ints_lock);
-	__adf_disable_vf2pf_interrupts(accel_dev, vf_mask);
-	spin_unlock(&accel_dev->pf.vf2pf_ints_lock);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __adf_iov_putmsg(struct adf_accel_dev *accel_dev, u32 msg, u8 vf_nr)
 {
 	struct adf_accel_pci *pci_info = &accel_dev->accel_pci_dev;
@@ -241,13 +186,7 @@ int adf_iov_putmsg(struct adf_accel_dev *accel_dev, u32 msg, u8 vf_nr)
 
 	return ret;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 EXPORT_SYMBOL_GPL(adf_iov_putmsg);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void adf_vf2pf_req_hndl(struct adf_accel_vf_info *vf_info)
 {
@@ -277,15 +216,7 @@ void adf_vf2pf_req_hndl(struct adf_accel_vf_info *vf_info)
 		resp = (ADF_PF2VF_MSGORIGIN_SYSTEM |
 			 (ADF_PF2VF_MSGTYPE_VERSION_RESP <<
 			  ADF_PF2VF_MSGTYPE_SHIFT) |
-<<<<<<< HEAD
-<<<<<<< HEAD
-			 (ADF_PFVF_COMPAT_THIS_VERSION <<
-=======
 			 (ADF_PFVF_COMPATIBILITY_VERSION <<
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			 (ADF_PFVF_COMPAT_THIS_VERSION <<
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  ADF_PF2VF_VERSION_RESP_VERS_SHIFT));
 
 		dev_dbg(&GET_DEV(accel_dev),
@@ -295,45 +226,19 @@ void adf_vf2pf_req_hndl(struct adf_accel_vf_info *vf_info)
 		if (vf_compat_ver < hw_data->min_iov_compat_ver) {
 			dev_err(&GET_DEV(accel_dev),
 				"VF (vers %d) incompatible with PF (vers %d)\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-				vf_compat_ver, ADF_PFVF_COMPAT_THIS_VERSION);
+				vf_compat_ver, ADF_PFVF_COMPATIBILITY_VERSION);
 			resp |= ADF_PF2VF_VF_INCOMPATIBLE <<
 				ADF_PF2VF_VERSION_RESP_RESULT_SHIFT;
-		} else if (vf_compat_ver > ADF_PFVF_COMPAT_THIS_VERSION) {
+		} else if (vf_compat_ver > ADF_PFVF_COMPATIBILITY_VERSION) {
 			dev_err(&GET_DEV(accel_dev),
 				"VF (vers %d) compat with PF (vers %d) unkn.\n",
-				vf_compat_ver, ADF_PFVF_COMPAT_THIS_VERSION);
-=======
 				vf_compat_ver, ADF_PFVF_COMPATIBILITY_VERSION);
-=======
-				vf_compat_ver, ADF_PFVF_COMPAT_THIS_VERSION);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			resp |= ADF_PF2VF_VF_INCOMPATIBLE <<
-				ADF_PF2VF_VERSION_RESP_RESULT_SHIFT;
-		} else if (vf_compat_ver > ADF_PFVF_COMPAT_THIS_VERSION) {
-			dev_err(&GET_DEV(accel_dev),
-				"VF (vers %d) compat with PF (vers %d) unkn.\n",
-<<<<<<< HEAD
-				vf_compat_ver, ADF_PFVF_COMPATIBILITY_VERSION);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				vf_compat_ver, ADF_PFVF_COMPAT_THIS_VERSION);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			resp |= ADF_PF2VF_VF_COMPAT_UNKNOWN <<
 				ADF_PF2VF_VERSION_RESP_RESULT_SHIFT;
 		} else {
 			dev_dbg(&GET_DEV(accel_dev),
 				"VF (vers %d) compatible with PF (vers %d)\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-				vf_compat_ver, ADF_PFVF_COMPAT_THIS_VERSION);
-=======
 				vf_compat_ver, ADF_PFVF_COMPATIBILITY_VERSION);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				vf_compat_ver, ADF_PFVF_COMPAT_THIS_VERSION);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			resp |= ADF_PF2VF_VF_COMPATIBLE <<
 				ADF_PF2VF_VERSION_RESP_RESULT_SHIFT;
 		}
@@ -346,15 +251,7 @@ void adf_vf2pf_req_hndl(struct adf_accel_vf_info *vf_info)
 		resp = (ADF_PF2VF_MSGORIGIN_SYSTEM |
 			 (ADF_PF2VF_MSGTYPE_VERSION_RESP <<
 			  ADF_PF2VF_MSGTYPE_SHIFT) |
-<<<<<<< HEAD
-<<<<<<< HEAD
-			 (ADF_PFVF_COMPAT_THIS_VERSION <<
-=======
 			 (ADF_PFVF_COMPATIBILITY_VERSION <<
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			 (ADF_PFVF_COMPAT_THIS_VERSION <<
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  ADF_PF2VF_VERSION_RESP_VERS_SHIFT));
 		resp |= ADF_PF2VF_VF_COMPATIBLE <<
 			ADF_PF2VF_VERSION_RESP_RESULT_SHIFT;
@@ -387,14 +284,6 @@ void adf_vf2pf_req_hndl(struct adf_accel_vf_info *vf_info)
 
 	/* re-enable interrupt on PF from this VF */
 	adf_enable_vf2pf_interrupts(accel_dev, (1 << vf_nr));
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return;
 err:
 	dev_dbg(&GET_DEV(accel_dev), "Unknown message from VF%d (0x%x);\n",
@@ -424,21 +313,8 @@ static int adf_vf2pf_request_version(struct adf_accel_dev *accel_dev)
 
 	msg = ADF_VF2PF_MSGORIGIN_SYSTEM;
 	msg |= ADF_VF2PF_MSGTYPE_COMPAT_VER_REQ << ADF_VF2PF_MSGTYPE_SHIFT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	msg |= ADF_PFVF_COMPAT_THIS_VERSION << ADF_VF2PF_COMPAT_VER_REQ_SHIFT;
-	BUILD_BUG_ON(ADF_PFVF_COMPAT_THIS_VERSION > 255);
-
-	reinit_completion(&accel_dev->vf.iov_msg_completion);
-<<<<<<< HEAD
-=======
 	msg |= ADF_PFVF_COMPATIBILITY_VERSION << ADF_VF2PF_COMPAT_VER_REQ_SHIFT;
 	BUILD_BUG_ON(ADF_PFVF_COMPATIBILITY_VERSION > 255);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Send request from VF to PF */
 	ret = adf_iov_putmsg(accel_dev, msg, 0);
@@ -462,36 +338,14 @@ static int adf_vf2pf_request_version(struct adf_accel_dev *accel_dev)
 		break;
 	case ADF_PF2VF_VF_COMPAT_UNKNOWN:
 		/* VF is newer than PF and decides whether it is compatible */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (accel_dev->vf.pf_version >= hw_data->min_iov_compat_ver) {
-			accel_dev->vf.compatible = ADF_PF2VF_VF_COMPATIBLE;
-			break;
-		}
-=======
 		if (accel_dev->vf.pf_version >= hw_data->min_iov_compat_ver)
 			break;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (accel_dev->vf.pf_version >= hw_data->min_iov_compat_ver) {
-			accel_dev->vf.compatible = ADF_PF2VF_VF_COMPATIBLE;
-			break;
-		}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fallthrough;
 	case ADF_PF2VF_VF_INCOMPATIBLE:
 		dev_err(&GET_DEV(accel_dev),
 			"PF (vers %d) and VF (vers %d) are not compatible\n",
 			accel_dev->vf.pf_version,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			ADF_PFVF_COMPAT_THIS_VERSION);
-=======
 			ADF_PFVF_COMPATIBILITY_VERSION);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			ADF_PFVF_COMPAT_THIS_VERSION);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return -EINVAL;
 	default:
 		dev_err(&GET_DEV(accel_dev),

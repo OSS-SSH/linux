@@ -1744,15 +1744,7 @@
 			compatible = "ti,tmp451";
 			reg = <0x4c>;
 			interrupt-parent = <&gpio>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-			interrupts = <TEGRA_GPIO(I, 6) IRQ_TYPE_EDGE_FALLING>;
-=======
 			interrupts = <TEGRA_GPIO(I, 6) IRQ_TYPE_LEVEL_LOW>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			interrupts = <TEGRA_GPIO(I, 6) IRQ_TYPE_EDGE_FALLING>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			#thermal-sensor-cells = <1>;
 			vcc-supply = <&reg_module_3v3>;
 		};

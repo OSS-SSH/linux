@@ -385,43 +385,9 @@
 
 /* Bluetooth on AP6212 */
 &uart_A {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	status = "okay";
-	pinctrl-0 = <&uart_a_pins>, <&uart_a_cts_rts_pins>;
-	pinctrl-names = "default";
-	uart-has-rtscts;
-
-	bluetooth {
-		compatible = "brcm,bcm43438-bt";
-		clocks = <&wifi_32k>;
-		clock-names = "lpo";
-		vbat-supply = <&vddio_ao3v3>;
-		vddio-supply = <&vddio_ao18>;
-		host-wakeup-gpios = <&gpio GPIOX_21 GPIO_ACTIVE_HIGH>;
-		shutdown-gpios = <&gpio GPIOX_20 GPIO_ACTIVE_HIGH>;
-	};
-=======
 	status = "disabled";
 	pinctrl-0 = <&uart_a_pins>, <&uart_a_cts_rts_pins>;
 	pinctrl-names = "default";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	status = "okay";
-	pinctrl-0 = <&uart_a_pins>, <&uart_a_cts_rts_pins>;
-	pinctrl-names = "default";
-	uart-has-rtscts;
-
-	bluetooth {
-		compatible = "brcm,bcm43438-bt";
-		clocks = <&wifi_32k>;
-		clock-names = "lpo";
-		vbat-supply = <&vddio_ao3v3>;
-		vddio-supply = <&vddio_ao18>;
-		host-wakeup-gpios = <&gpio GPIOX_21 GPIO_ACTIVE_HIGH>;
-		shutdown-gpios = <&gpio GPIOX_20 GPIO_ACTIVE_HIGH>;
-	};
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /* 40-pin CON1 */

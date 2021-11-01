@@ -171,21 +171,12 @@ int tegra_pcm_hw_params(struct snd_soc_component *component,
 		return ret;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 EXPORT_SYMBOL_GPL(tegra_pcm_hw_params);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 int tegra_pcm_hw_free(struct snd_soc_component *component,
 		      struct snd_pcm_substream *substream)
 {
@@ -215,9 +206,6 @@ int tegra_pcm_mmap(struct snd_soc_component *component,
 }
 EXPORT_SYMBOL_GPL(tegra_pcm_mmap);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 snd_pcm_uframes_t tegra_pcm_pointer(struct snd_soc_component *component,
 				    struct snd_pcm_substream *substream)
 {
@@ -225,20 +213,6 @@ snd_pcm_uframes_t tegra_pcm_pointer(struct snd_soc_component *component,
 }
 EXPORT_SYMBOL_GPL(tegra_pcm_pointer);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int tegra_pcm_dma_allocate(struct device *dev, struct snd_soc_pcm_runtime *rtd,
-				  size_t size)
-{
-	struct snd_pcm *pcm = rtd->pcm;
-	int ret;
-
-	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
-	if (ret < 0)
-		return ret;
-
-	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV_WC, dev, size);
-=======
 static int tegra_pcm_preallocate_dma_buffer(struct snd_pcm *pcm, int stream,
 					    size_t size)
 {
@@ -275,19 +249,16 @@ static void tegra_pcm_deallocate_dma_buffer(struct snd_pcm *pcm, int stream)
 }
 
 static int tegra_pcm_dma_allocate(struct snd_soc_pcm_runtime *rtd,
-=======
-static int tegra_pcm_dma_allocate(struct device *dev, struct snd_soc_pcm_runtime *rtd,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				  size_t size)
 {
+	struct snd_card *card = rtd->card->snd_card;
 	struct snd_pcm *pcm = rtd->pcm;
 	int ret;
 
-	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
+	ret = dma_set_mask_and_coherent(card->dev, DMA_BIT_MASK(32));
 	if (ret < 0)
 		return ret;
 
-<<<<<<< HEAD
 	if (pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream) {
 		ret = tegra_pcm_preallocate_dma_buffer(pcm,
 			SNDRV_PCM_STREAM_PLAYBACK, size);
@@ -308,50 +279,23 @@ err_free_play:
 	tegra_pcm_deallocate_dma_buffer(pcm, SNDRV_PCM_STREAM_PLAYBACK);
 err:
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV_WC, dev, size);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int tegra_pcm_construct(struct snd_soc_component *component,
 			struct snd_soc_pcm_runtime *rtd)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct device *dev = component->dev;
-
-	/*
-	 * Fallback for backwards-compatibility with older device trees that
-	 * have the iommus property in the virtual, top-level "sound" node.
-	 */
-	if (!of_get_property(dev->of_node, "iommus", NULL))
-		dev = rtd->card->snd_card->dev;
-
-	return tegra_pcm_dma_allocate(dev, rtd, tegra_pcm_hardware.buffer_bytes_max);
-}
-EXPORT_SYMBOL_GPL(tegra_pcm_construct);
-
-=======
 	return tegra_pcm_dma_allocate(rtd, tegra_pcm_hardware.buffer_bytes_max);
 }
 EXPORT_SYMBOL_GPL(tegra_pcm_construct);
-=======
-	struct device *dev = component->dev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	/*
-	 * Fallback for backwards-compatibility with older device trees that
-	 * have the iommus property in the virtual, top-level "sound" node.
-	 */
-	if (!of_get_property(dev->of_node, "iommus", NULL))
-		dev = rtd->card->snd_card->dev;
-
-	return tegra_pcm_dma_allocate(dev, rtd, tegra_pcm_hardware.buffer_bytes_max);
+void tegra_pcm_destruct(struct snd_soc_component *component,
+			struct snd_pcm *pcm)
+{
+	tegra_pcm_deallocate_dma_buffer(pcm, SNDRV_PCM_STREAM_CAPTURE);
+	tegra_pcm_deallocate_dma_buffer(pcm, SNDRV_PCM_STREAM_PLAYBACK);
 }
-EXPORT_SYMBOL_GPL(tegra_pcm_construct);
+EXPORT_SYMBOL_GPL(tegra_pcm_destruct);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MODULE_AUTHOR("Stephen Warren <swarren@nvidia.com>");
 MODULE_DESCRIPTION("Tegra PCM ASoC driver");
 MODULE_LICENSE("GPL");

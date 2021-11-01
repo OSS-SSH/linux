@@ -186,15 +186,7 @@ xchk_block_set_preen(
 	struct xfs_buf		*bp)
 {
 	sc->sm->sm_flags |= XFS_SCRUB_OFLAG_PREEN;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	trace_xchk_block_preen(sc, xfs_buf_daddr(bp), __return_address);
-=======
 	trace_xchk_block_preen(sc, bp->b_bn, __return_address);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	trace_xchk_block_preen(sc, xfs_buf_daddr(bp), __return_address);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -227,15 +219,7 @@ xchk_block_set_corrupt(
 	struct xfs_buf		*bp)
 {
 	sc->sm->sm_flags |= XFS_SCRUB_OFLAG_CORRUPT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	trace_xchk_block_error(sc, xfs_buf_daddr(bp), __return_address);
-=======
 	trace_xchk_block_error(sc, bp->b_bn, __return_address);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	trace_xchk_block_error(sc, xfs_buf_daddr(bp), __return_address);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Record a corruption while cross-referencing. */
@@ -245,15 +229,7 @@ xchk_block_xref_set_corrupt(
 	struct xfs_buf		*bp)
 {
 	sc->sm->sm_flags |= XFS_SCRUB_OFLAG_XCORRUPT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	trace_xchk_block_error(sc, xfs_buf_daddr(bp), __return_address);
-=======
 	trace_xchk_block_error(sc, bp->b_bn, __return_address);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	trace_xchk_block_error(sc, xfs_buf_daddr(bp), __return_address);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -348,15 +324,7 @@ struct xchk_rmap_ownedby_info {
 STATIC int
 xchk_count_rmap_ownedby_irec(
 	struct xfs_btree_cur		*cur,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct xfs_rmap_irec	*rec,
-=======
 	struct xfs_rmap_irec		*rec,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct xfs_rmap_irec	*rec,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void				*priv)
 {
 	struct xchk_rmap_ownedby_info	*sroi = priv;
@@ -426,27 +394,11 @@ want_ag_read_header_failure(
 }
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Grab the perag structure and all the headers for an AG.
- *
- * The headers should be released by xchk_ag_free, but as a fail safe we attach
- * all the buffers we grab to the scrub transaction so they'll all be freed
- * when we cancel it.  Returns ENOENT if we can't grab the perag structure.
-=======
  * Grab all the headers for an AG.
  *
  * The headers should be released by xchk_ag_free, but as a fail
  * safe we attach all the buffers we grab to the scrub transaction so
  * they'll all be freed when we cancel it.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Grab the perag structure and all the headers for an AG.
- *
- * The headers should be released by xchk_ag_free, but as a fail safe we attach
- * all the buffers we grab to the scrub transaction so they'll all be freed
- * when we cancel it.  Returns ENOENT if we can't grab the perag structure.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int
 xchk_ag_read_headers(
@@ -457,55 +409,22 @@ xchk_ag_read_headers(
 	struct xfs_mount	*mp = sc->mp;
 	int			error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ASSERT(!sa->pag);
-	sa->pag = xfs_perag_get(mp, agno);
-	if (!sa->pag)
-		return -ENOENT;
-<<<<<<< HEAD
-
-	error = xfs_ialloc_read_agi(mp, sc->tp, agno, &sa->agi_bp);
-	if (error && want_ag_read_header_failure(sc, XFS_SCRUB_TYPE_AGI))
-		return error;
-
-	error = xfs_alloc_read_agf(mp, sc->tp, agno, 0, &sa->agf_bp);
-	if (error && want_ag_read_header_failure(sc, XFS_SCRUB_TYPE_AGF))
-		return error;
-
-	error = xfs_alloc_read_agfl(mp, sc->tp, agno, &sa->agfl_bp);
-	if (error && want_ag_read_header_failure(sc, XFS_SCRUB_TYPE_AGFL))
-		return error;
-
-	return 0;
-=======
 	sa->agno = agno;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	error = xfs_ialloc_read_agi(mp, sc->tp, agno, &sa->agi_bp);
 	if (error && want_ag_read_header_failure(sc, XFS_SCRUB_TYPE_AGI))
-		return error;
+		goto out;
 
 	error = xfs_alloc_read_agf(mp, sc->tp, agno, 0, &sa->agf_bp);
 	if (error && want_ag_read_header_failure(sc, XFS_SCRUB_TYPE_AGF))
-		return error;
+		goto out;
 
 	error = xfs_alloc_read_agfl(mp, sc->tp, agno, &sa->agfl_bp);
 	if (error && want_ag_read_header_failure(sc, XFS_SCRUB_TYPE_AGFL))
-<<<<<<< HEAD
 		goto out;
 	error = 0;
 out:
 	return error;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return error;
-
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Release all the AG btree cursors. */
@@ -542,13 +461,7 @@ xchk_ag_btcur_init(
 {
 	struct xfs_mount	*mp = sc->mp;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	xchk_perag_get(sc->mp, sa);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sa->agf_bp &&
 	    xchk_ag_btree_healthy_enough(sc, sa->pag, XFS_BTNUM_BNO)) {
 		/* Set up a bnobt cursor for cross-referencing. */
@@ -571,45 +484,21 @@ xchk_ag_btcur_init(
 	}
 
 	/* Set up a finobt cursor for cross-referencing. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (sa->agi_bp && xfs_has_finobt(mp) &&
-=======
 	if (sa->agi_bp && xfs_sb_version_hasfinobt(&mp->m_sb) &&
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (sa->agi_bp && xfs_has_finobt(mp) &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    xchk_ag_btree_healthy_enough(sc, sa->pag, XFS_BTNUM_FINO)) {
 		sa->fino_cur = xfs_inobt_init_cursor(mp, sc->tp, sa->agi_bp,
 				sa->pag, XFS_BTNUM_FINO);
 	}
 
 	/* Set up a rmapbt cursor for cross-referencing. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (sa->agf_bp && xfs_has_rmapbt(mp) &&
-=======
 	if (sa->agf_bp && xfs_sb_version_hasrmapbt(&mp->m_sb) &&
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (sa->agf_bp && xfs_has_rmapbt(mp) &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    xchk_ag_btree_healthy_enough(sc, sa->pag, XFS_BTNUM_RMAP)) {
 		sa->rmap_cur = xfs_rmapbt_init_cursor(mp, sc->tp, sa->agf_bp,
 				sa->pag);
 	}
 
 	/* Set up a refcountbt cursor for cross-referencing. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (sa->agf_bp && xfs_has_reflink(mp) &&
-=======
 	if (sa->agf_bp && xfs_sb_version_hasreflink(&mp->m_sb) &&
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (sa->agf_bp && xfs_has_reflink(mp) &&
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	    xchk_ag_btree_healthy_enough(sc, sa->pag, XFS_BTNUM_REFC)) {
 		sa->refc_cur = xfs_refcountbt_init_cursor(mp, sc->tp,
 				sa->agf_bp, sa->pag);
@@ -639,17 +528,6 @@ xchk_ag_free(
 		xfs_perag_put(sa->pag);
 		sa->pag = NULL;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-}
-
-/*
- * For scrub, grab the perag structure, the AGI, and the AGF headers, in that
- * order.  Locking order requires us to get the AGI before the AGF.  We use the
- * transaction to avoid deadlocking on crosslinked metadata buffers; either the
- * caller passes one in (bmap scrub) or we have to create a transaction
- * ourselves.  Returns ENOENT if the perag struct cannot be grabbed.
-=======
 	sa->agno = NULLAGNUMBER;
 }
 
@@ -659,17 +537,6 @@ xchk_ag_free(
  * transaction to avoid deadlocking on crosslinked metadata buffers;
  * either the caller passes one in (bmap scrub) or we have to create a
  * transaction ourselves.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-}
-
-/*
- * For scrub, grab the perag structure, the AGI, and the AGF headers, in that
- * order.  Locking order requires us to get the AGI before the AGF.  We use the
- * transaction to avoid deadlocking on crosslinked metadata buffers; either the
- * caller passes one in (bmap scrub) or we have to create a transaction
- * ourselves.  Returns ENOENT if the perag struct cannot be grabbed.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int
 xchk_ag_init(
@@ -687,9 +554,6 @@ xchk_ag_init(
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /*
  * Grab the per-ag structure if we haven't already gotten it.  Teardown of the
  * xchk_ag will release it for us.
@@ -703,9 +567,6 @@ xchk_perag_get(
 		sa->pag = xfs_perag_get(mp, sa->agno);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* Per-scrubber setup functions */
 
 /*
@@ -936,15 +797,7 @@ xchk_buffer_recheck(
 	if (!fa)
 		return;
 	sc->sm->sm_flags |= XFS_SCRUB_OFLAG_CORRUPT;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	trace_xchk_block_error(sc, xfs_buf_daddr(bp), fa);
-=======
 	trace_xchk_block_error(sc, bp->b_bn, fa);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	trace_xchk_block_error(sc, xfs_buf_daddr(bp), fa);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -989,15 +842,7 @@ xchk_metadata_inode_forks(
 		return error;
 
 	/* Look for incorrect shared blocks. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_reflink(sc->mp)) {
-=======
 	if (xfs_sb_version_hasreflink(&sc->mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_reflink(sc->mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		error = xfs_reflink_inode_has_shared_extents(sc->tp, sc->ip,
 				&shared);
 		if (!xchk_fblock_process_error(sc, XFS_DATA_FORK, 0,
@@ -1039,14 +884,6 @@ xchk_stop_reaping(
 {
 	sc->flags |= XCHK_REAPING_DISABLED;
 	xfs_blockgc_stop(sc->mp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	xfs_inodegc_stop(sc->mp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	xfs_inodegc_stop(sc->mp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /* Restart background reaping of resources. */
@@ -1054,23 +891,6 @@ void
 xchk_start_reaping(
 	struct xfs_scrub	*sc)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Readonly filesystems do not perform inactivation or speculative
-	 * preallocation, so there's no need to restart the workers.
-	 */
-	if (!xfs_is_readonly(sc->mp)) {
-		xfs_inodegc_start(sc->mp);
-		xfs_blockgc_start(sc->mp);
-	}
-<<<<<<< HEAD
-=======
 	xfs_blockgc_start(sc->mp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sc->flags &= ~XCHK_REAPING_DISABLED;
 }

@@ -404,15 +404,7 @@ static int audio_probe(struct platform_device *pdev)
 		return -ENOMEM;
 
 	/* By default dais[0] is configured for max98373 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!strcmp(pdev->name, "sof_da7219_mx98360a")) {
-=======
 	if (!strcmp(pdev->name, "sof_da7219_max98360a")) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!strcmp(pdev->name, "sof_da7219_mx98360a")) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dais[0] = (struct snd_soc_dai_link) {
 			.name = "SSP1-Codec",
 			.id = 0,

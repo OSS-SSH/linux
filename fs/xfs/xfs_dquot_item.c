@@ -218,9 +218,6 @@ xfs_qm_dquot_logitem_init(
 					&xfs_dquot_item_ops);
 	lp->qli_dquot = dqp;
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 /*------------------  QUOTAOFF LOG ITEMS  -------------------*/
 
@@ -355,6 +352,3 @@ xfs_qm_qoff_logitem_init(
 	qf->qql_flags = flags;
 	return qf;
 }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -462,15 +462,7 @@ static int zonefs_file_truncate(struct inode *inode, loff_t isize)
 	inode_dio_wait(inode);
 
 	/* Serialize against page faults */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	filemap_invalidate_lock(inode->i_mapping);
-=======
 	down_write(&zi->i_mmap_sem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	filemap_invalidate_lock(inode->i_mapping);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Serialize against zonefs_iomap_begin() */
 	mutex_lock(&zi->i_truncate_mutex);
@@ -508,15 +500,7 @@ static int zonefs_file_truncate(struct inode *inode, loff_t isize)
 
 unlock:
 	mutex_unlock(&zi->i_truncate_mutex);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	filemap_invalidate_unlock(inode->i_mapping);
-=======
 	up_write(&zi->i_mmap_sem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	filemap_invalidate_unlock(inode->i_mapping);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return ret;
 }
@@ -591,9 +575,6 @@ static int zonefs_file_fsync(struct file *file, loff_t start, loff_t end,
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static vm_fault_t zonefs_filemap_fault(struct vm_fault *vmf)
 {
 	struct zonefs_inode_info *zi = ZONEFS_I(file_inode(vmf->vma->vm_file));
@@ -606,9 +587,6 @@ static vm_fault_t zonefs_filemap_fault(struct vm_fault *vmf)
 	return ret;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static vm_fault_t zonefs_filemap_page_mkwrite(struct vm_fault *vmf)
 {
 	struct inode *inode = file_inode(vmf->vma->vm_file);
@@ -629,36 +607,16 @@ static vm_fault_t zonefs_filemap_page_mkwrite(struct vm_fault *vmf)
 	file_update_time(vmf->vma->vm_file);
 
 	/* Serialize against truncates */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	filemap_invalidate_lock_shared(inode->i_mapping);
-	ret = iomap_page_mkwrite(vmf, &zonefs_iomap_ops);
-	filemap_invalidate_unlock_shared(inode->i_mapping);
-=======
 	down_read(&zi->i_mmap_sem);
 	ret = iomap_page_mkwrite(vmf, &zonefs_iomap_ops);
 	up_read(&zi->i_mmap_sem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	filemap_invalidate_lock_shared(inode->i_mapping);
-	ret = iomap_page_mkwrite(vmf, &zonefs_iomap_ops);
-	filemap_invalidate_unlock_shared(inode->i_mapping);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sb_end_pagefault(inode->i_sb);
 	return ret;
 }
 
 static const struct vm_operations_struct zonefs_file_vm_ops = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.fault		= filemap_fault,
-=======
 	.fault		= zonefs_filemap_fault,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.fault		= filemap_fault,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.map_pages	= filemap_map_pages,
 	.page_mkwrite	= zonefs_filemap_page_mkwrite,
 };
@@ -747,15 +705,9 @@ static ssize_t zonefs_file_dio_append(struct kiocb *iocb, struct iov_iter *from)
 		return 0;
 
 	bio = bio_alloc(GFP_NOFS, nr_pages);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (!bio)
 		return -ENOMEM;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bio_set_dev(bio, bdev);
 	bio->bi_iter.bi_sector = zi->i_zsector;
 	bio->bi_write_hint = iocb->ki_hint;
@@ -1206,13 +1158,7 @@ static struct inode *zonefs_alloc_inode(struct super_block *sb)
 
 	inode_init_once(&zi->i_vnode);
 	mutex_init(&zi->i_truncate_mutex);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	init_rwsem(&zi->i_mmap_sem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	zi->i_wr_refcnt = 0;
 
 	return &zi->i_vnode;

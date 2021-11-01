@@ -6,14 +6,6 @@ Required properties:
 	"ti,da830-mcasp-audio"	: for both DA830 & DA850 platforms
 	"ti,am33xx-mcasp-audio"	: for AM33xx platforms (AM33xx, AM43xx, TI81xx)
 	"ti,dra7-mcasp-audio"	: for DRA7xx platforms
-<<<<<<< HEAD
-<<<<<<< HEAD
-	"ti,omap4-mcasp-audio"	: for OMAP4
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	"ti,omap4-mcasp-audio"	: for OMAP4
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 - reg : Should contain reg specifiers for the entries in the reg-names property.
 - reg-names : Should contain:

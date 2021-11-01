@@ -60,15 +60,7 @@ static struct syscon *of_syscon_register(struct device_node *np, bool check_clk)
 		goto err_map;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	base = of_iomap(np, 0);
-=======
 	base = ioremap(res.start, resource_size(&res));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	base = of_iomap(np, 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!base) {
 		ret = -ENOMEM;
 		goto err_map;

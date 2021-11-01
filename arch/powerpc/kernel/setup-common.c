@@ -33,13 +33,7 @@
 #include <linux/of_platform.h>
 #include <linux/hugetlb.h>
 #include <linux/pgtable.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <asm/debugfs.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/io.h>
 #include <asm/paca.h>
 #include <asm/prom.h>
@@ -779,9 +773,6 @@ static int __init check_cache_coherency(void)
 late_initcall(check_cache_coherency);
 #endif /* CONFIG_CHECK_CACHE_COHERENCY */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_DEBUG_FS
 struct dentry *powerpc_debugfs_root;
 EXPORT_SYMBOL(powerpc_debugfs_root);
@@ -794,9 +785,6 @@ static int powerpc_debugfs_init(void)
 arch_initcall(powerpc_debugfs_init);
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void ppc_printk_progress(char *s, unsigned short hex)
 {
 	pr_info("%s\n", s);

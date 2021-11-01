@@ -667,15 +667,9 @@ struct ext2_inode_info {
 	struct rw_semaphore xattr_sem;
 #endif
 	rwlock_t i_meta_lock;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_FS_DAX
 	struct rw_semaphore dax_sem;
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * truncate_mutex is for serialising ext2_truncate() against
@@ -691,9 +685,6 @@ struct ext2_inode_info {
 #endif
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_FS_DAX
 #define dax_sem_down_write(ext2_inode)	down_write(&(ext2_inode)->dax_sem)
 #define dax_sem_up_write(ext2_inode)	up_write(&(ext2_inode)->dax_sem)
@@ -702,9 +693,6 @@ struct ext2_inode_info {
 #define dax_sem_up_write(ext2_inode)
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Inode dynamic state flags
  */
@@ -752,17 +740,7 @@ extern int ext2_inode_by_name(struct inode *dir,
 extern int ext2_make_empty(struct inode *, struct inode *);
 extern struct ext2_dir_entry_2 *ext2_find_entry(struct inode *, const struct qstr *,
 						struct page **, void **res_page_addr);
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern int ext2_delete_entry(struct ext2_dir_entry_2 *dir, struct page *page,
-			     char *kaddr);
-=======
 extern int ext2_delete_entry (struct ext2_dir_entry_2 *, struct page *);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern int ext2_delete_entry(struct ext2_dir_entry_2 *dir, struct page *page,
-			     char *kaddr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern int ext2_empty_dir (struct inode *);
 extern struct ext2_dir_entry_2 *ext2_dotdot(struct inode *dir, struct page **p, void **pa);
 extern void ext2_set_link(struct inode *, struct ext2_dir_entry_2 *, struct page *, void *,

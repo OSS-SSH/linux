@@ -2022,27 +2022,8 @@ static int rcu_torture_stall(void *args)
 			  __func__, raw_smp_processor_id());
 		while (ULONG_CMP_LT((unsigned long)ktime_get_seconds(),
 				    stop_at))
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			if (stall_cpu_block) {
-#ifdef CONFIG_PREEMPTION
-				preempt_schedule();
-#else
-<<<<<<< HEAD
-				schedule_timeout_uninterruptible(HZ);
-#endif
-			}
-=======
 			if (stall_cpu_block)
 				schedule_timeout_uninterruptible(HZ);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				schedule_timeout_uninterruptible(HZ);
-#endif
-			}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (stall_cpu_irqsoff)
 			local_irq_enable();
 		else if (!stall_cpu_block)

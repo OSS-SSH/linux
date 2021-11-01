@@ -853,15 +853,7 @@ int mcp251xfd_regmap_init(struct mcp251xfd_priv *priv);
 u16 mcp251xfd_crc16_compute2(const void *cmd, size_t cmd_size,
 			     const void *data, size_t data_size);
 u16 mcp251xfd_crc16_compute(const void *data, size_t data_size);
-<<<<<<< HEAD
-<<<<<<< HEAD
-void mcp251xfd_skb_set_timestamp(const struct mcp251xfd_priv *priv,
-=======
 void mcp251xfd_skb_set_timestamp(struct mcp251xfd_priv *priv,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void mcp251xfd_skb_set_timestamp(const struct mcp251xfd_priv *priv,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 struct sk_buff *skb, u32 timestamp);
 void mcp251xfd_timestamp_init(struct mcp251xfd_priv *priv);
 void mcp251xfd_timestamp_stop(struct mcp251xfd_priv *priv);

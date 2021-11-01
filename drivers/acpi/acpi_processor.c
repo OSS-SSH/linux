@@ -182,15 +182,7 @@ static int acpi_processor_hotadd_init(struct acpi_processor *pr)
 		return -ENODEV;
 
 	cpu_maps_update_begin();
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_write_lock();
-=======
 	cpu_hotplug_begin();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_write_lock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = acpi_map_cpu(pr->handle, pr->phys_id, pr->acpi_id, &pr->id);
 	if (ret)
@@ -211,15 +203,7 @@ static int acpi_processor_hotadd_init(struct acpi_processor *pr)
 	pr->flags.need_hotplug_init = 1;
 
 out:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_write_unlock();
-=======
 	cpu_hotplug_done();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_write_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cpu_maps_update_done();
 	return ret;
 }
@@ -470,29 +454,13 @@ static void acpi_processor_remove(struct acpi_device *device)
 	per_cpu(processors, pr->id) = NULL;
 
 	cpu_maps_update_begin();
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_write_lock();
-=======
 	cpu_hotplug_begin();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_write_lock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Remove the CPU. */
 	arch_unregister_cpu(pr->id);
 	acpi_unmap_cpu(pr->id);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	cpus_write_unlock();
-=======
 	cpu_hotplug_done();
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	cpus_write_unlock();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cpu_maps_update_done();
 
 	try_offline_node(cpu_to_node(pr->id));

@@ -40,21 +40,6 @@ config PINCTRL_STM32H743
 	default MACH_STM32H743
 	select PINCTRL_STM32
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-config PINCTRL_STM32MP135
-	bool "STMicroelectronics STM32MP135 pin control" if COMPILE_TEST && !MACH_STM32MP13
-	depends on OF && HAS_IOMEM
-	default MACH_STM32MP13
-	select PINCTRL_STM32
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 config PINCTRL_STM32MP157
 	bool "STMicroelectronics STM32MP157 pin control" if COMPILE_TEST && !MACH_STM32MP157
 	depends on OF && HAS_IOMEM

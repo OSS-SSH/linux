@@ -490,13 +490,7 @@ __setup("qla1280=", qla1280_setup);
 #define	CMD_SNSLEN(Cmnd)	SCSI_SENSE_BUFFERSIZE
 #define	CMD_RESULT(Cmnd)	Cmnd->result
 #define	CMD_HANDLE(Cmnd)	Cmnd->host_scribble
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define CMD_REQUEST(Cmnd)	Cmnd->request->cmd
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define CMD_HOST(Cmnd)		Cmnd->device->host
 #define SCSI_BUS_32(Cmnd)	Cmnd->device->channel
@@ -2833,15 +2827,7 @@ qla1280_64bit_start_scsi(struct scsi_qla_host *ha, struct srb * sp)
 	memset(((char *)pkt + 8), 0, (REQUEST_ENTRY_SIZE - 8));
 
 	/* Set ISP command timeout. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	pkt->timeout = cpu_to_le16(scsi_cmd_to_rq(cmd)->timeout / HZ);
-=======
 	pkt->timeout = cpu_to_le16(cmd->request->timeout/HZ);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	pkt->timeout = cpu_to_le16(scsi_cmd_to_rq(cmd)->timeout / HZ);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Set device target ID and LUN */
 	pkt->lun = SCSI_LUN_32(cmd);
@@ -3096,15 +3082,7 @@ qla1280_32bit_start_scsi(struct scsi_qla_host *ha, struct srb * sp)
 	memset(((char *)pkt + 8), 0, (REQUEST_ENTRY_SIZE - 8));
 
 	/* Set ISP command timeout. */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	pkt->timeout = cpu_to_le16(scsi_cmd_to_rq(cmd)->timeout / HZ);
-=======
 	pkt->timeout = cpu_to_le16(cmd->request->timeout/HZ);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	pkt->timeout = cpu_to_le16(scsi_cmd_to_rq(cmd)->timeout / HZ);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* Set device target ID and LUN */
 	pkt->lun = SCSI_LUN_32(cmd);
@@ -4003,15 +3981,7 @@ __qla1280_print_scsi_cmd(struct scsi_cmnd *cmd)
 	   qla1280_dump_buffer(1, (char *)sg, (cmd->use_sg*sizeof(struct scatterlist)));
 	   } */
 	printk("  tag=%d, transfersize=0x%x \n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-	       scsi_cmd_to_rq(cmd)->tag, cmd->transfersize);
-=======
 	       cmd->tag, cmd->transfersize);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	       scsi_cmd_to_rq(cmd)->tag, cmd->transfersize);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	printk("  SP=0x%p\n", CMD_SP(cmd));
 	printk(" underflow size = 0x%x, direction=0x%x\n",
 	       cmd->underflow, cmd->sc_data_direction);

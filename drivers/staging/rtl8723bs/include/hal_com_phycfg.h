@@ -16,9 +16,6 @@ enum rate_section {
 	CCK = 0,
 	OFDM,
 	HT_MCS0_MCS7,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	HT_MCS8_MCS15,
 	HT_MCS16_MCS23,
 	HT_MCS24_MCS31,
@@ -31,9 +28,6 @@ enum {
 	RF_4TX,
 	RF_MAX_TX_NUM,
 	RF_TX_NUM_NONIMPLEMENT,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define MAX_POWER_INDEX			0x3F
@@ -72,15 +66,7 @@ struct bb_register_def {
 
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-u8 PHY_GetTxPowerByRateBase(struct adapter *Adapter, u8 RfPath,
-=======
 u8 PHY_GetTxPowerByRateBase(struct adapter *Adapter, u8 RfPath, u8 TxNum,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-u8 PHY_GetTxPowerByRateBase(struct adapter *Adapter, u8 RfPath,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    enum rate_section RateSection);
 
 u8 PHY_GetRateSectionIndexOfTxPowerByRate(struct adapter *padapter, u32	RegAddr,
@@ -95,21 +81,9 @@ u8 PHY_GetRateIndexOfTxPowerByRate(u8 Rate);
 void PHY_SetTxPowerIndexByRateSection(struct adapter *padapter, u8 RFPath, u8 Channel,
 				      u8 RateSection);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-s8 PHY_GetTxPowerByRate(struct adapter *padapter, u8 RFPath, u8 RateIndex);
-
-void PHY_SetTxPowerByRate(struct adapter *padapter, u8 RFPath, u8 Rate,
-=======
 s8 PHY_GetTxPowerByRate(struct adapter *padapter, u8 RFPath, u8	TxNum, u8 RateIndex);
 
 void PHY_SetTxPowerByRate(struct adapter *padapter, u8 RFPath, u8 TxNum, u8 Rate,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-s8 PHY_GetTxPowerByRate(struct adapter *padapter, u8 RFPath, u8 RateIndex);
-
-void PHY_SetTxPowerByRate(struct adapter *padapter, u8 RFPath, u8 Rate,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  s8 Value);
 
 void PHY_SetTxPowerLevelByPath(struct adapter *Adapter, u8 channel, u8 path);
@@ -120,15 +94,7 @@ void PHY_SetTxPowerIndexByRateArray(struct adapter *padapter, u8 RFPath,
 
 void PHY_InitTxPowerByRate(struct adapter *padapter);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void PHY_StoreTxPowerByRate(struct adapter *padapter, u32 RfPath,
-=======
 void PHY_StoreTxPowerByRate(struct adapter *padapter, u32 RfPath, u32 TxNum,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void PHY_StoreTxPowerByRate(struct adapter *padapter, u32 RfPath,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    u32	RegAddr, u32 BitMask, u32 Data);
 
 void PHY_TxPowerByRateConfiguration(struct adapter *padapter);

@@ -403,25 +403,9 @@ static ssize_t diagc_attr_store(struct ib_device *ibdev, u32 port_num,
 }
 
 #define QIB_DIAGC_ATTR(N)                                                      \
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static_assert(__same_type(((struct qib_ibport *)0)->rvp.n_##N, u64));  \
-	static struct qib_diagc_attr qib_diagc_attr_##N = {                    \
-		.attr = __ATTR(N, 0664, diagc_attr_show, diagc_attr_store),    \
-		.counter =                                                     \
-			offsetof(struct qib_ibport, rvp.n_##N) / sizeof(u64)   \
-=======
 	static struct qib_diagc_attr qib_diagc_attr_##N = {                    \
 		.attr = __ATTR(N, 0664, diagc_attr_show, diagc_attr_store),    \
 		.counter = &((struct qib_ibport *)0)->rvp.n_##N - (u64 *)0,    \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static_assert(__same_type(((struct qib_ibport *)0)->rvp.n_##N, u64));  \
-	static struct qib_diagc_attr qib_diagc_attr_##N = {                    \
-		.attr = __ATTR(N, 0664, diagc_attr_show, diagc_attr_store),    \
-		.counter =                                                     \
-			offsetof(struct qib_ibport, rvp.n_##N) / sizeof(u64)   \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 QIB_DIAGC_ATTR(rc_resends);

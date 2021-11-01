@@ -8,14 +8,6 @@
 #include <linux/fs.h>
 #include <linux/slab.h>
 #include <linux/file.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/fileattr.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/fileattr.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/splice.h>
 #include <linux/xattr.h>
 #include <linux/security.h>
@@ -70,15 +62,7 @@ int ovl_copy_xattr(struct super_block *sb, struct dentry *old,
 		return list_size;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	buf = kvzalloc(list_size, GFP_KERNEL);
-=======
 	buf = kzalloc(list_size, GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	buf = kvzalloc(list_size, GFP_KERNEL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!buf)
 		return -ENOMEM;
 
@@ -121,27 +105,11 @@ retry:
 		if (size > value_size) {
 			void *new;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			new = kvmalloc(size, GFP_KERNEL);
-=======
 			new = krealloc(value, size, GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			new = kvmalloc(size, GFP_KERNEL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			if (!new) {
 				error = -ENOMEM;
 				break;
 			}
-<<<<<<< HEAD
-<<<<<<< HEAD
-			kvfree(value);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			kvfree(value);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			value = new;
 			value_size = size;
 			goto retry;
@@ -156,104 +124,12 @@ retry:
 			error = 0;
 		}
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	kvfree(value);
-out:
-	kvfree(buf);
-	return error;
-}
-
-static int ovl_copy_fileattr(struct inode *inode, struct path *old,
-			     struct path *new)
-{
-	struct fileattr oldfa = { .flags_valid = true };
-	struct fileattr newfa = { .flags_valid = true };
-	int err;
-
-	err = ovl_real_fileattr_get(old, &oldfa);
-	if (err)
-		return err;
-
-	err = ovl_real_fileattr_get(new, &newfa);
-	if (err)
-		return err;
-
-	/*
-	 * We cannot set immutable and append-only flags on upper inode,
-	 * because we would not be able to link upper inode to upper dir
-	 * not set overlay private xattr on upper inode.
-	 * Store these flags in overlay.protattr xattr instead.
-	 */
-	if (oldfa.flags & OVL_PROT_FS_FLAGS_MASK) {
-		err = ovl_set_protattr(inode, new->dentry, &oldfa);
-		if (err)
-			return err;
-	}
-
-	BUILD_BUG_ON(OVL_COPY_FS_FLAGS_MASK & ~FS_COMMON_FL);
-	newfa.flags &= ~OVL_COPY_FS_FLAGS_MASK;
-	newfa.flags |= (oldfa.flags & OVL_COPY_FS_FLAGS_MASK);
-
-	BUILD_BUG_ON(OVL_COPY_FSX_FLAGS_MASK & ~FS_XFLAG_COMMON);
-	newfa.fsx_xflags &= ~OVL_COPY_FSX_FLAGS_MASK;
-	newfa.fsx_xflags |= (oldfa.fsx_xflags & OVL_COPY_FSX_FLAGS_MASK);
-
-	return ovl_real_fileattr_set(new, &newfa);
-}
-
-=======
 	kfree(value);
-=======
-	kvfree(value);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 out:
-	kvfree(buf);
+	kfree(buf);
 	return error;
 }
 
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int ovl_copy_fileattr(struct inode *inode, struct path *old,
-			     struct path *new)
-{
-	struct fileattr oldfa = { .flags_valid = true };
-	struct fileattr newfa = { .flags_valid = true };
-	int err;
-
-	err = ovl_real_fileattr_get(old, &oldfa);
-	if (err)
-		return err;
-
-	err = ovl_real_fileattr_get(new, &newfa);
-	if (err)
-		return err;
-
-	/*
-	 * We cannot set immutable and append-only flags on upper inode,
-	 * because we would not be able to link upper inode to upper dir
-	 * not set overlay private xattr on upper inode.
-	 * Store these flags in overlay.protattr xattr instead.
-	 */
-	if (oldfa.flags & OVL_PROT_FS_FLAGS_MASK) {
-		err = ovl_set_protattr(inode, new->dentry, &oldfa);
-		if (err)
-			return err;
-	}
-
-	BUILD_BUG_ON(OVL_COPY_FS_FLAGS_MASK & ~FS_COMMON_FL);
-	newfa.flags &= ~OVL_COPY_FS_FLAGS_MASK;
-	newfa.flags |= (oldfa.flags & OVL_COPY_FS_FLAGS_MASK);
-
-	BUILD_BUG_ON(OVL_COPY_FSX_FLAGS_MASK & ~FS_XFLAG_COMMON);
-	newfa.fsx_xflags &= ~OVL_COPY_FSX_FLAGS_MASK;
-	newfa.fsx_xflags |= (oldfa.fsx_xflags & OVL_COPY_FSX_FLAGS_MASK);
-
-	return ovl_real_fileattr_set(new, &newfa);
-}
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int ovl_copy_up_data(struct ovl_fs *ofs, struct path *old,
 			    struct path *new, loff_t len)
 {
@@ -455,18 +331,8 @@ out_err:
 	return ERR_PTR(err);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int ovl_set_origin(struct ovl_fs *ofs, struct dentry *lower,
-		   struct dentry *upper)
-=======
 int ovl_set_origin(struct ovl_fs *ofs, struct dentry *dentry,
 		   struct dentry *lower, struct dentry *upper)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int ovl_set_origin(struct ovl_fs *ofs, struct dentry *lower,
-		   struct dentry *upper)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const struct ovl_fh *fh = NULL;
 	int err;
@@ -485,15 +351,7 @@ int ovl_set_origin(struct ovl_fs *ofs, struct dentry *lower,
 	/*
 	 * Do not fail when upper doesn't support xattrs.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ovl_check_setxattr(ofs, upper, OVL_XATTR_ORIGIN, fh->buf,
-=======
 	err = ovl_check_setxattr(dentry, upper, OVL_XATTR_ORIGIN, fh->buf,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ovl_check_setxattr(ofs, upper, OVL_XATTR_ORIGIN, fh->buf,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 fh ? fh->fb.len : 0, 0);
 	kfree(fh);
 
@@ -635,42 +493,13 @@ static int ovl_link_up(struct ovl_copy_up_ctx *c)
 static int ovl_copy_up_inode(struct ovl_copy_up_ctx *c, struct dentry *temp)
 {
 	struct ovl_fs *ofs = OVL_FS(c->dentry->d_sb);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct inode *inode = d_inode(c->dentry);
-	struct path upperpath, datapath;
 	int err;
 
-	ovl_path_upper(c->dentry, &upperpath);
-	if (WARN_ON(upperpath.dentry != NULL))
-		return -EIO;
-
-	upperpath.dentry = temp;
-
-=======
-	int err;
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct inode *inode = d_inode(c->dentry);
-	struct path upperpath, datapath;
-	int err;
-
-	ovl_path_upper(c->dentry, &upperpath);
-	if (WARN_ON(upperpath.dentry != NULL))
-		return -EIO;
-
-	upperpath.dentry = temp;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Copy up data first and then xattrs. Writing data after
 	 * xattrs will remove security.capability xattr automatically.
 	 */
 	if (S_ISREG(c->stat.mode) && !c->metacopy) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		struct path upperpath, datapath;
 
 		ovl_path_upper(c->dentry, &upperpath);
@@ -678,9 +507,6 @@ static int ovl_copy_up_inode(struct ovl_copy_up_ctx *c, struct dentry *temp)
 			return -EIO;
 		upperpath.dentry = temp;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ovl_path_lowerdata(c->dentry, &datapath);
 		err = ovl_copy_up_data(ofs, &datapath, &upperpath,
 				       c->stat.size);
@@ -692,25 +518,6 @@ static int ovl_copy_up_inode(struct ovl_copy_up_ctx *c, struct dentry *temp)
 	if (err)
 		return err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (inode->i_flags & OVL_COPY_I_FLAGS_MASK) {
-		/*
-		 * Copy the fileattr inode flags that are the source of already
-		 * copied i_flags
-		 */
-		err = ovl_copy_fileattr(inode, &c->lowerpath, &upperpath);
-		if (err)
-			return err;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Store identifier of lower inode in upper inode xattr to
 	 * allow lookup of the copy up origin inode.
@@ -719,29 +526,13 @@ static int ovl_copy_up_inode(struct ovl_copy_up_ctx *c, struct dentry *temp)
 	 * hard link.
 	 */
 	if (c->origin) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = ovl_set_origin(ofs, c->lowerpath.dentry, temp);
-=======
 		err = ovl_set_origin(ofs, c->dentry, c->lowerpath.dentry, temp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = ovl_set_origin(ofs, c->lowerpath.dentry, temp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (err)
 			return err;
 	}
 
 	if (c->metacopy) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = ovl_check_setxattr(ofs, temp, OVL_XATTR_METACOPY,
-=======
 		err = ovl_check_setxattr(c->dentry, temp, OVL_XATTR_METACOPY,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		err = ovl_check_setxattr(ofs, temp, OVL_XATTR_METACOPY,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 NULL, 0, -EOPNOTSUPP);
 		if (err)
 			return err;

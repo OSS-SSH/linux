@@ -1447,32 +1447,6 @@ void pm_runtime_enable(struct device *dev)
 }
 EXPORT_SYMBOL_GPL(pm_runtime_enable);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void pm_runtime_disable_action(void *data)
-{
-	pm_runtime_disable(data);
-}
-
-/**
- * devm_pm_runtime_enable - devres-enabled version of pm_runtime_enable.
- * @dev: Device to handle.
- */
-int devm_pm_runtime_enable(struct device *dev)
-{
-	pm_runtime_enable(dev);
-
-	return devm_add_action_or_reset(dev, pm_runtime_disable_action, dev);
-}
-EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * pm_runtime_forbid - Block runtime PM of a device.
  * @dev: Device to handle.

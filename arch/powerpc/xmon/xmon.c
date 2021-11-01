@@ -26,18 +26,8 @@
 #include <linux/ctype.h>
 #include <linux/highmem.h>
 #include <linux/security.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/debugfs.h>
-
-=======
 
 #include <asm/debugfs.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/debugfs.h>
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/ptrace.h>
 #include <asm/smp.h>
 #include <asm/string.h>
@@ -492,9 +482,6 @@ static inline void get_output_lock(void) {}
 static inline void release_output_lock(void) {}
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline int unrecoverable_excp(struct pt_regs *regs)
 {
 #if defined(CONFIG_4xx) || defined(CONFIG_PPC_BOOK3E)
@@ -505,9 +492,6 @@ static inline int unrecoverable_excp(struct pt_regs *regs)
 #endif
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static void xmon_touch_watchdogs(void)
 {
 	touch_softlockup_watchdog_sync();
@@ -581,15 +565,7 @@ static int xmon_core(struct pt_regs *regs, volatile int fromipi)
 	bp = NULL;
 	if ((regs->msr & (MSR_IR|MSR_PR|MSR_64BIT)) == (MSR_IR|MSR_64BIT))
 		bp = at_breakpoint(regs->nip);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (bp || regs_is_unrecoverable(regs))
-=======
 	if (bp || unrecoverable_excp(regs))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (bp || regs_is_unrecoverable(regs))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		fromipi = 0;
 
 	if (!fromipi) {
@@ -601,15 +577,7 @@ static int xmon_core(struct pt_regs *regs, volatile int fromipi)
 			       cpu, BP_NUM(bp));
 			xmon_print_symbol(regs->nip, " ", ")\n");
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (regs_is_unrecoverable(regs))
-=======
 		if (unrecoverable_excp(regs))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (regs_is_unrecoverable(regs))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			printf("WARNING: exception is not recoverable, "
 			       "can't continue\n");
 		release_output_lock();
@@ -725,15 +693,7 @@ static int xmon_core(struct pt_regs *regs, volatile int fromipi)
 			printf("Stopped at breakpoint %tx (", BP_NUM(bp));
 			xmon_print_symbol(regs->nip, " ", ")\n");
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (regs_is_unrecoverable(regs))
-=======
 		if (unrecoverable_excp(regs))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (regs_is_unrecoverable(regs))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			printf("WARNING: exception is not recoverable, "
 			       "can't continue\n");
 		remove_bpts();
@@ -4117,18 +4077,8 @@ DEFINE_SIMPLE_ATTRIBUTE(xmon_dbgfs_ops, xmon_dbgfs_get,
 
 static int __init setup_xmon_dbgfs(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	debugfs_create_file("xmon", 0600, arch_debugfs_dir, NULL,
-			    &xmon_dbgfs_ops);
-=======
 	debugfs_create_file("xmon", 0600, powerpc_debugfs_root, NULL,
 				&xmon_dbgfs_ops);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	debugfs_create_file("xmon", 0600, arch_debugfs_dir, NULL,
-			    &xmon_dbgfs_ops);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 device_initcall(setup_xmon_dbgfs);

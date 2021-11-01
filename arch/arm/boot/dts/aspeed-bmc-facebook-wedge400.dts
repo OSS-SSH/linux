@@ -91,10 +91,6 @@
  * Both firmware flashes are 128MB on Wedge400 BMC.
  */
 &fmc_flash0 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "facebook-bmc-flash-layout-128.dtsi"
-=======
 	partitions {
 		compatible = "fixed-partitions";
 		#address-cells = <1>;
@@ -142,10 +138,6 @@
 			label = "flash0";
 		};
 	};
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "facebook-bmc-flash-layout-128.dtsi"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 &fmc_flash1 {

@@ -3510,19 +3510,7 @@ static void tun_set_msglevel(struct net_device *dev, u32 value)
 }
 
 static int tun_get_coalesce(struct net_device *dev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			    struct ethtool_coalesce *ec,
-			    struct kernel_ethtool_coalesce *kernel_coal,
-			    struct netlink_ext_ack *extack)
-=======
 			    struct ethtool_coalesce *ec)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			    struct ethtool_coalesce *ec,
-			    struct kernel_ethtool_coalesce *kernel_coal,
-			    struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tun_struct *tun = netdev_priv(dev);
 
@@ -3532,19 +3520,7 @@ static int tun_get_coalesce(struct net_device *dev,
 }
 
 static int tun_set_coalesce(struct net_device *dev,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			    struct ethtool_coalesce *ec,
-			    struct kernel_ethtool_coalesce *kernel_coal,
-			    struct netlink_ext_ack *extack)
-=======
 			    struct ethtool_coalesce *ec)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			    struct ethtool_coalesce *ec,
-			    struct kernel_ethtool_coalesce *kernel_coal,
-			    struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct tun_struct *tun = netdev_priv(dev);
 

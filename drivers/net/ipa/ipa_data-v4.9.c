@@ -106,14 +106,6 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
 			.filter_support	= true,
 			.config = {
 				.resource_group	= IPA_RSRC_GROUP_SRC_UL_DL,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				.checksum       = true,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				.checksum       = true,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				.qmap		= true,
 				.status_enable	= true,
 				.tx = {
@@ -137,14 +129,6 @@ static const struct ipa_gsi_endpoint_data ipa_gsi_endpoint_data[] = {
 		.endpoint = {
 			.config = {
 				.resource_group	= IPA_RSRC_GROUP_DST_UL_DL_DPL,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				.checksum       = true,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				.checksum       = true,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				.qmap		= true,
 				.aggregation	= true,
 				.rx = {
@@ -432,31 +416,18 @@ static const struct ipa_mem_data ipa_mem_data = {
 /* Interconnect rates are in 1000 byte/second units */
 static const struct ipa_interconnect_data ipa_interconnect_data[] = {
 	{
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.name			= "memory",
-		.peak_bandwidth		= 600000,	/* 600 MBps */
-		.average_bandwidth	= 150000,	/* 150 MBps */
-	},
-	/* Average rate is unused for the next interconnect */
-	{
-		.name			= "config",
-=======
 		.name			= "ipa_to_llcc",
-=======
-		.name			= "memory",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.peak_bandwidth		= 600000,	/* 600 MBps */
+		.average_bandwidth	= 150000,	/* 150 MBps */
+	},
+	{
+		.name			= "llcc_to_ebi1",
+		.peak_bandwidth		= 1804000,	/* 1.804 GBps */
 		.average_bandwidth	= 150000,	/* 150 MBps */
 	},
 	/* Average rate is unused for the next interconnect */
 	{
-<<<<<<< HEAD
 		.name			= "appss_to_ipa",
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.name			= "config",
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		.peak_bandwidth		= 74000,	/* 74 MBps */
 		.average_bandwidth	= 0,		/* unused */
 	},
@@ -464,15 +435,7 @@ static const struct ipa_interconnect_data ipa_interconnect_data[] = {
 };
 
 /* Clock and interconnect configuration data for an SoC having IPA v4.9 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const struct ipa_power_data ipa_power_data = {
-=======
 static const struct ipa_clock_data ipa_clock_data = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct ipa_power_data ipa_power_data = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.core_clock_rate	= 60 * 1000 * 1000,	/* Hz */
 	.interconnect_count	= ARRAY_SIZE(ipa_interconnect_data),
 	.interconnect_data	= ipa_interconnect_data,
@@ -487,13 +450,5 @@ const struct ipa_data ipa_data_v4_9 = {
 	.endpoint_data	= ipa_gsi_endpoint_data,
 	.resource_data	= &ipa_resource_data,
 	.mem_data	= &ipa_mem_data,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.power_data	= &ipa_power_data,
-=======
 	.clock_data	= &ipa_clock_data,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.power_data	= &ipa_power_data,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };

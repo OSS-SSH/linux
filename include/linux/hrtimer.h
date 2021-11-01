@@ -318,28 +318,16 @@ struct clock_event_device;
 
 extern void hrtimer_interrupt(struct clock_event_device *dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 extern void clock_was_set_delayed(void);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern unsigned int hrtimer_resolution;
 
 #else
 
 #define hrtimer_resolution	(unsigned int)LOW_RES_NSEC
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline void clock_was_set_delayed(void) { }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 static inline ktime_t
@@ -363,31 +351,13 @@ hrtimer_expires_remaining_adjusted(const struct hrtimer *timer)
 						    timer->base->get_time());
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifdef CONFIG_TIMERFD
-extern void timerfd_clock_was_set(void);
-extern void timerfd_resume(void);
-#else
-static inline void timerfd_clock_was_set(void) { }
-static inline void timerfd_resume(void) { }
-#endif
-=======
 extern void clock_was_set(void);
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_TIMERFD
 extern void timerfd_clock_was_set(void);
-extern void timerfd_resume(void);
 #else
 static inline void timerfd_clock_was_set(void) { }
-static inline void timerfd_resume(void) { }
 #endif
-<<<<<<< HEAD
 extern void hrtimers_resume(void);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 DECLARE_PER_CPU(struct tick_device, tick_cpu_device);
 

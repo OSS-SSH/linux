@@ -478,15 +478,7 @@ static void free_rx_bufs(struct adapter *adapter, struct sge_fl *fl, int n)
 		if (is_buf_mapped(sdesc))
 			dma_unmap_page(adapter->pdev_dev, get_buf_addr(sdesc),
 				       get_buf_size(adapter, sdesc),
-<<<<<<< HEAD
-<<<<<<< HEAD
-				       DMA_FROM_DEVICE);
-=======
 				       PCI_DMA_FROMDEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				       DMA_FROM_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		put_page(sdesc->page);
 		sdesc->page = NULL;
 		if (++fl->cidx == fl->size)
@@ -515,15 +507,7 @@ static void unmap_rx_buf(struct adapter *adapter, struct sge_fl *fl)
 	if (is_buf_mapped(sdesc))
 		dma_unmap_page(adapter->pdev_dev, get_buf_addr(sdesc),
 			       get_buf_size(adapter, sdesc),
-<<<<<<< HEAD
-<<<<<<< HEAD
-			       DMA_FROM_DEVICE);
-=======
 			       PCI_DMA_FROMDEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			       DMA_FROM_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sdesc->page = NULL;
 	if (++fl->cidx == fl->size)
 		fl->cidx = 0;
@@ -660,15 +644,7 @@ static unsigned int refill_fl(struct adapter *adapter, struct sge_fl *fl,
 
 		dma_addr = dma_map_page(adapter->pdev_dev, page, 0,
 					PAGE_SIZE << s->fl_pg_order,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					DMA_FROM_DEVICE);
-=======
 					PCI_DMA_FROMDEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					DMA_FROM_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (unlikely(dma_mapping_error(adapter->pdev_dev, dma_addr))) {
 			/*
 			 * We've run out of DMA mapping space.  Free up the
@@ -706,15 +682,7 @@ alloc_small_pages:
 		poison_buf(page, PAGE_SIZE);
 
 		dma_addr = dma_map_page(adapter->pdev_dev, page, 0, PAGE_SIZE,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				       DMA_FROM_DEVICE);
-=======
 				       PCI_DMA_FROMDEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				       DMA_FROM_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (unlikely(dma_mapping_error(adapter->pdev_dev, dma_addr))) {
 			put_page(page);
 			break;

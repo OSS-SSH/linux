@@ -5,14 +5,6 @@
 
 #include <dt-bindings/interrupt-controller/irq.h>
 #include <dt-bindings/interrupt-controller/arm-gic.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <dt-bindings/sound/meson-aiu.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <dt-bindings/sound/meson-aiu.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 / {
 	#address-cells = <1>;
@@ -44,26 +36,6 @@
 				reg = <0x4000 0x400>;
 			};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			aiu: audio-controller@5400 {
-				compatible = "amlogic,aiu";
-				#sound-dai-cells = <2>;
-				sound-name-prefix = "AIU";
-				reg = <0x5400 0x2ac>;
-				interrupts = <GIC_SPI 48 IRQ_TYPE_EDGE_RISING>,
-					     <GIC_SPI 50 IRQ_TYPE_EDGE_RISING>;
-				interrupt-names = "i2s", "spdif";
-				status = "disabled";
-			};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			assist: assist@7c00 {
 				compatible = "amlogic,meson-mx-assist", "syscon";
 				reg = <0x7c00 0x200>;

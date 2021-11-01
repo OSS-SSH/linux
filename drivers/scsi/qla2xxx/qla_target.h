@@ -176,14 +176,6 @@ struct nack_to_isp {
 	uint8_t  reserved[2];
 	__le16	ox_id;
 } __packed;
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define NOTIFY_ACK_FLAGS_FCSP		BIT_5
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define NOTIFY_ACK_FLAGS_FCSP		BIT_5
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define NOTIFY_ACK_FLAGS_TERMINATE	BIT_3
 #define NOTIFY_ACK_SRR_FLAGS_ACCEPT	0
 #define NOTIFY_ACK_SRR_FLAGS_REJECT	1
@@ -246,19 +238,6 @@ struct ctio_to_2xxx {
 #define CTIO_PORT_LOGGED_OUT		0x29
 #define CTIO_PORT_CONF_CHANGED		0x2A
 #define CTIO_SRR_RECEIVED		0x45
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define CTIO_FAST_AUTH_ERR		0x63
-#define CTIO_FAST_INCOMP_PAD_LEN	0x65
-#define CTIO_FAST_INVALID_REQ		0x66
-#define CTIO_FAST_SPI_ERR		0x67
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 #ifndef CTIO_RET_TYPE
@@ -429,26 +408,7 @@ struct ctio7_to_24xx {
 		struct {
 			__le16	reserved1;
 			__le16 flags;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			union {
-				__le32	residual;
-				struct {
-					uint8_t rsvd1;
-					uint8_t edif_flags;
-#define EF_EN_EDIF	BIT_0
-#define EF_NEW_SA	BIT_1
-					uint16_t rsvd2;
-				};
-			};
-<<<<<<< HEAD
-=======
 			__le32	residual;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__le16 ox_id;
 			__le16	scsi_status;
 			__le32	relative_offset;
@@ -486,15 +446,7 @@ struct ctio7_from_24xx {
 	uint8_t  vp_index;
 	uint8_t  reserved1[5];
 	__le32	exchange_address;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	__le16	edif_sa_index;
-=======
 	__le16	reserved2;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	__le16	edif_sa_index;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__le16	flags;
 	__le32	residual;
 	__le16	ox_id;
@@ -923,14 +875,6 @@ struct qla_tgt_cmd {
 	unsigned int term_exchg:1;
 	unsigned int cmd_sent_to_fw:1;
 	unsigned int cmd_in_wq:1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int edif:1;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int edif:1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * This variable may be set from outside the LIO and I/O completion

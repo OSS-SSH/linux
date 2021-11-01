@@ -4,14 +4,6 @@
  * Authors: Joonyoung Shim <jy0922.shim@samsung.com>
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/refcount.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/refcount.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/clk.h>
 #include <linux/component.h>
 #include <linux/delay.h>
@@ -216,15 +208,7 @@ struct g2d_cmdlist_userptr {
 	struct page		**pages;
 	unsigned int		npages;
 	struct sg_table		*sgt;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	refcount_t		refcount;
-=======
 	atomic_t		refcount;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	refcount_t		refcount;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool			in_pool;
 	bool			out_of_list;
 };
@@ -402,21 +386,9 @@ static void g2d_userptr_put_dma_addr(struct g2d_data *g2d,
 	if (force)
 		goto out;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	refcount_dec(&g2d_userptr->refcount);
-
-	if (refcount_read(&g2d_userptr->refcount) > 0)
-=======
 	atomic_dec(&g2d_userptr->refcount);
 
 	if (atomic_read(&g2d_userptr->refcount) > 0)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	refcount_dec(&g2d_userptr->refcount);
-
-	if (refcount_read(&g2d_userptr->refcount) > 0)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	if (g2d_userptr->in_pool)
@@ -464,15 +436,7 @@ static dma_addr_t *g2d_userptr_get_dma_addr(struct g2d_data *g2d,
 			 * and different size.
 			 */
 			if (g2d_userptr->size == size) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-				refcount_inc(&g2d_userptr->refcount);
-=======
 				atomic_inc(&g2d_userptr->refcount);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				refcount_inc(&g2d_userptr->refcount);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				*obj = g2d_userptr;
 
 				return &g2d_userptr->dma_addr;
@@ -497,15 +461,7 @@ static dma_addr_t *g2d_userptr_get_dma_addr(struct g2d_data *g2d,
 	if (!g2d_userptr)
 		return ERR_PTR(-ENOMEM);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	refcount_set(&g2d_userptr->refcount, 1);
-=======
 	atomic_set(&g2d_userptr->refcount, 1);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	refcount_set(&g2d_userptr->refcount, 1);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	g2d_userptr->size = size;
 
 	start = userptr & PAGE_MASK;
@@ -941,29 +897,13 @@ static void g2d_runqueue_worker(struct work_struct *work)
 			ret = pm_runtime_resume_and_get(g2d->dev);
 			if (ret < 0) {
 				dev_err(g2d->dev, "failed to enable G2D device.\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-				goto out;
-=======
 				return;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				goto out;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			}
 
 			g2d_dma_start(g2d, g2d->runqueue_node);
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-out:
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-out:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mutex_unlock(&g2d->runqueue_mutex);
 }
 
@@ -1507,13 +1447,7 @@ static const struct component_ops g2d_component_ops = {
 static int g2d_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct resource *res;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct g2d_data *g2d;
 	int ret;
 
@@ -1555,17 +1489,9 @@ static int g2d_probe(struct platform_device *pdev)
 	clear_bit(G2D_BIT_SUSPEND_RUNQUEUE, &g2d->flags);
 	clear_bit(G2D_BIT_ENGINE_BUSY, &g2d->flags);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	g2d->regs = devm_platform_ioremap_resource(pdev, 0);
-=======
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 
 	g2d->regs = devm_ioremap_resource(dev, res);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	g2d->regs = devm_platform_ioremap_resource(pdev, 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(g2d->regs)) {
 		ret = PTR_ERR(g2d->regs);
 		goto err_put_clk;

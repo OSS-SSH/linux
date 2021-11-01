@@ -193,15 +193,7 @@ int mhi_map_single_no_bb(struct mhi_controller *mhi_cntrl,
 int mhi_map_single_use_bb(struct mhi_controller *mhi_cntrl,
 			  struct mhi_buf_info *buf_info)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	void *buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, buf_info->len,
-=======
 	void *buf = mhi_alloc_coherent(mhi_cntrl, buf_info->len,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	void *buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, buf_info->len,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       &buf_info->p_addr, GFP_ATOMIC);
 
 	if (!buf)
@@ -228,18 +220,8 @@ void mhi_unmap_single_use_bb(struct mhi_controller *mhi_cntrl,
 	if (buf_info->dir == DMA_FROM_DEVICE)
 		memcpy(buf_info->v_addr, buf_info->bb_addr, buf_info->len);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dma_free_coherent(mhi_cntrl->cntrl_dev, buf_info->len,
-			  buf_info->bb_addr, buf_info->p_addr);
-=======
 	mhi_free_coherent(mhi_cntrl, buf_info->len, buf_info->bb_addr,
 			  buf_info->p_addr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dma_free_coherent(mhi_cntrl->cntrl_dev, buf_info->len,
-			  buf_info->bb_addr, buf_info->p_addr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int get_nr_avail_ring_elements(struct mhi_controller *mhi_cntrl,
@@ -791,32 +773,11 @@ static void mhi_process_cmd_completion(struct mhi_controller *mhi_cntrl,
 	cmd_pkt = mhi_to_virtual(mhi_ring, ptr);
 
 	chan = MHI_TRE_GET_CMD_CHID(cmd_pkt);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (chan < mhi_cntrl->max_chan &&
-	    mhi_cntrl->mhi_chan[chan].configured) {
-		mhi_chan = &mhi_cntrl->mhi_chan[chan];
-		write_lock_bh(&mhi_chan->lock);
-		mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
-		complete(&mhi_chan->completion);
-		write_unlock_bh(&mhi_chan->lock);
-	} else {
-		dev_err(&mhi_cntrl->mhi_dev->dev,
-			"Completion packet for invalid channel ID: %d\n", chan);
-	}
-<<<<<<< HEAD
-=======
 	mhi_chan = &mhi_cntrl->mhi_chan[chan];
 	write_lock_bh(&mhi_chan->lock);
 	mhi_chan->ccs = MHI_TRE_GET_EV_CODE(tre);
 	complete(&mhi_chan->completion);
 	write_unlock_bh(&mhi_chan->lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mhi_del_ring_element(mhi_cntrl, mhi_ring);
 }

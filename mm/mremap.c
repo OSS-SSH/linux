@@ -686,15 +686,7 @@ static unsigned long move_vma(struct vm_area_struct *vma,
 	if (do_munmap(mm, old_addr, old_len, uf_unmap) < 0) {
 		/* OOM: unable to split vma, just get accounts right */
 		if (vm_flags & VM_ACCOUNT && !(flags & MREMAP_DONTUNMAP))
-<<<<<<< HEAD
-<<<<<<< HEAD
-			vm_acct_memory(old_len >> PAGE_SHIFT);
-=======
 			vm_acct_memory(new_len >> PAGE_SHIFT);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			vm_acct_memory(old_len >> PAGE_SHIFT);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		excess = 0;
 	}
 

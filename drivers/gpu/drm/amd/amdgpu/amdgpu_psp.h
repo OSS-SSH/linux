@@ -48,31 +48,11 @@
 struct psp_context;
 struct psp_xgmi_node_info;
 struct psp_xgmi_topology_info;
-<<<<<<< HEAD
-<<<<<<< HEAD
-struct psp_bin_desc;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct psp_bin_desc;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enum psp_bootloader_cmd {
 	PSP_BL__LOAD_SYSDRV		= 0x10000,
 	PSP_BL__LOAD_SOSDRV		= 0x20000,
 	PSP_BL__LOAD_KEY_DATABASE	= 0x80000,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	PSP_BL__LOAD_SOCDRV             = 0xB0000,
-	PSP_BL__LOAD_INTFDRV            = 0xC0000,
-	PSP_BL__LOAD_DBGDRV             = 0xD0000,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	PSP_BL__LOAD_SOCDRV             = 0xB0000,
-	PSP_BL__LOAD_INTFDRV            = 0xC0000,
-	PSP_BL__LOAD_DBGDRV             = 0xD0000,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	PSP_BL__DRAM_LONG_TRAIN		= 0x100000,
 	PSP_BL__DRAM_SHORT_TRAIN	= 0x200000,
 	PSP_BL__LOAD_TOS_SPL_TABLE	= 0x10000000,
@@ -113,18 +93,6 @@ struct psp_funcs
 	int (*bootloader_load_kdb)(struct psp_context *psp);
 	int (*bootloader_load_spl)(struct psp_context *psp);
 	int (*bootloader_load_sysdrv)(struct psp_context *psp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int (*bootloader_load_soc_drv)(struct psp_context *psp);
-	int (*bootloader_load_intf_drv)(struct psp_context *psp);
-	int (*bootloader_load_dbg_drv)(struct psp_context *psp);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int (*bootloader_load_soc_drv)(struct psp_context *psp);
-	int (*bootloader_load_intf_drv)(struct psp_context *psp);
-	int (*bootloader_load_dbg_drv)(struct psp_context *psp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*bootloader_load_sos)(struct psp_context *psp);
 	int (*ring_init)(struct psp_context *psp, enum psp_ring_type ring_type);
 	int (*ring_create)(struct psp_context *psp,
@@ -138,15 +106,7 @@ struct psp_funcs
 	int (*mem_training)(struct psp_context *psp, uint32_t ops);
 	uint32_t (*ring_get_wptr)(struct psp_context *psp);
 	void (*ring_set_wptr)(struct psp_context *psp, uint32_t value);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int (*load_usbc_pd_fw)(struct psp_context *psp, uint64_t fw_pri_mc_addr);
-=======
 	int (*load_usbc_pd_fw)(struct psp_context *psp, dma_addr_t dma_addr);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int (*load_usbc_pd_fw)(struct psp_context *psp, uint64_t fw_pri_mc_addr);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int (*read_usbc_pd_fw)(struct psp_context *psp, uint32_t *fw_ver);
 };
 
@@ -156,14 +116,6 @@ struct psp_xgmi_node_info {
 	uint8_t					num_hops;
 	uint8_t					is_sharing_enabled;
 	enum ta_xgmi_assigned_sdma_engine	sdma_engine;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	uint8_t					num_links;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	uint8_t					num_links;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct psp_xgmi_topology_info {
@@ -176,38 +128,6 @@ struct psp_asd_context {
 	uint32_t		session_id;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct ta_mem_context {
-	struct amdgpu_bo		*shared_bo;
-	uint64_t		shared_mc_addr;
-	void			*shared_buf;
-<<<<<<< HEAD
-};
-
-struct ta_context {
-	bool			initialized;
-	uint32_t		session_id;
-	struct ta_mem_context	mem_context;
-};
-
-struct ta_cp_context {
-	struct ta_context		context;
-	struct mutex			mutex;
-};
-
-struct psp_xgmi_context {
-	struct ta_context		context;
-	struct psp_xgmi_topology_info	top_info;
-	bool				supports_extended_data;
-};
-
-struct psp_ras_context {
-	struct ta_context		context;
-	struct amdgpu_ras		*ras;
-=======
 struct psp_xgmi_context {
 	uint8_t				initialized;
 	uint32_t			session_id;
@@ -225,28 +145,35 @@ struct psp_ras_context {
 	uint64_t		ras_shared_mc_addr;
 	void			*ras_shared_buf;
 	struct amdgpu_ras	*ras;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
-struct ta_context {
-	bool			initialized;
+struct psp_hdcp_context {
+	bool			hdcp_initialized;
 	uint32_t		session_id;
-	struct ta_mem_context	mem_context;
+	struct amdgpu_bo	*hdcp_shared_bo;
+	uint64_t		hdcp_shared_mc_addr;
+	void			*hdcp_shared_buf;
+	struct mutex		mutex;
 };
 
-struct ta_cp_context {
-	struct ta_context		context;
-	struct mutex			mutex;
+struct psp_dtm_context {
+	bool			dtm_initialized;
+	uint32_t		session_id;
+	struct amdgpu_bo	*dtm_shared_bo;
+	uint64_t		dtm_shared_mc_addr;
+	void			*dtm_shared_buf;
+	struct mutex		mutex;
 };
 
-struct psp_xgmi_context {
-	struct ta_context		context;
-	struct psp_xgmi_topology_info	top_info;
-	bool				supports_extended_data;
+struct psp_rap_context {
+	bool			rap_initialized;
+	uint32_t		session_id;
+	struct amdgpu_bo	*rap_shared_bo;
+	uint64_t		rap_shared_mc_addr;
+	void			*rap_shared_buf;
+	struct mutex		mutex;
 };
 
-<<<<<<< HEAD
 struct psp_securedisplay_context {
 	bool			securedisplay_initialized;
 	uint32_t		session_id;
@@ -254,12 +181,6 @@ struct psp_securedisplay_context {
 	uint64_t		securedisplay_shared_mc_addr;
 	void			*securedisplay_shared_buf;
 	struct mutex		mutex;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-struct psp_ras_context {
-	struct ta_context		context;
-	struct amdgpu_ras		*ras;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define MEM_TRAIN_SYSTEM_SIGNATURE		0x54534942
@@ -361,22 +282,6 @@ struct psp_runtime_boot_cfg_entry {
 	uint32_t reserved;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-struct psp_bin_desc {
-	uint32_t fw_version;
-	uint32_t feature_version;
-	uint32_t size_bytes;
-	uint8_t *start_addr;
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 struct psp_context
 {
 	struct amdgpu_device            *adev;
@@ -392,21 +297,6 @@ struct psp_context
 
 	/* sos firmware */
 	const struct firmware		*sos_fw;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct psp_bin_desc		sys;
-	struct psp_bin_desc		sos;
-	struct psp_bin_desc		toc;
-	struct psp_bin_desc		kdb;
-	struct psp_bin_desc		spl;
-	struct psp_bin_desc		rl;
-	struct psp_bin_desc		soc_drv;
-	struct psp_bin_desc		intf_drv;
-	struct psp_bin_desc		dbg_drv;
-<<<<<<< HEAD
-=======
 	uint32_t			sos_fw_version;
 	uint32_t			sos_feature_version;
 	uint32_t			sys_bin_size;
@@ -421,23 +311,12 @@ struct psp_context
 	uint8_t				*kdb_start_addr;
 	uint8_t				*spl_start_addr;
 	uint8_t				*rl_start_addr;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* tmr buffer */
 	struct amdgpu_bo		*tmr_bo;
 	uint64_t			tmr_mc_addr;
 
 	/* asd firmware */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct firmware	*asd_fw;
-	struct psp_bin_desc		asd;
-
-	/* toc firmware */
-	const struct firmware		*toc_fw;
-=======
 	const struct firmware		*asd_fw;
 	uint32_t			asd_fw_version;
 	uint32_t			asd_feature_version;
@@ -448,14 +327,6 @@ struct psp_context
 	const struct firmware		*toc_fw;
 	uint32_t			toc_fw_version;
 	uint32_t			toc_feature_version;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct firmware	*asd_fw;
-	struct psp_bin_desc		asd;
-
-	/* toc firmware */
-	const struct firmware		*toc_fw;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* fence buffer */
 	struct amdgpu_bo		*fence_buf_bo;
@@ -477,26 +348,6 @@ struct psp_context
 	/* xgmi ta firmware and buffer */
 	const struct firmware		*ta_fw;
 	uint32_t			ta_fw_version;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct psp_bin_desc		xgmi;
-	struct psp_bin_desc		ras;
-	struct psp_bin_desc		hdcp;
-	struct psp_bin_desc		dtm;
-	struct psp_bin_desc		rap;
-	struct psp_bin_desc		securedisplay;
-<<<<<<< HEAD
-
-	struct psp_asd_context		asd_context;
-	struct psp_xgmi_context		xgmi_context;
-	struct psp_ras_context		ras_context;
-	struct ta_cp_context		hdcp_context;
-	struct ta_cp_context		dtm_context;
-	struct ta_cp_context		rap_context;
-	struct ta_cp_context		securedisplay_context;
-=======
 	uint32_t			ta_xgmi_ucode_version;
 	uint32_t			ta_xgmi_ucode_size;
 	uint8_t				*ta_xgmi_start_addr;
@@ -527,17 +378,6 @@ struct psp_context
 	struct psp_dtm_context		dtm_context;
 	struct psp_rap_context		rap_context;
 	struct psp_securedisplay_context	securedisplay_context;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	struct psp_asd_context		asd_context;
-	struct psp_xgmi_context		xgmi_context;
-	struct psp_ras_context		ras_context;
-	struct ta_cp_context		hdcp_context;
-	struct ta_cp_context		dtm_context;
-	struct ta_cp_context		rap_context;
-	struct ta_cp_context		securedisplay_context;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct mutex			mutex;
 	struct psp_memory_training_context mem_train_ctx;
 
@@ -562,21 +402,6 @@ struct amdgpu_psp_funcs {
 		((psp)->funcs->bootloader_load_spl ? (psp)->funcs->bootloader_load_spl((psp)) : 0)
 #define psp_bootloader_load_sysdrv(psp) \
 		((psp)->funcs->bootloader_load_sysdrv ? (psp)->funcs->bootloader_load_sysdrv((psp)) : 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define psp_bootloader_load_soc_drv(psp) \
-		((psp)->funcs->bootloader_load_soc_drv ? (psp)->funcs->bootloader_load_soc_drv((psp)) : 0)
-#define psp_bootloader_load_intf_drv(psp) \
-		((psp)->funcs->bootloader_load_intf_drv ? (psp)->funcs->bootloader_load_intf_drv((psp)) : 0)
-#define psp_bootloader_load_dbg_drv(psp) \
-		((psp)->funcs->bootloader_load_dbg_drv ? (psp)->funcs->bootloader_load_dbg_drv((psp)) : 0)
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define psp_bootloader_load_sos(psp) \
 		((psp)->funcs->bootloader_load_sos ? (psp)->funcs->bootloader_load_sos((psp)) : 0)
 #define psp_smu_reload_quirk(psp) \
@@ -589,21 +414,9 @@ struct amdgpu_psp_funcs {
 #define psp_ring_get_wptr(psp) (psp)->funcs->ring_get_wptr((psp))
 #define psp_ring_set_wptr(psp, value) (psp)->funcs->ring_set_wptr((psp), (value))
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define psp_load_usbc_pd_fw(psp, fw_pri_mc_addr) \
-	((psp)->funcs->load_usbc_pd_fw ? \
-	(psp)->funcs->load_usbc_pd_fw((psp), (fw_pri_mc_addr)) : -EINVAL)
-=======
 #define psp_load_usbc_pd_fw(psp, dma_addr) \
 	((psp)->funcs->load_usbc_pd_fw ? \
 	(psp)->funcs->load_usbc_pd_fw((psp), (dma_addr)) : -EINVAL)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define psp_load_usbc_pd_fw(psp, fw_pri_mc_addr) \
-	((psp)->funcs->load_usbc_pd_fw ? \
-	(psp)->funcs->load_usbc_pd_fw((psp), (fw_pri_mc_addr)) : -EINVAL)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define psp_read_usbc_pd_fw(psp, fw_ver) \
 	((psp)->funcs->read_usbc_pd_fw ? \
@@ -614,14 +427,6 @@ extern const struct amd_ip_funcs psp_ip_funcs;
 extern const struct amdgpu_ip_block_version psp_v3_1_ip_block;
 extern const struct amdgpu_ip_block_version psp_v10_0_ip_block;
 extern const struct amdgpu_ip_block_version psp_v11_0_ip_block;
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern const struct amdgpu_ip_block_version psp_v11_0_8_ip_block;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern const struct amdgpu_ip_block_version psp_v11_0_8_ip_block;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 extern const struct amdgpu_ip_block_version psp_v12_0_ip_block;
 extern const struct amdgpu_ip_block_version psp_v13_0_ip_block;
 
@@ -632,32 +437,14 @@ int psp_gpu_reset(struct amdgpu_device *adev);
 int psp_update_vcn_sram(struct amdgpu_device *adev, int inst_idx,
 			uint64_t cmd_gpu_addr, int cmd_size);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int psp_xgmi_initialize(struct psp_context *psp, bool set_extended_data, bool load_ta);
-=======
 int psp_xgmi_initialize(struct psp_context *psp);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int psp_xgmi_initialize(struct psp_context *psp, bool set_extended_data, bool load_ta);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int psp_xgmi_terminate(struct psp_context *psp);
 int psp_xgmi_invoke(struct psp_context *psp, uint32_t ta_cmd_id);
 int psp_xgmi_get_hive_id(struct psp_context *psp, uint64_t *hive_id);
 int psp_xgmi_get_node_id(struct psp_context *psp, uint64_t *node_id);
 int psp_xgmi_get_topology_info(struct psp_context *psp,
 			       int number_devices,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			       struct psp_xgmi_topology_info *topology,
-			       bool get_extended_data);
-=======
 			       struct psp_xgmi_topology_info *topology);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			       struct psp_xgmi_topology_info *topology,
-			       bool get_extended_data);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int psp_xgmi_set_topology_info(struct psp_context *psp,
 			       int number_devices,
 			       struct psp_xgmi_topology_info *topology);
@@ -696,12 +483,4 @@ int psp_load_fw_list(struct psp_context *psp,
 		     struct amdgpu_firmware_info **ucode_list, int ucode_count);
 void psp_copy_fw(struct psp_context *psp, uint8_t *start_addr, uint32_t bin_size);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int is_psp_fw_valid(struct psp_bin_desc bin);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int is_psp_fw_valid(struct psp_bin_desc bin);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif

@@ -313,13 +313,7 @@ xfs_get_aghdr_buf(
 	if (error)
 		return error;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	bp->b_bn = blkno;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bp->b_maps[0].bm_bn = blkno;
 	bp->b_ops = ops;
 
@@ -475,15 +469,7 @@ xfs_rmaproot_init(
 	rrec->rm_offset = 0;
 
 	/* account for refc btree root */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_reflink(mp)) {
-=======
 	if (xfs_sb_version_hasreflink(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_reflink(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		rrec = XFS_RMAP_REC_ADDR(block, 5);
 		rrec->rm_startblock = cpu_to_be32(xfs_refc_block(mp));
 		rrec->rm_blockcount = cpu_to_be32(1);
@@ -542,15 +528,7 @@ xfs_agfblock_init(
 	agf->agf_roots[XFS_BTNUM_CNTi] = cpu_to_be32(XFS_CNT_BLOCK(mp));
 	agf->agf_levels[XFS_BTNUM_BNOi] = cpu_to_be32(1);
 	agf->agf_levels[XFS_BTNUM_CNTi] = cpu_to_be32(1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_rmapbt(mp)) {
-=======
 	if (xfs_sb_version_hasrmapbt(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_rmapbt(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		agf->agf_roots[XFS_BTNUM_RMAPi] =
 					cpu_to_be32(XFS_RMAP_BLOCK(mp));
 		agf->agf_levels[XFS_BTNUM_RMAPi] = cpu_to_be32(1);
@@ -563,21 +541,9 @@ xfs_agfblock_init(
 	tmpsize = id->agsize - mp->m_ag_prealloc_blocks;
 	agf->agf_freeblks = cpu_to_be32(tmpsize);
 	agf->agf_longest = cpu_to_be32(tmpsize);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_crc(mp))
-		uuid_copy(&agf->agf_uuid, &mp->m_sb.sb_meta_uuid);
-	if (xfs_has_reflink(mp)) {
-=======
 	if (xfs_sb_version_hascrc(&mp->m_sb))
 		uuid_copy(&agf->agf_uuid, &mp->m_sb.sb_meta_uuid);
 	if (xfs_sb_version_hasreflink(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_crc(mp))
-		uuid_copy(&agf->agf_uuid, &mp->m_sb.sb_meta_uuid);
-	if (xfs_has_reflink(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		agf->agf_refcount_root = cpu_to_be32(
 				xfs_refc_block(mp));
 		agf->agf_refcount_level = cpu_to_be32(1);
@@ -603,15 +569,7 @@ xfs_agflblock_init(
 	__be32			*agfl_bno;
 	int			bucket;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_crc(mp)) {
-=======
 	if (xfs_sb_version_hascrc(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_crc(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		agfl->agfl_magicnum = cpu_to_be32(XFS_AGFL_MAGIC);
 		agfl->agfl_seqno = cpu_to_be32(id->agno);
 		uuid_copy(&agfl->agfl_uuid, &mp->m_sb.sb_meta_uuid);
@@ -641,41 +599,17 @@ xfs_agiblock_init(
 	agi->agi_freecount = 0;
 	agi->agi_newino = cpu_to_be32(NULLAGINO);
 	agi->agi_dirino = cpu_to_be32(NULLAGINO);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_crc(mp))
-		uuid_copy(&agi->agi_uuid, &mp->m_sb.sb_meta_uuid);
-	if (xfs_has_finobt(mp)) {
-=======
 	if (xfs_sb_version_hascrc(&mp->m_sb))
 		uuid_copy(&agi->agi_uuid, &mp->m_sb.sb_meta_uuid);
 	if (xfs_sb_version_hasfinobt(&mp->m_sb)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_crc(mp))
-		uuid_copy(&agi->agi_uuid, &mp->m_sb.sb_meta_uuid);
-	if (xfs_has_finobt(mp)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		agi->agi_free_root = cpu_to_be32(XFS_FIBT_BLOCK(mp));
 		agi->agi_free_level = cpu_to_be32(1);
 	}
 	for (bucket = 0; bucket < XFS_AGI_UNLINKED_BUCKETS; bucket++)
 		agi->agi_unlinked[bucket] = cpu_to_be32(NULLAGINO);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (xfs_has_inobtcounts(mp)) {
-		agi->agi_iblocks = cpu_to_be32(1);
-		if (xfs_has_finobt(mp))
-=======
 	if (xfs_sb_version_hasinobtcounts(&mp->m_sb)) {
 		agi->agi_iblocks = cpu_to_be32(1);
 		if (xfs_sb_version_hasfinobt(&mp->m_sb))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (xfs_has_inobtcounts(mp)) {
-		agi->agi_iblocks = cpu_to_be32(1);
-		if (xfs_has_finobt(mp))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			agi->agi_fblocks = cpu_to_be32(1);
 	}
 }
@@ -785,30 +719,14 @@ xfs_ag_init_headers(
 		.ops = &xfs_finobt_buf_ops,
 		.work = &xfs_btroot_init,
 		.type = XFS_BTNUM_FINO,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.need_init =  xfs_has_finobt(mp)
-=======
 		.need_init =  xfs_sb_version_hasfinobt(&mp->m_sb)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.need_init =  xfs_has_finobt(mp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{ /* RMAP root block */
 		.daddr = XFS_AGB_TO_DADDR(mp, id->agno, XFS_RMAP_BLOCK(mp)),
 		.numblks = BTOBB(mp->m_sb.sb_blocksize),
 		.ops = &xfs_rmapbt_buf_ops,
 		.work = &xfs_rmaproot_init,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.need_init = xfs_has_rmapbt(mp)
-=======
 		.need_init = xfs_sb_version_hasrmapbt(&mp->m_sb)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.need_init = xfs_has_rmapbt(mp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{ /* REFC root block */
 		.daddr = XFS_AGB_TO_DADDR(mp, id->agno, xfs_refc_block(mp)),
@@ -816,15 +734,7 @@ xfs_ag_init_headers(
 		.ops = &xfs_refcountbt_buf_ops,
 		.work = &xfs_btroot_init,
 		.type = XFS_BTNUM_REFC,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		.need_init = xfs_has_reflink(mp)
-=======
 		.need_init = xfs_sb_version_hasreflink(&mp->m_sb)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		.need_init = xfs_has_reflink(mp)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	{ /* NULL terminating block */
 		.daddr = XFS_BUF_DADDR_NULL,
@@ -894,23 +804,6 @@ xfs_ag_shrink_space(
 	args.fsbno = XFS_AGB_TO_FSB(mp, agno, aglen - delta);
 
 	/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	 * Make sure that the last inode cluster cannot overlap with the new
-	 * end of the AG, even if it's sparse.
-	 */
-	error = xfs_ialloc_check_shrink(*tpp, agno, agibp, aglen - delta);
-	if (error)
-		return error;
-
-	/*
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * Disable perag reservations so it doesn't cause the allocation request
 	 * to fail. We'll reestablish reservation before we return.
 	 */

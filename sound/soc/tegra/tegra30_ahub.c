@@ -512,34 +512,16 @@ static const struct of_device_id tegra30_ahub_of_match[] = {
 
 static int tegra30_ahub_probe(struct platform_device *pdev)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	const struct of_device_id *match;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct tegra30_ahub_soc_data *soc_data;
 	struct resource *res0;
 	void __iomem *regs_apbif, *regs_ahub;
 	int ret = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	soc_data = of_device_get_match_data(&pdev->dev);
-	if (!soc_data)
-		return -EINVAL;
-=======
 	match = of_match_device(tegra30_ahub_of_match, &pdev->dev);
 	if (!match)
 		return -EINVAL;
 	soc_data = match->data;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	soc_data = of_device_get_match_data(&pdev->dev);
-	if (!soc_data)
-		return -EINVAL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ahub = devm_kzalloc(&pdev->dev, sizeof(struct tegra30_ahub),
 			    GFP_KERNEL);

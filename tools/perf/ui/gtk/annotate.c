@@ -177,14 +177,6 @@ static int symbol__gtk_annotate(struct map_symbol *ms, struct evsel *evsel,
 	err = symbol__annotate(ms, evsel, &annotation__default_options, NULL);
 	if (err) {
 		char msg[BUFSIZ];
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ms->map->dso->annotate_warned = true;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ms->map->dso->annotate_warned = true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		symbol__strerror_disassemble(ms, err, msg, sizeof(msg));
 		ui__error("Couldn't annotate %s: %s\n", sym->name, msg);
 		return -1;

@@ -207,14 +207,6 @@ struct timer_base {
 	unsigned int		cpu;
 	bool			next_expiry_recalc;
 	bool			is_idle;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool			timers_pending;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool			timers_pending;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	DECLARE_BITMAP(pending_map, WHEEL_SIZE);
 	struct hlist_head	vectors[WHEEL_SIZE];
 } ____cacheline_aligned;
@@ -603,14 +595,6 @@ static void enqueue_timer(struct timer_base *base, struct timer_list *timer,
 		 * can reevaluate the wheel:
 		 */
 		base->next_expiry = bucket_expiry;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		base->timers_pending = true;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		base->timers_pending = true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		base->next_expiry_recalc = false;
 		trigger_dyntick_cpu(base, timer);
 	}
@@ -1279,21 +1263,8 @@ static inline void timer_base_unlock_expiry(struct timer_base *base)
 static void timer_sync_wait_running(struct timer_base *base)
 {
 	if (atomic_read(&base->timer_waiters)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		raw_spin_unlock_irq(&base->lock);
 		spin_unlock(&base->expiry_lock);
 		spin_lock(&base->expiry_lock);
-		raw_spin_lock_irq(&base->lock);
-<<<<<<< HEAD
-=======
-		spin_unlock(&base->expiry_lock);
-		spin_lock(&base->expiry_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -1484,33 +1455,14 @@ static void expire_timers(struct timer_base *base, struct hlist_head *head)
 		if (timer->flags & TIMER_IRQSAFE) {
 			raw_spin_unlock(&base->lock);
 			call_timer_fn(timer, fn, baseclk);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			raw_spin_lock(&base->lock);
 			base->running_timer = NULL;
+			raw_spin_lock(&base->lock);
 		} else {
 			raw_spin_unlock_irq(&base->lock);
 			call_timer_fn(timer, fn, baseclk);
-			raw_spin_lock_irq(&base->lock);
 			base->running_timer = NULL;
 			timer_sync_wait_running(base);
-=======
-			base->running_timer = NULL;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			raw_spin_lock(&base->lock);
-			base->running_timer = NULL;
-		} else {
-			raw_spin_unlock_irq(&base->lock);
-			call_timer_fn(timer, fn, baseclk);
 			raw_spin_lock_irq(&base->lock);
-			base->running_timer = NULL;
-			timer_sync_wait_running(base);
-<<<<<<< HEAD
-			raw_spin_lock_irq(&base->lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 }
@@ -1630,14 +1582,6 @@ static unsigned long __next_timer_interrupt(struct timer_base *base)
 	}
 
 	base->next_expiry_recalc = false;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	base->timers_pending = !(next == base->clk + NEXT_TIMER_MAX_DELTA);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	base->timers_pending = !(next == base->clk + NEXT_TIMER_MAX_DELTA);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return next;
 }
@@ -1689,13 +1633,7 @@ u64 get_next_timer_interrupt(unsigned long basej, u64 basem)
 	struct timer_base *base = this_cpu_ptr(&timer_bases[BASE_STD]);
 	u64 expires = KTIME_MAX;
 	unsigned long nextevt;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	bool is_max_delta;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Pretend that there is no timer pending if the cpu is offline.
@@ -1708,13 +1646,7 @@ u64 get_next_timer_interrupt(unsigned long basej, u64 basem)
 	if (base->next_expiry_recalc)
 		base->next_expiry = __next_timer_interrupt(base);
 	nextevt = base->next_expiry;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	is_max_delta = (nextevt == base->clk + NEXT_TIMER_MAX_DELTA);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * We have a fresh next event. Check whether we can forward the
@@ -1732,15 +1664,7 @@ u64 get_next_timer_interrupt(unsigned long basej, u64 basem)
 		expires = basem;
 		base->is_idle = false;
 	} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (base->timers_pending)
-=======
 		if (!is_max_delta)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (base->timers_pending)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			expires = basem + (u64)(nextevt - basej) * TICK_NSEC;
 		/*
 		 * If we expect to sleep more than a tick, mark the base idle.
@@ -2023,14 +1947,6 @@ int timers_prepare_cpu(unsigned int cpu)
 		base = per_cpu_ptr(&timer_bases[b], cpu);
 		base->clk = jiffies;
 		base->next_expiry = base->clk + NEXT_TIMER_MAX_DELTA;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		base->timers_pending = false;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		base->timers_pending = false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		base->is_idle = false;
 	}
 	return 0;

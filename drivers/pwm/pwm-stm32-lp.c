@@ -209,15 +209,7 @@ static int stm32_pwm_lp_probe(struct platform_device *pdev)
 	priv->chip.ops = &stm32_pwm_lp_ops;
 	priv->chip.npwm = 1;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = devm_pwmchip_add(&pdev->dev, &priv->chip);
-=======
 	ret = pwmchip_add(&priv->chip);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = devm_pwmchip_add(&pdev->dev, &priv->chip);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		return ret;
 
@@ -226,9 +218,6 @@ static int stm32_pwm_lp_probe(struct platform_device *pdev)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int stm32_pwm_lp_remove(struct platform_device *pdev)
 {
 	struct stm32_pwm_lp *priv = platform_get_drvdata(pdev);
@@ -238,9 +227,6 @@ static int stm32_pwm_lp_remove(struct platform_device *pdev)
 	return pwmchip_remove(&priv->chip);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int __maybe_unused stm32_pwm_lp_suspend(struct device *dev)
 {
 	struct stm32_pwm_lp *priv = dev_get_drvdata(dev);
@@ -272,13 +258,7 @@ MODULE_DEVICE_TABLE(of, stm32_pwm_lp_of_match);
 
 static struct platform_driver stm32_pwm_lp_driver = {
 	.probe	= stm32_pwm_lp_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove	= stm32_pwm_lp_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver	= {
 		.name = "stm32-pwm-lp",
 		.of_match_table = of_match_ptr(stm32_pwm_lp_of_match),

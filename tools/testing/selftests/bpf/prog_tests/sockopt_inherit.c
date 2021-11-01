@@ -195,22 +195,8 @@ static void run_test(int cgroup_fd)
 
 	pthread_mutex_lock(&server_started_mtx);
 	if (CHECK_FAIL(pthread_create(&tid, NULL, server_thread,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				      (void *)&server_fd))) {
-		pthread_mutex_unlock(&server_started_mtx);
-		goto close_server_fd;
-	}
-=======
 				      (void *)&server_fd)))
 		goto close_server_fd;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				      (void *)&server_fd))) {
-		pthread_mutex_unlock(&server_started_mtx);
-		goto close_server_fd;
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pthread_cond_wait(&server_started, &server_started_mtx);
 	pthread_mutex_unlock(&server_started_mtx);
 

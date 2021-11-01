@@ -54,14 +54,6 @@
 #define ARPHRD_X25	271		/* CCITT X.25			*/
 #define ARPHRD_HWX25	272		/* Boards with X.25 in firmware	*/
 #define ARPHRD_CAN	280		/* Controller Area Network      */
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define ARPHRD_MCTP	290
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define ARPHRD_MCTP	290
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ARPHRD_PPP	512
 #define ARPHRD_CISCO	513		/* Cisco HDLC	 		*/
 #define ARPHRD_HDLC	ARPHRD_CISCO

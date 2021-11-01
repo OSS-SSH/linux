@@ -295,21 +295,9 @@ static int pearl_skb2rbd_attach(struct qtnf_pcie_pearl_state *ps, u16 index)
 	priv->rx_skb[index] = skb;
 	rxbd = &ps->rx_bd_vbase[index];
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	paddr = dma_map_single(&priv->pdev->dev, skb->data, SKB_BUF_SIZE,
-			       DMA_FROM_DEVICE);
-	if (dma_mapping_error(&priv->pdev->dev, paddr)) {
-=======
 	paddr = pci_map_single(priv->pdev, skb->data,
 			       SKB_BUF_SIZE, PCI_DMA_FROMDEVICE);
 	if (pci_dma_mapping_error(priv->pdev, paddr)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	paddr = dma_map_single(&priv->pdev->dev, skb->data, SKB_BUF_SIZE,
-			       DMA_FROM_DEVICE);
-	if (dma_mapping_error(&priv->pdev->dev, paddr)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_err("skb DMA mapping error: %pad\n", &paddr);
 		return -ENOMEM;
 	}
@@ -369,18 +357,8 @@ static void qtnf_pearl_free_xfer_buffers(struct qtnf_pcie_pearl_state *ps)
 			skb = priv->rx_skb[i];
 			paddr = QTN_HOST_ADDR(le32_to_cpu(rxbd->addr_h),
 					      le32_to_cpu(rxbd->addr));
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dma_unmap_single(&priv->pdev->dev, paddr,
-					 SKB_BUF_SIZE, DMA_FROM_DEVICE);
-=======
 			pci_unmap_single(priv->pdev, paddr, SKB_BUF_SIZE,
 					 PCI_DMA_FROMDEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dma_unmap_single(&priv->pdev->dev, paddr,
-					 SKB_BUF_SIZE, DMA_FROM_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_kfree_skb_any(skb);
 			priv->rx_skb[i] = NULL;
 		}
@@ -393,18 +371,8 @@ static void qtnf_pearl_free_xfer_buffers(struct qtnf_pcie_pearl_state *ps)
 			skb = priv->tx_skb[i];
 			paddr = QTN_HOST_ADDR(le32_to_cpu(txbd->addr_h),
 					      le32_to_cpu(txbd->addr));
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dma_unmap_single(&priv->pdev->dev, paddr, skb->len,
-					 DMA_TO_DEVICE);
-=======
 			pci_unmap_single(priv->pdev, paddr, skb->len,
 					 PCI_DMA_TODEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dma_unmap_single(&priv->pdev->dev, paddr, skb->len,
-					 DMA_TO_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			dev_kfree_skb_any(skb);
 			priv->tx_skb[i] = NULL;
 		}
@@ -517,18 +485,8 @@ static void qtnf_pearl_data_tx_reclaim(struct qtnf_pcie_pearl_state *ps)
 			txbd = &ps->tx_bd_vbase[i];
 			paddr = QTN_HOST_ADDR(le32_to_cpu(txbd->addr_h),
 					      le32_to_cpu(txbd->addr));
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dma_unmap_single(&priv->pdev->dev, paddr, skb->len,
-					 DMA_TO_DEVICE);
-=======
 			pci_unmap_single(priv->pdev, paddr, skb->len,
 					 PCI_DMA_TODEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dma_unmap_single(&priv->pdev->dev, paddr, skb->len,
-					 DMA_TO_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 			if (skb->dev) {
 				dev_sw_netstats_tx_add(skb->dev, 1, skb->len);
@@ -601,21 +559,9 @@ static int qtnf_pcie_skb_send(struct qtnf_bus *bus, struct sk_buff *skb)
 	priv->tx_skb[i] = skb;
 	len = skb->len;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	skb_paddr = dma_map_single(&priv->pdev->dev, skb->data, skb->len,
-				   DMA_TO_DEVICE);
-	if (dma_mapping_error(&priv->pdev->dev, skb_paddr)) {
-=======
 	skb_paddr = pci_map_single(priv->pdev, skb->data,
 				   skb->len, PCI_DMA_TODEVICE);
 	if (pci_dma_mapping_error(priv->pdev, skb_paddr)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	skb_paddr = dma_map_single(&priv->pdev->dev, skb->data, skb->len,
-				   DMA_TO_DEVICE);
-	if (dma_mapping_error(&priv->pdev->dev, skb_paddr)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pr_err("skb DMA mapping error: %pad\n", &skb_paddr);
 		ret = -ENOMEM;
 		goto tx_done;
@@ -802,18 +748,8 @@ static int qtnf_pcie_pearl_rx_poll(struct napi_struct *napi, int budget)
 		if (skb) {
 			skb_paddr = QTN_HOST_ADDR(le32_to_cpu(rxbd->addr_h),
 						  le32_to_cpu(rxbd->addr));
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dma_unmap_single(&priv->pdev->dev, skb_paddr,
-					 SKB_BUF_SIZE, DMA_FROM_DEVICE);
-=======
 			pci_unmap_single(priv->pdev, skb_paddr, SKB_BUF_SIZE,
 					 PCI_DMA_FROMDEVICE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dma_unmap_single(&priv->pdev->dev, skb_paddr,
-					 SKB_BUF_SIZE, DMA_FROM_DEVICE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		if (consume) {

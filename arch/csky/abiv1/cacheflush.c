@@ -56,9 +56,6 @@ void update_mmu_cache(struct vm_area_struct *vma, unsigned long addr,
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void flush_kernel_dcache_page(struct page *page)
 {
 	struct address_space *mapping;
@@ -70,9 +67,6 @@ void flush_kernel_dcache_page(struct page *page)
 }
 EXPORT_SYMBOL(flush_kernel_dcache_page);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void flush_cache_range(struct vm_area_struct *vma, unsigned long start,
 	unsigned long end)
 {

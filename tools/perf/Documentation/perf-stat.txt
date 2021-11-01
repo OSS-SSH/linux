@@ -9,18 +9,8 @@ SYNOPSIS
 --------
 [verse]
 'perf stat' [-e <EVENT> | --event=EVENT] [-a] <command>
-<<<<<<< HEAD
-<<<<<<< HEAD
-'perf stat' [-e <EVENT> | --event=EVENT] [-a] \-- <command> [<options>]
-'perf stat' [-e <EVENT> | --event=EVENT] [-a] record [-o file] \-- <command> [<options>]
-=======
 'perf stat' [-e <EVENT> | --event=EVENT] [-a] -- <command> [<options>]
 'perf stat' [-e <EVENT> | --event=EVENT] [-a] record [-o file] -- <command> [<options>]
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-'perf stat' [-e <EVENT> | --event=EVENT] [-a] \-- <command> [<options>]
-'perf stat' [-e <EVENT> | --event=EVENT] [-a] record [-o file] \-- <command> [<options>]
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 'perf stat' report [-i file]
 
 DESCRIPTION
@@ -227,18 +217,8 @@ Append to the output file designated with the -o option. Ignored if -o is not sp
 
 Log output to fd, instead of stderr.  Complementary to --output, and mutually exclusive
 with it.  --append may be used here.  Examples:
-<<<<<<< HEAD
-<<<<<<< HEAD
-     3>results  perf stat --log-fd 3          \-- $cmd
-     3>>results perf stat --log-fd 3 --append \-- $cmd
-=======
      3>results  perf stat --log-fd 3          -- $cmd
      3>>results perf stat --log-fd 3 --append -- $cmd
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-     3>results  perf stat --log-fd 3          \-- $cmd
-     3>>results perf stat --log-fd 3 --append \-- $cmd
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 --control=fifo:ctl-fifo[,ack-fifo]::
 --control=fd:ctl-fd[,ack-fd]::
@@ -265,15 +245,7 @@ disable events during measurements:
 
  perf stat -D -1 -e cpu-cycles -a -I 1000       \
            --control fd:${ctl_fd},${ctl_fd_ack} \
-<<<<<<< HEAD
-<<<<<<< HEAD
-           \-- sleep 30 &
-=======
            -- sleep 30 &
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-           \-- sleep 30 &
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  perf_pid=$!
 
  sleep 5  && echo 'enable' >&${ctl_fd} && read -u ${ctl_fd_ack} e1 && echo "enabled(${e1})"
@@ -293,15 +265,7 @@ disable events during measurements:
 --post::
 	Pre and post measurement hooks, e.g.:
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-perf stat --repeat 10 --null --sync --pre 'make -s O=defconfig-build/clean' \-- make -s -j64 O=defconfig-build/ bzImage
-=======
 perf stat --repeat 10 --null --sync --pre 'make -s O=defconfig-build/clean' -- make -s -j64 O=defconfig-build/ bzImage
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-perf stat --repeat 10 --null --sync --pre 'make -s O=defconfig-build/clean' \-- make -s -j64 O=defconfig-build/ bzImage
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 -I msecs::
 --interval-print msecs::
@@ -421,15 +385,7 @@ Aggregate counts per physical processor for system-wide mode measurements.
 Print metrics or metricgroups specified in a comma separated list.
 For a group all metrics from the group are added.
 The events from the metrics are automatically measured.
-<<<<<<< HEAD
-<<<<<<< HEAD
-See perf list output for the possible metrics and metricgroups.
-=======
 See perf list output for the possble metrics and metricgroups.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-See perf list output for the possible metrics and metricgroups.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 -A::
 --no-aggr::
@@ -540,15 +496,7 @@ $ perf config stat.no-csv-summary=true
 EXAMPLES
 --------
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-$ perf stat \-- make
-=======
 $ perf stat -- make
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-$ perf stat \-- make
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
    Performance counter stats for 'make':
 

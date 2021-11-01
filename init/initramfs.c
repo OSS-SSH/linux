@@ -15,14 +15,6 @@
 #include <linux/mm.h>
 #include <linux/namei.h>
 #include <linux/init_syscalls.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/umh.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/umh.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static ssize_t __init xwrite(struct file *file, const char *p, size_t count,
 		loff_t *pos)
@@ -735,14 +727,6 @@ static int __init populate_rootfs(void)
 {
 	initramfs_cookie = async_schedule_domain(do_populate_rootfs, NULL,
 						 &initramfs_domain);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	usermodehelper_enable();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	usermodehelper_enable();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!initramfs_async)
 		wait_for_initramfs();
 	return 0;

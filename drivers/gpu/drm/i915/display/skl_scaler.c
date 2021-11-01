@@ -96,19 +96,9 @@ skl_update_scaler(struct intel_crtc_state *crtc_state, bool force_detach,
 {
 	struct intel_crtc_scaler_state *scaler_state =
 		&crtc_state->scaler_state;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
-	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
-=======
 	struct intel_crtc *intel_crtc =
 		to_intel_crtc(crtc_state->uapi.crtc);
 	struct drm_i915_private *dev_priv = to_i915(intel_crtc->base.dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
-	struct drm_i915_private *dev_priv = to_i915(crtc->base.dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct drm_display_mode *adjusted_mode =
 		&crtc_state->hw.adjusted_mode;
 
@@ -151,15 +141,7 @@ skl_update_scaler(struct intel_crtc_state *crtc_state, bool force_detach,
 			drm_dbg_kms(&dev_priv->drm,
 				    "scaler_user index %u.%u: "
 				    "Staged freeing scaler id %d scaler_users = 0x%x\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-				    crtc->pipe, scaler_user, *scaler_id,
-=======
 				    intel_crtc->pipe, scaler_user, *scaler_id,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				    crtc->pipe, scaler_user, *scaler_id,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				    scaler_state->scaler_users);
 			*scaler_id = -1;
 		}
@@ -185,15 +167,7 @@ skl_update_scaler(struct intel_crtc_state *crtc_state, bool force_detach,
 		drm_dbg_kms(&dev_priv->drm,
 			    "scaler_user index %u.%u: src %ux%u dst %ux%u "
 			    "size is out of scaler range\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			    crtc->pipe, scaler_user, src_w, src_h,
-=======
 			    intel_crtc->pipe, scaler_user, src_w, src_h,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			    crtc->pipe, scaler_user, src_w, src_h,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    dst_w, dst_h);
 		return -EINVAL;
 	}
@@ -202,15 +176,7 @@ skl_update_scaler(struct intel_crtc_state *crtc_state, bool force_detach,
 	scaler_state->scaler_users |= (1 << scaler_user);
 	drm_dbg_kms(&dev_priv->drm, "scaler_user index %u.%u: "
 		    "staged scaling request for %ux%u->%ux%u scaler_users = 0x%x\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-		    crtc->pipe, scaler_user, src_w, src_h, dst_w, dst_h,
-=======
 		    intel_crtc->pipe, scaler_user, src_w, src_h, dst_w, dst_h,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		    crtc->pipe, scaler_user, src_w, src_h, dst_w, dst_h,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		    scaler_state->scaler_users);
 
 	return 0;
@@ -329,28 +295,12 @@ int skl_update_scaler_plane(struct intel_crtc_state *crtc_state,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int glk_coef_tap(int i)
-=======
 static int cnl_coef_tap(int i)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int glk_coef_tap(int i)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return i % 7;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static u16 glk_nearest_filter_coef(int t)
-=======
 static u16 cnl_nearest_filter_coef(int t)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static u16 glk_nearest_filter_coef(int t)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return t == 3 ? 0x0800 : 0x3000;
 }
@@ -392,68 +342,29 @@ static u16 glk_nearest_filter_coef(int t)
  *
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void glk_program_nearest_filter_coefs(struct drm_i915_private *dev_priv,
-=======
 static void cnl_program_nearest_filter_coefs(struct drm_i915_private *dev_priv,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void glk_program_nearest_filter_coefs(struct drm_i915_private *dev_priv,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					     enum pipe pipe, int id, int set)
 {
 	int i;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	intel_de_write_fw(dev_priv, GLK_PS_COEF_INDEX_SET(pipe, id, set),
-=======
 	intel_de_write_fw(dev_priv, CNL_PS_COEF_INDEX_SET(pipe, id, set),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	intel_de_write_fw(dev_priv, GLK_PS_COEF_INDEX_SET(pipe, id, set),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			  PS_COEE_INDEX_AUTO_INC);
 
 	for (i = 0; i < 17 * 7; i += 2) {
 		u32 tmp;
 		int t;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		t = glk_coef_tap(i);
-		tmp = glk_nearest_filter_coef(t);
-
-		t = glk_coef_tap(i + 1);
-		tmp |= glk_nearest_filter_coef(t) << 16;
-
-		intel_de_write_fw(dev_priv, GLK_PS_COEF_DATA_SET(pipe, id, set),
-				  tmp);
-	}
-
-	intel_de_write_fw(dev_priv, GLK_PS_COEF_INDEX_SET(pipe, id, set), 0);
-=======
 		t = cnl_coef_tap(i);
 		tmp = cnl_nearest_filter_coef(t);
-=======
-		t = glk_coef_tap(i);
-		tmp = glk_nearest_filter_coef(t);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-		t = glk_coef_tap(i + 1);
-		tmp |= glk_nearest_filter_coef(t) << 16;
+		t = cnl_coef_tap(i + 1);
+		tmp |= cnl_nearest_filter_coef(t) << 16;
 
-		intel_de_write_fw(dev_priv, GLK_PS_COEF_DATA_SET(pipe, id, set),
+		intel_de_write_fw(dev_priv, CNL_PS_COEF_DATA_SET(pipe, id, set),
 				  tmp);
 	}
 
-<<<<<<< HEAD
 	intel_de_write_fw(dev_priv, CNL_PS_COEF_INDEX_SET(pipe, id, set), 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	intel_de_write_fw(dev_priv, GLK_PS_COEF_INDEX_SET(pipe, id, set), 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static u32 skl_scaler_get_filter_select(enum drm_scaling_filter filter, int set)
@@ -476,15 +387,7 @@ static void skl_scaler_setup_filter(struct drm_i915_private *dev_priv, enum pipe
 	case DRM_SCALING_FILTER_DEFAULT:
 		break;
 	case DRM_SCALING_FILTER_NEAREST_NEIGHBOR:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		glk_program_nearest_filter_coefs(dev_priv, pipe, id, set);
-=======
 		cnl_program_nearest_filter_coefs(dev_priv, pipe, id, set);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		glk_program_nearest_filter_coefs(dev_priv, pipe, id, set);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	default:
 		MISSING_CASE(filter);
@@ -612,41 +515,17 @@ skl_program_plane_scaler(struct intel_plane *plane,
 			  (crtc_w << 16) | crtc_h);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void skl_detach_scaler(struct intel_crtc *crtc, int id)
-{
-	struct drm_device *dev = crtc->base.dev;
-=======
 static void skl_detach_scaler(struct intel_crtc *intel_crtc, int id)
 {
 	struct drm_device *dev = intel_crtc->base.dev;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void skl_detach_scaler(struct intel_crtc *crtc, int id)
-{
-	struct drm_device *dev = crtc->base.dev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct drm_i915_private *dev_priv = to_i915(dev);
 	unsigned long irqflags;
 
 	spin_lock_irqsave(&dev_priv->uncore.lock, irqflags);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	intel_de_write_fw(dev_priv, SKL_PS_CTRL(crtc->pipe, id), 0);
-	intel_de_write_fw(dev_priv, SKL_PS_WIN_POS(crtc->pipe, id), 0);
-	intel_de_write_fw(dev_priv, SKL_PS_WIN_SZ(crtc->pipe, id), 0);
-=======
 	intel_de_write_fw(dev_priv, SKL_PS_CTRL(intel_crtc->pipe, id), 0);
 	intel_de_write_fw(dev_priv, SKL_PS_WIN_POS(intel_crtc->pipe, id), 0);
 	intel_de_write_fw(dev_priv, SKL_PS_WIN_SZ(intel_crtc->pipe, id), 0);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	intel_de_write_fw(dev_priv, SKL_PS_CTRL(crtc->pipe, id), 0);
-	intel_de_write_fw(dev_priv, SKL_PS_WIN_POS(crtc->pipe, id), 0);
-	intel_de_write_fw(dev_priv, SKL_PS_WIN_SZ(crtc->pipe, id), 0);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_unlock_irqrestore(&dev_priv->uncore.lock, irqflags);
 }
@@ -656,35 +535,15 @@ static void skl_detach_scaler(struct intel_crtc *crtc, int id)
  */
 void skl_detach_scalers(const struct intel_crtc_state *crtc_state)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
-=======
 	struct intel_crtc *intel_crtc = to_intel_crtc(crtc_state->uapi.crtc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct intel_crtc *crtc = to_intel_crtc(crtc_state->uapi.crtc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const struct intel_crtc_scaler_state *scaler_state =
 		&crtc_state->scaler_state;
 	int i;
 
 	/* loop through and disable scalers that aren't in use */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	for (i = 0; i < crtc->num_scalers; i++) {
-		if (!scaler_state->scalers[i].in_use)
-			skl_detach_scaler(crtc, i);
-=======
 	for (i = 0; i < intel_crtc->num_scalers; i++) {
 		if (!scaler_state->scalers[i].in_use)
 			skl_detach_scaler(intel_crtc, i);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	for (i = 0; i < crtc->num_scalers; i++) {
-		if (!scaler_state->scalers[i].in_use)
-			skl_detach_scaler(crtc, i);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 

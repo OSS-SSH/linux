@@ -104,17 +104,11 @@ static int scmi_dev_probe(struct device *dev)
 {
 	struct scmi_driver *scmi_drv = to_scmi_driver(dev->driver);
 	struct scmi_device *scmi_dev = to_scmi_dev(dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	const struct scmi_device_id *id;
 
 	id = scmi_dev_match_id(scmi_dev, scmi_drv);
 	if (!id)
 		return -ENODEV;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!scmi_dev->handle)
 		return -EPROBE_DEFER;
@@ -122,29 +116,15 @@ static int scmi_dev_probe(struct device *dev)
 	return scmi_drv->probe(scmi_dev);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void scmi_dev_remove(struct device *dev)
-=======
 static int scmi_dev_remove(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void scmi_dev_remove(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct scmi_driver *scmi_drv = to_scmi_driver(dev->driver);
 	struct scmi_device *scmi_dev = to_scmi_dev(dev);
 
 	if (scmi_drv->remove)
 		scmi_drv->remove(scmi_dev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct bus_type scmi_bus_type = {
@@ -159,18 +139,6 @@ int scmi_driver_register(struct scmi_driver *driver, struct module *owner,
 {
 	int retval;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!driver->probe)
-		return -EINVAL;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!driver->probe)
-		return -EINVAL;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	retval = scmi_protocol_device_request(driver->id_table);
 	if (retval)
 		return retval;

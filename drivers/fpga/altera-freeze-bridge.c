@@ -198,27 +198,11 @@ static const struct fpga_bridge_ops altera_freeze_br_br_ops = {
 	.enable_show = altera_freeze_br_enable_show,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifdef CONFIG_OF
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifdef CONFIG_OF
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static const struct of_device_id altera_freeze_br_of_match[] = {
 	{ .compatible = "altr,freeze-bridge-controller", },
 	{},
 };
 MODULE_DEVICE_TABLE(of, altera_freeze_br_of_match);
-<<<<<<< HEAD
-<<<<<<< HEAD
-#endif
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#endif
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static int altera_freeze_br_probe(struct platform_device *pdev)
 {

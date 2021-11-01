@@ -834,15 +834,7 @@ SYSCALL_DEFINE5(osf_setsysinfo, unsigned long, op, void __user *, buffer,
 			return -EFAULT;
 		state = &current_thread_info()->ieee_state;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		/* Update software trap enable bits.  */
-=======
 		/* Update softare trap enable bits.  */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		/* Update software trap enable bits.  */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		*state = (*state & ~IEEE_SW_MASK) | (swcr & IEEE_SW_MASK);
 
 		/* Update the real fpcr.  */
@@ -862,15 +854,7 @@ SYSCALL_DEFINE5(osf_setsysinfo, unsigned long, op, void __user *, buffer,
 		state = &current_thread_info()->ieee_state;
 		exc &= IEEE_STATUS_MASK;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		/* Update software trap enable bits.  */
-=======
 		/* Update softare trap enable bits.  */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		/* Update software trap enable bits.  */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  		swcr = (*state & IEEE_SW_MASK) | exc;
 		*state |= exc;
 
@@ -892,15 +876,7 @@ SYSCALL_DEFINE5(osf_setsysinfo, unsigned long, op, void __user *, buffer,
 			if (fex & IEEE_TRAP_ENABLE_DZE) si_code = FPE_FLTDIV;
 			if (fex & IEEE_TRAP_ENABLE_INV) si_code = FPE_FLTINV;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-			send_sig_fault_trapno(SIGFPE, si_code,
-=======
 			send_sig_fault(SIGFPE, si_code,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			send_sig_fault_trapno(SIGFPE, si_code,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				       (void __user *)NULL,  /* FIXME */
 				       0, current);
  		}

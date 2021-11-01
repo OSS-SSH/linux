@@ -1,13 +1,5 @@
 // SPDX-License-Identifier: BSD-3-Clause
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* Copyright 2016-2018 NXP
-=======
 /* Copyright (c) 2016-2018, NXP Semiconductors
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* Copyright 2016-2018 NXP
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Copyright (c) 2018, Sensor-Technik Wiedemann GmbH
  * Copyright (c) 2018-2019, Vladimir Oltean <olteanv@gmail.com>
  */
@@ -583,13 +575,7 @@ const struct sja1105_info sja1105e_info = {
 	.part_no		= SJA1105ET_PART_NO,
 	.static_ops		= sja1105e_table_ops,
 	.dyn_ops		= sja1105et_dyn_ops,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.qinq_tpid		= ETH_P_8021Q,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tag_proto		= DSA_TAG_PROTO_SJA1105,
 	.can_limit_mcast_flood	= false,
 	.ptp_ts_bits		= 24,
@@ -622,13 +608,7 @@ const struct sja1105_info sja1105t_info = {
 	.part_no		= SJA1105ET_PART_NO,
 	.static_ops		= sja1105t_table_ops,
 	.dyn_ops		= sja1105et_dyn_ops,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.qinq_tpid		= ETH_P_8021Q,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tag_proto		= DSA_TAG_PROTO_SJA1105,
 	.can_limit_mcast_flood	= false,
 	.ptp_ts_bits		= 24,
@@ -661,13 +641,7 @@ const struct sja1105_info sja1105p_info = {
 	.part_no		= SJA1105P_PART_NO,
 	.static_ops		= sja1105p_table_ops,
 	.dyn_ops		= sja1105pqrs_dyn_ops,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.qinq_tpid		= ETH_P_8021AD,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tag_proto		= DSA_TAG_PROTO_SJA1105,
 	.can_limit_mcast_flood	= true,
 	.ptp_ts_bits		= 32,
@@ -701,13 +675,7 @@ const struct sja1105_info sja1105q_info = {
 	.part_no		= SJA1105Q_PART_NO,
 	.static_ops		= sja1105q_table_ops,
 	.dyn_ops		= sja1105pqrs_dyn_ops,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.qinq_tpid		= ETH_P_8021AD,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tag_proto		= DSA_TAG_PROTO_SJA1105,
 	.can_limit_mcast_flood	= true,
 	.ptp_ts_bits		= 32,
@@ -741,13 +709,7 @@ const struct sja1105_info sja1105r_info = {
 	.part_no		= SJA1105R_PART_NO,
 	.static_ops		= sja1105r_table_ops,
 	.dyn_ops		= sja1105pqrs_dyn_ops,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.qinq_tpid		= ETH_P_8021AD,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tag_proto		= DSA_TAG_PROTO_SJA1105,
 	.can_limit_mcast_flood	= true,
 	.ptp_ts_bits		= 32,
@@ -785,13 +747,7 @@ const struct sja1105_info sja1105s_info = {
 	.static_ops		= sja1105s_table_ops,
 	.dyn_ops		= sja1105pqrs_dyn_ops,
 	.regs			= &sja1105pqrs_regs,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.qinq_tpid		= ETH_P_8021AD,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tag_proto		= DSA_TAG_PROTO_SJA1105,
 	.can_limit_mcast_flood	= true,
 	.ptp_ts_bits		= 32,
@@ -828,13 +784,7 @@ const struct sja1105_info sja1110a_info = {
 	.static_ops		= sja1110_table_ops,
 	.dyn_ops		= sja1110_dyn_ops,
 	.regs			= &sja1110_regs,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.qinq_tpid		= ETH_P_8021AD,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tag_proto		= DSA_TAG_PROTO_SJA1110,
 	.can_limit_mcast_flood	= true,
 	.multiple_cascade_ports	= true,
@@ -885,13 +835,7 @@ const struct sja1105_info sja1110b_info = {
 	.static_ops		= sja1110_table_ops,
 	.dyn_ops		= sja1110_dyn_ops,
 	.regs			= &sja1110_regs,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.qinq_tpid		= ETH_P_8021AD,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tag_proto		= DSA_TAG_PROTO_SJA1110,
 	.can_limit_mcast_flood	= true,
 	.multiple_cascade_ports	= true,
@@ -942,13 +886,7 @@ const struct sja1105_info sja1110c_info = {
 	.static_ops		= sja1110_table_ops,
 	.dyn_ops		= sja1110_dyn_ops,
 	.regs			= &sja1110_regs,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.qinq_tpid		= ETH_P_8021AD,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tag_proto		= DSA_TAG_PROTO_SJA1110,
 	.can_limit_mcast_flood	= true,
 	.multiple_cascade_ports	= true,
@@ -999,13 +937,7 @@ const struct sja1105_info sja1110d_info = {
 	.static_ops		= sja1110_table_ops,
 	.dyn_ops		= sja1110_dyn_ops,
 	.regs			= &sja1110_regs,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.qinq_tpid		= ETH_P_8021AD,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.tag_proto		= DSA_TAG_PROTO_SJA1110,
 	.can_limit_mcast_flood	= true,
 	.multiple_cascade_ports	= true,

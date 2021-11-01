@@ -132,15 +132,7 @@ static u16 mlx5e_qid_from_qos(struct mlx5e_channels *chs, u16 qid)
 	 */
 	bool is_ptp = MLX5E_GET_PFLAG(&chs->params, MLX5E_PFLAG_TX_PORT_TS);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return (chs->params.num_channels + is_ptp) * mlx5e_get_dcb_num_tc(&chs->params) + qid;
-=======
 	return (chs->params.num_channels + is_ptp) * chs->params.num_tc + qid;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return (chs->params.num_channels + is_ptp) * mlx5e_get_dcb_num_tc(&chs->params) + qid;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 int mlx5e_get_txq_by_classid(struct mlx5e_priv *priv, u16 classid)
@@ -741,18 +733,8 @@ static void mlx5e_reset_qdisc(struct net_device *dev, u16 qid)
 	spin_unlock_bh(qdisc_lock(qdisc));
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int mlx5e_htb_leaf_del(struct mlx5e_priv *priv, u16 *classid,
-		       struct netlink_ext_ack *extack)
-=======
 int mlx5e_htb_leaf_del(struct mlx5e_priv *priv, u16 classid, u16 *old_qid,
 		       u16 *new_qid, struct netlink_ext_ack *extack)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int mlx5e_htb_leaf_del(struct mlx5e_priv *priv, u16 *classid,
-		       struct netlink_ext_ack *extack)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mlx5e_qos_node *node;
 	struct netdev_queue *txq;
@@ -760,23 +742,11 @@ int mlx5e_htb_leaf_del(struct mlx5e_priv *priv, u16 *classid,
 	bool opened;
 	int err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	qos_dbg(priv->mdev, "TC_HTB_LEAF_DEL classid %04x\n", *classid);
-
-	node = mlx5e_sw_node_find(priv, *classid);
-=======
 	qos_dbg(priv->mdev, "TC_HTB_LEAF_DEL classid %04x\n", classid);
 
 	*old_qid = *new_qid = 0;
 
 	node = mlx5e_sw_node_find(priv, classid);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	qos_dbg(priv->mdev, "TC_HTB_LEAF_DEL classid %04x\n", *classid);
-
-	node = mlx5e_sw_node_find(priv, *classid);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!node)
 		return -ENOENT;
 
@@ -794,15 +764,7 @@ int mlx5e_htb_leaf_del(struct mlx5e_priv *priv, u16 *classid,
 	err = mlx5_qos_destroy_node(priv->mdev, node->hw_id);
 	if (err) /* Not fatal. */
 		qos_warn(priv->mdev, "Failed to destroy leaf node %u (class %04x), err = %d\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-			 node->hw_id, *classid, err);
-=======
 			 node->hw_id, classid, err);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			 node->hw_id, *classid, err);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mlx5e_sw_node_delete(priv, node);
 
@@ -864,16 +826,8 @@ int mlx5e_htb_leaf_del(struct mlx5e_priv *priv, u16 *classid,
 	if (opened)
 		mlx5e_reactivate_qos_sq(priv, moved_qid, txq);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	*classid = node->classid;
-=======
 	*old_qid = mlx5e_qid_from_qos(&priv->channels, moved_qid);
 	*new_qid = mlx5e_qid_from_qos(&priv->channels, qid);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	*classid = node->classid;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

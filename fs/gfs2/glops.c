@@ -33,44 +33,16 @@ extern struct workqueue_struct *gfs2_control_wq;
 
 static void gfs2_ail_error(struct gfs2_glock *gl, const struct buffer_head *bh)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
-
-	fs_err(sdp,
-=======
 	fs_err(gl->gl_name.ln_sbd,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct gfs2_sbd *sdp = gl->gl_name.ln_sbd;
-
-	fs_err(sdp,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	       "AIL buffer %p: blocknr %llu state 0x%08lx mapping %p page "
 	       "state 0x%lx\n",
 	       bh, (unsigned long long)bh->b_blocknr, bh->b_state,
 	       bh->b_page->mapping, bh->b_page->flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	fs_err(sdp, "AIL glock %u:%llu mapping %p\n",
-	       gl->gl_name.ln_type, gl->gl_name.ln_number,
-	       gfs2_glock2aspace(gl));
-	gfs2_lm(sdp, "AIL error\n");
-	gfs2_withdraw_delayed(sdp);
-=======
 	fs_err(gl->gl_name.ln_sbd, "AIL glock %u:%llu mapping %p\n",
 	       gl->gl_name.ln_type, gl->gl_name.ln_number,
 	       gfs2_glock2aspace(gl));
 	gfs2_lm(gl->gl_name.ln_sbd, "AIL error\n");
 	gfs2_withdraw(gl->gl_name.ln_sbd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	fs_err(sdp, "AIL glock %u:%llu mapping %p\n",
-	       gl->gl_name.ln_type, gl->gl_name.ln_number,
-	       gfs2_glock2aspace(gl));
-	gfs2_lm(sdp, "AIL error\n");
-	gfs2_withdraw_delayed(sdp);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -638,19 +610,6 @@ static int freeze_go_xmote_bh(struct gfs2_glock *gl)
 		j_gl->gl_ops->go_inval(j_gl, DIO_METADATA);
 
 		error = gfs2_find_jhead(sdp->sd_jdesc, &head, false);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (gfs2_assert_withdraw_delayed(sdp, !error))
-			return error;
-		if (gfs2_assert_withdraw_delayed(sdp, head.lh_flags &
-						 GFS2_LOG_HEAD_UNMOUNT))
-			return -EIO;
-		sdp->sd_log_sequence = head.lh_sequence + 1;
-		gfs2_log_pointers_init(sdp, head.lh_blkno);
-<<<<<<< HEAD
-=======
 		if (error)
 			gfs2_consist(sdp);
 		if (!(head.lh_flags & GFS2_LOG_HEAD_UNMOUNT))
@@ -661,9 +620,6 @@ static int freeze_go_xmote_bh(struct gfs2_glock *gl)
 			sdp->sd_log_sequence = head.lh_sequence + 1;
 			gfs2_log_pointers_init(sdp, head.lh_blkno);
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	return 0;
 }

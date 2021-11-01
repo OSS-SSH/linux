@@ -14,12 +14,4 @@ config PRIME_NUMBERS
 	  If unsure, say N.
 
 config RATIONAL
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tristate
-=======
 	bool
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tristate
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -343,20 +343,8 @@ static int rt8515_probe(struct platform_device *pdev)
 
 	ret = devm_led_classdev_flash_register_ext(dev, fled, &init_data);
 	if (ret) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		fwnode_handle_put(child);
-		mutex_destroy(&rt->lock);
-		dev_err(dev, "can't register LED %s\n", led->name);
-=======
 		dev_err(dev, "can't register LED %s\n", led->name);
 		mutex_destroy(&rt->lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		fwnode_handle_put(child);
-		mutex_destroy(&rt->lock);
-		dev_err(dev, "can't register LED %s\n", led->name);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return ret;
 	}
 
@@ -374,14 +362,6 @@ static int rt8515_probe(struct platform_device *pdev)
 		 */
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	fwnode_handle_put(child);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	fwnode_handle_put(child);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 

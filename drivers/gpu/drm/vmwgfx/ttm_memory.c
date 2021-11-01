@@ -435,22 +435,8 @@ int ttm_mem_global_init(struct ttm_mem_global *glob, struct device *dev)
 
 	si_meminfo(&si);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_lock(&glob->lock);
 	/* set it as 0 by default to keep original behavior of OOM */
 	glob->lower_mem_limit = 0;
-	spin_unlock(&glob->lock);
-=======
-	/* set it as 0 by default to keep original behavior of OOM */
-	glob->lower_mem_limit = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_lock(&glob->lock);
-	/* set it as 0 by default to keep original behavior of OOM */
-	glob->lower_mem_limit = 0;
-	spin_unlock(&glob->lock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = ttm_mem_init_kernel_zone(glob, &si);
 	if (unlikely(ret != 0))

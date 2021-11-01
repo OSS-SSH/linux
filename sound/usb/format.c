@@ -472,22 +472,12 @@ static int validate_sample_rate_table_v2v3(struct snd_usb_audio *chip,
 	 * behavior afterwards by some unknown reason.  Do this only for the
 	 * known devices.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!(chip->quirk_flags & QUIRK_FLAG_VALIDATE_RATES))
-		return 0; /* don't perform the validation as default */
-=======
 	switch (USB_ID_VENDOR(chip->usb_id)) {
 	case 0x07fd: /* MOTU */
 		break;
 	default:
 		return 0; /* don't perform the validation as default */
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!(chip->quirk_flags & QUIRK_FLAG_VALIDATE_RATES))
-		return 0; /* don't perform the validation as default */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	table = kcalloc(fp->nr_rates, sizeof(*table), GFP_KERNEL);
 	if (!table)

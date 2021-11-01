@@ -138,14 +138,6 @@ static struct tty_driver *pdc_console_tty_driver;
 
 static int __init pdc_console_tty_driver_init(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct tty_driver *driver;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct tty_driver *driver;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	/* Check if the console driver is still registered.
@@ -168,70 +160,31 @@ static int __init pdc_console_tty_driver_init(void)
 	printk(KERN_INFO "The PDC console driver is still registered, removing CON_BOOT flag\n");
 	pdc_cons.flags &= ~CON_BOOT;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	driver = tty_alloc_driver(1, TTY_DRIVER_REAL_RAW |
-			TTY_DRIVER_RESET_TERMIOS);
-	if (IS_ERR(driver))
-		return PTR_ERR(driver);
-<<<<<<< HEAD
-
-	tty_port_init(&tty_port);
-
-	driver->driver_name = "pdc_cons";
-	driver->name = "ttyB";
-	driver->major = MUX_MAJOR;
-	driver->minor_start = 0;
-	driver->type = TTY_DRIVER_TYPE_SYSTEM;
-	driver->init_termios = tty_std_termios;
-	tty_set_operations(driver, &pdc_console_tty_ops);
-	tty_port_link_device(&tty_port, driver, 0);
-
-	err = tty_register_driver(driver);
-	if (err) {
-		printk(KERN_ERR "Unable to register the PDC console TTY driver\n");
-		tty_port_destroy(&tty_port);
-		tty_driver_kref_put(driver);
-		return err;
-	}
-
-	pdc_console_tty_driver = driver;
-
-=======
 	pdc_console_tty_driver = alloc_tty_driver(1);
 
 	if (!pdc_console_tty_driver)
 		return -ENOMEM;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tty_port_init(&tty_port);
 
-	driver->driver_name = "pdc_cons";
-	driver->name = "ttyB";
-	driver->major = MUX_MAJOR;
-	driver->minor_start = 0;
-	driver->type = TTY_DRIVER_TYPE_SYSTEM;
-	driver->init_termios = tty_std_termios;
-	tty_set_operations(driver, &pdc_console_tty_ops);
-	tty_port_link_device(&tty_port, driver, 0);
+	pdc_console_tty_driver->driver_name = "pdc_cons";
+	pdc_console_tty_driver->name = "ttyB";
+	pdc_console_tty_driver->major = MUX_MAJOR;
+	pdc_console_tty_driver->minor_start = 0;
+	pdc_console_tty_driver->type = TTY_DRIVER_TYPE_SYSTEM;
+	pdc_console_tty_driver->init_termios = tty_std_termios;
+	pdc_console_tty_driver->flags = TTY_DRIVER_REAL_RAW |
+		TTY_DRIVER_RESET_TERMIOS;
+	tty_set_operations(pdc_console_tty_driver, &pdc_console_tty_ops);
+	tty_port_link_device(&tty_port, pdc_console_tty_driver, 0);
 
-	err = tty_register_driver(driver);
+	err = tty_register_driver(pdc_console_tty_driver);
 	if (err) {
 		printk(KERN_ERR "Unable to register the PDC console TTY driver\n");
 		tty_port_destroy(&tty_port);
-		tty_driver_kref_put(driver);
 		return err;
 	}
 
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	pdc_console_tty_driver = driver;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 device_initcall(pdc_console_tty_driver_init);

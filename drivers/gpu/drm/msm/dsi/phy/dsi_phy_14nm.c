@@ -86,15 +86,7 @@ struct dsi_pll_14nm {
 /*
  * Private struct for N1/N2 post-divider clocks. These clocks are similar to
  * the generic clk_divider class of clocks. The only difference is that it
-<<<<<<< HEAD
-<<<<<<< HEAD
- * also sets the slave DSI PLL's post-dividers if in bonded DSI mode
-=======
  * also sets the slave DSI PLL's post-dividers if in Dual DSI mode
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * also sets the slave DSI PLL's post-dividers if in bonded DSI mode
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct dsi_pll_14nm_postdiv {
 	struct clk_hw hw;
@@ -110,15 +102,7 @@ struct dsi_pll_14nm_postdiv {
 #define to_pll_14nm_postdiv(_hw) container_of(_hw, struct dsi_pll_14nm_postdiv, hw)
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Global list of private DSI PLL struct pointers. We need this for bonded DSI
-=======
  * Global list of private DSI PLL struct pointers. We need this for Dual DSI
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Global list of private DSI PLL struct pointers. We need this for bonded DSI
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * mode, where the master PLL's clk_ops needs access the slave's private data
  */
 static struct dsi_pll_14nm *pll_14nm_list[DSI_MAX];
@@ -126,30 +110,14 @@ static struct dsi_pll_14nm *pll_14nm_list[DSI_MAX];
 static bool pll_14nm_poll_for_ready(struct dsi_pll_14nm *pll_14nm,
 				    u32 nb_tries, u32 timeout_us)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool pll_locked = false, pll_ready = false;
-=======
 	bool pll_locked = false;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool pll_locked = false, pll_ready = false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void __iomem *base = pll_14nm->phy->pll_base;
 	u32 tries, val;
 
 	tries = nb_tries;
 	while (tries--) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		val = dsi_phy_read(base + REG_DSI_14nm_PHY_PLL_RESET_SM_READY_STATUS);
-=======
 		val = dsi_phy_read(base +
 			       REG_DSI_14nm_PHY_PLL_RESET_SM_READY_STATUS);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		val = dsi_phy_read(base + REG_DSI_14nm_PHY_PLL_RESET_SM_READY_STATUS);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pll_locked = !!(val & BIT(5));
 
 		if (pll_locked)
@@ -158,58 +126,23 @@ static bool pll_14nm_poll_for_ready(struct dsi_pll_14nm *pll_14nm,
 		udelay(timeout_us);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!pll_locked)
-		goto out;
-
-	tries = nb_tries;
-	while (tries--) {
-		val = dsi_phy_read(base + REG_DSI_14nm_PHY_PLL_RESET_SM_READY_STATUS);
-		pll_ready = !!(val & BIT(0));
-
-		if (pll_ready)
-			break;
-
-		udelay(timeout_us);
-	}
-
-out:
-	DBG("DSI PLL is %slocked, %sready", pll_locked ? "" : "*not* ", pll_ready ? "" : "*not* ");
-
-	return pll_locked && pll_ready;
-=======
 	if (!pll_locked) {
 		tries = nb_tries;
 		while (tries--) {
 			val = dsi_phy_read(base +
 				REG_DSI_14nm_PHY_PLL_RESET_SM_READY_STATUS);
 			pll_locked = !!(val & BIT(0));
-=======
-	if (!pll_locked)
-		goto out;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
-	tries = nb_tries;
-	while (tries--) {
-		val = dsi_phy_read(base + REG_DSI_14nm_PHY_PLL_RESET_SM_READY_STATUS);
-		pll_ready = !!(val & BIT(0));
+			if (pll_locked)
+				break;
 
-		if (pll_ready)
-			break;
-
-		udelay(timeout_us);
+			udelay(timeout_us);
+		}
 	}
 
-out:
-	DBG("DSI PLL is %slocked, %sready", pll_locked ? "" : "*not* ", pll_ready ? "" : "*not* ");
+	DBG("DSI PLL is %slocked", pll_locked ? "" : "*not* ");
 
-<<<<<<< HEAD
 	return pll_locked;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return pll_locked && pll_ready;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void dsi_pll_14nm_config_init(struct dsi_pll_config *pconf)
@@ -725,15 +658,7 @@ static int dsi_pll_14nm_postdiv_set_rate(struct clk_hw *hw, unsigned long rate,
 	val |= value << shift;
 	dsi_phy_write(base + REG_DSI_14nm_PHY_CMN_CLK_CFG0, val);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* If we're master in bonded DSI mode, then the slave PLL's post-dividers
-=======
 	/* If we're master in dual DSI mode, then the slave PLL's post-dividers
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* If we're master in bonded DSI mode, then the slave PLL's post-dividers
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * follow the master's post dividers
 	 */
 	if (pll_14nm->phy->usecase == MSM_DSI_PHY_MASTER) {
@@ -1125,15 +1050,7 @@ const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs = {
 	.reg_cfg = {
 		.num = 1,
 		.regs = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			{"vcca", 73400, 32},
-=======
 			{"vcca", 17000, 32},
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			{"vcca", 73400, 32},
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		},
 	},
 	.ops = {

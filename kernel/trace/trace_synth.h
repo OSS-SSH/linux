@@ -5,15 +5,7 @@
 #include "trace_dynevent.h"
 
 #define SYNTH_SYSTEM		"synthetic"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define SYNTH_FIELDS_MAX	64
-=======
 #define SYNTH_FIELDS_MAX	32
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define SYNTH_FIELDS_MAX	64
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define STR_VAR_LEN_MAX		MAX_FILTER_STR_VAL /* must be multiple of sizeof(u64) */
 
@@ -22,24 +14,10 @@ struct synth_field {
 	char *name;
 	size_t size;
 	unsigned int offset;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int field_pos;
-	bool is_signed;
-	bool is_string;
-	bool is_dynamic;
-=======
 	bool is_signed;
 	bool is_string;
 	bool is_dynamic;
 	bool field_pos;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int field_pos;
-	bool is_signed;
-	bool is_string;
-	bool is_dynamic;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct synth_event {

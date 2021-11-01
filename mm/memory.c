@@ -3403,14 +3403,6 @@ void unmap_mapping_pages(struct address_space *mapping, pgoff_t start,
 		unmap_mapping_range_tree(&mapping->i_mmap, &details);
 	i_mmap_unlock_write(mapping);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-EXPORT_SYMBOL_GPL(unmap_mapping_pages);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-EXPORT_SYMBOL_GPL(unmap_mapping_pages);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * unmap_mapping_range - unmap the portion of all mmaps in the specified
@@ -4034,30 +4026,8 @@ vm_fault_t finish_fault(struct vm_fault *vmf)
 				return ret;
 		}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (vmf->prealloc_pte) {
-			vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
-			if (likely(pmd_none(*vmf->pmd))) {
-				mm_inc_nr_ptes(vma->vm_mm);
-				pmd_populate(vma->vm_mm, vmf->pmd, vmf->prealloc_pte);
-				vmf->prealloc_pte = NULL;
-			}
-			spin_unlock(vmf->ptl);
-		} else if (unlikely(pte_alloc(vma->vm_mm, vmf->pmd))) {
-<<<<<<< HEAD
-			return VM_FAULT_OOM;
-		}
-=======
 		if (unlikely(pte_alloc(vma->vm_mm, vmf->pmd)))
 			return VM_FAULT_OOM;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return VM_FAULT_OOM;
-		}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* See comment in handle_pte_fault() */

@@ -163,14 +163,8 @@ static int scpi_cpufreq_init(struct cpufreq_policy *policy)
 
 	policy->fast_switch_possible = false;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	dev_pm_opp_of_register_em(cpu_dev, policy->cpus);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 
 out_free_cpufreq_table:
@@ -206,14 +200,6 @@ static struct cpufreq_driver scpi_cpufreq_driver = {
 	.init	= scpi_cpufreq_init,
 	.exit	= scpi_cpufreq_exit,
 	.target_index	= scpi_cpufreq_set_target,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.register_em	= cpufreq_register_em_with_opp,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.register_em	= cpufreq_register_em_with_opp,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int scpi_cpufreq_probe(struct platform_device *pdev)

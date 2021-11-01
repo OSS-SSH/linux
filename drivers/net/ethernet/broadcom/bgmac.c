@@ -1263,15 +1263,7 @@ static const struct net_device_ops bgmac_netdev_ops = {
 	.ndo_set_rx_mode	= bgmac_set_rx_mode,
 	.ndo_set_mac_address	= bgmac_set_mac_address,
 	.ndo_validate_addr	= eth_validate_addr,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl           = phy_do_ioctl_running,
-=======
 	.ndo_do_ioctl           = phy_do_ioctl_running,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl           = phy_do_ioctl_running,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_change_mtu		= bgmac_change_mtu,
 };
 

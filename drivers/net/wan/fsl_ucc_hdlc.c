@@ -674,28 +674,12 @@ static irqreturn_t ucc_hdlc_irq_handler(int irq, void *dev_id)
 	return IRQ_HANDLED;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int uhdlc_ioctl(struct net_device *dev, struct if_settings *ifs)
-=======
 static int uhdlc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int uhdlc_ioctl(struct net_device *dev, struct if_settings *ifs)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	const size_t size = sizeof(te1_settings);
 	te1_settings line;
 	struct ucc_hdlc_private *priv = netdev_priv(dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	switch (ifs->type) {
-	case IF_GET_IFACE:
-		ifs->type = IF_IFACE_E1;
-		if (ifs->size < size) {
-			ifs->size = size; /* data size wanted */
-=======
 	if (cmd != SIOCWANDEV)
 		return hdlc_ioctl(dev, ifr, cmd);
 
@@ -704,41 +688,17 @@ static int uhdlc_ioctl(struct net_device *dev, struct if_settings *ifs)
 		ifr->ifr_settings.type = IF_IFACE_E1;
 		if (ifr->ifr_settings.size < size) {
 			ifr->ifr_settings.size = size; /* data size wanted */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	switch (ifs->type) {
-	case IF_GET_IFACE:
-		ifs->type = IF_IFACE_E1;
-		if (ifs->size < size) {
-			ifs->size = size; /* data size wanted */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -ENOBUFS;
 		}
 		memset(&line, 0, sizeof(line));
 		line.clock_type = priv->clocking;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (copy_to_user(ifs->ifs_ifsu.sync, &line, size))
-=======
 		if (copy_to_user(ifr->ifr_settings.ifs_ifsu.sync, &line, size))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (copy_to_user(ifs->ifs_ifsu.sync, &line, size))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			return -EFAULT;
 		return 0;
 
 	default:
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return hdlc_ioctl(dev, ifs);
-=======
 		return hdlc_ioctl(dev, ifr, cmd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return hdlc_ioctl(dev, ifs);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 }
 
@@ -1093,15 +1053,7 @@ static const struct net_device_ops uhdlc_ops = {
 	.ndo_open       = uhdlc_open,
 	.ndo_stop       = uhdlc_close,
 	.ndo_start_xmit = hdlc_start_xmit,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_siocwandev = uhdlc_ioctl,
-=======
 	.ndo_do_ioctl   = uhdlc_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_siocwandev = uhdlc_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_tx_timeout	= uhdlc_tx_timeout,
 };
 

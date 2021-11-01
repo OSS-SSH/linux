@@ -338,15 +338,7 @@ do {									     \
 	FP_SET_EXCEPTION(FP_EX_INVALID | FP_EX_INVALID_ISI);		     \
 	break;								     \
       }									     \
-<<<<<<< HEAD
-<<<<<<< HEAD
-    fallthrough;							     \
-=======
     /* FALLTHRU */							     \
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-    fallthrough;							     \
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 									     \
   case _FP_CLS_COMBINE(FP_CLS_INF,FP_CLS_NORMAL):			     \
   case _FP_CLS_COMBINE(FP_CLS_INF,FP_CLS_ZERO):				     \

@@ -212,14 +212,6 @@ Userspace to kernel:
   ``ETHTOOL_MSG_FEC_SET``               set FEC settings
   ``ETHTOOL_MSG_MODULE_EEPROM_GET``     read SFP module EEPROM
   ``ETHTOOL_MSG_STATS_GET``             get standard statistics
-<<<<<<< HEAD
-<<<<<<< HEAD
-  ``ETHTOOL_MSG_PHC_VCLOCKS_GET``       get PHC virtual clocks info
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  ``ETHTOOL_MSG_PHC_VCLOCKS_GET``       get PHC virtual clocks info
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   ===================================== ================================
 
 Kernel to userspace:
@@ -258,14 +250,6 @@ Kernel to userspace:
   ``ETHTOOL_MSG_FEC_NTF``                  FEC settings
   ``ETHTOOL_MSG_MODULE_EEPROM_GET_REPLY``  read SFP module EEPROM
   ``ETHTOOL_MSG_STATS_GET_REPLY``          standard statistics
-<<<<<<< HEAD
-<<<<<<< HEAD
-  ``ETHTOOL_MSG_PHC_VCLOCKS_GET_REPLY``    PHC virtual clocks info
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  ``ETHTOOL_MSG_PHC_VCLOCKS_GET_REPLY``    PHC virtual clocks info
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   ======================================== =================================
 
 ``GET`` requests are sent by userspace applications to retrieve device
@@ -609,23 +593,6 @@ Link extended substates:
                                                                        that is not formally
                                                                        supported, which led to
                                                                        signal integrity issues
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-  ``ETHTOOL_LINK_EXT_SUBSTATE_BSI_SERDES_REFERENCE_CLOCK_LOST``        The external clock signal for
-                                                                       SerDes is too weak or
-                                                                       unavailable.
-
-  ``ETHTOOL_LINK_EXT_SUBSTATE_BSI_SERDES_ALOS``                        The received signal for
-                                                                       SerDes is too weak because
-                                                                       analog loss of signal.
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   =================================================================    =============================
 
   Cable issue substates:
@@ -970,42 +937,12 @@ Kernel response contents:
   ``ETHTOOL_A_COALESCE_TX_USECS_HIGH``         u32     delay (us), high Tx
   ``ETHTOOL_A_COALESCE_TX_MAX_FRAMES_HIGH``    u32     max packets, high Tx
   ``ETHTOOL_A_COALESCE_RATE_SAMPLE_INTERVAL``  u32     rate sampling interval
-<<<<<<< HEAD
-<<<<<<< HEAD
-  ``ETHTOOL_A_COALESCE_USE_CQE_TX``            bool    timer reset mode, Tx
-  ``ETHTOOL_A_COALESCE_USE_CQE_RX``            bool    timer reset mode, Rx
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  ``ETHTOOL_A_COALESCE_USE_CQE_TX``            bool    timer reset mode, Tx
-  ``ETHTOOL_A_COALESCE_USE_CQE_RX``            bool    timer reset mode, Rx
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   ===========================================  ======  =======================
 
 Attributes are only included in reply if their value is not zero or the
 corresponding bit in ``ethtool_ops::supported_coalesce_params`` is set (i.e.
 they are declared as supported by driver).
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-Timer reset mode (``ETHTOOL_A_COALESCE_USE_CQE_TX`` and
-``ETHTOOL_A_COALESCE_USE_CQE_RX``) controls the interaction between packet
-arrival and the various time based delay parameters. By default timers are
-expected to limit the max delay between any packet arrival/departure and a
-corresponding interrupt. In this mode timer should be started by packet
-arrival (sometimes delivery of previous interrupt) and reset when interrupt
-is delivered.
-Setting the appropriate attribute to 1 will enable ``CQE`` mode, where
-each packet event resets the timer. In this mode timer is used to force
-the interrupt if queue goes idle, while busy queues depend on the packet
-limit to trigger interrupts.
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 COALESCE_SET
 ============
@@ -1038,16 +975,6 @@ Request contents:
   ``ETHTOOL_A_COALESCE_TX_USECS_HIGH``         u32     delay (us), high Tx
   ``ETHTOOL_A_COALESCE_TX_MAX_FRAMES_HIGH``    u32     max packets, high Tx
   ``ETHTOOL_A_COALESCE_RATE_SAMPLE_INTERVAL``  u32     rate sampling interval
-<<<<<<< HEAD
-<<<<<<< HEAD
-  ``ETHTOOL_A_COALESCE_USE_CQE_TX``            bool    timer reset mode, Tx
-  ``ETHTOOL_A_COALESCE_USE_CQE_RX``            bool    timer reset mode, Rx
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  ``ETHTOOL_A_COALESCE_USE_CQE_TX``            bool    timer reset mode, Tx
-  ``ETHTOOL_A_COALESCE_USE_CQE_RX``            bool    timer reset mode, Rx
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   ===========================================  ======  =======================
 
 Request is rejected if it attributes declared as unsupported by driver (i.e.
@@ -1550,34 +1477,6 @@ Low and high bounds are inclusive, for example:
  etherStatsPkts512to1023Octets 512  1023
  ============================= ==== ====
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-PHC_VCLOCKS_GET
-===============
-
-Query device PHC virtual clocks information.
-
-Request contents:
-
-  ====================================  ======  ==========================
-  ``ETHTOOL_A_PHC_VCLOCKS_HEADER``      nested  request header
-  ====================================  ======  ==========================
-
-Kernel response contents:
-
-  ====================================  ======  ==========================
-  ``ETHTOOL_A_PHC_VCLOCKS_HEADER``      nested  reply header
-  ``ETHTOOL_A_PHC_VCLOCKS_NUM``         u32     PHC virtual clocks number
-  ``ETHTOOL_A_PHC_VCLOCKS_INDEX``       s32     PHC index array
-  ====================================  ======  ==========================
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 Request translation
 ===================
 
@@ -1676,12 +1575,4 @@ are netlink only.
   n/a                                 ``ETHTOOL_MSG_CABLE_TEST_ACT``
   n/a                                 ``ETHTOOL_MSG_CABLE_TEST_TDR_ACT``
   n/a                                 ``ETHTOOL_MSG_TUNNEL_INFO_GET``
-<<<<<<< HEAD
-<<<<<<< HEAD
-  n/a                                 ``ETHTOOL_MSG_PHC_VCLOCKS_GET``
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  n/a                                 ``ETHTOOL_MSG_PHC_VCLOCKS_GET``
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   =================================== =====================================

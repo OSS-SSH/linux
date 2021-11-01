@@ -67,9 +67,6 @@ struct pvd {
 #define LVM_MAXLVS 256
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * last_lba(): return number of last logical block of device
  * @bdev: block device
  *
@@ -86,24 +83,13 @@ static u64 last_lba(struct block_device *bdev)
 }
 
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * read_lba(): Read bytes from disk, starting at given LBA
  * @state
  * @lba
  * @buffer
  * @count
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Description:  Reads @count bytes from @state->disk into @buffer.
-=======
  * Description:  Reads @count bytes from @state->bdev into @buffer.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Description:  Reads @count bytes from @state->disk into @buffer.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Returns number of bytes read on success, 0 on error.
  */
 static size_t read_lba(struct parsed_partitions *state, u64 lba, u8 *buffer,
@@ -111,15 +97,7 @@ static size_t read_lba(struct parsed_partitions *state, u64 lba, u8 *buffer,
 {
 	size_t totalreadcount = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!buffer || lba + count / 512 > get_capacity(state->disk) - 1ULL)
-=======
 	if (!buffer || lba + count / 512 > last_lba(state->bdev))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!buffer || lba + count / 512 > get_capacity(state->disk) - 1ULL)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return 0;
 
 	while (count) {

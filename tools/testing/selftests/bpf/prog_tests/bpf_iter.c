@@ -13,14 +13,6 @@
 #include "bpf_iter_tcp6.skel.h"
 #include "bpf_iter_udp4.skel.h"
 #include "bpf_iter_udp6.skel.h"
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include "bpf_iter_unix.skel.h"
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include "bpf_iter_unix.skel.h"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "bpf_iter_test_kern1.skel.h"
 #include "bpf_iter_test_kern2.skel.h"
 #include "bpf_iter_test_kern3.skel.h"
@@ -321,28 +313,6 @@ static void test_udp6(void)
 	bpf_iter_udp6__destroy(skel);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void test_unix(void)
-{
-	struct bpf_iter_unix *skel;
-
-	skel = bpf_iter_unix__open_and_load();
-	if (!ASSERT_OK_PTR(skel, "bpf_iter_unix__open_and_load"))
-		return;
-
-	do_dummy_read(skel->progs.dump_unix);
-
-	bpf_iter_unix__destroy(skel);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* The expected string is less than 16 bytes */
 static int do_read_with_fd(int iter_fd, const char *expected,
 			   bool read_one_char)
@@ -1285,16 +1255,6 @@ void test_bpf_iter(void)
 		test_udp4();
 	if (test__start_subtest("udp6"))
 		test_udp6();
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (test__start_subtest("unix"))
-		test_unix();
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (test__start_subtest("unix"))
-		test_unix();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (test__start_subtest("anon"))
 		test_anon_iter(false);
 	if (test__start_subtest("anon-read-one-char"))

@@ -99,17 +99,7 @@ static void hv_apic_eoi_write(u32 reg, u32 val)
 /*
  * IPI implementation on Hyper-V.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static bool __send_ipi_mask_ex(const struct cpumask *mask, int vector,
-		bool exclude_self)
-=======
 static bool __send_ipi_mask_ex(const struct cpumask *mask, int vector)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static bool __send_ipi_mask_ex(const struct cpumask *mask, int vector,
-		bool exclude_self)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct hv_send_ipi_ex **arg;
 	struct hv_send_ipi_ex *ipi_arg;
@@ -131,56 +121,14 @@ static bool __send_ipi_mask_ex(const struct cpumask *mask, int vector,
 	ipi_arg->reserved = 0;
 	ipi_arg->vp_set.valid_bank_mask = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Use HV_GENERIC_SET_ALL and avoid converting cpumask to VP_SET
-	 * when the IPI is sent to all currently present CPUs.
-	 */
-	if (!cpumask_equal(mask, cpu_present_mask) || exclude_self) {
-<<<<<<< HEAD
-		ipi_arg->vp_set.format = HV_GENERIC_SET_SPARSE_4K;
-		if (exclude_self)
-			nr_bank = cpumask_to_vpset_noself(&(ipi_arg->vp_set), mask);
-		else
-			nr_bank = cpumask_to_vpset(&(ipi_arg->vp_set), mask);
-
-		/*
-		 * 'nr_bank <= 0' means some CPUs in cpumask can't be
-		 * represented in VP_SET. Return an error and fall back to
-		 * native (architectural) method of sending IPIs.
-		 */
-		if (nr_bank <= 0)
-			goto ipi_mask_ex_done;
-	} else {
-		ipi_arg->vp_set.format = HV_GENERIC_SET_ALL;
-	}
-=======
 	if (!cpumask_equal(mask, cpu_present_mask)) {
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ipi_arg->vp_set.format = HV_GENERIC_SET_SPARSE_4K;
-		if (exclude_self)
-			nr_bank = cpumask_to_vpset_noself(&(ipi_arg->vp_set), mask);
-		else
-			nr_bank = cpumask_to_vpset(&(ipi_arg->vp_set), mask);
-
-		/*
-		 * 'nr_bank <= 0' means some CPUs in cpumask can't be
-		 * represented in VP_SET. Return an error and fall back to
-		 * native (architectural) method of sending IPIs.
-		 */
-		if (nr_bank <= 0)
-			goto ipi_mask_ex_done;
-	} else {
-		ipi_arg->vp_set.format = HV_GENERIC_SET_ALL;
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
+		nr_bank = cpumask_to_vpset(&(ipi_arg->vp_set), mask);
 	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+	if (nr_bank < 0)
+		goto ipi_mask_ex_done;
+	if (!nr_bank)
+		ipi_arg->vp_set.format = HV_GENERIC_SET_ALL;
 
 	status = hv_do_rep_hypercall(HVCALL_SEND_IPI_EX, 0, nr_bank,
 			      ipi_arg, NULL);
@@ -190,55 +138,15 @@ ipi_mask_ex_done:
 	return hv_result_success(status);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static bool __send_ipi_mask(const struct cpumask *mask, int vector,
-		bool exclude_self)
-{
-	int cur_cpu, vcpu, this_cpu = smp_processor_id();
-	struct hv_send_ipi ipi_arg;
-	u64 status;
-	unsigned int weight;
-
-	trace_hyperv_send_ipi_mask(mask, vector);
-
-	weight = cpumask_weight(mask);
-
-	/*
-	 * Do nothing if
-	 *   1. the mask is empty
-	 *   2. the mask only contains self when exclude_self is true
-	 */
-	if (weight == 0 ||
-	    (exclude_self && weight == 1 && cpumask_test_cpu(this_cpu, mask)))
-=======
 static bool __send_ipi_mask(const struct cpumask *mask, int vector)
-=======
-static bool __send_ipi_mask(const struct cpumask *mask, int vector,
-		bool exclude_self)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	int cur_cpu, vcpu, this_cpu = smp_processor_id();
+	int cur_cpu, vcpu;
 	struct hv_send_ipi ipi_arg;
 	u64 status;
-	unsigned int weight;
 
 	trace_hyperv_send_ipi_mask(mask, vector);
 
-<<<<<<< HEAD
 	if (cpumask_empty(mask))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	weight = cpumask_weight(mask);
-
-	/*
-	 * Do nothing if
-	 *   1. the mask is empty
-	 *   2. the mask only contains self when exclude_self is true
-	 */
-	if (weight == 0 ||
-	    (exclude_self && weight == 1 && cpumask_test_cpu(this_cpu, mask)))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return true;
 
 	if (!hv_hypercall_pg)
@@ -264,16 +172,6 @@ static bool __send_ipi_mask(const struct cpumask *mask, int vector,
 	ipi_arg.cpu_mask = 0;
 
 	for_each_cpu(cur_cpu, mask) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (exclude_self && cur_cpu == this_cpu)
-			continue;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (exclude_self && cur_cpu == this_cpu)
-			continue;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		vcpu = hv_cpu_number_to_vp_number(cur_cpu);
 		if (vcpu == VP_INVAL)
 			return false;
@@ -293,15 +191,7 @@ static bool __send_ipi_mask(const struct cpumask *mask, int vector,
 	return hv_result_success(status);
 
 do_ex_hypercall:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return __send_ipi_mask_ex(mask, vector, exclude_self);
-=======
 	return __send_ipi_mask_ex(mask, vector);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return __send_ipi_mask_ex(mask, vector, exclude_self);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static bool __send_ipi_one(int cpu, int vector)
@@ -318,15 +208,7 @@ static bool __send_ipi_one(int cpu, int vector)
 		return false;
 
 	if (vp >= 64)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return __send_ipi_mask_ex(cpumask_of(cpu), vector, false);
-=======
 		return __send_ipi_mask_ex(cpumask_of(cpu), vector);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return __send_ipi_mask_ex(cpumask_of(cpu), vector, false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	status = hv_do_fast_hypercall16(HVCALL_SEND_IPI, vector, BIT_ULL(vp));
 	return hv_result_success(status);
@@ -340,24 +222,12 @@ static void hv_send_ipi(int cpu, int vector)
 
 static void hv_send_ipi_mask(const struct cpumask *mask, int vector)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!__send_ipi_mask(mask, vector, false))
-=======
 	if (!__send_ipi_mask(mask, vector))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!__send_ipi_mask(mask, vector, false))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		orig_apic.send_IPI_mask(mask, vector);
 }
 
 static void hv_send_ipi_mask_allbutself(const struct cpumask *mask, int vector)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!__send_ipi_mask(mask, vector, true))
-=======
 	unsigned int this_cpu = smp_processor_id();
 	struct cpumask new_mask;
 	const struct cpumask *local_mask;
@@ -366,10 +236,6 @@ static void hv_send_ipi_mask_allbutself(const struct cpumask *mask, int vector)
 	cpumask_clear_cpu(this_cpu, &new_mask);
 	local_mask = &new_mask;
 	if (!__send_ipi_mask(local_mask, vector))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!__send_ipi_mask(mask, vector, true))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		orig_apic.send_IPI_mask_allbutself(mask, vector);
 }
 
@@ -380,15 +246,7 @@ static void hv_send_ipi_allbutself(int vector)
 
 static void hv_send_ipi_all(int vector)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!__send_ipi_mask(cpu_online_mask, vector, false))
-=======
 	if (!__send_ipi_mask(cpu_online_mask, vector))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!__send_ipi_mask(cpu_online_mask, vector, false))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		orig_apic.send_IPI_all(vector);
 }
 

@@ -750,15 +750,7 @@ static int rkisp1_vb2_queue_setup(struct vb2_queue *queue,
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int rkisp1_vb2_buf_init(struct vb2_buffer *vb)
-=======
 static void rkisp1_vb2_buf_queue(struct vb2_buffer *vb)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int rkisp1_vb2_buf_init(struct vb2_buffer *vb)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
 	struct rkisp1_buffer *ispbuf =
@@ -788,24 +780,6 @@ static int rkisp1_vb2_buf_init(struct vb2_buffer *vb)
 	if (cap->pix.info->comp_planes == 3 && cap->pix.cfg->uv_swap)
 		swap(ispbuf->buff_addr[RKISP1_PLANE_CR],
 		     ispbuf->buff_addr[RKISP1_PLANE_CB]);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	return 0;
-}
-
-static void rkisp1_vb2_buf_queue(struct vb2_buffer *vb)
-{
-	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
-	struct rkisp1_buffer *ispbuf =
-		container_of(vbuf, struct rkisp1_buffer, vb);
-	struct rkisp1_capture *cap = vb->vb2_queue->drv_priv;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock_irq(&cap->buf.lock);
 	list_add_tail(&ispbuf->queue, &cap->buf.queue);
@@ -1065,14 +1039,6 @@ err_ret_buffers:
 
 static const struct vb2_ops rkisp1_vb2_ops = {
 	.queue_setup = rkisp1_vb2_queue_setup,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.buf_init = rkisp1_vb2_buf_init,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.buf_init = rkisp1_vb2_buf_init,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.buf_queue = rkisp1_vb2_buf_queue,
 	.buf_prepare = rkisp1_vb2_buf_prepare,
 	.wait_prepare = vb2_ops_wait_prepare,

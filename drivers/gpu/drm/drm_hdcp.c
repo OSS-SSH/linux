@@ -280,15 +280,7 @@ exit:
  * https://www.digital-cp.com/sites/default/files/specifications/HDCP%20on%20HDMI%20Specification%20Rev2_2_Final1.pdf
  *
  * Returns:
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Count of the revoked KSVs or -ve error number in case of the failure.
-=======
  * Count of the revoked KSVs or -ve error number incase of the failure.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Count of the revoked KSVs or -ve error number in case of the failure.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 int drm_hdcp_check_ksvs_revoked(struct drm_device *drm_dev, u8 *ksvs,
 				u32 ksv_count)

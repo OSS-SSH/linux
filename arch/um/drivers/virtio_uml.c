@@ -27,14 +27,6 @@
 #include <linux/virtio_config.h>
 #include <linux/virtio_ring.h>
 #include <linux/time-internal.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/virtio-uml.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/virtio-uml.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <shared/as-layout.h>
 #include <irq_kern.h>
 #include <init.h>
@@ -1147,15 +1139,7 @@ static int virtio_uml_probe(struct platform_device *pdev)
 		rc = os_connect_socket(pdata->socket_path);
 	} while (rc == -EINTR);
 	if (rc < 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		goto error_free;
-=======
 		return rc;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		goto error_free;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	vu_dev->sock = rc;
 
 	spin_lock_init(&vu_dev->sock_lock);
@@ -1176,16 +1160,6 @@ static int virtio_uml_probe(struct platform_device *pdev)
 
 error_init:
 	os_close_file(vu_dev->sock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-error_free:
-	kfree(vu_dev);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-error_free:
-	kfree(vu_dev);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return rc;
 }
 

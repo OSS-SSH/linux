@@ -16,13 +16,7 @@
 #include <linux/delay.h>
 #include <linux/spinlock.h>
 #include <linux/ktime.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <linux/debugfs.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/uaccess.h>
 #include <linux/dma-buf.h>
 #include <linux/slab.h>
@@ -31,13 +25,7 @@
 #include <linux/pm_runtime.h>
 #include <linux/kthread.h>
 #include <linux/devcoredump.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <stdarg.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include "msm_kms.h"
 
 #define MSM_DISP_SNAPSHOT_MAX_BLKS		10

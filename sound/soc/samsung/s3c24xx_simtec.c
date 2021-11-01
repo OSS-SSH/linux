@@ -327,15 +327,7 @@ int simtec_audio_core_probe(struct platform_device *pdev,
 
 	snd_dev = platform_device_alloc("soc-audio", -1);
 	if (!snd_dev) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev_err(&pdev->dev, "failed to alloc soc-audio device\n");
-=======
 		dev_err(&pdev->dev, "failed to alloc soc-audio devicec\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev_err(&pdev->dev, "failed to alloc soc-audio device\n");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = -ENOMEM;
 		goto err_gpio;
 	}

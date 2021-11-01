@@ -17,15 +17,7 @@
 #include <linux/vfio.h>
 #include <linux/vgaarb.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/vfio_pci_core.h>
-=======
 #include "vfio_pci_private.h"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/vfio_pci_core.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #ifdef __LITTLE_ENDIAN
 #define vfio_ioread64	ioread64
@@ -46,15 +38,7 @@
 #define vfio_iowrite8	iowrite8
 
 #define VFIO_IOWRITE(size) \
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int vfio_pci_iowrite##size(struct vfio_pci_core_device *vdev,		\
-=======
 static int vfio_pci_iowrite##size(struct vfio_pci_device *vdev,		\
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int vfio_pci_iowrite##size(struct vfio_pci_core_device *vdev,		\
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bool test_mem, u##size val, void __iomem *io)	\
 {									\
 	if (test_mem) {							\
@@ -81,15 +65,7 @@ VFIO_IOWRITE(64)
 #endif
 
 #define VFIO_IOREAD(size) \
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int vfio_pci_ioread##size(struct vfio_pci_core_device *vdev,		\
-=======
 static int vfio_pci_ioread##size(struct vfio_pci_device *vdev,		\
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int vfio_pci_ioread##size(struct vfio_pci_core_device *vdev,		\
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bool test_mem, u##size *val, void __iomem *io)	\
 {									\
 	if (test_mem) {							\
@@ -118,15 +94,7 @@ VFIO_IOREAD(32)
  * reads with -1.  This is intended for handling MSI-X vector tables and
  * leftover space for ROM BARs.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t do_io_rw(struct vfio_pci_core_device *vdev, bool test_mem,
-=======
 static ssize_t do_io_rw(struct vfio_pci_device *vdev, bool test_mem,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t do_io_rw(struct vfio_pci_core_device *vdev, bool test_mem,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			void __iomem *io, char __user *buf,
 			loff_t off, size_t count, size_t x_start,
 			size_t x_end, bool iswrite)
@@ -232,15 +200,7 @@ static ssize_t do_io_rw(struct vfio_pci_core_device *vdev, bool test_mem,
 	return done;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static int vfio_pci_setup_barmap(struct vfio_pci_core_device *vdev, int bar)
-=======
 static int vfio_pci_setup_barmap(struct vfio_pci_device *vdev, int bar)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static int vfio_pci_setup_barmap(struct vfio_pci_core_device *vdev, int bar)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct pci_dev *pdev = vdev->pdev;
 	int ret;
@@ -264,15 +224,7 @@ static int vfio_pci_setup_barmap(struct vfio_pci_core_device *vdev, int bar)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-ssize_t vfio_pci_bar_rw(struct vfio_pci_core_device *vdev, char __user *buf,
-=======
 ssize_t vfio_pci_bar_rw(struct vfio_pci_device *vdev, char __user *buf,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-ssize_t vfio_pci_bar_rw(struct vfio_pci_core_device *vdev, char __user *buf,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			size_t count, loff_t *ppos, bool iswrite)
 {
 	struct pci_dev *pdev = vdev->pdev;
@@ -336,15 +288,7 @@ out:
 	return done;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-ssize_t vfio_pci_vga_rw(struct vfio_pci_core_device *vdev, char __user *buf,
-=======
 ssize_t vfio_pci_vga_rw(struct vfio_pci_device *vdev, char __user *buf,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-ssize_t vfio_pci_vga_rw(struct vfio_pci_core_device *vdev, char __user *buf,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			       size_t count, loff_t *ppos, bool iswrite)
 {
 	int ret;
@@ -440,15 +384,7 @@ static void vfio_pci_ioeventfd_do_write(struct vfio_pci_ioeventfd *ioeventfd,
 static int vfio_pci_ioeventfd_handler(void *opaque, void *unused)
 {
 	struct vfio_pci_ioeventfd *ioeventfd = opaque;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct vfio_pci_core_device *vdev = ioeventfd->vdev;
-=======
 	struct vfio_pci_device *vdev = ioeventfd->vdev;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct vfio_pci_core_device *vdev = ioeventfd->vdev;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (ioeventfd->test_mem) {
 		if (!down_read_trylock(&vdev->memory_lock))
@@ -474,15 +410,7 @@ static void vfio_pci_ioeventfd_thread(void *opaque, void *unused)
 	vfio_pci_ioeventfd_do_write(ioeventfd, ioeventfd->test_mem);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-long vfio_pci_ioeventfd(struct vfio_pci_core_device *vdev, loff_t offset,
-=======
 long vfio_pci_ioeventfd(struct vfio_pci_device *vdev, loff_t offset,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-long vfio_pci_ioeventfd(struct vfio_pci_core_device *vdev, loff_t offset,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			uint64_t data, int count, int fd)
 {
 	struct pci_dev *pdev = vdev->pdev;

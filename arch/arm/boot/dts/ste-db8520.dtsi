@@ -5,25 +5,11 @@
 / {
 	cpus {
 		cpu@300 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			operating-points = <1152000 0
-					    798720 0
-					    399360 0
-					    199680 0>;
-=======
 			/* cpufreq controls */
 			operating-points = <1152000 0
 					    800000 0
 					    400000 0
 					    200000 0>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			operating-points = <1152000 0
-					    798720 0
-					    399360 0
-					    199680 0>;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		};
 	};
 
@@ -33,43 +19,19 @@
 		ranges;
 
 		/* Modem trace memory */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ram@6000000 {
-=======
 		ram@06000000 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ram@6000000 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0x06000000 0x00f00000>;
 			no-map;
 		};
 
 		/* Modem shared memory */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ram@6f00000 {
-=======
 		ram@06f00000 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ram@6f00000 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0x06f00000 0x00100000>;
 			no-map;
 		};
 
 		/* Modem private memory */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		ram@7000000 {
-=======
 		ram@07000000 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		ram@7000000 {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0x07000000 0x01000000>;
 			no-map;
 		};

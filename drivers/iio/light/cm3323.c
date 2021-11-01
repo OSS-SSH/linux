@@ -256,32 +256,9 @@ static const struct i2c_device_id cm3323_id[] = {
 };
 MODULE_DEVICE_TABLE(i2c, cm3323_id);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static const struct of_device_id cm3323_of_match[] = {
-	{ .compatible = "capella,cm3323", },
-	{ /* sentinel */ }
-};
-MODULE_DEVICE_TABLE(of, cm3323_of_match);
-
-<<<<<<< HEAD
 static struct i2c_driver cm3323_driver = {
 	.driver = {
 		.name = CM3323_DRV_NAME,
-		.of_match_table = cm3323_of_match,
-=======
-static struct i2c_driver cm3323_driver = {
-	.driver = {
-		.name = CM3323_DRV_NAME,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static struct i2c_driver cm3323_driver = {
-	.driver = {
-		.name = CM3323_DRV_NAME,
-		.of_match_table = cm3323_of_match,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	},
 	.probe		= cm3323_probe,
 	.id_table	= cm3323_id,

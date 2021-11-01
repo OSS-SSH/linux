@@ -91,32 +91,9 @@ int mlx5_esw_offloads_devlink_port_register(struct mlx5_eswitch *esw, u16 vport_
 	if (err)
 		goto reg_err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	err = devlink_rate_leaf_create(dl_port, vport);
-	if (err)
-		goto rate_err;
-
-<<<<<<< HEAD
 	vport->dl_port = dl_port;
 	return 0;
 
-rate_err:
-	devlink_port_unregister(dl_port);
-=======
-	vport->dl_port = dl_port;
-	return 0;
-
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	vport->dl_port = dl_port;
-	return 0;
-
-rate_err:
-	devlink_port_unregister(dl_port);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 reg_err:
 	mlx5_esw_dl_port_free(dl_port);
 	return err;
@@ -132,21 +109,6 @@ void mlx5_esw_offloads_devlink_port_unregister(struct mlx5_eswitch *esw, u16 vpo
 	vport = mlx5_eswitch_get_vport(esw, vport_num);
 	if (IS_ERR(vport))
 		return;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (vport->dl_port->devlink_rate) {
-		mlx5_esw_qos_vport_update_group(esw, vport, NULL, NULL);
-		devlink_rate_leaf_destroy(vport->dl_port);
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	devlink_port_unregister(vport->dl_port);
 	mlx5_esw_dl_port_free(vport->dl_port);
 	vport->dl_port = NULL;
@@ -186,33 +148,8 @@ int mlx5_esw_devlink_sf_port_register(struct mlx5_eswitch *esw, struct devlink_p
 	if (err)
 		return err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	err = devlink_rate_leaf_create(dl_port, vport);
-	if (err)
-		goto rate_err;
-
-<<<<<<< HEAD
 	vport->dl_port = dl_port;
 	return 0;
-
-rate_err:
-	devlink_port_unregister(dl_port);
-	return err;
-=======
-	vport->dl_port = dl_port;
-	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	vport->dl_port = dl_port;
-	return 0;
-
-rate_err:
-	devlink_port_unregister(dl_port);
-	return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 void mlx5_esw_devlink_sf_port_unregister(struct mlx5_eswitch *esw, u16 vport_num)
@@ -222,21 +159,6 @@ void mlx5_esw_devlink_sf_port_unregister(struct mlx5_eswitch *esw, u16 vport_num
 	vport = mlx5_eswitch_get_vport(esw, vport_num);
 	if (IS_ERR(vport))
 		return;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	if (vport->dl_port->devlink_rate) {
-		mlx5_esw_qos_vport_update_group(esw, vport, NULL, NULL);
-		devlink_rate_leaf_destroy(vport->dl_port);
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	devlink_port_unregister(vport->dl_port);
 	vport->dl_port = NULL;
 }

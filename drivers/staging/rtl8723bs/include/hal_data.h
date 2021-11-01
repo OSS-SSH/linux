@@ -52,20 +52,10 @@ enum rt_ampdu_burst {
 
 /*  Tx Power Limit Table Size */
 #define MAX_REGULATION_NUM			4
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define MAX_2_4G_BANDWIDTH_NUM			2
-#define MAX_RATE_SECTION_NUM			3 /* CCK:1, OFDM:1, HT:1 */
-=======
 #define MAX_2_4G_BANDWIDTH_NUM			4
 #define MAX_RATE_SECTION_NUM			10
 
 #define MAX_BASE_NUM_IN_PHY_REG_PG_2_4G		10 /*   CCK:1, OFDM:1, HT:4, VHT:4 */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define MAX_2_4G_BANDWIDTH_NUM			2
-#define MAX_RATE_SECTION_NUM			3 /* CCK:1, OFDM:1, HT:1 */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /*  duplicate code, will move to ODM ######### */
 /* define IQK_MAC_REG_NUM		4 */
@@ -199,13 +189,7 @@ struct hal_com_data {
 
 	/* rf_ctrl */
 	u8 rf_chip;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	u8 rf_type;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 PackageType;
 	u8 NumTotalRFPath;
 
@@ -251,15 +235,6 @@ struct hal_com_data {
 	u8 TxPwrInPercentage;
 
 	u8 TxPwrCalibrateRate;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/*  TX power by rate table */
-	/*  RF: at most 2 = AB = 0/1 */
-	/*  CCK = 0 OFDM = 1 HT-MCS 0-7 = 2 */
-	u8 TxPwrByRateTable;
-	u8 TxPwrByRateBand;
-	s8 TxPwrByRateOffset[MAX_RF_PATH_NUM][TX_PWR_BY_RATE_NUM_RATE];
-=======
 	/*  TX power by rate table at most 4RF path. */
 	/*  The register is */
 	/*  VHT TX power by rate off setArray = */
@@ -270,15 +245,6 @@ struct hal_com_data {
 	s8 TxPwrByRateOffset[TX_PWR_BY_RATE_NUM_RF]
 			    [TX_PWR_BY_RATE_NUM_RF]
 			    [TX_PWR_BY_RATE_NUM_RATE];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/*  TX power by rate table */
-	/*  RF: at most 2 = AB = 0/1 */
-	/*  CCK = 0 OFDM = 1 HT-MCS 0-7 = 2 */
-	u8 TxPwrByRateTable;
-	u8 TxPwrByRateBand;
-	s8 TxPwrByRateOffset[MAX_RF_PATH_NUM][TX_PWR_BY_RATE_NUM_RATE];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*  */
 
 	/* 2 Power Limit Table */
@@ -296,17 +262,9 @@ struct hal_com_data {
 						[MAX_RF_PATH_NUM];
 
 	/*  Store the original power by rate value of the base of each rate section of rf path A & B */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u8 TxPwrByRateBase2_4G[MAX_RF_PATH_NUM][MAX_RATE_SECTION_NUM];
-=======
 	u8 TxPwrByRateBase2_4G[TX_PWR_BY_RATE_NUM_RF]
 						[TX_PWR_BY_RATE_NUM_RF]
 						[MAX_BASE_NUM_IN_PHY_REG_PG_2_4G];
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u8 TxPwrByRateBase2_4G[MAX_RF_PATH_NUM][MAX_RATE_SECTION_NUM];
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*  For power group */
 	u8 PwrGroupHT20[RF_PATH_MAX_92C_88E][CHANNEL_MAX_NUMBER];
@@ -447,12 +405,6 @@ struct hal_com_data {
 #define GET_HAL_DATA(__padapter)	((struct hal_com_data *)((__padapter)->HalData))
 #define GET_HAL_RFPATH_NUM(__padapter) (((struct hal_com_data *)((__padapter)->HalData))->NumTotalRFPath)
 #define RT_GetInterfaceSelection(_Adapter)	(GET_HAL_DATA(_Adapter)->InterfaceSel)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define GET_RF_TYPE(__padapter)		(GET_HAL_DATA(__padapter)->rf_type)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* __HAL_DATA_H__ */

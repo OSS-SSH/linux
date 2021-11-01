@@ -119,20 +119,6 @@ static inline void set_fs(mm_segment_t fs)
 #ifndef uaccess_kernel
 #define uaccess_kernel() (get_fs().seg == KERNEL_DS.seg)
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-#ifndef user_addr_max
-#define user_addr_max() (uaccess_kernel() ? ~0UL : TASK_SIZE)
-#endif
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* CONFIG_SET_FS */
 
 #define access_ok(addr, size) __access_ok((unsigned long)(addr),(size))
@@ -258,9 +244,6 @@ static inline int __get_user_fn(size_t size, const void __user *ptr, void *x)
 extern int __get_user_bad(void) __attribute__((noreturn));
 
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * Copy a null terminated string from userspace.
  */
 #ifndef __strncpy_from_user
@@ -305,9 +288,6 @@ static inline long strnlen_user(const char __user *src, long n)
 }
 
 /*
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Zero Userspace
  */
 #ifndef __clear_user
@@ -331,17 +311,4 @@ clear_user(void __user *to, unsigned long n)
 
 #include <asm/extable.h>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-__must_check long strncpy_from_user(char *dst, const char __user *src,
-				    long count);
-__must_check long strnlen_user(const char __user *src, long n);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __ASM_GENERIC_UACCESS_H */

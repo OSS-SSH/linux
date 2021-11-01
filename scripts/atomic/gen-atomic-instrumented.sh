@@ -121,18 +121,8 @@ cat << EOF
  * arch_ variants (i.e. arch_atomic_read()/arch_atomic_cmpxchg()) to avoid
  * double instrumentation.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifndef _LINUX_ATOMIC_INSTRUMENTED_H
-#define _LINUX_ATOMIC_INSTRUMENTED_H
-=======
 #ifndef _ASM_GENERIC_ATOMIC_INSTRUMENTED_H
 #define _ASM_GENERIC_ATOMIC_INSTRUMENTED_H
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifndef _LINUX_ATOMIC_INSTRUMENTED_H
-#define _LINUX_ATOMIC_INSTRUMENTED_H
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include <linux/build_bug.h>
 #include <linux/compiler.h>
@@ -148,20 +138,6 @@ grep '^[a-z]' "$1" | while read name meta args; do
 	gen_proto "${meta}" "${name}" "atomic64" "s64" ${args}
 done
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-grep '^[a-z]' "$1" | while read name meta args; do
-	gen_proto "${meta}" "${name}" "atomic_long" "long" ${args}
-done
-
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 for xchg in "xchg" "cmpxchg" "cmpxchg64" "try_cmpxchg"; do
 	for order in "" "_acquire" "_release" "_relaxed"; do
 		gen_xchg "${xchg}${order}" ""
@@ -182,13 +158,5 @@ gen_xchg "cmpxchg_double_local" "2 * "
 
 cat <<EOF
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#endif /* _LINUX_ATOMIC_INSTRUMENTED_H */
-=======
 #endif /* _ASM_GENERIC_ATOMIC_INSTRUMENTED_H */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#endif /* _LINUX_ATOMIC_INSTRUMENTED_H */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 EOF

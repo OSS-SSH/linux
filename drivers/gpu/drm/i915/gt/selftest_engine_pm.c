@@ -173,18 +173,8 @@ static int __live_engine_timestamps(struct intel_engine_cs *engine)
 	d_ctx = trifilter(s_ctx);
 
 	d_ctx *= engine->gt->clock_frequency;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (GRAPHICS_VER(engine->i915) == 11)
-		d_ring *= 12500000; /* Fixed 80ns for GEN11 ctx timestamp? */
-=======
 	if (IS_ICELAKE(engine->i915))
 		d_ring *= 12500000; /* Fixed 80ns for icl ctx timestamp? */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (GRAPHICS_VER(engine->i915) == 11)
-		d_ring *= 12500000; /* Fixed 80ns for GEN11 ctx timestamp? */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		d_ring *= engine->gt->clock_frequency;
 

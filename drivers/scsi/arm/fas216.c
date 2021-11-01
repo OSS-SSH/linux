@@ -77,13 +77,7 @@
  *  I was thinking that this was a good chip until I found this restriction ;(
  */
 #define SCSI2_SYNC
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #undef  SCSI2_TAG
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #undef DEBUG_CONNECT
 #undef DEBUG_MESSAGES
@@ -996,15 +990,7 @@ fas216_reselected_intr(FAS216_Info *info)
 		info->scsi.disconnectable = 0;
 		if (info->SCpnt->device->id  == target &&
 		    info->SCpnt->device->lun == lun &&
-<<<<<<< HEAD
-<<<<<<< HEAD
-		    scsi_cmd_to_rq(info->SCpnt)->tag == tag) {
-=======
 		    info->SCpnt->tag         == tag) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		    scsi_cmd_to_rq(info->SCpnt)->tag == tag) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			fas216_log(info, LOG_CONNECT, "reconnected previously executing command");
 		} else {
 			queue_add_cmd_tail(&info->queues.disconnected, info->SCpnt);
@@ -1389,14 +1375,6 @@ static void fas216_busservice_intr(FAS216_Info *info, unsigned int stat, unsigne
 		case IS_COMPLETE:
 			break;
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
-		break;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		break;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	default:
 		break;
@@ -1812,20 +1790,8 @@ static void fas216_start_command(FAS216_Info *info, struct scsi_cmnd *SCpnt)
 	/*
 	 * add tag message if required
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (SCpnt->device->simple_tags)
-		msgqueue_addmsg(&info->scsi.msgs, 2, SIMPLE_QUEUE_TAG,
-				scsi_cmd_to_rq(SCpnt)->tag);
-=======
 	if (SCpnt->tag)
 		msgqueue_addmsg(&info->scsi.msgs, 2, SIMPLE_QUEUE_TAG, SCpnt->tag);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (SCpnt->device->simple_tags)
-		msgqueue_addmsg(&info->scsi.msgs, 2, SIMPLE_QUEUE_TAG,
-				scsi_cmd_to_rq(SCpnt)->tag);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	do {
 #ifdef SCSI2_SYNC
@@ -1848,11 +1814,6 @@ static void fas216_start_command(FAS216_Info *info, struct scsi_cmnd *SCpnt)
 
 static void fas216_allocate_tag(FAS216_Info *info, struct scsi_cmnd *SCpnt)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	set_bit(SCpnt->device->id * 8 +
-		(u8)(SCpnt->device->lun & 0x7), info->busyluns);
-=======
 #ifdef SCSI2_TAG
 	/*
 	 * tagged queuing - allocate a new tag to this command
@@ -1867,11 +1828,6 @@ static void fas216_allocate_tag(FAS216_Info *info, struct scsi_cmnd *SCpnt)
 #endif
 		set_bit(SCpnt->device->id * 8 +
 			(u8)(SCpnt->device->lun & 0x7), info->busyluns);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	set_bit(SCpnt->device->id * 8 +
-		(u8)(SCpnt->device->lun & 0x7), info->busyluns);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	info->stats.removes += 1;
 	switch (SCpnt->cmnd[0]) {
@@ -2054,15 +2010,7 @@ static void fas216_rq_sns_done(FAS216_Info *info, struct scsi_cmnd *SCpnt,
 		   "request sense complete, result=0x%04x%02x%02x",
 		   result, SCpnt->SCp.Message, SCpnt->SCp.Status);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (result != DID_OK || SCpnt->SCp.Status != SAM_STAT_GOOD)
-=======
 	if (result != DID_OK || SCpnt->SCp.Status != GOOD)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (result != DID_OK || SCpnt->SCp.Status != SAM_STAT_GOOD)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		/*
 		 * Something went wrong.  Make sure that we don't
 		 * have valid data in the sense buffer that could
@@ -2168,13 +2116,7 @@ request_sense:
 	init_SCp(SCpnt);
 	SCpnt->SCp.Message = 0;
 	SCpnt->SCp.Status = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	SCpnt->tag = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	SCpnt->host_scribble = (void *)fas216_rq_sns_done;
 
 	/*
@@ -2280,13 +2222,7 @@ static int fas216_queue_command_lck(struct scsi_cmnd *SCpnt,
 	init_SCp(SCpnt);
 
 	info->stats.queues += 1;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	SCpnt->tag = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	spin_lock(&info->host_lock);
 
@@ -3066,19 +3002,9 @@ void fas216_print_devices(FAS216_Info *info, struct seq_file *m)
 		dev = &info->device[scd->id];
 		seq_printf(m, "     %d/%llu   ", scd->id, scd->lun);
 		if (scd->tagged_supported)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			seq_printf(m, "%3sabled ",
-				     scd->simple_tags ? "en" : "dis");
-=======
 			seq_printf(m, "%3sabled(%3d) ",
 				     scd->simple_tags ? "en" : "dis",
 				     scd->current_tag);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			seq_printf(m, "%3sabled ",
-				     scd->simple_tags ? "en" : "dis");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		else
 			seq_puts(m, "unsupported   ");
 

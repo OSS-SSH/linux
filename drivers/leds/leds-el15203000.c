@@ -4,20 +4,8 @@
 
 #include <linux/delay.h>
 #include <linux/leds.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/mod_devicetable.h>
-#include <linux/module.h>
-#include <linux/property.h>
-=======
 #include <linux/module.h>
 #include <linux/of_device.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/mod_devicetable.h>
-#include <linux/module.h>
-#include <linux/property.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/spi/spi.h>
 
 /*

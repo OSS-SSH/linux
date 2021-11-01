@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-=======
 /* SPDX-License-Identifier: GPL-2.0 */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /* eBPF instruction mini library */
 #ifndef __BPF_INSN_H
 #define __BPF_INSN_H

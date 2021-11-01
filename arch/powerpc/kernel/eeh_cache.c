@@ -12,18 +12,8 @@
 #include <linux/slab.h>
 #include <linux/spinlock.h>
 #include <linux/atomic.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/debugfs.h>
-#include <asm/pci-bridge.h>
-=======
 #include <asm/pci-bridge.h>
 #include <asm/debugfs.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/debugfs.h>
-#include <asm/pci-bridge.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <asm/ppc-pci.h>
 
 
@@ -293,14 +283,6 @@ DEFINE_SHOW_ATTRIBUTE(eeh_addr_cache);
 void eeh_cache_debugfs_init(void)
 {
 	debugfs_create_file_unsafe("eeh_address_cache", 0400,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			arch_debugfs_dir, NULL,
-=======
 			powerpc_debugfs_root, NULL,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			arch_debugfs_dir, NULL,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			&eeh_addr_cache_fops);
 }

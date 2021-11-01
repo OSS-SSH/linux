@@ -56,18 +56,8 @@ int qedr_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
 int qedr_resize_cq(struct ib_cq *, int cqe, struct ib_udata *);
 int qedr_destroy_cq(struct ib_cq *ibcq, struct ib_udata *udata);
 int qedr_arm_cq(struct ib_cq *ibcq, enum ib_cq_notify_flags flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-int qedr_create_qp(struct ib_qp *qp, struct ib_qp_init_attr *attrs,
-		   struct ib_udata *udata);
-=======
 struct ib_qp *qedr_create_qp(struct ib_pd *, struct ib_qp_init_attr *attrs,
 			     struct ib_udata *);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int qedr_create_qp(struct ib_qp *qp, struct ib_qp_init_attr *attrs,
-		   struct ib_udata *udata);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int qedr_modify_qp(struct ib_qp *, struct ib_qp_attr *attr,
 		   int attr_mask, struct ib_udata *udata);
 int qedr_query_qp(struct ib_qp *, struct ib_qp_attr *qp_attr,

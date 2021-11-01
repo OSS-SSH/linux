@@ -129,18 +129,6 @@ struct sdw_cdns {
 	struct sdw_cdns_streams pcm;
 	struct sdw_cdns_streams pdm;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int pdi_loopback_source;
-	int pdi_loopback_target;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int pdi_loopback_source;
-	int pdi_loopback_target;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void __iomem *registers;
 
 	bool link_up;
@@ -196,17 +184,4 @@ int cdns_bus_conf(struct sdw_bus *bus, struct sdw_bus_params *params);
 
 int cdns_set_sdw_stream(struct snd_soc_dai *dai,
 			void *stream, bool pcm, int direction);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-void sdw_cdns_check_self_clearing_bits(struct sdw_cdns *cdns, const char *string,
-				       bool initial_delay, int reset_iterations);
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __SDW_CADENCE_H */

@@ -220,17 +220,7 @@ void __kvm_migrate_pit_timer(struct kvm_vcpu *vcpu)
 	struct kvm_pit *pit = vcpu->kvm->arch.vpit;
 	struct hrtimer *timer;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* Somewhat arbitrarily make vcpu0 the owner of the PIT. */
-	if (vcpu->vcpu_id || !pit)
-=======
 	if (!kvm_vcpu_is_bsp(vcpu) || !pit)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* Somewhat arbitrarily make vcpu0 the owner of the PIT. */
-	if (vcpu->vcpu_id || !pit)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 
 	timer = &pit->pit_state.timer;

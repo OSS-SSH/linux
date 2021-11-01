@@ -704,54 +704,22 @@ static vm_fault_t ext4_dax_huge_fault(struct vm_fault *vmf,
 	 */
 	bool write = (vmf->flags & FAULT_FLAG_WRITE) &&
 		(vmf->vma->vm_flags & VM_SHARED);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct address_space *mapping = vmf->vma->vm_file->f_mapping;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct address_space *mapping = vmf->vma->vm_file->f_mapping;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	pfn_t pfn;
 
 	if (write) {
 		sb_start_pagefault(sb);
 		file_update_time(vmf->vma->vm_file);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		filemap_invalidate_lock_shared(mapping);
-=======
 		down_read(&EXT4_I(inode)->i_mmap_sem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		filemap_invalidate_lock_shared(mapping);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 retry:
 		handle = ext4_journal_start_sb(sb, EXT4_HT_WRITE_PAGE,
 					       EXT4_DATA_TRANS_BLOCKS(sb));
 		if (IS_ERR(handle)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			filemap_invalidate_unlock_shared(mapping);
-=======
 			up_read(&EXT4_I(inode)->i_mmap_sem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			filemap_invalidate_unlock_shared(mapping);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			sb_end_pagefault(sb);
 			return VM_FAULT_SIGBUS;
 		}
 	} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		filemap_invalidate_lock_shared(mapping);
-=======
 		down_read(&EXT4_I(inode)->i_mmap_sem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		filemap_invalidate_lock_shared(mapping);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	result = dax_iomap_fault(vmf, pe_size, &pfn, &error, &ext4_iomap_ops);
 	if (write) {
@@ -763,24 +731,10 @@ retry:
 		/* Handling synchronous page fault? */
 		if (result & VM_FAULT_NEEDDSYNC)
 			result = dax_finish_sync_fault(vmf, pe_size, pfn);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		filemap_invalidate_unlock_shared(mapping);
-		sb_end_pagefault(sb);
-	} else {
-		filemap_invalidate_unlock_shared(mapping);
-=======
 		up_read(&EXT4_I(inode)->i_mmap_sem);
 		sb_end_pagefault(sb);
 	} else {
 		up_read(&EXT4_I(inode)->i_mmap_sem);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		filemap_invalidate_unlock_shared(mapping);
-		sb_end_pagefault(sb);
-	} else {
-		filemap_invalidate_unlock_shared(mapping);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	return result;
@@ -802,15 +756,7 @@ static const struct vm_operations_struct ext4_dax_vm_ops = {
 #endif
 
 static const struct vm_operations_struct ext4_file_vm_ops = {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.fault		= filemap_fault,
-=======
 	.fault		= ext4_filemap_fault,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.fault		= filemap_fault,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.map_pages	= filemap_map_pages,
 	.page_mkwrite   = ext4_page_mkwrite,
 };
@@ -876,17 +822,7 @@ static int ext4_sample_last_mounted(struct super_block *sb,
 	if (IS_ERR(handle))
 		goto out;
 	BUFFER_TRACE(sbi->s_sbh, "get_write_access");
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = ext4_journal_get_write_access(handle, sb, sbi->s_sbh,
-					    EXT4_JTR_NONE);
-=======
 	err = ext4_journal_get_write_access(handle, sbi->s_sbh);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = ext4_journal_get_write_access(handle, sb, sbi->s_sbh,
-					    EXT4_JTR_NONE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err)
 		goto out_journal;
 	lock_buffer(sbi->s_sbh);

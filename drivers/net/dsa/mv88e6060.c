@@ -290,49 +290,7 @@ static void mv88e6060_remove(struct mdio_device *mdiodev)
 {
 	struct dsa_switch *ds = dev_get_drvdata(&mdiodev->dev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!ds)
-		return;
-
 	dsa_unregister_switch(ds);
-
-	dev_set_drvdata(&mdiodev->dev, NULL);
-}
-
-static void mv88e6060_shutdown(struct mdio_device *mdiodev)
-{
-	struct dsa_switch *ds = dev_get_drvdata(&mdiodev->dev);
-
-	if (!ds)
-		return;
-
-	dsa_switch_shutdown(ds);
-
-	dev_set_drvdata(&mdiodev->dev, NULL);
-=======
-	dsa_unregister_switch(ds);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!ds)
-		return;
-
-	dsa_unregister_switch(ds);
-
-	dev_set_drvdata(&mdiodev->dev, NULL);
-}
-
-static void mv88e6060_shutdown(struct mdio_device *mdiodev)
-{
-	struct dsa_switch *ds = dev_get_drvdata(&mdiodev->dev);
-
-	if (!ds)
-		return;
-
-	dsa_switch_shutdown(ds);
-
-	dev_set_drvdata(&mdiodev->dev, NULL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static const struct of_device_id mv88e6060_of_match[] = {
@@ -345,14 +303,6 @@ static const struct of_device_id mv88e6060_of_match[] = {
 static struct mdio_driver mv88e6060_driver = {
 	.probe	= mv88e6060_probe,
 	.remove = mv88e6060_remove,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.shutdown = mv88e6060_shutdown,
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.shutdown = mv88e6060_shutdown,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.mdiodrv.driver = {
 		.name = "mv88e6060",
 		.of_match_table = mv88e6060_of_match,

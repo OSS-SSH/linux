@@ -1227,29 +1227,13 @@
 
 		cpu@0 {
 			device_type = "cpu";
-<<<<<<< HEAD
-<<<<<<< HEAD
-			compatible = "nvidia,tegra132-denver";
-=======
 			compatible = "nvidia,denver";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			compatible = "nvidia,tegra132-denver";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <0>;
 		};
 
 		cpu@1 {
 			device_type = "cpu";
-<<<<<<< HEAD
-<<<<<<< HEAD
-			compatible = "nvidia,tegra132-denver";
-=======
 			compatible = "nvidia,denver";
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			compatible = "nvidia,tegra132-denver";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			reg = <1>;
 		};
 	};

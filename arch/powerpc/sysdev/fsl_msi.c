@@ -266,13 +266,7 @@ out_free:
 
 static irqreturn_t fsl_msi_cascade(int irq, void *data)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	unsigned int cascade_irq;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	struct fsl_msi *msi_data;
 	int msir_index = -1;
 	u32 msir_value = 0;
@@ -285,15 +279,9 @@ static irqreturn_t fsl_msi_cascade(int irq, void *data)
 
 	msir_index = cascade_data->index;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (msir_index >= NR_MSI_REG_MAX)
 		cascade_irq = 0;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	switch (msi_data->feature & FSL_PIC_IP_MASK) {
 	case FSL_PIC_IP_MPIC:
 		msir_value = fsl_msi_read(msi_data->msi_regs,
@@ -317,34 +305,15 @@ static irqreturn_t fsl_msi_cascade(int irq, void *data)
 	}
 
 	while (msir_value) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		int err;
 		intr_index = ffs(msir_value) - 1;
 
-		err = generic_handle_domain_irq(msi_data->irqhost,
+		cascade_irq = irq_linear_revmap(msi_data->irqhost,
 				msi_hwirq(msi_data, msir_index,
 					  intr_index + have_shift));
-		if (!err)
+		if (cascade_irq) {
+			generic_handle_irq(cascade_irq);
 			ret = IRQ_HANDLED;
-
-=======
-=======
-		int err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		intr_index = ffs(msir_value) - 1;
-
-		err = generic_handle_domain_irq(msi_data->irqhost,
-				msi_hwirq(msi_data, msir_index,
-					  intr_index + have_shift));
-		if (!err)
-			ret = IRQ_HANDLED;
-<<<<<<< HEAD
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		have_shift += intr_index + 1;
 		msir_value = msir_value >> (intr_index + 1);
 	}

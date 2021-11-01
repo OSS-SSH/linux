@@ -61,14 +61,6 @@ int adf_dev_init(struct adf_accel_dev *accel_dev)
 	struct service_hndl *service;
 	struct list_head *list_itr;
 	struct adf_hw_device_data *hw_data = accel_dev->hw_device;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!hw_data) {
 		dev_err(&GET_DEV(accel_dev),
@@ -96,14 +88,8 @@ int adf_dev_init(struct adf_accel_dev *accel_dev)
 		return -EFAULT;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	hw_data->enable_ints(accel_dev);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (adf_ae_init(accel_dev)) {
 		dev_err(&GET_DEV(accel_dev),
 			"Failed to initialise Acceleration Engine\n");
@@ -124,22 +110,6 @@ int adf_dev_init(struct adf_accel_dev *accel_dev)
 	}
 	set_bit(ADF_STATUS_IRQ_ALLOCATED, &accel_dev->status);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	hw_data->enable_ints(accel_dev);
-	hw_data->enable_error_correction(accel_dev);
-
-	ret = hw_data->enable_pfvf_comms(accel_dev);
-	if (ret)
-		return ret;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * Subservice initialisation is divided into two stages: init and start.
 	 * This is to facilitate any ordering dependencies between services
@@ -156,15 +126,9 @@ int adf_dev_init(struct adf_accel_dev *accel_dev)
 		set_bit(accel_dev->accel_id, service->init_status);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	hw_data->enable_error_correction(accel_dev);
 	hw_data->enable_vf2pf_comms(accel_dev);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 EXPORT_SYMBOL_GPL(adf_dev_init);

@@ -91,15 +91,7 @@ static unsigned int fq_codel_classify(struct sk_buff *skb, struct Qdisc *sch,
 		return fq_codel_hash(q, skb) + 1;
 
 	*qerr = NET_XMIT_SUCCESS | __NET_XMIT_BYPASS;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	result = tcf_classify(skb, NULL, filter, &res, false);
-=======
 	result = tcf_classify(skb, filter, &res, false);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	result = tcf_classify(skb, NULL, filter, &res, false);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (result >= 0) {
 #ifdef CONFIG_NET_CLS_ACT
 		switch (result) {
@@ -377,14 +369,6 @@ static int fq_codel_change(struct Qdisc *sch, struct nlattr *opt,
 {
 	struct fq_codel_sched_data *q = qdisc_priv(sch);
 	struct nlattr *tb[TCA_FQ_CODEL_MAX + 1];
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 quantum = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 quantum = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
 
 	if (!opt)
@@ -402,22 +386,6 @@ static int fq_codel_change(struct Qdisc *sch, struct nlattr *opt,
 		    q->flows_cnt > 65536)
 			return -EINVAL;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (tb[TCA_FQ_CODEL_QUANTUM]) {
-		quantum = max(256U, nla_get_u32(tb[TCA_FQ_CODEL_QUANTUM]));
-		if (quantum > FQ_CODEL_QUANTUM_MAX) {
-			NL_SET_ERR_MSG(extack, "Invalid quantum");
-			return -EINVAL;
-		}
-	}
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	sch_tree_lock(sch);
 
 	if (tb[TCA_FQ_CODEL_TARGET]) {
@@ -444,18 +412,8 @@ static int fq_codel_change(struct Qdisc *sch, struct nlattr *opt,
 	if (tb[TCA_FQ_CODEL_ECN])
 		q->cparams.ecn = !!nla_get_u32(tb[TCA_FQ_CODEL_ECN]);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (quantum)
-		q->quantum = quantum;
-=======
 	if (tb[TCA_FQ_CODEL_QUANTUM])
 		q->quantum = max(256U, nla_get_u32(tb[TCA_FQ_CODEL_QUANTUM]));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (quantum)
-		q->quantum = quantum;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (tb[TCA_FQ_CODEL_DROP_BATCH_SIZE])
 		q->drop_batch_size = max(1U, nla_get_u32(tb[TCA_FQ_CODEL_DROP_BATCH_SIZE]));

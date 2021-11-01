@@ -31,25 +31,6 @@ int intel_gpu_freq(struct intel_rps *rps, int val);
 int intel_freq_opcode(struct intel_rps *rps, int val);
 u32 intel_rps_get_cagf(struct intel_rps *rps, u32 rpstat1);
 u32 intel_rps_read_actual_frequency(struct intel_rps *rps);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-u32 intel_rps_get_requested_frequency(struct intel_rps *rps);
-u32 intel_rps_get_min_frequency(struct intel_rps *rps);
-int intel_rps_set_min_frequency(struct intel_rps *rps, u32 val);
-u32 intel_rps_get_max_frequency(struct intel_rps *rps);
-int intel_rps_set_max_frequency(struct intel_rps *rps, u32 val);
-u32 intel_rps_get_rp0_frequency(struct intel_rps *rps);
-u32 intel_rps_get_rp1_frequency(struct intel_rps *rps);
-u32 intel_rps_get_rpn_frequency(struct intel_rps *rps);
-u32 intel_rps_read_punit_req(struct intel_rps *rps);
-u32 intel_rps_read_punit_req_frequency(struct intel_rps *rps);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 void gen5_rps_irq_handler(struct intel_rps *rps);
 void gen6_rps_irq_handler(struct intel_rps *rps, u32 pm_iir);

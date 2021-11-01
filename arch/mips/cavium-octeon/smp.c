@@ -91,15 +91,7 @@ static irqreturn_t mailbox_interrupt(int irq, void *dev_id)
 	return IRQ_HANDLED;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
-=======
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Cause the function described by call_data to be executed on the passed
  * cpu.	 When the function has finished, increment the finished field of
  * call_data.
@@ -123,15 +115,7 @@ static inline void octeon_send_ipi_mask(const struct cpumask *mask,
 		octeon_send_ipi_single(i, action);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
-=======
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Detect available CPUs, populate cpu_possible_mask
  */
 static void octeon_smp_hotplug_setup(void)
@@ -218,19 +202,9 @@ int plat_post_relocation(long offset)
 }
 #endif /* CONFIG_RELOCATABLE */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
- * Firmware CPU startup hook
-=======
 /**
  * Firmware CPU startup hook
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
- * Firmware CPU startup hook
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static int octeon_boot_secondary(int cpu, struct task_struct *idle)
 {
@@ -258,15 +232,7 @@ static int octeon_boot_secondary(int cpu, struct task_struct *idle)
 	return 0;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
-=======
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * After we've done initial boot, this function is called to allow the
  * board code to clean up state, if needed
  */
@@ -284,19 +250,9 @@ static void octeon_init_secondary(void)
 	octeon_irq_setup_secondary();
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
- * Callout to firmware before smp_init
-=======
 /**
  * Callout to firmware before smp_init
  *
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
- * Callout to firmware before smp_init
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 static void __init octeon_prepare_cpus(unsigned int max_cpus)
 {
@@ -312,15 +268,7 @@ static void __init octeon_prepare_cpus(unsigned int max_cpus)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
-=======
 /**
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/*
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * Last chance for the board code to finish SMP initialization before
  * the CPU is "online".
  */

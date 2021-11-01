@@ -209,61 +209,21 @@ SYSCALL_DEFINE3(sysfs, int, option, unsigned long, arg1, unsigned long, arg2)
 }
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int __init list_bdev_fs_names(char *buf, size_t size)
-{
-	struct file_system_type *p;
-	size_t len;
-	int count = 0;
-
-	read_lock(&file_systems_lock);
-	for (p = file_systems; p; p = p->next) {
-		if (!(p->fs_flags & FS_REQUIRES_DEV))
-			continue;
-		len = strlen(p->name) + 1;
-		if (len > size) {
-			pr_warn("%s: truncating file system list\n", __func__);
-			break;
-		}
-		memcpy(buf, p->name, len);
-		buf += len;
-		size -= len;
-		count++;
-	}
-	read_unlock(&file_systems_lock);
-	return count;
-=======
 int __init get_filesystem_list(char *buf)
-=======
-int __init list_bdev_fs_names(char *buf, size_t size)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	struct file_system_type *p;
-	size_t len;
-	int count = 0;
+	int len = 0;
+	struct file_system_type * tmp;
 
 	read_lock(&file_systems_lock);
-	for (p = file_systems; p; p = p->next) {
-		if (!(p->fs_flags & FS_REQUIRES_DEV))
-			continue;
-		len = strlen(p->name) + 1;
-		if (len > size) {
-			pr_warn("%s: truncating file system list\n", __func__);
-			break;
-		}
-		memcpy(buf, p->name, len);
-		buf += len;
-		size -= len;
-		count++;
+	tmp = file_systems;
+	while (tmp && len < PAGE_SIZE - 80) {
+		len += sprintf(buf+len, "%s\t%s\n",
+			(tmp->fs_flags & FS_REQUIRES_DEV) ? "" : "nodev",
+			tmp->name);
+		tmp = tmp->next;
 	}
 	read_unlock(&file_systems_lock);
-<<<<<<< HEAD
 	return len;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return count;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #ifdef CONFIG_PROC_FS

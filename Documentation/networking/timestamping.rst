@@ -625,15 +625,7 @@ interfaces of a DSA switch to share the same PHC.
 By design, PTP timestamping with a DSA switch does not need any special
 handling in the driver for the host port it is attached to.  However, when the
 host port also supports PTP timestamping, DSA will take care of intercepting
-<<<<<<< HEAD
-<<<<<<< HEAD
-the ``.ndo_eth_ioctl`` calls towards the host port, and block attempts to enable
-=======
 the ``.ndo_do_ioctl`` calls towards the host port, and block attempts to enable
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-the ``.ndo_eth_ioctl`` calls towards the host port, and block attempts to enable
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 hardware timestamping on it. This is because the SO_TIMESTAMPING API does not
 allow the delivery of multiple hardware timestamps for the same packet, so
 anybody else except for the DSA switch port must be prevented from doing so.
@@ -696,15 +688,7 @@ ethtool ioctl operations for them need to be mediated by their respective MAC
 driver.  Therefore, as opposed to DSA switches, modifications need to be done
 to each individual MAC driver for PHY timestamping support. This entails:
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-- Checking, in ``.ndo_eth_ioctl``, whether ``phy_has_hwtstamp(netdev->phydev)``
-=======
 - Checking, in ``.ndo_do_ioctl``, whether ``phy_has_hwtstamp(netdev->phydev)``
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-- Checking, in ``.ndo_eth_ioctl``, whether ``phy_has_hwtstamp(netdev->phydev)``
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
   is true or not. If it is, then the MAC driver should not process this request
   but instead pass it on to the PHY using ``phy_mii_ioctl()``.
 
@@ -763,15 +747,7 @@ For example, a typical driver design for TX timestamping might be to split the
 transmission part into 2 portions:
 
 1. "TX": checks whether PTP timestamping has been previously enabled through
-<<<<<<< HEAD
-<<<<<<< HEAD
-   the ``.ndo_eth_ioctl`` ("``priv->hwtstamp_tx_enabled == true``") and the
-=======
    the ``.ndo_do_ioctl`` ("``priv->hwtstamp_tx_enabled == true``") and the
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-   the ``.ndo_eth_ioctl`` ("``priv->hwtstamp_tx_enabled == true``") and the
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
    current skb requires a TX timestamp ("``skb_shinfo(skb)->tx_flags &
    SKBTX_HW_TSTAMP``"). If this is true, it sets the
    "``skb_shinfo(skb)->tx_flags |= SKBTX_IN_PROGRESS``" flag. Note: as

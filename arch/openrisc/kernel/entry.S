@@ -326,15 +326,7 @@ EXCEPTION_ENTRY(_data_page_fault_handler)
 1:	l.ori   r6,r0,0x0                  // !write access
 2:
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* call fault.c handler in openrisc/mm/fault.c */
-=======
 	/* call fault.c handler in or32/mm/fault.c */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* call fault.c handler in openrisc/mm/fault.c */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	l.jal   do_page_fault
 	 l.nop
 	l.j     _ret_from_exception
@@ -356,15 +348,7 @@ EXCEPTION_ENTRY(_insn_page_fault_handler)
 	/* r4 set be EXCEPTION_HANDLE */   // effective address of fault
 	l.ori	r6,r0,0x0		   // !write access
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* call fault.c handler in openrisc/mm/fault.c */
-=======
 	/* call fault.c handler in or32/mm/fault.c */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* call fault.c handler in openrisc/mm/fault.c */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	l.jal   do_page_fault
 	 l.nop
 	l.j     _ret_from_exception
@@ -563,27 +547,11 @@ EXCEPTION_ENTRY(_external_irq_handler)
 	l.bnf	1f			// ext irq enabled, all ok.
 	l.nop
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#ifdef CONFIG_PRINTK
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#ifdef CONFIG_PRINTK
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	l.addi  r1,r1,-0x8
 	l.movhi r3,hi(42f)
 	l.ori	r3,r3,lo(42f)
 	l.sw    0x0(r1),r3
-<<<<<<< HEAD
-<<<<<<< HEAD
-	l.jal   _printk
-=======
 	l.jal   printk
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	l.jal   _printk
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	l.sw    0x4(r1),r4
 	l.addi  r1,r1,0x8
 
@@ -592,14 +560,6 @@ EXCEPTION_ENTRY(_external_irq_handler)
 		.string "\n\rESR interrupt bug: in _external_irq_handler (ESR %x)\n\r"
 		.align 4
 	.previous
-<<<<<<< HEAD
-<<<<<<< HEAD
-#endif
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#endif
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	l.ori	r4,r4,SPR_SR_IEE	// fix the bug
 //	l.sw	PT_SR(r1),r4
@@ -721,18 +681,8 @@ _syscall_debug:
 	l.sw    -4(r1),r27
 	l.sw    -8(r1),r11
 	l.addi  r1,r1,-8
-<<<<<<< HEAD
-<<<<<<< HEAD
-	l.movhi r27,hi(_printk)
-	l.ori   r27,r27,lo(_printk)
-=======
 	l.movhi r27,hi(printk)
 	l.ori   r27,r27,lo(printk)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	l.movhi r27,hi(_printk)
-	l.ori   r27,r27,lo(_printk)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	l.jalr  r27
 	 l.nop
 	l.addi  r1,r1,8

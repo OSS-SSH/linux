@@ -256,15 +256,7 @@ static int __sbus_iommu_map_sg(struct device *dev, struct scatterlist *sgl,
 		sg->dma_address =__sbus_iommu_map_page(dev, sg_page(sg),
 				sg->offset, sg->length, per_page_flush);
 		if (sg->dma_address == DMA_MAPPING_ERROR)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return -EIO;
-=======
 			return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return -EIO;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sg->dma_length = sg->length;
 	}
 

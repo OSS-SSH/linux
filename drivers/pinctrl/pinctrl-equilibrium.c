@@ -155,15 +155,7 @@ static void eqbr_irq_handler(struct irq_desc *desc)
 	pins = readl(gctrl->membase + GPIO_IRNCR);
 
 	for_each_set_bit(offset, &pins, gc->ngpio)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		generic_handle_domain_irq(gc->irq.domain, offset);
-=======
 		generic_handle_irq(irq_find_mapping(gc->irq.domain, offset));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		generic_handle_domain_irq(gc->irq.domain, offset);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	chained_irq_exit(ic, desc);
 }

@@ -11,14 +11,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <sys/stat.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <sys/syscall.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <sys/syscall.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #include <linux/mman.h>
 #include "linux/kernel.h"
 
@@ -137,33 +129,13 @@ size_t get_trans_hugepagesz(void)
 {
 	size_t size;
 	FILE *f;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int ret;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	TEST_ASSERT(thp_configured(), "THP is not configured in host kernel");
 
 	f = fopen("/sys/kernel/mm/transparent_hugepage/hpage_pmd_size", "r");
 	TEST_ASSERT(f != NULL, "Error in opening transparent_hugepage/hpage_pmd_size");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	ret = fscanf(f, "%ld", &size);
-	ret = fscanf(f, "%ld", &size);
-	TEST_ASSERT(ret < 1, "Error reading transparent_hugepage/hpage_pmd_size");
-=======
 	fscanf(f, "%ld", &size);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = fscanf(f, "%ld", &size);
-	ret = fscanf(f, "%ld", &size);
-	TEST_ASSERT(ret < 1, "Error reading transparent_hugepage/hpage_pmd_size");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fclose(f);
 
 	return size;
@@ -307,49 +279,13 @@ size_t get_backing_src_pagesz(uint32_t i)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void print_available_backing_src_types(const char *prefix)
-{
-	int i;
-
-	printf("%sAvailable backing src types:\n", prefix);
-
-	for (i = 0; i < NUM_SRC_TYPES; i++)
-		printf("%s    %s\n", prefix, vm_mem_backing_src_alias(i)->name);
-}
-
-void backing_src_help(const char *flag)
-{
-	printf(" %s: specify the type of memory that should be used to\n"
-	       "     back the guest data region. (default: %s)\n",
-	       flag, vm_mem_backing_src_alias(DEFAULT_VM_MEM_SRC)->name);
-	print_available_backing_src_types("     ");
-=======
 void backing_src_help(void)
-=======
-static void print_available_backing_src_types(const char *prefix)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	int i;
 
-	printf("%sAvailable backing src types:\n", prefix);
-
+	printf("Available backing src types:\n");
 	for (i = 0; i < NUM_SRC_TYPES; i++)
-<<<<<<< HEAD
 		printf("\t%s\n", vm_mem_backing_src_alias(i)->name);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		printf("%s    %s\n", prefix, vm_mem_backing_src_alias(i)->name);
-}
-
-void backing_src_help(const char *flag)
-{
-	printf(" %s: specify the type of memory that should be used to\n"
-	       "     back the guest data region. (default: %s)\n",
-	       flag, vm_mem_backing_src_alias(DEFAULT_VM_MEM_SRC)->name);
-	print_available_backing_src_types("     ");
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 enum vm_mem_backing_src_type parse_backing_src_type(const char *type_name)
@@ -360,53 +296,7 @@ enum vm_mem_backing_src_type parse_backing_src_type(const char *type_name)
 		if (!strcmp(type_name, vm_mem_backing_src_alias(i)->name))
 			return i;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	print_available_backing_src_types("");
-	TEST_FAIL("Unknown backing src type: %s", type_name);
-	return -1;
-}
-
-long get_run_delay(void)
-{
-	char path[64];
-	long val[2];
-	FILE *fp;
-
-	sprintf(path, "/proc/%ld/schedstat", syscall(SYS_gettid));
-	fp = fopen(path, "r");
-	/* Return MIN_RUN_DELAY_NS upon failure just to be safe */
-	if (fscanf(fp, "%ld %ld ", &val[0], &val[1]) < 2)
-		val[1] = MIN_RUN_DELAY_NS;
-	fclose(fp);
-
-	return val[1];
-}
-=======
 	backing_src_help();
 	TEST_FAIL("Unknown backing src type: %s", type_name);
 	return -1;
 }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	print_available_backing_src_types("");
-	TEST_FAIL("Unknown backing src type: %s", type_name);
-	return -1;
-}
-
-long get_run_delay(void)
-{
-	char path[64];
-	long val[2];
-	FILE *fp;
-
-	sprintf(path, "/proc/%ld/schedstat", syscall(SYS_gettid));
-	fp = fopen(path, "r");
-	/* Return MIN_RUN_DELAY_NS upon failure just to be safe */
-	if (fscanf(fp, "%ld %ld ", &val[0], &val[1]) < 2)
-		val[1] = MIN_RUN_DELAY_NS;
-	fclose(fp);
-
-	return val[1];
-}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

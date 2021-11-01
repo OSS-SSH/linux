@@ -265,20 +265,6 @@
 		#address-cells = <1>;
 		#size-cells = <1>;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		io_domains: io-domains {
-			compatible = "rockchip,rv1108-io-voltage-domain";
-			status = "disabled";
-		};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		u2phy: usb2phy@100 {
 			compatible = "rockchip,rv1108-usb2phy";
 			reg = <0x100 0x0c>;
@@ -448,28 +434,8 @@
 	};
 
 	pmugrf: syscon@20060000 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		compatible = "rockchip,rv1108-pmugrf", "syscon", "simple-mfd";
-		reg = <0x20060000 0x1000>;
-
-		pmu_io_domains: io-domains {
-			compatible = "rockchip,rv1108-pmu-io-voltage-domain";
-			status = "disabled";
-		};
-=======
 		compatible = "rockchip,rv1108-pmugrf", "syscon";
 		reg = <0x20060000 0x1000>;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		compatible = "rockchip,rv1108-pmugrf", "syscon", "simple-mfd";
-		reg = <0x20060000 0x1000>;
-
-		pmu_io_domains: io-domains {
-			compatible = "rockchip,rv1108-pmu-io-voltage-domain";
-			status = "disabled";
-		};
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 
 	usbgrf: syscon@202a0000 {
@@ -570,26 +536,6 @@
 		status = "disabled";
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	sfc: spi@301c0000 {
-		compatible = "rockchip,sfc";
-		reg = <0x301c0000 0x4000>;
-		interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>;
-		clocks = <&cru SCLK_SFC>, <&cru HCLK_SFC>;
-		clock-names = "clk_sfc", "hclk_sfc";
-		pinctrl-0 = <&sfc_clk &sfc_cs0 &sfc_bus4>;
-		pinctrl-names = "default";
-		status = "disabled";
-	};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	gmac: eth@30200000 {
 		compatible = "rockchip,rv1108-gmac";
 		reg = <0x30200000 0x10000>;
@@ -758,41 +704,6 @@
 			};
 		};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		sfc {
-			sfc_bus4: sfc-bus4 {
-				rockchip,pins =
-					<2 RK_PA0 3 &pcfg_pull_none>,
-					<2 RK_PA1 3 &pcfg_pull_none>,
-					<2 RK_PA2 3 &pcfg_pull_none>,
-					<2 RK_PA3 3 &pcfg_pull_none>;
-			};
-
-			sfc_bus2: sfc-bus2 {
-				rockchip,pins =
-					<2 RK_PA0 3 &pcfg_pull_none>,
-					<2 RK_PA1 3 &pcfg_pull_none>;
-			};
-
-			sfc_cs0: sfc-cs0 {
-				rockchip,pins =
-					<2 RK_PB4 3 &pcfg_pull_none>;
-			};
-
-			sfc_clk: sfc-clk {
-				rockchip,pins =
-					<2 RK_PB7 2 &pcfg_pull_none>;
-			};
-		};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		gmac {
 			rmii_pins: rmii-pins {
 				rockchip,pins =	<1 RK_PC5 2 &pcfg_pull_none>,

@@ -408,29 +408,13 @@ static int wcn36xx_config(struct ieee80211_hw *hw, u32 changed)
 		wcn36xx_dbg(WCN36XX_DBG_MAC, "wcn36xx_config channel switch=%d\n",
 			    ch);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (wcn->sw_scan_opchannel == ch && wcn->sw_scan_channel) {
-=======
 		if (wcn->sw_scan_opchannel == ch) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (wcn->sw_scan_opchannel == ch && wcn->sw_scan_channel) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			/* If channel is the initial operating channel, we may
 			 * want to receive/transmit regular data packets, then
 			 * simply stop the scan session and exit PS mode.
 			 */
 			wcn36xx_smd_finish_scan(wcn, HAL_SYS_MODE_SCAN,
 						wcn->sw_scan_vif);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			wcn->sw_scan_channel = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			wcn->sw_scan_channel = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else if (wcn->sw_scan) {
 			/* A scan is ongoing, do not change the operating
 			 * channel, but start a scan session on the channel.
@@ -438,14 +422,6 @@ static int wcn36xx_config(struct ieee80211_hw *hw, u32 changed)
 			wcn36xx_smd_init_scan(wcn, HAL_SYS_MODE_SCAN,
 					      wcn->sw_scan_vif);
 			wcn36xx_smd_start_scan(wcn, ch);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			wcn->sw_scan_channel = ch;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			wcn->sw_scan_channel = ch;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			wcn36xx_change_opchannel(wcn, ch);
 		}
@@ -726,14 +702,6 @@ static void wcn36xx_sw_scan_start(struct ieee80211_hw *hw,
 
 	wcn->sw_scan = true;
 	wcn->sw_scan_vif = vif;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	wcn->sw_scan_channel = 0;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	wcn->sw_scan_channel = 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (vif_priv->sta_assoc)
 		wcn->sw_scan_opchannel = WCN36XX_HW_CHANNEL(wcn);
 	else
@@ -1532,22 +1500,6 @@ static int wcn36xx_probe(struct platform_device *pdev)
 		goto out_wq;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	wcn->nv_file = WLAN_NV_FILE;
-	ret = of_property_read_string(wcn->dev->parent->of_node, "firmware-name", &wcn->nv_file);
-	if (ret < 0 && ret != -EINVAL) {
-		wcn36xx_err("failed to read \"firmware-name\" property: %d\n", ret);
-		goto out_wq;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	wcn->smd_channel = qcom_wcnss_open_channel(wcnss, "WLAN_CTRL", wcn36xx_smd_rsp_process, hw);
 	if (IS_ERR(wcn->smd_channel)) {
 		wcn36xx_err("failed to open WLAN_CTRL channel\n");

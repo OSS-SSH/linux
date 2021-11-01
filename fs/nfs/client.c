@@ -179,14 +179,6 @@ struct nfs_client *nfs_alloc_client(const struct nfs_client_initdata *cl_init)
 
 	clp->cl_proto = cl_init->proto;
 	clp->cl_nconnect = cl_init->nconnect;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clp->cl_max_connect = cl_init->max_connect ? cl_init->max_connect : 1;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clp->cl_max_connect = cl_init->max_connect ? cl_init->max_connect : 1;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	clp->cl_net = get_net(cl_init->net);
 
 	clp->cl_principal = "*";
@@ -548,14 +540,6 @@ int nfs_create_rpc_client(struct nfs_client *clp,
 
 	clnt->cl_principal = clp->cl_principal;
 	clp->cl_rpcclient = clnt;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	clnt->cl_max_connect = clp->cl_max_connect;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	clnt->cl_max_connect = clp->cl_max_connect;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return 0;
 }
 EXPORT_SYMBOL_GPL(nfs_create_rpc_client);

@@ -443,14 +443,8 @@ extern int mem_init_done;
 
 asmlinkage void __init mmu_init(void);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void __init *early_get_page(void);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif /* __ASSEMBLY__ */
 #endif /* __KERNEL__ */
 

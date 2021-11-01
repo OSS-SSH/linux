@@ -354,34 +354,13 @@ static int iio_scan_mask_set(struct iio_dev *indio_dev,
 	const unsigned long *mask;
 	unsigned long *trialmask;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (!indio_dev->masklength) {
-		WARN(1, "Trying to set scanmask prior to registering buffer\n");
-		return -EINVAL;
-	}
-
-	trialmask = bitmap_alloc(indio_dev->masklength, GFP_KERNEL);
-	if (!trialmask)
-		return -ENOMEM;
-=======
 	trialmask = bitmap_zalloc(indio_dev->masklength, GFP_KERNEL);
 	if (trialmask == NULL)
 		return -ENOMEM;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!indio_dev->masklength) {
 		WARN(1, "Trying to set scanmask prior to registering buffer\n");
-		return -EINVAL;
+		goto err_invalid_mask;
 	}
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	trialmask = bitmap_alloc(indio_dev->masklength, GFP_KERNEL);
-	if (!trialmask)
-		return -ENOMEM;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bitmap_copy(trialmask, buffer->scan_mask, indio_dev->masklength);
 	set_bit(bit, trialmask);
 

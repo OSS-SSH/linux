@@ -920,19 +920,6 @@
 			compatible = "onnn,nct1008";
 			reg = <0x4c>;
 			vcc-supply = <&vdd_3v3_sys>;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-			interrupt-parent = <&gpio>;
-			interrupts = <TEGRA_GPIO(S, 3) IRQ_TYPE_EDGE_FALLING>;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			#thermal-sensor-cells = <1>;
 		};
 
@@ -1264,63 +1251,21 @@
 	};
 
 	thermal-zones {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		/*
-		 * NCT72 has two sensors:
-		 *
-		 *	0: internal that monitors ambient/skin temperature
-		 *	1: external that is connected to the CPU's diode
-		 *
-		 * Ideally we should use userspace thermal governor,
-		 * but it's a much more complex solution.  The "skin"
-		 * zone is a simpler solution which prevents Nexus 7
-		 * from getting too hot from a user's tactile perspective.
-		 * The CPU zone is intended to protect silicon from damage.
-		 */
-
-		skin-thermal {
-<<<<<<< HEAD
-			polling-delay-passive = <1000>; /* milliseconds */
-			polling-delay = <5000>; /* milliseconds */
-
-			thermal-sensors = <&nct72 0>;
-
-			trips {
-				trip0: skin-alert {
-=======
 		cpu-thermal {
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			polling-delay-passive = <1000>; /* milliseconds */
 			polling-delay = <5000>; /* milliseconds */
 
-			thermal-sensors = <&nct72 0>;
+			thermal-sensors = <&nct72 1>;
 
 			trips {
-<<<<<<< HEAD
 				trip0: cpu-alert0 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				trip0: skin-alert {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					/* throttle at 57C until temperature drops to 56.8C */
 					temperature = <57000>;
 					hysteresis = <200>;
 					type = "passive";
 				};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-				trip1: skin-crit {
-=======
 				trip1: cpu-crit {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				trip1: skin-crit {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					/* shut down at 65C */
 					temperature = <65000>;
 					hysteresis = <2000>;
@@ -1340,49 +1285,5 @@
 				};
 			};
 		};
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-		cpu-thermal {
-			polling-delay-passive = <1000>; /* milliseconds */
-			polling-delay = <5000>; /* milliseconds */
-
-			thermal-sensors = <&nct72 1>;
-
-			trips {
-				trip2: cpu-alert {
-					/* throttle at 85C until temperature drops to 84.8C */
-					temperature = <85000>;
-					hysteresis = <200>;
-					type = "passive";
-				};
-
-				trip3: cpu-crit {
-					/* shut down at 90C */
-					temperature = <90000>;
-					hysteresis = <2000>;
-					type = "critical";
-				};
-			};
-
-			cooling-maps {
-				map1 {
-					trip = <&trip2>;
-					cooling-device = <&cpu0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-							 <&cpu1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-							 <&cpu2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-							 <&cpu3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>,
-							 <&actmon THERMAL_NO_LIMIT
-								  THERMAL_NO_LIMIT>;
-				};
-			};
-		};
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	};
 };

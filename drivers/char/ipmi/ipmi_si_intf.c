@@ -591,15 +591,7 @@ static void handle_transaction_done(struct smi_info *smi_info)
 		smi_info->handlers->get_result(smi_info->si_sm, msg, 3);
 		if (msg[2] != 0) {
 			/* Error clearing flags */
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dev_warn_ratelimited(smi_info->io.dev,
-=======
 			dev_warn(smi_info->io.dev,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dev_warn_ratelimited(smi_info->io.dev,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 "Error clearing flags: %2.2x\n", msg[2]);
 		}
 		smi_info->si_state = SI_NORMAL;
@@ -691,23 +683,10 @@ static void handle_transaction_done(struct smi_info *smi_info)
 		/* We got the flags from the SMI, now handle them. */
 		smi_info->handlers->get_result(smi_info->si_sm, msg, 4);
 		if (msg[2] != 0) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-			dev_warn_ratelimited(smi_info->io.dev,
-				"Couldn't get irq info: %x,\n"
-				"Maybe ok, but ipmi might run very slowly.\n",
-				msg[2]);
-<<<<<<< HEAD
-=======
 			dev_warn(smi_info->io.dev,
 				 "Couldn't get irq info: %x.\n", msg[2]);
 			dev_warn(smi_info->io.dev,
 				 "Maybe ok, but ipmi might run very slowly.\n");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			smi_info->si_state = SI_NORMAL;
 			break;
 		}
@@ -742,15 +721,7 @@ static void handle_transaction_done(struct smi_info *smi_info)
 
 		smi_info->handlers->get_result(smi_info->si_sm, msg, 4);
 		if (msg[2] != 0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dev_warn_ratelimited(smi_info->io.dev,
-=======
 			dev_warn(smi_info->io.dev,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dev_warn_ratelimited(smi_info->io.dev,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				 "Could not set the global enables: 0x%x.\n",
 				 msg[2]);
 
@@ -1372,15 +1343,7 @@ retry:
 
 		if (cc != IPMI_CC_NO_ERROR &&
 		    ++retry_count <= GET_DEVICE_ID_MAX_RETRY) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			dev_warn_ratelimited(smi_info->io.dev,
-=======
 			dev_warn(smi_info->io.dev,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			dev_warn_ratelimited(smi_info->io.dev,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			    "BMC returned 0x%2.2x, retry get bmc device id\n",
 			    cc);
 			goto retry;
@@ -1642,15 +1605,7 @@ static ssize_t name##_show(struct device *dev,			\
 									\
 	return snprintf(buf, 10, "%u\n", smi_get_stat(smi_info, name));	\
 }									\
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RO(name)
-=======
 static DEVICE_ATTR(name, 0444, name##_show, NULL)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RO(name)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static ssize_t type_show(struct device *dev,
 			 struct device_attribute *attr,
@@ -1660,15 +1615,7 @@ static ssize_t type_show(struct device *dev,
 
 	return snprintf(buf, 10, "%s\n", si_to_str[smi_info->io.si_type]);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RO(type);
-=======
 static DEVICE_ATTR(type, 0444, type_show, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RO(type);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static ssize_t interrupts_enabled_show(struct device *dev,
 				       struct device_attribute *attr,
@@ -1679,16 +1626,8 @@ static ssize_t interrupts_enabled_show(struct device *dev,
 
 	return snprintf(buf, 10, "%d\n", enabled);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RO(interrupts_enabled);
-=======
 static DEVICE_ATTR(interrupts_enabled, 0444,
 		   interrupts_enabled_show, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RO(interrupts_enabled);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 IPMI_SI_ATTR(short_timeouts);
 IPMI_SI_ATTR(long_timeouts);
@@ -1719,15 +1658,7 @@ static ssize_t params_show(struct device *dev,
 			smi_info->io.irq,
 			smi_info->io.slave_addr);
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RO(params);
-=======
 static DEVICE_ATTR(params, 0444, params_show, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RO(params);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct attribute *ipmi_si_dev_attrs[] = {
 	&dev_attr_type.attr,
@@ -2297,46 +2228,22 @@ static void cleanup_one_si(struct smi_info *smi_info)
 	kfree(smi_info);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-void ipmi_si_remove_by_dev(struct device *dev)
-{
-	struct smi_info *e;
-=======
 int ipmi_si_remove_by_dev(struct device *dev)
 {
 	struct smi_info *e;
 	int rv = -ENOENT;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-void ipmi_si_remove_by_dev(struct device *dev)
-{
-	struct smi_info *e;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	mutex_lock(&smi_infos_lock);
 	list_for_each_entry(e, &smi_infos, link) {
 		if (e->io.dev == dev) {
 			cleanup_one_si(e);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 			rv = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			break;
 		}
 	}
 	mutex_unlock(&smi_infos_lock);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	return rv;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct device *ipmi_si_remove_by_data(int addr_space, enum si_type si_type,

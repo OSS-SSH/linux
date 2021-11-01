@@ -17,46 +17,6 @@
 #define arch_atomic_read(v)  READ_ONCE((v)->counter)
 
 #ifdef CONFIG_ARC_HAS_LLSC
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <asm/atomic-llsc.h>
-#else
-#include <asm/atomic-spinlock.h>
-#endif
-
-#define arch_atomic_cmpxchg(v, o, n)					\
-({									\
-	arch_cmpxchg(&((v)->counter), (o), (n));			\
-})
-
-#ifdef arch_cmpxchg_relaxed
-#define arch_atomic_cmpxchg_relaxed(v, o, n)				\
-({									\
-	arch_cmpxchg_relaxed(&((v)->counter), (o), (n));		\
-})
-#endif
-
-#define arch_atomic_xchg(v, n)						\
-({									\
-	arch_xchg(&((v)->counter), (n));				\
-})
-
-#ifdef arch_xchg_relaxed
-#define arch_atomic_xchg_relaxed(v, n)					\
-({									\
-	arch_xchg_relaxed(&((v)->counter), (n));			\
-})
-#endif
-
-/*
- * 64-bit atomics
- */
-#ifdef CONFIG_GENERIC_ATOMIC64
-#include <asm-generic/atomic64.h>
-#else
-#include <asm/atomic64-arcv2.h>
-#endif
-=======
 
 #define arch_atomic_set(v, i) WRITE_ONCE(((v)->counter), (i))
 
@@ -136,43 +96,111 @@ static inline int arch_atomic_fetch_##op(int i, atomic_t *v)		\
  /* violating atomic_xxx API locking protocol in UP for optimization sake */
 #define arch_atomic_set(v, i) WRITE_ONCE(((v)->counter), (i))
 
-=======
-#include <asm/atomic-llsc.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #else
-#include <asm/atomic-spinlock.h>
-#endif
 
-#define arch_atomic_cmpxchg(v, o, n)					\
-({									\
-	arch_cmpxchg(&((v)->counter), (o), (n));			\
-})
+static inline void arch_atomic_set(atomic_t *v, int i)
+{
+	/*
+	 * Independent of hardware support, all of the atomic_xxx() APIs need
+	 * to follow the same locking rules to make sure that a "hardware"
+	 * atomic insn (e.g. LD) doesn't clobber an "emulated" atomic insn
+	 * sequence
+	 *
+	 * Thus atomic_set() despite being 1 insn (and seemingly atomic)
+	 * requires the locking.
+	 */
+	unsigned long flags;
 
-#ifdef arch_cmpxchg_relaxed
-#define arch_atomic_cmpxchg_relaxed(v, o, n)				\
-({									\
-	arch_cmpxchg_relaxed(&((v)->counter), (o), (n));		\
-})
-#endif
+	atomic_ops_lock(flags);
+	WRITE_ONCE(v->counter, i);
+	atomic_ops_unlock(flags);
+}
 
-#define arch_atomic_xchg(v, n)						\
-({									\
-	arch_xchg(&((v)->counter), (n));				\
-})
+#define arch_atomic_set_release(v, i)	arch_atomic_set((v), (i))
 
-#ifdef arch_xchg_relaxed
-#define arch_atomic_xchg_relaxed(v, n)					\
-({									\
-	arch_xchg_relaxed(&((v)->counter), (n));			\
-})
 #endif
 
 /*
- * 64-bit atomics
+ * Non hardware assisted Atomic-R-M-W
+ * Locking would change to irq-disabling only (UP) and spinlocks (SMP)
  */
+
+#define ATOMIC_OP(op, c_op, asm_op)					\
+static inline void arch_atomic_##op(int i, atomic_t *v)			\
+{									\
+	unsigned long flags;						\
+									\
+	atomic_ops_lock(flags);						\
+	v->counter c_op i;						\
+	atomic_ops_unlock(flags);					\
+}
+
+#define ATOMIC_OP_RETURN(op, c_op, asm_op)				\
+static inline int arch_atomic_##op##_return(int i, atomic_t *v)		\
+{									\
+	unsigned long flags;						\
+	unsigned long temp;						\
+									\
+	/*								\
+	 * spin lock/unlock provides the needed smp_mb() before/after	\
+	 */								\
+	atomic_ops_lock(flags);						\
+	temp = v->counter;						\
+	temp c_op i;							\
+	v->counter = temp;						\
+	atomic_ops_unlock(flags);					\
+									\
+	return temp;							\
+}
+
+#define ATOMIC_FETCH_OP(op, c_op, asm_op)				\
+static inline int arch_atomic_fetch_##op(int i, atomic_t *v)		\
+{									\
+	unsigned long flags;						\
+	unsigned long orig;						\
+									\
+	/*								\
+	 * spin lock/unlock provides the needed smp_mb() before/after	\
+	 */								\
+	atomic_ops_lock(flags);						\
+	orig = v->counter;						\
+	v->counter c_op i;						\
+	atomic_ops_unlock(flags);					\
+									\
+	return orig;							\
+}
+
+#endif /* !CONFIG_ARC_HAS_LLSC */
+
+#define ATOMIC_OPS(op, c_op, asm_op)					\
+	ATOMIC_OP(op, c_op, asm_op)					\
+	ATOMIC_OP_RETURN(op, c_op, asm_op)				\
+	ATOMIC_FETCH_OP(op, c_op, asm_op)
+
+ATOMIC_OPS(add, +=, add)
+ATOMIC_OPS(sub, -=, sub)
+
+#undef ATOMIC_OPS
+#define ATOMIC_OPS(op, c_op, asm_op)					\
+	ATOMIC_OP(op, c_op, asm_op)					\
+	ATOMIC_FETCH_OP(op, c_op, asm_op)
+
+ATOMIC_OPS(and, &=, and)
+ATOMIC_OPS(andnot, &= ~, bic)
+ATOMIC_OPS(or, |=, or)
+ATOMIC_OPS(xor, ^=, xor)
+
+#define arch_atomic_andnot		arch_atomic_andnot
+#define arch_atomic_fetch_andnot	arch_atomic_fetch_andnot
+
+#undef ATOMIC_OPS
+#undef ATOMIC_FETCH_OP
+#undef ATOMIC_OP_RETURN
+#undef ATOMIC_OP
+
 #ifdef CONFIG_GENERIC_ATOMIC64
+
 #include <asm-generic/atomic64.h>
-<<<<<<< HEAD
 
 #else	/* Kconfig ensures this is only enabled with needed h/w assist */
 
@@ -418,12 +446,6 @@ static inline s64 arch_atomic64_fetch_add_unless(atomic64_t *v, s64 a, s64 u)
 #define arch_atomic64_fetch_add_unless arch_atomic64_fetch_add_unless
 
 #endif	/* !CONFIG_GENERIC_ATOMIC64 */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#else
-#include <asm/atomic64-arcv2.h>
-#endif
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif	/* !__ASSEMBLY__ */
 

@@ -41,13 +41,7 @@ int amdgpu_umc_ras_late_init(struct amdgpu_device *adev)
 		adev->umc.ras_if->block = AMDGPU_RAS_BLOCK__UMC;
 		adev->umc.ras_if->type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
 		adev->umc.ras_if->sub_block_index = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		strcpy(adev->umc.ras_if->name, "umc");
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	ih_info.head = fs_info.head = *adev->umc.ras_if;
 
@@ -140,15 +134,7 @@ int amdgpu_umc_process_ras_data_cb(struct amdgpu_device *adev,
 			amdgpu_ras_save_bad_pages(adev);
 
 			if (adev->smu.ppt_funcs && adev->smu.ppt_funcs->send_hbm_bad_pages_num)
-<<<<<<< HEAD
-<<<<<<< HEAD
-				adev->smu.ppt_funcs->send_hbm_bad_pages_num(&adev->smu, con->eeprom_control.ras_num_recs);
-=======
 				adev->smu.ppt_funcs->send_hbm_bad_pages_num(&adev->smu, con->eeprom_control.num_recs);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				adev->smu.ppt_funcs->send_hbm_bad_pages_num(&adev->smu, con->eeprom_control.ras_num_recs);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		amdgpu_ras_reset_gpu(adev);

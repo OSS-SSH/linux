@@ -1,15 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
  * Copyright (C) 2010 Red Hat, Inc.
-<<<<<<< HEAD
-<<<<<<< HEAD
- * Copyright (c) 2016-2021 Christoph Hellwig.
-=======
  * Copyright (c) 2016-2018 Christoph Hellwig.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * Copyright (c) 2016-2021 Christoph Hellwig.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 #include <linux/module.h>
 #include <linux/compiler.h>
@@ -67,41 +59,19 @@ int iomap_dio_iopoll(struct kiocb *kiocb, bool spin)
 }
 EXPORT_SYMBOL_GPL(iomap_dio_iopoll);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void iomap_dio_submit_bio(const struct iomap_iter *iter,
-		struct iomap_dio *dio, struct bio *bio, loff_t pos)
-=======
 static void iomap_dio_submit_bio(struct iomap_dio *dio, struct iomap *iomap,
 		struct bio *bio, loff_t pos)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void iomap_dio_submit_bio(const struct iomap_iter *iter,
-		struct iomap_dio *dio, struct bio *bio, loff_t pos)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	atomic_inc(&dio->ref);
 
 	if (dio->iocb->ki_flags & IOCB_HIPRI)
 		bio_set_polled(bio, dio->iocb);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	dio->submit.last_queue = bdev_get_queue(iter->iomap.bdev);
-	if (dio->dops && dio->dops->submit_io)
-		dio->submit.cookie = dio->dops->submit_io(iter, bio, pos);
-=======
 	dio->submit.last_queue = bdev_get_queue(iomap->bdev);
 	if (dio->dops && dio->dops->submit_io)
 		dio->submit.cookie = dio->dops->submit_io(
 				file_inode(dio->iocb->ki_filp),
 				iomap, bio, pos);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	dio->submit.last_queue = bdev_get_queue(iter->iomap.bdev);
-	if (dio->dops && dio->dops->submit_io)
-		dio->submit.cookie = dio->dops->submit_io(iter, bio, pos);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	else
 		dio->submit.cookie = submit_bio(bio);
 }
@@ -211,52 +181,24 @@ static void iomap_dio_bio_end_io(struct bio *bio)
 	}
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
-		loff_t pos, unsigned len)
-=======
 static void
 iomap_dio_zero(struct iomap_dio *dio, struct iomap *iomap, loff_t pos,
 		unsigned len)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
-		loff_t pos, unsigned len)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct page *page = ZERO_PAGE(0);
 	int flags = REQ_SYNC | REQ_IDLE;
 	struct bio *bio;
 
 	bio = bio_alloc(GFP_KERNEL, 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bio_set_dev(bio, iter->iomap.bdev);
-	bio->bi_iter.bi_sector = iomap_sector(&iter->iomap, pos);
-=======
 	bio_set_dev(bio, iomap->bdev);
 	bio->bi_iter.bi_sector = iomap_sector(iomap, pos);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bio_set_dev(bio, iter->iomap.bdev);
-	bio->bi_iter.bi_sector = iomap_sector(&iter->iomap, pos);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bio->bi_private = dio;
 	bio->bi_end_io = iomap_dio_bio_end_io;
 
 	get_page(page);
 	__bio_add_page(bio, page, len, 0);
 	bio_set_op_attrs(bio, REQ_OP_WRITE, flags);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	iomap_dio_submit_bio(iter, dio, bio, pos);
-=======
 	iomap_dio_submit_bio(dio, iomap, bio, pos);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	iomap_dio_submit_bio(iter, dio, bio, pos);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /*
@@ -264,18 +206,8 @@ static void iomap_dio_zero(const struct iomap_iter *iter, struct iomap_dio *dio,
  * mapping, and whether or not we want FUA.  Note that we can end up
  * clearing the WRITE_FUA flag in the dio request.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-static inline unsigned int iomap_dio_bio_opflags(struct iomap_dio *dio,
-		const struct iomap *iomap, bool use_fua)
-=======
 static inline unsigned int
 iomap_dio_bio_opflags(struct iomap_dio *dio, struct iomap *iomap, bool use_fua)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static inline unsigned int iomap_dio_bio_opflags(struct iomap_dio *dio,
-		const struct iomap *iomap, bool use_fua)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	unsigned int opflags = REQ_SYNC | REQ_IDLE;
 
@@ -297,38 +229,13 @@ static inline unsigned int iomap_dio_bio_opflags(struct iomap_dio *dio,
 	return opflags;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static loff_t iomap_dio_bio_iter(const struct iomap_iter *iter,
-		struct iomap_dio *dio)
-{
-	const struct iomap *iomap = &iter->iomap;
-	struct inode *inode = iter->inode;
-	unsigned int blkbits = blksize_bits(bdev_logical_block_size(iomap->bdev));
-	unsigned int fs_block_size = i_blocksize(inode), pad;
-	unsigned int align = iov_iter_alignment(dio->submit.iter);
-	loff_t length = iomap_length(iter);
-	loff_t pos = iter->pos;
-=======
 static loff_t
 iomap_dio_bio_actor(struct inode *inode, loff_t pos, loff_t length,
 		struct iomap_dio *dio, struct iomap *iomap)
-=======
-static loff_t iomap_dio_bio_iter(const struct iomap_iter *iter,
-		struct iomap_dio *dio)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	const struct iomap *iomap = &iter->iomap;
-	struct inode *inode = iter->inode;
 	unsigned int blkbits = blksize_bits(bdev_logical_block_size(iomap->bdev));
 	unsigned int fs_block_size = i_blocksize(inode), pad;
 	unsigned int align = iov_iter_alignment(dio->submit.iter);
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	loff_t length = iomap_length(iter);
-	loff_t pos = iter->pos;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned int bio_opf;
 	struct bio *bio;
 	bool need_zeroout = false;
@@ -379,15 +286,7 @@ static loff_t iomap_dio_bio_iter(const struct iomap_iter *iter,
 		/* zero out from the start of the block to the write offset */
 		pad = pos & (fs_block_size - 1);
 		if (pad)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			iomap_dio_zero(iter, dio, pos - pad, pad);
-=======
 			iomap_dio_zero(dio, iomap, pos - pad, pad);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			iomap_dio_zero(iter, dio, pos - pad, pad);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/*
@@ -440,15 +339,7 @@ static loff_t iomap_dio_bio_iter(const struct iomap_iter *iter,
 
 		nr_pages = bio_iov_vecs_to_alloc(dio->submit.iter,
 						 BIO_MAX_VECS);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		iomap_dio_submit_bio(iter, dio, bio, pos);
-=======
 		iomap_dio_submit_bio(dio, iomap, bio, pos);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		iomap_dio_submit_bio(iter, dio, bio, pos);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		pos += n;
 	} while (nr_pages);
 
@@ -464,15 +355,7 @@ zero_tail:
 		/* zero out from the end of the write to the end of the block */
 		pad = pos & (fs_block_size - 1);
 		if (pad)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			iomap_dio_zero(iter, dio, pos, fs_block_size - pad);
-=======
 			iomap_dio_zero(dio, iomap, pos, fs_block_size - pad);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			iomap_dio_zero(iter, dio, pos, fs_block_size - pad);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 out:
 	/* Undo iter limitation to current extent */
@@ -482,158 +365,65 @@ out:
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static loff_t iomap_dio_hole_iter(const struct iomap_iter *iter,
-		struct iomap_dio *dio)
-{
-	loff_t length = iov_iter_zero(iomap_length(iter), dio->submit.iter);
-
-=======
 static loff_t
 iomap_dio_hole_actor(loff_t length, struct iomap_dio *dio)
 {
 	length = iov_iter_zero(length, dio->submit.iter);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static loff_t iomap_dio_hole_iter(const struct iomap_iter *iter,
-		struct iomap_dio *dio)
-{
-	loff_t length = iov_iter_zero(iomap_length(iter), dio->submit.iter);
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dio->size += length;
 	return length;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static loff_t iomap_dio_inline_iter(const struct iomap_iter *iomi,
-		struct iomap_dio *dio)
-{
-	const struct iomap *iomap = &iomi->iomap;
-	struct iov_iter *iter = dio->submit.iter;
-	void *inline_data = iomap_inline_data(iomap, iomi->pos);
-	loff_t length = iomap_length(iomi);
-	loff_t pos = iomi->pos;
-	size_t copied;
-
-	if (WARN_ON_ONCE(!iomap_inline_data_valid(iomap)))
-		return -EIO;
-
-	if (dio->flags & IOMAP_DIO_WRITE) {
-		loff_t size = iomi->inode->i_size;
-
-		if (pos > size)
-			memset(iomap_inline_data(iomap, size), 0, pos - size);
-		copied = copy_from_iter(inline_data, length, iter);
-		if (copied) {
-			if (pos + copied > size)
-				i_size_write(iomi->inode, pos + copied);
-			mark_inode_dirty(iomi->inode);
-		}
-	} else {
-		copied = copy_to_iter(inline_data, length, iter);
-=======
 static loff_t
 iomap_dio_inline_actor(struct inode *inode, loff_t pos, loff_t length,
 		struct iomap_dio *dio, struct iomap *iomap)
-=======
-static loff_t iomap_dio_inline_iter(const struct iomap_iter *iomi,
-		struct iomap_dio *dio)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	const struct iomap *iomap = &iomi->iomap;
 	struct iov_iter *iter = dio->submit.iter;
-	void *inline_data = iomap_inline_data(iomap, iomi->pos);
-	loff_t length = iomap_length(iomi);
-	loff_t pos = iomi->pos;
 	size_t copied;
 
-	if (WARN_ON_ONCE(!iomap_inline_data_valid(iomap)))
-		return -EIO;
+	BUG_ON(pos + length > PAGE_SIZE - offset_in_page(iomap->inline_data));
 
 	if (dio->flags & IOMAP_DIO_WRITE) {
-		loff_t size = iomi->inode->i_size;
+		loff_t size = inode->i_size;
 
 		if (pos > size)
-			memset(iomap_inline_data(iomap, size), 0, pos - size);
-		copied = copy_from_iter(inline_data, length, iter);
+			memset(iomap->inline_data + size, 0, pos - size);
+		copied = copy_from_iter(iomap->inline_data + pos, length, iter);
 		if (copied) {
 			if (pos + copied > size)
-				i_size_write(iomi->inode, pos + copied);
-			mark_inode_dirty(iomi->inode);
+				i_size_write(inode, pos + copied);
+			mark_inode_dirty(inode);
 		}
 	} else {
-<<<<<<< HEAD
 		copied = copy_to_iter(iomap->inline_data + pos, length, iter);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		copied = copy_to_iter(inline_data, length, iter);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 	dio->size += copied;
 	return copied;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static loff_t iomap_dio_iter(const struct iomap_iter *iter,
-		struct iomap_dio *dio)
-{
-	switch (iter->iomap.type) {
-	case IOMAP_HOLE:
-		if (WARN_ON_ONCE(dio->flags & IOMAP_DIO_WRITE))
-			return -EIO;
-		return iomap_dio_hole_iter(iter, dio);
-	case IOMAP_UNWRITTEN:
-		if (!(dio->flags & IOMAP_DIO_WRITE))
-			return iomap_dio_hole_iter(iter, dio);
-		return iomap_dio_bio_iter(iter, dio);
-	case IOMAP_MAPPED:
-		return iomap_dio_bio_iter(iter, dio);
-	case IOMAP_INLINE:
-		return iomap_dio_inline_iter(iter, dio);
-=======
 static loff_t
 iomap_dio_actor(struct inode *inode, loff_t pos, loff_t length,
 		void *data, struct iomap *iomap, struct iomap *srcmap)
-=======
-static loff_t iomap_dio_iter(const struct iomap_iter *iter,
-		struct iomap_dio *dio)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
-	switch (iter->iomap.type) {
+	struct iomap_dio *dio = data;
+
+	switch (iomap->type) {
 	case IOMAP_HOLE:
 		if (WARN_ON_ONCE(dio->flags & IOMAP_DIO_WRITE))
 			return -EIO;
-		return iomap_dio_hole_iter(iter, dio);
+		return iomap_dio_hole_actor(length, dio);
 	case IOMAP_UNWRITTEN:
 		if (!(dio->flags & IOMAP_DIO_WRITE))
-			return iomap_dio_hole_iter(iter, dio);
-		return iomap_dio_bio_iter(iter, dio);
+			return iomap_dio_hole_actor(length, dio);
+		return iomap_dio_bio_actor(inode, pos, length, dio, iomap);
 	case IOMAP_MAPPED:
-		return iomap_dio_bio_iter(iter, dio);
+		return iomap_dio_bio_actor(inode, pos, length, dio, iomap);
 	case IOMAP_INLINE:
-<<<<<<< HEAD
 		return iomap_dio_inline_actor(inode, pos, length, dio, iomap);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return iomap_dio_inline_iter(iter, dio);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case IOMAP_DELALLOC:
 		/*
 		 * DIO is not serialised against mmap() access at all, and so
 		 * if the page_mkwrite occurs between the writeback and the
-<<<<<<< HEAD
-<<<<<<< HEAD
-		 * iomap_iter() call in the DIO path, then it will see the
-=======
 		 * iomap_apply() call in the DIO path, then it will see the
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		 * iomap_iter() call in the DIO path, then it will see the
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 * DELALLOC block that the page-mkwrite allocated.
 		 */
 		pr_warn_ratelimited("Direct I/O collision with buffered writes! File: %pD4 Comm: %.20s\n",
@@ -664,41 +454,16 @@ __iomap_dio_rw(struct kiocb *iocb, struct iov_iter *iter,
 {
 	struct address_space *mapping = iocb->ki_filp->f_mapping;
 	struct inode *inode = file_inode(iocb->ki_filp);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	struct iomap_iter iomi = {
-		.inode		= inode,
-		.pos		= iocb->ki_pos,
-		.len		= iov_iter_count(iter),
-		.flags		= IOMAP_DIRECT,
-	};
-	loff_t end = iomi.pos + iomi.len - 1, ret = 0;
-<<<<<<< HEAD
-	bool wait_for_completion =
-		is_sync_kiocb(iocb) || (dio_flags & IOMAP_DIO_FORCE_WAIT);
-	struct blk_plug plug;
-	struct iomap_dio *dio;
-
-	if (!iomi.len)
-=======
 	size_t count = iov_iter_count(iter);
 	loff_t pos = iocb->ki_pos;
 	loff_t end = iocb->ki_pos + count - 1, ret = 0;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	bool wait_for_completion =
 		is_sync_kiocb(iocb) || (dio_flags & IOMAP_DIO_FORCE_WAIT);
+	unsigned int iomap_flags = IOMAP_DIRECT;
 	struct blk_plug plug;
 	struct iomap_dio *dio;
 
-<<<<<<< HEAD
 	if (!count)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!iomi.len)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return NULL;
 
 	dio = kmalloc(sizeof(*dio), GFP_KERNEL);
@@ -719,71 +484,29 @@ __iomap_dio_rw(struct kiocb *iocb, struct iov_iter *iter,
 	dio->submit.last_queue = NULL;
 
 	if (iov_iter_rw(iter) == READ) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (iomi.pos >= dio->i_size)
-			goto out_free_dio;
-
-		if (iocb->ki_flags & IOCB_NOWAIT) {
-			if (filemap_range_needs_writeback(mapping, iomi.pos,
-					end)) {
-				ret = -EAGAIN;
-				goto out_free_dio;
-			}
-			iomi.flags |= IOMAP_NOWAIT;
-=======
 		if (pos >= dio->i_size)
-=======
-		if (iomi.pos >= dio->i_size)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto out_free_dio;
 
 		if (iocb->ki_flags & IOCB_NOWAIT) {
-			if (filemap_range_needs_writeback(mapping, iomi.pos,
-					end)) {
+			if (filemap_range_needs_writeback(mapping, pos, end)) {
 				ret = -EAGAIN;
 				goto out_free_dio;
 			}
-<<<<<<< HEAD
 			iomap_flags |= IOMAP_NOWAIT;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			iomi.flags |= IOMAP_NOWAIT;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		if (iter_is_iovec(iter))
 			dio->flags |= IOMAP_DIO_DIRTY;
 	} else {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		iomi.flags |= IOMAP_WRITE;
-		dio->flags |= IOMAP_DIO_WRITE;
-
-		if (iocb->ki_flags & IOCB_NOWAIT) {
-			if (filemap_range_has_page(mapping, iomi.pos, end)) {
-				ret = -EAGAIN;
-				goto out_free_dio;
-			}
-			iomi.flags |= IOMAP_NOWAIT;
-=======
 		iomap_flags |= IOMAP_WRITE;
-=======
-		iomi.flags |= IOMAP_WRITE;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dio->flags |= IOMAP_DIO_WRITE;
 
 		if (iocb->ki_flags & IOCB_NOWAIT) {
-			if (filemap_range_has_page(mapping, iomi.pos, end)) {
+			if (filemap_range_has_page(mapping, pos, end)) {
 				ret = -EAGAIN;
 				goto out_free_dio;
 			}
-<<<<<<< HEAD
 			iomap_flags |= IOMAP_NOWAIT;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			iomi.flags |= IOMAP_NOWAIT;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 
 		/* for data sync or sync, we need sync completion processing */
@@ -802,31 +525,12 @@ __iomap_dio_rw(struct kiocb *iocb, struct iov_iter *iter,
 
 	if (dio_flags & IOMAP_DIO_OVERWRITE_ONLY) {
 		ret = -EAGAIN;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (iomi.pos >= dio->i_size ||
-		    iomi.pos + iomi.len > dio->i_size)
-			goto out_free_dio;
-		iomi.flags |= IOMAP_OVERWRITE_ONLY;
-	}
-
-	ret = filemap_write_and_wait_range(mapping, iomi.pos, end);
-=======
 		if (pos >= dio->i_size || pos + count > dio->i_size)
-=======
-		if (iomi.pos >= dio->i_size ||
-		    iomi.pos + iomi.len > dio->i_size)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			goto out_free_dio;
-		iomi.flags |= IOMAP_OVERWRITE_ONLY;
+		iomap_flags |= IOMAP_OVERWRITE_ONLY;
 	}
 
-<<<<<<< HEAD
 	ret = filemap_write_and_wait_range(mapping, pos, end);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	ret = filemap_write_and_wait_range(mapping, iomi.pos, end);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret)
 		goto out_free_dio;
 
@@ -836,22 +540,9 @@ __iomap_dio_rw(struct kiocb *iocb, struct iov_iter *iter,
 		 * If this invalidation fails, let the caller fall back to
 		 * buffered I/O.
 		 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		if (invalidate_inode_pages2_range(mapping,
-				iomi.pos >> PAGE_SHIFT, end >> PAGE_SHIFT)) {
-			trace_iomap_dio_invalidate_fail(inode, iomi.pos,
-							iomi.len);
-<<<<<<< HEAD
-=======
 		if (invalidate_inode_pages2_range(mapping, pos >> PAGE_SHIFT,
 				end >> PAGE_SHIFT)) {
 			trace_iomap_dio_invalidate_fail(inode, pos, count);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			ret = -ENOTBLK;
 			goto out_free_dio;
 		}
@@ -866,26 +557,6 @@ __iomap_dio_rw(struct kiocb *iocb, struct iov_iter *iter,
 	inode_dio_begin(inode);
 
 	blk_start_plug(&plug);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	while ((ret = iomap_iter(&iomi, ops)) > 0)
-		iomi.processed = iomap_dio_iter(&iomi, dio);
-	blk_finish_plug(&plug);
-
-	/*
-	 * We only report that we've read data up to i_size.
-	 * Revert iter to a state corresponding to that as some callers (such
-	 * as the splice code) rely on it.
-	 */
-	if (iov_iter_rw(iter) == READ && iomi.pos >= dio->i_size)
-		iov_iter_revert(iter, iomi.pos - dio->i_size);
-
-	/* magic error code to fall back to buffered I/O */
-	if (ret == -ENOTBLK) {
-		wait_for_completion = true;
-		ret = 0;
-	}
-=======
 	do {
 		ret = iomap_apply(inode, pos, count, iomap_flags, ops, dio,
 				iomap_dio_actor);
@@ -911,26 +582,6 @@ __iomap_dio_rw(struct kiocb *iocb, struct iov_iter *iter,
 	} while ((count = iov_iter_count(iter)) > 0);
 	blk_finish_plug(&plug);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	while ((ret = iomap_iter(&iomi, ops)) > 0)
-		iomi.processed = iomap_dio_iter(&iomi, dio);
-	blk_finish_plug(&plug);
-
-	/*
-	 * We only report that we've read data up to i_size.
-	 * Revert iter to a state corresponding to that as some callers (such
-	 * as the splice code) rely on it.
-	 */
-	if (iov_iter_rw(iter) == READ && iomi.pos >= dio->i_size)
-		iov_iter_revert(iter, iomi.pos - dio->i_size);
-
-	/* magic error code to fall back to buffered I/O */
-	if (ret == -ENOTBLK) {
-		wait_for_completion = true;
-		ret = 0;
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (ret < 0)
 		iomap_dio_set_error(dio, ret);
 

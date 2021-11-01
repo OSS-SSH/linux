@@ -196,9 +196,6 @@ static int sa1111_map_irq(struct sa1111 *sachip, irq_hw_number_t hwirq)
 	return irq_create_mapping(sachip->irqdomain, hwirq);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static void sa1111_handle_irqdomain(struct irq_domain *irqdomain, int irq)
 {
 	struct irq_desc *d = irq_to_desc(irq_linear_revmap(irqdomain, irq));
@@ -207,9 +204,6 @@ static void sa1111_handle_irqdomain(struct irq_domain *irqdomain, int irq)
 		generic_handle_irq_desc(d);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * SA1111 interrupt support.  Since clearing an IRQ while there are
  * active IRQs causes the interrupt output to pulse, the upper levels
@@ -240,27 +234,11 @@ static void sa1111_irq_handler(struct irq_desc *desc)
 
 	for (i = 0; stat0; i++, stat0 >>= 1)
 		if (stat0 & 1)
-<<<<<<< HEAD
-<<<<<<< HEAD
-			generic_handle_domain_irq(irqdomain, i);
-
-	for (i = 32; stat1; i++, stat1 >>= 1)
-		if (stat1 & 1)
-			generic_handle_domain_irq(irqdomain, i);
-=======
 			sa1111_handle_irqdomain(irqdomain, i);
 
 	for (i = 32; stat1; i++, stat1 >>= 1)
 		if (stat1 & 1)
 			sa1111_handle_irqdomain(irqdomain, i);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			generic_handle_domain_irq(irqdomain, i);
-
-	for (i = 32; stat1; i++, stat1 >>= 1)
-		if (stat1 & 1)
-			generic_handle_domain_irq(irqdomain, i);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* For level-based interrupts */
 	desc->irq_data.chip->irq_unmask(&desc->irq_data);
@@ -1386,29 +1364,15 @@ static int sa1111_bus_probe(struct device *dev)
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void sa1111_bus_remove(struct device *dev)
-=======
 static int sa1111_bus_remove(struct device *dev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void sa1111_bus_remove(struct device *dev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct sa1111_dev *sadev = to_sa1111_device(dev);
 	struct sa1111_driver *drv = SA1111_DRV(dev->driver);
 
 	if (drv->remove)
 		drv->remove(sadev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 struct bus_type sa1111_bus_type = {

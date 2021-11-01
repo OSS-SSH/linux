@@ -57,40 +57,20 @@ struct ipa_cmd_info {
 	enum dma_data_direction direction;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef IPA_VALIDATE
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * ipa_cmd_table_valid() - Validate a memory region holding a table
  * @ipa:	- IPA pointer
  * @mem:	- IPA memory region descriptor
  * @route:	- Whether the region holds a route or filter table
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  * @ipv6:	- Whether the table is for IPv6 or IPv4
  * @hashed:	- Whether the table is hashed or non-hashed
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Return:	true if region is valid, false otherwise
  */
 bool ipa_cmd_table_valid(struct ipa *ipa, const struct ipa_mem *mem,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			    bool route);
-=======
 			    bool route, bool ipv6, bool hashed);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			    bool route);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 /**
  * ipa_cmd_data_valid() - Validate command-realted configuration is valid
@@ -100,9 +80,6 @@ bool ipa_cmd_table_valid(struct ipa *ipa, const struct ipa_mem *mem,
  */
 bool ipa_cmd_data_valid(struct ipa *ipa);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #else /* !IPA_VALIDATE */
 
 static inline bool ipa_cmd_table_valid(struct ipa *ipa,
@@ -119,9 +96,6 @@ static inline bool ipa_cmd_data_valid(struct ipa *ipa)
 
 #endif /* !IPA_VALIDATE */
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * ipa_cmd_pool_init() - initialize command channel pools
  * @channel:	AP->IPA command TX GSI channel pointer

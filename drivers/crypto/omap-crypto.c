@@ -210,15 +210,7 @@ void omap_crypto_cleanup(struct scatterlist *sg, struct scatterlist *orig,
 	buf = sg_virt(sg);
 	pages = get_order(len);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (orig && (flags & OMAP_CRYPTO_DATA_COPIED))
-=======
 	if (orig && (flags & OMAP_CRYPTO_COPY_MASK))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (orig && (flags & OMAP_CRYPTO_DATA_COPIED))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		omap_crypto_copy_data(sg, orig, offset, len);
 
 	if (flags & OMAP_CRYPTO_DATA_COPIED)

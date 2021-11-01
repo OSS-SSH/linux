@@ -29,15 +29,7 @@
 		compatible = "arm,im-pd1-syscon", "syscon";
 		reg = <0x00000000 0x1000>;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		vco1: vco1-clock {
-=======
 		vco1: clock@00 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		vco1: vco1-clock {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			compatible = "arm,impd1-vco1";
 			#clock-cells = <0>;
 			lock-offset = <0x08>;
@@ -46,15 +38,7 @@
 			clock-output-names = "IM-PD1-VCO1";
 		};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		vco2: vco2-clock {
-=======
 		vco2: clock@04 {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		vco2: vco2-clock {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			compatible = "arm,impd1-vco2";
 			#clock-cells = <0>;
 			lock-offset = <0x08>;

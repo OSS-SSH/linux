@@ -182,14 +182,8 @@ static inline unsigned long *get_st_pto(unsigned long entry)
 }
 
 /* Prototypes */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 int zpci_dma_init_device(struct zpci_dev *);
 void zpci_dma_exit_device(struct zpci_dev *);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void dma_free_seg_table(unsigned long);
 unsigned long *dma_alloc_cpu_table(void);
 void dma_cleanup_tables(unsigned long *);

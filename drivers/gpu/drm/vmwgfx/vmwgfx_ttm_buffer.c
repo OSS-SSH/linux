@@ -222,9 +222,6 @@ static bool __vmw_piter_sg_next(struct vmw_piter *viter)
 }
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 /**
  * __vmw_piter_non_sg_page: Helper functions to return a pointer
  * to the current page.
@@ -255,9 +252,6 @@ static dma_addr_t __vmw_piter_phys_addr(struct vmw_piter *viter)
 	return page_to_phys(viter->pages[viter->i]);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static dma_addr_t __vmw_piter_dma_addr(struct vmw_piter *viter)
 {
 	return viter->addrs[viter->i];
@@ -285,11 +279,6 @@ void vmw_piter_start(struct vmw_piter *viter, const struct vmw_sg_table *vsgt,
 {
 	viter->i = p_offset - 1;
 	viter->num_pages = vsgt->num_pages;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	viter->pages = vsgt->pages;
-	switch (vsgt->mode) {
-=======
 	viter->page = &__vmw_piter_non_sg_page;
 	viter->pages = vsgt->pages;
 	switch (vsgt->mode) {
@@ -297,11 +286,6 @@ void vmw_piter_start(struct vmw_piter *viter, const struct vmw_sg_table *vsgt,
 		viter->next = &__vmw_piter_non_sg_next;
 		viter->dma_address = &__vmw_piter_phys_addr;
 		break;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	viter->pages = vsgt->pages;
-	switch (vsgt->mode) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case vmw_dma_alloc_coherent:
 		viter->next = &__vmw_piter_non_sg_next;
 		viter->dma_address = &__vmw_piter_dma_addr;
@@ -379,13 +363,7 @@ static int vmw_ttm_map_dma(struct vmw_ttm_tt *vmw_tt)
 	int ret = 0;
 	static size_t sgl_size;
 	static size_t sgt_size;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	struct scatterlist *sg;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (vmw_tt->mapped)
 		return 0;
@@ -408,18 +386,6 @@ static int vmw_ttm_map_dma(struct vmw_ttm_tt *vmw_tt)
 		if (unlikely(ret != 0))
 			return ret;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		ret = sg_alloc_table_from_pages_segment(
-			&vmw_tt->sgt, vsgt->pages, vsgt->num_pages, 0,
-			(unsigned long)vsgt->num_pages << PAGE_SHIFT,
-			dma_get_max_seg_size(dev_priv->drm.dev), GFP_KERNEL);
-		if (ret)
-<<<<<<< HEAD
-			goto out_sg_alloc_fail;
-=======
 		sg = __sg_alloc_table_from_pages(&vmw_tt->sgt, vsgt->pages,
 				vsgt->num_pages, 0,
 				(unsigned long) vsgt->num_pages << PAGE_SHIFT,
@@ -429,10 +395,6 @@ static int vmw_ttm_map_dma(struct vmw_ttm_tt *vmw_tt)
 			ret = PTR_ERR(sg);
 			goto out_sg_alloc_fail;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			goto out_sg_alloc_fail;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		if (vsgt->num_pages > vmw_tt->sgt.orig_nents) {
 			uint64_t over_alloc =

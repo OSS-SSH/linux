@@ -138,14 +138,6 @@ int sandybridge_pcode_write_timeout(struct drm_i915_private *i915, u32 mbox,
 int skl_pcode_request(struct drm_i915_private *i915, u32 mbox, u32 request,
 		      u32 reply_mask, u32 reply, int timeout_base_ms);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int intel_pcode_init(struct drm_i915_private *i915);
-=======
 void intel_pcode_init(struct drm_i915_private *i915);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int intel_pcode_init(struct drm_i915_private *i915);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #endif /* _INTEL_SIDEBAND_H */

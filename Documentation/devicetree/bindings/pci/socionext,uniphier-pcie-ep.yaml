@@ -10,29 +10,13 @@ description: |
   UniPhier PCIe endpoint controller is based on the Synopsys DesignWare
   PCI core. It shares common features with the PCIe DesignWare core and
   inherits common properties defined in
-<<<<<<< HEAD
-<<<<<<< HEAD
-  Documentation/devicetree/bindings/pci/snps,dw-pcie-ep.yaml.
-=======
   Documentation/devicetree/bindings/pci/designware-pcie.txt.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  Documentation/devicetree/bindings/pci/snps,dw-pcie-ep.yaml.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 maintainers:
   - Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
 allOf:
-<<<<<<< HEAD
-<<<<<<< HEAD
-  - $ref: /schemas/pci/snps,dw-pcie-ep.yaml#
-=======
   - $ref: "pci-ep.yaml#"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-  - $ref: /schemas/pci/snps,dw-pcie-ep.yaml#
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 properties:
   compatible:

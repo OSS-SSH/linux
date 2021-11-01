@@ -470,16 +470,6 @@ static void hl_mmu_v1_fini(struct hl_device *hdev)
 	if (!ZERO_OR_NULL_PTR(hdev->mmu_priv.hr.mmu_shadow_hop0)) {
 		kvfree(hdev->mmu_priv.dr.mmu_shadow_hop0);
 		gen_pool_destroy(hdev->mmu_priv.dr.mmu_pgt_pool);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-		/* Make sure that if we arrive here again without init was
-		 * called we won't cause kernel panic. This can happen for
-		 * example if we fail during hard reset code at certain points
-		 */
-		hdev->mmu_priv.dr.mmu_shadow_hop0 = NULL;
-	}
-=======
 	}
 
 	/* Make sure that if we arrive here again without init was called we
@@ -487,16 +477,6 @@ static void hl_mmu_v1_fini(struct hl_device *hdev)
 	 * during hard reset code at certain points
 	 */
 	hdev->mmu_priv.dr.mmu_shadow_hop0 = NULL;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-		/* Make sure that if we arrive here again without init was
-		 * called we won't cause kernel panic. This can happen for
-		 * example if we fail during hard reset code at certain points
-		 */
-		hdev->mmu_priv.dr.mmu_shadow_hop0 = NULL;
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**

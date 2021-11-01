@@ -1093,15 +1093,7 @@ static void pxa25x_ep_fifo_flush(struct usb_ep *_ep)
 }
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const struct usb_ep_ops pxa25x_ep_ops = {
-=======
 static struct usb_ep_ops pxa25x_ep_ops = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct usb_ep_ops pxa25x_ep_ops = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.enable		= pxa25x_ep_enable,
 	.disable	= pxa25x_ep_disable,
 

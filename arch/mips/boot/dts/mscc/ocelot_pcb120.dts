@@ -69,107 +69,40 @@
 };
 
 &port0 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	status = "okay";
 	phy-handle = <&phy0>;
-	phy-mode = "internal";
 };
 
 &port1 {
-	status = "okay";
 	phy-handle = <&phy1>;
-	phy-mode = "internal";
 };
 
 &port2 {
-	status = "okay";
 	phy-handle = <&phy2>;
-	phy-mode = "internal";
 };
 
 &port3 {
-	status = "okay";
 	phy-handle = <&phy3>;
-	phy-mode = "internal";
 };
 
 &port4 {
-	status = "okay";
-=======
-=======
-	status = "okay";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	phy-handle = <&phy0>;
-	phy-mode = "internal";
-};
-
-&port1 {
-	status = "okay";
-	phy-handle = <&phy1>;
-	phy-mode = "internal";
-};
-
-&port2 {
-	status = "okay";
-	phy-handle = <&phy2>;
-	phy-mode = "internal";
-};
-
-&port3 {
-	status = "okay";
-	phy-handle = <&phy3>;
-	phy-mode = "internal";
-};
-
-&port4 {
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	status = "okay";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy-handle = <&phy7>;
 	phy-mode = "sgmii";
 	phys = <&serdes 4 SERDES1G(2)>;
 };
 
 &port5 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	status = "okay";
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	status = "okay";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy-handle = <&phy4>;
 	phy-mode = "sgmii";
 	phys = <&serdes 5 SERDES1G(5)>;
 };
 
 &port6 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	status = "okay";
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	status = "okay";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy-handle = <&phy6>;
 	phy-mode = "sgmii";
 	phys = <&serdes 6 SERDES1G(3)>;
 };
 
 &port9 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	status = "okay";
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	status = "okay";
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	phy-handle = <&phy5>;
 	phy-mode = "sgmii";
 	phys = <&serdes 9 SERDES1G(4)>;

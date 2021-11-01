@@ -7,12 +7,4 @@ obj-$(CONFIG_SPARX5_SWITCH) += sparx5-switch.o
 
 sparx5-switch-objs  := sparx5_main.o sparx5_packet.o \
  sparx5_netdev.o sparx5_phylink.o sparx5_port.o sparx5_mactable.o sparx5_vlan.o \
-<<<<<<< HEAD
-<<<<<<< HEAD
- sparx5_switchdev.o sparx5_calendar.o sparx5_ethtool.o sparx5_fdma.o
-=======
  sparx5_switchdev.o sparx5_calendar.o sparx5_ethtool.o
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- sparx5_switchdev.o sparx5_calendar.o sparx5_ethtool.o sparx5_fdma.o
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

@@ -3,14 +3,6 @@
 #define LINUX_VIRTIO_H
 #include <linux/scatterlist.h>
 #include <linux/kernel.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-#include <linux/spinlock.h>
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#include <linux/spinlock.h>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct device {
 	void *parent;
@@ -20,14 +12,6 @@ struct virtio_device {
 	struct device dev;
 	u64 features;
 	struct list_head vqs;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spinlock_t vqs_list_lock;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spinlock_t vqs_list_lock;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct virtqueue {

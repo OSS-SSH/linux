@@ -75,25 +75,4 @@ extern int xfs_errortag_clearall(struct xfs_mount *mp);
 #define		XFS_PTAG_FSBLOCK_ZERO		0x00000080
 #define		XFS_PTAG_VERIFIER_ERROR		0x00000100
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-#define XFS_PTAG_STRINGS \
-	{ XFS_NO_PTAG,			"none" }, \
-	{ XFS_PTAG_IFLUSH,		"iflush" }, \
-	{ XFS_PTAG_LOGRES,		"logres" }, \
-	{ XFS_PTAG_AILDELETE,		"aildelete" }, \
-	{ XFS_PTAG_ERROR_REPORT	,	"error_report" }, \
-	{ XFS_PTAG_SHUTDOWN_CORRUPT,	"corrupt" }, \
-	{ XFS_PTAG_SHUTDOWN_IOERROR,	"ioerror" }, \
-	{ XFS_PTAG_SHUTDOWN_LOGERROR,	"logerror" }, \
-	{ XFS_PTAG_FSBLOCK_ZERO,	"fsb_zero" }, \
-	{ XFS_PTAG_VERIFIER_ERROR,	"verifier" }
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif	/* __XFS_ERROR_H__ */

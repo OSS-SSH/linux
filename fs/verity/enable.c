@@ -177,15 +177,7 @@ static int build_merkle_tree(struct file *filp,
 	 * (level 0) and ascending to the root node (level 'num_levels - 1').
 	 * Then at the end (level 'num_levels'), calculate the root hash.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	blocks = ((u64)inode->i_size + params->block_size - 1) >>
-=======
 	blocks = (inode->i_size + params->block_size - 1) >>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	blocks = ((u64)inode->i_size + params->block_size - 1) >>
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		 params->log_blocksize;
 	for (level = 0; level <= params->num_levels; level++) {
 		err = build_merkle_tree_level(filp, level, blocks, params,

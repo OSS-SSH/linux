@@ -1562,11 +1562,6 @@ static const struct snd_pcm_ops snd_rme96_capture_adat_ops = {
 };
 
 static void
-<<<<<<< HEAD
-<<<<<<< HEAD
-snd_rme96_free(struct rme96 *rme96)
-{
-=======
 snd_rme96_free(void *private_data)
 {
 	struct rme96 *rme96 = (struct rme96 *)private_data;
@@ -1574,18 +1569,10 @@ snd_rme96_free(void *private_data)
 	if (!rme96)
 	        return;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-snd_rme96_free(struct rme96 *rme96)
-{
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (rme96->irq >= 0) {
 		snd_rme96_trigger(rme96, RME96_STOP_BOTH);
 		rme96->areg &= ~RME96_AR_DAC_EN;
 		writel(rme96->areg, rme96->iobase + RME96_IO_ADDITIONAL_REG);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 		free_irq(rme96->irq, (void *)rme96);
 		rme96->irq = -1;
 	}
@@ -1596,21 +1583,12 @@ snd_rme96_free(struct rme96 *rme96)
 	if (rme96->port) {
 		pci_release_regions(rme96->pci);
 		rme96->port = 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 #ifdef CONFIG_PM_SLEEP
 	vfree(rme96->playback_suspend_buffer);
 	vfree(rme96->capture_suspend_buffer);
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	pci_disable_device(rme96->pci);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void
@@ -1636,15 +1614,7 @@ snd_rme96_create(struct rme96 *rme96)
 	rme96->irq = -1;
 	spin_lock_init(&rme96->lock);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = pcim_enable_device(pci);
-=======
 	err = pci_enable_device(pci);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = pcim_enable_device(pci);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 
@@ -1653,40 +1623,16 @@ snd_rme96_create(struct rme96 *rme96)
 		return err;
 	rme96->port = pci_resource_start(rme96->pci, 0);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	rme96->iobase = devm_ioremap(&pci->dev, rme96->port, RME96_IO_SIZE);
-=======
 	rme96->iobase = ioremap(rme96->port, RME96_IO_SIZE);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	rme96->iobase = devm_ioremap(&pci->dev, rme96->port, RME96_IO_SIZE);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!rme96->iobase) {
 		dev_err(rme96->card->dev,
 			"unable to remap memory region 0x%lx-0x%lx\n",
 			rme96->port, rme96->port + RME96_IO_SIZE - 1);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return -EBUSY;
-	}
-
-	if (devm_request_irq(&pci->dev, pci->irq, snd_rme96_interrupt,
-			     IRQF_SHARED, KBUILD_MODNAME, rme96)) {
-=======
 		return -ENOMEM;
 	}
 
 	if (request_irq(pci->irq, snd_rme96_interrupt, IRQF_SHARED,
 			KBUILD_MODNAME, rme96)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return -EBUSY;
-	}
-
-	if (devm_request_irq(&pci->dev, pci->irq, snd_rme96_interrupt,
-			     IRQF_SHARED, KBUILD_MODNAME, rme96)) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		dev_err(rme96->card->dev, "unable to grab IRQ %d\n", pci->irq);
 		return -EBUSY;
 	}
@@ -2516,18 +2462,8 @@ snd_rme96_probe(struct pci_dev *pci,
 		dev++;
 		return -ENOENT;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				sizeof(*rme96), &card);
-=======
 	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 			   sizeof(struct rme96), &card);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
-				sizeof(*rme96), &card);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (err < 0)
 		return err;
 	card->private_free = snd_rme96_card_free;
@@ -2536,38 +2472,19 @@ snd_rme96_probe(struct pci_dev *pci,
 	rme96->pci = pci;
 	err = snd_rme96_create(rme96);
 	if (err)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return err;
-	
-#ifdef CONFIG_PM_SLEEP
-	rme96->playback_suspend_buffer = vmalloc(RME96_BUFFER_SIZE);
-	if (!rme96->playback_suspend_buffer)
-		return -ENOMEM;
-	rme96->capture_suspend_buffer = vmalloc(RME96_BUFFER_SIZE);
-	if (!rme96->capture_suspend_buffer)
-		return -ENOMEM;
-=======
 		goto free_card;
-=======
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	
 #ifdef CONFIG_PM_SLEEP
 	rme96->playback_suspend_buffer = vmalloc(RME96_BUFFER_SIZE);
-	if (!rme96->playback_suspend_buffer)
-		return -ENOMEM;
+	if (!rme96->playback_suspend_buffer) {
+		err = -ENOMEM;
+		goto free_card;
+	}
 	rme96->capture_suspend_buffer = vmalloc(RME96_BUFFER_SIZE);
-<<<<<<< HEAD
 	if (!rme96->capture_suspend_buffer) {
 		err = -ENOMEM;
 		goto free_card;
 	}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (!rme96->capture_suspend_buffer)
-		return -ENOMEM;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #endif
 
 	strcpy(card->driver, "Digi96");
@@ -2594,22 +2511,11 @@ snd_rme96_probe(struct pci_dev *pci,
 		rme96->port, rme96->irq);
 	err = snd_card_register(card);
 	if (err)
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return err;
-=======
 		goto free_card;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 free_card:
 	snd_card_free(card);
 	return err;
@@ -2618,22 +2524,13 @@ free_card:
 static void snd_rme96_remove(struct pci_dev *pci)
 {
 	snd_card_free(pci_get_drvdata(pci));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct pci_driver rme96_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_rme96_ids,
 	.probe = snd_rme96_probe,
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	.remove = snd_rme96_remove,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.driver = {
 		.pm = RME96_PM_OPS,
 	},

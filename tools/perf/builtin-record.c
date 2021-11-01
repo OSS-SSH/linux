@@ -910,17 +910,7 @@ static int record__open(struct record *rec)
 		 * Enable the dummy event when the process is forked for
 		 * initial_delay, immediately for system wide.
 		 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (opts->initial_delay && !pos->immediate &&
-		    !target__has_cpu(&opts->target))
-=======
 		if (opts->initial_delay && !pos->immediate)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (opts->initial_delay && !pos->immediate &&
-		    !target__has_cpu(&opts->target))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			pos->core.attr.enable_on_exec = 1;
 		else
 			pos->immediate = 1;
@@ -1397,13 +1387,7 @@ static int record__synthesize(struct record *rec, bool tail)
 	struct perf_data *data = &rec->data;
 	struct record_opts *opts = &rec->opts;
 	struct perf_tool *tool = &rec->tool;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	int fd = perf_data__fd(data);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err = 0;
 	event_op f = process_synthesized_event;
 
@@ -1411,15 +1395,6 @@ static int record__synthesize(struct record *rec, bool tail)
 		return 0;
 
 	if (data->is_pipe) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		err = perf_event__synthesize_for_pipe(tool, session, data,
-						      process_synthesized_event);
-		if (err < 0)
-			goto out;
-
-		rec->bytes_written += err;
-=======
 		/*
 		 * We need to synthesize events first, because some
 		 * features works on top of them (on report side).
@@ -1432,14 +1407,12 @@ static int record__synthesize(struct record *rec, bool tail)
 		}
 
 		err = perf_event__synthesize_features(tool, session, rec->evlist,
-=======
-		err = perf_event__synthesize_for_pipe(tool, session, data,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						      process_synthesized_event);
-		if (err < 0)
-			goto out;
+		if (err < 0) {
+			pr_err("Couldn't synthesize features.\n");
+			return err;
+		}
 
-<<<<<<< HEAD
 		if (have_tracepoints(&rec->evlist->core.entries)) {
 			/*
 			 * FIXME err <= 0 here actually means that
@@ -1457,10 +1430,6 @@ static int record__synthesize(struct record *rec, bool tail)
 			}
 			rec->bytes_written += err;
 		}
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		rec->bytes_written += err;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	err = perf_event__synth_time_conv(record__pick_pc(rec), tool,
@@ -1712,15 +1681,7 @@ static int __cmd_record(struct record *rec, int argc, const char **argv)
 		signal(SIGUSR2, SIG_IGN);
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	session = perf_session__new(data, tool);
-=======
 	session = perf_session__new(data, false, tool);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	session = perf_session__new(data, tool);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (IS_ERR(session)) {
 		pr_err("Perf session creation failed.\n");
 		return PTR_ERR(session);
@@ -2825,15 +2786,7 @@ int cmd_record(int argc, const char **argv)
 
 	if (rec->opts.affinity != PERF_AFFINITY_SYS) {
 		rec->affinity_mask.nbits = cpu__max_cpu();
-<<<<<<< HEAD
-<<<<<<< HEAD
-		rec->affinity_mask.bits = bitmap_zalloc(rec->affinity_mask.nbits);
-=======
 		rec->affinity_mask.bits = bitmap_alloc(rec->affinity_mask.nbits);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		rec->affinity_mask.bits = bitmap_zalloc(rec->affinity_mask.nbits);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (!rec->affinity_mask.bits) {
 			pr_err("Failed to allocate thread mask for %zd cpus\n", rec->affinity_mask.nbits);
 			err = -ENOMEM;
@@ -2931,22 +2884,6 @@ int cmd_record(int argc, const char **argv)
 	/* Enable ignoring missing threads when -u/-p option is defined. */
 	rec->opts.ignore_missing_thread = rec->opts.target.uid != UINT_MAX || rec->opts.target.pid;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (evlist__fix_hybrid_cpus(rec->evlist, rec->opts.target.cpu_list)) {
-		pr_err("failed to use cpu list %s\n",
-		       rec->opts.target.cpu_list);
-		goto out;
-	}
-
-	rec->opts.target.hybrid = perf_pmu__has_hybrid();
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = -ENOMEM;
 	if (evlist__create_maps(rec->evlist, &rec->opts.target) < 0)
 		usage_with_options(record_usage, record_options);

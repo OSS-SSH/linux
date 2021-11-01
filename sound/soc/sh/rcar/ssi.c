@@ -165,15 +165,7 @@ static void rsnd_ssi_status_check(struct rsnd_mod *mod,
 
 static u32 rsnd_ssi_multi_secondaries(struct rsnd_dai_stream *io)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static const enum rsnd_mod_type types[] = {
-=======
 	enum rsnd_mod_type types[] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static const enum rsnd_mod_type types[] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		RSND_MOD_SSIM1,
 		RSND_MOD_SSIM2,
 		RSND_MOD_SSIM3,
@@ -236,15 +228,7 @@ unsigned int rsnd_ssi_clk_query(struct rsnd_dai *rdai,
 		       int param1, int param2, int *idx)
 {
 	struct rsnd_priv *priv = rsnd_rdai_to_priv(rdai);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static const int ssi_clk_mul_table[] = {
-=======
 	int ssi_clk_mul_table[] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static const int ssi_clk_mul_table[] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		1, 2, 4, 8, 16, 6, 12,
 	};
 	int j, ret;
@@ -1095,15 +1079,7 @@ static void rsnd_ssi_connect(struct rsnd_mod *mod,
 			     struct rsnd_dai_stream *io)
 {
 	struct rsnd_dai *rdai = rsnd_io_to_rdai(io);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static const enum rsnd_mod_type types[] = {
-=======
 	enum rsnd_mod_type types[] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static const enum rsnd_mod_type types[] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		RSND_MOD_SSI,
 		RSND_MOD_SSIM1,
 		RSND_MOD_SSIM2,

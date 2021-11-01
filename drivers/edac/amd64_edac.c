@@ -571,18 +571,8 @@ EDAC_DCT_ATTR_SHOW(dbam0);
 EDAC_DCT_ATTR_SHOW(top_mem);
 EDAC_DCT_ATTR_SHOW(top_mem2);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static ssize_t dram_hole_show(struct device *dev, struct device_attribute *mattr,
-			      char *data)
-=======
 static ssize_t hole_show(struct device *dev, struct device_attribute *mattr,
 			 char *data)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static ssize_t dram_hole_show(struct device *dev, struct device_attribute *mattr,
-			      char *data)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct mem_ctl_info *mci = to_mci(dev);
 
@@ -603,15 +593,7 @@ static DEVICE_ATTR(dhar, S_IRUGO, dhar_show, NULL);
 static DEVICE_ATTR(dbam, S_IRUGO, dbam0_show, NULL);
 static DEVICE_ATTR(topmem, S_IRUGO, top_mem_show, NULL);
 static DEVICE_ATTR(topmem2, S_IRUGO, top_mem2_show, NULL);
-<<<<<<< HEAD
-<<<<<<< HEAD
-static DEVICE_ATTR_RO(dram_hole);
-=======
 static DEVICE_ATTR(dram_hole, S_IRUGO, hole_show, NULL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static DEVICE_ATTR_RO(dram_hole);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct attribute *dbg_attrs[] = {
 	&dev_attr_dhar.attr,
@@ -820,17 +802,6 @@ static ssize_t inject_write_store(struct device *dev,
  * update NUM_INJ_ATTRS in case you add new members
  */
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static DEVICE_ATTR_RW(inject_section);
-static DEVICE_ATTR_RW(inject_word);
-static DEVICE_ATTR_RW(inject_ecc_vector);
-static DEVICE_ATTR_WO(inject_write);
-static DEVICE_ATTR_WO(inject_read);
-<<<<<<< HEAD
-=======
 static DEVICE_ATTR(inject_section, S_IRUGO | S_IWUSR,
 		   inject_section_show, inject_section_store);
 static DEVICE_ATTR(inject_word, S_IRUGO | S_IWUSR,
@@ -841,9 +812,6 @@ static DEVICE_ATTR(inject_write, S_IWUSR,
 		   NULL, inject_write_store);
 static DEVICE_ATTR(inject_read,  S_IWUSR,
 		   NULL, inject_read_store);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static struct attribute *inj_attrs[] = {
 	&dev_attr_inject_section.attr,

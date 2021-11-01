@@ -51,15 +51,7 @@ void ui_browser__write_graph(struct ui_browser *browser, int graph);
 void __ui_browser__line_arrow(struct ui_browser *browser, unsigned int column,
 			      u64 start, u64 end);
 void ui_browser__mark_fused(struct ui_browser *browser, unsigned int column,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			    unsigned int row, int diff, bool arrow_down);
-=======
 			    unsigned int row, bool arrow_down);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			    unsigned int row, int diff, bool arrow_down);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 void __ui_browser__show_title(struct ui_browser *browser, const char *title);
 void ui_browser__show_title(struct ui_browser *browser, const char *title);
 int ui_browser__show(struct ui_browser *browser, const char *title,

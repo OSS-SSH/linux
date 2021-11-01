@@ -1656,15 +1656,7 @@ static int xs_get_srcport(struct sock_xprt *transport)
 unsigned short get_srcport(struct rpc_xprt *xprt)
 {
 	struct sock_xprt *sock = container_of(xprt, struct sock_xprt, xprt);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return xs_sock_getport(sock->sock);
-=======
 	return sock->srcport;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return xs_sock_getport(sock->sock);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 EXPORT_SYMBOL(get_srcport);
 
@@ -2107,44 +2099,13 @@ static void xs_tcp_shutdown(struct rpc_xprt *xprt)
 
 	if (sock == NULL)
 		return;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!xprt->reuseport) {
-		xs_close(xprt);
-		return;
-	}
-<<<<<<< HEAD
 	switch (skst) {
-	case TCP_FIN_WAIT1:
-	case TCP_FIN_WAIT2:
-		break;
-	case TCP_ESTABLISHED:
-	case TCP_CLOSE_WAIT:
-		kernel_sock_shutdown(sock, SHUT_RDWR);
-		trace_rpc_socket_shutdown(xprt, sock);
-		break;
 	default:
-=======
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	switch (skst) {
-	case TCP_FIN_WAIT1:
-	case TCP_FIN_WAIT2:
-		break;
-	case TCP_ESTABLISHED:
-	case TCP_CLOSE_WAIT:
 		kernel_sock_shutdown(sock, SHUT_RDWR);
 		trace_rpc_socket_shutdown(xprt, sock);
 		break;
-<<<<<<< HEAD
 	case TCP_CLOSE:
 	case TCP_TIME_WAIT:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	default:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		xs_reset_transport(transport);
 	}
 }
@@ -3188,9 +3149,6 @@ void cleanup_socket_xprt(void)
 	xprt_unregister_transport(&xs_bc_tcp_transport);
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static int param_set_uint_minmax(const char *val,
 		const struct kernel_param *kp,
 		unsigned int min, unsigned int max)
@@ -3209,9 +3167,6 @@ static int param_set_uint_minmax(const char *val,
 	return 0;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int param_set_portnr(const char *val, const struct kernel_param *kp)
 {
 	return param_set_uint_minmax(val, kp,

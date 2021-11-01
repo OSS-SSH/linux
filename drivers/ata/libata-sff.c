@@ -637,29 +637,6 @@ unsigned int ata_sff_data_xfer32(struct ata_queued_cmd *qc, unsigned char *buf,
 }
 EXPORT_SYMBOL_GPL(ata_sff_data_xfer32);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static void ata_pio_xfer(struct ata_queued_cmd *qc, struct page *page,
-		unsigned int offset, size_t xfer_size)
-{
-	bool do_write = (qc->tf.flags & ATA_TFLAG_WRITE);
-	unsigned char *buf;
-
-	buf = kmap_atomic(page);
-	qc->ap->ops->sff_data_xfer(qc, buf + offset, xfer_size, do_write);
-	kunmap_atomic(buf);
-
-	if (!do_write && !PageSlab(page))
-		flush_dcache_page(page);
-}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  *	ata_pio_sector - Transfer a sector of data.
  *	@qc: Command on going
@@ -671,23 +648,11 @@ static void ata_pio_xfer(struct ata_queued_cmd *qc, struct page *page,
  */
 static void ata_pio_sector(struct ata_queued_cmd *qc)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct ata_port *ap = qc->ap;
-	struct page *page;
-	unsigned int offset;
-=======
 	int do_write = (qc->tf.flags & ATA_TFLAG_WRITE);
 	struct ata_port *ap = qc->ap;
 	struct page *page;
 	unsigned int offset;
 	unsigned char *buf;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct ata_port *ap = qc->ap;
-	struct page *page;
-	unsigned int offset;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (!qc->cursg) {
 		qc->curbytes = qc->nbytes;
@@ -705,26 +670,6 @@ static void ata_pio_sector(struct ata_queued_cmd *qc)
 
 	DPRINTK("data %s\n", qc->tf.flags & ATA_TFLAG_WRITE ? "write" : "read");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * Split the transfer when it splits a page boundary.  Note that the
-	 * split still has to be dword aligned like all ATA data transfers.
-	 */
-	WARN_ON_ONCE(offset % 4);
-	if (offset + qc->sect_size > PAGE_SIZE) {
-		unsigned int split_len = PAGE_SIZE - offset;
-<<<<<<< HEAD
-
-		ata_pio_xfer(qc, page, offset, split_len);
-		ata_pio_xfer(qc, nth_page(page, 1), 0,
-			     qc->sect_size - split_len);
-	} else {
-		ata_pio_xfer(qc, page, offset, qc->sect_size);
-	}
-=======
 	/* do the actual data transfer */
 	buf = kmap_atomic(page);
 	ap->ops->sff_data_xfer(qc, buf + offset, qc->sect_size, do_write);
@@ -732,16 +677,6 @@ static void ata_pio_sector(struct ata_queued_cmd *qc)
 
 	if (!do_write && !PageSlab(page))
 		flush_dcache_page(page);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-		ata_pio_xfer(qc, page, offset, split_len);
-		ata_pio_xfer(qc, nth_page(page, 1), 0,
-			     qc->sect_size - split_len);
-	} else {
-		ata_pio_xfer(qc, page, offset, qc->sect_size);
-	}
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	qc->curbytes += qc->sect_size;
 	qc->cursg_ofs += qc->sect_size;

@@ -229,33 +229,19 @@ static int cmos_read_time(struct device *dev, struct rtc_time *t)
 	if (!pm_trace_rtc_valid())
 		return -EIO;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	/* REVISIT:  if the clock has a "century" register, use
 	 * that instead of the heuristic in mc146818_get_time().
 	 * That'll make Y3K compatility (year > 2070) easy!
 	 */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	mc146818_get_time(t);
 	return 0;
 }
 
 static int cmos_set_time(struct device *dev, struct rtc_time *t)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	/* NOTE: this ignores the issue whereby updating the seconds
-=======
 	/* REVISIT:  set the "century" register if available
 	 *
 	 * NOTE: this ignores the issue whereby updating the seconds
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	/* NOTE: this ignores the issue whereby updating the seconds
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	 * takes effect exactly 500ms after we write the register.
 	 * (Also queueing and other delays before we get this far.)
 	 */
@@ -1067,19 +1053,7 @@ static void cmos_check_wkalrm(struct device *dev)
 	 * ACK the rtc irq here
 	 */
 	if (t_now >= cmos->alarm_expires && cmos_use_acpi_alarm()) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		local_irq_disable();
 		cmos_interrupt(0, (void *)cmos->rtc);
-		local_irq_enable();
-=======
-		cmos_interrupt(0, (void *)cmos->rtc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		local_irq_disable();
-		cmos_interrupt(0, (void *)cmos->rtc);
-		local_irq_enable();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		return;
 	}
 

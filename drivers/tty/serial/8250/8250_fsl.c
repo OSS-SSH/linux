@@ -30,26 +30,10 @@ struct fsl8250_data {
 int fsl8250_handle_irq(struct uart_port *port)
 {
 	unsigned char lsr, orig_lsr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned long flags;
-	unsigned int iir;
-	struct uart_8250_port *up = up_to_u8250p(port);
-
-	spin_lock_irqsave(&up->port.lock, flags);
-=======
 	unsigned int iir;
 	struct uart_8250_port *up = up_to_u8250p(port);
 
 	spin_lock(&up->port.lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned long flags;
-	unsigned int iir;
-	struct uart_8250_port *up = up_to_u8250p(port);
-
-	spin_lock_irqsave(&up->port.lock, flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	iir = port->serial_in(port, UART_IIR);
 	if (iir & UART_IIR_NO_INT) {
@@ -98,15 +82,7 @@ int fsl8250_handle_irq(struct uart_port *port)
 
 	up->lsr_saved_flags = orig_lsr;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	uart_unlock_and_check_sysrq_irqrestore(&up->port, flags);
-=======
 	uart_unlock_and_check_sysrq(&up->port);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	uart_unlock_and_check_sysrq_irqrestore(&up->port, flags);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 1;
 }

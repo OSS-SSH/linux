@@ -46,14 +46,6 @@ config AMD8111_ETH
 config LANCE
 	tristate "AMD LANCE and PCnet (AT1500 and NE2100) support"
 	depends on ISA && ISA_DMA_API && !ARM && !PPC32
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select NETDEV_LEGACY_INIT
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select NETDEV_LEGACY_INIT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  If you have a network (Ethernet) card of this type, say Y here.
 	  Some LinkSys cards are of this type.
@@ -140,14 +132,6 @@ config PCMCIA_NMCLAN
 config NI65
 	tristate "NI6510 support"
 	depends on ISA && ISA_DMA_API && !ARM && !PPC32
-<<<<<<< HEAD
-<<<<<<< HEAD
-	select NETDEV_LEGACY_INIT
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	select NETDEV_LEGACY_INIT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  If you have a network (Ethernet) card of this type, say Y here.
 
@@ -184,25 +168,11 @@ config AMD_XGBE
 	tristate "AMD 10GbE Ethernet driver"
 	depends on ((OF_NET && OF_ADDRESS) || ACPI || PCI) && HAS_IOMEM
 	depends on X86 || ARM64 || COMPILE_TEST
-<<<<<<< HEAD
-<<<<<<< HEAD
-	depends on PTP_1588_CLOCK_OPTIONAL
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	depends on PTP_1588_CLOCK_OPTIONAL
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	select BITREVERSE
 	select CRC32
 	select PHYLIB
 	select AMD_XGBE_HAVE_ECC if X86
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	imply PTP_1588_CLOCK
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	help
 	  This driver supports the AMD 10GbE Ethernet device found on an
 	  AMD SoC.

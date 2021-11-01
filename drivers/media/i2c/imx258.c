@@ -23,15 +23,7 @@
 #define IMX258_CHIP_ID			0x0258
 
 /* V_TIMING internal */
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define IMX258_VTS_30FPS		0x0c50
-=======
 #define IMX258_VTS_30FPS		0x0c98
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define IMX258_VTS_30FPS		0x0c50
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IMX258_VTS_30FPS_2K		0x0638
 #define IMX258_VTS_30FPS_VGA		0x034c
 #define IMX258_VTS_MAX			0xffff
@@ -55,15 +47,7 @@
 /* Analog gain control */
 #define IMX258_REG_ANALOG_GAIN		0x0204
 #define IMX258_ANA_GAIN_MIN		0
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define IMX258_ANA_GAIN_MAX		480
-=======
 #define IMX258_ANA_GAIN_MAX		0x1fff
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define IMX258_ANA_GAIN_MAX		480
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define IMX258_ANA_GAIN_STEP		1
 #define IMX258_ANA_GAIN_DEFAULT		0x0
 

@@ -291,15 +291,7 @@ static int tc358768_calc_pll(struct tc358768_priv *priv,
 			     const struct drm_display_mode *mode,
 			     bool verify_only)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	static const u32 frs_limits[] = {
-=======
 	const u32 frs_limits[] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	static const u32 frs_limits[] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		1000000000,
 		500000000,
 		250000000,
@@ -833,15 +825,7 @@ static void tc358768_bridge_pre_enable(struct drm_bridge *bridge)
 	if (!(dsi_dev->mode_flags & MIPI_DSI_CLOCK_NON_CONTINUOUS))
 		val |= TC358768_DSI_CONTROL_HSCKMD;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (dsi_dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
-=======
 	if (dsi_dev->mode_flags & MIPI_DSI_MODE_EOT_PACKET)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (dsi_dev->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		val |= TC358768_DSI_CONTROL_EOTDIS;
 
 	tc358768_write(priv, TC358768_DSI_CONFW, val);

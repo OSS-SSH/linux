@@ -355,25 +355,6 @@ struct v4l2_mbus_frame_desc {
 };
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * enum v4l2_subdev_pre_streamon_flags - Flags for pre_streamon subdev core op
- *
- * @V4L2_SUBDEV_PRE_STREAMON_FL_MANUAL_LP: Set the transmitter to either LP-11
- *	or LP-111 mode before call to s_stream().
- */
-enum v4l2_subdev_pre_streamon_flags {
-	V4L2_SUBDEV_PRE_STREAMON_FL_MANUAL_LP = BIT(0),
-};
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * struct v4l2_subdev_video_ops - Callbacks used when v4l device was opened
  *				  in video mode.
  *
@@ -428,28 +409,6 @@ enum v4l2_subdev_pre_streamon_flags {
  * @s_rx_buffer: set a host allocated memory buffer for the subdev. The subdev
  *	can adjust @size to a lower value and must not write more data to the
  *	buffer starting at @data than the original value of @size.
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- *
- * @pre_streamon: May be called before streaming is actually started, to help
- *	initialising the bus. Current usage is to set a CSI-2 transmitter to
- *	LP-11 or LP-111 mode before streaming. See &enum
- *	v4l2_subdev_pre_streamon_flags.
- *
- *	pre_streamon shall return error if it cannot perform the operation as
- *	indicated by the flags argument. In particular, -EACCES indicates lack
- *	of support for the operation. The caller shall call post_streamoff for
- *	each successful call of pre_streamon.
- *
- * @post_streamoff: Called after streaming is stopped, but if and only if
- *	pre_streamon was called earlier.
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
 struct v4l2_subdev_video_ops {
 	int (*s_routing)(struct v4l2_subdev *sd, u32 input, u32 output, u32 config);
@@ -476,16 +435,6 @@ struct v4l2_subdev_video_ops {
 			struct v4l2_dv_timings *timings);
 	int (*s_rx_buffer)(struct v4l2_subdev *sd, void *buf,
 			   unsigned int *size);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	int (*pre_streamon)(struct v4l2_subdev *sd, u32 flags);
-	int (*post_streamoff)(struct v4l2_subdev *sd);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	int (*pre_streamon)(struct v4l2_subdev *sd, u32 flags);
-	int (*post_streamoff)(struct v4l2_subdev *sd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 /**
@@ -922,15 +871,7 @@ struct v4l2_subdev_platform_data {
  * @asd: Pointer to respective &struct v4l2_async_subdev.
  * @notifier: Pointer to the managing notifier.
  * @subdev_notifier: A sub-device notifier implicitly registered for the sub-
-<<<<<<< HEAD
-<<<<<<< HEAD
- *		     device using v4l2_async_register_subdev_sensor().
-=======
  *		     device using v4l2_device_register_sensor_subdev().
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- *		     device using v4l2_async_register_subdev_sensor().
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @pdata: common part of subdevice platform data
  *
  * Each instance of a subdev driver should create this struct, either

@@ -198,28 +198,12 @@ struct sdma_script_start_addrs {
 	s32 per_2_firi_addr;
 	s32 mcu_2_firi_addr;
 	s32 uart_2_per_addr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	s32 uart_2_mcu_ram_addr;
-=======
 	s32 uart_2_mcu_addr;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	s32 uart_2_mcu_ram_addr;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	s32 per_2_app_addr;
 	s32 mcu_2_app_addr;
 	s32 per_2_per_addr;
 	s32 uartsh_2_per_addr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	s32 uartsh_2_mcu_ram_addr;
-=======
 	s32 uartsh_2_mcu_addr;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	s32 uartsh_2_mcu_ram_addr;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	s32 per_2_shp_addr;
 	s32 mcu_2_shp_addr;
 	s32 ata_2_mcu_addr;
@@ -246,19 +230,6 @@ struct sdma_script_start_addrs {
 	s32 zcanfd_2_mcu_addr;
 	s32 zqspi_2_mcu_addr;
 	s32 mcu_2_ecspi_addr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	s32 mcu_2_sai_addr;
-	s32 sai_2_mcu_addr;
-	s32 uart_2_mcu_addr;
-	s32 uartsh_2_mcu_addr;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/* End of v3 array */
 	s32 mcu_2_zqspi_addr;
 	/* End of v4 array */
@@ -462,23 +433,9 @@ struct sdma_channel {
 	unsigned long			watermark_level;
 	u32				shp_addr, per_addr;
 	enum dma_status			status;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct imx_dma_data		data;
-	struct work_struct		terminate_worker;
-	struct list_head                terminated;
-	bool				is_ram_script;
-=======
 	bool				context_loaded;
 	struct imx_dma_data		data;
 	struct work_struct		terminate_worker;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct imx_dma_data		data;
-	struct work_struct		terminate_worker;
-	struct list_head                terminated;
-	bool				is_ram_script;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 #define IMX_DMA_SG_LOOP		BIT(0)
@@ -519,22 +476,6 @@ struct sdma_driver_data {
 	int num_events;
 	struct sdma_script_start_addrs	*script_addrs;
 	bool check_ratio;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/*
-	 * ecspi ERR009165 fixed should be done in sdma script
-	 * and it has been fixed in soc from i.mx6ul.
-	 * please get more information from the below link:
-	 * https://www.nxp.com/docs/en/errata/IMX6DQCE.pdf
-	 */
-	bool ecspi_fixed;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 struct sdma_engine {
@@ -558,14 +499,6 @@ struct sdma_engine {
 	struct sdma_buffer_descriptor	*bd0;
 	/* clock ratio for AHB:SDMA core. 1:1 is 1, 2:1 is 0*/
 	bool				clk_ratio;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool                            fw_loaded;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	bool                            fw_loaded;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 };
 
 static int sdma_config_write(struct dma_chan *chan,
@@ -662,22 +595,6 @@ static struct sdma_driver_data sdma_imx6q = {
 	.script_addrs = &sdma_script_imx6q,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-static struct sdma_driver_data sdma_imx6ul = {
-	.chnenbl0 = SDMA_CHNENBL0_IMX35,
-	.num_events = 48,
-	.script_addrs = &sdma_script_imx6q,
-	.ecspi_fixed = true,
-};
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static struct sdma_script_start_addrs sdma_script_imx7d = {
 	.ap_2_ap_addr = 644,
 	.uart_2_mcu_addr = 819,
@@ -711,14 +628,6 @@ static const struct of_device_id sdma_dt_ids[] = {
 	{ .compatible = "fsl,imx31-sdma", .data = &sdma_imx31, },
 	{ .compatible = "fsl,imx25-sdma", .data = &sdma_imx25, },
 	{ .compatible = "fsl,imx7d-sdma", .data = &sdma_imx7d, },
-<<<<<<< HEAD
-<<<<<<< HEAD
-	{ .compatible = "fsl,imx6ul-sdma", .data = &sdma_imx6ul, },
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	{ .compatible = "fsl,imx6ul-sdma", .data = &sdma_imx6ul, },
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{ .compatible = "fsl,imx8mq-sdma", .data = &sdma_imx8mq, },
 	{ /* sentinel */ }
 };
@@ -1010,14 +919,6 @@ static void sdma_get_pc(struct sdma_channel *sdmac,
 	sdmac->pc_to_device = 0;
 	sdmac->device_to_device = 0;
 	sdmac->pc_to_pc = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sdmac->is_ram_script = false;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	sdmac->is_ram_script = false;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (peripheral_type) {
 	case IMX_DMATYPE_MEMORY:
@@ -1044,26 +945,6 @@ static void sdma_get_pc(struct sdma_channel *sdmac,
 		emi_2_per = sdma->script_addrs->mcu_2_ata_addr;
 		break;
 	case IMX_DMATYPE_CSPI:
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		per_2_emi = sdma->script_addrs->app_2_mcu_addr;
-
-		/* Use rom script mcu_2_app if ERR009165 fixed */
-		if (sdmac->sdma->drvdata->ecspi_fixed) {
-			emi_2_per = sdma->script_addrs->mcu_2_app_addr;
-		} else {
-			emi_2_per = sdma->script_addrs->mcu_2_ecspi_addr;
-			sdmac->is_ram_script = true;
-		}
-
-		break;
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	case IMX_DMATYPE_EXT:
 	case IMX_DMATYPE_SSI:
 	case IMX_DMATYPE_SAI:
@@ -1073,14 +954,6 @@ static void sdma_get_pc(struct sdma_channel *sdmac,
 	case IMX_DMATYPE_SSI_DUAL:
 		per_2_emi = sdma->script_addrs->ssish_2_mcu_addr;
 		emi_2_per = sdma->script_addrs->mcu_2_ssish_addr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		sdmac->is_ram_script = true;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		sdmac->is_ram_script = true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case IMX_DMATYPE_SSI_SP:
 	case IMX_DMATYPE_MMC:
@@ -1095,14 +968,6 @@ static void sdma_get_pc(struct sdma_channel *sdmac,
 		per_2_emi = sdma->script_addrs->asrc_2_mcu_addr;
 		emi_2_per = sdma->script_addrs->asrc_2_mcu_addr;
 		per_2_per = sdma->script_addrs->per_2_per_addr;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		sdmac->is_ram_script = true;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		sdmac->is_ram_script = true;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		break;
 	case IMX_DMATYPE_ASRC_SP:
 		per_2_emi = sdma->script_addrs->shp_2_mcu_addr;
@@ -1143,15 +1008,9 @@ static int sdma_load_context(struct sdma_channel *sdmac)
 	int ret;
 	unsigned long flags;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	if (sdmac->context_loaded)
 		return 0;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (sdmac->direction == DMA_DEV_TO_MEM)
 		load_address = sdmac->pc_from_device;
 	else if (sdmac->direction == DMA_DEV_TO_DEV)
@@ -1194,14 +1053,8 @@ static int sdma_load_context(struct sdma_channel *sdmac)
 
 	spin_unlock_irqrestore(&sdma->channel_0_lock, flags);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	sdmac->context_loaded = true;
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -1225,15 +1078,9 @@ static void sdma_channel_terminate_work(struct work_struct *work)
 {
 	struct sdma_channel *sdmac = container_of(work, struct sdma_channel,
 						  terminate_worker);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	unsigned long flags;
 	LIST_HEAD(head);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	/*
 	 * According to NXP R&D team a delay of one BD SDMA cost time
 	 * (maximum is 1ms) should be added after disable of the channel
@@ -1242,19 +1089,11 @@ static void sdma_channel_terminate_work(struct work_struct *work)
 	 */
 	usleep_range(1000, 2000);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	vchan_dma_desc_free_list(&sdmac->vc, &sdmac->terminated);
-=======
 	spin_lock_irqsave(&sdmac->vc.lock, flags);
 	vchan_get_all_descriptors(&sdmac->vc, &head);
 	spin_unlock_irqrestore(&sdmac->vc.lock, flags);
 	vchan_dma_desc_free_list(&sdmac->vc, &head);
 	sdmac->context_loaded = false;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	vchan_dma_desc_free_list(&sdmac->vc, &sdmac->terminated);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int sdma_terminate_all(struct dma_chan *chan)
@@ -1268,22 +1107,6 @@ static int sdma_terminate_all(struct dma_chan *chan)
 
 	if (sdmac->desc) {
 		vchan_terminate_vdesc(&sdmac->desc->vd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		/*
-		 * move out current descriptor into terminated list so that
-		 * it could be free in sdma_channel_terminate_work alone
-		 * later without potential involving next descriptor raised
-		 * up before the last descriptor terminated.
-		 */
-		vchan_get_all_descriptors(&sdmac->vc, &sdmac->terminated);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		sdmac->desc = NULL;
 		schedule_work(&sdmac->terminate_worker);
 	}
@@ -1345,13 +1168,7 @@ static void sdma_set_watermarklevel_for_p2p(struct sdma_channel *sdmac)
 static int sdma_config_channel(struct dma_chan *chan)
 {
 	struct sdma_channel *sdmac = to_sdma_chan(chan);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	int ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sdma_disable_channel(chan);
 
@@ -1391,17 +1208,9 @@ static int sdma_config_channel(struct dma_chan *chan)
 		sdmac->watermark_level = 0; /* FIXME: M3_BASE_ADDRESS */
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return 0;
-=======
 	ret = sdma_load_context(sdmac);
 
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static int sdma_set_channel_priority(struct sdma_channel *sdmac,
@@ -1552,13 +1361,7 @@ static void sdma_free_chan_resources(struct dma_chan *chan)
 
 	sdmac->event_id0 = 0;
 	sdmac->event_id1 = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	sdmac->context_loaded = false;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	sdma_set_channel_priority(sdmac, 0);
 
@@ -1571,20 +1374,6 @@ static struct sdma_desc *sdma_transfer_init(struct sdma_channel *sdmac,
 {
 	struct sdma_desc *desc;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (!sdmac->sdma->fw_loaded && sdmac->is_ram_script) {
-		dev_warn_once(sdmac->sdma->dev, "sdma firmware not ready!\n");
-		goto err_out;
-	}
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	desc = kzalloc((sizeof(*desc)), GFP_NOWAIT);
 	if (!desc)
 		goto err_out;
@@ -1933,18 +1722,8 @@ static void sdma_issue_pending(struct dma_chan *chan)
 
 #define SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V1	34
 #define SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V2	38
-<<<<<<< HEAD
-<<<<<<< HEAD
-#define SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V3	45
-#define SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V4	46
-=======
 #define SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V3	41
 #define SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V4	42
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#define SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V3	45
-#define SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V4	46
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 static void sdma_add_scripts(struct sdma_engine *sdma,
 		const struct sdma_script_start_addrs *addr)
@@ -1968,28 +1747,6 @@ static void sdma_add_scripts(struct sdma_engine *sdma,
 	for (i = 0; i < sdma->script_number; i++)
 		if (addr_arr[i] > 0)
 			saddr_arr[i] = addr_arr[i];
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-	/*
-	 * get uart_2_mcu_addr/uartsh_2_mcu_addr rom script specially because
-	 * they are now replaced by uart_2_mcu_ram_addr/uartsh_2_mcu_ram_addr
-	 * to be compatible with legacy freescale/nxp sdma firmware, and they
-	 * are located in the bottom part of sdma_script_start_addrs which are
-	 * beyond the SDMA_SCRIPT_ADDRS_ARRAY_SIZE_V1.
-	 */
-	if (addr->uart_2_mcu_addr)
-		sdma->script_addrs->uart_2_mcu_addr = addr->uart_2_mcu_addr;
-	if (addr->uartsh_2_mcu_addr)
-		sdma->script_addrs->uartsh_2_mcu_addr = addr->uartsh_2_mcu_addr;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static void sdma_load_firmware(const struct firmware *fw, void *context)
@@ -2046,16 +1803,6 @@ static void sdma_load_firmware(const struct firmware *fw, void *context)
 
 	sdma_add_scripts(sdma, addr);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	sdma->fw_loaded = true;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	sdma->fw_loaded = true;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	dev_info(sdma->dev, "loaded firmware %d.%d\n",
 			header->version_major,
 			header->version_minor);
@@ -2339,14 +2086,6 @@ static int sdma_probe(struct platform_device *pdev)
 
 		sdmac->channel = i;
 		sdmac->vc.desc_free = sdma_desc_free;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		INIT_LIST_HEAD(&sdmac->terminated);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		INIT_LIST_HEAD(&sdmac->terminated);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		INIT_WORK(&sdmac->terminate_worker,
 				sdma_channel_terminate_work);
 		/*

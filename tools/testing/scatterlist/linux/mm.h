@@ -127,13 +127,7 @@ kmalloc_array(unsigned int n, unsigned int size, unsigned int flags)
 #define kmemleak_free(a)
 
 #define PageSlab(p) (0)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #define flush_kernel_dcache_page(p)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #define MAX_ERRNO	4095
 

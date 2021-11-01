@@ -18,15 +18,7 @@
 void ftrace_caller(void);
 
 extern char ftrace_graph_caller_end;
-<<<<<<< HEAD
-<<<<<<< HEAD
-extern void *ftrace_func;
-=======
 extern unsigned long ftrace_plt;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-extern void *ftrace_func;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 struct dyn_arch_ftrace { };
 
@@ -38,24 +30,10 @@ struct dyn_arch_ftrace { };
 
 struct module;
 struct dyn_ftrace;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-bool ftrace_need_init_nop(void);
-#define ftrace_need_init_nop ftrace_need_init_nop
-
-int ftrace_init_nop(struct module *mod, struct dyn_ftrace *rec);
-<<<<<<< HEAD
-=======
 /*
  * Either -mhotpatch or -mnop-mcount is used - no explicit init is required
  */
 static inline int ftrace_init_nop(struct module *mod, struct dyn_ftrace *rec) { return 0; }
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #define ftrace_init_nop ftrace_init_nop
 
 static inline unsigned long ftrace_call_adjust(unsigned long addr)
@@ -63,9 +41,6 @@ static inline unsigned long ftrace_call_adjust(unsigned long addr)
 	return addr;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 struct ftrace_insn {
 	u16 opc;
 	s32 disp;
@@ -102,9 +77,6 @@ static inline void ftrace_generate_call_insn(struct ftrace_insn *insn,
 #endif
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /*
  * Even though the system call numbers are identical for s390/s390x a
  * different system call table is used for compat tasks. This may lead

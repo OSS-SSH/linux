@@ -483,15 +483,7 @@ static __always_inline ssize_t __mcopy_atomic(struct mm_struct *dst_mm,
 					      unsigned long src_start,
 					      unsigned long len,
 					      enum mcopy_atomic_mode mcopy_mode,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					      atomic_t *mmap_changing,
-=======
 					      bool *mmap_changing,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					      atomic_t *mmap_changing,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					      __u64 mode)
 {
 	struct vm_area_struct *dst_vma;
@@ -525,15 +517,7 @@ retry:
 	 * request the user to retry later
 	 */
 	err = -EAGAIN;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (mmap_changing && atomic_read(mmap_changing))
-=======
 	if (mmap_changing && READ_ONCE(*mmap_changing))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (mmap_changing && atomic_read(mmap_changing))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_unlock;
 
 	/*
@@ -666,62 +650,28 @@ out:
 
 ssize_t mcopy_atomic(struct mm_struct *dst_mm, unsigned long dst_start,
 		     unsigned long src_start, unsigned long len,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		     atomic_t *mmap_changing, __u64 mode)
-=======
 		     bool *mmap_changing, __u64 mode)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		     atomic_t *mmap_changing, __u64 mode)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return __mcopy_atomic(dst_mm, dst_start, src_start, len,
 			      MCOPY_ATOMIC_NORMAL, mmap_changing, mode);
 }
 
 ssize_t mfill_zeropage(struct mm_struct *dst_mm, unsigned long start,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		       unsigned long len, atomic_t *mmap_changing)
-=======
 		       unsigned long len, bool *mmap_changing)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		       unsigned long len, atomic_t *mmap_changing)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return __mcopy_atomic(dst_mm, start, 0, len, MCOPY_ATOMIC_ZEROPAGE,
 			      mmap_changing, 0);
 }
 
 ssize_t mcopy_continue(struct mm_struct *dst_mm, unsigned long start,
-<<<<<<< HEAD
-<<<<<<< HEAD
-		       unsigned long len, atomic_t *mmap_changing)
-=======
 		       unsigned long len, bool *mmap_changing)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		       unsigned long len, atomic_t *mmap_changing)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	return __mcopy_atomic(dst_mm, start, 0, len, MCOPY_ATOMIC_CONTINUE,
 			      mmap_changing, 0);
 }
 
 int mwriteprotect_range(struct mm_struct *dst_mm, unsigned long start,
-<<<<<<< HEAD
-<<<<<<< HEAD
-			unsigned long len, bool enable_wp,
-			atomic_t *mmap_changing)
-=======
 			unsigned long len, bool enable_wp, bool *mmap_changing)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			unsigned long len, bool enable_wp,
-			atomic_t *mmap_changing)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vm_area_struct *dst_vma;
 	pgprot_t newprot;
@@ -744,15 +694,7 @@ int mwriteprotect_range(struct mm_struct *dst_mm, unsigned long start,
 	 * request the user to retry later
 	 */
 	err = -EAGAIN;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (mmap_changing && atomic_read(mmap_changing))
-=======
 	if (mmap_changing && READ_ONCE(*mmap_changing))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (mmap_changing && atomic_read(mmap_changing))
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		goto out_unlock;
 
 	err = -ENOENT;

@@ -34,29 +34,15 @@ static int vdpa_dev_probe(struct device *d)
 	return ret;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static void vdpa_dev_remove(struct device *d)
-=======
 static int vdpa_dev_remove(struct device *d)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static void vdpa_dev_remove(struct device *d)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vdpa_device *vdev = dev_to_vdpa(d);
 	struct vdpa_driver *drv = drv_to_vdpa(vdev->dev.driver);
 
 	if (drv && drv->remove)
 		drv->remove(vdev);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 	return 0;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 static struct bus_type vdpa_bus = {
@@ -85,14 +71,6 @@ static void vdpa_release_dev(struct device *d)
  * @config: the bus operations that is supported by this device
  * @size: size of the parent structure that contains private data
  * @name: name of the vdpa device; optional.
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @use_va: indicate whether virtual address must be used by this device
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @use_va: indicate whether virtual address must be used by this device
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Driver should use vdpa_alloc_device() wrapper macro instead of
  * using this directly.
@@ -102,17 +80,7 @@ static void vdpa_release_dev(struct device *d)
  */
 struct vdpa_device *__vdpa_alloc_device(struct device *parent,
 					const struct vdpa_config_ops *config,
-<<<<<<< HEAD
-<<<<<<< HEAD
-					size_t size, const char *name,
-					bool use_va)
-=======
 					size_t size, const char *name)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					size_t size, const char *name,
-					bool use_va)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct vdpa_device *vdev;
 	int err = -EINVAL;
@@ -123,19 +91,6 @@ struct vdpa_device *__vdpa_alloc_device(struct device *parent,
 	if (!!config->dma_map != !!config->dma_unmap)
 		goto err;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	/* It should only work for the device that use on-chip IOMMU */
-	if (use_va && !(config->dma_map || config->set_map))
-		goto err;
-
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = -ENOMEM;
 	vdev = kzalloc(size, GFP_KERNEL);
 	if (!vdev)
@@ -151,14 +106,6 @@ struct vdpa_device *__vdpa_alloc_device(struct device *parent,
 	vdev->index = err;
 	vdev->config = config;
 	vdev->features_valid = false;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	vdev->use_va = use_va;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	vdev->use_va = use_va;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	if (name)
 		err = dev_set_name(&vdev->dev, "%s", name);

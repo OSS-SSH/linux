@@ -15,13 +15,7 @@
 #include <linux/nfc.h>
 #include <net/nfc/nfc.h>
 #include <net/nfc/hci.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #include <net/nfc/llc.h>
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 #include "microread.h"
 
@@ -137,15 +131,7 @@
 #define MICROREAD_ELT_ID_SE2 0x04
 #define MICROREAD_ELT_ID_SE3 0x05
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const struct nfc_hci_gate microread_gates[] = {
-=======
 static struct nfc_hci_gate microread_gates[] = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct nfc_hci_gate microread_gates[] = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	{MICROREAD_GATE_ID_ADM, MICROREAD_PIPE_ID_ADMIN},
 	{MICROREAD_GATE_ID_LOOPBACK, MICROREAD_PIPE_ID_HDS_LOOPBACK},
 	{MICROREAD_GATE_ID_IDT, MICROREAD_PIPE_ID_HDS_IDT},
@@ -166,15 +152,7 @@ static const struct nfc_hci_gate microread_gates[] = {
 #define MICROREAD_CMD_TAILROOM	2
 
 struct microread_info {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct nfc_phy_ops *phy_ops;
-=======
 	struct nfc_phy_ops *phy_ops;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct nfc_phy_ops *phy_ops;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	void *phy_id;
 
 	struct nfc_hci_dev *hdev;
@@ -380,15 +358,7 @@ static int microread_complete_target_discovered(struct nfc_hci_dev *hdev,
 static void microread_im_transceive_cb(void *context, struct sk_buff *skb,
 				       int err)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	const struct microread_info *info = context;
-=======
 	struct microread_info *info = context;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	const struct microread_info *info = context;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	switch (info->async_cb_type) {
 	case MICROREAD_CB_TYPE_READER_ALL:
@@ -655,15 +625,7 @@ static int microread_event_received(struct nfc_hci_dev *hdev, u8 pipe,
 	return r;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-static const struct nfc_hci_ops microread_hci_ops = {
-=======
 static struct nfc_hci_ops microread_hci_ops = {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-static const struct nfc_hci_ops microread_hci_ops = {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.open = microread_open,
 	.close = microread_close,
 	.hci_ready = microread_hci_ready,
@@ -679,21 +641,9 @@ static const struct nfc_hci_ops microread_hci_ops = {
 	.event_received = microread_event_received,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-int microread_probe(void *phy_id, const struct nfc_phy_ops *phy_ops,
-		    const char *llc_name, int phy_headroom, int phy_tailroom,
-		    int phy_payload, struct nfc_hci_dev **hdev)
-=======
 int microread_probe(void *phy_id, struct nfc_phy_ops *phy_ops, char *llc_name,
 		    int phy_headroom, int phy_tailroom, int phy_payload,
 		    struct nfc_hci_dev **hdev)
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-int microread_probe(void *phy_id, const struct nfc_phy_ops *phy_ops,
-		    const char *llc_name, int phy_headroom, int phy_tailroom,
-		    int phy_payload, struct nfc_hci_dev **hdev)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 {
 	struct microread_info *info;
 	unsigned long quirks = 0;

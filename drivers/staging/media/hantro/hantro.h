@@ -61,18 +61,8 @@ struct hantro_irq {
  * @num_postproc_fmts:		Number of post-processor formats.
  * @codec:			Supported codecs
  * @codec_ops:			Codec ops.
-<<<<<<< HEAD
-<<<<<<< HEAD
- * @init:			Initialize hardware, optional.
- * @runtime_resume:		reenable hardware after power gating, optional.
-=======
  * @init:			Initialize hardware.
  * @runtime_resume:		reenable hardware after power gating
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
- * @init:			Initialize hardware, optional.
- * @runtime_resume:		reenable hardware after power gating, optional.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @irqs:			array of irq names and interrupt handlers
  * @num_irqs:			number of irqs in the array
  * @clk_names:			array of clock names

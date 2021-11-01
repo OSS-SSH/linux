@@ -126,14 +126,6 @@ int arch_uprobe_exception_notify(struct notifier_block *self, unsigned long val,
 	case DIE_SSTEP:
 		if (uprobe_post_sstep_notifier(regs))
 			return NOTIFY_STOP;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		break;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		break;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	default:
 		break;
 	}

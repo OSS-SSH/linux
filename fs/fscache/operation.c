@@ -22,20 +22,7 @@ static void fscache_operation_dummy_cancel(struct fscache_operation *op)
 
 /**
  * fscache_operation_init - Do basic initialisation of an operation
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * @cookie: The cookie to operate on
  * @op: The operation to initialise
- * @processor: The function to perform the operation
- * @cancel: A function to handle operation cancellation
-<<<<<<< HEAD
-=======
- * @op: The operation to initialise
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * @release: The release function to assign
  *
  * Do basic initialisation of an operation.  The caller must still set flags,
@@ -629,13 +616,7 @@ void fscache_op_work_func(struct work_struct *work)
 {
 	struct fscache_operation *op =
 		container_of(work, struct fscache_operation, work);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	unsigned long start;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	_enter("{OBJ%x OP%x,%d}",
 	       op->object->debug_id, op->debug_id, atomic_read(&op->usage));
@@ -643,17 +624,9 @@ void fscache_op_work_func(struct work_struct *work)
 	trace_fscache_op(op->object->cookie, op, fscache_op_work);
 
 	ASSERT(op->processor != NULL);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	op->processor(op);
-=======
 	start = jiffies;
 	op->processor(op);
 	fscache_hist(fscache_ops_histogram, start);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	op->processor(op);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fscache_put_operation(op);
 
 	_leave("");

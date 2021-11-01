@@ -142,9 +142,6 @@ static const struct wcnss_data pronto_v2_data = {
 	.num_vregs = 1,
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 void qcom_wcnss_assign_iris(struct qcom_wcnss *wcnss,
 			    struct qcom_iris *iris,
 			    bool use_48mhz_xo)
@@ -157,9 +154,6 @@ void qcom_wcnss_assign_iris(struct qcom_wcnss *wcnss,
 	mutex_unlock(&wcnss->iris_lock);
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static int wcnss_load(struct rproc *rproc, const struct firmware *fw)
 {
 	struct qcom_wcnss *wcnss = (struct qcom_wcnss *)rproc->priv;
@@ -645,40 +639,12 @@ static int wcnss_probe(struct platform_device *pdev)
 		goto detach_pds;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	wcnss->iris = qcom_iris_probe(&pdev->dev, &wcnss->use_48mhz_xo);
-	if (IS_ERR(wcnss->iris)) {
-		ret = PTR_ERR(wcnss->iris);
+	ret = rproc_add(rproc);
+	if (ret)
 		goto detach_pds;
-	}
 
-<<<<<<< HEAD
-	ret = rproc_add(rproc);
-	if (ret)
-		goto remove_iris;
+	return of_platform_populate(pdev->dev.of_node, NULL, NULL, &pdev->dev);
 
-	return 0;
-
-remove_iris:
-	qcom_iris_remove(wcnss->iris);
-=======
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	ret = rproc_add(rproc);
-	if (ret)
-		goto remove_iris;
-
-	return 0;
-
-<<<<<<< HEAD
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-remove_iris:
-	qcom_iris_remove(wcnss->iris);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 detach_pds:
 	wcnss_release_pds(wcnss);
 free_rproc:
@@ -691,15 +657,7 @@ static int wcnss_remove(struct platform_device *pdev)
 {
 	struct qcom_wcnss *wcnss = platform_get_drvdata(pdev);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	qcom_iris_remove(wcnss->iris);
-=======
 	of_platform_depopulate(&pdev->dev);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	qcom_iris_remove(wcnss->iris);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	rproc_del(wcnss->rproc);
 
@@ -728,10 +686,6 @@ static struct platform_driver wcnss_driver = {
 	},
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-module_platform_driver(wcnss_driver);
-=======
 static int __init wcnss_init(void)
 {
 	int ret;
@@ -754,10 +708,6 @@ static void __exit wcnss_exit(void)
 	platform_driver_unregister(&wcnss_driver);
 }
 module_exit(wcnss_exit);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-module_platform_driver(wcnss_driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 MODULE_DESCRIPTION("Qualcomm Peripheral Image Loader for Wireless Subsystem");
 MODULE_LICENSE("GPL v2");

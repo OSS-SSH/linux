@@ -1,18 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-/**********************************************************
- * Copyright 1998-2015 VMware, Inc.
- * SPDX-License-Identifier: GPL-2.0 OR MIT
-=======
 /* SPDX-License-Identifier: GPL-2.0 OR MIT */
 /**********************************************************
  * Copyright 1998-2015 VMware, Inc.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-/**********************************************************
- * Copyright 1998-2015 VMware, Inc.
- * SPDX-License-Identifier: GPL-2.0 OR MIT
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -39,29 +27,18 @@
 /*
  * svga3d_reg.h --
  *
-<<<<<<< HEAD
-<<<<<<< HEAD
- *    SVGA 3d hardware definitions
- */
-
-
-
-#ifndef _SVGA3D_REG_H_
-#define _SVGA3D_REG_H_
-
-=======
  *       SVGA 3d hardware definitions
-=======
- *    SVGA 3d hardware definitions
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  */
-
-
 
 #ifndef _SVGA3D_REG_H_
 #define _SVGA3D_REG_H_
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+#define INCLUDE_ALLOW_MODULE
+#define INCLUDE_ALLOW_USERLEVEL
+#define INCLUDE_ALLOW_VMCORE
+
+#include "includeCheck.h"
+
 #include "svga_reg.h"
 
 #include "svga3d_types.h"
@@ -70,13 +47,5 @@
 #include "svga3d_dx.h"
 #include "svga3d_devcaps.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-#endif
-=======
 
 #endif /* _SVGA3D_REG_H_ */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-#endif
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b

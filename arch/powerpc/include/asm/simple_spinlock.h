@@ -51,15 +51,7 @@ static inline unsigned long __arch_spin_trylock(arch_spinlock_t *lock)
 
 	token = LOCK_TOKEN;
 	__asm__ __volatile__(
-<<<<<<< HEAD
-<<<<<<< HEAD
-"1:	lwarx		%0,0,%2,1\n\
-=======
 "1:	" PPC_LWARX(%0,0,%2,1) "\n\
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-"1:	lwarx		%0,0,%2,1\n\
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cmpwi		0,%0,0\n\
 	bne-		2f\n\
 	stwcx.		%1,0,%2\n\
@@ -187,15 +179,7 @@ static inline long __arch_read_trylock(arch_rwlock_t *rw)
 	long tmp;
 
 	__asm__ __volatile__(
-<<<<<<< HEAD
-<<<<<<< HEAD
-"1:	lwarx		%0,0,%1,1\n"
-=======
 "1:	" PPC_LWARX(%0,0,%1,1) "\n"
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-"1:	lwarx		%0,0,%1,1\n"
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	__DO_SIGN_EXTEND
 "	addic.		%0,%0,1\n\
 	ble-		2f\n"
@@ -219,15 +203,7 @@ static inline long __arch_write_trylock(arch_rwlock_t *rw)
 
 	token = WRLOCK_TOKEN;
 	__asm__ __volatile__(
-<<<<<<< HEAD
-<<<<<<< HEAD
-"1:	lwarx		%0,0,%2,1\n\
-=======
 "1:	" PPC_LWARX(%0,0,%2,1) "\n\
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-"1:	lwarx		%0,0,%2,1\n\
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	cmpwi		0,%0,0\n\
 	bne-		2f\n"
 "	stwcx.		%1,0,%2\n\

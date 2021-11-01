@@ -30,43 +30,11 @@ following ASL code can be used::
         {
             Device (STAC)
             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                Name (_HID, "BMA222E")
-                Name (RBUF, ResourceTemplate ()
-                {
-                    I2cSerialBus (0x0018, ControllerInitiated, 0x00061A80,
-                                AddressingMode7Bit, "\\_SB.I2C6", 0x00,
-                                ResourceConsumer, ,)
-                    GpioInt (Edge, ActiveHigh, Exclusive, PullDown, 0x0000,
-                            "\\_SB.GPO2", 0x00, ResourceConsumer, , )
-                    { // Pin list
-                        0
-                    }
-                })
-
-                Method (_CRS, 0, Serialized)
-                {
-=======
                 Name (_ADR, Zero)
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
                 Name (_HID, "BMA222E")
-                Name (RBUF, ResourceTemplate ()
-                {
-                    I2cSerialBus (0x0018, ControllerInitiated, 0x00061A80,
-                                AddressingMode7Bit, "\\_SB.I2C6", 0x00,
-                                ResourceConsumer, ,)
-                    GpioInt (Edge, ActiveHigh, Exclusive, PullDown, 0x0000,
-                            "\\_SB.GPO2", 0x00, ResourceConsumer, , )
-                    { // Pin list
-                        0
-                    }
-                })
 
                 Method (_CRS, 0, Serialized)
                 {
-<<<<<<< HEAD
                     Name (RBUF, ResourceTemplate ()
                     {
                         I2cSerialBus (0x0018, ControllerInitiated, 0x00061A80,
@@ -78,9 +46,6 @@ following ASL code can be used::
                             0
                         }
                     })
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
                     Return (RBUF)
                 }
             }
@@ -110,15 +75,7 @@ This option allows loading of user defined SSDTs from initrd and it is useful
 when the system does not support EFI or when there is not enough EFI storage.
 
 It works in a similar way with initrd based ACPI tables override/upgrade: SSDT
-<<<<<<< HEAD
-<<<<<<< HEAD
-AML code must be placed in the first, uncompressed, initrd under the
-=======
 aml code must be placed in the first, uncompressed, initrd under the
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-AML code must be placed in the first, uncompressed, initrd under the
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 "kernel/firmware/acpi" path. Multiple files can be used and this will translate
 in loading multiple tables. Only SSDT and OEM tables are allowed. See
 initrd_table_override.txt for more details.
@@ -146,34 +103,12 @@ This is the preferred method, when EFI is supported on the platform, because it
 allows a persistent, OS independent way of storing the user defined SSDTs. There
 is also work underway to implement EFI support for loading user defined SSDTs
 and using this method will make it easier to convert to the EFI loading
-<<<<<<< HEAD
-<<<<<<< HEAD
-mechanism when that will arrive. To enable it, the
-CONFIG_EFI_CUSTOM_SSDT_OVERLAYS shoyld be chosen to y.
-
-In order to load SSDTs from an EFI variable the ``"efivar_ssdt=..."`` kernel
-command line parameter can be used (the name has a limitation of 16 characters).
-The argument for the option is the variable name to use. If there are multiple
-variables with the same name but with different vendor GUIDs, all of them will
-be loaded.
-=======
 mechanism when that will arrive.
 
 In order to load SSDTs from an EFI variable the efivar_ssdt kernel command line
 parameter can be used. The argument for the option is the variable name to
 use. If there are multiple variables with the same name but with different
 vendor GUIDs, all of them will be loaded.
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-mechanism when that will arrive. To enable it, the
-CONFIG_EFI_CUSTOM_SSDT_OVERLAYS shoyld be chosen to y.
-
-In order to load SSDTs from an EFI variable the ``"efivar_ssdt=..."`` kernel
-command line parameter can be used (the name has a limitation of 16 characters).
-The argument for the option is the variable name to use. If there are multiple
-variables with the same name but with different vendor GUIDs, all of them will
-be loaded.
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 In order to store the AML code in an EFI variable the efivarfs filesystem can be
 used. It is enabled and mounted by default in /sys/firmware/efi/efivars in all
@@ -192,15 +127,7 @@ variable with the content from a given file::
 
     #!/bin/sh -e
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    while [ -n "$1" ]; do
-=======
     while ! [ -z "$1" ]; do
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-    while [ -n "$1" ]; do
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
             case "$1" in
             "-f") filename="$2"; shift;;
             "-g") guid="$2"; shift;;
@@ -240,34 +167,14 @@ variable with the content from a given file::
 Loading ACPI SSDTs from configfs
 ================================
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-This option allows loading of user defined SSDTs from user space via the configfs
-interface. The CONFIG_ACPI_CONFIGFS option must be select and configfs must be
-mounted. In the following examples, we assume that configfs has been mounted in
-/sys/kernel/config.
-
-New tables can be loading by creating new directories in /sys/kernel/config/acpi/table
-and writing the SSDT AML code in the aml attribute::
-
-    cd /sys/kernel/config/acpi/table
-=======
 This option allows loading of user defined SSDTs from userspace via the configfs
-=======
-This option allows loading of user defined SSDTs from user space via the configfs
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 interface. The CONFIG_ACPI_CONFIGFS option must be select and configfs must be
 mounted. In the following examples, we assume that configfs has been mounted in
-/sys/kernel/config.
+/config.
 
-New tables can be loading by creating new directories in /sys/kernel/config/acpi/table
-and writing the SSDT AML code in the aml attribute::
+New tables can be loading by creating new directories in /config/acpi/table/ and
+writing the SSDT aml code in the aml attribute::
 
-<<<<<<< HEAD
     cd /config/acpi/table
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-    cd /sys/kernel/config/acpi/table
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
     mkdir my_ssdt
     cat ~/ssdt.aml > my_ssdt/aml

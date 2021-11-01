@@ -541,16 +541,8 @@ static void enetc_mac_config(struct enetc_hw *hw, phy_interface_t phy_mode)
 
 	if (phy_interface_mode_is_rgmii(phy_mode)) {
 		val = enetc_port_rd(hw, ENETC_PM0_IF_MODE);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		val &= ~(ENETC_PM0_IFM_EN_AUTO | ENETC_PM0_IFM_IFMODE_MASK);
-=======
 		val &= ~ENETC_PM0_IFM_EN_AUTO;
 		val &= ENETC_PM0_IFM_IFMODE_MASK;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		val &= ~(ENETC_PM0_IFM_EN_AUTO | ENETC_PM0_IFM_IFMODE_MASK);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		val |= ENETC_PM0_IFM_IFMODE_GMII | ENETC_PM0_IFM_RG;
 		enetc_port_wr(hw, ENETC_PM0_IF_MODE, val);
 	}
@@ -743,15 +735,7 @@ static const struct net_device_ops enetc_ndev_ops = {
 	.ndo_set_vf_vlan	= enetc_pf_set_vf_vlan,
 	.ndo_set_vf_spoofchk	= enetc_pf_set_vf_spoofchk,
 	.ndo_set_features	= enetc_pf_set_features,
-<<<<<<< HEAD
-<<<<<<< HEAD
-	.ndo_eth_ioctl		= enetc_ioctl,
-=======
 	.ndo_do_ioctl		= enetc_ioctl,
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	.ndo_eth_ioctl		= enetc_ioctl,
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	.ndo_setup_tc		= enetc_setup_tc,
 	.ndo_bpf		= enetc_setup_bpf,
 	.ndo_xdp_xmit		= enetc_xdp_xmit,

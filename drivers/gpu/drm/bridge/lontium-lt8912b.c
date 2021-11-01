@@ -487,15 +487,7 @@ static int lt8912_attach_dsi(struct lt8912 *lt)
 	dsi->mode_flags = MIPI_DSI_MODE_VIDEO |
 			  MIPI_DSI_MODE_VIDEO_BURST |
 			  MIPI_DSI_MODE_LPM |
-<<<<<<< HEAD
-<<<<<<< HEAD
-			  MIPI_DSI_MODE_NO_EOT_PACKET;
-=======
 			  MIPI_DSI_MODE_EOT_PACKET;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			  MIPI_DSI_MODE_NO_EOT_PACKET;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	ret = mipi_dsi_attach(dsi);
 	if (ret < 0) {

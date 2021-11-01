@@ -134,12 +134,6 @@ svcxdr_decode_owner(struct xdr_stream *xdr, struct xdr_netobj *obj)
 static inline bool
 svcxdr_encode_owner(struct xdr_stream *xdr, const struct xdr_netobj *obj)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (obj->len > XDR_MAX_NETOBJ)
-		return false;
-	return xdr_stream_encode_opaque(xdr, obj->data, obj->len) > 0;
-=======
 	unsigned int quadlen = XDR_QUADLEN(obj->len);
 	__be32 *p;
 
@@ -152,12 +146,6 @@ svcxdr_encode_owner(struct xdr_stream *xdr, const struct xdr_netobj *obj)
 	memcpy(p, obj->data, obj->len);
 
 	return true;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (obj->len > XDR_MAX_NETOBJ)
-		return false;
-	return xdr_stream_encode_opaque(xdr, obj->data, obj->len) > 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 #endif /* _LOCKD_SVCXDR_H_ */

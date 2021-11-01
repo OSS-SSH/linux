@@ -64,15 +64,7 @@ static noinline void microbenchmark(unsigned long iters)
 {
 	const struct kcsan_ctx ctx_save = current->kcsan_ctx;
 	const bool was_enabled = READ_ONCE(kcsan_enabled);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u64 cycles;
-=======
 	cycles_t cycles;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u64 cycles;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* We may have been called from an atomic region; reset context. */
 	memset(&current->kcsan_ctx, 0, sizeof(current->kcsan_ctx));

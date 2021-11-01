@@ -421,22 +421,10 @@ int s3fwrn5_fw_download(struct s3fwrn5_fw_info *fw_info)
 
 	tfm = crypto_alloc_shash("sha1", 0, 0);
 	if (IS_ERR(tfm)) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		dev_err(&fw_info->ndev->nfc_dev->dev,
-			"Cannot allocate shash (code=%pe)\n", tfm);
-		return PTR_ERR(tfm);
-=======
 		ret = PTR_ERR(tfm);
 		dev_err(&fw_info->ndev->nfc_dev->dev,
 			"Cannot allocate shash (code=%d)\n", ret);
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		dev_err(&fw_info->ndev->nfc_dev->dev,
-			"Cannot allocate shash (code=%pe)\n", tfm);
-		return PTR_ERR(tfm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = crypto_shash_tfm_digest(tfm, fw->image, image_size, hash_data);
@@ -445,15 +433,7 @@ int s3fwrn5_fw_download(struct s3fwrn5_fw_info *fw_info)
 	if (ret) {
 		dev_err(&fw_info->ndev->nfc_dev->dev,
 			"Cannot compute hash (code=%d)\n", ret);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return ret;
-=======
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	/* Firmware update process */
@@ -466,15 +446,7 @@ int s3fwrn5_fw_download(struct s3fwrn5_fw_info *fw_info)
 	if (ret < 0) {
 		dev_err(&fw_info->ndev->nfc_dev->dev,
 			"Unable to enter update mode\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return ret;
-=======
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	for (off = 0; off < image_size; off += fw_info->sector_size) {
@@ -483,15 +455,7 @@ int s3fwrn5_fw_download(struct s3fwrn5_fw_info *fw_info)
 		if (ret < 0) {
 			dev_err(&fw_info->ndev->nfc_dev->dev,
 				"Firmware update error (code=%d)\n", ret);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			return ret;
-=======
 			goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -499,27 +463,13 @@ int s3fwrn5_fw_download(struct s3fwrn5_fw_info *fw_info)
 	if (ret < 0) {
 		dev_err(&fw_info->ndev->nfc_dev->dev,
 			"Unable to complete update mode\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return ret;
-=======
 		goto out;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	dev_info(&fw_info->ndev->nfc_dev->dev,
 		"Firmware update: success\n");
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 out:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 

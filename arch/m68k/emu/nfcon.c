@@ -120,83 +120,35 @@ early_param("debug", nf_debug_setup);
 
 static int __init nfcon_init(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct tty_driver *driver;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct tty_driver *driver;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int res;
 
 	stderr_id = nf_get_id("NF_STDERR");
 	if (!stderr_id)
 		return -ENODEV;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	driver = tty_alloc_driver(1, TTY_DRIVER_REAL_RAW);
-	if (IS_ERR(driver))
-		return PTR_ERR(driver);
-
-	tty_port_init(&nfcon_tty_port);
-
-	driver->driver_name = "nfcon";
-	driver->name = "nfcon";
-	driver->type = TTY_DRIVER_TYPE_SYSTEM;
-	driver->subtype = SYSTEM_TYPE_TTY;
-	driver->init_termios = tty_std_termios;
-
-	tty_set_operations(driver, &nfcon_tty_ops);
-	tty_port_link_device(&nfcon_tty_port, driver, 0);
-	res = tty_register_driver(driver);
-	if (res) {
-		pr_err("failed to register nfcon tty driver\n");
-		tty_driver_kref_put(driver);
-=======
 	nfcon_tty_driver = alloc_tty_driver(1);
 	if (!nfcon_tty_driver)
 		return -ENOMEM;
-=======
-	driver = tty_alloc_driver(1, TTY_DRIVER_REAL_RAW);
-	if (IS_ERR(driver))
-		return PTR_ERR(driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	tty_port_init(&nfcon_tty_port);
 
-	driver->driver_name = "nfcon";
-	driver->name = "nfcon";
-	driver->type = TTY_DRIVER_TYPE_SYSTEM;
-	driver->subtype = SYSTEM_TYPE_TTY;
-	driver->init_termios = tty_std_termios;
+	nfcon_tty_driver->driver_name = "nfcon";
+	nfcon_tty_driver->name = "nfcon";
+	nfcon_tty_driver->type = TTY_DRIVER_TYPE_SYSTEM;
+	nfcon_tty_driver->subtype = SYSTEM_TYPE_TTY;
+	nfcon_tty_driver->init_termios = tty_std_termios;
+	nfcon_tty_driver->flags = TTY_DRIVER_REAL_RAW;
 
-	tty_set_operations(driver, &nfcon_tty_ops);
-	tty_port_link_device(&nfcon_tty_port, driver, 0);
-	res = tty_register_driver(driver);
+	tty_set_operations(nfcon_tty_driver, &nfcon_tty_ops);
+	tty_port_link_device(&nfcon_tty_port, nfcon_tty_driver, 0);
+	res = tty_register_driver(nfcon_tty_driver);
 	if (res) {
 		pr_err("failed to register nfcon tty driver\n");
-<<<<<<< HEAD
 		put_tty_driver(nfcon_tty_driver);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		tty_driver_kref_put(driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		tty_port_destroy(&nfcon_tty_port);
 		return res;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	nfcon_tty_driver = driver;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	nfcon_tty_driver = driver;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!(nf_console.flags & CON_ENABLED))
 		register_console(&nf_console);
 
@@ -207,15 +159,7 @@ static void __exit nfcon_exit(void)
 {
 	unregister_console(&nf_console);
 	tty_unregister_driver(nfcon_tty_driver);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	tty_driver_kref_put(nfcon_tty_driver);
-=======
 	put_tty_driver(nfcon_tty_driver);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	tty_driver_kref_put(nfcon_tty_driver);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	tty_port_destroy(&nfcon_tty_port);
 }
 

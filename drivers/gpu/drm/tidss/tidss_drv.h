@@ -27,16 +27,6 @@ struct tidss_device {
 	unsigned int num_planes;
 	struct drm_plane *planes[TIDSS_MAX_PLANES];
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	unsigned int irq;
-
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	unsigned int irq;
-
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	spinlock_t wait_lock;	/* protects the irq masks */
 	dispc_irq_t irq_mask;	/* enabled irqs in addition to wait_list */
 };

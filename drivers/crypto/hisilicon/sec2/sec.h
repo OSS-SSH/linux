@@ -157,17 +157,11 @@ struct sec_ctx {
 	struct device *dev;
 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 enum sec_endian {
 	SEC_LE = 0,
 	SEC_32BE,
 	SEC_64BE
 };
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 enum sec_debug_file_index {
 	SEC_CLEAR_ENABLE,

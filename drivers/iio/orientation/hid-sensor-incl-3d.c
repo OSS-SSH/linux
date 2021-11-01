@@ -326,18 +326,8 @@ static int hid_incl_3d_probe(struct platform_device *pdev)
 		return ret;
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	indio_dev->channels = devm_kmemdup(&pdev->dev, incl_3d_channels,
-					   sizeof(incl_3d_channels), GFP_KERNEL);
-=======
 	indio_dev->channels = kmemdup(incl_3d_channels,
 				      sizeof(incl_3d_channels), GFP_KERNEL);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	indio_dev->channels = devm_kmemdup(&pdev->dev, incl_3d_channels,
-					   sizeof(incl_3d_channels), GFP_KERNEL);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!indio_dev->channels) {
 		dev_err(&pdev->dev, "failed to duplicate channels\n");
 		return -ENOMEM;
@@ -349,15 +339,7 @@ static int hid_incl_3d_probe(struct platform_device *pdev)
 				   incl_state);
 	if (ret) {
 		dev_err(&pdev->dev, "failed to setup attributes\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return ret;
-=======
 		goto error_free_dev_mem;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	indio_dev->num_channels = ARRAY_SIZE(incl_3d_channels);
@@ -371,15 +353,7 @@ static int hid_incl_3d_probe(struct platform_device *pdev)
 					&incl_state->common_attributes);
 	if (ret) {
 		dev_err(&pdev->dev, "trigger setup failed\n");
-<<<<<<< HEAD
-<<<<<<< HEAD
-		return ret;
-=======
 		goto error_free_dev_mem;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		return ret;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	ret = iio_device_register(indio_dev);
@@ -405,14 +379,8 @@ error_iio_unreg:
 	iio_device_unregister(indio_dev);
 error_remove_trigger:
 	hid_sensor_remove_trigger(indio_dev, &incl_state->common_attributes);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 error_free_dev_mem:
 	kfree(indio_dev->channels);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return ret;
 }
 
@@ -426,13 +394,7 @@ static int hid_incl_3d_remove(struct platform_device *pdev)
 	sensor_hub_remove_callback(hsdev, HID_USAGE_SENSOR_INCLINOMETER_3D);
 	iio_device_unregister(indio_dev);
 	hid_sensor_remove_trigger(indio_dev, &incl_state->common_attributes);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	kfree(indio_dev->channels);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return 0;
 }

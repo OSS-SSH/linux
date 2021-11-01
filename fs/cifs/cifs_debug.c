@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
  *   fs/cifs_debug.c
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  *
  *   Copyright (C) International Business Machines  Corp., 2000,2005
  *
@@ -256,15 +250,9 @@ static int cifs_debug_data_proc_show(struct seq_file *m, void *v)
 #ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
 	seq_printf(m, ",ALLOW_INSECURE_LEGACY");
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 #ifdef CONFIG_CIFS_WEAK_PW_HASH
 	seq_printf(m, ",WEAK_PW_HASH");
 #endif
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_CIFS_POSIX
 	seq_printf(m, ",CIFS_POSIX");
 #endif
@@ -941,9 +929,6 @@ cifs_security_flags_handle_must_flags(unsigned int *flags)
 		*flags = CIFSSEC_MUST_NTLMSSP;
 	else if ((*flags & CIFSSEC_MUST_NTLMV2) == CIFSSEC_MUST_NTLMV2)
 		*flags = CIFSSEC_MUST_NTLMV2;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 	else if ((*flags & CIFSSEC_MUST_NTLM) == CIFSSEC_MUST_NTLM)
 		*flags = CIFSSEC_MUST_NTLM;
 	else if (CIFSSEC_MUST_LANMAN &&
@@ -952,9 +937,6 @@ cifs_security_flags_handle_must_flags(unsigned int *flags)
 	else if (CIFSSEC_MUST_PLNTXT &&
 		 (*flags & CIFSSEC_MUST_PLNTXT) == CIFSSEC_MUST_PLNTXT)
 		*flags = CIFSSEC_MUST_PLNTXT;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	*flags |= signflags;
 }

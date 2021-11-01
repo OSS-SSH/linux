@@ -96,9 +96,6 @@ static void lpfc_vmid_update_entry(struct lpfc_vport *vport, struct scsi_cmnd
 static void lpfc_vmid_assign_cs_ctl(struct lpfc_vport *vport,
 				    struct lpfc_vmid *vmid);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 static inline unsigned
 lpfc_cmd_blksize(struct scsi_cmnd *sc)
 {
@@ -123,9 +120,6 @@ lpfc_cmd_guard_csum(struct scsi_cmnd *sc)
 	return 0;
 }
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 /**
  * lpfc_sli4_set_rsp_sgl_last - Set the last bit in the response sge.
  * @phba: Pointer to HBA object.
@@ -689,15 +683,7 @@ lpfc_get_scsi_buf_s4(struct lpfc_hba *phba, struct lpfc_nodelist *ndlp,
 
 	cpu = raw_smp_processor_id();
 	if (cmnd && phba->cfg_fcp_io_sched == LPFC_FCP_SCHED_BY_HDWQ) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		tag = blk_mq_unique_tag(scsi_cmd_to_rq(cmnd));
-=======
 		tag = blk_mq_unique_tag(cmnd->request);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		tag = blk_mq_unique_tag(scsi_cmd_to_rq(cmnd));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		idx = blk_mq_unique_tag_to_hwq(tag);
 	} else {
 		idx = phba->sli4_hba.cpu_map[cpu].hdwq;
@@ -1060,29 +1046,13 @@ lpfc_bg_err_inject(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 		return 0;
 
 	sgpe = scsi_prot_sglist(sc);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	lba = scsi_prot_ref_tag(sc);
-=======
 	lba = t10_pi_ref_tag(sc->request);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	lba = scsi_prot_ref_tag(sc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (lba == LPFC_INVALID_REFTAG)
 		return 0;
 
 	/* First check if we need to match the LBA */
 	if (phba->lpfc_injerr_lba != LPFC_INJERR_LBA_OFF) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		blksize = scsi_prot_interval(sc);
-=======
 		blksize = lpfc_cmd_blksize(sc);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		blksize = scsi_prot_interval(sc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		numblks = (scsi_bufflen(sc) + blksize - 1) / blksize;
 
 		/* Make sure we have the right LBA if one is specified */
@@ -1471,15 +1441,7 @@ lpfc_sc_to_bg_opcodes(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 {
 	uint8_t ret = 0;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	if (sc->prot_flags & SCSI_PROT_IP_CHECKSUM) {
-=======
 	if (lpfc_cmd_guard_csum(sc)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (sc->prot_flags & SCSI_PROT_IP_CHECKSUM) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		switch (scsi_get_prot_op(sc)) {
 		case SCSI_PROT_READ_INSERT:
 		case SCSI_PROT_WRITE_STRIP:
@@ -1557,19 +1519,9 @@ static int
 lpfc_bg_err_opcodes(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 		uint8_t *txop, uint8_t *rxop)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	if (sc->prot_flags & SCSI_PROT_IP_CHECKSUM) {
-=======
 	uint8_t ret = 0;
 
 	if (lpfc_cmd_guard_csum(sc)) {
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-
-	if (sc->prot_flags & SCSI_PROT_IP_CHECKSUM) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		switch (scsi_get_prot_op(sc)) {
 		case SCSI_PROT_READ_INSERT:
 		case SCSI_PROT_WRITE_STRIP:
@@ -1620,15 +1572,7 @@ lpfc_bg_err_opcodes(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 		}
 	}
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-	return 0;
-=======
 	return ret;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	return 0;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 #endif
 
@@ -1685,15 +1629,7 @@ lpfc_bg_setup_bpl(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 		goto out;
 
 	/* extract some info from the scsi command for pde*/
-<<<<<<< HEAD
-<<<<<<< HEAD
-	reftag = scsi_prot_ref_tag(sc);
-=======
 	reftag = t10_pi_ref_tag(sc->request);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	reftag = scsi_prot_ref_tag(sc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (reftag == LPFC_INVALID_REFTAG)
 		goto out;
 
@@ -1732,28 +1668,12 @@ lpfc_bg_setup_bpl(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 	 * protection data is automatically generated, not checked.
 	 */
 	if (datadir == DMA_FROM_DEVICE) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (sc->prot_flags & SCSI_PROT_GUARD_CHECK)
-=======
 		if (lpfc_cmd_protect(sc, LPFC_CHECK_PROTECT_GUARD))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (sc->prot_flags & SCSI_PROT_GUARD_CHECK)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bf_set(pde6_ce, pde6, checking);
 		else
 			bf_set(pde6_ce, pde6, 0);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (sc->prot_flags & SCSI_PROT_REF_CHECK)
-=======
 		if (lpfc_cmd_protect(sc, LPFC_CHECK_PROTECT_REF))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (sc->prot_flags & SCSI_PROT_REF_CHECK)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bf_set(pde6_re, pde6, checking);
 		else
 			bf_set(pde6_re, pde6, 0);
@@ -1871,18 +1791,8 @@ lpfc_bg_setup_bpl_prot(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 		goto out;
 
 	/* extract some info from the scsi command */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	blksize = scsi_prot_interval(sc);
-	reftag = scsi_prot_ref_tag(sc);
-=======
 	blksize = lpfc_cmd_blksize(sc);
 	reftag = t10_pi_ref_tag(sc->request);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	blksize = scsi_prot_interval(sc);
-	reftag = scsi_prot_ref_tag(sc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (reftag == LPFC_INVALID_REFTAG)
 		goto out;
 
@@ -1922,28 +1832,12 @@ lpfc_bg_setup_bpl_prot(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 		bf_set(pde6_optx, pde6, txop);
 		bf_set(pde6_oprx, pde6, rxop);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (sc->prot_flags & SCSI_PROT_GUARD_CHECK)
-=======
 		if (lpfc_cmd_protect(sc, LPFC_CHECK_PROTECT_GUARD))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (sc->prot_flags & SCSI_PROT_GUARD_CHECK)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bf_set(pde6_ce, pde6, checking);
 		else
 			bf_set(pde6_ce, pde6, 0);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (sc->prot_flags & SCSI_PROT_REF_CHECK)
-=======
 		if (lpfc_cmd_protect(sc, LPFC_CHECK_PROTECT_REF))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (sc->prot_flags & SCSI_PROT_REF_CHECK)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bf_set(pde6_re, pde6, checking);
 		else
 			bf_set(pde6_re, pde6, 0);
@@ -2129,15 +2023,7 @@ lpfc_bg_setup_sgl(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 		goto out;
 
 	/* extract some info from the scsi command for pde*/
-<<<<<<< HEAD
-<<<<<<< HEAD
-	reftag = scsi_prot_ref_tag(sc);
-=======
 	reftag = t10_pi_ref_tag(sc->request);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	reftag = scsi_prot_ref_tag(sc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (reftag == LPFC_INVALID_REFTAG)
 		goto out;
 
@@ -2165,28 +2051,12 @@ lpfc_bg_setup_sgl(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 	 * protection data is automatically generated, not checked.
 	 */
 	if (sc->sc_data_direction == DMA_FROM_DEVICE) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (sc->prot_flags & SCSI_PROT_GUARD_CHECK)
-=======
 		if (lpfc_cmd_protect(sc, LPFC_CHECK_PROTECT_GUARD))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (sc->prot_flags & SCSI_PROT_GUARD_CHECK)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bf_set(lpfc_sli4_sge_dif_ce, diseed, checking);
 		else
 			bf_set(lpfc_sli4_sge_dif_ce, diseed, 0);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (sc->prot_flags & SCSI_PROT_REF_CHECK)
-=======
 		if (lpfc_cmd_protect(sc, LPFC_CHECK_PROTECT_REF))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (sc->prot_flags & SCSI_PROT_REF_CHECK)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bf_set(lpfc_sli4_sge_dif_re, diseed, checking);
 		else
 			bf_set(lpfc_sli4_sge_dif_re, diseed, 0);
@@ -2353,18 +2223,8 @@ lpfc_bg_setup_sgl_prot(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 		goto out;
 
 	/* extract some info from the scsi command */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	blksize = scsi_prot_interval(sc);
-	reftag = scsi_prot_ref_tag(sc);
-=======
 	blksize = lpfc_cmd_blksize(sc);
 	reftag = t10_pi_ref_tag(sc->request);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	blksize = scsi_prot_interval(sc);
-	reftag = scsi_prot_ref_tag(sc);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (reftag == LPFC_INVALID_REFTAG)
 		goto out;
 
@@ -2421,19 +2281,9 @@ lpfc_bg_setup_sgl_prot(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 		diseed->ref_tag = cpu_to_le32(reftag);
 		diseed->ref_tag_tran = diseed->ref_tag;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (sc->prot_flags & SCSI_PROT_GUARD_CHECK) {
-			bf_set(lpfc_sli4_sge_dif_ce, diseed, checking);
-=======
 		if (lpfc_cmd_protect(sc, LPFC_CHECK_PROTECT_GUARD)) {
 			bf_set(lpfc_sli4_sge_dif_ce, diseed, checking);
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (sc->prot_flags & SCSI_PROT_GUARD_CHECK) {
-			bf_set(lpfc_sli4_sge_dif_ce, diseed, checking);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
 			bf_set(lpfc_sli4_sge_dif_ce, diseed, 0);
 			/*
@@ -2450,15 +2300,7 @@ lpfc_bg_setup_sgl_prot(struct lpfc_hba *phba, struct scsi_cmnd *sc,
 		}
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (sc->prot_flags & SCSI_PROT_REF_CHECK)
-=======
 		if (lpfc_cmd_protect(sc, LPFC_CHECK_PROTECT_REF))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (sc->prot_flags & SCSI_PROT_REF_CHECK)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			bf_set(lpfc_sli4_sge_dif_re, diseed, checking);
 		else
 			bf_set(lpfc_sli4_sge_dif_re, diseed, 0);
@@ -2715,15 +2557,7 @@ lpfc_bg_scsi_adjust_dl(struct lpfc_hba *phba,
 	 * DIF (trailer) attached to it. Must ajust FCP data length
 	 * to account for the protection data.
 	 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-	fcpdl += (fcpdl / scsi_prot_interval(sc)) * 8;
-=======
 	fcpdl += (fcpdl / lpfc_cmd_blksize(sc)) * 8;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	fcpdl += (fcpdl / scsi_prot_interval(sc)) * 8;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	return fcpdl;
 }
@@ -2977,30 +2811,14 @@ lpfc_calc_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd)
 		 * data length is a multiple of the blksize.
 		 */
 		sgde = scsi_sglist(cmd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		blksize = scsi_prot_interval(cmd);
-=======
 		blksize = lpfc_cmd_blksize(cmd);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		blksize = scsi_prot_interval(cmd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		data_src = (uint8_t *)sg_virt(sgde);
 		data_len = sgde->length;
 		if ((data_len & (blksize - 1)) == 0)
 			chk_guard = 1;
 
 		src = (struct scsi_dif_tuple *)sg_virt(sgpe);
-<<<<<<< HEAD
-<<<<<<< HEAD
-		start_ref_tag = scsi_prot_ref_tag(cmd);
-=======
 		start_ref_tag = t10_pi_ref_tag(cmd->request);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		start_ref_tag = scsi_prot_ref_tag(cmd);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		if (start_ref_tag == LPFC_INVALID_REFTAG)
 			goto out;
 		start_app_tag = src->app_tag;
@@ -3021,17 +2839,7 @@ lpfc_calc_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd)
 				/* First Guard Tag checking */
 				if (chk_guard) {
 					guard_tag = src->guard_tag;
-<<<<<<< HEAD
-<<<<<<< HEAD
-					if (cmd->prot_flags
-					    & SCSI_PROT_IP_CHECKSUM)
-=======
 					if (lpfc_cmd_guard_csum(cmd))
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					if (cmd->prot_flags
-					    & SCSI_PROT_IP_CHECKSUM)
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 						sum = lpfc_bg_csum(data_src,
 								   blksize);
 					else
@@ -3102,15 +2910,7 @@ out:
 		phba->bg_guard_err_cnt++;
 		lpfc_printf_log(phba, KERN_WARNING, LOG_FCP | LOG_BG,
 				"9069 BLKGRD: reftag %x grd_tag err %x != %x\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_prot_ref_tag(cmd),
-=======
 				t10_pi_ref_tag(cmd->request),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_prot_ref_tag(cmd),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				sum, guard_tag);
 
 	} else if (err_type == BGS_REFTAG_ERR_MASK) {
@@ -3120,15 +2920,7 @@ out:
 		phba->bg_reftag_err_cnt++;
 		lpfc_printf_log(phba, KERN_WARNING, LOG_FCP | LOG_BG,
 				"9066 BLKGRD: reftag %x ref_tag err %x != %x\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_prot_ref_tag(cmd),
-=======
 				t10_pi_ref_tag(cmd->request),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_prot_ref_tag(cmd),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				ref_tag, start_ref_tag);
 
 	} else if (err_type == BGS_APPTAG_ERR_MASK) {
@@ -3138,15 +2930,7 @@ out:
 		phba->bg_apptag_err_cnt++;
 		lpfc_printf_log(phba, KERN_WARNING, LOG_FCP | LOG_BG,
 				"9041 BLKGRD: reftag %x app_tag err %x != %x\n",
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_prot_ref_tag(cmd),
-=======
 				t10_pi_ref_tag(cmd->request),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_prot_ref_tag(cmd),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 				app_tag, start_app_tag);
 	}
 }
@@ -3208,15 +2992,7 @@ lpfc_sli4_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
 				" 0x%x lba 0x%llx blk cnt 0x%x "
 				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
 				(unsigned long long)scsi_get_lba(cmd),
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_logical_block_count(cmd), bgstat, bghm);
-=======
 				blk_rq_sectors(cmd->request), bgstat, bghm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_logical_block_count(cmd), bgstat, bghm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (lpfc_bgs_get_reftag_err(bgstat)) {
@@ -3231,15 +3007,7 @@ lpfc_sli4_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
 				" 0x%x lba 0x%llx blk cnt 0x%x "
 				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
 				(unsigned long long)scsi_get_lba(cmd),
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_logical_block_count(cmd), bgstat, bghm);
-=======
 				blk_rq_sectors(cmd->request), bgstat, bghm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_logical_block_count(cmd), bgstat, bghm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (lpfc_bgs_get_apptag_err(bgstat)) {
@@ -3254,15 +3022,7 @@ lpfc_sli4_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
 				" 0x%x lba 0x%llx blk cnt 0x%x "
 				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
 				(unsigned long long)scsi_get_lba(cmd),
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_logical_block_count(cmd), bgstat, bghm);
-=======
 				blk_rq_sectors(cmd->request), bgstat, bghm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_logical_block_count(cmd), bgstat, bghm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (lpfc_bgs_get_hi_water_mark_present(bgstat)) {
@@ -3306,21 +3066,9 @@ lpfc_sli4_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
 				" 0x%x lba 0x%llx blk cnt 0x%x "
 				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
 				(unsigned long long)scsi_get_lba(cmd),
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_logical_block_count(cmd), bgstat, bghm);
-
-		/* Calculate what type of error it was */
-=======
 				blk_rq_sectors(cmd->request), bgstat, bghm);
 
 		/* Calcuate what type of error it was */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_logical_block_count(cmd), bgstat, bghm);
-
-		/* Calculate what type of error it was */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lpfc_calc_bg_err(phba, lpfc_cmd);
 	}
 	return ret;
@@ -3355,18 +3103,8 @@ lpfc_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
 				"9072 BLKGRD: Invalid BG Profile in cmd "
 				"0x%x reftag 0x%x blk cnt 0x%x "
 				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
-=======
 				t10_pi_ref_tag(cmd->request),
 				blk_rq_sectors(cmd->request), bgstat, bghm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = (-1);
 		goto out;
 	}
@@ -3377,18 +3115,8 @@ lpfc_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
 				"9073 BLKGRD: Invalid BG PDIF Block in cmd "
 				"0x%x reftag 0x%x blk cnt 0x%x "
 				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
-=======
 				t10_pi_ref_tag(cmd->request),
 				blk_rq_sectors(cmd->request), bgstat, bghm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		ret = (-1);
 		goto out;
 	}
@@ -3403,18 +3131,8 @@ lpfc_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
 				"9055 BLKGRD: Guard Tag error in cmd "
 				"0x%x reftag 0x%x blk cnt 0x%x "
 				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
-=======
 				t10_pi_ref_tag(cmd->request),
 				blk_rq_sectors(cmd->request), bgstat, bghm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (lpfc_bgs_get_reftag_err(bgstat)) {
@@ -3428,18 +3146,8 @@ lpfc_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
 				"9056 BLKGRD: Ref Tag error in cmd "
 				"0x%x reftag 0x%x blk cnt 0x%x "
 				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
-=======
 				t10_pi_ref_tag(cmd->request),
 				blk_rq_sectors(cmd->request), bgstat, bghm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (lpfc_bgs_get_apptag_err(bgstat)) {
@@ -3453,18 +3161,8 @@ lpfc_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
 				"9061 BLKGRD: App Tag error in cmd "
 				"0x%x reftag 0x%x blk cnt 0x%x "
 				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
-=======
 				t10_pi_ref_tag(cmd->request),
 				blk_rq_sectors(cmd->request), bgstat, bghm);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	if (lpfc_bgs_get_hi_water_mark_present(bgstat)) {
@@ -3507,24 +3205,10 @@ lpfc_parse_bg_err(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd,
 				"9057 BLKGRD: Unknown error in cmd "
 				"0x%x reftag 0x%x blk cnt 0x%x "
 				"bgstat=x%x bghm=x%x\n", cmd->cmnd[0],
-<<<<<<< HEAD
-<<<<<<< HEAD
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
-
-		/* Calculate what type of error it was */
-=======
 				t10_pi_ref_tag(cmd->request),
 				blk_rq_sectors(cmd->request), bgstat, bghm);
 
 		/* Calcuate what type of error it was */
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				scsi_prot_ref_tag(cmd),
-				scsi_logical_block_count(cmd), bgstat, bghm);
-
-		/* Calculate what type of error it was */
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		lpfc_calc_bg_err(phba, lpfc_cmd);
 	}
 out:
@@ -4170,152 +3854,6 @@ lpfc_scsi_unprep_dma_buf(struct lpfc_hba *phba, struct lpfc_io_buf *psb)
 }
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
- * lpfc_unblock_requests - allow further commands to be queued.
- * @phba: pointer to phba object
- *
- * For single vport, just call scsi_unblock_requests on physical port.
- * For multiple vports, send scsi_unblock_requests for all the vports.
- */
-void
-lpfc_unblock_requests(struct lpfc_hba *phba)
-{
-	struct lpfc_vport **vports;
-	struct Scsi_Host  *shost;
-	int i;
-
-	if (phba->sli_rev == LPFC_SLI_REV4 &&
-	    !phba->sli4_hba.max_cfg_param.vpi_used) {
-		shost = lpfc_shost_from_vport(phba->pport);
-		scsi_unblock_requests(shost);
-		return;
-	}
-
-	vports = lpfc_create_vport_work_array(phba);
-	if (vports != NULL)
-		for (i = 0; i <= phba->max_vports && vports[i] != NULL; i++) {
-			shost = lpfc_shost_from_vport(vports[i]);
-			scsi_unblock_requests(shost);
-		}
-	lpfc_destroy_vport_work_array(phba, vports);
-}
-
-/**
- * lpfc_block_requests - prevent further commands from being queued.
- * @phba: pointer to phba object
- *
- * For single vport, just call scsi_block_requests on physical port.
- * For multiple vports, send scsi_block_requests for all the vports.
- */
-void
-lpfc_block_requests(struct lpfc_hba *phba)
-{
-	struct lpfc_vport **vports;
-	struct Scsi_Host  *shost;
-	int i;
-
-	if (atomic_read(&phba->cmf_stop_io))
-		return;
-
-	if (phba->sli_rev == LPFC_SLI_REV4 &&
-	    !phba->sli4_hba.max_cfg_param.vpi_used) {
-		shost = lpfc_shost_from_vport(phba->pport);
-		scsi_block_requests(shost);
-		return;
-	}
-
-	vports = lpfc_create_vport_work_array(phba);
-	if (vports != NULL)
-		for (i = 0; i <= phba->max_vports && vports[i] != NULL; i++) {
-			shost = lpfc_shost_from_vport(vports[i]);
-			scsi_block_requests(shost);
-		}
-	lpfc_destroy_vport_work_array(phba, vports);
-}
-
-/**
- * lpfc_update_cmf_cmpl - Adjust CMF counters for IO completion
- * @phba: The HBA for which this call is being executed.
- * @time: The latency of the IO that completed (in ns)
- * @size: The size of the IO that completed
- * @shost: SCSI host the IO completed on (NULL for a NVME IO)
- *
- * The routine adjusts the various Burst and Bandwidth counters used in
- * Congestion management and E2E. If time is set to LPFC_CGN_NOT_SENT,
- * that means the IO was never issued to the HBA, so this routine is
- * just being called to cleanup the counter from a previous
- * lpfc_update_cmf_cmd call.
- */
-int
-lpfc_update_cmf_cmpl(struct lpfc_hba *phba,
-		     uint64_t time, uint32_t size, struct Scsi_Host *shost)
-{
-	struct lpfc_cgn_stat *cgs;
-
-	if (time != LPFC_CGN_NOT_SENT) {
-		/* lat is ns coming in, save latency in us */
-		if (time < 1000)
-			time = 1;
-		else
-			time = div_u64(time + 500, 1000); /* round it */
-
-		cgs = this_cpu_ptr(phba->cmf_stat);
-		atomic64_add(size, &cgs->rcv_bytes);
-		atomic64_add(time, &cgs->rx_latency);
-		atomic_inc(&cgs->rx_io_cnt);
-	}
-	return 0;
-}
-
-/**
- * lpfc_update_cmf_cmd - Adjust CMF counters for IO submission
- * @phba: The HBA for which this call is being executed.
- * @size: The size of the IO that will be issued
- *
- * The routine adjusts the various Burst and Bandwidth counters used in
- * Congestion management and E2E.
- */
-int
-lpfc_update_cmf_cmd(struct lpfc_hba *phba, uint32_t size)
-{
-	uint64_t total;
-	struct lpfc_cgn_stat *cgs;
-	int cpu;
-
-	/* At this point we are either LPFC_CFG_MANAGED or LPFC_CFG_MONITOR */
-	if (phba->cmf_active_mode == LPFC_CFG_MANAGED) {
-		total = 0;
-		for_each_present_cpu(cpu) {
-			cgs = per_cpu_ptr(phba->cmf_stat, cpu);
-			total += atomic64_read(&cgs->total_bytes);
-		}
-		if (total >= phba->cmf_max_bytes_per_interval) {
-			if (!atomic_xchg(&phba->cmf_bw_wait, 1)) {
-				lpfc_block_requests(phba);
-				phba->cmf_last_ts =
-					lpfc_calc_cmf_latency(phba);
-			}
-			atomic_inc(&phba->cmf_busy);
-			return -EBUSY;
-		}
-		if (size > atomic_read(&phba->rx_max_read_cnt))
-			atomic_set(&phba->rx_max_read_cnt, size);
-	}
-
-	cgs = this_cpu_ptr(phba->cmf_stat);
-	atomic64_add(size, &cgs->total_bytes);
-	return 0;
-}
-
-/**
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  * lpfc_handle_fcp_err - FCP response handler
  * @vport: The virtual port for which this call is being executed.
  * @lpfc_cmd: Pointer to lpfc_io_buf data structure.
@@ -4525,14 +4063,6 @@ lpfc_fcp_io_cmd_wqe_cmpl(struct lpfc_hba *phba, struct lpfc_iocbq *pwqeIn,
 	u32 logit = LOG_FCP;
 	u32 status, idx;
 	unsigned long iflags = 0;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 lat;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 lat;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	u8 wait_xb_clr = 0;
 
 	/* Sanity check on return of outstanding command */
@@ -4821,36 +4351,10 @@ lpfc_fcp_io_cmd_wqe_cmpl(struct lpfc_hba *phba, struct lpfc_iocbq *pwqeIn,
 		lpfc_io_ktime(phba, lpfc_cmd);
 	}
 #endif
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (likely(!wait_xb_clr))
-		lpfc_cmd->pCmd = NULL;
-	spin_unlock(&lpfc_cmd->buf_lock);
-
-	/* Check if IO qualified for CMF */
-	if (phba->cmf_active_mode != LPFC_CFG_OFF &&
-	    cmd->sc_data_direction == DMA_FROM_DEVICE &&
-	    (scsi_sg_count(cmd))) {
-		/* Used when calculating average latency */
-		lat = ktime_get_ns() - lpfc_cmd->rx_cmd_start;
-		lpfc_update_cmf_cmpl(phba, lat, scsi_bufflen(cmd), shost);
-	}
-
-<<<<<<< HEAD
-	if (wait_xb_clr)
-		goto out;
-=======
 	if (wait_xb_clr)
 		goto out;
 	lpfc_cmd->pCmd = NULL;
 	spin_unlock(&lpfc_cmd->buf_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	if (wait_xb_clr)
-		goto out;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/* The sdev is not guaranteed to be valid post scsi_done upcall. */
 	cmd->scsi_done(cmd);
@@ -4863,18 +4367,8 @@ lpfc_fcp_io_cmd_wqe_cmpl(struct lpfc_hba *phba, struct lpfc_iocbq *pwqeIn,
 	lpfc_cmd->cur_iocbq.iocb_flag &= ~LPFC_DRIVER_ABORTED;
 	if (lpfc_cmd->waitq)
 		wake_up(lpfc_cmd->waitq);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	spin_unlock(&lpfc_cmd->buf_lock);
-out:
-=======
 out:
 	spin_unlock(&lpfc_cmd->buf_lock);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	spin_unlock(&lpfc_cmd->buf_lock);
-out:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	lpfc_release_scsi_buf(phba, lpfc_cmd);
 }
 
@@ -5281,20 +4775,6 @@ static int lpfc_scsi_prep_cmnd_buf_s4(struct lpfc_vport *vport,
 			fcp_cmnd->fcpCntl3 = READ_DATA;
 			if (hdwq)
 				hdwq->scsi_cstat.input_requests++;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-
-			/* For a CMF Managed port, iod must be zero'ed */
-			if (phba->cmf_active_mode == LPFC_CFG_MANAGED)
-				bf_set(wqe_iod, &wqe->fcp_iread.wqe_com,
-				       LPFC_WQE_IOD_NONE);
-<<<<<<< HEAD
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	} else {
 		/* From the icmnd template, initialize words 4 - 11 */
@@ -5549,22 +5029,12 @@ lpfc_check_pci_resettable(struct lpfc_hba *phba)
 		}
 
 		/* Check for valid Emulex Device ID */
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if (phba->sli_rev != LPFC_SLI_REV4 ||
-		    phba->hba_flag & HBA_FCOE_MODE) {
-=======
 		switch (ptr->device) {
 		case PCI_DEVICE_ID_LANCER_FC:
 		case PCI_DEVICE_ID_LANCER_G6_FC:
 		case PCI_DEVICE_ID_LANCER_G7_FC:
 			break;
 		default:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-		if (phba->sli_rev != LPFC_SLI_REV4 ||
-		    phba->hba_flag & HBA_FCOE_MODE) {
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
 					"8347 Incapable PCI reset device: "
 					"0x%04x\n", ptr->device);
@@ -5953,12 +5423,6 @@ static int lpfc_vmid_get_appid(struct lpfc_vport *vport, char *uuid, struct
  */
 static char *lpfc_is_command_vm_io(struct scsi_cmnd *cmd)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-	struct bio *bio = scsi_cmd_to_rq(cmd)->bio;
-
-	return bio ? blkcg_get_fc_appid(bio) : NULL;
-=======
 	char *uuid = NULL;
 
 	if (cmd->request) {
@@ -5966,12 +5430,6 @@ static char *lpfc_is_command_vm_io(struct scsi_cmnd *cmd)
 			uuid = blkcg_get_fc_appid(cmd->request->bio);
 	}
 	return uuid;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	struct bio *bio = scsi_cmd_to_rq(cmd)->bio;
-
-	return bio ? blkcg_get_fc_appid(bio) : NULL;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 }
 
 /**
@@ -5998,12 +5456,6 @@ lpfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
 	struct fc_rport *rport = starget_to_rport(scsi_target(cmnd->device));
 	int err, idx;
 	u8 *uuid = NULL;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	uint64_t start;
-
-	start = ktime_get_ns();
-=======
 #ifdef CONFIG_SCSI_LPFC_DEBUG_FS
 	uint64_t start = 0L;
 
@@ -6011,12 +5463,6 @@ lpfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
 		start = ktime_get_ns();
 #endif
 
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	uint64_t start;
-
-	start = ktime_get_ns();
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	rdata = lpfc_rport_data_from_scsi_device(cmnd->device);
 
 	/* sanity check on references */
@@ -6047,28 +5493,7 @@ lpfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
 	 * transport is still transitioning.
 	 */
 	if (!ndlp)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-		goto out_tgt_busy1;
-
-	/* Check if IO qualifies for CMF */
-	if (phba->cmf_active_mode != LPFC_CFG_OFF &&
-	    cmnd->sc_data_direction == DMA_FROM_DEVICE &&
-	    (scsi_sg_count(cmnd))) {
-		/* Latency start time saved in rx_cmd_start later in routine */
-		err = lpfc_update_cmf_cmd(phba, scsi_bufflen(cmnd));
-		if (err)
-			goto out_tgt_busy1;
-	}
-
-<<<<<<< HEAD
-=======
 		goto out_tgt_busy;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (lpfc_ndlp_check_qdepth(phba, ndlp)) {
 		if (atomic_read(&ndlp->cmd_pending) >= ndlp->cmd_qdepth) {
 			lpfc_printf_vlog(vport, KERN_INFO, LOG_FCP_ERROR,
@@ -6096,15 +5521,7 @@ lpfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
 					 ndlp->nlp_portname.u.wwn[5],
 					 ndlp->nlp_portname.u.wwn[6],
 					 ndlp->nlp_portname.u.wwn[7]);
-<<<<<<< HEAD
-<<<<<<< HEAD
-			goto out_tgt_busy2;
-=======
 			goto out_tgt_busy;
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-			goto out_tgt_busy2;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
 	}
 
@@ -6117,14 +5534,6 @@ lpfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
 				 "IO busied\n");
 		goto out_host_busy;
 	}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	lpfc_cmd->rx_cmd_start = start;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	lpfc_cmd->rx_cmd_start = start;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 	/*
 	 * Store the midlayer's command structure for the completion phase
@@ -6148,18 +5557,8 @@ lpfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
 					 "reftag x%x cnt %u pt %x\n",
 					 dif_op_str[scsi_get_prot_op(cmnd)],
 					 cmnd->cmnd[0],
-<<<<<<< HEAD
-<<<<<<< HEAD
-					 scsi_prot_ref_tag(cmnd),
-					 scsi_logical_block_count(cmnd),
-=======
 					 t10_pi_ref_tag(cmnd->request),
 					 blk_rq_sectors(cmnd->request),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					 scsi_prot_ref_tag(cmnd),
-					 scsi_logical_block_count(cmnd),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 (cmnd->cmnd[1]>>5));
 		}
 		err = lpfc_bg_scsi_prep_dma_buf(phba, lpfc_cmd);
@@ -6170,18 +5569,8 @@ lpfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
 					 "9038 BLKGRD: rcvd PROT_NORMAL cmd: "
 					 "x%x reftag x%x cnt %u pt %x\n",
 					 cmnd->cmnd[0],
-<<<<<<< HEAD
-<<<<<<< HEAD
-					 scsi_prot_ref_tag(cmnd),
-					 scsi_logical_block_count(cmnd),
-=======
 					 t10_pi_ref_tag(cmnd->request),
 					 blk_rq_sectors(cmnd->request),
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-					 scsi_prot_ref_tag(cmnd),
-					 scsi_logical_block_count(cmnd),
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 					 (cmnd->cmnd[1]>>5));
 		}
 		err = lpfc_scsi_prep_dma_buf(phba, lpfc_cmd);
@@ -6252,16 +5641,8 @@ lpfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
 				   bf_get(wqe_tmo,
 				   &lpfc_cmd->cur_iocbq.wqe.generic.wqe_com) :
 				   lpfc_cmd->cur_iocbq.iocb.ulpTimeout,
-<<<<<<< HEAD
-<<<<<<< HEAD
-				   (uint32_t)(scsi_cmd_to_rq(cmnd)->timeout / 1000));
-=======
 				   (uint32_t)
 				   (cmnd->request->timeout / 1000));
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-				   (uint32_t)(scsi_cmd_to_rq(cmnd)->timeout / 1000));
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
 		goto out_host_busy_free_buf;
 	}
@@ -6297,45 +5678,13 @@ lpfc_queuecommand(struct Scsi_Host *shost, struct scsi_cmnd *cmnd)
  out_host_busy_release_buf:
 	lpfc_release_scsi_buf(phba, lpfc_cmd);
  out_host_busy:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	lpfc_update_cmf_cmpl(phba, LPFC_CGN_NOT_SENT, scsi_bufflen(cmnd),
-			     shost);
-	return SCSI_MLQUEUE_HOST_BUSY;
-
- out_tgt_busy2:
-	lpfc_update_cmf_cmpl(phba, LPFC_CGN_NOT_SENT, scsi_bufflen(cmnd),
-			     shost);
- out_tgt_busy1:
-=======
 	return SCSI_MLQUEUE_HOST_BUSY;
 
  out_tgt_busy:
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	lpfc_update_cmf_cmpl(phba, LPFC_CGN_NOT_SENT, scsi_bufflen(cmnd),
-			     shost);
-	return SCSI_MLQUEUE_HOST_BUSY;
-
- out_tgt_busy2:
-	lpfc_update_cmf_cmpl(phba, LPFC_CGN_NOT_SENT, scsi_bufflen(cmnd),
-			     shost);
- out_tgt_busy1:
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	return SCSI_MLQUEUE_TARGET_BUSY;
 
  out_fail_command_release_buf:
 	lpfc_release_scsi_buf(phba, lpfc_cmd);
-<<<<<<< HEAD
-<<<<<<< HEAD
-	lpfc_update_cmf_cmpl(phba, LPFC_CGN_NOT_SENT, scsi_bufflen(cmnd),
-			     shost);
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	lpfc_update_cmf_cmpl(phba, LPFC_CGN_NOT_SENT, scsi_bufflen(cmnd),
-			     shost);
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
  out_fail_command:
 	cmnd->scsi_done(cmnd);
@@ -6924,14 +6273,6 @@ lpfc_target_reset_handler(struct scsi_cmnd *cmnd)
 	struct lpfc_scsi_event_header scsi_event;
 	int status;
 	u32 logit = LOG_FCP;
-<<<<<<< HEAD
-<<<<<<< HEAD
-	u32 dev_loss_tmo = vport->cfg_devloss_tmo;
-=======
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
-	u32 dev_loss_tmo = vport->cfg_devloss_tmo;
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	unsigned long flags;
 	DECLARE_WAIT_QUEUE_HEAD_ONSTACK(waitq);
 
@@ -6973,50 +6314,6 @@ lpfc_target_reset_handler(struct scsi_cmnd *cmnd)
 
 	status = lpfc_send_taskmgmt(vport, cmnd, tgt_id, lun_id,
 					FCP_TARGET_RESET);
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
-	if (status != SUCCESS) {
-		logit = LOG_TRACE_EVENT;
-
-		/* Issue LOGO, if no LOGO is outstanding */
-		spin_lock_irqsave(&pnode->lock, flags);
-		if (!(pnode->upcall_flags & NLP_WAIT_FOR_LOGO) &&
-		    !pnode->logo_waitq) {
-			pnode->logo_waitq = &waitq;
-			pnode->nlp_fcp_info &= ~NLP_FCP_2_DEVICE;
-			pnode->nlp_flag |= NLP_ISSUE_LOGO;
-			pnode->upcall_flags |= NLP_WAIT_FOR_LOGO;
-			spin_unlock_irqrestore(&pnode->lock, flags);
-			lpfc_unreg_rpi(vport, pnode);
-			wait_event_timeout(waitq,
-					   (!(pnode->upcall_flags &
-					      NLP_WAIT_FOR_LOGO)),
-					   msecs_to_jiffies(dev_loss_tmo *
-							    1000));
-
-			if (pnode->upcall_flags & NLP_WAIT_FOR_LOGO) {
-				lpfc_printf_vlog(vport, KERN_ERR, logit,
-						 "0725 SCSI layer TGTRST "
-						 "failed & LOGO TMO (%d, %llu) "
-						 "return x%x\n",
-						 tgt_id, lun_id, status);
-				spin_lock_irqsave(&pnode->lock, flags);
-				pnode->upcall_flags &= ~NLP_WAIT_FOR_LOGO;
-			} else {
-				spin_lock_irqsave(&pnode->lock, flags);
-			}
-			pnode->logo_waitq = NULL;
-			spin_unlock_irqrestore(&pnode->lock, flags);
-			status = SUCCESS;
-
-<<<<<<< HEAD
-		} else {
-			spin_unlock_irqrestore(&pnode->lock, flags);
-			status = FAILED;
-		}
-=======
 	if (status != SUCCESS)
 		logit =  LOG_TRACE_EVENT;
 	spin_lock_irqsave(&pnode->lock, flags);
@@ -7041,22 +6338,15 @@ lpfc_target_reset_handler(struct scsi_cmnd *cmnd)
 				 lun_id, status);
 			spin_lock_irqsave(&pnode->lock, flags);
 			pnode->upcall_flags &= ~NLP_WAIT_FOR_LOGO;
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		} else {
-			spin_unlock_irqrestore(&pnode->lock, flags);
-			status = FAILED;
+			spin_lock_irqsave(&pnode->lock, flags);
 		}
-<<<<<<< HEAD
 		pnode->logo_waitq = NULL;
 		spin_unlock_irqrestore(&pnode->lock, flags);
 		status = SUCCESS;
 	} else {
 		status = FAILED;
 		spin_unlock_irqrestore(&pnode->lock, flags);
->>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
-=======
->>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	}
 
 	lpfc_printf_vlog(vport, KERN_ERR, logit,
