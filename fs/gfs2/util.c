@@ -135,6 +135,11 @@ static void signal_our_withdraw(struct gfs2_sbd *sdp)
 	i_gl = ip->i_gl;
 	no_formal_ino = ip->i_no_formal_ino;
 
+	inode = sdp->sd_jdesc->jd_inode;
+	ip = GFS2_I(inode);
+	i_gl = ip->i_gl;
+	no_formal_ino = ip->i_no_formal_ino;
+
 	/* Prevent any glock dq until withdraw recovery is complete */
 	set_bit(SDF_WITHDRAW_RECOVERY, &sdp->sd_flags);
 	/*
